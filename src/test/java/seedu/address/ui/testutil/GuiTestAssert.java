@@ -5,9 +5,13 @@ import static org.junit.Assert.assertEquals;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import guitests.guihandles.AttendanceCardHandle;
+import guitests.guihandles.EpicEventCardHandle;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import seedu.address.model.attendance.Attendance;
+import seedu.address.model.event.EpicEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -26,16 +30,53 @@ public class GuiTestAssert {
         assertEquals(expectedCard.getTags(), actualCard.getTags());
     }
 
+    //@@ author raynoldng
+    /**
+     * Asserts that {@code actualEpicEventCard} displays the same values as {@code expectedEpicEventCard}.
+     */
+    public static void assertEpicEventCardEquals(EpicEventCardHandle expectedCard, EpicEventCardHandle actualCard) {
+        assertEquals(expectedCard.getId(), actualCard.getId());
+        assertEquals(expectedCard.getName(), actualCard.getName());
+        assertEquals(expectedCard.getTags(), actualCard.getTags());
+    }
+
+    public static void assertAttendanceCardEquals(AttendanceCardHandle expectedCard,
+                                                  AttendanceCardHandle selectedCard) {
+        assertCardEquals(expectedCard, selectedCard);
+    }
+
+    /**
+     * Asserts that {@code actualEpicEventCard} displays the details of {@code expectedEpicEvent}.
+     */
+    public static void assertAttendanceEventCardDisplaysAttendance(Attendance expectedAttendance,
+                                                                   AttendanceCardHandle actualCard) {
+        assertCardDisplaysPerson(expectedAttendance.getPerson(),  actualCard);
+    }
+
+    //@@ author
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
+        assertEquals(expectedPerson.getFullName().name, actualCard.getName());
         assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
         assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
         assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
         assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
+    }
+
+    /**
+     * Asserts that {@code actualEpicEventCard} displays the details of {@code expectedEpicEvent}.
+     */
+    public static void assertEpicEventCardDisplaysEpicEvent(EpicEvent expectedEpicEvent,
+                                                            EpicEventCardHandle actualCard) {
+        assertEquals(expectedEpicEvent.getName().name, actualCard.getName());
+
+        /* Tags in events are not displayed for now
+        assertEquals(expectedEpicEvent.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
+                actualCard.getTags());
+        */
     }
 
     /**

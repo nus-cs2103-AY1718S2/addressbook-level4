@@ -1,51 +1,109 @@
-= AddressBook Level 4 - User Guide
+= Event Planning isn’t Complicated (EPIC) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
-:xrefstyle: full
+:xrefstyle: short
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W13-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B2`      Since: `Mar 2018`      Licence: `MIT`
+
+Table of Contents:
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Event Planning isn’t Complicated (EPIC) is a desktop application used for *event planning
+and registration for large organisations*.
+EPIC is optimized for event planners who prefer typing to using the mouse.
+If you can type fast, EPIC can get your event planning tasks and registration processes for
+events done faster than traditional (Graphical User Interface) GUI applications
+or pen and paper registration.
+
+This user guide will walk you through setting up EPIC on your computer, navigating within the
+GUI, using the various features EPIC has.
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+This section walks you through setting up EPIC on your computer, provides an overview of the UI
+and goes through some example commands you can try.
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `EPIC.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for EPIC.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+
+
+.GUI of EPIC
+image::Ui.png[width="790"]
+Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to EPIC.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+Refer to <<Features>> for details of each command.
+
+[NOTE]
+Registrant refers to the person registered to a particular event.
+
+
+[[Layout]]
+== How to Use the GUI
+
+This section describes the components of the GUI, and common ways to interact with it.
+// tag::uilayout[]
+
+=== Layout
+
+The UI consists of the 5 main layout regions (<<#layout-of-epic>>):
+
+[#layout-of-epic]
+.Components of the GUI
+image::Ui_annotated.png[width="750"]
+
+. Command Box: text box to receive user input.
+. Result Display: status bar that displays the result of user commands.
+. Persons Pane: pane that lists all persons stored in EPIC.
+. Events Pane: pane that lists all events stored in EPIC.
+. Attendance Pane: pane that lists all registrants in the selected event.
+// end::uilayout[]
+
+[TIP]
+The lists displayed in the panes can be filtered using the `find`, `find-event` `find-registrant` commands!
+
+// tag::uiinteractions[]
+
+=== Interacting with the GUI
+
+* Clicking on an event in the Events Pane *selects* that event, allowing you to see all registrants for that event in the Attendance Pane,
+as well as perform actions such as toggling attendance.
+Selecting an event can also be done with the `select` command in the command box.
+
+
+// end::uiinteractions[]
 
 [[Features]]
 == Features
+
+This section details the various features EPIC supports.
 
 ====
 *Command Format*
@@ -56,35 +114,40 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing Help : `help`
 
+Opens the help screen in a separate window.
 Format: `help`
 
-=== Adding a person: `add`
+=== Adding a Person: `add`
 
-Adds a person to the address book +
+Adds a person to EPIC. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A person can have any number of tags (including 0).
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+Adds the person John Doe to EPIC.
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
+Adds the person Betsy Crowe to EPIC.
 
-=== Listing all persons : `list`
+=== Listing all Persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in EPIC on the Persons Pane. +
 Format: `list`
 
-=== Editing a person : `edit`
+=== Editing a Person : `edit`
 
-Edits an existing person in the address book. +
+Edits an existing person in EPIC. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the person at the specified `INDEX`.
+The index refers to the index number shown in the Persons Pane.
+* The index *must be a positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -98,54 +161,53 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+=== Locating Persons by Name: `find`
 
 Finds persons whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case-insensitive. e.g `hans` will match `Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched. e.g. `Han` will not match `Hans`.
+* Persons matching *at least* one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber` and `Bo Yang`.
 ****
 
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
+Returns `john` and `John Doe`.
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any person having names `Betsy`, `Tim`, or `John`.
 
-=== Deleting a person : `delete`
+=== Deleting a Person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from EPIC. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes the person at the specified `INDEX` shown.
+The index refers to the index number shown in the Persons Pane.
+* The index *must be a positive integer*: 1, 2, 3, ...
+* The person specified must not be registered for any event.
 ****
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in EPIC.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a Person : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+Selects the person identified by the index number used in the Persons Pane. +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number shown in the Persons Pane.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -153,58 +215,333 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
 
-=== Listing entered commands : `history`
+//tag::addevent[]
+=== Adding an Event: `add-event`
+
+Adds an event to EPIC. +
+Format: `add-event n/NAME [t/TAG]...`
+
+[TIP]
+An event can have any number of tags (including 0).
+
+Examples:
+
+* `add-event n/AY201718 Graduation t/Graduation`
+Adds the event AY201718 Graduation to EPIC.
+* `add-event n/Computing Seminar`
+Adds the event Computing Seminar to EPIC.
+//end::addevent[]
+
+=== Listing all Events: `list-events`
+
+Shows a list of all events in the Events Pane. +
+Format: `list-events`
+
+// tag::selectevent[]
+=== Selecting an Event: `select-event`
+
+Selects the event identified by the index number used in the Events Pane.
+The Attendance Pane will display the persons registered for that event.
+
+Format: `select-event INDEX`
+
+
+[TIP]
+By default, the first event in the Events Pane is the selected event.
+// end::selectevent[]
+
+// tag::editevent[]
+
+=== Editing an Event : `edit-event`
+
+Edits an existing event in EPIC. +
+Format: `edit-event INDEX [n/NAME] [t/TAG]...`
+
+****
+* Edits the event at the specified `INDEX`. The index refers to the index number shown in the Events Pane.
+The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the event will be removed i.e adding of tags is not cumulative.
+* You can remove all the event's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit-event 2 n/Graduation Day t/` +
+Edits the name of the 2nd event to `Graduation Day` and clears all existing tags.
+* `edit-event 6 n/Career Talk 2018` +
+Edits the name of the 6th event in the Events Pane to `Career Talk 2018`. See <<#editevent>> below for UI changes. +
+
+[#editevent]
+.Illustration of `edit-event` command (only the Events Pane is shown for clarity).
+image::EditEventUG.png[width="790"]
+
+// end::editevent[]
+
+// tag::findevent[]
+
+=== Locating Events by Name: `find-event`
+
+Finds events whose names contain any of the given keywords. +
+Format: `find-event KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case-insensitive. e.g `talks` will match `Talks`
+* The order of the keywords does not matter. e.g. `Food Talk` will match `Talk Food`
+* Only the name is searched.
+* Only full words will be matched e.g. `Talk` will not match `Talks`
+* Events matching at least one keyword will be returned (i.e. `OR` search). e.g. `Talk` will return `Food Talk`, `IoT Talk`
+****
+
+Examples:
+
+* `find-event talk` +
+Returns `Career Talk`
+* `find-event Talk Competition` +
+Returns any event having `Talk`, or `Competition` in its name. See <<#findevent>> below for UI changes. +
+
+[#findevent]
+.Illustration of `find-event` command (only the Events Pane is shown for clarity).
+image::FindEventUG.png[width="790"]
+
+// end::findevent[]
+
+// tag::deleteevent[]
+
+=== Deleting an Event : `delete-event`
+
+Deletes the specified event from EPIC. +
+Format: `delete-event INDEX`
+
+****
+* Deletes the event at the specified `INDEX`.
+The index refers to the index number shown in the Events Pane.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list-events` +
+`delete-event 2` +
+Deletes the 2nd event in EPIC.
+* `find-event Talk` +
+`delete-event 1` +
+Deletes the 1st event in the results of the `find-event` command.
+
+// end::deleteevent[]
+
+// tag::register[]
+
+=== Registering a Person for an Event: `register`
+
+Registers the specified person for an event in EPIC. +
+Format: `register INDEX EVENT_NAME`
+
+****
+* Registers the person at the specified `INDEX`.
+The index refers to the index number shown in the Persons Pane.
+* The index *must be a positive integer*: 1, 2, 3, ...
+* `EVENT_NAME` must match the name of an event in EPIC exactly.
+****
+
+Examples:
+
+* `find Betsy` +
+`register 1 Computing Seminar` +
+Registers the 1st person in the results of the `find` command for Computing Seminar.
+* `list` +
+`register 2 AY201718 Graduation` +
+Registers the 2nd person in EPIC for AY201718 Graduation. See <<#register>> below for UI changes. +
+
+[#register]
+.Illustration of `register` command (only the Attendance Pane is shown for clarity).
+image::RegisterUG.png[width="790"]
+
+// end::register[]
+
+// tag::deregister[]
+
+=== Deregistering a Person from an Event: `deregister`
+
+Deregisters the specified person from an event in the EPIC. +
+Format: `deregister INDEX EVENT_NAME`
+
+****
+* Deregisters the person at the specified `INDEX`.
+The index refers to the index number shown in the Persons Pane.
+* The index *must be a positive integer*: 1, 2, 3, ...
+* `EVENT_NAME` must match the name of an event in EPIC exactly.
+* The person to be deregistered must be already in the event.
+****
+
+Examples:
+
+* `list` +
+`deregister 2 AY201718 Graduation` +
+Deregisters the 2nd person in EPIC from AY201718 Graduation.
+* `find Betsy` +
+`deregister 1 Computing Seminar` +
+Deregisters the 1st person in the results of the `find` command from Computing Seminar.
+
+// end::deregister[]
+
+// tag::list-registered[]
+
+=== Listing all Event Registrants: `list-registered`
+
+Lists all registrants for the specified event in the Persons Pane. +
+Format: `list-registered EVENT_NAME`
+
+****
+* `EVENT_NAME` must match the name of an event in EPIC exactly.
+****
+// end::list-registered[]
+
+
+// tag::attendance-search[]
+
+=== Finding Event Registrants: `find-registrant`
+
+Finds registrants whose names contain any of the given keywords.
+
+Format: `find-registrant KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case-insensitive. e.g hans will match Hans.
+* Only the name is searched.
+* Only full words will be matched. e.g. Han will not match Hans.
+****
+
+If your event contains too many registrants, it can be difficult to find information quickly. The
+`find-registrant` command can be used to narrow down registrants by their name. Only persons whose
+names contain any of the given keywords are displayed.
+
+In our example, we'll apply a filter to display only registrants from the IoT Talk event with the
+name "Alex".
+
+. Select the IoT Event by executing `select-event 1`. Observe that Alex Yeoh is registered
+. Execute `find-registrant alex`. This command filters the Attendance Pane, hiding anyone whose name does
+not contain the word alex (case-insensitive).
+. To remove the filter, execute `list-registrants`.
+
+When a filter is applied, the header of the Attendance Pane will display `filtered`, and the attendance statistic will
+be computed based on the filtered list. See <<#findregistrants>> below for UI changes. +
+
+[#findregistrants]
+.Illustration of `find-registrants` command (only the Attendance Pane is shown for clarity).
+image::FindRegistrantsUG.png[width="790"]
+
+****
+* The search is case-insensitive. e.g hans will match Hans.
+* Only the name is searched.
+* Only full words will be matched. e.g. Han will not match Hans.
+****
+
+=== Listing all Event Registrants: `list-registrants`
+
+Lists all registrants for the selected event in the Attendance Pane, removing any filter. +
+Format: `list-registrants EVENT_NAME`
+// end::attendance-search[]
+
+
+
+//tag::toggle[]
+=== Toggle Attendance for Event Registrant : `toggle`
+
+Toggles the attendance of a registrant to an event from attended to not attended and vice versa. +
+Format: `toggle INDEX`
+
+****
+* Toggles the attendance of the registrant at the specified `INDEX`.
+The index refers to the index number shown in the Attendance Pane.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `select-event 2` +
+`toggle 3` +
+Toggles the attendance of the 3rd registrant in the attendance list of
+the 2nd event currently listed. See <<#toggle>> below for UI changes. +
+
+[#toggle]
+.Illustration of `toggle` command (only the Attendance Pane is shown for clarity).
+image::ToggleUG.png[width="790"]
+//end::toggle[]
+
+=== Listing Entered Commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the up and down arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Clearing all Entries : `clear`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Clears all entries from EPIC. +
+Format: `clear`
+
+// tag::undo[]
+=== Undoing Commands : `undo`
+
+Restores EPIC to the state before the previous _undoable_ command was executed. +
+There is no guarantee that the relative order of persons/events will be preserved after the undoing
+of a `delete` or `delete-event` command (see the third example). +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify EPIC's content.
+To see the full list of undoable commands, refer to <<List of undoable commands>>
 ====
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
 * `select 1` +
 `list` +
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+The `undo` command fails since neither `list` nor `select` is undoable.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+`undo` +
+Undoes the `clear` command, followed by the `delete 1` command.
 
-=== Redoing the previously undone command : `redo`
+* `delete 2` +
+`undo` +
+Undoes the `delete 2` command. See <<#undoafter>> below for UI changes. In particular,
+it shows that relative order of persons might not be preserved. +
 
-Reverses the most recent `undo` command. +
+[#undoafter]
+.Illustration of `undo` command (only the Persons Pane is shown for clarity).
+image::UndoUG.png[width="790"]
+
+// end::undo[]
+
+// tag::redo[]
+
+=== Redoing Commands : `redo`
+
+Reverses the most recent `undo` command. This will *fail* if the most recent command
+was neither `undo` nor `redo` (See last example below). +
 Format: `redo`
 
 Examples:
 
 * `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` +
+`redo` +
+Redoes the `delete 1` command.
 
 * `delete 1` +
 `redo` +
@@ -212,53 +549,122 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+`undo` +
+`undo` +
+`redo` +
+`redo` +
+Redoes the `delete 1` command, followed by the `clear` command.
 
-=== Clearing all entries : `clear`
+* `add-event n/MyEvent` +
+`undo` +
+`add-event n/MyEvent` +
+`redo` +
+The `redo` command fails as the most recent command was not an `undo/redo` command. This
+prevents ill-defined behavior like trying to add back an event that already exists.
+// end::redo[]
 
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
+=== Exiting the Program : `exit`
 
 Exits the program. +
 Format: `exit`
 
-=== Saving the data
+=== Saving the Data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+EPIC data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Exporting Contact Information to a CSV File : `export` [coming in v2.0]
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Exports the list of all persons in EPIC to a csv file. +
+Format: `export FILE_NAME`
+
+=== Importing Contact Information from a CSV File : `import` [coming in v2.0]
+
+Imports a list of persons from a csv file and adds them to EPIC. +
+Format: `import FILE_NAME`
+
+=== Adding Feedback for an Event from a Participant : `add-feedback` [coming in v2.0]
+
+Adds feedback for an event from a participant of the event. +
+Format: `add-feedback INDEX EVENT-NAME FEEDBACK`
+
+=== Exporting Event Details to a CSV file : `export-event` [coming in v2.0]
+
+Exports event details for a single event into a csv file. +
+Format: `export-event EVENT_NAME FILE_NAME`
+
+=== Registering all Persons with a Particular Tag to an Event : `register-by-tag` [coming in v2.0]
+
+Registers all persons with a particular tag to an event in EPIC. +
+Format: `register-by-tag TAG EVENT_NAME`
+
+=== Adding Automatic Email Reminder to Event Registrants : `add-reminder` [coming in v2.0]
+
+Adds an automatic email reminder at the stipulated time to all event registrants. +
+Format: `add-reminder DAYS_OFFSET EVENT_NAME`
+
+
+=== Adding Hotkeys for Commands : `add-hotkey` [coming in v2.0]
+
+Adds a hotkey for a command. +
+Format: `add-hotkey HOTKEY COMMAND_NAME`
+
+// end::automatedemailreminder[]
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Install EPIC on the other computer and overwrite the empty data file it creates with your data file.
+By default, this file is in data/addressbook.xml.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add Event* `add-event n/NAME [t/TAG]...` +
+e.g. `add-event n/AY201718 Graduation t/Graduation`
+* *Add Person* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Clear Persons and Events* : `clear`
+* *Delete Event* : `delete-event INDEX` +
+e.g. `delete-event 3`
+* *Delete Person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Deregister Person* : `deregister INDEX EVENT_NAME` +
+e.g. `deregister 1 Computing Seminar`
+* *Edit Event* : `edit-event INDEX [n/NAME] [t/TAG]...` +
+e.g. `edit-event 1 n/IoT Talk t/talk`
+* *Edit Person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
+* *Find Event* : `find-event KEYWORD [MORE_KEYWORDS]` +
+e.g. `find-event Talk Competition`
+* *Find Person* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
-* *List* : `list`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
 * *History* : `history`
-* *Undo* : `undo`
+* *List Events* : `list-events`
+* *List Persons* : `list`
+* *List Registered Persons* : `list-registered`
 * *Redo* : `redo`
+* *Register Person* : `register INDEX EVENT_NAME` +
+e.g. `register 1 Computing Seminar`
+* *Select Person* : `select INDEX` +
+e.g.`select 2`
+* *Toggle Attendance* : `toggle INDEX` +
+e.g. `toggle 1`
+* *Undo* : `undo`
+
+[appendix]
+== List of Undoable Commands
+* `add` +
+* `delete` +
+* `add-event` +
+* `delete-event` +
+* `edit` +
+* `edit-event` +
+* `register` +
+* `deregister` +
+* `toggle` +
+* `clear` +
+
+[appendix]
+== Glossary
+positive integer: A number between 1 and 2,147,483,647

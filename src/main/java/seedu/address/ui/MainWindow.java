@@ -7,15 +7,22 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.SingleSelectionModel;
+import javafx.scene.control.Tab;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
+
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.EpicEventPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToEventListRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -34,13 +41,13 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private EpicEventListPanel epicEventListPanel;
+    private AttendanceListPanel attendanceListPanel;
     private Config config;
     private UserPrefs prefs;
 
-    @FXML
-    private StackPane browserPlaceholder;
+    private SingleSelectionModel<Tab> tabSingleSelectionModel;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -50,6 +57,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane epicEventListPanelPlaceholder;
+
+    @FXML
+    private StackPane attendanceListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -116,11 +129,20 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        epicEventListPanel = new EpicEventListPanel(logic.getFilteredEventList());
+        epicEventListPanelPlaceholder.getChildren().add(epicEventListPanel.getRoot());
+
+        // visually select the first event if possible
+        if (logic.getFilteredEventList().size() > 0) {
+            EventsCenter.getInstance().post(new JumpToEventListRequestEvent(Index.fromZeroBased(0)));
+        }
+
+        attendanceListPanel = new AttendanceListPanel(logic.getSelectedEpicEvent());
+        attendanceListPanelPlaceholder.getChildren().add(attendanceListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -185,13 +207,27 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    // @@author raynoldng
+    @Subscribe
+    private void handleEpicEventPanelSelectionChangedEvent(EpicEventPanelSelectionChangedEvent event) {
+        logic.setSelectedEpicEvent(event.getNewSelection().epicEvent);
+
+    }
+
+    @Subscribe
+    private void handleJumpToListRequestEvent(JumpToEventListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.setSelectedEpicEvent(event.targetIndex);
+
+    }
+    // @@author
+
+
+
 }

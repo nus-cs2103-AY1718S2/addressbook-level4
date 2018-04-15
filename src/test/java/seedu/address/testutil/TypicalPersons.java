@@ -1,21 +1,24 @@
 package seedu.address.testutil;
 
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_ADDRESS_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_ADDRESS_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_EMAIL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_NAME_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_NAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_PHONE_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_PERSON_TAG_HUSBAND;
+import static seedu.address.testutil.TypicalEpicEvents.getTypicalEvents;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import seedu.address.model.AddressBook;
+import seedu.address.model.EventPlanner;
+import seedu.address.model.event.EpicEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
@@ -50,25 +53,50 @@ public class TypicalPersons {
             .withEmail("hans@example.com").withAddress("chicago ave").build();
 
     // Manually added - Person's details found in {@code CommandTestUtil}
-    public static final Person AMY = new PersonBuilder().withName(VALID_NAME_AMY).withPhone(VALID_PHONE_AMY)
-            .withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY).withTags(VALID_TAG_FRIEND).build();
-    public static final Person BOB = new PersonBuilder().withName(VALID_NAME_BOB).withPhone(VALID_PHONE_BOB)
-            .withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
-            .build();
+    public static final Person AMY = new PersonBuilder().withName(VALID_PERSON_NAME_AMY)
+            .withPhone(VALID_PERSON_PHONE_AMY).withEmail(VALID_PERSON_EMAIL_AMY).withAddress(VALID_PERSON_ADDRESS_AMY)
+            .withTags(VALID_PERSON_TAG_FRIEND).build();
+    public static final Person BOB = new PersonBuilder().withName(VALID_PERSON_NAME_BOB)
+            .withPhone(VALID_PERSON_PHONE_BOB).withEmail(VALID_PERSON_EMAIL_BOB).withAddress(VALID_PERSON_ADDRESS_BOB)
+            .withTags(VALID_PERSON_TAG_HUSBAND, VALID_PERSON_TAG_FRIEND).build();
 
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     private TypicalPersons() {} // prevents instantiation
 
+    // @@author raynoldng
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code EventPlanner} with all the typical persons.
      */
-    public static AddressBook getTypicalAddressBook() {
-        AddressBook ab = new AddressBook();
+    public static EventPlanner getTypicalAddressBookWithoutEvents() {
+        EventPlanner ab = new EventPlanner();
         for (Person person : getTypicalPersons()) {
             try {
                 ab.addPerson(person);
             } catch (DuplicatePersonException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        return ab;
+    }
+    // @@author
+
+    /**
+     * Returns an {@code EventPlanner} with all the typical persons.
+     */
+    public static EventPlanner getTypicalAddressBook() {
+        EventPlanner ab = new EventPlanner();
+        for (Person person : getTypicalPersons()) {
+            try {
+                ab.addPerson(person);
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        for (EpicEvent epicEvent : getTypicalEvents()) {
+            try {
+                ab.addEvent(epicEvent);
+            } catch (DuplicateEventException e) {
                 throw new AssertionError("not possible");
             }
         }

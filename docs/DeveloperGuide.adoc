@@ -1,22 +1,38 @@
-= AddressBook Level 4 - Developer Guide
+= Event Planning isn't Complicated (EPIC) - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
-:xrefstyle: full
+:xrefstyle: short
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W13-B2/main/blob/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W13-B2`      Since: `Mar 2018`      Licence: `MIT`
 
-== Setting up
+Table of Contents:
+
+== Introduction
+
+EPIC is a Java application and event planning tool for large organization hosting many large-scale events (e.g. schools which host competitions, award and graduation ceremonies, and seminars and talks).
+
+It provides a basic suite of operations for managing the attendance for multiple events. Attendees can be drawn from a common attendance list. It is targeted at and optimised for event planners who are comfortable with using a Command Line Interface (CLI).
+
+
+This Developer Guide provides a high level introduction and view of EPIC. We will walk you through the software architecture EPIC adopts, the implementation
+of several interesting features EPIC has, as well as prepare you to modify the codebase of EPIC yourself.
+
+== Setting Up
+
+This section details the set-up process for working on the codebase on your computer.
 
 === Prerequisites
+
+Please ensure that you have the following installed on your computer:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -28,49 +44,58 @@ This app will not work with earlier versions of Java 8.
 . *IntelliJ* IDE
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
+IntelliJ by default has Gradle and JavaFX plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting Up the Project on Your Computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+Please follow these steps to set up the project on your computer:
+
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+To ensure that EPIC has been set up correctly:
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configurations to Do Before Writing Code
 
-==== Configuring the coding style
+For the best developer experience, we recommend the following configurations before you start coding.
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+==== Configuring the Coding Style
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab. Then,
+
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`:
+** Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`:
+** The order should be `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`.
+** Check the checkbox: `Add a blank line between each import`.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
+==== Updating Documentation to Match Your Fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS3103JAN2018-W13-B2/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W13-B2/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting Up CI
 
 Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
@@ -82,165 +107,295 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
-
-==== Getting started with coding
-
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
-
-== Design
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 [[Design-Architecture]]
-=== Architecture
+== Architecture
 
+EPIC incorporates the core architectural principles of object-oriented, Java-based applications. It consists of loosely coupled components written in Java. The *_Architecture Diagram_* (<<#architecture-diagram>>) given below explains the high-level design of the App.
+
+[#architecture-diagram]
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+The application consists of the Main, Commons, Logic, UI, Model and Storage components. The UI, Logic, Model and Storage
+components form the *core* of the application, with Main and Commons facilitating their initialisation and inter-communication.
 
-[TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+Below is a quick overview of each component:
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+=== Main
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+The Main component only has one class - link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. This class has two main responsibilities:
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+* At app launch, it initialises the other components in the correct sequence, and connects them up with each other.
+* Upon exit, it shuts down the other components and invokes cleanup methods where necessary.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+=== Commons
 
-The rest of the App consists of four components.
+Commons represents a collection of classes used by multiple other components. Two of these classes play important roles at the architecture level.
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
-
-Each of the four components
-
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
-
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
-.Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
-
-[discrete]
-==== Events-Driven nature of the design
-
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
-
-.Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
-
-[NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
-
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
-
-.Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
-
-[NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
-
-The sections below give more details of each component.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library])
+is used by components to communicate with other components using events (i.e. a form of _Event Driven Design_).
+* `LogsCenter` : This class is used by many classes to write log messages to the application's log file.
 
 [[Design-Ui]]
-=== UI component
+// tag::uicomponent[]
+=== UI Component
 
+The UI component is responsible for interfacing with the user. The UI component has three main responsibilities:
+
+* It executes user commands using the Logic component.
+* It binds itself to some data in the Model component so that it can auto-update itself when data in the Model component changes.
+* It responds to events raised from various parts of the App and updates itself accordingly.
+
+====  Functional Overview
+
+The UI consists of a `MainWindow` that contains the 5 main layout regions (<<#GUIOverview>>):
+
+[#GUIOverview]
+.Overview of the Graphical User Interface of EPIC
+image::GUI.png[width="750"]
+
+. Command Box: text box to receive user inputs.
+. Result Display: status bar that displays the result of user commands.
+. Persons Pane: pane that lists all persons.
+. Events Pane: pane that lists all events.
+. Attendance Pane: pane that lists all registrants in the user selected event.
+. Person Card: a card that lists a person's contact information.
+. Event Card: a card that lists an event's details.
+. Attendance Card: a card that lists a registrant's contact information and displays if the registrant has attended or not.
+
+[NOTE]
+If no  `EpicEvent` has been selected, the Attendance Pane will be empty
+
+
+==== Technical Overview
+
+The UI component (<<#UiClassDiagram>>) uses the JavaFX UI framework. The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+
+
+[#UiClassDiagram]
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram.png[width="750"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
-
-The `UI` component,
-
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+The layout of these UI parts is defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
+For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+// end::uicomponent[]
 
 [[Design-Logic]]
-=== Logic component
+=== Logic Component
 
-[[fig-LogicClassDiagram]]
+The Logic component (<<#LGC>>) is responsible for the parsing and execution of commands.
+
+[#LGC]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<#LGC>>
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+When a command is entered into the command box, the following steps take place:
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+.  The Logic component uses the `EventPlannerParser` class to parse the user command.
+.  A `Command` object is returned by the parser, which is passed to the `LogicManager` to execute.
+.  The command execution may affect the Model component (e.g. adding a person) and/or raise events.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the UI component.
+
+The Sequence Diagram for interactions within the Logic component for the `execute("delete 1")` API call is shown below.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
+// tag::modelcomponent[]
 [[Design-Model]]
-=== Model component
+=== Model Component
 
+The Model component (<<#MCD>>) is responsible for holding application data in-memory.
+
+[#MCD]
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The Model component has the following responsibilities:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* It stores a `UserPref` object that represents the user's preferences.
+* It stores the Event Planner data.
+* It exposes three unmodifiable `ObservableLists`, one each for `Person`, `EpicEvent` and `Attendance`.
+The UI can be bound to any of these lists so that it automatically updates when the data in the list changes.
+
+[NOTE]
+The Model does not depend on any of the other three components. This reduces coupling between components.
+// end::modelcomponent[]
 
 [[Design-Storage]]
-=== Storage component
+=== Storage Component
 
+The Storage component (<<SCD>>) is responsible for persisting application data on the hard disk.
+
+[#SCD]
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The Storage component has the following functions:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* It can save `UserPref` objects in json format and reconstruct the Model from a file of this format.
+* It can save the Event Planner data in xml format and reconstruct the Model from a file of this format.
 
-[[Design-Commons]]
-=== Common classes
+// tag::storagedevguide[]
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+When EPIC is re-launched, the following steps take place to restore data from the storage file:
+
+.  The `Main` creates an instance of `UserPrefStorage` object to initiate user preference for storage.
+.  The `Main` creates an instance of `XmlEventPlannerStorage` object to restore data with storage file path supplied by the instance of `UserPrefStorage` object.
+.  The restored data is encapsulated as an `EventPlanner` object inside the `XmlEventPlannerStorage` instance.
+.  An instance of `StorageManager` object is created from both the `XmlEventPlannerStorage` object and the `UserPrefStorage` object.
+.  The `StorageManager` object is used to initiate the model components.
+
+The Sequence Diagram (<<SCSD>>) for interactions within the Storage Component to restore data is shown below.
+
+[#SCSD]
+.Interactions inside the Storage Component to restore data
+image::StorageComponentSequenceDiagram.png[width="800"]
+
+// end::storagedevguide[]
+
+=== How Components Interact
+
+Finally, we will conclude the Architecture section with several examples on how the components interact.
+
+Each of the core components (UI, Logic, Model, Storage) has the following functions:
+
+* It defines its _API_ in an `interface` with the same name as the component.
+* It exposes its functionality using a `{COMPONENT NAME}Manager` class.
+
+For example, the Logic component
+defines its API in the `Logic.java` interface and exposes its functionality
+using the `LogicManager.java` class.
+
+The _Sequence Diagram_ below shows how the components interact with one another after the user issues the command `delete 1`.
+
+.Component interactions for `delete 1` command (part 1)
+image::SDforDeletePerson.png[width="800"]
+
+[NOTE]
+Note how the Model component simply raises a `EventPlannerChangedEvent` when the data in EPIC is changed,
+instead of asking the Storage component to save the updates to the hard disk.
+
+The diagram below shows how the `EventsCenter` reacts to that event,
+which eventually results in the updates being saved to the hard disk and the
+status bar of the UI reflecting the 'Last Updated' time.
+
+.Component interactions for `delete 1` command (part 2)
+image::SDforDeletePersonEventHandling.png[width="800"]
+
+[NOTE]
+Note how the event is propagated through the `EventsCenter` to the Storage and UI components without
+the Model component having to be coupled to either of them. This is an example of how the _Event Driven Design_ helps us reduce direct coupling between components.
+
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
-=== Undo/Redo feature
+// tag::findeventdevguide[]
+
+=== Find Event Feature
+The `find-event` command enables the user to find events from the event list with keywords. The command finds all events whose names contain any of the given keywords. The user can further modify the events with `edit-event` or `delete-event` command once the event is found.
+
+<<#SDFEC>> below shows how the `find-event` command is processed in the Logic component.
+
+[#SDFEC]
+.Sequence Diagram for `find-event` command
+image::FindEventCommandSequenceDiagram.png[width="650"]
+==== Current Implementation
+The `find-event` command input is passed into an `EventPlannerParser` object. The `EventPlannerParser` reads the command word “find-event” and creates a `FindEventCommandParser` object that further parses the command input and creates a `FindEventCommand`. The `FindEventCommand` filters the the event list based on the keywords and updates Model component on changes in the filtered event list.
+
+==== Design Considerations
+
+===== Aspect: Keyword Matching Pattern
+
+* **Alternative 1 (current choice):** Match any of the keywords
+** Pros: The user can find multiple events given multiple keywords for events.
+** Cons: The user cannot pin-point an event if the keyword used for matching is also inside other event names.
+* **Alternative 2:** Match all the keywords
+** Pros: The find events function will be more targeted and precise.
+** Cons: The users cannot find different types of events at the same time.
+* **Alternative 3:** Fuzzy search
+** Pros: The user can find an event even if he/she has forgotten the name of the event.
+** Cons: It is harder to implement the find function.
+// end::findeventdevguide[]
+
+=== Edit Person/Event Features
+
+// tag::editfeature[]
+
+==== Previous Implementation
+
+In https://github.com/se-edu/addressbook-level4[AddressBook-Level4], the `edit` command was performed by creating a new `Person`
+and passing it to the `UniquePersonList` in the model, which would then replace the to-be-edited `Person` with it.
+
+[source,java]
+----
+    int index = internalList.indexOf(personToEdit);
+    Person editedPerson = new Person(name, ...);
+    internalList.set(index, editedPerson);
+----
+
+[#edit-curr-implementation]
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+In EPIC, the `edit` and `edit-event` commands are now implemented in a mutable manner - instead of replacing the to-be-edited `Person/EpicEvent` with the new one, we edit the details of the to-be-edited `Person/EpicEvent` directly.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+[source,java]
+----
+    int index = internalList.indexOf(personToEdit);
+    Person editedPerson = new Person(name, ...);
+    internalList.get(index).setPerson(editedPerson); // setPerson edits internal details using those of the supplied Person
+----
 
+==== Design Considerations
+
+===== Aspect: Implementation of `edit`
+
+* **Alternative 1 (current choice):** Edit in a mutable manner
+** Pros: Since an `EpicEvent` maintain references to multiple `Person` objects, editing a `Person` in this manner
+automatically updates the `EpicEvent` objects which reference it. Similarly, editing an `EpicEvent` in this manner
+automatically updates the `Attendance` objects which reference it.
+** Cons: Implementation of `undo` will be more difficult.
+* **Alternative 2:** Edit in an immutable manner
+** Pros: Implementation of `undo` is easier, since we can just replace the current `EventPlanner` with the previous one.
+** Cons: Editing a `Person/EpicEvent` will require passing a copy of the newly-created `Person/EpicEvent` to all objects
+associated with the to-be-edited version, introducing significant overhead.
+
+// end::editfeature[]
+
+// tag::undoredo[]
+=== Undo/Redo Features
+==== Current Implementation
+
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports
+undoing and redoing of commands that
+modify the state of the event planner (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. <<#UCCD>> shows the class diagram for commands:
+
+[#UCCD]
+.Class Diagram for commands
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such
+as generating the opposite command before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm
+in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,95 +430,415 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the event planner.
+The current state of the event planner is saved before the `delete 5` command executes.
+The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.How a delete command modifies the UndoRedoStack
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute
+`add n/David ...` to add a new person.
 
+.How an add command modifies the UndoRedoStack
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
+[NOTE]
+The `oppositeCommands` for the `AddPersonCommand` and `DeletePersonCommand` above are different! The former is a `DeletePersonCommand`
+while the latter is an `AddPersonCommand`.
+
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the event planner to the state before the `add` command is executed.
 
+.How an undo command utilises the UndoRedoStack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
-If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+If the `undoStack` is empty, there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence Diagram for the undo command
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+// tag::editedundoparts[]
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and performs the intention of the original command).
 
 [NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+If the `redoStack` is empty, then there are no other commands left to be redone, and a `CommandException` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+[NOTE]
+redo() does not simply execute the `Command` with the previous parameters! This would cause indexing issues with
+commands like `delete` if `filteredPersons` had been altered by a `find` or other view command.
 
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`.
+This time the `redoStack` is no longer empty. It will be purged as it no longer makes sense to redo the `add n/David` command
+(this is the behavior that most modern desktop applications follow). <<#UndoRedoNewCommand2StackDiagram>> below shows how
+the clear command changes the `UndoRedoStack`.
+
+[#UndoRedoNewCommand2StackDiagram]
+.How a clear command modifies the UndoRedoStack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+
+// end::editedundoparts[]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.A list command does not modify the UndoRedoStack
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram summarizes what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for command execution
 image::UndoRedoActivityDiagram.png[width="650"]
 
+// tag::undoredochanges[]
+
+==== Changes from Previous Implementation
+
+Instead of saving the entire event planner each time we execute an `UndoableCommand`, each `UndoableCommand` knows how to `undo/redo` itself.
+Each `UndoableCommand` has an `oppositeCommand` field, which is another `UndoableCommand` that, when executed, reverses the changes made by the original command.
+This `oppositeCommand` is generated as part of the `execute()` method, which is overridden in the `UndoableCommand` class.
+
+The sequence diagram for the overridden `execute()` method is shown in <<#sdoverriddenexecute>>, and that for the new `undo()` implementation in <<#sdundo>>.
+
+[#sdoverriddenexecute]
+.Sequence Diagram for the overridden `execute()`
+image::ExecuteSequenceDiagram.png[width="450"]
+
+[#sdundo]
+.Sequence Diagram for new undo implementation
+image::UndoSequenceDiagram.png[width="450"]
+
+The `oppositeCommand` is generated in the `execute()` method, after `preprocessUndoableCommand()`. This is because generating the `oppositeCommand`
+requires knowledge of the actual `Person/EpicEvent` objects to be modified. For example, the `oppositeCommand` of a `deletePersonCommand` is an `addPersonCommand`,
+but we only know the person to be deleted after the pre-processing step.
+
+[NOTE]
+Each `UndoableCommand` now requires its individual `generateOppositeCommand()` implementation. Hence, this method is made abstract in
+the abstract class `UndoableCommand`.
+
+There was no `Command` that could easily reverse the changes caused by executing a `ClearCommand`, hence a new `Command` `RestoreCommand` had to be created. Since the sole purpose
+of this command is to serve as the `oppositeCommand` of a `ClearCommand`, this command is not directly accessible to the user, and can only be executed when
+the user undoes a `ClearCommand`.
+
 ==== Design Considerations
+
+===== Aspect: How Undo and Redo Executes
+
+* **Alternative 1 (current choice):** Store the minimal knowledge required to undo each command inside itself.
+** Pros: Significantly less memory is used (e.g. for `delete`, just save the person being deleted). Compatible with mutable commands.
+** Cons: Implementation is more complicated.
+* **Alternative 2:** Save the entire event planner after every undoable command.
+** Pros: Implementation is easy.
+** Cons: Performance issues may result due to high memory usage. Also, this is incompatible with the mutable `edit` and `edit-event` implementations.
+
+// end::undoredochanges[]
 
 ===== Aspect: Implementation of `UndoableCommand`
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
-
-===== Aspect: How undo & redo executes
-
-* **Alternative 1 (current choice):** Saves the entire address book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+** Pros: Undo/redo functionality will now be part of the default behaviour. Classes that deal with `Command` will not have to know that `executeUndoableCommand()` exists.
+** Cons: New developers will find the template pattern difficult to understand.
+* **Alternative 2:** Override `execute()`
+** Pros: New developers will not have to learn the above template pattern
+** Cons: Command classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to be undone/redone.
 
 
-===== Aspect: Type of commands that can be undone/redone
+===== Aspect: Type of Commands that Can be Undone/Redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+* **Alternative 1 (current choice):** Only include commands that modify the event planner (`add`, `clear`, `edit`).
+** Pros: Only commands that cannot be easily reverted need to be implemented (the view can easily be re-modified as no data is lost).
+** Cons: User might mistakenly think that undo also applies to view modification (e.g. filtering).
 * **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+** Pros: It might be more intuitive for the user.
+** Cons: User has no way of skipping such commands if he or she just want to reset the state of the event planner and not the view.
+**Additional Info:** See the discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
-===== Aspect: Data structure to support the undo/redo commands
+===== Aspect: Data Structure to Support the Undo/Redo Commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Pros: This will be easier to understand for new Computer Science undergraduates, who are likely to be the incoming developers of our project.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Cons: This requires dealing with commands that have already been undone - we must remember to skip these commands. This also violates the Single Responsibility Principle (SRP) and Separation of Concerns (SoC) as `HistoryManager` now needs to do two different things.
+
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::registerpersons[]
 
-_{Explain here how the data encryption feature will be implemented}_
+=== Register/Deregister Features
 
-// end::dataencryption[]
+==== Current Implementation
+
+Each `EpicEvent` class maintains a `UniqueAttendanceList`, which contains references to the `Persons`
+registered for that event. The association between `EpicEvent` and `Person` is unidirectional i.e.
+a `Person` does not maintain references to the `EpicEvents` he/she has registered for.
+
+When a `register` command is called, we first find the `PersonToRegister` using the index provided,
+and the `EventToRegisterFor` using the name provided. Then, we call `registerPersonForEvent()` through
+the `ModelManager`, which eventually calls the `registerPerson()` method of the `EpicEvent`.
+
+This method not only adds the reference of the `Person` to the `EpicEvent`, but also increments a counter inside
+the `Person`. This counter is used to check whether a `Person` is still registered for some event
+when the user attempts to delete that `Person`.
+
+The entire process is illustrated using the sequence diagram (<<#registerseq>>) below.
+
+[#registerseq]
+.Sequence Diagram for the `register` command
+image::RegisterPersonCommandSequenceDiagram.png[width="650"]
+
+==== Design Considerations
+
+===== Aspect: Association Links between EpicEvent and Person
+
+* **Alternative 1 (current choice):** Make the EpicEvent-Person association unidirectional
+** Pros: Implementation of the association is easier.
+** Cons: Some features might need the backward association link in future.
+* **Alternative 2:** Make the EpicEvent-Person association bidirectional
+** Pros: Features needing the backward association link can be more easily implemented - there is no
+need to implement the link later.
+** Cons: Implementation of the association is much more complicated. Violates the `You Aren't Gonna Need It (YAGNI)` principle.
+
+==== Aspect: Deletion of Persons still Registered for an Event
+
+* **Alternative 1 (current choice):** Disallow deletion of persons still registered for an event
+** Pros: This ensures that all persons' details will be safeguarded until they are no longer required.
+** Cons: Implementation is more complicated.
+* **Alternative 2:** Allow deletion of persons still registered for an event
+** Pros: The user will not have to deregister persons/delete events before a person can be deleted.
+Implementation is easier.
+** Cons: The user might absentmindedly delete a person when his/her details are still required
+(by an upcoming event he/she is registered for).
+
+=== List Registered Persons Feature
+
+==== Current Implementation
+
+To list the persons registered for an event, we create a `Predicate` that tests whether a `Person`
+is in an `EpicEvent`, then pass it to `updateFilteredPersonList()`. `Predicate` is a new feature in Java 8
+that supports the filtering of lists in a functional style. Incoming developers can learn how to use
+this feature at https://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[the official Java site].
+
+// end::registerpersons[]
+
+// tag::markattendance[]
+
+=== Toggle Attendance Feature
+
+==== Current Implementation
+
+The implementation uses a class called `Attendance`. An instance of `Attendance` is created
+every time a `EpicEvent` registers to an `EpicEvent` and the instance stores references to the corresponding
+`Person` and `Person`. It also stores a `BooleanProperty` called `hasAttendedEventProperty`
+that represents whether the `Person` has attended the `EpicEvent`.
+The `Attendance` object is then added to the `UniqueAttendanceList` inside the `EpicEvent`.
+This structure reduces coupling between the `Person` and `EpicEvent` class and allows the
+`EpicEvent` to have access to all its registrants so that adding, removing and listing registrants are
+easy to implement.
+
+When the `toggle` command is called, the command is passed to the `EventPlannerParser` object, which reads and parses the input to return a `ToggleAttendanceCommand` object.
+The command then uses the index provided to find and save a reference to the `Attendance` object
+to be toggled. This is done so that the command can be undone by toggling the same
+`Attendance` object. <<#TCD>> below shows how the `toggle` command is processed
+in the Logic component.
+
+[#TCD]
+.Sequence Diagram for toggle command
+image::ToggleAttendanceCommandSequenceDiagram.png[width="800"]
+
+When the `ToggleAttendanceCommand` is executed, it obtains the relevant `Person` and
+`EpicEvent` objects from the stored `Attendance` object and triggers `toggleAttendance` from
+the `Model`. After which, the relevant `Attendance` object is replaced with a copy
+where the `hasAttendedEventProperty` is toggled.
+
+==== Design Considerations
+
+===== Aspect: Location of `Attendance` Objects
+
+* **Alternative 1 (current choice):** Store in `EpicEvent` object
+** Pros: There is less coupling between the `Person` and `EpicEvent` classes.
+Instances of `EpicEvent` are also able to keep track of changes in the attendance list more easily,
+making it easier for the UI  to reflect these changes when required.
+** Cons: It is more difficult for `EventPlanner` to track which `EpicEvents` a
+`Person` is registered for. In this case, deleting a `Person` requires
+checking through all the `EpicEvents` to determine whether the `Person` is still
+registered for any `EpicEvents` and this might be slow if there is a large number `EpicEvents` in
+the `EventPlanner`
+* **Alternative 2:** Store in `EventPlanner` object
+** Pros: The `EventPlanner` can easily track which `EpicEvent` a `Person` is registered for, making
+the implementation of some person-related commands, such as `delete`, easier.
+** Cons: In order to find out which `Persons` are registered to an `EpicEvent`,
+an instance of `EpicEvent` would have to search through the entire list of `Attendance`
+objects in `EventPlanner`. This can be very slow if the number of `Attendance` objects is very large.
+
+==== Aspect: Mutability of `Attendance` Objects
+
+* **Alternative 1 (current choice):** Make `Attendance` objects immutable
+** Pros: Changes to the `Attendance` objects in the attendance list are more easily
+tracked, which makes updating of the UI more striaghtforward.
+This is because changes need to be made by replacing the object
+with a new copy that contains the updated properties, and this replacement can be tracked using listeners.
+** Cons: Implementation of the `toggle` command is more difficult as the entire object has to be replaced whenever
+a change needs to be made. For example, toggling the attendance would have to be done
+by replacing the entire object with a new copy which only has its `hasAttendedEventProperty` changed.
+* **Alternative 2:** Make `Attendance` objects mutable
+** Pros: Implementation of the `toggle` command is easier as the `hasAttendedEventProperty`
+of the `Attendance` object can be directly accessed and modified.
+** Cons: Changes to the `Attendance` objects in the attendance list are harder to track
+as mutating the object cannot be tracked using a listener. In this case, specialised events
+would have to be used to trigger changes in the UI.
+
+==== Aspect: Method of Marking Attendance
+
+* **Alternative 1 (current choice):** Have one command to toggle attendance from attended to not attended and vice versa
+** Pros: Undoing the `toggle` command is easier as toggling is always valid. In constrast, marking a registrant
+as attended may not always be valid since that registrant may have already been marked as attended so
+the undo command has to account for that.
+** Cons: Users may find it less intuitive to toggle the attendance of a registrant
+compared to directly marking a registrant as attended or not attended.
+* **Alternative 2:** Have two separate commands: one for marking registrants as attended and one for marking
+them as not attended
+** Pros: Users may find it more intuitive compared to toggling the attendance of a registrant.
+** Cons: Undoing the command is more difficult as the undo commmand has to account for the case where
+a user tries to mark a registrant as attended when he/she has already been marked as attended.
+// end::markattendance[]
+
+// tag::findregistrant[]
+=== Find Registrant Feature
+
+The `find-registrant` command enables users to filter registrants of an event with keywords. Only registrants
+whose names contain any of the given keywords will be listed. The user can further toggle the attendance of the
+registrants with the `toggle` command.
+
+<<#SDSEC>> below shows how the `find-registrant` command is processed in the Logic component.
+
+[#SDSEC]
+.Sequence Diagram for `find-registrant` command
+image::FindRegistrantSequenceDiagram.png[width="650"]
+
+==== Current Implementation
+
+The `find-registrant` command is passed to the `EventPlannerParser` object which then reads the parses the input and
+returns a `FindRegistrantCommand` object. When the `FindRegistrantCommand` object is executed, the Model filters the
+list of registrants and the Attendance Paneis updated.
+
+==== Design Considerations
+
+===== Aspect: Keyword Matching Pattern
+
+* **Alternative 1 (current choice)**: Match any of the keywords
+** Pros: The user can find multiple registrants using multiple keywords.
+** Cons: The user will not be able to search by full name as other registrants might be matched as well.
+* **Alternative 2**: Match all keywords
+** Pros: The user can search by full name.
+** Cons: Matching all keywords might be too restrictive and would not be a useful filter to narrow down registrants.
+* **Alternative 3**: Fuzzy Search
+** Pros: The user can filter registrants with approximate keywords.
+** Cons: It is harder to implement fuzzy search.
+// end::findregistrant[]
+
+
+// tag::threepaneui[]
+=== Three-Pane UI
+
+The new UI is a three-pane UI consisting of a list of persons, events, and registrants for the selected event. Being able to
+ view all three panes will allow the user to read off the desired command parameters without having to switch between
+  lists.
+
+In addition, `edit` and `edit-event` commands are now implemented in a mutable manner
+ (see <<edit-curr-implementation>>). As a result, the `ObservableList` that wraps the people and event data will no
+ longer be notified of changes. The new UI must be notified of changes to data so it can refresh itself to reflect
+ such changes. The UI will also have to respond to new commands such as the `select-event` and `toggle`.
+ The `select-event` could invoke a change in the contents of the Attendance Pane and `toggle` will toggle the
+ attendance status and is reflected in the UI in the form of the attendance icon change.
+
+==== Current Implementation
+
+The UI now consists of 3 list panes: `PersonListPanel`, `EpicEventListPanel` and `AttendanceListPanel`. Each pane is a list of `PersonCard`, `EpicEventCard` and `AttendanceCard` respectively. Since the `AttendanceCard` has the same UI as `PersonCard` with the addition of the toggle icon, it extends `PersonCard`. The `model` maintains a `selectedEpicEvent` variable whose registrants will be displayed in the `AttendancePanel`.
+
+In order to get the `AttendanceListPanel` to instantly update its elements, we employ the JavaFX Bean Pattern. We listen to changes to object properties by using the JavaBeans API to represent the properties.
+
+The `Person` class is implemented this way:
+
+[source,java]
+----
+public class Person extends SimpleObjectProperty {
+
+    // ... Person logic ...
+
+    /**
+     * Edits this person by transferring the fields of dummyPerson over.
+     * Used for the mutable edit command
+     */
+    public void setPerson(Person dummyPerson) {
+        // ... setPerson logic ...
+        fireValueChangedEvent();
+    }
+}
+----
+
+This way, editing `Person` calls `fireValueChangedEvent()` which informs JavaFX of the content change and triggers an UI refresh.
+
+To listen to changes in attendance. We enable the `AttendanceList` to report changes on the element by providing a properties extractor. First, we use the JavaBeans API to represent properties of `Attendance` that we want to listen to, which is the `hasAttendedEventProperty`, a `BooleanProperty` object.
+
+We use an Extractor which is a Callback containing an array of `Observables` which are then observed by the `ObservableList`.
+
+[source,java]
+----
+Callback<Attendance, javafx.beans.Observable[]> extractor = attendance -> new javafx.beans.Observable[] {
+                attendance.getPerson(), attendance.getHasAttendedEventProperty()};
+----
+
+By using the JavaBeans API to handle UI updates, the programmer does not have to care about manually refreshing the UI upon data updates.
+
+//.Sequence Diagram for Panel initialisation
+//image::CreatePersonListPanelSequenceDiagram.png[width="650"]
+
+==== Design Considerations
+
+When deciding on the UI, the following aspects of user experience were considered:
+
+===== Aspect: Overall UI Design
+
+- *Alternative 1 (current choice)*: A three-pane UI consisting of list of persons, events, and registrants for the selected event
+    * Pros: The user can view all 3 lists at the same time. He would know what arguments to supply when typing commands as he can read them off the list.
+    * Cons: The UI might become too cluttered as there are too many UI elements. However, given that EPIC is meant for modern computers with large displays, this should not be an issue.
+- *Alternative 2 (previous choice)*: two-pane UI where the left pane is a two tab pane consisting of a list of persons and events, and the right pane is a list of registrants
+    * Pros: Merging the horizontal space for the list of persons and events will create more space for the list of registrants. The user is likely to be more interested in the registrants' details.
+    * Cons: If the user needs to access data for some tabbed pane that is not in focus to fill out a command, he would have to delete his current command, and execute a command to set focus to the desired tab. He must then memorize the required details and reenter his previous command. This would break his workflow and be a great inconvenience.
+- *Alternative 3*: A common list that can display either list of persons, events or registrants for the selected event
+    * Pros: We only have to make minimal changes to the UI layout.
+    * Cons: Events, persons, and registrants must be displayed using the same `Card` class. This would result in tight coupling of the display graphics logic  for the three lists.
+
+===== Aspect: Updating UI when Data Changes
+
+Previously, changes to `Person` would create a new `Person` object that would replace the previous object, triggering a UI refresh. Now that such changes to `Peron`, `EpicEvent` and `Attendance` objects only mutate it, the `ListView` is unable to listen to such changes.
+
+- **Alternative 1 (current choice)**: Use the JavaFX Beans Convention
+    * Pros: Using the JavaBeans API to represent a property of an object allows property changes to be propagated to property change listeners. This is an elegant way to get the `ListView` to instantly update its elements.
+    * Cons: Using the JavaBeans API to represent object properties introduces coupling between the Model and UI components.
+- Alternative 2: Force all commands that change data to invoke a UI refresh
+    * Pros: It is straightforward to force a `ListView` UI refresh by invoking its `refresh()` method.
+    * Cons: We will have to ensure that any action that could modify data forces a UI refresh. In addition, constantly invoking a UI refresh could become a resource hog.
+
+==== Binding Data to Attendance Pane
+
+- **Alternative 1 (current choice)**: Bind `ObservableEpicEvent` to the Attendance Pane
+    * Pros: As `ObservableEpicEvent` extends `Observable`, it can listen to when the selected event changes and update the Attendance Pane accordingly.
+    * Cons: More code has to be written and maintained as we are introducing an additional layer of abstraction.
+- Alternative 2: Bind `ObservableList<Attendance>` to the Attendance Pane
+    * Pros: Binding data to the Attendance Pane is straightforward and the approach used to bind data to the People and Events Panels can be used here too.
+    * Cons: Logic to handle the switching of selected events is moved up to the `MainWindow`, increasing coupling between the `MainWindow` and `AttendanceListPanel`. It is a violation of Single Responsibility Principle as the `MainWindow` should only be concerned with displaying the main layout.
+// end::threepaneui[]
 
 === Logging
 
@@ -380,10 +855,71 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `INFO` : Information showing the noteworthy actions by the App
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-[[Implementation-Configuration]]
-=== Configuration
-
+[TIP]
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::massregistration[]
+
+=== [Proposed] Mass Registration
+
+==== Proposed Implementation
+
+This feature is proposed to allow mass registration of multiple persons, with
+the same tag, to a single event. For example, a user can register all persons tagged with
+`computing` for a computing-related seminar.
+
+The proposed implementation is to make use of tags to select a group persons to register for an event.
+Currently, the `Tag` class has been split into `PersonTag` and `EpicEventTag` so as to
+differentiate between the two. This allows searching for persons by `PersonTag` and searching for events by `EpicEventTag`.
+
+By doing so, a `register-by-tag` command can be implemented that takes in a `PersonTag` as an argument.
+The persons can be filtered by `PersonTag` and the list of filtered persons can be registered
+to an `EpicEvent` without requiring the user to register each person individually.
+
+// end::massregistration[]
+
+// tag::exporteventdevguide[]
+
+=== [Proposed] Export an Event
+
+The proposed export command exports their contact information and their attendance information of a particular
+event to a csv file into a file path specified by the user. Having all the information of a
+particular event in a csv file would enable the user to analyse the data using other tools.
+
+==== [Proposed] Implementation
+
+The `export-event` command input is first parsed in `EventPlannerParser` to create an `ExportEventCommand`.
+The execution of it creates a `CsvEventPlannerStorage`. The subsequent export mechanism is handled by a `CsvEventPlannerStorage` where event data is parsed by `CsvUtil` and then exported as a file through `CsvFileStorage` using the file path specified by the user.
+
+<<#SDCSV>> below shows how the csv event export is processed in the storage component.
+
+[#SDCSV]
+.Sequence Diagram for csv export
+image::ExportEventSequenceDiagram.png[width="650"]
+
+==== Design Considerations
+
+When deciding on the export options, the following aspects of the user experience are considered.
+
+===== Aspect: Data to be Exported
+
+- *Alternative 1 (current choice)*: Name of the registrants, their phone number, their email address, their home address and their attendance information for the event
+    * Pros: The information includes almost all the data users need for an event. The parsing of the data is straight forward.
+    * Cons: The tags of the registrants are not exported.
+- *Alternative 2*: All information for registrants including their tags
+    * Pros: More information for users as compared to current implementation.
+    * Cons: The registrants may have zero or multiple tags. The uncertainty in the number of tags makes parsing messy.
+
+==== Aspect: Format of Exported Files
+
+- *Alternative 1 (current choice)*: csv files
+    * Pros: The format can be imported and then processed by most data processing applications in the market.
+    * Cons: The files are not reader friendly if they are opened directly as a text file.
+- *Alternative 2*: excel files
+    * Pros: Excel files are well-formatted when opened with Microsoft Excel.
+    * Cons: Even though Microsoft Excel is used by many people, some may prefer other data processing applications that support csv files but not excel files.
+
+// end::exporteventdevguide[]
 
 == Documentation
 
@@ -401,7 +937,7 @@ Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows y
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -443,7 +979,7 @@ Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI t
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
-=== Types of tests
+=== Types of Tests
 
 We have two types of tests:
 
@@ -493,302 +1029,40 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, EPIC depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
-
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
 [appendix]
 == Product Scope
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* has to plan school events with a large attendance size
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: streamline attendance taking and registration of event registrants, far superior to traditional pen and paper registration
+
+*Feature Contribution*:
+
+* Raynold Ng:
+** Minor: Add commands for searching list of registrants and displaying all registrants. This allows the user to filter list of registrants from a list of keywords.
+** Major: Implemented a three pane view (persons, events, and event registrant). The user should be able to view persons, events and registrants of an event at the same time. That would also allow the user to execute event administration commands as he can view both events and contacts at the same time.
+
+* Wei Liang:
+** Minor: Add EpicEvent class to keep track of events and a command to add an event. This facilitates the implementation of the other commands to manipulate events.
+** Major: Add Attendance class and a command to toggle attendance for each event registrant. This facilitates the attendance portion of the event planner.
+
+* Jiang Yue:
+** Minor: Persistent storage. The user should be able to have their data retained after the app is closed so that they can continue their edits when they open the app next time.
+** Major: Adding commands to modify EpicEvents in the eventlist. The commands implemented include `delete-event`, `find-event` and `edit-event`. The commands allow user to locate an event with `find-event` and then to modify the located event by deleting the event or editing the information of the event with `delete-event` and `edit-event` respectively.
+
+* Wei Heng:
+** Minor: Adding commands for Person-EpicEvents interactions, which includes adding new fields/methods to the EpicEvent class. The commands implemented include `register`, `deregister` and `list-registered`. The commands allow user to register/deregister a person to/from an event, as well as list an event's register in the UI.
+** Major: Revamp of undo/redo feature. Currently, the entire EventPlanner is saved every time an UndoableCommand is executed, which is a huge drain on memory and violates important non-functional requirements relating to capacity of EventPlanner. Each UndoableCommand will have an UndoableCommand oppositeCommand, which it will execute to reverse the changes made by the original command. This will also allow edit's behavior to be mutable, so we may modify an event/person directly without passing a new copy to every single person/event that is in it/it is in.
 
 [appendix]
 == User Stories
@@ -800,33 +1074,97 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *`|new user |see an onboarding guide |familiarize myself with the application
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |event planner |add a new registrant |
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |event planner |delete a registrant |remove a registrant that has withdrawn from the event
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |event planner |list all registrants for the event |
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |event planner |edit a registrant’s details |update a registrant’s details upon request
+
+|`* * *` |event planner |mark attendance for a registrant |know who attended the event
+
+|`* * *` |event planner |find a registrant by name |locate a registrant without going through the entire list of registrants
+
+|`* * *` |event planner |have all registrant’s data in persistent storage |close the program without losing my data
+
+|`* *` |event planner |set privacy settings |meet PDPA guideline
+
+|`* *` |event planner |create multiple events|
+
+|`* *` |event planner |add the same user to multiple events |use the same, stored information across multiple events
+
+|`* *` |event planner managing large events |import registrant contact information from csv |quickly add registrants without manual typing
+
+|`* *` |event planner managing large events |export registrant contact information as csv |use the data for other applications (e.g. presentation, data analysis)
+
+|`* *` |event planner managing many registrants |find a registrant by his/her initials |find persons quickly
+
+|`* *` |event planner |manage registrants based on tags |mass register/delete registrants belonging to a certain group
+
+|`*` |registrant |mark my attendance by scanning a QR code |make the process of marking attendance quicker
+
+|`*` |registrant |mark my attendance by scanning a card with an RFID chip |make the process of marking attendance quicker
+
+|`*` |event planner |fuzzy search contacts |find the relevant contact even if I do not know his/her complete name
+
+|`*` |registrant |mark my attendance by scanning an NFC tag |make the process of marking attendance quicker
+
+|`*` |registrant |see where I should be seated at the venue when I mark my attendance |find my seating location quicker
+
+|`*` |event planner |synchronize application data across multiple devices |collaboratively edit registrant information
+
+|`*` |registrant |add feedback for the event |
+
+|`*` |event planner |send out a mass email to all registrants |send out information such as event details and QR codes quickly
+
+|`*` |event planner |make my edits synchronized in real time across all devices |parallelize the registration and attendance taking process
+
+|`*` |event planner |automatically email a reminder to all registrants near the event date |ensure registrants do not accidentally forget about the event
+
+|`*` |event planner |type commands in natural language |do without memorising the syntax for every command
+
+|`*` |tech-savvy event planner |set hotkeys for commands |shorten frequently used commands
+
+|`*` |event planner |export event details (attendance rate, feedback etc) in a presentable format |do an after action review of the event
+
+|`*` |event planner |conduct a lucky draw for event registrants |
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `EventPlanner` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use Case: Find Person by Name
+
+*MSS*
+
+1.  User requests to find persons with a particular name
+2.  EventPlanner shows a list of persons with entered name
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
+** 2a1. EventPlanner alerts the user that there is no such person with name
++
+Use case ends.
+
+[discrete]
+=== Use Case: Delete Person
 
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  EventPlanner shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  EventPlanner deletes the person
 +
 Use case ends.
 
@@ -840,46 +1178,139 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. EventPlanner shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use Case: Edit Person
+
+*MSS*
+
+1. User requests to list persons
+2. EventPlanner shows a list of persons
+3. User requests to edit a specific person in the list
+4. EventPlanner edits the person’s details
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. EventPlanner shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The edit string following the command is invalid.
++
+[none]
+** 3b1. EventPlanner shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use Case: Mark Event Attendee's Attendance
+
+*MSS*
+
+1. User requests to find persons by name
+2. EventPlanner shows a list of persons
+3. User requests to mark the attendance of that person
+4. EventPlanner marks the attendance of that person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. No persons are found.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. EventPlanner shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 50000 persons.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should come with automated unit tests and open source code.
+.  Should work on both 32-bit and 64-bit environments.
+.  Should respond to any command within one second
+.  Should be able to be used by programmers and non-programmers alike
+.  Should not result in a large binary (more than 5mb)
+.  Packaging should take care of dependencies
 
 [appendix]
 == Glossary
 
+[[cli]] Command Line Interface (CLI) :: Means of interacting with a computer program where the user issues commands to the program in the form of typed text
+
+[[csv]] Comma Separated Values (CSV) :: A file that stores tabular data in plain text
+
+[[fuzzy-search]] Fuzzy Search :: process that locates terms that are likely to be relevant to a search argument even when the argument does not exactly correspond to the desired information
+
+[[hotkeys]] Hotkeys :: A combination of keys that what pressed together, executes a command
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[natural-language]] Natural Language :: any language that has evolved naturally in humans through use and repetition without conscious planning or premeditation
+
+[[nfc]] NFC (Near-Field Communication) :: Radio communication technology standard to send data over short distances
+
+[[pdpa]] PDPA (Personal Data Protection Act) ::
+A Singapore law that governs collection, use and disclosure of personal data by all private organisations
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
+[[qr-code]] Quick Response (QR) code:: A machine-readable matrix (or two-dimensional barcode) that contains information about the item to which it is attached
+
+[[rfid]] Radio-frequency identification (RFID) :: A technology to record the presence of an object using radio signals
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Guestday*
 
-Author: ...
+Author: Tinkertanker Pte Ltd
+
+Website: https://guestday.com
 
 Pros:
 
-* ...
-* ...
+* Fast Contextual Search
+** Search for guests by name, table, department, or any other parameter of your choosing.
+* Quick, easy check-in
+** Effortlessly check the guest in with a simple swipe. Guests can also find out where they’re seated and whom they’re seated with. Display custom data to aid your receptionists, such as information on VIP registrants.
+* Even faster: QR scanning
+** Send out QR codes on physical invitation cards or by email, and guests can simply wave their codes at the iPad camera to check in.
+* Synchronization across multiple devices
+** Multiple devices can be setup to parallelize the registration process and increase the efficiency of the reception
+* Elegant and easy to use interface
+
 
 Cons:
 
-* ...
-* ...
+* Requires specific hardware (iPads loaned out by the company).
+* Expensive, and not reusable (payment for each event).
+* Proprietary software, not open source.
+* registrant contact information cannot be reused across multiple events - has to be re-entered.
+* Editing guest list has to go through the company and hence is slow and a large hassle.
 
 [appendix]
 == Instructions for Manual Testing
@@ -905,7 +1336,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a Person
 
 . Deleting a person while all persons are listed
 
@@ -919,10 +1350,11 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
-=== Saving data
+=== Saving Data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+

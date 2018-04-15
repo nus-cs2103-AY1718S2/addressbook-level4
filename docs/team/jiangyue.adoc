@@ -1,0 +1,67 @@
+= Jiang Yue - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:xrefstyle: short
+:experimental:
+
+== Overview
+This Project Portfolio details my contributions to project EPIC, showing that I am capable of producing functional code,
+and working in a team on a large project.
+
+---
+
+== PROJECT: EPIC
+
+Event Planning isn’t Complicated (EPIC) is a desktop application used for *event planning
+and registration for large organisations*. EPIC handles event attendance management with
+simplicity and efficiency. By storing all of the contacts in a common database, the same person
+can be registered for multiple events without having to re-enter his or her details for each event.
+EPIC is optimized for event planners who prefer typing to using the mouse.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *commands to modify EpicEvents in the event list*.
+** What it does: The commands allow the user to locate an event with `find-event` command and then to modify the event by deleting it or editing its information with `delete-event` and `edit-event` respectively.
+** Justification: These commands are essential to our product because EPIC targets at event planners who manage many events. Hence, event planners should be able to find the event they want to modify from multiple events easily and perform operations on it.
+** Highlights: This enhancement provides several basic functions for EPIC so that further enhancements that interact with events in EPIC can build on it.
+
+* *Minor enhancement*: Maintained the persistent storage of EPIC so that data is retained after EPIC is closed and users can continue their edits when they open the app next time.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B2/main/blob/master/collated/functional/jiangyue12392.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B2/main/blob/master/collated/test/jiangyue12392.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Wrote additional tests for existing features to increase coverage from 88% to 90% (Pull requests https://github.com/CS2103JAN2018-W13-B2/main/pull/138[#138])
+** Documentation:
+*** Updated Storage class diagram in the User Guide: https://github.com/CS2103JAN2018-W13-B2/main/pull/116[#116]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B2/main/pull/15[#15], https://github.com/CS2103JAN2018-W13-B2/main/pull/17[#17]
+*** Reported bugs and suggestions for other teams in the class (https://github.com/CS2103JAN2018-W14-B2/main/issues/185[#185], https://github.com/CS2103JAN2018-W14-B2/main/issues/186[#186], https://github.com/CS2103JAN2018-W14-B2/main/issues/189[#189], https://github.com/CS2103JAN2018-W14-B2/main/issues/191[#191])
+
+<<<
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=editevent]
+
+include::../UserGuide.adoc[tag=findevent]
+
+include::../UserGuide.adoc[tag=deleteevent]
+
+<<<
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=storagedevguide]
+
+include::../DeveloperGuide.adoc[tag=findeventdevguide]
+
+include::../DeveloperGuide.adoc[tag=exporteventdevguide]

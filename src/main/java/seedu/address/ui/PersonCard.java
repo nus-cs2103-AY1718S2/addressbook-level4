@@ -12,14 +12,14 @@ import seedu.address.model.person.Person;
  */
 public class PersonCard extends UiPart<Region> {
 
-    private static final String FXML = "PersonListCard.fxml";
+    protected static final String FXML = "PersonListCard.fxml";
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
      * or an exception will be thrown by JavaFX during runtime.
      *
-     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on AddressBook level 4</a>
+     * @see <a href="https://github.com/se-edu/addressbook-level4/issues/336">The issue on EventPlanner level 4</a>
      */
 
     public final Person person;
@@ -42,13 +42,26 @@ public class PersonCard extends UiPart<Region> {
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
+        initializeCardDetails(person, displayedIndex);
+    }
+
+    // @@author raynoldng
+    public PersonCard(Person person, int displayedIndex, String fxml) {
+        super(fxml);
+        this.person = person;
+        initializeCardDetails(person, displayedIndex);
+    }
+
+    /** initilialize card labels **/
+    private void initializeCardDetails(Person person, int displayedIndex) {
         id.setText(displayedIndex + ". ");
-        name.setText(person.getName().fullName);
+        name.setText(person.getFullName().name);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
     }
+    // @@author
 
     @Override
     public boolean equals(Object other) {

@@ -10,8 +10,19 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.model.EventPlannerChangedEvent;
+import seedu.address.commons.events.ui.ClearEventListSelectionEvent;
+import seedu.address.commons.events.ui.JumpToEventListRequestEvent;
+import seedu.address.model.attendance.Attendance;
+import seedu.address.model.attendance.exceptions.DuplicateAttendanceException;
+import seedu.address.model.event.EpicEvent;
+import seedu.address.model.event.ObservableEpicEvent;
+import seedu.address.model.event.exceptions.DuplicateEventException;
+import seedu.address.model.event.exceptions.EventNotFoundException;
+import seedu.address.model.event.exceptions.PersonNotFoundInEventException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -23,69 +34,139 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
-    private final AddressBook addressBook;
+    private final EventPlanner eventPlanner;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<EpicEvent> filteredEvents;
+    private final ObservableEpicEvent selectedEpicEvent;
 
     /**
-     * Initializes a ModelManager with the given addressBook and userPrefs.
+     * Initializes a ModelManager with the given eventPlanner and userPrefs.
      */
-    public ModelManager(ReadOnlyAddressBook addressBook, UserPrefs userPrefs) {
+    public ModelManager(ReadOnlyEventPlanner eventPlanner, UserPrefs userPrefs) {
         super();
-        requireAllNonNull(addressBook, userPrefs);
+        requireAllNonNull(eventPlanner, userPrefs);
 
-        logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
+        logger.fine("Initializing with event planner: " + eventPlanner + " and user prefs " + userPrefs);
 
-        this.addressBook = new AddressBook(addressBook);
-        filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        this.eventPlanner = new EventPlanner(eventPlanner);
+        filteredPersons = new FilteredList<>(this.eventPlanner.getPersonList());
+        filteredEvents = new FilteredList<>(this.eventPlanner.getEventList());
+        if (filteredEvents.size() > 0) {
+            selectedEpicEvent = new ObservableEpicEvent(filteredEvents.get(0));
+        } else {
+            selectedEpicEvent = new ObservableEpicEvent(EpicEvent.getDummyEpicEvent());
+        }
+        selectedEpicEvent.getFilteredAttendees().setPredicate(PREDICATE_SHOW_ALL_ATTENDEES);
     }
 
     public ModelManager() {
-        this(new AddressBook(), new UserPrefs());
+        this(new EventPlanner(), new UserPrefs());
     }
 
     @Override
-    public void resetData(ReadOnlyAddressBook newData) {
-        addressBook.resetData(newData);
-        indicateAddressBookChanged();
+    public void resetData(ReadOnlyEventPlanner newData) {
+        eventPlanner.resetData(newData);
+        indicateEventPlannerChanged();
     }
 
     @Override
-    public ReadOnlyAddressBook getAddressBook() {
-        return addressBook;
+    public ReadOnlyEventPlanner getEventPlanner() {
+        return eventPlanner;
     }
 
     /** Raises an event to indicate the model has changed */
-    private void indicateAddressBookChanged() {
-        raise(new AddressBookChangedEvent(addressBook));
+    private void indicateEventPlannerChanged() {
+        raise(new EventPlannerChangedEvent(eventPlanner));
     }
 
     @Override
-    public synchronized void deletePerson(Person target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
+    public synchronized void deletePerson(Person targetPerson) throws PersonNotFoundException {
+        eventPlanner.removePerson(targetPerson);
+        indicateEventPlannerChanged();
     }
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
+        eventPlanner.addPerson(person);
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
+        indicateEventPlannerChanged();
     }
 
     @Override
-    public void updatePerson(Person target, Person editedPerson)
+    public void updatePerson(Person targetPerson, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException {
-        requireAllNonNull(target, editedPerson);
+        requireAllNonNull(targetPerson, editedPerson);
 
-        addressBook.updatePerson(target, editedPerson);
-        indicateAddressBookChanged();
+        eventPlanner.updatePerson(targetPerson, editedPerson);
+        indicateEventPlannerChanged();
     }
+
+    //@@author william6364
+
+    //=========== Event Level Operations =====================================================================
+
+    @Override
+    public synchronized void addEvent(EpicEvent event) throws DuplicateEventException {
+        eventPlanner.addEvent(event);
+        updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        indicateEventPlannerChanged();
+    }
+
+    //@@author jiangyue12392
+    @Override
+    public synchronized void deleteEvent(EpicEvent targetEvent) throws EventNotFoundException {
+        eventPlanner.removeEvent(targetEvent);
+        indicateEventPlannerChanged();
+    }
+
+    //@@author bayweiheng
+    @Override
+    public void updateEvent(EpicEvent targetEvent, EpicEvent editedEvent)
+            throws DuplicateEventException, EventNotFoundException {
+        requireAllNonNull(targetEvent, editedEvent);
+
+        eventPlanner.updateEvent(targetEvent, editedEvent);
+        indicateEventPlannerChanged();
+    }
+
+    //=========== Event-Person Interactions ==================================================================
+
+    @Override
+    public void registerPersonForEvent(Person person, EpicEvent event)
+            throws EventNotFoundException, DuplicateAttendanceException {
+        requireAllNonNull(person, event);
+
+        eventPlanner.registerPersonForEvent(person, event);
+        indicateEventPlannerChanged();
+    }
+
+    @Override
+    public void deregisterPersonFromEvent(Person person, EpicEvent event)
+            throws EventNotFoundException, PersonNotFoundInEventException {
+        requireAllNonNull(person, event);
+
+        eventPlanner.deregisterPersonFromEvent(person, event);
+        indicateEventPlannerChanged();
+    }
+
+    //@@author william6364
+
+    @Override
+    public void toggleAttendance(Person person, EpicEvent event)
+        throws EventNotFoundException, PersonNotFoundInEventException {
+        requireAllNonNull(person, event);
+
+        eventPlanner.toggleAttendance(person, event);
+        indicateEventPlannerChanged();
+    }
+
+    //@@author
 
     //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
-     * {@code addressBook}
+     * {@code eventPlanner}
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
@@ -97,6 +178,76 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //@@author william6364
+    //=========== Filtered Event List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the filtered list of {@code EpicEvent} backed by the internal list of
+     * {@code eventPlanner}
+     */
+    @Override
+    public ObservableList<EpicEvent> getFilteredEventList() {
+        return FXCollections.unmodifiableObservableList(filteredEvents);
+    }
+
+    @Override
+    public void updateFilteredEventList(Predicate<EpicEvent> predicate) {
+        requireNonNull(predicate);
+        filteredEvents.setPredicate(predicate);
+    }
+
+    //@@author raynoldng
+    @Override
+    public void setSelectedEpicEvent(int index) {
+        selectedEpicEvent.setEpicEvent(filteredEvents.get(index));
+    }
+
+    @Override
+    public void setSelectedEpicEvent(EpicEvent epicEvent) {
+        selectedEpicEvent.setEpicEvent(epicEvent);
+    }
+
+    @Override
+    public void updateFilteredAttendanceList(Predicate<Attendance> predicate) {
+        requireNonNull(predicate);
+        selectedEpicEvent.getFilteredAttendees().setPredicate(predicate);
+    }
+
+    @Override
+    public void visuallySelectEpicEvent(EpicEvent toSelect) {
+        setSelectedEpicEvent(toSelect);
+        int eventIndexInFilteredList = getFilteredEventList().indexOf(toSelect);
+        if (eventIndexInFilteredList != -1) {
+            EventsCenter.getInstance().post(new JumpToEventListRequestEvent(
+                    Index.fromZeroBased(eventIndexInFilteredList)));
+        } else {
+            EventsCenter.getInstance().post(new ClearEventListSelectionEvent());
+        }
+    }
+
+    @Override
+    public void clearSelectedEpicEvent() {
+        visuallySelectEpicEvent(EpicEvent.getDummyEpicEvent());
+        EventsCenter.getInstance().post(new ClearEventListSelectionEvent());
+    }
+
+    @Override
+    public ObservableEpicEvent getSelectedEpicEvent() {
+        return selectedEpicEvent;
+    }
+
+    //@@author bayweiheng
+    /**
+     * Returns an unmodifiable view of the list of {@code EpicEvent} backed by the internal list of
+     * {@code eventPlanner}
+     */
+    @Override
+    public ObservableList<EpicEvent> getEventList() {
+        return FXCollections.unmodifiableObservableList(eventPlanner.getEventList());
+    }
+
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -112,8 +263,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         // state check
         ModelManager other = (ModelManager) obj;
-        return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+        return eventPlanner.equals(other.eventPlanner)
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredEvents.equals(other.filteredEvents);
     }
 
 }

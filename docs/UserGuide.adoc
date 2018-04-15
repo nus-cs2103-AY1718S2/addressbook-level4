@@ -778,6 +778,7 @@ image::logoutResult.png[width="790"]
 // end::sync[]
 
 // tag::dashboard[]
+// tag::dashboard1[]
 === Dashboard
 
 In Codeducator, you can *track the learning progress* of your students easily by utilising our Dashboard feature.
@@ -921,6 +922,8 @@ The `STUDENT_INDEX` and `MILESTONE_INDEX` provided must be valid. Otherwise, an 
 
 .Error message displayed when invalid `STUDENT_INDEX` "10" and `MILESTONE_INDEX` "10" are entered
 image::deleteMS3_screenshot.png[width="800"]
+
+// end::dashboard1[]
 
 ==== Adding a task to a milestone: `addTask`
 

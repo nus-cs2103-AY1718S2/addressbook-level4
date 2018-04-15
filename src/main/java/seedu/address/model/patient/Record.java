@@ -74,7 +74,6 @@ public class Record {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        //to nest following lines into try once the various classes are set up
         String date = argMultimap.getPreamble();
         String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
         String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();

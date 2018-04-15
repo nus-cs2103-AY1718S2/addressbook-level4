@@ -92,11 +92,11 @@ Before introducing the commands, a brief walkthrough of the user interface is sh
 [caption="Figure 2: "]
 image::ui_walkthrough.png[width="990"]
 
-<1>	Command box: the user types the command here
-<2>	Command result: the command result message will be displayed here after a command is entered
-<3>	Multipurpose panel: the patient's details and appointments will be displayed here
-<4>	Patient list panel: the list of patients in the database is displayed
-<5>	Visiting queue panel: the list of patients who are currently waiting for consultation is displayed
+.	Command box: the user types the command here
+.	Command result: the command result message will be displayed here after a command is entered
+.	Multipurpose panel: the patient's details and appointments will be displayed here
+.	Patient list panel: the list of patients in the database is displayed
+.	Visiting queue panel: the list of patients who are currently waiting for consultation is displayed
 
 *Command Format*
 

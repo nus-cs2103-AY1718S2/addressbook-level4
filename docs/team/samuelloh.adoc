@@ -29,14 +29,13 @@ However, it is relatively small. Moreover, some details like Next-Of-Kin contact
 
 ** Highlights: This feature was implemented partially using HTML and JavaScript and hence further changes to it will have to consider both the source code and the HTML/JavaScript files.
 
-
 * *Minor enhancement*: Added *a 'ProgrammingLanguage' field to the student model.*
 
 ** What it does: Allows the tutor to keep track of what programming language(s) are being used or taught to each student.
 
 **Justification: A tutor would want to keep track of what programming language a student is learning with or about, in order to better prepare lessons for that student.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/samuelloh.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/samuelloh.md[Test code]]] _{give links to collated code files}_
 
 * *Other contributions*:
 
@@ -72,5 +71,4 @@ include::../UserGuide.adoc[tag=profilePage]
 |===
 
 include::../DeveloperGuide.adoc[tag=programmingLanguage]
-
 include::../DeveloperGuide.adoc[tag=profilePage]

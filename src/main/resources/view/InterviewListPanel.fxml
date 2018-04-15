@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.VBox?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.text.Text?>
+<!--Referenced for <Text> https://github.com/kush1509/contactHeRo/blob/master/src/main/resources/view/PersonListPanel.fxml-->
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #fce4ec;" >
+    <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Interviews" textAlignment="CENTER" wrappingWidth="200.27490234375">
+        <VBox.margin>
+            <Insets bottom="5.0" top="5.0" />
+        </VBox.margin>
+    </Text>
+    <ListView fx:id="interviewListView" VBox.vgrow="ALWAYS" />
+</VBox>

@@ -10,10 +10,17 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.interview.Date;
+import seedu.address.model.interview.InterviewLocation;
+import seedu.address.model.interview.InterviewTitle;
+import seedu.address.model.job.JobTitle;
+import seedu.address.model.job.Location;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -46,7 +53,7 @@ public class ParserUtil {
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
-     *
+     * TODO: Change this after classes are created for each field.
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
     public static Name parseName(String name) throws IllegalValueException {
@@ -65,6 +72,103 @@ public class ParserUtil {
     public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String name} into a trimmed {@code String}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static String parseString(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Name.isValidName(trimmedString)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedString;
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseString(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseString(string.get())) : Optional.empty();
+    }
+
+    /**
+     * TODO: Fix the javadoc comment
+     * Parses a {@code String string} into a trimmed {@code JobTitle}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static JobTitle parseJobTitle(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!JobTitle.isValidTitle(trimmedString)) {
+            throw new IllegalValueException(JobTitle.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new JobTitle(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<JobTitle>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<JobTitle> parseJobTitle(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseJobTitle(string.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String string} into a trimmed {@code Location}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static Location parseLocation(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Location.isValidLocation(trimmedString)) {
+            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new Location(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<Location>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Location> parseLocation(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseLocation(string.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String string} into a trimmed {@code Skill}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static Skill parseSkill(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Skill.isValidSkill(trimmedString)) {
+            throw new IllegalValueException(Location.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new Skill(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<Skill>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Skill> parseSkill(Optional<String> string) throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseSkill(string.get())) : Optional.empty();
     }
 
     /**
@@ -100,7 +204,7 @@ public class ParserUtil {
     public static Address parseAddress(String address) throws IllegalValueException {
         requireNonNull(address);
         String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
+        if (!Address.isValidLocation(trimmedAddress)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
         return new Address(trimmedAddress);
@@ -164,5 +268,104 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author deeheenguyen
+    /**
+     * Parses a {@code String string} into a trimmed {@code Location}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code string} is invalid.
+     */
+    public static InterviewLocation parseInterviewLocation(String string) throws IllegalValueException {
+        requireNonNull(string);
+        String trimmedString = string.trim();
+        if (!Location.isValidLocation(trimmedString)) {
+            throw new IllegalValueException(InterviewLocation.MESSAGE_LOCATION_CONSTRAINTS);
+        }
+        return new InterviewLocation(trimmedString);
+    }
+
+    /**
+     * Parses a {@code Optional<String> string} into an {@code Optional<Location>} if {@code string} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InterviewLocation> parseInterviewLocation(Optional<String> string)
+            throws IllegalValueException {
+        requireNonNull(string);
+        return string.isPresent() ? Optional.of(parseInterviewLocation(string.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String link} into an {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static Link parseLink(String link) throws IllegalValueException {
+        requireNonNull(link);
+        String trimmedLink = link.trim();
+        if (!Link.isValidLink(trimmedLink)) {
+            throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
+        }
+        return new Link(link);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Link> parseLink(Optional<String> link) throws IllegalValueException {
+        requireNonNull(link);
+        return link.isPresent() ? Optional.of(parseLink(link.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String link} into an {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static InterviewTitle parseInterviewTitle(String interviewTitle) throws IllegalValueException {
+        requireNonNull(interviewTitle);
+        String trimmedInterviewTitle = interviewTitle.trim();
+        if (!Link.isValidLink(trimmedInterviewTitle)) {
+            throw new IllegalValueException(InterviewTitle.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new InterviewTitle(interviewTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<InterviewTitle> parseInterviewTitle(Optional<String> interviewTitle)
+                throws IllegalValueException {
+        requireNonNull(interviewTitle);
+        return interviewTitle.isPresent() ? Optional.of(parseInterviewTitle(interviewTitle.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String link} into an {@code Link}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code email} is invalid.
+     */
+    public static Date parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Date.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS);
+        }
+        return new Date(date);
+    }
+
+    /**
+     * Parses a {@code Optional<String> link} into an {@code Optional<Link>} if {@code link} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
     }
 }

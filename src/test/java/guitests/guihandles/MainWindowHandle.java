@@ -1,11 +1,18 @@
 package guitests.guihandles;
 
+import java.util.logging.Logger;
+
+import guitests.guihandles.exceptions.NodeNotFoundException;
 import javafx.stage.Stage;
+import seedu.address.MainApp;
+import seedu.address.commons.core.LogsCenter;
 
 /**
  * Provides a handle for {@code MainWindow}.
  */
 public class MainWindowHandle extends StageHandle {
+
+    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
     private final PersonListPanelHandle personListPanel;
     private final ResultDisplayHandle resultDisplay;
@@ -13,6 +20,7 @@ public class MainWindowHandle extends StageHandle {
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
     private final BrowserPanelHandle browserPanel;
+    private ReportPanelHandle reportPanel;
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -47,5 +55,27 @@ public class MainWindowHandle extends StageHandle {
 
     public BrowserPanelHandle getBrowserPanel() {
         return browserPanel;
+    }
+
+    /**
+     * Check if ReportPanel is currently open.
+     */
+    public boolean isReportPanelOpenning() {
+        try {
+            this.reportPanel = new ReportPanelHandle(getChildNode(ReportPanelHandle.REPORT_ID));
+            return true;
+        } catch (NodeNotFoundException e) {
+            return false;
+        }
+    }
+
+    public ReportPanelHandle getReportPanel() {
+        try {
+            this.reportPanel = new ReportPanelHandle(getChildNode(ReportPanelHandle.REPORT_ID));
+            return reportPanel;
+        } catch (NodeNotFoundException e) {
+            logger.warning("Report Panel is not openning.");
+            return null;
+        }
     }
 }

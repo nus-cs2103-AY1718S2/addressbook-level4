@@ -1,6 +1,7 @@
 package seedu.address;
 
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -99,6 +100,9 @@ public class MainApp extends Application {
             initialData = new AddressBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            initialData = new AddressBook();
+        } catch (ParseException e) {
+            logger.warning("Problem while parsing from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
         }
 

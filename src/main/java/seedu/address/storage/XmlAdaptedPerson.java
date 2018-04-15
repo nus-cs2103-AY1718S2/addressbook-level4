@@ -11,9 +11,12 @@ import javax.xml.bind.annotation.XmlElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Link;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.skill.Skill;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,7 +34,12 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
-
+    @XmlElement(required = true)
+    private String remark;
+    @XmlElement(required = true)
+    private String link;
+    @XmlElement(required = true)
+    private String skill;
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 
@@ -44,11 +52,14 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address,
+                            String link, String skills, List<XmlAdaptedTag> tagged) {
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.link = link;
+        this.skill = skills;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,6 +75,9 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
+        link = source.getLink().value;
+        skill = source.getSkills().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
@@ -87,6 +101,7 @@ public class XmlAdaptedPerson {
         if (!Name.isValidName(this.name)) {
             throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
+
         final Name name = new Name(this.name);
 
         if (this.phone == null) {
@@ -108,13 +123,36 @@ public class XmlAdaptedPerson {
         if (this.address == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Address.class.getSimpleName()));
         }
-        if (!Address.isValidAddress(this.address)) {
+        if (!Address.isValidLocation(this.address)) {
             throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
         }
+
+        if (this.link == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Link.class.getSimpleName()));
+        }
+
+        if (!Link.isValidLink(this.link)) {
+            throw new IllegalValueException(Link.MESSAGE_LINK_CONSTRAINTS);
+        }
+
+        if (this.skill == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Skill.class.getSimpleName()));
+        }
+        if (!Skill.isValidSkill(this.skill)) {
+            throw new IllegalValueException(Skill.MESSAGE_SKILL_CONSTRAINTS);
+        }
+
+        final Skill skill = new Skill(this.skill);
+
         final Address address = new Address(this.address);
 
+        final Remark remark = new Remark(this.remark);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+
+        final Link link = new Link(this.link);
+
+        return new Person(name, phone, email, address, remark, link, skill, tags);
     }
 
     @Override

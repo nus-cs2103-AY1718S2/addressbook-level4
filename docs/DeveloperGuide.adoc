@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Infinity Book - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -9,14 +9,40 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
-endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+endif::[]
+:repoURL: https://github.com/CS2103JAN2018-W11-B3/main
+
+By: `Team JACKHA (W11-B3)`      Since: `Jun 2016`      Licence: `MIT`
+[[top]]
+
+== Introduction
+Infinity Book is an Infinity Book application for Tech recruiters who *prefer to use a desktop app to keep track candidates' information, job postings, and interview*.  +
+
+Infinity Book provides end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews. +
+
+More importantly, Infinity Book is *optimized for those who prefer to work with a Command Line Interface* (link:#cli[CLI]) while still having the benefits of a Graphical User Interface (link:#gui[GUI]). If you can type fast, Infinity Book can get your candidates management tasks done faster than traditional GUI apps. +
+
+link:#top[Back to top]
+
+== About
+
+This Developer Guide provides details on setting up this project for development, compatibility, and architecture information about Infinity Book. Design and implementation specifications are specified below, followed by product management specifics. +
+
+For information about application usage, refer to the link:https://github.com/CS2103JAN2018-W11-B3/main/blob/master/docs/UserGuide.adoc[User Guide]
+Interested? +
+Jump to the <<Setting up, Setting up>> section to get started. Enjoy!
+
+link:#top[Back to top]
 
 == Setting up
 
+This section provides step-by-step instructions to set up Infinity Book for development on your computer. +
+
+
 === Prerequisites
+
+To continue development, the following two prerequisites are recommended to be met:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -33,6 +59,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 
 === Setting up the project in your computer
+
+After meeting the <<Prerequisites, prerequisites>>, follow these steps to set up the project on your computer:
 
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
@@ -52,6 +80,8 @@ This will generate all resources required by the application and tests.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+Configuring the coding style, documentation and continuous integration (CI) is recommended to maintain uniformity across contributions.
 
 ==== Configuring the coding style
 
@@ -91,9 +121,13 @@ When you are ready to start coding,
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
-== Design
+<<top,Back to top>>
 
+== Design
 [[Design-Architecture]]
+
+The following sections describe the architecture of the system, with details about each component.
+
 === Architecture
 
 .Architecture Diagram
@@ -140,7 +174,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the Infinity Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -204,7 +238,7 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
+* stores the Infinity Book data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -219,12 +253,14 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Infinity Book data in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
+
+link:#top[Back to top]
 
 == Implementation
 
@@ -234,13 +270,13 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the Infinity Book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the Infinity Book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,21 +311,24 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th candidate in the Infinity Book. The current state of the Infinity Book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.UndoRedo stack at the start.
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Undo Redo stack showing add command.
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the candidate was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the Infinity Book to the state before the `add` command executed.
 
+.UndoRedo stack demonstration
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -297,23 +336,27 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence diagram for the undo operation.
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the Infinity Book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.UndoRedo stack showing Redo operation.
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.UndoRedo stack showing no changes due to Commands that are not undoable.
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for Undo and Redo operations
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -329,17 +372,17 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire Infinity Book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+** Pros: Will use less memory (e.g. for `delete`, just save the candidate being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
+* **Alternative 1 (current choice):** Only include commands that modifies the Infinity Book (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
@@ -361,7 +404,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+Data is to be encrypted to protect the Infinity Book data from unauthorized access.
 
 // end::dataencryption[]
 
@@ -385,9 +428,998 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-== Documentation
+// tag::findall[]
+=== Search by Name, Tags, Email, and Phone [Since v1.2]
 
-We use asciidoc for writing documentation.
+This `find` command allows the user to search through the list of all candidates and output all whose  `Name`, `Tags`, `Email`, and `Phone` match with the given keywords.
+
+==== Implementation Details
+
+During execution of this command, Infinity Book will do the following:
+
+. `FindCommandParser` class will extract keywords from user input, form a predicate, then pass it to `FindCommand` class.
+. `FindCommand` will take in the predicate and update the list of Persons accordingly.
+
+The condition for a candidate to be matched with given keywords is defined in `PersonContainsKeywordsPredicate`.
+
+[source, java]
+----
+keywords.stream()
+    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword)
+    || StringUtil.containsWordIgnoreCase(person.getEmail().toString(), keyword)
+    || StringUtil.containsWordIgnoreCase(person.getPhone().toString(), keyword)
+    || person.getTags().stream()
+    .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, keyword)));
+----
+
+==== Design Considerations
+
+**Aspect:** How user should specify the field to search +
+**Alternative 1 (current choice):** Search for all `Name`, `Tags`, `Email`, and `Phone` +
+**Pros:** User does not need to learn additional commands. +
+**Cons:** There can be unintended results, but since the set of keywords to search for each field does not overlap with each other, so such unintended results are very rare. +
+
+**Alternative 2:** Allow users to opt searching for one field in `Name`, `Tags`, `Email`, or `Phone`  +
+**Pros:** User can narrow down the search result. +
+**Cons:** User has to remember additional syntax.
+
+---
+
+**Aspect:**  The matching condition +
+**Alternative 1 (current choice):** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have at least one keyword in the input keywords. +
+**Pros:** User can do a wider search when he or she does not remember candidates' information clearly. +
+**Cons:** User hardly does a detailed search. +
+
+**Alternative 2:** Return Persons whose `Name`, `Tags`, `Email`, or `Phone` have all input keywords. +
+**Pros:** User can narrow down the search results. +
+**Cons:** In some cases, user cannot do a more general search.
+// end::findall[]
+// tag::edittags[]
+
+=== Add/Remove Tags (Since v1.3)
+
+The mechanics of `EditCommand` is that a new `Person` will be first created with the same information as the `Person` to edit.
+Then edited fields of the new `Person` will be determined based on user inputs, then it will be used to update the persons list of Infinity Book.
+
+[source, java]
+----
+personToEdit = lastShownList.get(index.getZeroBased());
+editedPerson = editPersonDescriptor.createEditedPerson(personToEdit);
+
+try {
+    model.updatePerson(personToEdit, editedPerson);
+}
+----
+
+From v1.0, user can overwrite any field of a candidate using `edit` command. Enhancing on top of this, the creation of the new `Person` is updated
+so that user can add new tags by `edit -add-tag INDEX [t/TAG]...` command and remove existing tags by `edit -delete-tag [t/TAG]...` command.
+
+==== Design Considerations
+**Aspect:** Implementation of removing/adding tags +
+**Alternative 1 (current choice):** Modify `EditPersonDescriptor` in `EditCommand` +
+**Pros:** Prevent overlapping codes. +
+**Cons:** Modify other details (e.g. Name, Phone, Address,...) apart from Tags. +
+
+**Alternative 2:** Write a new EditPersonDescriptor for this command +
+**Pros:** Maintain the current `edit` logic and behaviour. +
+**Cons:** Duplicate the exact code, which may cause a lot of hassles in future development.
+
+---
+
+**Aspect:** Choosing command to add or remove tags +
+**Alternative 1 (current choice):** Add `COMMAND_OPTION` (`-add-tag` and `-delete-tag`) to the current `edit` command. +
+**Pros:** Adding or removing tags is indeed editing a Person's details, so it makes complete sense to perform this action using `edit` command and reduces the number of commands that user has to remember.  +
+**Cons:** Have to modify the parser so that it can extract the option. +
+
+**Alternative 2:** Using two new commands for adding and removing tags +
+**Pros:** It is easier to parse the command.   +
+**Cons:** User has to remember more commands.
+
+// end::edittags[]
+// tag::option[]
+
+=== Accept Option for Commands (Since v1.2)
+
+To reduce the number of commands that user needs to learn, functions having similar behaviours can be grouped under one `COMMAND_WORD`, and each function in the group can be specified by `COMMAND_OPTION` by the user.
+
+The command format is thus: `COMMAND_WORD [-COMMAND_OPTION] [PARAMETERS]...`
+
+==== Implementation Details
+
+Arguments including option are wrapped with the `ArgumentWithOption` class shown in the below code snippet.
+
+[source, java]
+----
+/**
+ *  ArgumentWithOption class encapsulates an argument in the format: [OPTION] ARGS, and handles the parsing, extracting
+ *  option from the argument.
+ */
+
+public class ArgumentWithOption {
+
+    private static final Pattern ARGUMENT_FORMAT =
+            Pattern.compile("(?<commandOption>" + PREFIX_OPTION.getPrefix() + "\\S+)?(?<arguments>.*)");
+    private String rawArgs;
+    private final String option;
+    private String args;
+
+    public ArgumentWithOption(String rawArgs) throws ParseException {
+        this.rawArgs = rawArgs.trim();
+
+        final Matcher matcher = ARGUMENT_FORMAT.matcher(this.rawArgs);
+        if (!matcher.matches()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditCommand.MESSAGE_USAGE));
+        }
+        this.args = matcher.group("arguments");
+
+        String rawOption = matcher.group("commandOption");
+        this.option = (rawOption != null) ?  rawOption.substring(PREFIX_OPTION.getPrefix().length()) : "";
+    }
+
+    public boolean isOption(String toCheck) {
+        return toCheck.equals(option);
+    }
+
+    public String getArgs() {
+        return args;
+    }
+}
+----
+
+The following snippet shows how `ArgumentWithOption` may be used
+
+[source, java]
+----
+ArgumentWithOption argWithOption = new ArgumentWithOption(args);
+// Get arguments
+args = argWithOption.getArgs();
+// Check for option
+if (argWithOption.isOption(EditCommand.COMMAND_OPTION_ADD_TAG)) {
+    parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setNewTags);
+}
+----
+
+// end::option[]
+// tag::report[]
+
+=== Report (Since v1.4)
+
+Each `Report` is identified with a `Tag population`:
+
+Represented with the prefix `pop/` followed by the `tagName` of the `Tag population`. Example: `pop/SEIntern`.
+
+In the report, you will find statistics of the group of all Persons tagged with `population`: +
+
+. A bar chart showing all other Tags owned by this group and number of owners for each Tag.
+. A pie chart illustrating the numerical proportion of each Tag.
+. A history panel listing statistics of this group at earlier points of time.
+
+User can view a report using `viewreport` command and save a report for future reference using `savereport` command.
+
+==== Implementation Details
+
+===== Model Component
+
+For each report, all statistics details are encapsulated within the `Report` class. We use one `UniqueReportList` to keep all `Report` that user has saved.
+
+.Report as a part in the structure of Model Component of Infinity Book
+image::report_model.jpg[width="700"]
+
+**Calculating statistics:**
+
+Given the idea we use `UniqueReportList` to keep history, all `Report` instances in this list are immutable. There is no method to update instances in this list.
+We keep one `Report` instance in Infinity Book so that we can show to the user.
+This instance can be re-calculated via method `updateReport()` (implementation shown in the below snippet) in `Model` interface.
+
+[source, java]
+----
+public void updateReport(Tag population) {
+
+    // Get the list of `Person` tagged with `population`.
+
+    FilteredList<Person> allPersonList = new FilteredList<>(this.addressBook.getPersonList());
+    Predicate<Person> personContainsPopulationTagPredicate =
+        new Predicate<Person>() {
+            @Override
+            public boolean test(Person person) {
+                return person.getTags().stream()
+                        .anyMatch(tag -> StringUtil.containsWordIgnoreCase(tag.tagName, population.tagName));
+            }
+        };
+    allPersonList.setPredicate(personContainsPopulationTagPredicate);
+
+    // Calculate statistics of other `Tag` owned by `Person` in this list
+
+    Map<String, Pair<Integer, Integer>> counts = new HashMap<>();
+    allPersonList.forEach((p) -> {
+        Set<Tag> allTags = p.getTags();
+        for (Tag t : allTags) {
+            if (!t.tagName.equalsIgnoreCase(population.tagName)) {
+                counts.merge(t.tagName, new Pair<>(1, 1), (a, b) ->
+                        new Pair(a.getKey() + b.getKey(), a.getValue() + b.getValue()));
+            }
+        }
+    });
+
+    // Encapsulate statistics of each `Tag` in a `Proportion` instance
+
+    List<Proportion> allProportions = new ArrayList<>();
+    for (Map.Entry<String, Pair<Integer, Integer>> entry : counts.entrySet()) {
+        allProportions.add(new Proportion(entry.getKey(), entry.getValue().getKey(), entry.getValue().getValue()));
+    }
+
+    report = new Report(population, allProportions, allPersonList.size());
+}
+----
+
+===== Storage Component
+
+We keep `UniqueReportList` persistently in XML files.
+
+.`XmlAdaptedReport` in the structure of Storage Component of Infinity Book.
+image::ReportStorageDiagram.jpg[width="700"]
+
+===== Logic Component
+
+The below sequence diagram show interactions within `Logic` component when user executes `viewreport pop/CS`.
+
+.Interactions Inside the Logic Component for the `viewreport pop/CS` Command
+image::ViewReportDiagram.jpg[width="700"]
+
+===== UI Component
+
+'ReportPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel`. When `viewreport` or `savereport` is executed, `MainWindow` class will swap out the `BrowserPanel` for the `ReportPanel`.
+We achieve this by posting `ToggleReportPanelEvent` (showing in the below sequence diagram).
+
+.Posting event when we execute Report commands.
+image::ComponentInteractions.jpg[width="700"]
+
+The `EventsCenters` then handles this `Event` and then triggers the update of `Report` instance (as shown in the below seqence diagram).
+
+.Update `Report` instance after the `ToggleReportPanelEvent` is posted
+image::EventInteraction.jpg[width="700"]
+
+==== Design Considerations
+**Aspect:** Where calculation of statistics in the `Report` should be placed +
+**Alternative 1 (current choice):** in `ModelManager` +
+**Pros:**
+Since the calculation requires fetching the list of all Persons in Infinity Book, Defining it in the `ModelManager` to reduce dependency among components. +
+**Cons:** Have to modify multiple components such as `LogicManager`, `ModelManager`, `Event`. +
+**Alternative 2:** in `Report` class itself +
+**Pros:** Do not require a `Report` instance in Infinity Book, which can be redundant when user does not use. +
+**Cons:** Have to write setter and getter to get the list of Persons from `Model`.
+
+---
+
+**Aspect:** Choosing the region to show `ReportPanel` +
+**Alternative 1 (current choice):** `ReportPanel` shares the same region with `BrowserPanel` +
+**Pros:** Do not take additional area +
+**Cons:** Have to implement `Event` handling to swap panel +
+
+**Alternative 2:** Use a new panel +
+**Pros:** User can view reports and the browser at the same time.   +
+**Cons:** Add one more panel to the interface. +
+
+---
+
+**Aspect:** Choosing the chart color in Report +
+**Alternative 1 (current choice):** Define a new color palettes +
+**Pros:**
+We are able to use color palettes that are vary in both hue and brightness
+so that they are accessible by people who are color blind and obvious for everyone. +
+**Cons:** Have to write code to overwrite the default color palettes. +
+
+**Alternative 2:** Use a the default JavaFX chart color palettes +
+**Pros:** Do not need to implement.   +
+**Cons:** Do not have the control over visual effect. +
+
+//end::report[]
+
+//tag::tagcolor[]
+=== Tag colors [since v1.0]
+
+==== Current Implementation
+
+Use different colors for different tags inside person cards. For example, `friends` tags can be all in red and `colleagues` tags can be all in blue.
+Pre-defined colors are included in `DarkTheme.css`, `LightTheme.css` and `MorningTheme.css`. We use hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs.
+
+==== Design considerations
+
+**Aspect:** Implementation of color for tags +
+
+**Alternative 1 (current choice):** Have tags to be colored using hashcode instead of randomization +
+**Pros:** The color stay consistent each time the app is launched +
+**Cons:** Limited number of colors (the limiting factor is the size of pre-define color array) +
+
+**Alternative 2:** Have tag colors to be a random hexadecimal color value +
+**Pros:** Number of different color is very big (i.e. there is less repetitive color used)   +
+**Cons:** The color for each tag value might be different between app launchs +
+
+//end::tagcolor[]
+
+//tag::viewcommand[]
+=== Display relevant Github or resume page. (Since v1.3)
+
+As a candidate may have linked online resume or github page. The recruiter may want
+to consider these pages.
+
+==== Design Considerations
+**Aspect**: Aspects: Implementation of removing/adding a linked page.
+
+**Alternative 1:**(current choice) Each person has a page, which is resume or github.
+Add the view command to view a specific person, and view the linked page on the browser panel. +
+**Pros:** The page can be linked to the person, and it is easier to view by person's email +
+**Cons:** Need to modify current implementation of person model +
+**Alternative 2:** Add a new command to view specific page, which is hard code URL.
+**Pros:** No need to modify current person +
+**Cons:** Hard to maintain the hard code URL
+
+==== Implementation details
+* `ViewCommandParser` class will extract emails ID from user input, form a predicate,
+then pass it to `ViewCommand` class.
+* `ViewCommand` will take in the predicate and update the list of Persons by email ID,
+and change the browser panel accordingly.
+source, java]
+----
+public class EmailFilter implements Predicate<Person> {
+    private final String email;
+
+    public EmailFilter (Email email) {
+        this.email = email.toString();
+    }
+
+    @Override
+    public boolean test(Person person) {
+        return person.getEmail().toString().equals(this.email);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof EmailFilter // instanceof handles nulls
+                && this.email.equals(((EmailFilter) other).email)); // state check
+    }
+
+}
+----
+
+//end::viewcommand[]
+
+// tag::autocorrect[]
+=== Auto-correct and Auto-complete [since v1.4]
+
+Infinity Book enhances the user's interaction with the application, with built in auto-correct and auto-complete. Command
+words that are typed in are examined for spelling errors and completions upon `SPACE` and `TAB` press respectively.
+
+To include completion and correction support for a new command, simply add it into commandDictionary in
+CommandCorrection#createDictionary() as shown in code snippet.
+
+[source:Java]
+----
+public static void createDictionary() {
+        commandDictionary = new HashSet<>();
+
+        // .. add other command words
+        commandDictionary.add(PostJobCommand.COMMAND_WORD);
+}
+----
+
+==== Auto-complete Implementation
+
+The user input is recorded in CommandBox, and upon `TAB` keypress, the CommandBox#navigateToCompletedCommand() method looks for command
+words containing the entered string as the first substring.
+
+.This activity diagram demonstrates the high level behavior of the autocomplete feature.
+image::AutocompleteActivityDiagram.png[width="700"]
+
+When CommandCorrection#updateSuggestionsList() method is called, it searches through all command words for suitable matches.
+
+When multiple matches are available, the `TAB` keypress is counted, and the command box cycles through all suggestions. When no suggestions are available, the existing
+text is left unchanged.
+
+Since the text in the command box is altered with each `TAB` press, a brief history is maintained containing the most recent suggestion
+made by auto-complete and original user input. Here, the user has pressed the `TAB` key multiple times, but expects completions based on his input, not the recent suggestion that fills the command box.
+
+
+The following code snipped demonstrates the use of the suggestion history to choose the text to complete.
+
+[source:Java]
+----
+    public static String updateTextToComplete(String textToComplete) {
+        if (textToComplete.compareTo(recentSuggestion.trim()) == 0) {
+            return recentInput;
+        } else {
+            return textToComplete;
+        }
+    }
+----
+
+==== Auto-correct Implementation
+
+Auto-correct searches command word input for potential one edit distance errors, including missed,swapped and stray characters.
+
+Two details about the implementation are noteworthy:
+
+. For seamless background operation, command words that are not recognized are automatically analysed for spelling errors on `SPACE` key press.
+. In cases where commands with spell errors are copy-pasted into the command box, `SPACE` key press separates the command word from arguments, and corrects the command word without altering the rest of the command.
+
+Upon being triggered, CommandBox#navigateToLikelyInput() method returns the likely correction using the mentioned heuristics.
+
+When multiple suggestions are available, corrections obtained by removing stray character, and adding missing character are prioritized, in that order. This is in line with
+belief that these are the most common kinds of errors.
+
+The following code snippet demonstrates this ability clearly.
+
+[source:Java]
+----
+   public static String extractCommandWord(String commandText) {
+           String trimmedCommandText = commandText.trim();
+           String[] wordsInCommandText = trimmedCommandText.split(" ");
+           commandParameters = trimmedCommandText.replace(wordsInCommandText[0], "");
+           return wordsInCommandText[0];
+       }
+----
+
+// end::autocorrect[]
+
+link:#top[Back to top]
+
+// tag::jobposting[]
+=== Job Postings [Since v1.3]
+
+Recruiters may have several job openings available with varying required skills, location and tags. These are represented in the Infinity
+Book as Job Postings. Job postings may be added or removed at any time. Existing job postings can be listed, searched, edited and deleted.
+Any existing job postings may be matched with the list of candidates to filter potential matches.
+
+// end::jobposting[]
+
+// tag::jobposting1[]
+
+==== Implementation Specifics
+
+===== Model Component
+
+Job postings are maintained in the Model in a UniqueJobList, enforcing uniqueness among the stored individual job postings.
+
+.UML diagram showing representation of UniqueJobList in Infinity Book.
+image::UniqueJobListUML.png[width="300"]
+
+Individual job postings are represented by the Job object with attributes `Job Title`, `Location`, `Skills` and `Tags`. The class relationship is shown
+in Figure 2 below.
+
+.UML diagram showing representation of Job in Infinity Book.
+image::JobUMLDiagram.png[width="300"]
+
+In addition, the Person and Job class have been modified to maintain Skills as an additional field to offer better functionality
+during candidate-job matching. The `add` and `edit` commands reflect these changes as well.
+
+Together, this modifies the Model to the state shown in the following diagram.
+
+.A complete picture of the model as maintained by Infinity Book.
+image::ModelWithJobUML.png[width="600"]
+
+===== Storage Component
+
+Job postings are stored in `XmlAdaptedJob` objects, which maintain a class relationship as shown in this diagram.
+
+.Job objects are saved using XmlAdaptedJob objects as shown above.
+image::JobStorageDiagram.png[width="600"]
+
+An example job stored in this format is reproduced below:
+
+[source:xml]
+----
+<jobs>
+        <jobTitle>Backend Engineer</jobTitle>
+        <location>Geylang</location>
+        <skills>Java,SQL</skills>
+        <tagged>SEIntern</tagged>
+        <tagged>ATAP</tagged>
+</jobs>
+----
+
+===== UI Component
+
+The main window contains a JobListPanel, which contains individual jobs represented using JobListCards.
+JobListCards represent the fields in each Job using Labels and flowPanes.
+
+// end::jobposting1[]
+
+// tag::jobposting2[]
+===== Job Operations and Logic
+
+Operations performed on jobs follow the sequence of operations described in the diagram below.
+
+. Command input is received by the UI component.
+. The command execution is handled by the Logic component.
+. The changes to data are effected by the Model component.
+. The new Infinity Book data is saved by the Storage component.
+
+This sequence of events is summarized in the following sequence diagram.
+
+.A high level sequence diagram showing events triggered by the `postjob` command.
+image::SequenceDiagramJobPosting.png[width="600"]
+
+The following job posting commands are implemented extending `UndoableCommand` and `Command`:
+
+[width="50%",cols="<50%,<50%",options="header",]
+|=====================
+|extends `UndoableCommand` | extends `Command`
+|`PostJobCommand` +
+ `EditJobCommand` +
+ `DeleteJobCommand` +
+ `MatchJobCommand` | `ListJobCommand` +
+  `FindJobCommand`
+|=====================
+
+The following diagram details the class relationship for Commands.
+
+.UML Diagram depicting the class relationship between command classes.
+image::CommandsStructure.png[width="300"]
+
+---
+// end::jobposting2[]
+
+// tag::jobposting3[]
+
+
+*Adding Job Postings*
+
+Adding job postings to Infinity Book is performed by the PostJobCommand. The sequence of events triggered while adding a job posting are shown in the diagram below:
+
+.Adding a job posting is executed as shown above.
+image::PostJobCommandSequenceDiagram.png[width="600"]
+
+The PostJobCommand#executeUndoableCommand triggers addition of the Job to `UniqueJobList` in AddressBook#add
+The following code snippet demonstrates the prevention of duplicates in the UniqueJobList
+[source:Java]
+----
+    public void add(Job toAdd) throws DuplicateJobException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateJobException();
+        }
+        internalList.add(toAdd);
+    }
+----
+
+---
+// end::jobposting3[]
+// tag::jobposting4[]
+
+*Editing Job Postings*
+
+Editing job postings in the Infinity Book is performed by the EditJobCommand. The sequence of events triggered while editing a job posting are shown in the diagram below:
+
+.Editing a job posting is executed as shown above.
+image::EditJobCommandSequenceDiagram.png[width="600"]
+
+The EditJobCommand#executeUndoableCommand triggers editing of a existing Job in `UniqueJobList` in AddressBook#add
+The `EditJobCommand` ensures that the index specified refers to a valid index in the most recent listing of jobs.
+Editing jobs to cause duplicates in the UniqueJobList is prevented by throwing a DuplicateJobException.
+
+The following code snippet demonstrates the prevention of duplicates and index checking in the UniqueJobList after editing
+
+[source:Java]
+----
+    public void setJob(Job target, Job editedJob) throws DuplicateJobException, JobNotFoundException {
+        requireNonNull(editedJob);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new JobNotFoundException();
+        }
+        if (!target.equals(editedJob) && internalList.contains(editedJob)) {
+            throw new DuplicateJobException();
+        }
+        internalList.set(index, editedJob);
+    }
+----
+
+To completely specify the changes to the Job object specified by EditJobCommand, an EditJobCommandDescriptor is parsed from the command, and used to update changes in the Model. Completing
+these operations ensures the new Job object is updated in the Infinity Book.
+
+---
+*Delete Job Postings*
+
+Deleting job postings in the Infinity Book is performed by the DeleteJobCommand. The sequence of events triggered while deleting a job posting are shown in the diagram below:
+
+.Deleting a job posting is executed as shown above.
+image::DeleteJobCommandSequenceDiagram.png[width="700"]
+
+The DeleteJobCommand selects a Job object by matching the index with the last shown job list, and checks the index as shown in the following code snippet.
+[source:Java]
+----
+ protected void preprocessUndoableCommand() throws CommandException {
+        List<Job> lastShownList = model.getFilteredJobList();
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_JOB_DISPLAYED_INDEX);
+        }
+
+        jobToDelete = lastShownList.get(targetIndex.getZeroBased());
+----
+The changes to the UniqueJobList are enacted by AddressBook#removeJob, which completes the removal of the object and triggers Storage to update the data.
+
+---
+// end::jobposting4[]
+
+// tag::jobposting5[]
+
+*Matching Job Postings*
+
+Matching job postings to candidates in the Infinity Book is performed by the MatchJobCommand.
+
+The sequence of events triggered while matching a job posting are shown in the diagram below:
+
+.`matchjob` uses predicate based filtering similar to `findjob` and `listjobs`
+image::matchJobSequenceDiagram.png[width="700"]
+
+The MatchJobCommand selects a Job object by matching the index with the last shown job list. A PersonMatchesJobPredicate is used to find matches, by looking for matches between tags, location and skills fields of the Job and Person.
+
+Search parameters can be excluded from search when they are set to 'ALL'. Under these circumstances only the other parameters will influence the search.
+
+The following code snippet shows how Location can be excluded from the search. Other two parameters are handles similarly.
+
+[source:Java]
+----
+public boolean test(Person person) {
+
+        // .. code to set up and assign locationMatch, skillsMatch and tagsMatch
+        locationMatch = isLocationMatchSatisfied(locationMatch);
+        //.. similarly for skillsMatch and tagsMatch
+
+        return locationMatch && skillsMatch && tagsMatch;
+ }
+ private boolean isLocationMatchSatisfied(boolean locationMatch) {
+         if (notLocationBound) {
+             locationMatch = true;
+         }
+         return locationMatch;
+ }
+----
+
+The PersonListPanel is populated with a list of candidates who match the job according to the set parameters.
+
+---
+// end::jobposting5[]
+
+// tag::listandfind[]
+*Listing Job Postings*
+
+Listing all job postings in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while listing all job postings are shown in the diagram below:
+
+.Sequence diagram above shows the sequence of events triggered on execution of `listjobs`
+image::listjobcommandSequenceDiagram.png[width="600"]
+
+The ListJobCommand selects displays all Job objects from UniqueJobList in the JobListPanel.
+
+---
+
+*Finding Job Postings*
+
+Finding job postings by keywords in the Infinity Book is performed by the FindJobCommand. The sequence of events triggered while finding a job posting are extremely similar to listing all job postings as in Figure above, differing only in the specifics of the predicate used.
+
+The FindJobCommand selects Job objects to display by matching the keyword with the Job Title, Location or Tags, and lists all matches in the JobListPanel.
+
+// end::listandfind[]
+
+==== Design Considerations
+**Aspect:** Implementation of additional Skill parameter for Person and Job +
+
+**Alternative 1 (current choice):** Maintain skills as list of strings. +
+**Pros:** Allows recruiter freedom in creating a skills list as they need. +
+**Cons:** Searching requires complex string operations. Duplicates of the same skill will be found under different persons. +
+
+**Alternative 2:** Maintain a UniqueSkillsList similar to tags. +
+**Pros:** Different candidates with similar skills will utilize the same object. +
+**Cons:** The list of skills must be synchronized with both person list and job list, removing any skills that are not used by both.
+
+---
+
+**Aspect:** Implementation of Job-Person Matching +
+
+**Alternative 1 (current choice):** Match as many keywords in an OR search as possible +
+**Pros:** Maintains existing search predicates with minor modifications. +
+**Cons:** May not provide effective filtering. +
+
+**Alternative 2:** Indicate required and optional matches in job posting. +
+**Pros:** Search can be customized to be as accurate as required. +
+**Cons:** Spelling differences may still cause diminished effectiveness.
+
+// end::jobposting[]
+
+link:#top[Back to top]
+
+// tag::theme[]
+
+=== Theming Mechanism [since v1.3]
+
+The theme mechanism is facilitated by a singleton class `UiTheme` which will be called inside the `MainWindow` constructor where it passes its `scene` into the `UiTheme` class.
+The `scene` is necessary for changing the CSS at runtime.
+
+The class `UiTheme` requires the scene to be set at `MainWindow` class so that it can be used to edit themes.
+
+
+----
+public class UiTheme {
+    ...
+    public static void setScene(Scene s) {
+        scene = s;
+        setDefaultTheme();
+    }
+
+    private static void setDefaultTheme() {
+        setToMorningTheme();
+    }
+
+    public static void setToLightTheme() {
+        scene.getStylesheets().setAll(LIGHT_THEME_STYLE);
+    }
+
+    public static void setToDarkTheme() {
+        scene.getStylesheets().setAll(DARK_THEME_STYLE);
+    }
+
+    public static void setToMorningTheme() {
+        scene.getStylesheets().setAll(MORNING_THEME_STYLE);
+    }
+    ...
+}
+----
+
+Example of calling the application to change to light theme:
+
+----
+UiTheme.getInstance().setToLightTheme();
+----
+
+==== Design Considerations
+
+**Aspect:** Ways to change the application theme +
+**Alternative 1 (current choice):** Use a dedicated singleton class `UiTheme` to change the theme +
+**Pros:** Provide a dedicated class that manages all the changing of themes. `UiTheme` can contain many CSS theme file paths and thus the theme mechanism is more scalable . It is easier for `ThemeCommand` class to call `UiTheme` instance and use its methods directly. +
+**Cons:** Increases coupling +
+**Alternative 2:** Change the themes in `MainWindow` class directly +
+**Pros:** Decreases coupling +
+**Cons:** Violates the single responsibility principle since `MainWindow` class also controls the changing of theme. It is harder for `ThemeCommand` class to access the methods from `MainWindow` to change theme +
+
+// end::theme[]
+
+//tag::interviewmanagement[]
+=== Interview Management [Since v1.5rc]
+Interviewing is one of the important steps in recruiting process.
+HR may need a tool to manage interview efficiently. The Infinity Book will
+need interview model with basic features including adding interview, listing
+interview, and deleting interview.
+
+* Model Component:
+
+.Add Interview Model to Model Component
+image::InterviewModel.png[width="700"]
+
+* Storage Component:
+
+.add XmlAdaptedInterview to Storage Component
+image::InterviewStorage.png[width="700]
+
+==== Adding an interview
+The recruiter may want to conduct an interview with candidates, and maintain
+an interview lists.
+
+Aspects: Implementation of removing/add interview with candidates.
+
+**Alternative 1:** (current choice): Add a new model interview including many
+sub fields such as Date, Location, List of Questions. +
+**Pros:** It is easier to implement other commands such as find Interview, delete
+Interview, add questions. +
+**Cons:** It takes time to create new model.
+
+**Alternative 2:** Add a new field interview to each candidates and maintain
+according to each candidates. +
+**Pros:** It is easier to implement. +
+**Cons:** It is difficult to search specific interview effectively.
+
+** Current implementation details
+* `AddInterviewCommandParser` class will extract interview title, interviewee name, date,
+and interview location from user input, form a new interview,
+then pass it to `AddInterviewCommand` class.
+* `AddInterviewCommand` will take in the interview and call add new interview to
+storage in model management.
+
+.Adding an interview sequence diagram
+image::addInterviewSequence.png[width="700"]
+
+[source,java]
+----
+public synchronized void addInterview(Interview interview) throws DuplicateInterviewException {
+        addressBook.addInterview(interview);
+        updateFilteredInterviewList(PREDICATE_SHOW_ALL_INTERVIEWS);
+        indicateAddressBookChanged();
+}
+----
+
+==== List interview
+The recruiter may want to take a look at all of the interviews.
+
+Aspects: Implementation of listing all the interviews.
+
+**Alternative 1:** (current choice) create a new command to listing all the interview. +
+**Pros:** It is easier to use and modify. +
+**Cons:** New command is needed.
+
+**Alternative 2:** each candidate has been linked to an interview, listing all the
+interview when listing all candidates. +
+**Pros:** No need to create new command, just need to edit current list comamnd +
+**Cons:** It increases coupling and it is harder to implement.
+
+** Current implementation details
+* `AddressBookParser` class will parse the command `listInterview` from CLI
+and call ListInterviewCommand.
+* `ListInterviewCommand` will call updateFilteredList in model and list all the interviews in storage.
+
+.Listing an interview sequence diagram
+image::ListInterviewSequence.png[width="700"]
+
+[source,java]
+----
+
+public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+        requireNonNull(predicate);
+        filteredInterviews.setPredicate(predicate);
+}
+----
+
+==== Deleting Interview
+After conducted interview, the HR may want to delete the interview from the Infinity Book.
+
+Aspects: Implementation of deleting an interview:
+
+**Alternative 1:** (current choice) create deleting command for deleting interview by index +
+**Pros:** It can be easily to use follow the index of listing interview command +
+**Cons:** It requires users to use two commands +
+
+**Alternative 2:** create deleting command for deleting interview by name. +
+**Pros:** It requires addtional tools to match interview +
+**Cons:** It is easier for user to use.
+
+.Delete an interview sequence diagram
+image::DeleteInterviewSequence.png[width="700"]
+
+** Current implementation details
+* `DeletingInterviewParser` class will extract the index of the interview needed
+to be deleted and pass in to `DeleteInterviewCommand`.
+* `DeleteInterviewCommand` will take in the index and update the interview list
+accordingly.
+
+[source,java]
+----
+
+public synchronized void deleteInterview(Interview target) throws InterviewNotFoundException {
+        addressBook.removeInterview(target);
+        indicateAddressBookChanged();
+}
+
+----
+
+//end::interviewmanagement[]
+
+//tag::facebook[]
+
+=== Facebook Integration
+
+The Facebook features (facebooklogin and facebookpost) are facilitated by Facebook Graph API and RestFB API. The Graph API is low-level HTTP-based API used to get data into and out of the Facebook platform while RestAPI is a high level third-party Graph API client.
+
+==== Preparation
+
+Firstly, we need to build a Graddle dependency in the `graddle.properties` file for RestFB API
+
+----
+compile group: 'com.restfb', name: 'restfb', version: '2.4.0'
+----
+
+To use Facebook Graph API, we followed the instruction link:https://developers.facebook.com/docs/apps/register/#create-app[`here`] to create a Facebook Application on the Facebook for developer site
+
+Finishing the steps, we reached this page
+
+.Facebook Application page
+image::FacebookAppCreated.png[width="800"]
+
+==== Implementation
+
+===== Facebooklogin
+
+We allow users to log in by loading the authentication URL associated with our Facebook Application to the FacebookPanel (to be explained later) specified by Graph API
+
+[source,java]
+----
+private static final String FACEBOOK_AUTH_URL =
+    "https://graph.facebook.com/oauth/authorize?type=user_agent&client_id=" + FACEBOOK_APP_ID
+        + "&redirect_uri=" + FACEBOOK_DOMAIN + "&scope" + FACEBOOK_PERMISSIONS;
+----
+
+[source,java]
+----
+Platform.runLater(() -> webEngine.load(FACEBOOK_AUTH_URL));
+----
+
+If login credentials are accepted, facebook will return an access_token in its redirected url. An example of a redirected url
+
+----
+https://www.facebook.com/?#access_token=EAAC15Ydo408BANN5h1MoSHWhLATnte3EchlxqsXA7x2WASMlZBJzlZC3rZCmlu4Wib3hi1bXR2r2sx2ZCgIJvJCrXaTAnQVN4f0ksFLSvCuezLhG43myLJtxT3Qtn0PpcIXXZBjgYUI4LwGvv837KGC2V4ifctNaBnHqRX6e7qAZDZD&expires_in=5184000
+----
+
+Using this access_token, we 'capture' this login session by making use of RestFB API. We set up the session in `FacebookLoginCommand` as followed
+
+----
+fbClient = new DefaultFacebookClient(accessToken, Version.LATEST);
+user = fbClient.fetchObject("me", User.class);
+----
+
+'fbClient' is the Facebook Graph API client with the supplied token.
+
+'user' is the authenticated user object.
+
+===== Facebookpost
+
+We will check if user is authenticated via the boolean variable isAuthenticated before allowing posting on facebook. If user is not authenticated, he will be redirected to log in
+
+[source,java]
+----
+if (!FacebookLoginCommand.getAuthenticateState()) {
+    FacebookLoginCommand fbLoginCommand = new FacebookLoginCommand();
+    fbLoginCommand.execute();
+} else {
+    completePost();
+}
+----
+
+We simply post the message to Facebook using the authenticated fbClient in `FacebookLoginCommand`
+
+[source,java]
+----
+DefaultFacebookClient fbClient = FacebookLoginCommand.getFbClient();
+fbClient.publish("me/feed", FacebookType.class, Parameter.with("message", toPost));
+----
+
+==== Implementation details
+
+'FacebookPanel' extends `UiPart<Region>` and shares the same region with `BrowserPanel` or `ReportPanel`. When `facebooklogin` is executed,
+ `MainWindow` class will swap out the `BrowserPanel` or `ReportPanel` and replace by `FacebookPanel`.
+We achieve this by posting `ToggleFacebookPanelEvent` (showing in the below sequence diagram).
+
+'FacebookPanel' is used mainly as a browser to authorize a user to Facebook. It is also used to display the Facebook page after the user is authorized.
+
+For capturing the access_token, we register `FacebookPanel` as an event handler. If the url (of `FacebookPanel`) changes to a new one that contains the access_token,
+ we raise a `BrowserUrlChangedEvent`. Also, our `FacebookPanel` is subscribed to handle `BrowserUrlChangedEvent` by passing the url (with access_token) back to `FacebookLoginCommand` to complete the authentication.
+
+The below sequence diagram show interactions within Logic component when user executes `facebookpost hello`.
+
+.Sequence diagram detailing Logic component when executing facebookpost
+image::FbSequenceDiagram.png[width="800"]
+
+==== Design considerations
+
+**Aspect:** Choice of client API for Facebook Graph API +
+**Alternative 1 (current choice):** Use `RestFB` +
+**Pros:** RestFB is simple and easy to use with well-documented API
+**Cons:** Features are limited +
+**Alternative 2:** Facebook4j +
+**Pros:** Facebook4j provides more extensive features +
+**Cons:** It is harder to use and we do not really need advanced features for now +
+
+---
+
+**Aspect:** Authentication +
+**Alternative 1 (current choice):** Authenticate using the built-in web browser (in FacebookPanel) +
+**Pros:** Convenient for user as authentication is done inside the app itself +
+**Cons:** The built-in Java web-engine might not support certain features of a webpage +
+**Alternative 2:** Authenticate by opening a full-pledged web browser such as Chrome/ Safari +
+**Pros:** The Facebook authorization page will be better supported by such a browser +
+**Cons:** User needs to switch between different applications +
+
+//end::facebook[]
+
+== Documentation
+This project maintains documentation in the docs folder, also accessible through the readme. This documentation is written and maintained using *asciidoc*.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -415,8 +1447,11 @@ Here are the steps to convert the project documentation files to PDF format.
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
+link:#top[Back to top]
+
 [[Testing]]
 == Testing
+The Infinity Book project maintains GUI and non-GUI tests. Instructions on writing and running tests, and details about the nature of these tests are provided in this section.
 
 === Running Tests
 
@@ -465,6 +1500,8 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+link:#top[Back to top]
+
 == Dev Ops
 
 === Build Automation
@@ -493,9 +1530,11 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Infinity Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
+
+link:#top[Back to top]
 
 [[GetStartedProgramming]]
 [appendix]
@@ -536,12 +1575,12 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the Infinity Book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the Infinity Book.
 +
 ****
 * Hints
@@ -560,12 +1599,12 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Infinity Book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last candidate in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside candidate cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
@@ -610,7 +1649,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the Infinity Book.
 +
 **Before**
 +
@@ -623,7 +1662,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the Infinity Book is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
@@ -635,12 +1674,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the Infinity Book to the cloud. However, the current implementation of the application constantly saves the Infinity Book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the Infinity Book storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the Infinity Book can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -658,13 +1697,13 @@ By creating this command, you will get a chance to learn how to implement a feat
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a candidate specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first candidate to `Likes to drink coffee.`
 * `remark 1 r/` +
 Removes the remark for the first person.
 
@@ -700,7 +1739,7 @@ for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each candidate later.
 
 **Main:**
 
@@ -729,7 +1768,7 @@ Now we have the `Remark` class, we need to actually use it inside link:{repoURL}
 **Main:**
 
 . Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the candidate will be created without a remark).
 . Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
@@ -748,7 +1787,7 @@ Since `Person` can now have a `Remark`, we should add a helper method to link:{r
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the candidate that it is currently building.
 . Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
@@ -777,18 +1816,114 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
 
+link:#top[Back to top]
+
 [appendix]
 == Product Scope
 
 *Target user profile*:
+Tech recruiters who have the need for finding and acquiring skilled Computing students for tech companies.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* manage a significant number of student contacts
+* store student's basic information, contacts, expected graduation year, familiar frameworks, languages.
+* find students whose skill set is suitable for available positions
+* Keep track of student’s past interactions with the company: internship, coding challenges, interview,...
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+=== Feature contributions
+==== Sashankh Chengavalli Kumar (@ChengSashankh)
+===== Major Enhancement: Job postings
+This allows the recruiter to add and manage job postings and receive automated suggestions about most suitable candidates based on various parameters.
+
+For example, when the need arises to hire a new fresh graduate for a backend software development role with proficiency in SQL and Javascript, with location restrictions as well, the recruiter creates a job posting. As candidates are added and removed, the application displays an updated list of matching candidates, until removed from Infinity Book.
+
+Implementations needed:
+
+. Creating command such as postjob, editjob, deletejob, findjob and listjob to manage jobposting.
+. Creating a matchjob command that displays the list of matched candidates in the Infinity Book.
+. Display pane for showing the list of jobs currently active.
+. Adding skills field to Person and Job to enhance matching.
+
+===== Minor Enhancement: Auto-correct and auto-complete
+This allows users to interact with Infinity Book with enhanced speed and accuracy. This implementation provides
+users the ability to auto-correct trivial spelling errors and complete partial command words.
+
+For example, when `li` is typed, the command enables completion to either `list` , `listinterview` or `listjob`. Similarly
+`lsit` is corrected to `list` by the command.
+
+Implementations needed:
+
+. Complete list of command words used by Infinity Book has to be updated and maintained when features are added.
+. Command box has to be modified to consume some keypresses such as `TAB` and `SPACE` for completion and correction.
+. To support multiple suggestions for auto-complete, a brief history of the last suggestion and input has to be maintained. This is
+further explained in <<Auto-complete Implementation, Section 5.11.1>>
+
+
+==== Huynh Thanh Duc Anh (@anh2111)
+===== Major Enhancement: Data visualization
+This allows users to make data-driven decisions with the visualization of recruiting data.
+
+image::graph.png[width="500"]
+
+In the above example, `Screening`, `Interviewing`, `Accepted`, `SoftwareEngineerIntern` are tags that can be managed
+conveniently by the user. Given this chart, the recruiter can help a better high-level insights of candidates, which
+helps them significantly in making decisions.
+
+Implementations needed:
+
+. Making Command accepts OPTION. Example: `tag add`, `tag remove`.
+. Allowing add/remove one tag.
+. Drawing chart.
+
+===== Minor Enhancement: Enhance Find command
+* Allow users to Find Person by name, phone, email, and tags.
+* Given the huge number of contacts that a recruiter may have, it is not possible for them to remember candidates' name.
+ Hence, users should be able to search by other fields so that it's easier for them to locate a person.
+
+==== Nguyen Thi Viet Ha (@deeheenguyen)
+===== Major Enhancement: Adding Interview
+This allows the recruiters maintain a list of interview. Each Interview is linked to a
+person. The recruiters can search about the interview based on the candidates.
+
+Implementation needed:
+
+. Make a interview model
+. Add a interview command
+. Make the interview searchable.
+
+===== Minor Enhancement: View Command
+. Given a list of candidates, the recruiters can view a specific person by emailID.
+. Display all the information in the person card.
+. If there is a linked page to the person, it will be displayed on the brower panel.
+
+==== Nguyen Dinh Dung (@tiny767)
+===== Major Enhancement (coming in v2.0): Make several enhancements to the UI so that it is much more user-friendly.
+This allows tech recruiters who need to manage big Infinity Books to save time by using the app more efficiently
+and feel more comfortable.
+
+Implementations needed:
+
+* Making the color for tags the same for tags with same name and the choice of color stays the same.
+* For the user's command input, coloring keywords such as `name`, `p/`.
+* Provide usage syntax or syntax error in real time (e.g. display syntax for `add` when the users finish typing 'add'
+
+===== Major Enhancement (since v1.5): Facebook integration
+
+Implementations needed:
+
+* Allow user to log in to their facebook account and connect the address book with that facebook account
+* Allow for some features such as posting to wall, saving friends to the address book
+
+===== Minor Enhancement: `remark` command
+* Allow users to add remarks for people in their Infinity Books.
+* This allows tech recruiters to have a more flexible field to use for their candidates
+
+===== Minor Enhancement: `theme` command
+* Allow users to change between some pre-defined theme.
+
+===== Minor Enhancement: Tag color
+* Use different colors for different tags inside person cards
+
+link:#top[Back to top]
 
 [appendix]
 == User Stories
@@ -798,25 +1933,65 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+|`* * *` |User |Add a new candidate |
+
+|`* * *` |User |Delete a candidate |Remove entries that I no longer need
+
+|`* * *` |User |Find a candidate by name |Locate details of persons without having to go through the entire list
+
+|`* * *` |User who wants to record notes |Add a note entry for a candidate |Record more information about the person
+
+|`* * *` |User interested in a contact's skills |Get the technical skills of a candidate |to find suitable candidates
+
+|`* * *` |User who saves many resumes |Open candidates' resumes from commandline |to quickly view their profiles
+
+|`* * *` |User |Delete a tag from Infinity Book |To remove tags I am no longer interested in
+
+|`* * *` |Recruiter |Log in to Facebook on Infinity Book |Share job posting to facebook faster
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* *` |User |Hide <<private-contact-detail,private>> contact details by default |Minimize chance of someone else seeing them by accident
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* *` |User who views contacts |List frequently viewed candidates |To select the most probable candidates
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* *` |User with interest in recruitment |View candidates' LinkedIn profiles from commandline |To know about their work profiles
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* *` |User |View my search history |To keep track of my previous searches
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |User interested in specific skills |Search candidates by skill |To find suitable candidates easily
+
+|`* *` |User who is recruiting |Search by graduation year |To find suitable full/part time candidates
+
+|`* *` |User interested in checking projects |Access contacts' Github repositories |easily view and evaluate projects
+
+|`* *` |With many contacts |Set profile pictures for contacts |identify and remember them
+
+|`* *` |User |read all notes about a contact |Remember my past interactions and research about the contact
+
+|`* *` |User with multiple Infinity Books |Export my contacts |Import into another Infinity Book application
+
+|`* *` |User with multiple devices |Back up my Infinity Book in the cloud |Data is accessible from other devices
+
+|`*` |User with many persons in the Infinity Book |Sort persons by name |Locate a candidate easily
+
+|`*` |User concerned about confidentiality |Set a password for the AddressBook |My Infinity Book will be secure
+
+|`*` |User with frequently changing contacts |Clear the entire Infinity Book |To start with new candidates when required
+
+|`*` |User who frequently emails contacts |Open an email link to the contact directly |Quickly email candidates with copying their addresses
+
+|`*` |User who types many commands |Get autocomplete suggestion |Quickly complete command
+
 |=======================================================================
 
-_{More to be added}_
+
+link:#top[Back to top]
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `InfinityBook` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -824,9 +1999,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+2.  Infinity Book shows a list of persons
+3.  User requests to delete a specific candidate in the list
+4.  InfinityBook deletes the person
 +
 Use case ends.
 
@@ -840,20 +2015,41 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Infinity Book shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Search a candidate by tag
+*MSS*
+
+1. User requests to search and provides search params
+2. Infinity Book shows a list of candidate fitting the given criteria
++
+Use case ends.
+
+=== Use case: View Linkedin profile of a person
+*MSS*
+
+1. User requests to search the candidate by name
+2. Infinity Book shows a list of person
+3. User chooses a candidate by index in the list
+4. Infinity Book shows the linkedin page of that person
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 persons with a reponse time of less than 2 seconds for a command.
+.  Commands should ideally be less than 12 characters long to enable users with reasonable typing speed to use commands effectively.
+.  Should not use more than 11% CPU resources for executing commands
+.  Data storage for Infinity Book with 1000 contacts should not exceed 500 Gb
+.  Should be able to work even on older 32-bit system
+.  Project should not require updates to remain functional.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
 
-_{More to be added}_
+link:#top[Back to top]
 
 [appendix]
 == Glossary
@@ -864,22 +2060,27 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
+link:#top[Back to top]
+
 [appendix]
 == Product Survey
 
-*Product Name*
+*Infinity Book*
 
-Author: ...
+Author: Sashankh Chengavalli Kumar
 
 Pros:
 
-* ...
-* ...
+* Allows recruiters to collate all candidate details in one location
+* Allows for quick management of data using a Desktop Application
+* End-to-end support for recruiters from viewing candidates to inviting to interviews.
 
 Cons:
 
-* ...
-* ...
+* Synchronization across multiple devices/cloud not possible.
+* Mobile client not available to enable remote access to Infinity Book.
+
+link:#top[Back to top]
 
 [appendix]
 == Instructions for Manual Testing
@@ -903,26 +2104,141 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Add tags to a candidate
 
-=== Deleting a person
-
-. Deleting a person while all persons are listed
+. Add new tags to a candidate in the list.
 
 .. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Test case: `edit -add-tag 1 t/Year2 t/SpeakVietnamese` +
+   Expected: Added new tags to the first candidate.
+.. Test case: `edit -add-tag 1 t/Year2` +
+   Expected: Cannot add a new duplicated tag to the first candidate. The candidate’s details will not be updated, and Infinity Book will not show any warning.
+
+=== Delete tags from a candidate
+
+. Delete tags from a candidate in the list.
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `edit -delete-tag 1 t/computing` +
+   Expected: Cannot delete tag computing from the first candidate. The candidate’s details will not be updated, and Infinity Book will not show any warning
+.. Test case: `edit -delete-tag 1 t/Computing` +
+   Expected: Removes tag Computing from the first candidate.
+
+=== View a report
+
+. View report based on candidates in IB.
+
+.. Test case: `viewreport pop/SEIntern` +
+   Expected: Infinity Book has displayed Report with Population Tag `SEIntern` in the right-most column.
+.. Test case: `viewreport pop/SEIntern pop/Computing` +
+   Expected:  Infinity Book will display the report for Computing.
+
+Report explanation can be found in User Guide.
+
+=== Save a report
+
+. Save report based on candidates in IB.
+
+.. Test case: `savereport pop/SEIntern` +
+   Expected:  Infinity Book has saved Report with population Tag SEIntern. In the right-most column, the history list includes all statistics you have saved.
+.. Test case: `savereport pop/SEIntern pop/Computing` +
+   Expected: Infinity Book will save the report for Computing.
+
+Report explanation can be found in User Guide.
+
+=== View a person
+. Viewing a person by emailID
+.. Test case: `view notexisted@example.com` +
+   Expected: person found and no new url display on browser panel
+
+.. Test case: `view a@example.com` +
+   Prerequisites: the person with email a@example.com exists on Infinity Book. +
+   Expected: the person with email a@example.com returned,
+   and the corresponding linking page has been displayed on the browser panel.
+
+=== Interview Management
+
+==== Add interview
+. Add an interview to current infinity book.
+.. Test case: `addInterview` +
+   Expected:  Invalid format showing in the status message +
+.. Test case:  `addInterview i/SE INTERVIEW n/DAVID d/04.05.2018 l/NUS SOC` +
+   Expected: new interview added in the status message.
+   New interview added in the browser panel.
+
+==== List interview
+. List all interviews of infinity book
+.. Test case: `listInterview`
+   Expected: Showing all the interviews in the interview panel
+
+==== Delete Interview
+. Prerequisites: List all interviews using the `listInterview` command. Multiple interviews in the list. +
+
+. Deleting an interview while all interviews are listed
+.. Test case: `deleteInterview 1`
+   Expected: First interview deleted from the interview list.
+   Details of the deleted contact shown in the status message.
+.. Test case: `deleteInterview 0`
+   Expected: No interview is deleted. Error details shown in the status message.
+.. Other incorrect delete commands to try: `deleteInterview`, `deleteInterview x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Job Management
 
-=== Saving data
+==== Add Job
+. Post a job to infinity book.
+.. Test case: `postjob` +
+   Expected:  Invalid format showing in the status message +
+.. Test case:  `postjob j/JobTitle l/location s/skill t/NewTag` +
+   Expected: new job posted in the status message.
+   New job card displauyed in the JobListPanel.
 
-. Dealing with missing/corrupted data files
+==== List Jobs
+. List all jobs of infinity book
+.. Test case: `listjobs`
+   Expected: Showing all jobs in the job panel.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+==== Delete Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
 
-_{ more test cases ... }_
+. Deleting a job while all jobs are listed
+.. Test case: `deletejob 1`
+   Expected: First job deleted from the job list.
+   Details of the deleted job shown in the status message.
+.. Test case: `deletejob 0`
+   Expected: No interview is deleted. Error details shown in the status message.
+.. Other incorrect delete commands to try: `deletejob`, `deletejob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+==== Edit Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Editing a job while all jobs are listed
+.. Test case: `editjob 1 j/newTitle l/newLocation s/newSkill t/NewTag`
+   Expected: First job edited to contain new job title.
+   Details of the deleted job shown in the status message.
+.. Test case: `editjob 1 j/newTitle l/newLocation s/newSkill t/NewTag` + editjob 2 j/newTitle l/newLocation s/newSkill t/NewTag
+   Expected: Second job is not edited, but first is. Error details shown in the status message.
+.. Other incorrect delete commands to try: `editjob 1`, `deletejob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+==== Find Job
+. Find a job by keyword[s].
+.. Test case: `findjob keyword`
+   Expected: Showing all jobs matching keyword in the job panel.
+.. Test case: `findjob`
+   Expected: No job list change is made. Error details shown in the status message.
+
+==== Match Job
+. Prerequisites: List all jobs using the `listjobs` command. All entries are displayed in JobListPanel. +
+
+. Matching a job to candidates while all jobs are listed
+.. Test case: `matchjob 1`
+   Expected: All candidates matching the first job are displayed in the PersonListPanel.
+.. Test case: `matchjob 0`
+   Expected: No change is seen in the panels. Error message shown in the status message.
+.. Other incorrect delete commands to try: `matchjob`, `matchjob x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+
+link:#top[Back to top]

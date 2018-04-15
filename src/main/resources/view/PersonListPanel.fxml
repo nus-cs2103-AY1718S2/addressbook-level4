@@ -3,6 +3,15 @@
 <?import javafx.scene.control.ListView?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+<?import javafx.scene.text.Text?>
+<?import javafx.geometry.Insets?>
+
+<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" style="-fx-background-color: #e3f2fd;" >
+  <!--Referenced for <Text> https://github.com/kush1509/contactHeRo/blob/master/src/main/resources/view/PersonListPanel.fxml-->
+  <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Candidates" textAlignment="CENTER" wrappingWidth="248.27490234375">
+    <VBox.margin>
+      <Insets bottom="5.0" top="5.0" />
+    </VBox.margin>
+  </Text>
   <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
 </VBox>

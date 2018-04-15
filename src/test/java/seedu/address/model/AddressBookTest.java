@@ -1,7 +1,13 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_NONEXISTENT;
+
 import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersons.AMY;
+import static seedu.address.testutil.TypicalPersons.BOB;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
@@ -16,8 +22,14 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
+import seedu.address.model.report.Report;
 import seedu.address.model.tag.Tag;
+
+import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.PersonBuilder;
 
 public class AddressBookTest {
 
@@ -25,6 +37,10 @@ public class AddressBookTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private final AddressBook addressBook = new AddressBook();
+    private final AddressBook addressBookWithBobAndAlice =
+            new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
+    private final AddressBook addressBookWithBobAndAmy =
+            new AddressBookBuilder().withPerson(BOB).withPerson(AMY).build();
 
     @Test
     public void constructor() {
@@ -36,6 +52,28 @@ public class AddressBookTest {
     public void resetData_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         addressBook.resetData(null);
+    }
+
+    @Test
+    public void deleteTag_nonExistentTag_noChangesToAddressBook() throws Exception {
+        addressBookWithBobAndAlice.deleteTag(new Tag(VALID_TAG_NONEXISTENT));
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BOB).withPerson(ALICE).build();
+
+        assertEquals(expectedAddressBook, addressBookWithBobAndAlice);
+    }
+
+    @Test
+    public void deleteTag_tagExistsForSomeUsers_tagRemovedFromAllPersons() throws Exception {
+        addressBookWithBobAndAmy.deleteTag(new Tag(VALID_TAG_FRIEND));
+
+        Person bobWithFriendTag = new PersonBuilder(BOB).withTags(VALID_TAG_HUSBAND).build();
+        Person amyWithoutFriendTag = new PersonBuilder(AMY).withTags().build();
+
+        AddressBook expectedAddressBook =
+                new AddressBookBuilder().withPerson(bobWithFriendTag).withPerson(amyWithoutFriendTag).build();
+
+        assertEquals(expectedAddressBook, addressBookWithBobAndAmy);
+
     }
 
     @Test
@@ -74,11 +112,21 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Job> jobs = FXCollections.observableArrayList();
+        private final ObservableList<Interview> interviews = FXCollections.observableArrayList();
+        private final ObservableList<Report> reports = FXCollections.observableArrayList();
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
         }
+
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<Job> jobs) {
+            this.persons.setAll(persons);
+            this.tags.setAll(tags);
+            this.jobs.setAll(jobs);
+        }
+
 
         @Override
         public ObservableList<Person> getPersonList() {
@@ -89,6 +137,20 @@ public class AddressBookTest {
         public ObservableList<Tag> getTagList() {
             return tags;
         }
-    }
 
+        @Override
+        public ObservableList<Job> getJobList() {
+            return jobs;
+        }
+
+        @Override
+        public ObservableList<Report> getReportList() {
+            return reports;
+        }
+
+        @Override
+        public ObservableList<Interview> getInterviewList() {
+            return interviews;
+        }
+    }
 }

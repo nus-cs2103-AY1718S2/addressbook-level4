@@ -1,0 +1,81 @@
+= anh2111 - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Infinity Book
+
+---
+
+== Overview
+
+Infinity Book (IB) is an address book application for Tech recruiters, providing end-to-end support, from searching for candidates,to adding job postings and saving their resumes and interviews.
+
+== Summary of contributions
+
+* *Major enhancement*: Implementation of Dashboard Reporting and Tagging features.
+*** Recruiters may have to screen through one candidate's profile many times, which costs time. Thus, I improved `edit`
+command so that recruiters can add new tags or remove current tags from candidates.
+This enables them to summarize each candidate in a few keywords to save time for their future reference.
+
+*** Recruiters need to make decisions based on candidates' information in their contact list.
+But their list is overwhelmingly long, so I implemented `Report` feature showing them statistics from Tags they have added
+so that recruiters can have an idea of what is happening without going through each record.
+
+*** Highlights: This enhancement touches multiple components: Model, Logic, Storage, and UI.
+
+* *Minor enhancement*: Improvement of `Find` command.
+*** Since Infinity Book v1.2, recruiters can find candidates by their name, email, phone, and tags.
+*** Justification: Given the huge number of contacts that a recruiter has, it is not possible for them to remember candidates' name. Hence, recruiters must be able to search by other fields so that it is easier for them to locate a person.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/anh2111.md[Functional code]][https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/anh2111.md[Test code]]
+
+* *Other contributions*:
+
+** Did a UI overhaul to provide a sleek and visual appeal look that optimize for users' satisfaction and enjoyment. Infinity Book v1.5 uses this design as the default theme.
+** Managed to wrapped up project properly on GitHub from v1.1 to v1.5
+** Was responsible for updating Readme, UI screenshot, User Guide, Developer Guide to match with the actual product.
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B3/main/pull/58, https://github.com/CS2103JAN2018-W11-B3/main/pull/140
+*** Reported bugs and suggestions for other teams in the class: https://github.com/CS2103JAN2018-F11-B2/main/issues?utf8=%E2%9C%93&q=is%3Aissue+is%3Aclosed+anh2111+
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide, which showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=report]
+An example usage can be found in Appendices.
+
+include::../UserGuide.adoc[tag=reportcommands]
+include::../UserGuide.adoc[tag=addtags]
+
+You can find my other contributions to User Guide: Delete Tags and Improved Find command in Appendices.
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide, which showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=report]
+include::../DeveloperGuide.adoc[tag=edittags]
+
+You can find my other contributions to Developer Guide.
+
+== Appendices
+
+=== Other contributions to the User Guide
+
+==== An example usage of Report
+include::../UserGuide.adoc[tag=reportexample]
+
+include::../UserGuide.adoc[tag=deletetags]
+
+include::../UserGuide.adoc[tag=findall]
+
+=== Other contributions to the Developer Guide
+
+include::../DeveloperGuide.adoc[tag=findall]
+
+include::../DeveloperGuide.adoc[tag=option]

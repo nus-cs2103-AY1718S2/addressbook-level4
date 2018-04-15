@@ -21,9 +21,17 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.interview.exceptions.DuplicateInterviewException;
+import seedu.address.model.interview.exceptions.InterviewNotFoundException;
+import seedu.address.model.job.Job;
+import seedu.address.model.job.exceptions.DuplicateJobException;
+import seedu.address.model.job.exceptions.JobNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.report.Report;
+import seedu.address.model.tag.Tag;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -102,6 +110,27 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addJob(Job job) throws DuplicateJobException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addInterview(Interview interview) throws DuplicateInterviewException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteInterview(Interview target) throws InterviewNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addReport(Report report) {
+
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -124,7 +153,29 @@ public class AddCommandTest {
         }
 
         @Override
+        public void updateReport(Tag population) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Report getReport() {
+            fail("This method should not be called.");
+            return null;
+        };
+
+        @Override
+        public void refreshReport() {
+            fail("This method should not be called.");
+        };
+
+        @Override
+        public ObservableList<Report> getReportHistory() {
             fail("This method should not be called.");
             return null;
         }
@@ -133,6 +184,40 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void updateFilteredJobList(Predicate<Job> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Job> getFilteredJobList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteJob(Job target) throws JobNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateJob(Job target, Job editedJob)
+                throws DuplicateJobException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Interview> getFilteredInterviewList() {
+            fail("this method should not be called");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredInterviewList(Predicate<Interview> predicate) {
+            fail("This method should not be called.");
+        }
+
     }
 
     /**
@@ -161,6 +246,9 @@ public class AddCommandTest {
             requireNonNull(person);
             personsAdded.add(person);
         }
+
+        @Override
+        public void refreshReport() { }
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {

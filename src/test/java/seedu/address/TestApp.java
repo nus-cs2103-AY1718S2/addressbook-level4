@@ -2,6 +2,7 @@ package seedu.address;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.ParseException;
 import java.util.function.Supplier;
 
 import javafx.stage.Screen;
@@ -80,6 +81,8 @@ public class TestApp extends MainApp {
             throw new AssertionError("Data is not in the AddressBook format.");
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.");
+        } catch (ParseException e) {
+            throw new Error("Error in parsing file.");
         }
     }
 

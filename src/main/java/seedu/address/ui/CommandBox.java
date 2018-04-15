@@ -1,5 +1,14 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.CommandCorrection.chooseSuggestion;
+import static seedu.address.logic.CommandCorrection.getSuggestions;
+import static seedu.address.logic.CommandCorrection.setRecentInput;
+import static seedu.address.logic.CommandCorrection.setUpCommandCompletion;
+import static seedu.address.logic.CommandCorrection.setUpCommandCorrection;
+import static seedu.address.logic.CommandCorrection.updateTabCounter;
+import static seedu.address.logic.CommandCorrection.updateTextToComplete;
+
+import java.util.ArrayList;
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -8,7 +17,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CommandCorrectedEvent;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+
+import seedu.address.logic.CommandCorrection;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -22,7 +34,6 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
-
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
@@ -48,12 +59,19 @@ public class CommandBox extends UiPart<Region> {
             // As up and down buttons will alter the position of the caret,
             // consuming it causes the caret's position to remain unchanged
             keyEvent.consume();
-
             navigateToPreviousInput();
             break;
         case DOWN:
             keyEvent.consume();
             navigateToNextInput();
+            break;
+        case SPACE:
+            keyEvent.consume();
+            navigateToCorrectedCommand();
+            break;
+        case TAB:
+            keyEvent.consume();
+            navigateToCompletedCommand();
             break;
         default:
             // let JavaFx handle the keypress
@@ -85,6 +103,54 @@ public class CommandBox extends UiPart<Region> {
 
         replaceText(historySnapshot.next());
     }
+
+    //@@author ChengSashankh
+    /**
+     * Updates the text field with the suggested text by auto-correct,
+     * if there exists a suggestion.
+     */
+    private void navigateToCorrectedCommand() {
+        setUpCommandCorrection();
+        if (CommandCorrection.isCorrectCommand(commandTextField.getText())) {
+            return;
+        }
+
+        String textToCorrect = commandTextField.getText();
+        replaceText(CommandCorrection.nearestCorrection(textToCorrect));
+    }
+
+    /***
+     * Updates the text field with suggestion from auto-complete,
+     * if there exists a suggested completion
+     */
+    private void navigateToCompletedCommand() {
+        setUpCommandCompletion();
+        String textToComplete = commandTextField.getText().trim();
+
+        if (CommandCorrection.noTextToComplete(textToComplete)) {
+            return;
+        }
+
+        updateTabCounter(textToComplete);
+        textToComplete = updateTextToComplete(textToComplete);
+
+        setRecentInput(textToComplete);
+        int suggestionToChoose = CommandCorrection.getTabCounter();
+
+        ArrayList<String> suggestions = getSuggestions(textToComplete);
+        String chosenString = chooseSuggestion(suggestions, suggestionToChoose,
+                commandTextField.getText());
+        if (suggestions.isEmpty()) {
+            raise(new CommandCorrectedEvent(
+                    String.format(CommandCorrection.NO_MATCHES_FEEDBACK_TO_USER, chosenString)));
+        } else {
+            raise(new CommandCorrectedEvent(
+                    String.format(CommandCorrection.MATCH_FOUND_FEEDBACK_TO_USER, suggestions.toString()
+                            .replace(" ", ""))));
+        }
+        replaceText(chosenString);
+    }
+    //@@author
 
     /**
      * Sets {@code CommandBox}'s text field with {@code text} and

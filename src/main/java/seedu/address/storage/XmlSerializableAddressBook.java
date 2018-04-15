@@ -1,5 +1,6 @@
 package seedu.address.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,6 +22,12 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedJob> jobs;
+    @XmlElement
+    private List<XmlAdaptedInterview> interviews;
+    @XmlElement
+    private List<XmlAdaptedReport> reports;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -29,6 +36,9 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        jobs = new ArrayList<>();
+        interviews = new ArrayList<>();
+        reports = new ArrayList<>();
     }
 
     /**
@@ -38,21 +48,33 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        jobs.addAll(src.getJobList().stream().map(XmlAdaptedJob::new).collect(Collectors.toList()));
+        interviews.addAll(src.getInterviewList().stream().map(XmlAdaptedInterview::new).collect(Collectors.toList()));
+        reports.addAll(src.getReportList().stream().map(XmlAdaptedReport::new).collect(Collectors.toList()));
     }
 
     /**
      * Converts this addressbook into the model's {@code AddressBook} object.
      *
      * @throws IllegalValueException if there were any data constraints violated or duplicates in the
-     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag}.
+     * {@code XmlAdaptedPerson} or {@code XmlAdaptedTag} or {@code XmlAdaptedJob}.
      */
-    public AddressBook toModelType() throws IllegalValueException {
+    public AddressBook toModelType() throws IllegalValueException, ParseException {
         AddressBook addressBook = new AddressBook();
         for (XmlAdaptedTag t : tags) {
             addressBook.addTag(t.toModelType());
         }
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
+        }
+        for (XmlAdaptedJob j : jobs) {
+            addressBook.addJob(j.toModelType());
+        }
+        for (XmlAdaptedInterview i: interviews) {
+            addressBook.addInterview(i.toModelType());
+        }
+        for (XmlAdaptedReport p : reports) {
+            addressBook.addReport(p.toModelType());
         }
         return addressBook;
     }
@@ -68,6 +90,7 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && jobs.equals(otherAb.jobs)
+                && reports.equals(otherAb.reports);
     }
 }

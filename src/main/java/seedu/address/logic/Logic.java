@@ -4,7 +4,10 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.interview.Interview;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
+import seedu.address.model.report.Report;
 
 /**
  * API of the Logic component
@@ -19,8 +22,20 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    /** Returns the report. */
+    Report getReport();
+
+    /** Returns the saved history of the report. */
+    ObservableList<Report> getReportHistory();
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of jobs */
+    ObservableList<Job> getFilteredJobList();
+
+    /** Returns an unmodifiable view of the filtered list of interviews */
+    ObservableList<Interview> getFilteredInterviewList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

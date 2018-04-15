@@ -1,0 +1,227 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <persons>
+        <name>Bernice Yu</name>
+        <phone>99272758</phone>
+        <email>berniceyu@example.com</email>
+        <address>Blk 30 Lorong 3 Serangoon Gardens, #07-18</address>
+        <remark></remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>FreshGrad</tagged>
+        <tagged>Business</tagged>
+    </persons>
+    <persons>
+        <name>Charlotte Oliveiro</name>
+        <phone>93210283</phone>
+        <email>charlotte@example.com</email>
+        <address>Blk 11 Ang Mo Kio Street 74, #11-04</address>
+        <remark></remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Interviewing</tagged>
+    </persons>
+    <persons>
+        <name>David Li</name>
+        <phone>91031282</phone>
+        <email>lidavid@example.com</email>
+        <address>Blk 436 Serangoon Gardens Street 26, #16-43</address>
+        <remark></remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Offered</tagged>
+    </persons>
+    <persons>
+        <name>Irfan Ibrahim</name>
+        <phone>92492021</phone>
+        <email>irfan@example.com</email>
+        <address>Blk 47 Tampines Street 20, #17-35</address>
+        <remark></remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Screening</tagged>
+    </persons>
+    <persons>
+        <name>Clinton Francis Barton</name>
+        <phone>92624417</phone>
+        <email>royb@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Screening</tagged>
+    </persons>
+    <persons>
+        <name>Roy Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>a@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Screening</tagged>
+    </persons>
+    <persons>
+        <name>Roy Doe</name>
+        <phone>92624417</phone>
+        <email>b@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Rejected</tagged>
+    </persons>
+    <persons>
+        <name>Sam Balakrishnan</name>
+        <phone>92624417</phone>
+        <email>c@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Offered</tagged>
+    </persons>
+    <persons>
+        <name>Alex Smith</name>
+        <phone>92624417</phone>
+        <email>d@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Interviewing</tagged>
+    </persons>
+    <persons>
+        <name>Jacques Duquesne</name>
+        <phone>92624417</phone>
+        <email>e@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Interviewing</tagged>
+    </persons>
+    <persons>
+        <name>Pietro Maximoff</name>
+        <phone>92624417</phone>
+        <email>f@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Screening</tagged>
+    </persons>
+    <persons>
+        <name>Wanda Maximoff</name>
+        <phone>92624417</phone>
+        <email>j@example.com</email>
+        <address>Blk 45 Aljunied Street 85, #11-31</address>
+        <remark>Like fishing</remark>
+        <link>https://github.com/CS2103JAN2018-W11-B3/main</link>
+        <skill>Java</skill>
+        <tagged>SEIntern</tagged>
+        <tagged>Screening</tagged>
+    </persons>
+    <tags>SEIntern</tags>
+    <tags>Screening</tags>
+    <tags>FreshGrad</tags>
+    <tags>Rejected</tags>
+    <tags>Computing</tags>
+    <tags>Interviewing</tags>
+    <tags>Offered</tags>
+    <tags>Business</tags>
+    <jobs>
+        <jobTitle>Backend Engineer</jobTitle>
+        <location>Geylang</location>
+        <skills>Java,SQL</skills>
+        <tagged>SEIntern</tagged>
+    </jobs>
+    <jobs>
+        <jobTitle>Frontend Engineer</jobTitle>
+        <location>Serangoon</location>
+        <skills>JavaScript,CSS,HTML</skills>
+        <tagged>FreshGrad</tagged>
+    </jobs>
+    <jobs>
+        <jobTitle>Data Scientist</jobTitle>
+        <location>Ang Mo Kio</location>
+        <skills>Python, R</skills>
+        <tagged>Experienced</tagged>
+    </jobs>
+    <interviews>
+        <interviewTitle>Frontend Interview</interviewTitle>
+        <interviewLocation>SOC</interviewLocation>
+        <interviewee>Joe</interviewee>
+        <date>01.02.2016</date>
+    </interviews>
+    <interviews>
+        <interviewTitle>Data Scientist Interview</interviewTitle>
+        <interviewLocation>NUS</interviewLocation>
+        <interviewee>Kelvin</interviewee>
+        <date>01.03.2017</date>
+    </interviews>
+    <interviews>
+        <interviewTitle>Behavior</interviewTitle>
+        <interviewLocation>NUS</interviewLocation>
+        <interviewee>DAVID</interviewee>
+        <date>04.05.2018</date>
+    </interviews>
+    <reports>
+        <population>SEIntern</population>
+        <totalTags>11</totalTags>
+        <totalPersons>11</totalPersons>
+        <proportions>
+            <proportionName>Screening</proportionName>
+            <value>10</value>
+            <totalPersonsInProportion>10</totalPersonsInProportion>
+        </proportions>
+        <proportions>
+            <proportionName>Interviewing</proportionName>
+            <value>1</value>
+            <totalPersonsInProportion>1</totalPersonsInProportion>
+        </proportions>
+        <date>04/14/2018 10:34:28</date>
+    </reports>
+    <reports>
+        <population>SEIntern</population>
+        <totalTags>11</totalTags>
+        <totalPersons>11</totalPersons>
+        <proportions>
+            <proportionName>Screening</proportionName>
+            <value>9</value>
+            <totalPersonsInProportion>9</totalPersonsInProportion>
+        </proportions>
+        <proportions>
+            <proportionName>Interviewing</proportionName>
+            <value>2</value>
+            <totalPersonsInProportion>2</totalPersonsInProportion>
+        </proportions>
+        <date>04/14/2018 10:34:30</date>
+    </reports>
+    <reports>
+        <population>SEIntern</population>
+        <totalTags>11</totalTags>
+        <totalPersons>11</totalPersons>
+        <proportions>
+            <proportionName>Screening</proportionName>
+            <value>8</value>
+            <totalPersonsInProportion>8</totalPersonsInProportion>
+        </proportions>
+        <proportions>
+            <proportionName>Interviewing</proportionName>
+            <value>3</value>
+            <totalPersonsInProportion>3</totalPersonsInProportion>
+        </proportions>
+        <date>04/14/2018 10:34:32</date>
+    </reports>
+</addressbook>

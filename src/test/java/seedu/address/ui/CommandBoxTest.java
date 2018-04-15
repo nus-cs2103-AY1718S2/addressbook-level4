@@ -11,14 +11,37 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.ListInterviewCommand;
+import seedu.address.logic.commands.ListJobsCommand;
+import seedu.address.logic.commands.MatchJobCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
+    private static final int FIRST_INDEX = 0;
+    private static final int THIRD_INDEX = 2;
+
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
+    private static final String COMPLETE_COMMAND_FIRST_COMPLETION = ListCommand.COMMAND_WORD + " ";
+    private static final String COMPLETE_COMMAND_SECOND_COMPLETION = ListInterviewCommand.COMMAND_WORD + " ";
+    private static final String COMPLETE_COMMAND_THIRD_COMPLETION = ListJobsCommand.COMMAND_WORD + " ";
+    private static final String COMMAND_WITH_ONE_COMPLETION = MatchJobCommand.COMMAND_WORD
+            .substring(FIRST_INDEX, THIRD_INDEX);
+    private static final String COMPLETE_COMMAND_WITH_ONE_COMPLETION = MatchJobCommand.COMMAND_WORD + " ";
+    private static final String COMMAND_WITH_MULTIPLE_COMPLETIONS = ListCommand.COMMAND_WORD
+            .substring(FIRST_INDEX, THIRD_INDEX);
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String COMMAND_WITH_SWAPPED_CHARACTERS = "lsit";
+    private static final String COMMAND_WITH_MISSING_CHARACTER = "ist";
+    private static final String COMMAND_WITH_EXTRA_CHARACTER = "llist";
+    private static final String COMMAND_WITH_MULTIPLE_MISTAKES = "lllist";
+    private static final String EXPECTED_COMMAND_CORRECTION = ListCommand.COMMAND_WORD + " ";
+    private static final String DELETE_COMAND_WITH_TYPO = "dlete";
+    private static final String INCORRECT_COMMAND_WITH_ARGUMENTS = DELETE_COMAND_WITH_TYPO + " " + THIRD_INDEX;
+    private static final String CORRECT_COMMAND_WITH_ARGUMENTS = DeleteCommand.COMMAND_WORD + " " + THIRD_INDEX + " ";
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -123,6 +146,60 @@ public class CommandBoxTest extends GuiUnitTest {
         commandBoxHandle.run(thirdCommand);
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
+    }
+
+    //@@author ChengSashankh
+    @Test
+    public void handleKeyPress_startingWithTab() {
+        // no completion exists
+        assertInputHistory(KeyCode.TAB, "");
+
+        // one completion exists
+        commandBoxHandle.run(COMMAND_WITH_ONE_COMPLETION);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_WITH_ONE_COMPLETION);
+
+        // no change on multiple tab press
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_WITH_ONE_COMPLETION);
+
+        // three possible completions exist
+        commandBoxHandle.run(COMMAND_WITH_MULTIPLE_COMPLETIONS);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_FIRST_COMPLETION);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_SECOND_COMPLETION);
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_THIRD_COMPLETION);
+
+        // on further tab press it should cycle through
+        assertInputHistory(KeyCode.TAB, COMPLETE_COMMAND_FIRST_COMPLETION);
+
+        // incorrect command phrase is attempted to be completed
+        commandBoxHandle.run(COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
+    }
+    //@@author
+
+    @Test
+    public void handleKeyPress_afterSpace() {
+        // no correction exists
+        assertInputHistory(KeyCode.SPACE, " ");
+
+        // missing character correction exists
+        commandBoxHandle.run(COMMAND_WITH_MISSING_CHARACTER);
+        assertInputHistory(KeyCode.SPACE, EXPECTED_COMMAND_CORRECTION);
+
+        // additional character correction exists
+        commandBoxHandle.run(COMMAND_WITH_EXTRA_CHARACTER);
+        assertInputHistory(KeyCode.SPACE, EXPECTED_COMMAND_CORRECTION);
+
+        // swapped character correction exists
+        commandBoxHandle.run(COMMAND_WITH_SWAPPED_CHARACTERS);
+        assertInputHistory(KeyCode.SPACE, EXPECTED_COMMAND_CORRECTION);
+
+        // command with arguments copy pasted with typo in command word
+        commandBoxHandle.run(INCORRECT_COMMAND_WITH_ARGUMENTS);
+        assertInputHistory(KeyCode.SPACE, CORRECT_COMMAND_WITH_ARGUMENTS);
+
+        // command that cannot be corrected
+        commandBoxHandle.run(COMMAND_WITH_MULTIPLE_MISTAKES);
+        assertInputHistory(KeyCode.TAB, COMMAND_WITH_MULTIPLE_MISTAKES);
     }
 
     /**

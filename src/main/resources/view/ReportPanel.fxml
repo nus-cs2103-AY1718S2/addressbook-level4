@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?import javafx.scene.chart.PieChart?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.chart.BarChart?>
+<?import javafx.scene.chart.NumberAxis?>
+<?import javafx.scene.chart.CategoryAxis?>
+<?import javafx.scene.control.ListView?>
+<!--@@author anh2111-->
+<ScrollPane styleClass="report-pane" >
+    <GridPane xmlns="http://javafx.com/javafx"
+              xmlns:fx="http://javafx.com/fxml"
+              prefHeight="1000" prefWidth="400.0"
+              minWidth="400.0"
+              styleClass="report-pane"
+              fx:id="report">
+        <columnConstraints>
+            <ColumnConstraints percentWidth="100" hgrow="NEVER"/>
+        </columnConstraints>
+        <rowConstraints>
+            <RowConstraints percentHeight="32" vgrow="ALWAYS" />
+            <RowConstraints percentHeight="32" vgrow="ALWAYS" />
+            <RowConstraints percentHeight="36" vgrow="ALWAYS" />
+        </rowConstraints>
+        <children>
+            <BarChart id="barChart" fx:id="barChart"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="1"
+                      GridPane.rowIndex="0">
+                <xAxis>
+                    <CategoryAxis side="RIGHT" />
+                </xAxis>
+                <yAxis>
+                    <NumberAxis side="TOP" />
+                </yAxis>
+            </BarChart>
+            <PieChart id="pieChart" fx:id="pieChart"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="1"
+                      GridPane.rowIndex="1"
+            />
+            <ListView fx:id="reportListView"
+                      GridPane.columnIndex="0"
+                      GridPane.columnSpan="1"
+                      GridPane.rowIndex="2"
+            />
+        </children>
+    </GridPane>
+</ScrollPane>
+<!--@@author-->

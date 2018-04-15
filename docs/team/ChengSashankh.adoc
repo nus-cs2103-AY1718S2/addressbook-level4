@@ -1,0 +1,119 @@
+= Sashankh Chengavalli Kumar - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Infinity Book
+
+---
+
+== Overview
+
+Infinity Book (IB) is an address book application for tech recruiters who prefer to use a desktop application to manage their candidates. +
+
+IB provides recruiters with an *end-to-end* recruitment solution, from searching for candidates,to adding job postings and saving their resumes and interviews.
+
+== Summary of contributions
+
+. *Major enhancement*: *Job Postings*
+
+** *What it does*: Allows the recruiter to add a job posting along with preferred location, skills, tags and position title. These jobs can be matched to candidate automatically, or edited, listed, searched and deleted.
+** *Justification*: This feature makes all the information in the Infinity Book useful to a recruiter by providing a direct method to match and access relevant data for their job.
+** *Highlights*:
+*** For meaningful implementation of job matching, this enhancement adds a skills field to both Person and Job. This field details the skills possessed by a candidate and those required by the job.
+*** This enhancement also modifies the structure of the model and data handling in the entire application has been modified to suit a Job data list in addition to Person. The implementation effected many changes to the testing tools of the Infinity Book as well.
+*** Job matching is performed in a flexible manner, allowing the recruiter to ignore some fields.
+
+. *Minor enhancement*: Auto-correct and auto-complete
+** *What it does*: Allows the recruiter to auto-complete and auto-correct command words automatically.
+** *Justification*: This feature allows the recruiter to interact with the command line with increased accuracy and speed.
+** *Highlights*:
+*** Auto-correct finds and corrects misspelt command words at one edit distance even in copy pasted commands without affecting arguments.
+*** Auto-complete cycles through all possible completion on multiple key press.
+
+
+. *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/ChengSashankh.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/ChengSashankh.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` and `v1.4.1` ( 2 releases ) on GitHub
+** Enhancements to existing features:
+*** Updated the add and edit command to support the skills field(Pull request https://github.com/CS2103JAN2018-W11-B3/main/pull/157/[#157])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W11-B3/main/pull/174[#174], https://github.com/CS2103JAN2018-W11-B3/main/pull/56[#56], https://github.com/CS2103JAN2018-W11-B3/main/pull/160[#160]
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B3/main/issues/148[148], https://github.com/CS2103JAN2018-W13-B3/main/issues/147[147], https://github.com/CS2103JAN2018-W13-B3/main/issues/154[154], https://github.com/CS2103JAN2018-W13-B3/main/issues/155[155])
+*** Opened non-trivial issues for improvement: https://github.com/CS2103JAN2018-W11-B3/main/issues/54[#54], https://github.com/CS2103JAN2018-W11-B3/main/issues/55[#55]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=jobposting]
+
+---
+
+include::../UserGuide.adoc[tag=jobpostingmatch]
+
+---
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=jobposting]
+
+include::../DeveloperGuide.adoc[tag=jobposting2]
+
+include::../DeveloperGuide.adoc[tag=jobposting3]
+
+include::../DeveloperGuide.adoc[tag=jobposting5]
+
+---
+
+include::../DeveloperGuide.adoc[tag=autocorrect]
+
+----
+The following section contains optional contributions demonstrating technical writing capability.
+----
+[Appendix]
+== Appendix: Additional Contributions
+
+=== User Guide
+include::../UserGuide.adoc[tag=faq]
+
+---
+
+include::../UserGuide.adoc[tag=jobpostinglist]
+
+---
+
+include::../UserGuide.adoc[tag=jobpostingdelete]
+
+---
+
+include::../UserGuide.adoc[tag=editjob]
+
+=== Developer Guide
+
+include::../DeveloperGuide.adoc[tag=jobposting1]
+
+---
+
+include::../DeveloperGuide.adoc[tag=jobposting4]
+
+---
+
+include::../DeveloperGuide.adoc[tag=listandfind]
+
+---
+
+
+
+

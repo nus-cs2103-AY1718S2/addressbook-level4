@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -16,7 +17,11 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.RefreshReportPanelEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ToggleBrowserPanelEvent;
+import seedu.address.commons.events.ui.ToggleFacebookPanelEvent;
+import seedu.address.commons.events.ui.ToggleReportPanelEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -35,12 +40,20 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private FacebookPanel facebookPanel;
+    private ReportPanel reportPanel;
+    private InterviewListPanel interviewListPanel;
     private PersonListPanel personListPanel;
+    private JobListPanel jobListPanel;
     private Config config;
     private UserPrefs prefs;
+    private Boolean isReportPanelOpen;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane browserOrReportPlaceholder;
+
+    @FXML
+    private StackPane reportPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -50,6 +63,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane jobListPanelPlaceholder;
+
+    @FXML
+    private StackPane interviewListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -69,6 +88,12 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+
+        //@@author tiny767
+        Scene scene = primaryStage.getScene();
+        UiTheme.getInstance().setScene(scene);
+        primaryStage.setScene(scene);
+        //@@author
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -116,11 +141,15 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
+        switchToBrowserPanel();
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        jobListPanel = new JobListPanel(logic.getFilteredJobList());
+        jobListPanelPlaceholder.getChildren().add(jobListPanel.getRoot());
+
+        interviewListPanel = new InterviewListPanel(logic.getFilteredInterviewList());
+        interviewListPanelPlaceholder.getChildren().add(interviewListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -130,6 +159,46 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+    }
+    // @@author anh2111
+    /**
+     * Replace the current panel by Report panel
+     */
+    void switchToReportPanel() {
+        reportPanel = new ReportPanel(logic.getReport(), logic.getReportHistory());
+        browserOrReportPlaceholder.getChildren().clear();
+        browserOrReportPlaceholder.getChildren().add(reportPanel.getRoot());
+        isReportPanelOpen = true;
+    }
+
+    /**
+     * Replace the current panel by Browser panel
+     */
+    void switchToBrowserPanel() {
+        browserPanel = new BrowserPanel();
+        browserOrReportPlaceholder.getChildren().clear();
+        browserOrReportPlaceholder.getChildren().add(browserPanel.getRoot());
+        isReportPanelOpen = false;
+    }
+
+    // @@author
+    //@@author tiny767
+    /**
+     * Replace the current panel by Facebook panel
+     */
+    void switchToFacebookPanel() {
+        facebookPanel = new FacebookPanel();
+        browserOrReportPlaceholder.getChildren().clear();
+        browserOrReportPlaceholder.getChildren().add(facebookPanel.getRoot());
+        isReportPanelOpen = false;
+    }
+    //@@author
+
+    @Subscribe
+    private void handleRefreshReportPanel(RefreshReportPanelEvent event) {
+        if (isReportPanelOpen) {
+            switchToReportPanel();
+        }
     }
 
     void hide() {
@@ -193,5 +262,21 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+    // @@author anh2111
+    @Subscribe
+    private void handleToggleBrowserPanelEvent(ToggleBrowserPanelEvent event) {
+        switchToBrowserPanel();
+    }
+
+    @Subscribe
+    private void handleToggleReportPanelEvent(ToggleReportPanelEvent event) {
+        switchToReportPanel();
+    }
+    // @@author
+
+    @Subscribe
+    private void handleToggleFacebookPanelEvent(ToggleFacebookPanelEvent event) {
+        switchToFacebookPanel();
     }
 }

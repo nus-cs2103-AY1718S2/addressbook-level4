@@ -13,6 +13,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
+    private static final String[] TAG_COLORS = {"red", "pink", "blue"};
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -37,7 +38,11 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label skill;
+    @FXML
     private FlowPane tags;
+    @FXML
+    private Label remark;
 
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
@@ -47,8 +52,34 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        remark.setText(person.getRemark().value);
+        skill.setText(person.getSkills().value);
+
+        initTags(person);
     }
+
+    //@@author tiny767
+    /**
+     * Sets up a person's tags
+     * @param person
+     */
+    private void initTags(Person person) {
+        person.getTags().forEach(tag -> {
+            Label label = new Label(tag.tagName);
+            label.getStyleClass().add(getTagColorFor(tag.tagName));
+            tags.getChildren().add(label);
+        });
+    }
+
+    /**
+     * Gets the color for a tag based on its name
+     * @param tagName
+     * @return
+     */
+    private String getTagColorFor(String tagName) {
+        return TAG_COLORS[Math.abs(tagName.hashCode()) % TAG_COLORS.length];
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

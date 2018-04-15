@@ -8,12 +8,14 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Platform;
 import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+
 
 /**
  * The Browser Panel of the App.
@@ -22,14 +24,18 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/";
 
     private static final String FXML = "BrowserPanel.fxml";
+    private static String processType;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     @FXML
     private WebView browser;
+
+    private Label location;
+
 
     public BrowserPanel() {
         super(FXML);
@@ -41,8 +47,16 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    /**
+     * Loading the personal page with the given url
+     * If @param person is null. Return default page.
+    */
     private void loadPersonPage(Person person) {
-        loadPage(SEARCH_PAGE_URL + person.getName().fullName);
+        if (person.getLink() == null) {
+            loadPage(SEARCH_PAGE_URL);
+        } else {
+            loadPage(person.getLink().value);
+        }
     }
 
     public void loadPage(String url) {

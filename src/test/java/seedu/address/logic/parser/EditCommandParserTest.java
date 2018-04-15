@@ -62,6 +62,9 @@ public class EditCommandParserTest {
 
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+
+        // only option specified
+        assertParseFailure(parser, "-add-tag", MESSAGE_INVALID_FORMAT);
     }
 
     @Test

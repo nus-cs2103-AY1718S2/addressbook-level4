@@ -6,6 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.job.Job;
 import seedu.address.model.person.Person;
 
 /**
@@ -50,5 +51,12 @@ public class TestUtil {
      */
     public static Person getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
+    }
+
+    /**
+     * Returns the job in the {@code model}'s job list at {@code index}.
+     */
+    public static Job getJob(Model model, Index index) {
+        return model.getAddressBook().getJobList().get(index.getZeroBased());
     }
 }

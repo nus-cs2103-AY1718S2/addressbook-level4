@@ -31,6 +31,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: select the last card in the person list -> selected */
         Index personCount = Index.fromOneBased(getTypicalPersons().size());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
+
         assertCommandSuccess(command, personCount);
 
         /* Case: undo previous selection -> rejected */

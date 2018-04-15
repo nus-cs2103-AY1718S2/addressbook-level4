@@ -1116,8 +1116,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
 |=======================================================================
 
-_{More to be added}_
-
 [appendix]
 == Use Cases
 
@@ -1217,9 +1215,6 @@ Steps 4a1-4a2 are repeated until the command and alias entered are valid.
 +
 Use case ends
 
-
-_{More to be added}_
-
 [appendix]
 == Non Functional Requirements
 
@@ -1235,8 +1230,6 @@ _{More to be added}_
 .  Should work in both 32-bit and 64-bit environments.
 .  Should be usable by a new user who has not used command line interface before.
 
-_{More to be added}_
-
 [appendix]
 == Glossary
 
@@ -1245,23 +1238,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -1285,8 +1261,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1299,8 +1273,6 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Saving data
 
 . Dealing with missing/corrupted data files
@@ -1309,5 +1281,3 @@ _{ more test cases ... }_
    Expected: Application opens with an address book with dummy data.
 .. Test case: Corrupt `addressbook.xml` by editing it +
    Expected: Application opens with an address book with dummy data.
-
-_{ more test cases ... }_

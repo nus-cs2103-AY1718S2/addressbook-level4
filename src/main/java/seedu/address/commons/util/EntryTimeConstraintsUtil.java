@@ -17,7 +17,7 @@ import seedu.address.model.entry.StartTime;
 public class EntryTimeConstraintsUtil {
 
     public static final String ENTRY_DURATION_CONSTRAINTS =
-            "Entry must last at least 15 minutes if ending in same day."; //Constraint of CalendarFX entries
+            "Entry must last at least 15 minutes."; //Constraint of CalendarFX entries
     public static final String START_AND_END_DATE_CONSTRAINTS = "Start Date cannot be later than End Date.";
     public static final String START_AND_END_TIME_CONSTRAINTS =
             "Start Time cannot be later than End Time if Entry ends on same date.";

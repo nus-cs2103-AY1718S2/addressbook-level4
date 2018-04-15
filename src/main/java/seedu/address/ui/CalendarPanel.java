@@ -53,6 +53,15 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     /**
+     * Sets up CalendarFX.
+     */
+    public void initialiseCalendar(Calendar calendar) {
+        calendarSource.getCalendars().addAll(calendar);
+        calendarView.getCalendarSources().setAll(calendarSource);
+        calendarPanelHolder.getChildren().setAll(calendarView);
+    }
+
+    /**
      * Adapted from CalendarFX developer manual QuickStart section.
      * http://dlsc.com/wp-content/html/calendarfx/manual.html#_quick_start
      */
@@ -80,15 +89,6 @@ public class CalendarPanel extends UiPart<Region> {
         updateTimeThread.setPriority(Thread.MIN_PRIORITY);
         updateTimeThread.setDaemon(true);
         updateTimeThread.start();
-    }
-
-    /**
-     * Sets up CalendarFX.
-     */
-    public void initialiseCalendar(Calendar calendar) {
-        calendarSource.getCalendars().addAll(calendar);
-        calendarView.getCalendarSources().setAll(calendarSource);
-        calendarPanelHolder.getChildren().setAll(calendarView);
     }
 
     /**

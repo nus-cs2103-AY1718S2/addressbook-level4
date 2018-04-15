@@ -154,7 +154,7 @@ The following section provides information about the software architecture of Co
 [[Design-Architecture]]
 === Architecture
 
-The *_Architecture Diagram_* given below (Figure 1) explains the high-level design of the App.
+The *_Architecture Diagram_* given below (Figure 4) explains the high-level design of the App.
 
 .Architecture Diagram
 image::Architecture.png[width="600" align="center"]
@@ -189,7 +189,7 @@ Each of the four components does the following:
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see Figure 2 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 5 below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800" align="center"]
@@ -197,7 +197,7 @@ image::LogicClassDiagram.png[width="800" align="center"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ (Figure 3) below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ (Figure 6) below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeletePerson.png[width="800" align="center"]
@@ -205,7 +205,7 @@ image::SDforDeletePerson.png[width="800" align="center"]
 [NOTE]
 Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The _Sequence Diagram_ (Figure 4) below shows how `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The _Sequence Diagram_ (Figure 7) below shows how `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800" align="center"]
@@ -219,7 +219,7 @@ The sections from 3.2 to 3.5 below give more details of each component.
 === UI Component
 
 The `UI` Component consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-Figure 5 below shows the structure of the `UI` component.
+Figure 8 below shows the structure of the `UI` component.
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800" align="center"]
@@ -238,7 +238,7 @@ The `UI` Component does the following:
 === Logic Component
 
 The `Logic` Component deals with how each command would be parsed and executed in an event-driven design.
-Figure 6 below shows the structure of the `Logic` Component.
+Figure 9 below shows the structure of the `Logic` Component.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
@@ -247,7 +247,7 @@ image::LogicClassDiagram.png[width="800" align="center"]
 .Structure of Commands in the Logic Component.
 image::LogicCommandClassDiagram.png[width="800" align="center"]
 
-This diagram above (Figure 7) shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+This diagram above (Figure 10) shows the finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 
 *API* for the `Logic` Component:
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
@@ -259,7 +259,7 @@ The `Logic` Component does the following:
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the _Sequence Diagram_ (Figure 8) for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the _Sequence Diagram_ (Figure 11) for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800" align="center"]
@@ -269,7 +269,7 @@ image::DeletePersonSdForLogic.png[width="800" align="center"]
 
 The `Model` Component handles the contacts, orders, and events in ContactSails and all their stored details in data structures.
 These structures also provide APIs to create, read, update and delete the details of these objects.
-Figure 9 below shows the structure of the `Model` Component.
+Figure 12 below shows the structure of the `Model` Component.
 
 .Structure of the `Model` Component
 image::ModelClassDiagram.png[width="800" align="center"]
@@ -287,7 +287,7 @@ The `Model` Component does the following:
 === Storage Component
 
 The `Storage` Component handles the storing of data in the address book on the local computer.
-Figure 10 below shows the structure of the `Storage` Component.
+Figure 13 below shows the structure of the `Storage` Component.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800" align="center"]
@@ -317,14 +317,15 @@ This feature allows users to undo and redo certain commands executed in the curr
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. Figure 11 shows the inheritance diagram for commands.
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+Figure 14 shows the inheritance diagram for commands.
 
 .Inheritance Diagram for commands in `Logic` Component
 image::LogicCommandClassDiagram.png[width="800" align="center"]
 
-As you can see from figure 11, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from figure 14, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
-Commands that are not undoable are implemented this way:
+Commands that are not undoable have similar implementations like the code snippet below:
 [source,java]
 ----
 public class ListCommand extends Command {
@@ -335,7 +336,7 @@ public class ListCommand extends Command {
 }
 ----
 
-With the extra layer, the commands that are undoable are implemented this way:
+With the extra layer, the commands that are undoable are implemented similarly to the code snippet below:
 [source,java]
 ----
 public abstract class UndoableCommand extends Command {
@@ -357,53 +358,82 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in `AddressBook` residing in `Model`.
+The current state of the ContactSails is saved before the `delete 5` command executes.
+Figure 15 below shows the state of `UndoRedoStack` before and after the execution of `delete 5` command.
 
 .UndoRedoStack before and after executing 1 Delete Command
 image::UndoRedoStartingStackDiagram.png[width="800" align="center"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+In Figure 15, when `delete 5` command finishes execution, the command will be pushed onto the `undoStack` (the state before the execution is saved together with the command).
+
+As the user continues to use the program, more commands are added into the `undoStack`.
+For example, the user may execute `add n/David ...` to add a new person.
+Figure 16 below shows the change in `undoStack` when `add` command is executed right after `delete 5` command.
 
 .UndoRedoStack before and after Executing 1 Add Command
 image::UndoRedoNewCommand1StackDiagram.png[width="800" align="center"]
+
+In Figure 16, `undoStack` initially contains `delete 5` command alongside the state of `Model` before `delete 5` was executed.
+Upon executing `add` command, `add` command and the state of ContactSails before execution of `add` command is added to the `undoStack`.
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
+We will restore `Model` to the state before the `add` command executed.
+Figure 17 below shows the change in `UndoRedoStack` when the `undo` is performed.
 
 .UndoRedoStack before and after executing Undo Command
 image::UndoRedoExecuteUndoStackDiagram.png[width="800" align="center"]
 
+In Figure 17, `undo` results in `add` command in the `undoStack` being popped out and pushed into `redoStack`.
+At the same time, the state of `Model` before the execution of `add` command is restored.
+
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The sequence diagram in Figure 18 shows how the undo operation works:
 
 .Sequence Diagram for executing Undo Command
 image::UndoRedoSequenceDiagram.png[width="800" align="center"]
+
+In Figure 18, when the user enters the command to `undo`, `AddressBookParser` will parse the given command and create an `UndoCommand` to be returned to `LogicManager`.
+`LogicManager` will call `execute()` method in `UndoCommand`, which in turn calls `popUndo()` method in `UndoRedoStack`.
+`UndoRedoStack` will return the most recently executed `UndoableCommand` popped from the `undoStack` within `UndoRedoStack`.
+`UndoCommand` will then call `undo()` on the `XYZCommand`, which restores the initial state of `Model` before `XYZCommand` was executed.
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+Suppose the user now decides to execute a new command, `clear`.
+Figure 19 below shows the change in `UndoRedoStack` after executing `clear` command.
 
 .UndoRedoStack before and after executing Clear Command
 image::UndoRedoNewCommand2StackDiagram.png[width="800" align="center"]
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+In Figure 19, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty.
+Its contents are cleared as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+
+Commands that are not undoable are not added into the `undoStack`.
+For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution as seen in Figure 20 below.
 
 .UndoRedoStack before and after executing List Command
 image::UndoRedoNewCommand3StackDiagram.png[width="800" align="center"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+In Figure 20, `undoStack` remained the same even after `list` command is executed since only commands inherited from `UndoableCommand` will be pushed to `undoStack`.
 
-.Execution Path when Undoable Commands
+The following activity diagram in Figure 21 summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+
+.Activity Diagram after a `Command` is executed
 image::UndoRedoActivityDiagram.png[width="650" align="center"]
+
+In Figure 21, after execution, any `Command` that is not `UndoCommand` nor `RedoCommand` will cause `redoStack` to be cleared.
+Afterwards, if the `Command` is an `UndoableCommand`, it will be pushed to `undoStack` before control is returned to the user eventually.
 
 ==== Design considerations
 
@@ -411,16 +441,16 @@ image::UndoRedoActivityDiagram.png[width="650" align="center"]
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: It is hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
+** Cons: It is hard for new developers to understand the template pattern used to design this implementation.
+* **Alternative 2:** Simply override `execute()`
 ** Pros: The overriding does not involve the template pattern, which is easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire `Model` in terms of saving `AddressBook` and `CalendarManager`.
 ** Pros: This method is easy to implement.
-** Cons: This may have performance issues in terms of memory usage.
+** Cons: This may cause performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
 ** Pros: This will use less memory (e.g. for `delete`, just save the person being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
@@ -453,7 +483,7 @@ The `PersonPanel` replaces the previous `BrowserPanel`, and is called upon using
 `PersonPanel` will be used to display contact's information, groups and preferences depending on user's actions.
 
 ==== Layout Implementation
-The specifications for the layout of PersonPanel is in `PersonPanel.fxml`. Figure 19 shows the visual layout of the `PersonPanel`.
+The specifications for the layout of PersonPanel is in `PersonPanel.fxml`. Figure 22 shows the visual layout of the `PersonPanel`.
 
 .Visual layout of PersonPanel
 image::PersonPanelLayout.png[width="800" align="center"]
@@ -784,8 +814,7 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 // tag::calendarentries[]
 === Calendar and Entry tracking
 
-Entries refer to meetings, deadlines and order deliveries created by users in ContactSails.
-Users can create, edit and delete entries.
+Users can create, edit and delete entries, which can represent events such as meetings or deadlines.
 ContactSails has a calendar interface that displays existing entries for better visualisation of the user's schedule.
 
 ==== Current Implementation
@@ -794,6 +823,7 @@ ContactSails uses CalendarFX's calendar interface. The `Model` component manages
 the calendar's internal list of entries.
 
 ===== Calendar Entries
+
 `CalendarEntry` represents an entry created by users.
 
 A `CalendarEntry` is implemented in the following manner:
@@ -822,39 +852,135 @@ The following is a brief description of the attributes of `CalendarEntry`:
 * endTime: Represents ending time of the entry in HH:MM format (24-Hour format).
 
 Entry management is facilitated by `CalendarManager` residing in `ModelManager`.
-It supports the adding, removing and editing of `CalendarEntry`(e.g. `addEntry`, `deleteEntry`) and maintains a `UniqueCalendarEntryList` to store `CalendarEntry`.
-Ongoing orders of a person will also appear as `CalendarEntry` based on the `DeliveryDate` attribute of the `Order`.
+It supports the adding, removing and editing of `CalendarEntry`(e.g. `addCalendarEntry`, `deleteCalendarEntry`) and maintains a `UniqueCalendarEntryList` to store `CalendarEntry`.
 
 The following diagram shows class diagram of `Model` Component related to `CalendarEntry`.
 
 .Classes related to entry management in `Model` and `Commons`
 image::CalendarEntryClassDiagram.png[width="800" align="center"]
 
-In the Figure 22, `ModelManager` contains an instance of `CalendarManager`. `ModelManager` calls the functions in `CalendarManager` to manage `CalendarEntries` stored in it.
+In the Figure 34, `ModelManager` contains an instance of `CalendarManager`. `ModelManager` calls the functions in `CalendarManager` to manage `CalendarEntries` stored in it.
 `CalendarManager` in turn calls methods in `UniqueCalendarEntryList` to add, remove or edit `CalendarEntries` stored in it.
 `CalendarManager` contains an instance of `Calendar` belonging to CalendarFX's library. `Calendar` stores `Entry`, as defined in CalendarFX's library.
-`CalendarEntry` is converted to `Entry` before they can be added to `Calendar` via `CalendarUtil` in the `Commons` class.
+`CalendarEntry` is converted to `Entry` before they can be added to `Calendar` via `CalendarEntryConversionUtil` in the `Commons` class.
 
-`Logic` Component contains the commands required to manage user's entries (e.g. `AddEntryCommand`, `DeleteEntryCommand`).
+`Logic` Component contains the commands required to manage user's entries, which are `AddEntryCommand`, `DeleteEntryCommand` and `EditEntryCommand`.
+These commands inherit from `UndoableCommand` and are thus can be undone via the `UndoCommand`.
 
 The sequence diagram below shows how adding an entry works:
 
-.Sequence Diagram for adding of an entry into ContactSails
-image::AddEntrySD.png[width="800" align="center]
+.Sequence Diagram for adding an entry into ContactSails
+image::AddEntrySD.png[width="800" align="center"]
 
-In Figure 23, when a user enters the command to add an entry, `AddEntryCommandParser` is invoked which creates a `CalendarEntry` based on user input. The parser then creates `AddEntryCommand` passing the `CalendarEntry` to it.
+In Figure 35, when a user enters the command to add an entry, `AddEntryCommandParser` is invoked which creates a `CalendarEntry` based on user input. The parser then creates `AddEntryCommand` passing the `CalendarEntry` to it.
 When AddEntryCommand is executed, `CalendarEntry` is passed from `AddEntryCommand` to `ModelManager` and to `CalendarManager`, which adds it to `UniqueCalendarEntryList`.
-The `CalendarEntry` is then converted to `Entry` to be added to `Calendar` and control is eventually returned to the user.
+The `CalendarEntry` is then converted to `Entry` to be added to `Calendar` (not shown in diagram) and control is eventually returned to the user.
 
-Storing of `CalendarEvent` data is managed by `CalendarManagerStorage` within `Storage` Component, converting `CalendarEntry` to `XmlAdaptedCalendarEntry` to store in a .xml file.
-This file is separate from the one storing `Person` and `Order`.
+Storing of `CalendarEntry` data is managed by `CalendarManagerStorage` within `Storage` Component.
+`CalendarEntry` is converted to `XmlAdaptedCalendarEntry`, which can be stored in `XmlSerializableCalendarManager`.
+`XmlSerializableCalendarManager` is stored in a .xml file using `XmlFileStorage`.
 
-===== Calendar Interface
+===== Calendar Interface and Center Panel
 
 `CalendarView` within CalendarFX's library uses the `Calendar` within `CalendarManager` in `Model` to display all entries stored within `Calendar`.
 `CalendarPanel` residing in `Ui` component creates an instance of `CalendarView` to manage the display of the calendar.
-The panel responds to events related to the calendar, such as changing the viewing format or changing the current date displayed.
-Any changes made to `Calendar` in `Model` will automatically be shown via the `CalendarView`.
+
+The following code snippet shows how `CalendarPanel` is initialised.
+[source,java]
+----
+public class CalendarPanel extends UiPart<Region> {
+
+    private static final String FXML = "CalendarPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    private final CalendarView calendarView;
+    private final CalendarSource calendarSource;
+
+    @FXML
+    private StackPane calendarPanelHolder;
+
+    public CalendarPanel(Calendar calendar) {
+        super(FXML);
+        calendarView = CalendarFxUtil.returnModifiedCalendarView();
+        calendarSource = new CalendarSource();
+
+        initialiseCalendar(calendar);
+        createTimeThread();
+    }
+
+    // Methods to initialise calendar, change display of calendar, etc.
+}
+----
+
+When `CalendarPanel` is initialised, `CalendarFxUtil` returns an instance of `CalendarView` that is modified to remove unused features within `CalendarView`, such as the ability to print the calendar.
+`CalendarSource` is required to store the `Calendar` from `Model` and `CalendarView` in turn stores `CalendarSource` before it can display contents of `Calendar`. +
+The setting up of `CalendarSource` and `CalendarView` is done by `initialiseCalendar(calendar)`. `createTimeThread()` creates a `Thread` that updates the `timeProperty()` in `CalendarView` every 10 seconds,
+ensuring that the current time displayed within the calendar interface matches the actual time the user is using the application.
+
+Any changes made to `Calendar` in `Model` will automatically be shown via the `CalendarView` as `Calendar` is a class-level member in `CalendarManager` that is passed to `CalendarPanel`.
+`updateCalendar()` in `CalendarManager` clears all entries within `Calendar` and adds `CalendarEntries` converted to `Entries` to `Calendar`.
+
+As the placement of `CalendarPanel` coincides with that of `PersonPanel` at the center of the GUI interface of ContactSails, `CenterPanel` is used in place to switch between displaying contents of the two panels.
+
+The following code snippet shows how `CenterPanel` is initialised.
+[source, java]
+----
+public class CenterPanel extends UiPart<Region> {
+
+    private static final String FXML = "CenterPanel.fxml";
+
+    private CalendarPanel calendarPanel;
+
+    private PersonPanel personPanel;
+
+    @FXML
+    private StackPane centerPlaceholder;
+
+    public CenterPanel(Calendar calendar) {
+        super(FXML);
+
+        personPanel = new PersonPanel();
+        calendarPanel = new CalendarPanel(calendar);
+
+        displayPersonPanel();
+        registerAsAnEventHandler(this);
+    }
+    // Methods to handle BaseEvents, display either panels, etc.
+}
+----
+
+`CenterPanel` contains one instance of `CalendarPanel` and `PersonPanel`. `PersonPanel` is displayed upon initialising `CenterPanel` by calling `displayPersonPanel()`.
+`displayPersonPanel()` is also called when `BaseEvents` related to `PersonPanel` is received by `CenterPanel`.
+
+The following code snippet below shows how `CenterPanel` displays `PersonPanel`.
+[source, java]
+----
+public void displayPersonPanel() {
+        if (!centerPlaceholder.getChildren().contains(personPanel.getRoot())) {
+            centerPlaceholder.getChildren().clear();
+            centerPlaceholder.getChildren().add(personPanel.getRoot());
+        }
+    }
+----
+
+Based on the snippet, `CenterPanel` checks whether `centerPlaceholder` contains root node of `PersonPanel`.
+If it does not, centerPlaceholder` will clear any existing child nodes and add root node of `PersonPanel`, which causes `PersonPanel` to be displayed.
+
+`CenterPanel` displays `CalendarPanel` with `displayCalendarPanel()`, which is written similar to `displayPersonPanel()`.
+
+`CenterPanel` subscribes to `BaseEvents` related to the `CalendarPanel` and `PersonPanel`, such as `ChangeCalendarPageRequestEvent` and `PersonPanelSelectionChangedEvent`.
+Thus, `BaseEvents` received by `CenterPanel` can be split into two categories, one meant for `CalendarPanel`, and the other for `PersonPanel`.
+The following sequence diagram below shows how `ChangeCalendarPageRequestEvent` is handled by `CenterPanel`.
+
+.Sequence Diagram of `ViewTodayCommand` posting `ChangeCalendarPageRequestEvent`
+image::CalendarPanelSD.png[width="800" align="center"]
+
+In Figure 36, `ViewTodayCommand` posts a new `ChangeCalendarPageRequestEvent` to the `EventsCenter`.
+`CenterPanel` handles the event by calling `handleChangeCalendarPageRequestEvent()` in `CalendarPanel` before calling `displayCalendarPanel()`.
+In `CalendarPanel`, `getRequestType()` is called on the event to check the page that is requested.
+Given that `REQUEST_TODAY` is the `requestType` of the event, `CalendarView` will switch the displayed page to today.
+The calendar will be displayed at `CenterPanel` as control is eventually returned to the user.
 
 ==== Design Considerations
 
@@ -863,8 +989,8 @@ Any changes made to `Calendar` in `Model` will automatically be shown via the `C
 ** Pros: Doing so does not require constant Internet access to manage data of Calendar. CalendarFX can also synchronise with certain calendar applications such as Google Calendar.
 As less code is written to implement it, the effort required to maintain or debug is potentially lesser.
 ** Cons: CalendarFX has many features that are currently not used in ContactSails. Developers who intend to use them need to decide and learn how to implement such features by themselves.
-Developers cannot customise the calendar itself to implement features not present in the library or modify existing features.
-Bugs present in the library cannot be easily fixed by developers.
+ContactSails developers cannot customise the calendar itself to implement features not present in the library or modify existing features.
+Bugs present in the library cannot be easily fixed by non-developers of CalendarFX.
 
 
 * **Alternative 2:** Create a calendar using JavaFX to manage entries.
@@ -872,6 +998,16 @@ Bugs present in the library cannot be easily fixed by developers.
 ** Cons: There is greater probability of bugs created as implementation have to be created from scratch.
 As compared to using third-party libraries, substantial lines of code has to be written, thus debugging may be harder.
 Design of features of the calendar have to be decided by developers themselves, which requires more time and effort to implement the features.
+
+===== Aspect: Switching between `PersonPanel` and `CalendarPanel`
+* **Alternative 1 (current choice):** An additional panel, `CenterPanel` is used to switch between the two panels. `CenterPanel` subscribes `BaseEvent` meant for the two panels to facilitate the switching of the panels.
+** Pros: All `BaseEvents` meant for these two panels can be consolidated in one place.
+** Cons: It may not be intuitive for some developers to have `CenterPanel` register for `BaseEvent` meant for `PersonPanel` and `CalendarPanel`.
+
+
+* **Alternative 2:** `MainWindow` will subscribe to `BaseEvent` for the two panels and switch between them accordingly.
+** Pros: There is no need to create an additional Class to handle the switching, thus saving the resources and memory required.
+** Cons: This would violate the Single Responsibility Principle and Separation of Concerns as `MainWindow` has to manage other Ui related events such as opening the Help Window.
 // end::calendarentries[]
 
 [[Implementation-Configuration]]
@@ -1155,7 +1291,7 @@ A typical user from our target user profile:
 * is reasonably comfortable using CLI apps.
 
 *Value proposition*: ContactSails serve as the consolidation platform for all contacts from different platforms for
- users to communicate with customers more easily, analyse and apply their marketing strategies more effectively and efficiently.
+ users to communicate with them more easily, analyse and apply their marketing strategies more effectively and efficiently.
 
 *Feature Contribution:*
 
@@ -1173,8 +1309,8 @@ If customers have any issues regarding their orders, salespersons will be able t
 2. *Alicia Ho Sor Sian*
 * *Major Feature*: Ability to manage entries which are displayed in a calendar.
 ** Allows users to add, edit or delete entries, which can represent events or deadlines including order deliveries.
-** Once set, the event will be displayed in ContactSails' calendar, which shows all incoming events for the current month and after.
-** Orders set by users will automatically appear in the calendar without the user having to create an event for it.
+** Once set, the entry will be displayed in ContactSails' calendar, which shows all incoming events for the current date.
+** The calendar can be displayed in Day-view, Week-view or Month-view, depending on the user.
 * *Minor Feature*: Classifying tags into two categories, groups and preferences.
 ** Create 2 distinct categories of tags representing groups that a contact belongs to and preferences that a contact has.
 ** Each category is displayed at a separate location in the Ui.
@@ -1226,7 +1362,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |lazy user |use short-forms for commands |execute commands more quickly |1.0
 
-|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts |1.5
+|`* * *` |task-oriented user |implement meetings or deadlines for contacts |keep track of tasks to do for the contacts |1.3
 
 |`* * *` |organized user |delete multiple contacts at a time |remove the contacts I no longer need quickly |2.0
 
@@ -1236,7 +1372,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user with many contacts |sort the contacts by last contacted time |find contacts I corresponded with recently |2.0
 
-|`* * *` |salesperson |view a list of current orders| keep track of which customers I might need to contact at that point in time |2.0
+|`* * *` |salesperson |view a list of current orders| keep track of which customers I might need to contact at that point in time |1.2
 
 |`* * *` |salesperson |see a list of current customers |view necessary information about current customers more quickly |2.0
 
@@ -1248,15 +1384,15 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |salesperson |see the top preference among all contacts |know what products I should focus on |2.0
 
-|`* * *` |salesperson |edit specific details of contacts |update my customers' information more conveniently |2.0
+|`* * *` |salesperson |edit specific details of contacts |update my customers' information more conveniently |1.0
 
 |`* * *` |salesperson |see top contacts |divide my attention among my customers as needed |2.0
 
-|`* *` |salesperson |export contacts |share my customers' public details with concerned businesses |2.0
+|`* *` |salesperson |export contacts |share my customers' public details with concerned businesses |1.5
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident |1.0
 
-|`* *` |user who prefers visual imagery |use a calendar to know if there are any tasks or deadlines |clearer view on how to prioritise my work |1.5
+|`* *` |user who prefers visual imagery |use a calendar to know if there are any tasks or deadlines |clearer view on how to prioritise my work |1.3
 
 |`* *` |user |access and change my preferred Email Service provider within the ContactSails |look at my emails and my contacts at the same time |2.0
 
@@ -1264,13 +1400,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user who is fast at typing |copy a contact's email to the clipboard without using a mouse |save time in emailing a contact |2.0
 
-|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details |1.5
+|`* *` |lazy user |add contact details in any order |don't need to remember the order to enter the details |1.0
 
 |`* *` |lazy user |auto-completion of commands |execute commands quickly |1.1
 
 |`* *` |user |add notes to a contact |have a clearer description about the contact |2.0
 
-|`* *` |user |group contacts using tags |categorize my customers as needed |1.5
+|`* *` |user |group contacts using tags |categorize my customers as needed |1.0
 
 |`* *` |user |change the theme and font of the application |personalize my AddressBook |1.5
 
@@ -1426,19 +1562,19 @@ Use case ends.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Add contact specific tasks
+=== Use case: Add calendar entry
 
 *MSS*
 
-1.  User selects contact to add a task for and enters task description and deadline.
-2.  ContactSails adds task to specified contact and shows a success message.
+1.  User requests to add an entry with specified details.
+2.  ContactSails adds entry to list of entries.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 1a. User selects invalid contact.
+* 1a. User adds entry with invalid details.
 +
 [none]
 ** 1a1. ContactSails shows an error message.
@@ -1446,12 +1582,33 @@ Use case ends.
 Use case ends.
 
 [none]
-* 1b. User enters invalid task details.
+* 1b. User enters duplicate entry.
 +
 [none]
-** 1b1. ContactSails shows en error message.
+** 1b1. ContactSails shows an error message.
 +
 Use case ends.
+
+[discrete]
+=== Use case: Delete calendar entry
+
+*MSS*
+
+1.  User requests to delete an entry at specified index of entry list.
+2.  ContactSails deletes the entry at specified index.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User gives invalid index.
++
+[none]
+** 1a1. ContactSails shows an error message.
++
+Use case ends.
+
 
 [discrete]
 === Use case: Find persons by name
@@ -1951,3 +2108,88 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect `theme` commands to try:
     ** `theme` (no version specified) +
    Expected: Similar to previous.
+
+=== Adding a Calendar Entry
+
+. *Adding a Calendar Entry*
+
+.. Prerequisites:
+** List calendar entries using the `entrylist` command.
+.. Test case: `entryadd t/Meet with Supplier sd/04-04-2018 ed/04-04-2018 st/10:00 et/12:00` +
+   Expected: Calendar Entry is added to the Calendar Entry List, appearing at the last index. Details of the added calendar entry shown in the status message. Calendar is displayed. Timestamp in the status bar is updated.
+.. Test case: `entryadd t/Meet with Supplier sd/04-04-2018 ed/04-04-2018 st/10:00 et/12:00` +
+   Expected: Duplicate calendar entry is not added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `entryadd` commands to try:
+    ** `entryadd sd/10-04-2018 st/10:00 et/12:30` (compulsory fields missing) +
+    ** `entryadd t/Get Books et/10:00 ed/14.04.2018` (invalid date format) +
+    ** `entryadd t/Get Car et/2359 ed/14-04-2018` (invalid time format) +
+    ** `entryadd t/RoadShow at Orchard sd/04-05-2018 ed/05-05-2018 st/23:50 et/00:01` (duration of entry must be at least 15 minutes) +
+   Expected: Similar to previous.
+
+=== Deleting a Calendar Entry
+
+. *Deleting a Calendar Entry*
+
+.. Prerequisites:
+** List calendar entries using the `entrylist` command.
+** There should be at least one calendar entry listed.
+.. Test case: `entrydelete 1` +
+   Expected: Calendar entry is deleted. Details of deleted calendar entry shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `entrydelete 0` +
+   Expected: No calendar entry is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect `entrydelete` commands to try:
+    ** `entrydelete` (no index specified) +
+    ** `entrydelete x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+=== Editing a Calendar Entry
+
+. *Editing a Calendar Entry*
+
+.. Prerequisites:
+** List calendar entries using the `entrylist` command.
+** There should be at least one calendar entry listed.
+.. Test case: `entryedit 1 t/Meet with Bosses` +
+   Expected: Calendar entry in calendar entry list is edited and and updated calendar entry is displayed. Details of the edited calendar entry is shown in the status message. Timestamp in the status bar is updated.
+.. Incorrect `entryedit` commands to try:
+    ** `entryedit 1 sd/07-06-2018 ed/06-05-2018` (invalid dates, start date cannot be later than end date) +
+    ** `entryedit 1 sd/07-07-2018 ed/07-07-2018 st/12:00 et/08:00` (invalid times, start time cannot be later than end time for entries ending on the same date) +
+    ** `entryedit x t/Stakeholder Meeting` (where x is larger than the list size) +
+   Expected: Command will fail to execute. Error details shown in the status message. Status bar remains the same.
+
+=== Changing Calendar View
+
+. *Changing Calendar View*
+
+.. Prerequisites:
+** Calendar is displayed at center of interface, displaying in Day-view.
+.. Test case: `calendar month` +
+   Expected: Calendar will change its current view to Month-view. Details of current view of calendar will be displayed in status message.
+.. Correct `calendar` commands to try:
+    ** `calendar week` (Calendar will display in Week-view) +
+    ** `calendar` (Calendar will display in Day-view if no parameter is given) +
+    ** `calendar x@@ ` (Calendar will display in Day-view even if invalid parameters are entered) +
+   Expected: Same as previous
+
+=== Changing displayed date in Calendar
+
+. *Changing displayed date in Calendar*
+
+.. Prerequisites:
+** Calendar is displayed at center of interface, displaying in Day-view.
+.. Test case: `calendarjump td/05-05-2018` +
+   Expected: Calendar will change its displayed date to 05-05-2018. Details of current date of calendar will be displayed in status message.
+.. Incorrect `calendarjump` commands to try:
+    ** `calendarjump 04/04/2018` (No prefix is present) +
+    ** `calendarjump td/04.04.2018` (Wrong format for date) +
+    ** `calendarjump x@@ ` (invalid parameters are entered) +
+   Expected: Command will fail to execute. Error details shown in the status message. Status bar remains the same.
+
+=== Changing displayed page in Calendar
+
+. *Changing displayed page in Calendar*
+
+.. Prerequisites:
+** Calendar is displayed at center of interface, displaying in Day-view.
+.. Test case: `calendarnext` +
+   Expected: Calendar will change its displayed date to the next day (if Day-view is displayed). Command result will be displayed in status message, indicating that calendar has displayed the next page.

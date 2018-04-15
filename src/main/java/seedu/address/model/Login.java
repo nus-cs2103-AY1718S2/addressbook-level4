@@ -1,6 +1,5 @@
 package seedu.address.model;
 
-import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 

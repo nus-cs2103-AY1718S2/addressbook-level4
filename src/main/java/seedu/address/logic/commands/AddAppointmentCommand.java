@@ -26,11 +26,11 @@ public class AddAppointmentCommand extends Command {
             + "Parameters: "
             + "INDEX (must be a positive integer) "
             + "DATE TIME (24-hour clock) \n "
+            + "*DATE must be after today's date \n"
             + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
 
     public static final String MESSAGE_SUCCESS = "A new appointment is added.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exist.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
     private final Index targetPatientIndex;
     private final DateTime dateTime;
 

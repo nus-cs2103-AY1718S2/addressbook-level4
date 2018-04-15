@@ -9,6 +9,7 @@ import java.util.Arrays;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.DateTime;
@@ -42,6 +43,11 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
         String[] argsArray = trimmedArgs.split("\\s");
 
         if (argsArray.length < NO_OF_ARGUMENTS) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        if (DateTime.isBefore(argsArray[DATE_INDEX] + " " + argsArray[TIME_INDEX])) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAppointmentCommand.MESSAGE_USAGE));
         }

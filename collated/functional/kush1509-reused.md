@@ -1,5 +1,5 @@
 # kush1509-reused
-###### /resources/view/Extensions.css
+###### \resources\view\Extensions.css
 ``` css
 /* Source: https://stackoverflow.com/questions/19788661/change-javafx-tab-default-look */
 .tab{

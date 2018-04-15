@@ -164,14 +164,7 @@ public class LoginManager extends ComponentManager implements Login {
 
         return new ModelManager(initialData, userPrefs, username);
     }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof LoginManager // instanceof handles nulls
-                && this.userList.equals(((LoginManager) other).userList));
-    }
-
+    
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object

@@ -62,6 +62,7 @@ include::../UserGuide.adoc[tag=locatecommand]
 |===
 
 include::../DeveloperGuide.adoc[tag=locatecommand]
+include::../DeveloperGuide.adoc[tag=alias]
 
 ---
 

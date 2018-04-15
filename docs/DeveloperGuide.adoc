@@ -547,6 +547,37 @@ It was important to make sure that the `locate` command would use parameters oth
 //@@author
 //end::locatecommand[]
 
+//@@author zhangriqi
+//tag::alias[]
+=== Add Command Alias Enhancement
+In the original enhancement, all the command must be in full text to be considered as a valid command.
+----
+public class AddCommand extends UndoableCommand implements PopulatableCommand {
+
+    public static final String COMMAND_WORD = "add";
+    //@@author zhangriqi
+    public static final String COMMAND_ALIAS = "i";
+    //@@author
+
+     public CommandResult executeUndoableCommand() throws CommandException {
+            requireNonNull(model);
+            try {
+                model.addPerson(toAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
+
+        }
+----
+
+The alias command for all other commands will follow a similar implementation.
+
+==== Rationale
+This feature is implemented to allow a user to enter a command without specifying the entire word of the command.
+//@@author
+//end::alias[]
+
 //@@author jonleeyz
 // tag::tagcolours[]
 === Tag Colours Enhancement

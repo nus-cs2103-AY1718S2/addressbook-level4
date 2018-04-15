@@ -39,6 +39,7 @@ public class AliasListTest extends GuiUnitTest {
         AliasListEvent aliasListEventStub = new AliasListEvent(obsExpected);
 
         aliasList.init(obsExpected);
+        aliasList.setStyle();
         postNow(aliasListEventStub);
         guiRobot.pauseForHuman();
 

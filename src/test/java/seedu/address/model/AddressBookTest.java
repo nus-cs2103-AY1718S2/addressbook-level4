@@ -1,8 +1,8 @@
 package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
+import static seedu.address.testutil.AddressBookBuilder.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -16,8 +16,10 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Debtor;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.transaction.Transaction;
 
 public class AddressBookTest {
 
@@ -30,6 +32,7 @@ public class AddressBookTest {
     public void constructor() {
         assertEquals(Collections.emptyList(), addressBook.getPersonList());
         assertEquals(Collections.emptyList(), addressBook.getTagList());
+        assertEquals(Collections.emptyList(), addressBook.getTransactionList());
     }
 
     @Test
@@ -74,6 +77,13 @@ public class AddressBookTest {
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
+        private final ObservableList<Transaction> transactions = FXCollections.observableArrayList();
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<Transaction> transactions) {
+            this.persons.setAll(persons);
+            this.tags.setAll(tags);
+            this.transactions.setAll(transactions);
+        }
 
         AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
             this.persons.setAll(persons);
@@ -86,8 +96,33 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<Transaction> getTransactionList() {
+            return transactions;
+        }
+
+        @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public DebtsTable getDebtsTable() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Debtor> getDebtorsList() {
+            return null;
+        }
+
+        @Override
+        public void setDebtors(DebtsList debtsList) {
+
+        }
+
+        @Override
+        public void setCreditors(DebtsList debtsList) {
+
         }
     }
 

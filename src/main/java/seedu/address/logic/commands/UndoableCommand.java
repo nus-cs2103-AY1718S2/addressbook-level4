@@ -7,6 +7,7 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Represents a command which can be undone and redone.
@@ -14,7 +15,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
 
-    protected abstract CommandResult executeUndoableCommand() throws CommandException;
+    protected abstract CommandResult executeUndoableCommand() throws CommandException, PersonNotFoundException;
 
     /**
      * Stores the current state of {@code model#addressBook}.
@@ -39,13 +40,14 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
     }
 
     /**
      * Executes the command and updates the filtered person
      * list to show all persons.
      */
-    protected final void redo() {
+    protected final void redo() throws PersonNotFoundException {
         requireNonNull(model);
         try {
             executeUndoableCommand();
@@ -54,10 +56,11 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+
     }
 
     @Override
-    public final CommandResult execute() throws CommandException {
+    public final CommandResult execute() throws CommandException, PersonNotFoundException {
         saveAddressBookSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();

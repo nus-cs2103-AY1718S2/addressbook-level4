@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author steven-jia -->
+<!-- Person with invalid amount field -->
+<addressbook>
+    <transactions>
+        <payer>
+            <name>Alice Pauline</name>
+            <phone>698392023</phone>
+            <email>apauline@example.com</email>
+            <address>789 Alice Road</address>
+            <balance>0.00</balance>
+        </payer>
+        <amount>8.5.5</amount>
+        <description>for lunch meal</description>
+        <payees>
+            <name>Brandon Ingram</name>
+            <phone>457392393</phone>
+            <email>bingram@example.com</email>
+            <address>456 Brandon Road</address>
+            <balance>0.00</balance>
+        </payees>
+    </transactions>
+</addressbook>

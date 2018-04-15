@@ -8,6 +8,7 @@ import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
 
@@ -21,14 +22,18 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedTransaction> transactions;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
      * This empty constructor is required for marshalling.
      */
     public XmlSerializableAddressBook() {
+
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        transactions = new ArrayList<>();
     }
 
     /**
@@ -38,6 +43,8 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        transactions.addAll(src.getTransactionList().stream()
+                .map(XmlAdaptedTransaction::new).collect(Collectors.toList()));
     }
 
     /**
@@ -54,6 +61,14 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedTransaction tr : transactions) {
+            try {
+                addressBook.addTransaction(tr.toModelType());
+            } catch (CommandException e) {
+                e.printStackTrace();
+            }
+        }
+
         return addressBook;
     }
 

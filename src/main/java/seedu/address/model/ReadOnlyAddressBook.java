@@ -1,8 +1,10 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.person.Debtor;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.transaction.Transaction;
 
 /**
  * Unmodifiable view of an address book
@@ -16,9 +18,21 @@ public interface ReadOnlyAddressBook {
     ObservableList<Person> getPersonList();
 
     /**
+     * Returns an unmodifiable view of the transaction list.
+     */
+    ObservableList<Transaction> getTransactionList();
+
+    /**
      * Returns an unmodifiable view of the tags list.
      * This list will not contain any duplicate tags.
      */
     ObservableList<Tag> getTagList();
 
+    DebtsTable getDebtsTable();
+
+    ObservableList<Debtor> getDebtorsList();
+
+    void setDebtors(DebtsList debtsList);
+
+    void setCreditors(DebtsList debtsList);
 }

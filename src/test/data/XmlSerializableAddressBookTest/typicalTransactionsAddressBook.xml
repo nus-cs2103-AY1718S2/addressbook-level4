@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- AddressBook save file which contains the same Person values as in
+{@code TypicalPersons#getTypicalAddressBook()}-->
+<!-- @@author ongkc -->
+<addressbook>
+    <transactions>
+        <transactionType>payment</transactionType>
+        <payer>
+            <name>Alice Pauline</name>
+            <phone>91031282</phone>
+            <email>a.pauline@nus.com</email>
+            <balance>123.00</balance>
+            <tagged>friend</tagged>
+        </payer>
+        <amount>853.00</amount>
+        <description>for lunch meal</description>
+        <dateTime>2018-04-10T19:20:07+08:00</dateTime>
+        <payees>
+            <name>Brandon Ingram</name>
+            <phone>42398390</phone>
+            <email>ingram.b@contact.me</email>
+            <balance>0.00</balance>
+            <tagged>acquaintance</tagged>
+        </payees>
+        <splitMethod>not_applicable</splitMethod>
+        <transactionType>paydebt</transactionType>
+        <payer>
+            <name>Brandon Ingram</name>
+            <phone>91031282</phone>
+            <email>a.pauline@nus.com</email>
+            <balance>123.00</balance>
+            <tagged>friend</tagged>
+        </payer>
+        <amount>853.00</amount>
+        <description>for lunch meal</description>
+        <dateTime>2018-04-10T19:20:07+08:00</dateTime>
+        <payees>
+            <name>Alice Pauline</name>
+            <phone>42398390</phone>
+            <email>ingram.b@contact.me</email>
+            <balance>0.00</balance>
+            <tagged>acquaintance</tagged>
+        </payees>
+        <splitMethod>not_applicable</splitMethod>
+    </transactions>
+</addressbook>

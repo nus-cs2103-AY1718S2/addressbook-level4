@@ -16,6 +16,8 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonPanelNoSelectionEvent;
+import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -34,13 +36,15 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private TransactionListPanel transactionListPanel;
     private PersonListPanel personListPanel;
+    private DebtorListPanel personDebtorListPanel;
+    private CreditorListPanel personCreditorListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane transactionListPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -50,6 +54,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane personDebtorListPanelPlaceholder;
+
+    @FXML
+    private StackPane personCreditorListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -116,11 +126,18 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        personDebtorListPanel = new DebtorListPanel(logic.getFilteredDebtorsList());
+        personDebtorListPanelPlaceholder.getChildren().add(personDebtorListPanel.getRoot());
+
+        personCreditorListPanel = new CreditorListPanel(logic.getFilteredCreditorsList());
+        personCreditorListPanelPlaceholder.getChildren().add(personCreditorListPanel.getRoot());
+
+        transactionListPanel = new TransactionListPanel(logic.getFilteredTransactionList());
+        transactionListPanelPlaceholder.getChildren().add(transactionListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -185,13 +202,22 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.updateFilteredTransactionList(event.getNewSelection().person);
+        logic.updateDebtorsAndCreditorList(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handlePersonPanelNoSelectionEvent(PersonPanelNoSelectionEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        logic.updateFilteredTransactionList();
+        logic.updateDebtorsAndCreditorList();
     }
 }

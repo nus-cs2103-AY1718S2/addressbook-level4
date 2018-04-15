@@ -1,0 +1,101 @@
+= Kok Cong Ong - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+SmartSplit is a desktop app for managing share expenses between your contacts.
+SmartSplit can get your shared expense management tasks done faster than traditional GUI apps
+
+The user interacts with it using a Command Line Interface or its Graphical User Interface created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+
+== Summary of contributions
+
+*Major enhancement*: Create Add Transaction Commands(Payment & Paydebt)
+
+** What it does: This command allow a new transaction to be added in the application. There are two types of transaction as of now, "payment" or "paydebt". "Payment" transaction is when someone make a payment on certain expenses. Whereas for "paydebt" transaction is when someone return an amount of money he/she owed.
+
+image::AddedTransaction.png[width="800"]
+
+** Justification: By doing so, the amount pay by a person known as payer will be recorded and displayed on the user interface as know as balance. This allow the user to easily track the amount pay for, for what purpose, and by which person.
+
+** Implementation
+
+include::../DeveloperGuide.adoc[tag=addtransaction]
+
+*Major enhancement*: Create a Debtor & Creditor Table
+
+** What it does: This feature allows each person to view the amount and people he/she owed, as well as the people and amount other people owed her/him.
+
+image::DebtTable.png[width="800"]
+
+** Justification: With this feature, he can easily keep track who owed him/her or people whom he owed money to without the need to remember or calculate by themselves. The amount will be updated after each "payment" or "paydebt" transaction.
+
+** Implementation
+
+include::../DeveloperGuide.adoc[tag=Debtors_Creditor_Panel]
+
+*Minor enhancement*: Prevent a person from deleted if his or her debt is not yet cleared
+
+** What it does: A person can only be deleted if his/her debt is cleared.
+
+image::DebtNotCleared.png[width="800"]
+
+** Justification: This features ensure all amount owed or owed to is of the correct amount.
+
+*Minor enhancement*: Prevent a transaction from deleted if the person does not exist in the application anymore
+
+** What it does: This features is a enhancement to delete Transaction, where a transaction can be deleted if the person exists.
+
+image::CantDeletePerson1.png[width="800"]
+
+image::CantDeletePerson2.png[width="800"]
+
+** Justification: Since an error transaction is allowed to be deleted if a wrong transaction is made. However, if the person in the transaction does not exist anymore, it implies that the person has already cleared all his/her debt and that transaction is a valid transaction and is not a wrongly added transaction.
+Furthermore, a transaction can only be added only if the person in the transaction existed.
+
+
+=== *Code contributed*:
+[https://github.com/ongkc/addressbook-level4/blob/master/collated/functional/ongkc.md[Functional code]] +
+ [https://github.com/ongkc/addressbook-level4/blob/master/collated/test/ongkc.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated the addTransaction Command (Payment) (Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/25[#25])
+*** Updated the addTransaction Command (Paydebt) (Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/139[#139])
+*** Create the balance amount on the person panel card (Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/106[#106])
+*** Create the balance amount on the debtor and creditor panel card (Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/106[#106])
+*** Wrote tests for existing features to increase coverage from 79% to 90% (Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/129/commits[#129])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=addTransaction]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=addtransaction]
+
+include::../DeveloperGuide.adoc[tag=Debtors_Creditor_Panel]
+
+include::../DeveloperGuide.adoc[tag=deletetransaction]
+
+include::../DeveloperGuide.adoc[tag=usecases]
+
+include::../DeveloperGuide.adoc[tag=manualtesting]

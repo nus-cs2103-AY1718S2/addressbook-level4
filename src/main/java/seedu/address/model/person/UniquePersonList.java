@@ -29,7 +29,9 @@ public class UniquePersonList implements Iterable<Person> {
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        return internalList.stream().anyMatch(
+            person -> person.getName().fullName.toLowerCase().equals(toCheck.getName().fullName.toLowerCase())
+        );
     }
 
     /**
@@ -117,4 +119,6 @@ public class UniquePersonList implements Iterable<Person> {
     public int hashCode() {
         return internalList.hashCode();
     }
+
+
 }

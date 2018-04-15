@@ -6,6 +6,7 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
  * Redo the previously undone command.
@@ -17,7 +18,7 @@ public class RedoCommand extends Command {
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() throws CommandException, PersonNotFoundException {
         requireAllNonNull(model, undoRedoStack);
 
         if (!undoRedoStack.canRedo()) {

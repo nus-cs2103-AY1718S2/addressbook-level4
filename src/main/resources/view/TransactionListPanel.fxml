@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<!-- @@author phmignot -->
+
+<VBox xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+  <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane hgap="20" prefHeight="30.0" prefWidth="800.0" HBox.hgrow="ALWAYS" alignment="CENTER">
+      <columnConstraints>
+        <ColumnConstraints prefWidth="25.0" />
+        <ColumnConstraints maxWidth="214.4" minWidth="10.0" prefWidth="89.6" />
+        <ColumnConstraints maxWidth="179.6" minWidth="73.2" prefWidth="74.4" />
+        <ColumnConstraints maxWidth="274.8" minWidth="179.0" prefWidth="179.0" />
+        <ColumnConstraints maxWidth="255.6" minWidth="135.2" prefWidth="157.4" />
+        <ColumnConstraints maxWidth="85.0" minWidth="62.0" prefWidth="72.0" />
+        <ColumnConstraints maxWidth="250.0" minWidth="100.0" prefWidth="160.0" />
+      </columnConstraints>
+      <padding>
+        <Insets bottom="5" left="15" right="15" top="5" />
+      </padding>
+      <HBox GridPane.columnIndex="0" alignment="CENTER">
+        <Label text="No."/>
+      </HBox>
+      <HBox GridPane.columnIndex="1" alignment="CENTER">
+        <Label text="Payer" />
+      </HBox>
+      <HBox GridPane.columnIndex="2" alignment="CENTER">
+        <Label text="Amount" />
+      </HBox>
+      <HBox GridPane.columnIndex="3" alignment="CENTER">
+        <Label text="Description" />
+      </HBox>
+      <HBox GridPane.columnIndex="4" GridPane.hgrow="ALWAYS" alignment="CENTER">
+        <Label text="Payee" />
+      </HBox>
+      <HBox GridPane.columnIndex="5" alignment="CENTER">
+        <Label text="Type" />
+      </HBox>
+      <HBox GridPane.columnIndex="6" alignment="CENTER">
+        <Label text="Date &amp; Time" />
+      </HBox>
+      <rowConstraints>
+        <RowConstraints maxHeight="36.600006103515625" minHeight="10.0" prefHeight="21.5999755859375" />
+        <RowConstraints maxHeight="33.399993896484375" minHeight="10.399993896484375" prefHeight="25.4000244140625" />
+      </rowConstraints>
+    </GridPane>
+  </HBox>
+  <ListView fx:id="transactionListView" VBox.vgrow="ALWAYS" />
+</VBox>

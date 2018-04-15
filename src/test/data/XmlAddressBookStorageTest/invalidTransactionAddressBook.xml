@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<addressbook>
+    <!-- @@author steven-jia -->
+    <!-- Transaction with invalid payer field -->
+    <persons>
+        <payer>
+            <name>Hans Mu@ster</name>
+            <phone>98765432</phone>
+            <email>hansmuster@example.com</email>
+            <balance>0.00</balance>
+        </payer>
+        <amount isPrivate="false">9482424.3</amount>
+        <description isPrivate="false">for lunch and dinner</description>
+        <payees isPrivate="false">
+            <name>Kobe Bryant</name>
+            <phone>123498732</phone>
+            <email>kobebryant@example.com</email>
+            <balance>0.00</balance>
+        </payees>
+    </persons>
+</addressbook>

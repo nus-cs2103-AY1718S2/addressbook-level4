@@ -1,6 +1,12 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.AddTransactionCommand.MESSAGE_ONLY_ONE_PAYEE_FOR_PAYDEBT;
+import static seedu.address.logic.commands.AddTransactionCommand.MESSAGE_PAYEE_IS_BEING_OVERPAID;
+import static seedu.address.logic.commands.AddTransactionCommand.MESSAGE_PAYEE_NOT_OWED_ANY_DEBT;
+import static seedu.address.logic.commands.DeletePersonCommand.MESSAGE_DEBT_NOT_PAID;
+import static seedu.address.logic.util.CalculationUtil.calculateAmountToAddForPayee;
+import static seedu.address.logic.util.CalculationUtil.calculateAmountToAddForPayer;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,12 +17,22 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Balance;
+import seedu.address.model.person.Creditor;
+import seedu.address.model.person.Debtor;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.UniqueCreditorList;
+import seedu.address.model.person.UniqueDebtorList;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.transaction.Transaction;
+import seedu.address.model.transaction.TransactionList;
+import seedu.address.model.transaction.TransactionType;
+import seedu.address.model.transaction.exceptions.TransactionNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -26,6 +42,10 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final TransactionList transactions;
+    private UniqueDebtorList debtors;
+    private UniqueCreditorList creditors;
+    private DebtsTable debtsTable;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +57,10 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        transactions = new TransactionList();
+        debtors = new UniqueDebtorList();
+        creditors = new UniqueCreditorList();
+        debtsTable = new DebtsTable();
     }
 
     public AddressBook() {}
@@ -50,7 +74,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// list overwrite operations
-
     public void setPersons(List<Person> persons) throws DuplicatePersonException {
         this.persons.setPersons(persons);
     }
@@ -58,7 +81,25 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
+    //@@author ongkc
+    public void setDebtors(DebtsList debtsList)  {
+        this.debtors.setDebtors(debtsList);
+    }
 
+    public void setCreditors(DebtsList debtsList) {
+        this.creditors.setCreditors(debtsList); }
+    public void setTransactions(List<Transaction> transactions) {
+        this.transactions.setTransactions(transactions);
+    }
+    public void setDebtsTable(DebtsTable debtsTable) {
+        final DebtsTable replacement = new DebtsTable();
+        for (DebtsTable.Entry<Person, DebtsList> entry : debtsTable.entrySet()) {
+            DebtsList debtsList = new DebtsList();
+            debtsList.putAll(entry.getValue());
+            replacement.put(entry.getKey(), debtsList);
+        }
+        this.debtsTable = replacement;
+    }
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -68,11 +109,14 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
+        List<Transaction> syncedTransactionList = newData.getTransactionList();
+        DebtsTable syncedDebtsTable = newData.getDebtsTable();
         try {
             setPersons(syncedPersonList);
+            setTransactions(syncedTransactionList);
+            setDebtsTable(syncedDebtsTable);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("SmartSplit should not have duplicate persons");
         }
     }
 
@@ -91,6 +135,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(person);
+        debtsTable.add(person);
     }
 
     /**
@@ -112,6 +157,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.setPerson(target, syncedEditedPerson);
+        debtsTable.setPerson(target, editedPerson);
+        transactions.setPerson(target, editedPerson);
     }
 
     /**
@@ -132,19 +179,39 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getBalance(),
+                correctTagReferences);
     }
 
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(Person key) throws PersonNotFoundException {
+    public boolean removePerson(Person key) throws PersonNotFoundException, CommandException {
+        //@@author ongkc
+        if (debtExists(key)) {
+            throw new CommandException(String.format(MESSAGE_DEBT_NOT_PAID, key));
+        }
         if (persons.remove(key)) {
             return true;
         } else {
             throw new PersonNotFoundException();
         }
+    }
+    //@@author ongkc
+    /**
+     * check if the person to be deleted still owed any unpaid debt
+     */
+    private boolean debtExists(Person key) {
+        DebtsList debtsList = debtsTable.get(key);
+        if (debtsList != null) {
+            for (Balance value : debtsList.values()) {
+                if (value.getDoubleValue() != 0) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
     //// tag-level operations
@@ -157,7 +224,9 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, "
+                + tags.asObservableList().size() +  " tags, "
+                + transactions.asObservableList().size() + " transactions";
         // TODO: refine later
     }
 
@@ -172,6 +241,23 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public DebtsTable getDebtsTable() {
+        return debtsTable;
+    }
+
+    @Override
+    public ObservableList<Transaction> getTransactionList() {
+        return transactions.asObservableList();
+    }
+
+    public ObservableList<Debtor> getDebtorsList() {
+        return debtors.asObservableList();
+    }
+
+    public ObservableList<Creditor> getCreditorsList() {
+        return creditors.asObservableList();
+    }
+    @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
@@ -184,4 +270,84 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+    //@@author ongkc
+    /**
+     * Adds a {@code transaction} to the list of transactions.
+     */
+    public void addTransaction(Transaction transaction) throws CommandException {
+        //@@author steven-jia
+        if (transaction.getTransactionType().toString().toLowerCase()
+                .equals(TransactionType.TRANSACTION_TYPE_PAYDEBT)) {
+            if (transaction.getPayees().asObservableList().size() > 1) {
+                throw new CommandException(MESSAGE_ONLY_ONE_PAYEE_FOR_PAYDEBT);
+            }
+            Person payeeToFind = transaction.getPayees().asObservableList().get(0);
+            if (isNotOwedAnyDebt(transaction, payeeToFind)) {
+                throw new CommandException(MESSAGE_PAYEE_NOT_OWED_ANY_DEBT);
+            } else if (isBeingOverpaid(transaction, payeeToFind)) {
+                throw new CommandException(MESSAGE_PAYEE_IS_BEING_OVERPAID);
+            }
+        }
+        //@@author ongkc
+        transactions.add(transaction);
+        debtsTable.updateDebts(transaction, true);
+        debtsTable.display();
+    }
+
+    /**
+     * Update each payer and payee(s) balance whenever each new transaction is added or deleted
+     */
+    public void updatePayerAndPayeesBalance(Boolean isAddingTransaction, Transaction transaction, Person payer,
+                                            UniquePersonList payees) {
+        if (!transaction.getTransactionType().value.toLowerCase().equals(TransactionType.TRANSACTION_TYPE_PAYDEBT)) {
+            updatePayerBalance(isAddingTransaction, transaction, payer);
+            //@@author steven-jia
+            for (int i = 0; i < payees.asObservableList().size(); i++) {
+                Person payee = payees.asObservableList().get(i);
+                Integer splitMethodValuesListIndex = i + 1;
+                updatePayeeBalance(payee, isAddingTransaction, splitMethodValuesListIndex, transaction);
+            }
+            //@@author
+        }
+    }
+
+    /**
+     * Update payer balance whenever a new transaction is added or deleted
+     */
+    private void updatePayerBalance(Boolean isAddingTransaction, Transaction transaction, Person payer) {
+        payer.addToBalance(calculateAmountToAddForPayer(isAddingTransaction, transaction));
+    }
+    /**
+     * Update payee balance whenever a new transaction is added or deleted
+     */
+    private void updatePayeeBalance(Person payee,
+                                    Boolean isAddingTransaction,
+                                    Integer splitMethodValuesListIndex,
+                                    Transaction transaction) {
+        payee.addToBalance(calculateAmountToAddForPayee(isAddingTransaction,
+                    splitMethodValuesListIndex, transaction));
+    }
+    //@author phmignot
+    /**
+     * Removes {@code target} from the list of transactions.
+     * @throws TransactionNotFoundException if the {@code target} is not in the list of transactions.
+     */
+    public void removeTransaction(Transaction target) throws TransactionNotFoundException {
+        transactions.remove(target);
+        debtsTable.updateDebts(target, false);
+        debtsTable.display();
+    }
+
+    //@@author steven-jia
+    private boolean isNotOwedAnyDebt(Transaction transaction, Person payeeToFind) {
+        return debtsTable.size() != 0
+                && (debtsTable.get(transaction.getPayer()).get(payeeToFind) == null
+                || debtsTable.get(transaction.getPayer()).get(payeeToFind).getDoubleValue() <= 0);
+    }
+
+    private boolean isBeingOverpaid(Transaction transaction, Person payeeToFind) {
+        return transaction.getAmount().getDoubleValue()
+                > debtsTable.get(transaction.getPayer()).get(payeeToFind).getDoubleValue();
+    }
+
 }

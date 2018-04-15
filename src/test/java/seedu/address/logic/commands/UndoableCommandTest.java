@@ -4,8 +4,8 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.AddressBookBuilder.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import org.junit.Test;
 
@@ -37,7 +37,7 @@ public class UndoableCommandTest {
     }
 
     @Test
-    public void redo() {
+    public void redo() throws CommandException, PersonNotFoundException {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
 
         // redo() should cause the model's filtered list to show all persons

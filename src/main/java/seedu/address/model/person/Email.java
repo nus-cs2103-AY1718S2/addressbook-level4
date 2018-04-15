@@ -2,9 +2,8 @@ package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
-
 /**
- * Represents a Person's email in the address book.
+ * Represents a Person's email in SmartSplit.
  * Guarantees: immutable; is valid as declared in {@link #isValidEmail(String)}
  */
 public class Email {

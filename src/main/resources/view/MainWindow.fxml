@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
-         minWidth="450" minHeight="600">
+         minWidth="1400" minHeight="500">
   <icons>
     <Image url="@/images/address_book_32.png" />
   </icons>
@@ -40,21 +40,34 @@
         </StackPane>
 
         <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder" styleClass="pane-with-border"
-                   minHeight="100" prefHeight="100" maxHeight="100">
+                   minHeight="150" prefHeight="150" maxHeight="150">
           <padding>
             <Insets top="5" right="10" bottom="5" left="10" />
           </padding>
         </StackPane>
 
         <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+          <VBox fx:id="personList" minWidth="280" prefWidth="280" SplitPane.resizableWithParent="false">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
-            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS" />
           </VBox>
-
-          <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+          <VBox id="DebtsTables" minWidth="260" prefWidth="260" SplitPane.resizableWithParent="false">
+            <VBox fx:id="personListPositive"  SplitPane.resizableWithParent="false">
+              <padding>
+                <Insets top="5" right="5" bottom="5" left="5" />
+              </padding>
+              <StackPane fx:id="personDebtorListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
+            <VBox fx:id="personListNegative" SplitPane.resizableWithParent="false">
+              <padding>
+                <Insets top="5" right="5" bottom="5" left="5" />
+              </padding>
+              <StackPane fx:id="personCreditorListPanelPlaceholder" VBox.vgrow="ALWAYS" />
+            </VBox>
+          </VBox>
+          <StackPane fx:id="transactionListPanelPlaceholder" minWidth="950" prefWidth="950" SplitPane.resizableWithParent="true">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>

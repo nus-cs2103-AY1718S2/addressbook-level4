@@ -1,0 +1,87 @@
+= Wen Qin Jia - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: SmartSplit
+
+---
+
+== Overview
+
+SmartSplit is a desktop app for managing shared expenses between contacts. If the user pays for an expense that is shared with other people, he or she can use this application to quickly see how much each person owes.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+=== *Major enhancement*:
+
+* *Split transaction evenly, by units, and by percentage*
+** What it does: allows the user to add a transaction with the amount split using 1 of 3 options:
+1. Split evenly: The transaction amount is divided evenly among the payer and payees. This is the default method.
+2. Split by units: Each person involved in the transaction is associated with a unit of the transaction amount that they need to pay for. For example,
+Jon may have purchased 8 t-shirts, 3 of which are for himself, 4 of which are for Celine, and 1 of which is for Julie.
+3. Split by percentage: Each person involved in the transaction is associated with a percentage of the transaction amount that they need to pay for.
+The total percentage adds up to 100.
+// Explain further
+** Justification: This feature provides the user with flexible options to record a transaction, since real-world shared expenses are not always divided evenly.
+** Highlights: This enhancement was implemented by significantly altering the addTransaction command. The decision was made after an in-depth analysis of design alternatives, including creating an interactive CLI user interface to shorten
+the command line input required from the user. That implementation option too was challenging as it required changes to command design pattern.
+** Credits: Most features that were brainstormed for this project, including the ones mentioned here, were inspired by https://www.splitwise.com[SplitWise].
+
+=== *Minor enhancements*:
+* Added calculation logic to display the total amount spent for every user based on all their transactions
+* Added a balance field to the Person class and calculation logic that *updates a person's total amount spent every time a new transaction is added or deleted*.
+* Enabled *multiple payees for transactions* by adding a list of Persons to the Transaction model and ensured proper storage.
+
+=== *Code contributed*:
+
+https://github.com/CS2103JAN2018-W10-B1/main/blob/master/collated/functional/steven-jia.md[Functional code] +
+https://github.com/CS2103JAN2018-W10-B1/main/blob/master/collated/test/steven-jia.md[Test code]
+
+=== *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on https://github.com/CS2103JAN2018-W10-B1/main/releases[GitHub]
+*** Set up tracking labels, created detailed issues every week, and ensured that issues and milestones were closed according to their deadlines or carried over
+*** Fixed all collate annotation errors in codebase and regularly updated the collate files
+** Enhancements to existing features:
+*** Add methods to retrieve a person by name, find transactions with a specific payer, and find transactions with a specific payee (Pull request https://github.com/CS2103JAN2018-W10-B1/main/pull/78[#78])
+*** Update the transaction model to support multiple payees (Pull request https://github.com/CS2103JAN2018-W10-B1/main/pull/21[#23])
+*** Update the XMLAdaptedTransaction model to properly store transactions for reuse (Pull request https://github.com/CS2103JAN2018-W10-B1/main/pull/78[#78])
+*** Wrote additional tests for XMLAdaptedTransactionTest (Pull request https://github.com/CS2103JAN2018-W10-B1/main/pull/140[#140])
+
+** Documentation:
+*** Added detailed explanations and examples for the addTransaction command, and updated all person-related transaction commands and examples in the User Guide (Pull request https://github.com/CS2103JAN2018-W10-B1/main/pull/141[#141])
+*** Updated README product summary, interim https://github.com/CS2103JAN2018-W10-B1/main/blob/e9e2d2d713f4e909997524a7bd843b36a5ac1584/docs/images/Ui.png[UI mockup], relevant links, and references to "addressBook", and added transaction-related commands to the User Guide (Pull request https://github.com/CS2103JAN2018-W10-B1/main/pull/30[#30])
+*** Wrote most of the user stories and use cases in the Developer Guide (Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/1[#1], https://github.com/CS2103JAN2018-W10-B1/main/pull/2[#2])
+** Community:
+*** Reviewed pull request (with non-trivial review comments): https://github.com/CS2103JAN2018-W10-B1/main/pull/105[#105]
+*** Reported bugs and suggestions for team T16-B1 (examples: https://github.com/CS2103JAN2018-T16-B1/main/issues/66[1], https://github.com/CS2103JAN2018-T16-B1/main/issues/58[2], https://github.com/CS2103JAN2018-T16-B1/main/issues/88[3])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=addTransaction]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=findtransaction]
+
+---
+
+include::../DeveloperGuide.adoc[tag=addgroup]
+
+---
+
+include::../DeveloperGuide.adoc[tag=nonfunctionalrequirements]
+
+---
+
+include::../DeveloperGuide.adoc[tag=glossary]

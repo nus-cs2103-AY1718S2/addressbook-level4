@@ -3,6 +3,6 @@
 <person>
     <phone>9482424</phone>
     <email>hans@example</email>
-    <address>4th street</address>
+    <balance>0.00</balance>
     <tagged>friends</tagged>
 </person>

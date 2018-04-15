@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= SmartSplit - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,7 +12,7 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Kok Cong, Wen Qin, and Paul Henri`      Since: `April 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -30,7 +30,6 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
-
 
 === Setting up the project in your computer
 
@@ -98,6 +97,7 @@ When you are ready to start coding,
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
+_Figure 5.1f. Undo Redo New Command Stack Diagram 2_
 
 The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
@@ -160,7 +160,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CreditorPanel`, `DebtorPanel`, `TransactionPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -169,6 +169,7 @@ The `UI` component,
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+// end::DesignUI[]
 
 [[Design-Logic]]
 === Logic component
@@ -208,6 +209,28 @@ The `Model`,
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
+// tag::DebtsTable[]
+==== DebtsTable
+
+DebtsTable is a table that collects the debts between every person.
+
+This feature simplified the calculation, the storing and the retrieving of every debts between the persons added.
+The `DebtTable` is updated when a person or a transaction is added, edited or removed. +
+
+* Implementation of the DebtsTable:
+
+** **Alternative 1 (current choice):** Using a dictionary of every person's `DebtsList`,
+which are dictionaries with all persons that have debts with its owner.
+*** Pros: More flexible. Easy to add and remove a person or a debt. Easy to retrieve the debt between two persons.
+Will use less memory.
+*** Cons: Harder to edit
+** **Alternative 2:** Using an two dimensional array.
+*** Pros: Easy to add or edit a person or a debt.
+*** Cons: Hard to remove a person.
+
+// end::DebtsTable[]
+
+
 [[Design-Storage]]
 === Storage component
 
@@ -230,7 +253,6 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
-// tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
 
@@ -356,14 +378,279 @@ image::UndoRedoActivityDiagram.png[width="650"]
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
-// end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::addtransaction[]
+===  Add Transaction feature
 
-_{Explain here how the data encryption feature will be implemented}_
+==== Add Transaction Command Implementation
 
-// end::dataencryption[]
+.Component interactions for `addTransaction` command (part 1)
+image::AddTransaction.png[width="800"]
+
+image::addTransactionParser.png[width="800"]
+
+From the diagram above, when users enter the command addTransaction type/ Transaction_Type payer/ Payer a/ Amount d/ Description payee/ Payee to add a new a Transaction in their address book, AddTransactionCommandParser will be called and parse the arguments and return AddTransactionCommand. Depending on the type of transactions and split method input by the user, a different transaction object will be created and return to AddTransactionCommand as shown by the acitivty diagram above. Furthermore, during the parsing of the argument, a method(findPersonByName) to check if the payer or payee(s) exist will be called. In addition, validatePayees() is called to check if payee(s) enter is the same as the payer and valiadateSplitMethodValue() is used to check the validity of the split value entered. If all the three methods fail, an exception will be thrown. Refer to the code and diagram below for addTransactionCommandParser.
+
+image::AddTransactionCommandParser.png[width="800"]
+
+* Code Listing
+
+image::AddTransactionCommandParserCode.png[width="800"]
+
+Next, AddTransactionCommand will call its method execute(). When addTransaction command is executed, an addTransaction() method will be called.
+
+image::AddTransactionSequenceDiagram1.png[width="800"]
+
+With reference to the diagram above, when addTransaction method is executed, new transaction will be added and debt table will be updated as well. Subsequently, using calculation from calculationUtil, the new transaction amount will be added to each payer and payee(s) balance. Refer to the code below.
+
+* Code Listing
+
+** AddTransaction
+
+image::AddTransactionCode.png[width="800"]
+
+** Add Transaction Calculation
+
+image::CalculationUtil.png[width="800"]
+
+** Debt Table Object
+
+image::DebtTable.png[width="800"]
+
+==== Add Transaction Event process
+.Component interactions for `addTransaction` command (part 2)
+image::SDforDeletePersonEventHandling.png[width="800"]
+An AddressBookChangeEvent will be posted to allow the storage to handle this event and save the new transaction and balances of the involved Persons into the hard disk.
+The UI will also handle this event by adding the new transaction to the TransactionList Panel, updating the amount spent by each person.
+
+==== Design Considerations
+Why it is implemented that way
+
+===== Aspect: Calculation for each transaction
+
+*** Alternative 1: A new calculationUtil object is created (Current)
+** Pro: Allow reusability of calculation method since most transaction uses similar calculation formula. In addition, it ensures minimum coupling which could arise if there are many different kinds of transactions to be added in future enhancement.
+** Con: Create method not specific for each type of transaction calculation can be confusing and messy
+
+*** Alternative 2: Each transaction has it own specific calculation method
+** Pro: Easier to amend errors or bugs if arises
+** Con: Multiple method for each transaction calculation has to be created
+
+===== Aspect: Storing and updating of debt for each person after each new transaction is added
+
+*** Alternative 1: Create a HashMap Object
+** Pros: Allow debt to be updated easily when a person added or deleted, or when a person information is changed
+** Cons: Find person method is required to retrieve the debt information for each person
+
+*** Alternative 2: Create a list of debtors or creditors unique to each person
+** Pros: Debt amount can be easily retrieved
+** Con: If any person is deleted or added, or when any person information is changed, we need to go through every single person debtors or creditors list to amend.
+
+===== Aspect: Implementation of `payDebt addTransactionCommand`
+
+*** Alternative 1 (current choice):** Add a `transactionType` parameter that allows for a transaction to be added as a transaction of type "payDebt"
+** Pros: `addTransactionCommand` already works well and would simply need to include another parameter.
+** Cons: Increases the length of CLI input required from the user and adds complexity to the command by increasing the number of parameter combinations.
+* **Alternative 2:** Create a separate `payDebtCommand` that extends `addTransactionCommand`
+** Pros: Easier for users to understand. Allows for the use of a clearer and more obvious command word (i.e. "payDebt").
+** Cons: Very similar to addTransaction and will likely re-use a lot of the same code. As a new command, `payDebtCommand` would also require new tests for coverage.
+// end::addtransaction[]
+
+// tag::selectfeature[]
+===  Select feature
+
+There are two ways to triggered the `Select` feature. The first one uses the Command Line Interface, by taping `Select INDEX`.
+The second one directly through the user interface, by clicking on a `Person card`. +
+These two interactions will result in raising the same events. +
+
+`SelectCommand` is not a undoable command.
+
+==== Select Command Implementation
+
+.Component interactions for `select` command
+
+image::SelectCommandDiagram.png[width="800"]
+
+From the diagram above when users enter the command `select INDEX` to select one of the person from the persons list,
+`SelectCommandParser` will parse the argument, and return `SelectCommand`.
+Next, SelectCommand will call its method `execute()`. After SelectCommand is executed, an *JumpToListRequestEvent* is raised.
+
+==== JumpToListRequest Event process
+.Component interactions for `JumpToListRequest` event
+image::JumpToListRequestEventDiagram.png[width="800"]
+With reference to the diagram above, the JumpToListRequest event is handled by the UI,with PersonListPanel, that will display a frame around the selected person, status bar of the UI will be updated, and then the UI raise a PersonPanelSelectionChanged event.
+
+==== PersonPanelSelectionChanged Event process
+There are two ways to raise this event. The first one is by using this select command, the second one is by
+directly clicking on the `PersonCard` in the `PersonListPanel`.
+
+.Component interactions for `PersonPanelSelectionChanged` event
+image::PersonPanelSelectionChangedEventDiagram.png[width="800"]
+
+With reference to the diagram above, the `PersonPanelSelectionChanged` event is handled by the `Model`, that will call
+the `UpdateFilteredTransactionList` method in the `addressbook`, with the predicate to keep only transactions related with the person selected. +
+The `FilteredTransactionList`, `FilteredDebtorList` and `FilteredCreditorList` will be updated, the UI will display the new list. Refer to the codes below.
+
+* Code Listing
+
+** HandleSelectionChangeEvent
+
+image::PersonSelection.png[width="800"]
+
+** Update Transaction List
+
+image::FilterTransaction.png[width="800"]
+
+** Update Debtor & Creditor List
+
+image::Debtor_Creditor_list.png[width="800"]
+
+** Transaction Predicate
+
+image::TransactionPredicate.png[width="800"]
+
+==== PersonPanelNoSelection Event process
+In order to raise this event, the selection has to be cleared. There are several ways, it is possible to type
+another command that will clear the selection, such as the `findPerson` command, or by directly deselecting a selected
+`PersonCard` using "*Ctrl + Click*".
+
+.Component interactions for `PersonPanelSelectionChanged` event
+image::PersonPanelSelectionChangedEventDiagram.png[width="800"]
+
+With reference to the diagram above, the `PersonPanelNoSelection` event is handled by the `Model`, that will call
+the `UpdateFilteredTransactionList` method in the `addressbook`, with the predicate to keep every transactions, debtors list and creditors list.
+The `FilteredTransactionList`, `FilteredDebtorList` and `FilteredCreditorList` will be updated, the UI will display the new list.
+
+==== Why it is implemented that way
+
+This implementation can satisfy both user that are used and unused to deal with Command Line.
+This implementation uses events that are raised if needed, so there is no need to check regularly if the selection has changed.
+This implementation saves the application from wasting of computing resource.
+//end::selectfeature[]
+
+//tag::deletetransaction[]
+=== Delete Transaction Feature
+
+==== Delete Transaction Implementation
+
+Delete transaction feature was implemented the same as add transaction feature, please refer to addTransaction sequence diagram above. Similarly, for a transaction to be deleted the specify payer or payee(s) in that transaction need to exist in the application, otherwise an exception will be thrown. However the checking is done in when deleteTransaction method is called, and uses findPersonByName method when trying to update payer or payee(s) amount if a transaction were to delete. The updating the payer or payee(s) amount spent is successfully then the indicated transaction will be deleted successfully. In addition, calculation methods from calculationUtil object used are different from add transaction command. Refer to the code below for example,
+
+* Code Listing
+
+** Delete Transaction
+
+image::DeleteTransaction.png[width="800"]
+
+** Delete Transaction Calculation
+
+image::DeleteTransactionCode.png[width="800"]
+
+==== Design Considerations
+Why it is implemented that way
+
+===== Aspect: Checking the existence of payer or payee in the transaction to be deleted
+
+*** Alternative 1: Checking is done concurrently when trying to update the amount spent by the payer and payee(s) (Current)
+** Pro: This allows less method to be created
+** Con: If the check fail while updating the payer and payee(s) new amount spent, the payer or payee(s) new amount spent and as well as debt table will be affected and will be updated by the wrong amount.
+
+*** Alternative 2: Checking is done concurrently during parse of delete transaction argument, similar to add transaction
+** Pro: This will ensure exception to be thrown at the earlier part of the execution and prevent bugs from arising due to the inexistent of payer or payee(s)
+** Con: More line of codes and method has to be added
+//end::deletetransaction[]
+
+//tag::Debtors_Creditor_Panel[]
+=== Debtors & Creditors List Table Mechanism
+
+==== Debtors & Creditors List Table Implementation
+
+Debtors and Creditor list will only be updated when a person in the person card panel list is selected. When a person is selected, PersonPanelSelectionChangedEvent will be handled by the UI and post an updateDebtorsAndCreditorList event which will be handled by logic as shown by the code below.
+
+* Code Listing
+
+image::PersonSelection.png[width="800"]
+
+image::Debtors_Creditor.png[width="800"]
+
+
+After which to in order to set the new creditors or debtors lists, a debtList with respect to the person selected will be retrieved using debtTable.get(person) where the person is the key in debtTable object and debtList is the value. Subsequently, using the debtList of the person selected, setDebtor(debtList) and setCreditor(debtList) method will be executed, and the FilteredDebtorsLists and FilteredCreditorList will be updated as shown by the sequence diagram above. Please refer to the diagram and code below.
+
+* Code Listing
+
+image::Debtors_CreditorCode.png[width="800"]
+
+image::Debtors_CreditorCodeSet.png[width="800"]
+
+image::Debtors_CreditorCodeSetCreditor.png[width="800"]
+
+==== Design Considerations
+Why it is implemented that way
+
+===== Aspect: Checking the existence of payer or payee in the transaction to be deleted
+
+** Alternative 1: The creditor list and debtor list is not unique to each person
+** Pro: The current implementation allow the creditor list and debtor list to be updated responsively based on any changes on the debtTable.
+** Con: Once a creditor list or debtor list is updated, it no longer able to retrieve past data.
+
+** Alternative 2: Each person has a unique debtors and creditor list
+** Pro:  Easy retrieve of debtors and creditors
+** Con: Once a new transaction is added, all the creditors and debtors list relevant to the payer or payee(s) in the transaction have to be updated
+//end::Debtors_Creditor_Panel[]
+
+//tag::findtransaction[]
+=== [Proposed] Find Transaction feature
+==== Proposed Implementation
+
+A `FindTransaction` feature may be implemented as a new command in a similar way to all other commands, especially `FindPersonCommand`. The high level implementation can be seen below.
+
+.Component interactions for `findTransaction` command
+image::FindTransactionHighLevelSequenceDiagram.png[width="800"]
+
+The user can call this command by typing `findTransaction [keyword]` in the command box, where [keyword] represents any number of keywords separate by spaces.
+The parse() method of the `FindTransactionCommandParser` will parse the command and and return a FindTransactionCommand. This command is then executed by the
+`LogicManager` which achieves this by calling the execute() method of the `FindTransactionCommand`. At this point, a method named findTransaction([keyword])
+will be called in the ModelManager to find all transactions based on the [keyword] and a `CommandResult` will be returned.
+
+.Sequence diagram for the logic component of the `findTransaction` command
+image::FindTransactionLogicSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Number of transactions to return
+* **Alternative 1:** Return all transactions that match any of the keywords
+** Pros: Easy to implement and follows the behaviour of the `findPerson` command.
+** Cons: May yield a slow response time when there are hundreds or thousands of transactions to search through.
+* **Alternative 2:** Return all transactions that match any of the keywords up to a limit
+** Pros: Will guarantee a certain response time based on the specified limit.
+** Cons: May not be a complete search due to the arbitrary limit.
+//end::findtransaction[]
+
+//tag::addgroup[]
+=== [Proposed] Add Group feature
+==== Proposed Implementation
+
+An `AddGroup` feature may be implemented as a new command in a similar way to all other commands, especially the `AddPersonCommand` and the `AddTransactionCommand`.
+
+The purpose of this command would to add a new group to associate some number of existing persons together as a group. With groups, transactions that occur for a specific
+event or purpose between a set number of people can be easily separated from other transactions.
+
+There will be an `AddGroupCommand` and `AddGroupCommandParser` that works in the same sequence as all other commands.
+
+The `Group` class will need to be created and should include a list of Persons and Transaction IDs. See the diagram below for the class implementation:
+
+.Class diagram for `Group`
+image::GroupClassDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Associating transactions with groups
+* **Alternative 1:** Require that all transactions be associated with a group
+** Pros: Makes it easy to retrieve transactions by group
+** Cons: Imposes the group feature on all persons and transactions, and will require current transactions to be retroactively associated with groups
+* **Alternative 2:** Allow for both transactions that are associated and unassociated with a group
+** Pros: Provides more flexibility for users who do not want to use the groups feature
+** Cons: Requires complicated logic to handle the tiered categorization, especially if a transaction involves all of the same people that exist in a group
+//end::addgroup[]
 
 === Logging
 
@@ -782,13 +1069,37 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* traveller who shares many expenses with other people (friends, family, travel buddies, etc.)
 * prefer desktop apps over other types
-* can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: simplify the shared expense budgeting process and reduce the number of "pay-back" transactions between individuals to only 1
+
+[[GetStartedProgramming-FeatureContribution]]
+=== Feature Contribution
+
+*Kok Cong Ong*
+
+* Major feature: Added Payment & Paydebt add Transaction command. Payment transaction command is used when a person make a payment to one or multiple people. Paydebt Transaction is used when the user return an amount owed to another person.
+* Major feature: Added Debtors & Creditors panel for the user to see who owed them money or people who they owed money to
+* Minor feature: Prevent person from deleted if his debt not clear.
+* Minor feature: Prevent transaction from deleted if payer or payee in the transaction do not exist anymore.
+
+*Paul Henri Mignot*
+
+* Major feature: Update the User Interface to display the list of transactions.
+* Major feature: Update the User Interface to display the list of transactions related to the person selected
+* Minor feature: Allow user to delete their transactions.
+* Minor feature: Person information in the transaction list to be updated when the person is edited (e.g name).
+
+*Wen Qin Jia*
+
+* Major feature: Allow users to split their expenses <<split-evenly,evenly>>, <<split-by-percentage,by percentage>> or <<split-by-units,by units>>
+* Minor feature: Calculate and display the total amount spent for every user based on all of their transactions
+* Minor feature: Update the Person class with a Balance field in order to track, display, and store a person's total amount spent
+* Minor feature: Enable multiple payees for transactions
+* Minor feature: Ensure correct amount is entered for paydebt transactions (e.g debt must exist, amount entered cannot be more than the debt owed)
 
 [appendix]
 == User Stories
@@ -798,63 +1109,244 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |user |add an expense (split evenly to those who are involved) to the application | make a record of it
 
-|`* * *` |user |add a new person |
+|`* * *` | user |specify which users were involved with an expense|
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` | user |see all transactions recorded by users in a table |see a complete history of what was paid
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |see how much I owe to or am owed by each individual|
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |user |see how much I have spent during the trip|
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |user |record an offline payment to or from another user |update the balance between the 2 users
+
+|`* * *` |user |specify the type/category of my expense (food, accommodation, transport etc) when adding it |keep better track of my expenses
+
+|`* * *` |user |search for a specific expense |quickly find the transaction that I am interested in
+
+|`* * *` |user |filter transactions by various criteria |see similar transactions grouped together
+
+|`* * *` |user |split an expense by percentage so that unevenly shared expenses can be properly attributed to any individual that was involved|
+
+|`* * *` |user |split an expense by units |properly attribute unevenly shared expenses to any individual that was involved
+
+|`* * *` |user |delete an expense |remove a mistakenly entered or unwanted expense
+
+|`* * *` |user |edit an expense on the application |correct any mistakes I may have made
+
+|`* *` |admin user |create a new group |separate different trips by the people who were involved
+
+|`* *` |admin user |add people to a group |know who was involved with the expenses that were shared
+
+|`* *` |admin user |delete people from a group |remove those are are no longer involved with the shared expenses
+
+|`* *` |user |sort my expense into different categories |keep better track of my expenses
+
+|`* *` |user |comment on an expense |clarify an expense or ask questions about it
+
+|`* *` |admin user |set whether other group members can add new people to the group |control who is added
+
+|`* *` |user |request payment from others who owe me money via social media or a chat messenger |
+
+|`* *` |user |change the currency of the expense I am adding |have it match the currency in which I paid
+
+|`* *` |user |see all listed expenses converted to the currency of my choice |better gauge how much was spent
+
+|`* *` |user |see the transactions in graphical form |better visualize the balances of each group member
+
+|`* *` |user in a group for which the trip has ended |archive the group |no expenses can be added anymore
+
+|`* *` |user |log in to see my account |access my secured information
+
+|`* *` |user |log out of my account |ensure that my information is inaccessible to others
+
+|`* *` |user |set a deadline for when payments need to made |members of the group know when they can expect to be paid
+
+|`* *` |user |record the location where I spent my money |keep track where I spent the most/least money during the trip
+
+|`* *` |user |set a default currency for the group |
+
+|`* *` |user |add a recurring expense |avoid having to add it more than once
+
+|`* *` |user in a group with recurring expenses |remove a recurring expense |
+
+|`* *` |user in an archived group |reopen the group |add any forgotten expenses
+
+|`* *` |user with permission to add new people |add new people to the group |
+
+|`* *` |user |transfer money directly to a friend to pay a debt |
+
+|`*` |user |instantly message other members |communicate with them directly in the application
+
 |=======================================================================
 
-_{More to be added}_
-
+//tag::usecases[]
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `SmartSplit` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
-=== Use case: Delete person
+=== Use case: Add all persons involved in the trip
+
+*Preconditions*
+
+1.  User is an admin user for the group
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Admin user requests to add members to group
+2.  SmartSplit prompts adminuser for the names of the members to be added
+3.  User enters the names of the members to be added
+4.  SmartSplit adds the new members to the group
++
+Use case ends.
+
+[discrete]
+=== Use case: Add payment type transaction
+
+*MSS*
+
+1.  User requests to add payment type transaction
+2.  SmartSplit requests transaction details from the user
+3.  User enters the transaction details
+4.  SmartSplit records the transaction
 +
 Use case ends.
 
 *Extensions*
 
-[none]
-* 2a. The list is empty.
+* 3a. User enters details in an incorrect format.
+
+ SmartSplit shows an error message. Use case resume at 3.
+
+* 3b. User enters a payer or payee(s) name who does not exist in the application.
+
+ SmartSplit shows an error message. Use case resume at 3 or use case for add person.
+
+[discrete]
+=== Use case: Add paydebt type transaction
+
+*MSS*
+
+1.  User requests to add paydebt type transaction
+2.  SmartSplit requests transaction details from the user
+3.  User enters the transaction details
+4.  SmartSplit records the transaction
 +
 Use case ends.
 
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. AddressBook shows an error message.
-+
-Use case resumes at step 2.
+*Extensions*
 
-_{More to be added}_
+* 3a. User enters details in an incorrect format.
 
+ SmartSplit shows an error message. Use case resume at 3.
+
+* 3b. User enters a payer or payee name who does not exist in the application.
+
+ SmartSplit shows an error message. Use case resume at 3.
+
+ * 3c. User enters a payee name who does not owed any amount to the payer.
+
+  SmartSplit shows an error message. Use case resume at 3.
+
+* 3d. User enters a wrong amount.
+
+ SmartSplit shows an error message. Use case resume at 3.
+
+[discrete]
+
+=== Use case: delete a person
+
+*MSS*
+
+1.  User requests to delete a person
+2.  SmartSplit requests delete person index
+3.  User enters the delete person index
+4.  SmartSplit delete the person from the application
++
+Use case ends.
+
+*Extensions*
+
+* 3a. User enters the wrong index
+
+ SmartSplit shows an error message. Use case resume at 3.
+
+* 3b. User enter the person index whom the person has outstanding debt
+
+ SmartSplit shows an error message. Use case resume at 3 or ends.
+
+[discrete]
+
+=== Use case: delete a transaction
+
+*MSS*
+
+1.  User requests to delete a transaction
+2.  SmartSplit requests delete transaction index
+3.  User enters the delete transaction index
+4.  SmartSplit delete the transaction from the application
++
+Use case ends.
+
+*Extensions*
+
+* 3a. User enters the wrong index
+
+ SmartSplit shows an error message. Use case resume at 3.
+
+* 3b. User enter the transaction index whom the payer or payee(s) do not exist
+
+ SmartSplit shows an error message. Use case resume at 3 or ends.
+
+[discrete]
+
+=== Use case: Check debtors & creditors list
+
+*MSS*
+
+1.  User requests to check the debtors & creditors list
+2.  User select the person to check
+3.  SmartSplit displayed all the debtors and creditors with respect to the person selected
++
+Use case ends.
+
+[discrete]
+=== Use case: Check relevant transactions to the related to him/her
+
+*MSS*
+
+1.  User requests to relevant transaction related to him/her
+2.  User select the person to check
+3.  SmartSplit displayed all the transactions with respect to the person selected
++
+Use case ends.
+
+*Extensions*
+
+* 3a. User un-select the person selected
+
+    SmartSplit re-displayed all the transactions
+
+[discrete]
+//end::usecases[]
+
+//tag::nonfunctionalrequirements[]
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 100 users without a noticeable sluggishness (i.e. delay of more than 3 seconds) in performance for typical usage.
+.  Should be able to hold up to 1000 transactions per group without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should respond to user input within 3 seconds.
+.  Should work in both 32-bit and 64-bit environments.
+.  Should be usable by a novice who has never used this system before.
+.  The project is expected to adhere to a schedule that delivers a feature/bug-fix update every week.
+//end::nonfunctionalrequirements[]
 
-_{More to be added}_
-
+//tag::glossary[]
 [appendix]
 == Glossary
 
@@ -864,23 +1356,26 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[appendix]
-== Product Survey
+[[payment]] Payment::
+A type of transaction that allows a user to record a payment that was made on behalf of himself/herself and at least one other person
 
-*Product Name*
+[[paydebt]] Paydebt::
+A type of transaction that allows a user to record a payment that was made to another person to reduce the debt owed
 
-Author: ...
+[[split-evenly]] Split evenly::
+A method of dividing the total cost of an expense by splitting it in even parts over the total number of users involved with that expense
 
-Pros:
+[[split-by-units]] Split by units::
+A method of dividing the total cost of an expense by units. The amount that each person owes is the number of units that they are responsible for divided by the total number of units
 
-* ...
-* ...
+[[split-by-percentage]] Split by percentage::
+A method of dividing the total cost of an expense by percentages that add up to 100. The amount that each person owes is the percentage that they are responsible for multiplied by the amount
 
-Cons:
+[[recurring-expense]] Recurring expense::
+An expense that does not change in amount over a repeated time period (e.g. every month) and is always incurred by a user
+//end::glossary[]
 
-* ...
-* ...
-
+//tag::manualtesting[]
 [appendix]
 == Instructions for Manual Testing
 
@@ -903,26 +1398,155 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Adding a person
+
+. A person can be added only if the name is different, regardless of case (e.g. John Doe, john doe, and JOHN DOE are considered to all be the same).
+.. Test case: `addPerson n/john Doe p/98765432 e/johnd@example.com t/friends t/owesMoney`, `addPerson n/joHn DoE p/98765432 e/johnd@example.com t/friends t/owesMoney`
+   Expected: This person already exists in the address book. The name must be unique.
+.. Test case: `addPerson n/Bernice Yu p/98765432 e/johnd@example.com t/friends t/owesMoney`
+   Expected: New person added: Bernice Yu Phone: 98765432 Email: johnd@example.com Balance: 0.00 Tags: [owesMoney][friends]
+
+=== Adding a transaction
+
+. A transaction can be either of type <<payment,payment>> or <<paydebt,paydebt>>.
+.. A payment type transaction should be used if a person is making a payment for multiple people.
+.. A paydebt type transaction should be used when a person have already returned the amount owed to other person.
+.. All transactions can only be made if the payer or payee(s) indicated in the transaction exist in the application
+   ... Test case (if no person is added): `addtransaction type/payment payer/John Doe a/120.00 d/Taxi ride to NUS payee/Alex Yeoh payee/Bernice Yu m/evenly`
+
+       Expected: The specified payer or payee(s) do not exist.
+
+.. Before you proceed, please add the following persons to the application: 1)`addPerson n/John Doe p/98765432 e/johnd@example.com t/friends t/owesMoney`, 2)`addPerson n/Bernice Yu p/98765432 e/johnd@example.com t/friends t/owesMoney`, 3) `addPerson n/Alex Yeoh p/98765432 e/johnd@example.com t/friends t/owesMoney`
+
+==== Payment Type Transaction
+
+. A payment transaction allows one payer to one or more payees. There are three types of payment methods, <<split-evenly,split evenly>>, <<split-by-percentage,by percentage>> or <<split-by-units,by units>>. After each payment transaction is added, the amount spent based on the type of splitting methods indicated, will be updated and added onto the "Amount Spent" person panel card.
+.. Split Evenly(Default method)
+... Test case: `addtransaction type/payment payer/John Doe a/120.00 d/Taxi ride to NUS payee/Alex Yeoh payee/Bernice Yu m/evenly`
+
+   Expected: New transaction added
+
+... Test case: `addtransaction type/payment payer/John Doe a/120.00 d/Taxi ride to NUS payee/Alex Yeoh payee/Bernice Yu`
+
+   Expected: New transaction added
+
+.. By Percentage(percentages indicated must be seperated by
+
+... Test case: `addtransaction type/payment payer/Alex Yeoh a/50.00 d/Team dinner payee/John Doe payee/Bernice Yu m/percentage percentage/40, 40, 20`
+
+   Expected: New transaction added
+
+... Test case: `addtransaction type/payment payer/Alex Yeoh a/50.00 d/Team dinner payee/John Doe payee/Bernice Yu m/percentage percentage/40, 40`
+
+   Expected: The number of percentage values does not match the number of persons involved. Remember to include the payer in the count.
+
+... Test case: `addtransaction type/payment payer/Alex Yeoh a/50.00 d/Team dinner payee/John Doe payee/Bernice Yu m/percentage percentage/40, 40, 50`
+
+   Expected: The sum of the percentages does not equal 100.
+
+... Test case: `addtransaction type/payment payer/Alex Yeoh a/50.00 d/Team dinner payee/John Doe payee/Bernice Yu m/percentage percentage/40, 40,`
+
+   Expected: List of percentages can only take comma-separated integers
+
+... Test case: `addtransaction type/payment payer/Alex Yeoh a/50.00 d/Team dinner payee/John Doe payee/Bernice Yu m/percentage percentage/40, 40 .20`
+
+   Expected: List of percentages can only take comma-separated integers
+
+.. By Units
+
+... Test case: `addtransaction type/payment payer/Bernice Yu a/35.00 d/Team apparel items payee/Alex Yeoh payee/John Doe m/units units/4, 2, 1`
+
+   Expected: New transaction added
+
+... Test case: `addtransaction type/payment payer/Bernice Yu a/35.00 d/Team apparel items payee/Alex Yeoh payee/John Doe m/units units/4, 2,`
+
+   Expected: List of units can only take comma-separated integers
+
+... Test case: `addtransaction type/payment payer/Alex Yeoh a/50.00 d/Team dinner payee/John Doe payee/Bernice Yu m/percentage percentage/4, 2`
+
+   Expected: The number of units values does not match the number of persons involved. Remember to include the payer in the count.
+
+==== Paydebt Type Transaction
+
+. A paydebt type transaction only allows one payer to one payee.
+.. Before you proceed, please clear the application, `clear` and add the following persons and transaction to the application: 1)`addPerson n/John Doe p/98765432 e/johnd@example.com t/friends t/owesMoney`, 2)`addPerson n/Bernice Yu p/98765432 e/johnd@example.com t/friends t/owesMoney`, 3) `addPerson n/Alex Yeoh p/98765432 e/johnd@example.com t/friends t/owesMoney` and follow the order of each test case below.
+
+ 4)`addtransaction type/payment payer/John Doe a/120.00 d/Taxi ride to NUS payee/Alex Yeoh payee/Bernice Yu m/evenly`
+
+ ... Test case: `addtransaction type/paydebt payer/Bernice Yu a/50.00 d/Taxi ride to NUS payee/John Doe` (Amount pay more than amount owed)
+
+    Expected: Payee is being overpaid. Ensure that the transaction amount does not exceed the balance owed.
+
+ ... Test case: `addtransaction type/paydebt payer/Bernice Yu a/40.00 d/Taxi ride to NUS payee/John Doe`
+
+    Expected: New transaction added
+
+ ... Test case: `addtransaction type/paydebt payer/Bernice Yu a/40.00 d/Taxi ride to NUS payee/John Doe` (Bernice Yu does not owed John Doe any money)
+
+    Expected: Payee is not owed any debt
+
+==== Delete Transaction
+
+ . Purpose of delete transaction is solely for wrongly added transaction
+
+ .. Before you proceed, please clear the application, `clear` and add the following persons and transaction to the application: 1)`addPerson n/John Doe p/98765432 e/johnd@example.com t/friends t/owesMoney`, 2)`addPerson n/Bernice Yu p/98765432 e/johnd@example.com t/friends t/owesMoney`, 3) `addPerson n/Alex Yeoh p/98765432 e/johnd@example.com t/friends t/owesMoney` and follow the order of each test case below.
+
+  4)`addtransaction type/payment payer/John Doe a/120.00 d/Taxi ride to NUS payee/Alex Yeoh payee/Bernice Yu m/evenly` 5) `addtransaction type/payment payer/John Doe a/240.00 d/Taxi ride to NUS payee/Alex Yeoh payee/Bernice Yu m/evenly`
+
+... Test case: `deleteTransaction 1`
+
+     Expected:  Deleted Transaction:  Transaction id: X + Details of the deleted contact shown in the status message
+
+  ... Test case: `addTransaction type/paydebt payer/Bernice Yu a/80.00 d/Amount owed for taxi ride payee/John Doe` + `deletePerson 2`(Bernice Yu) + `deleteTransaction 1`
+
+     Expected: The payer or payee(s) in the transaction do not exist
 
 === Deleting a person
 
 . Deleting a person while all persons are listed
 
 .. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
 
-_{ more test cases ... }_
+.. Test case: `delete 1` +
+
+   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `delete 0` +
+
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+
+.. Test case: if delete person debt not cleared - outstanding debtor(s) or creditor(s) present in the debtor or creditor table respectively
+
+   Expected: Unable to delete, current person debt not cleared
+
+=== Selecting a person
+
+.. Test: selectPerson 1
+
+  Expected: All debtor(s) or creditor(s) present and transactions that involved this person selected will be displayed.
+
+=== Un-selecting a person
+
+.. Test: selectPerson 1 + un-select Person 1
+
+  Expected: After the person is unselected, all transaction will be shown, and no debtor or creditor will be displayed.
 
 === Saving data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Missing & Invalid Transaction type +
+   Expected: `Transaction type can only be "paydebt" or "payment" and it should not be blank`
+.. Missing & Invalid Missing payer +
+   Expected: `Transaction's Payer field is missing!` +
+   This message exists for every mandatory field of the Transaction class (i.e. Type, Payer, Amount, Description, Payees, SplitMethod)
+.. Missing & Invalid Transaction amount +
+   Expected: `Amount can only take in a positive numerical number up to 2 decimal places, and it should not be blank`
+.. Missing & Invalid Transaction description +
+   Expected: `Transaction description can take any value and should not be blank`
+.. Missing & Invalid Transaction payee +
+   Expected: `Transaction's Payees field is missing!`
+.. Missing & Invalid Transaction Date +
+   Expected: `Transaction's Date field is missing, or is in wrong format (date format example: 2018-04-14T17:22:56.218+08:00)`
+.. Missing & Invalid Split method +
+   Expected: `Transaction split method can only be "evenly", "units", or "percentage"`

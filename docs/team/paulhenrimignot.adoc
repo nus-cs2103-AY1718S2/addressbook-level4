@@ -1,0 +1,92 @@
+= Paul-Henri Mignot - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: SmartSplit
+
+---
+
+== Overview
+
+SmartSplit is a desktop app for managing share expenses between your contacts.
+SmartSplit can get your shared expense management tasks done faster than traditional GUI apps.
+
+The user interacts with it using a Command Line Interface or its Graphical User Interface created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+
+=== *Major enhancement*:
+
+** *Select/Unselect*
+
+*** `What it does`: Can select and unselect any person in the `PersonList`, and displays its transactions, creditors and debtors.
+
+*** `Justification`: This enhancement makes the application more user friendly, by improving User Interface, and adding more interaction with the user.
+*** `Highlights`: This enhancement affects existing events, and creates new ones, that can be handled in the future by other classes for extended applications.
+
+*** `Credits`: This enhancement was based on the `SelectCommand` of the *AddressBook-level4*
+which displayed the Url page of the person selected.
+
+** *DebtTable*
+
+*** `What it does`:  Implements a table that collects the debts between every person.
+*** `Justification`: This feature simplified the calculation, the storing and the retrieving of every debts between the persons added.
+*** `Highlights`: This `DebtTable` is updated when a transaction is added or removed. +
+The design was challenging since it has to be flexible with adding, editing or removing any person or transaction. +
+The `DebtTable` is a dictionary of every person's `DebtsList`, which are dictionaries of all persons that have debts with its owner.
+
+
+=== *Minor enhancements*:
+
+- Update the *User Interface* to *display the list of transactions*.
+- Insert in the *User Interface* two panels.
+- Allow the user to delete their transactions.
+
+
+=== *Code contributed*:
+
+[https://github.com/CS2103JAN2018-W10-B1/main/blob/master/collated/functional/phmignot.md[Functional code]] +
+
+[https://github.com/CS2103JAN2018-W10-B1/main/blob/master/collated/test/phmignot.md[Test code]] +
+
+=== *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.0` - `v1.5rc` (6 releases) on GitHub.
+** Removing existing features:
+*** Remove the `BrowserPanel` and the test associated, being replaced by Deptor and Creditor list.
+(Pull requests https://github.com/CS2103JAN2018-W10-B1/main/pull/80[#80], https://github.com/CS2103JAN2018-W10-B1/main/pull/82[#82])
+** Community:
+*** PRs reviewed (with non-trivial review comments):
+https://github.com/CS2103JAN2018-W10-B1/main/pull/81[#81],
+https://github.com/CS2103JAN2018-W10-B1/main/pull/129[#129],
+https://github.com/CS2103JAN2018-W10-B1/main/pull/103[#103],
+https://github.com/CS2103JAN2018-W10-B1/main/pull/21[#21]
+*** Helping others students in the addressBook version 2 (https://github.com/nus-cs2103-AY1718S2/addressbook-level2/pull/618[exemple])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=select]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=selectfeature]
+
+---
+
+include::../DeveloperGuide.adoc[tag=DesignUI]
+
+---
+
+include::../DeveloperGuide.adoc[tag=DebtsTable]

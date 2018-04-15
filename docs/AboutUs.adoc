@@ -3,53 +3,40 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
+SmartSplit was developed by the https://github.com/CS2103JAN2018-W10-B1/main/tree/master/docs/team[W10-B1] team. +
+based on the work of the AddressBook - Level 4 by the https://se-edu.github.io/docs/Team.html[se-edu] team +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Kok Cong Ong
+image::ongkc.png[width="150", align="left"]
+https://github.com/ongkc[Github Account] +
+https://github.com/CS2103JAN2018-W10-B1/main/blob/master/docs/team/Kok-Cong_Ong.adoc[Project Portfolio Page]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Team Lead, Development, Testing +
+Responsibilities: Implementing the addtransaction command and creating the debtors and creditors tables
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Wen Qin Jia
+image::steven-jia.png[width="150", align="left"]
+https://github.com/Steven-Jia[Github Account] +
+https://github.com/CS2103JAN2018-W10-B1/main/blob/master/docs/team/steven-jia.adoc[Project Portfolio Page]
 
-Role: Developer +
-Responsibilities: Data
-
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Role: Project Management, Development +
+Responsibilities: Implementing the different split methods and various calculation methods for adding a transaction
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Paul-Henri François Jacques Mignot
+image::phmignot.png[width="150", align="left"]
+http://github.com/phmignot[Github Account] +
+https://github.com/CS2103JAN2018-W10-B1/main/blob/master/docs/team/paulhenrimignot.adoc[Project Portfolio Page]
 
-Role: Developer +
-Responsibilities: UI
+Role: Development, Integration, Code Quality +
+Responsibilities: Creating the debts table and implementing the select/unselect feature for a person
 
 '''
+

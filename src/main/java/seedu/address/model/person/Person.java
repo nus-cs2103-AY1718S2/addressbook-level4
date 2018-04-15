@@ -10,7 +10,7 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
 /**
- * Represents a Person in the address book.
+ * Represents a Person in SmartSplit.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Person {
@@ -18,19 +18,19 @@ public class Person {
     private final Name name;
     private final Phone phone;
     private final Email email;
-    private final Address address;
+    private Balance balance;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Balance balance, Set<Tag> tags) {
+        requireAllNonNull(name, phone, email, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.address = address;
+        this.balance = balance;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
     }
@@ -47,8 +47,8 @@ public class Person {
         return email;
     }
 
-    public Address getAddress() {
-        return address;
+    public Balance getBalance() {
+        return balance;
     }
 
     /**
@@ -62,6 +62,7 @@ public class Person {
     @Override
     public boolean equals(Object other) {
         if (other == this) {
+
             return true;
         }
 
@@ -70,16 +71,32 @@ public class Person {
         }
 
         Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+        return otherPerson.getName().equals(this.getName());
     }
+
+    public void setBalance(Balance newBalance) {
+        this.balance = newBalance;
+    }
+
+    //@@author steven-jia
+    /**
+     * Update the balance of the person
+     * @param balanceToAdd
+     */
+    public void addToBalance(Balance balanceToAdd) {
+        Balance newBalance = this.balance.add(balanceToAdd);
+        if (newBalance.getDoubleValue() == 0) {
+            setBalance(new Balance("0.00"));
+        } else {
+            setBalance(newBalance);
+        }
+    }
+    //@@author
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, tags);
     }
 
     @Override
@@ -90,8 +107,8 @@ public class Person {
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
-                .append(" Address: ")
-                .append(getAddress())
+                .append(" Balance: ")
+                .append(getBalance())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();

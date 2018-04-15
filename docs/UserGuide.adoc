@@ -1052,7 +1052,7 @@ image::checkTask3_screenshot.png[width="800"]
 
 // end::dashboard[]
 
-// tag:profilePage[]
+// tag::profilePage[]
 === Student Profile Page
 ==== Displaying profile page for each student : `moreInfo`
 
@@ -1174,7 +1174,7 @@ image::editMiscSuccess.png[width:800]
 * Existing values will be updated to and overwritten by the input values.
 ****
 
-//end:profilePage[]
+//end::profilePage[]
 
 
 === Coming in v2.0

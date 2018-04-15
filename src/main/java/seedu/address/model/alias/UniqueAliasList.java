@@ -194,12 +194,20 @@ public class UniqueAliasList {
             aliases.add(new ArrayList<>());
         }
 
-        String[] sortedKeys = aliasCommandMap.keySet().toArray(new String[0]);
-        Arrays.sort(sortedKeys);
+        String[] sortedKeys = sortAliasKeysByAlphabeticalOrder();
         for (String key: sortedKeys) {
             String command = aliasCommandMap.get(key);
             aliases.get(AliasCommand.getCommands().indexOf(command)).add(key);
         }
+    }
+
+    /**
+     * Sorts aliases by alphabetical order.
+     */
+    private String[] sortAliasKeysByAlphabeticalOrder() {
+        String[] sortedKeys = aliasCommandMap.keySet().toArray(new String[0]);
+        Arrays.sort(sortedKeys);
+        return sortedKeys;
     }
 
     /**

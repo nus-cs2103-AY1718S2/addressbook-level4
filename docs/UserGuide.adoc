@@ -321,7 +321,7 @@ Alias: `s` +
 Format: `sort`
 
 // tag::participation[]
-=== Adding Participation Marks: `markPart`
+=== Adding participation marks: `markPart`
 
 Adds to the participation marks of a person (student). The maximum limit for participation marks is 100
 and the maximum amount that can be added per execution of the command is 100. +

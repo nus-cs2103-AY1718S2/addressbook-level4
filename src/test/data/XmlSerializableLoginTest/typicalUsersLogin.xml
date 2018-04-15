@@ -1,4 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+
+<!-- @@author Pearlissa -->
 <!-- AddressBook save file which contains the same User values as in
 {@code TypicalUsers#getTypicalLoginManager()}-->
 <addressbook>

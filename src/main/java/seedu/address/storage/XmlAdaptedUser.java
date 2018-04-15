@@ -9,6 +9,7 @@ import seedu.address.model.user.Password;
 import seedu.address.model.user.User;
 import seedu.address.model.user.Username;
 
+//@@author Pearlissa
 /**
  * JAXB-friendly version of the User.
  */

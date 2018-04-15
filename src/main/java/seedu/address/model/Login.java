@@ -3,6 +3,7 @@ package seedu.address.model;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 import seedu.address.model.user.exceptions.UserNotFoundException;
 
+//@@author Pearlissa
 /**
  * The API of the Login component.
  */

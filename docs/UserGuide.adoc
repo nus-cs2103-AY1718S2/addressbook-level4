@@ -398,7 +398,8 @@ Examples:
 === Reserve a book : `reserve`
 
 Renew a specific book from the Catalogue +
-Format: `reserve INDEX` +
+Format: `list` +
+`reserve INDEX` +
 Privilege Level: 2(Librarian)
 
 [NOTE]
@@ -415,7 +416,8 @@ Press TAB after writing `reserve` to use the auto-complete function.
 
 Examples:
 
-* `reserve` -> (press TAB) -> `reserve 1`
+* `list` +
+`reserve` -> (press TAB) -> `reserve 1`
 // end::Borrow[]
 
 // tag::cleara[]
@@ -441,6 +443,7 @@ All accounts removed from the list of accounts
 
 // tag::addaccount[]
 === Add an account : `addAccount`
+
 Add a given account to the list of accounts +
 Format: `addAccount n/NAME u/USERNAME p/PASSWORD m/MATRICNUMBER l/PRIVILEGE LEVEL` +
 Privilege Level: 2(Librarian)
@@ -451,29 +454,30 @@ Examples:
 * `addAccount n/Tom Madison u/tom p/tom123 m/A1234567T  I/2`
 
 [TIP]
-Press TAB after writing `adda` to use the auto-complete function.
+Press TAB after writing `addAccount` to use the auto-complete function.
 
 Examples:
 
-* `adda` --> (press TAB) --> `adda n/ m/ u/ p/ l/ `
+* `addAccount` --> (press TAB) --> `addAccount n/ m/ u/ p/ l/ `
 // end::addaccount[]
+
 // tag::deleteaccount[]
-== Deleting an account : `deleteAccount`
+=== Deleting an account : `deleteAccount`
 
 Deletes the specified account from the list of accounts. +
 Format: `delete USERNAME` +
 Privilege Level: 2(Librarian)
 
-****
+**
 * Deletes the account with the specified `USERNAME`.
-* The USERNAME *must be a from a created account in the list of accounts*
-****
+* The USERNAME must be a from a created account in the list of accounts
+**
 
 Examples:
 
-* `deleteAccount jackmorgan` +
+* `delete jackmorgan` +
 Deletes account linked to Jack Morgan.
-* `deleteAccount tommy` +
+* `delete tommy` +
 Deletes the account linked to Tommy.
 // end::deleteaccount[]
 
@@ -524,10 +528,10 @@ _{explain how the user can enable/disable data encryption}_
 |Librarian |*Reserve Book* |`reserve INDEX` +
   e.g. `reserve 2`
 |Librarian |*Clear Catalogue* |`clear`
-|Librarian |*Add Account* |`addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
- e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
-|Librarian |*Delete Account* |`deletea USERNAME` +
- e.g. `deletea A0123456M`
+|Librarian |*Add Account* |`addAccount n/NAME u/USERNAME p/PASSWORD m/MATRICNUMBER l/PRIVILEGE LEVEL` +
+ e.g. `addAccount n/Jack Morgan u/jack p/jack123 m/A0123456J l/1`
+|Librarian |*Delete Account* |`deleteAccount USERNAME` +
+ e.g. `deleteAccount tiongley`
 |Librarian |*Clear Account List* |`cleara`
 |Librarian |*History* |`history`
 |Librarian |*Undo* |`undo`
@@ -535,31 +539,4 @@ _{explain how the user can enable/disable data encryption}_
 |=======================================================================
 // end::commandsummary[]
 
-* *Add* `add t/TITLE a/AUTHOR i/ISBN av/AVAIL [tag/TAG]...` +
-e.g. `add n/Animal Farm a/George Orwell i/9780736692427 av/Borrowed t/political t/satire`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/TITLE] [a/AUTHOR] [i/ISBN] [av/AVAIL] [t/TAG]...` +
-e.g. `edit 2 n/Animal Farm e/Available`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find Animal Dawn`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
-* *Borrow* : `borrow INDEX` +
-e.g. `borrow 1`
-* *Return* : `return INDEX` +
-e.g. `return 2`
-* *reserve* : `reserve INDEX` +
-e.g. `reserve 2`
-* *addAccount* : `addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
-e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
-* *deleteAccount* : `deleteAccount USERNAME` +
-e.g. `delete A0123456M`
-* *cleara* : `cleara`
 

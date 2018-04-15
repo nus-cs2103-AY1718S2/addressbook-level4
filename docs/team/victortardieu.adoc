@@ -24,7 +24,7 @@
 ** Justification: This feature significantly improve the product since it allows the user to type even faster and to remind him what to write for the function.
 ** Highlights: This enhancement is related to the Logic and UI component since the autocomplete function is in Logic but it prints out in UI. It requires to take time to understand how Logic and UI interacts.
 
-* *Code contributed*: [Functional code] [Test code] [Unused code]
+* *Code contributed*: https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/functional/victortardieu.md[Functional] | https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/test/victortardieu.md[Test]
 
 * *Other contributions*:
 

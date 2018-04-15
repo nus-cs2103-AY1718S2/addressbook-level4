@@ -148,9 +148,9 @@ The above diagram shows the relations between each subcomponents within the Logi
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete -o 1`.
 
-.Component interactions for `delete 1` command (part 1)
+.Component interactions for `delete -o 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
@@ -567,7 +567,7 @@ image::autocomplete.png[width="500"]
 
 // tag::find[]
 === Finding a Contact or Pet Patient
-The find function allows users to find for a specific contact or pet patient through the listed fields.
+The find function allows users to look for contacts or pet patients.
 
 ==== Current Implementation
 
@@ -583,9 +583,11 @@ The find function allows users to find for a specific contact or pet patient thr
 ** Cons:
 
 ==== Current Limitations
-Users are unable to find appointment by type as the CalendarFX runs differently from the other classes.
+Users are unable to find appointment related elements as the `Appointment` listing function in the calendar is different from the listing function of the other classes of `Person` and `PetPatient`. As such, there is currently no implementation to find an appointment based on types or remarks, which may pose as inconvenience to veterinarians, should they want to search by a specific type of appointment or remark.
 
 ==== Future Considerations
+In the future, Medeina might consider adding functions that allow for finding of appointments by types or remarks, as well as update the calendar accordingly with the results of the find command.
+
 //end::find[]
 
 // tag::listappt[]
@@ -593,10 +595,11 @@ Users are unable to find appointment by type as the CalendarFX runs differently 
 The command allows users to list appointments based on the date that they wish to see, and the results are displayed via the API of CalendarFX.
 
 ==== Current Implementation
-After Medeina implemented CalendarFX, users are able to view appointments at a specified date by clicking on the Calendar. However, as Medeina is a CLI-based application, users should not be required to move their mouse. Thus, there was a need to be able to view appointments of specific dates through the command line.
+After Medeina implemented CalendarFX, users are able to view appointments at a specified date by clicking on the Calendar. However, as Medeina is a CLI-based application, users should not be required to move their mouse. Instead, users should be able to jump to certain dates to check appointments using the command line only.
 
 .Day view of the Calendar obtained by the `listappt -d` command.
 image::ListAppointmentDayView.png[width="800"]
+
 
 The implemented CalendarFX API consists of 4 different views: Day, Week, Month and Year views. Users should be able to get a specific requested view of a date, month, or year they wish to see.
 
@@ -605,9 +608,10 @@ The below diagram illustrates the interaction between the `UI`, `Logic` and `Eve
 .Sequence diagram for interactions between the different components upon running the `listappt -y 2017` command.
 image::SDforListAppointment.png[width="800"]
 
+
 `ListAppointmentParser.java` handles and separates the request of users based on a regular expression that captures the matching groups of options `-d`, `-w`, `-m`, `-y`. The parser then checks the remaining user input, and parses it into `LocalDate`, `YearMonth` and `Year` classes. Should there be no remaining user input after the option, the current date is obtained as the field. A new `ListAppointmentCommand` is created with the type (1 for year, 2 for month, 3 for week, 4 for date) as well as the parsed class.
 
-In `execute()`, there is a switch that determines the type of command run based on the type obtained from the parser. The relevant functions to change the Calendar gets called based on the type, and an event gets called to handle the change. A check is done to determine whether there were appointments in the year of the requested date, so that users are not able to randomly jump into years that should not have ever had any appointments (i.e. years before Medeina existed).
+In `execute()`, there is a switch that determines the type of command run based on the type obtained from the parser. The relevant functions to change the Calendar gets called based on the type, and an event gets called to handle the change. If an appointment is in the past, a check is done to determine whether there were appointments in the year of that requested date, so that users are not able to jump into years that should not have appointments (i.e. years before Medeina existed).
 
 [source, java]
 ----
@@ -669,7 +673,7 @@ Upon a successful listing, a `CommandResult(...)` class is called with a success
 ===== Aspect: Improving user productivity
 * **Alternative 1 (current choice):** Implement functions that requires users to type to switch views instead of clicking
 ** Pros: Users do not need to switch between using a mouse and a keyboard, which increases productivity for users accustomed to the CLI based nature of Medeina.
-** Cons: Need to implement functions that help will change views (`listappt` command).
+** Cons: Need to implement functions that help will change views (`listappt` or `la` command).
 
 * **Alternative 2:** Use buttons and clicks to switch a calendar than to manually input a command
 ** Pros: There will be no need to implement any functions pertaining to `ListAppointment`.

@@ -59,7 +59,7 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `imdb.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for IMDB.
-.  Double-click the file to start the app. The GUI should appear in a few seconds as shown in the figure below.
+.  Double-click the file to start the app. The GUI should appear in a few seconds as shown in the Figure 1 below.
 +
 .IMDB in action
 [caption="Figure 1: "]
@@ -88,7 +88,7 @@ For more information on the various commands,  refer to <<Features>> for the spe
 
 Before introducing the commands, a brief walkthrough of the user interface is shown in Figure 2 below.
 
-.User Interface Walkthrough of IMDB
+.User interface walkthrough of IMDB
 [caption="Figure 2: "]
 image::ui_walkthrough.png[width="990"]
 
@@ -113,28 +113,44 @@ The commands listed in this section are related to the general usage of IMDB.
 
 ==== Viewing help : `help`
 
-Opens the user guide in a separate window. +
+Opens the user guide in a separate window as shown in Figure 3 below. +
 Format: `help` or `h`
+
+.Help window
+[caption="Figure 3: "]
+image::help_window.PNG[width="990"]
 
 // tag::login[]
 ==== Logging into the system: `login` [since v1.2]
 
-Opens a window for the user to log into the IMDB with a matching username and password. +
+Opens a window for the user to log into the IMDB with a matching username and password as shown in Figure 4 below. +
 There are two placeholder accounts currently in the IMDB. There is alice, who is a doctor, and bob, who is a medical staff member. Some commands are restricted based on which role the user is logged into. +
 Format: `login` or `lg`
+
+.Login window
+[caption="Figure 4: "]
+image::login_window.PNG[width="990"]
 
 Examples:
 
 * `login` +
 Username: alice +
 Password: password123 +
-Logs the user in as alice, who is a doctor.
+Logs the user in as alice, who is a doctor as shown in Figure 5 below.
+
+.IMDB main window (Logged in as Alice)
+[caption="Figure 5: "]
+image::login_window_doctor.PNG[width="990"]
 
 * `login` +
 Username: bob +
 Password: password456 +
-Logs the user in as bob, who is a medical staff.
+Logs the user in as bob, who is a medical staff as shown in Figure 6 below.
 // end::login[]
+
+.IMDB main window (Logged in as Bob)
+[caption="Figure 6: "]
+image::login_window_staff.PNG[width="990"]
 
 ==== Listing entered commands : `history`
 
@@ -299,7 +315,7 @@ If the specified patient is in the queue, you have to remove the patient from th
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`.
 ****
 
 Examples:
@@ -323,7 +339,7 @@ This command is undoable.
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing conditions, the existing conditions of the patient will be removed i.e adding of conditions is not cumulative.
@@ -463,7 +479,11 @@ Examples:
 
 * `list` +
 `record 1 in/1` +
-Displays the first medical record for the first person in the result of the list command.
+Displays the first medical record for the first person in the result of the list command as shown Figure 7 below.
+
+.Record window
+[caption="Figure 7: "]
+image::record_window.PNG[width="990"]
 
 ==== Deleting the medical records for a patient : `remover` [since v1.4]
 
@@ -493,11 +513,16 @@ Deletes the first medical record for the first person in the result of the list 
 // tag::print[]
 ==== Printing a patient's formatted medical records : `print` [since v1.4]
 
-Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application. +
+Formats and prints a patient's medical records into a PDF file. This PDF file is located in the same directory as the IMDB application as shown in Figure 8 below. +
 Format: `print INDEX` or `p INDEX`
 
 [CAUTION]
 This command is only accessible to doctors.
+
+.PDF file in the directory
+[caption="Figure 8: "]
+image::print_window.PNG[width="990"]
+
 // end::print[]
 
 ==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`
@@ -520,6 +545,12 @@ This command is undoable.
 [CAUTION]
 This command is only accessible to medical staff.
 
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* This command will only add a patient if they are currently not in the visiting queue.
+****
+
 Examples:
 
 * `list` +
@@ -528,10 +559,10 @@ Adds the third person in the result of the list command into the visiting queue.
 
 * `find bernice` +
 `aq 2` +
-Adds Bernice Lee into the visiting queue as shown in Figure 3 below.
+Adds Bernice Lee into the visiting queue as shown in Figure 9 below.
 
 .Add patient to queue according to list index
-[caption="Figure 3: "]
+[caption="Figure 9: "]
 image::addq_duplicate.PNG[width="990"]
 
 ==== Removing a patient from the visiting queue: `removeq` [since v1.2]
@@ -567,7 +598,7 @@ This command is undoable.
 This command is only accessible to medical staff.
 
 ****
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number shown in the visiting queue.
 * The index *must be a positive integer* `1, 2, 3, ...`
 * This command will only remove a patient if they are currently in the visiting queue.
 ****
@@ -588,37 +619,59 @@ The commands listed in this section are related to the management of patients’
 
 Adds a medical appointment to a patient.
 
-Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
+Format: `addappt INDEX DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 [CAUTION]
 This command is only for medical staff.
 
 ****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
 * The date of the appointment must be in the following format: DD/MM/YYYY.
+* The date of the appointment must be after the current date and time.
 * The time of the appointment must be given in 24 hour clock format: HHMM.
+* This command will only add the appointment if it does not book by any other patient.
 ****
 
 Examples:
 
-* `addappt Betsy 19/3/2018 1000` +
-Adds a medical appointment for Betsy on 19/3/2018 at 10am.
+* `viewappt` +
+`addappt 1 19/6/2018 1000` +
+`viewappt` +
+Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 10.
 
-* `aa John 23/3/2019 1430` +
-Adds a medical appointment for John on 23/3/2018 at 2:30pm.
+.Calendar panel in IMDB after an appointment is added
+[caption="Figure 10: "]
+image::addappt_window.PNG[width="990"]
 
-==== Viewing medical appointments by patient name: `viewappt` [since v1.3]
+* `aa 1 23/7/2019 1430` +
+Adds a medical appointment for the first person in the list on 23/3/2018 at 2:30pm.
+
+==== Viewing medical appointments by index: `viewappt` [since v1.3]
 
 Shows the list of medical appointments of a patient.
 
-Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+Format: `viewappt INDEX` or `va INDEX`
+
+[CAUTION]
+This command is for both doctor and medical staff.
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+****
 
 Examples:
 
-* `viewappt Betsy` +
-Lists the medical appointments made by Betsy.
+* `viewappt 1` +
+Lists the medical appointments made by the first patient in the list as shown in Figure 11.
 
-* `va John` +
-Lists the medical appointments made by John.
+.Patient Appointment panel in IMDB
+[caption="Figure 11: "]
+image::viewappt_patient_window.PNG[width="990"]
+
+* `va 2` +
+Lists the medical appointments made by the second patient in the list.
 
 ==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
 
@@ -629,29 +682,46 @@ Format: `viewappt` or `va`
 Examples:
 
 * `viewappt` +
-Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month as shown in Figure 12 below.
 
 * `va` +
-Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month as shown in Figure 12 below.
+
+.Calendar panel in IMDB
+[caption="Figure 12: "]
+image::viewappt_window.PNG[width="990"]
 
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [since v1.3]
 
 Deletes the medical appointment at the given index of a patient specified by their name.
 
-Format: `delappt PATIENT_NAME APPOINTMENT_INDEX_NO` or `da PATIENT_NAME APPOINTMENT_INDEX_NO`
+Format: `delappt INDEX DATE TIME` or `da INDEX DATE TIME`
 
 [CAUTION]
 This command is only for medical staff.
 
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+* The date of the appointment must be in the following format: DD/MM/YYYY.
+* The time of the appointment must be given in 24 hour clock format: HHMM.
+* This command will only remove the appointment if it exists in the record.
+****
+
 Examples:
 
-* `viewappt Betsy` +
-`delappt Betsy 2` +
-Deletes the medical appointment made by Betsy with index number 2.
+* `viewappt 1` +
+`delappt 1 19/6/2018 1200` +
+Deletes the medical appointment on 19/6/2018 12pm made by the first patient in the list as shown in Figure 13.
 
-* `va John` +
-`da John 1` +
-Deletes the medical appointment made by John with index number 1.
+.Calendar panel in IMDB after deleting the appointment
+[caption="Figure 13: "]
+image::delappt_window.PNG[width="990"]
+
+* `va 2` +
+`da 2 13/7/2018 1430` +
+`viewappt` +
+Deletes the medical appointment on 13/7/2018 2:30pm made by the second patient in the list.
 
 ==== Viewing the schedule for a patient across all specialists `[coming in v2.0]`
 
@@ -768,7 +838,7 @@ e.g.`addc 2 c/CONDITION` or `ac 1 c/CONDITION`
 e.g.`addq 2` or `aq 1`
 
 * *Add new appointment* : `addappt` or `aa` +
-e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
+e.g.`addappt 1 19/6/2018 1200` or `aa 1 19/6/2018 1200`
 
 * *Clear* : `clear` or `c`
 
@@ -776,7 +846,7 @@ e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
 e.g. `delete` or `d` or `rm 3`
 
 * *Delete appointment* : `delappt` or `da` +
-e.g.`delappt betsy 2` or `da betsy 2`
+e.g.`delappt 1 19/6/2018 1200` or `da 1 19/6/2018 1200`
 
 * *History* : `history` or `hi`
 
@@ -819,6 +889,6 @@ e.g.`remover` or `rr 1 in/2`
 e.g.`select` or `s 2`
 
 * *View appointments in calendar* : `viewappt` or `va` +
-e.g.`viewappt john` or `viewappt john`
 
-* *View appointments by patient name* : `viewappt` or `va`
+* *View appointments by index* : `viewappt` or `va`
+e.g.`viewappt 1` or `va 1`

@@ -18,7 +18,7 @@ Responsibilities: UI and calendar implementation
 
 === Chang Ho Huan
 image::chh.jpg[width="150", align="left"]
-{empty}[http://github.com/Soilchang[github]] [<<Chang Ho Huan#, portfolio>>]
+{empty}[http://github.com/Soilchang[github]] [<<SoliChang#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: UI
@@ -27,7 +27,7 @@ Responsibilities: UI
 
 === Jonathan Wen
 image::jstarw.jpg[width="150", align="left"]
-{empty}[http://github.com/jstarw[github]] [<<Jonathan Wen#, portfolio>>]
+{empty}[http://github.com/jstarw[github]] [<<jstarw#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Data

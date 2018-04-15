@@ -89,7 +89,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     @Override
     public synchronized void deleteStudent(Student target)
-            throws StudentNotFoundException, LessonNotFoundException {
+            throws InvalidLessonTimeSlotException, StudentNotFoundException,
+            DuplicateLessonException, LessonNotFoundException {
         schedule.removeStudentLessons(target);
         indicateScheduleChanged();
         addressBook.removeStudent(target);

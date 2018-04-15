@@ -14,6 +14,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -65,6 +67,12 @@ public class UndoableCommandTest {
                 fail("Impossible: studentToDelete was retrieved from model.");
             } catch (LessonNotFoundException pnfe) {
                 fail("Impossible: Lessons associated with studentToDelete was retrieved from model.");
+            } catch (DuplicateLessonException dle) {
+                fail("Impossible: Lessons associated with studentToDelete"
+                        + " was retrieved from model, cannot be duplicate");
+            } catch (InvalidLessonTimeSlotException iltse) {
+                fail("Impossible: Lessons associated with studentToDelete"
+                        + " was retrieved from model, cannot be clashing.");
             }
             return new CommandResult("");
         }

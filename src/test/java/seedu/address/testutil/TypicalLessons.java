@@ -4,7 +4,10 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.model.Schedule;
 import seedu.address.model.lesson.Lesson;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 
 //@@author demitycho
 /**
@@ -16,6 +19,8 @@ public class TypicalLessons {
             .withStartTime("10:00").withEndTime("12:00").build();
     public static final Lesson ALICE_WED_14_16 = new LessonBuilder().withKey("c5daab").withDay("wed")
             .withStartTime("14:00").withEndTime("16:00").build();
+    public static final Lesson ALICE_WED_15_17 = new LessonBuilder().withKey("c5daab").withDay("wed")
+            .withStartTime("15:00").withEndTime("17:00").build();
     public static final Lesson CARL_THU_11_13 = new LessonBuilder().withKey("8e90ba").withDay("thu")
             .withStartTime("11:00").withEndTime("13:00").build();
     public static final Lesson RANDOM_THU_11_13 = new LessonBuilder().withKey("c0ffee").withDay("thu")
@@ -23,5 +28,22 @@ public class TypicalLessons {
 
     public static List<Lesson> getTypicalLessons() {
         return new ArrayList<>(Arrays.asList(ALICE_MON_10_12, ALICE_WED_14_16, CARL_THU_11_13));
+    }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical students.
+     */
+    public static Schedule getTypicalSchedule() {
+        Schedule sch = new Schedule();
+        for (Lesson lesson : getTypicalLessons()) {
+            try {
+                sch.addLesson(lesson);
+            } catch (DuplicateLessonException e) {
+                throw new AssertionError("not possible");
+            } catch (InvalidLessonTimeSlotException iltse) {
+                throw new AssertionError("cannot clash");
+            }
+        }
+        return sch;
     }
 }

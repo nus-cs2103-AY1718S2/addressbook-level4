@@ -33,6 +33,11 @@ public class CompleteTaskCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Keep it up! Completed task: %1$s";
     public static final String MESSAGE_NO_ACTION = "This task is already completed: %1$s";
     public static final String COMPLETE_FAILURE = "Error. Failed to mark it as completed. Index: %1$s";
+    public static final String UNKNOWN_ERROR = "Unknow error in the system occurred";
+
+    public static final int ERROR = -1;
+    public static final int NO_ACTION = 0;
+    public static final int SUCCESS = 1;
 
     private int index;
 
@@ -49,7 +54,7 @@ public class CompleteTaskCommand extends Command {
         try {
             Pair<Integer, String> result = completeTask(index, DEFAULT_LIST_ID);
 
-            if (result.getKey() == -1) {
+            if (result.getKey() == ERROR) {
                 return new CommandResult(String.format(result.getValue()));
             }
 
@@ -58,14 +63,17 @@ public class CompleteTaskCommand extends Command {
 
             String title = parts[0];
 
-            if (result.getKey() == 0) {
+            if (result.getKey() == NO_ACTION) {
                 return new CommandResult(String.format(MESSAGE_NO_ACTION, index + ". " + title));
+            } else if (result.getKey() == SUCCESS) {
+                ViewTaskListCommand view = LogicManager.getCurrentViewTask();
+                view.updateView();
+                return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));
+            } else {
+                // the command parser could never pass any value other than the above 4, thus we say "unknown error".
+                throw new CommandException(UNKNOWN_ERROR);
             }
 
-            ViewTaskListCommand view = LogicManager.getCurrentViewTask();
-            view.updateView();
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));
         } catch (CommandException ce) {
             throw ce;
         } catch (Exception e) {

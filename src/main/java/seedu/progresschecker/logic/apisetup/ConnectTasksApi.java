@@ -26,6 +26,7 @@ import com.google.api.services.tasks.TasksScopes;
  * ii. Builds service (initializes API).
  */
 public class ConnectTasksApi {
+    private static final String appName = "ProgressChecker";
     private JsonFactory jsonFactory;
     private HttpTransport transport;
     private Credential credentials;
@@ -81,6 +82,6 @@ public class ConnectTasksApi {
                 this.transport,
                 this.jsonFactory,
                 this.credentials
-        ).setApplicationName("ProgressChecker").build();
+        ).setApplicationName(appName).build();
     }
 }

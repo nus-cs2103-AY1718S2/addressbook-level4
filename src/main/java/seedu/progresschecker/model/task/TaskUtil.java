@@ -29,6 +29,8 @@ public class TaskUtil {
     public static final String COMPLETED = "completed";
     public static final String NEEDS_ACTION = "needsAction";
     public static final int ERROR_NUMBER = -1;
+    public static final int TRUE = 1;
+    public static final int FALSE = 0;
     public static final String ERROR_STRING = "";
     public static final String NOTE_TOKEN = "checkurl";
 
@@ -182,7 +184,7 @@ public class TaskUtil {
         com.google.api.services.tasks.Tasks service = connection.getTasksService();
 
         try {
-            int isChanged = 0;
+            int isChanged = FALSE;
             Tasks tasks = service.tasks().list(listId).execute();
             List<Task> list = tasks.getItems();
             if (list.size() < index) {
@@ -193,7 +195,7 @@ public class TaskUtil {
 
             if (!task.getStatus().equals(COMPLETED)) {
                 task.setStatus(COMPLETED);
-                isChanged = 1;
+                isChanged = TRUE;
             }
 
             task = service.tasks().update(
@@ -231,7 +233,7 @@ public class TaskUtil {
         com.google.api.services.tasks.Tasks service = connection.getTasksService();
 
         try {
-            int isChanged = 0;
+            int isChanged = FALSE;
             Tasks tasks = service.tasks().list(listId).execute();
             List<Task> list = tasks.getItems();
             if (list.size() < index) {
@@ -243,7 +245,7 @@ public class TaskUtil {
             if (!task.getStatus().equals(NEEDS_ACTION)) {
                 task.setCompleted(null);
                 task.setStatus(NEEDS_ACTION);
-                isChanged = 1;
+                isChanged = TRUE;
             }
 
             task = service.tasks().update(

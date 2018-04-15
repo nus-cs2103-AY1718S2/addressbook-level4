@@ -32,6 +32,11 @@ public class ResetTaskCommand extends Command {
     public static final String MESSAGE_SUCCESS = "Reset task: %1$s";
     public static final String MESSAGE_NO_ACTION = "This task is not completed yet: %1$s";
     public static final String RESET_FAILURE = "Error. Failed to mark it as incompleted. Index: %1$s";
+    public static final String UNKNOWN_ERROR = "Unknow error in the system occurred";
+
+    public static final int ERROR = -1;
+    public static final int NO_ACTION = 0;
+    public static final int SUCCESS = 1;
 
     private int index;
 
@@ -48,7 +53,7 @@ public class ResetTaskCommand extends Command {
         try {
             Pair<Integer, String> result = undoTask(index, DEFAULT_LIST_ID);
 
-            if (result.getKey() == -1) {
+            if (result.getKey() == ERROR) {
                 return new CommandResult(String.format(result.getValue()));
             }
 
@@ -57,14 +62,16 @@ public class ResetTaskCommand extends Command {
 
             String title = parts[0];
 
-            if (result.getKey() == 0) {
+            if (result.getKey() == NO_ACTION) {
                 return new CommandResult(String.format(MESSAGE_NO_ACTION, index + ". " + title));
+            } else if (result.getKey() == SUCCESS) {
+                ViewTaskListCommand view = LogicManager.getCurrentViewTask();
+                view.updateView();
+                return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));
+            } else {
+                // the command parser could never pass any value other than the above 4, thus we say "unknown error".
+                throw new CommandException(UNKNOWN_ERROR);
             }
-
-            ViewTaskListCommand view = LogicManager.getCurrentViewTask();;
-            view.updateView();
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS, index + ". " + title));
         } catch (CommandException ce) {
             throw ce;
         } catch (Exception e) {

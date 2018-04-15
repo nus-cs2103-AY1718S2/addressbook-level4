@@ -944,7 +944,6 @@ This will result in concurrent modification issues. Thus, `Semaphore` is used to
                             e.printStackTrace();
                         }
                         Region firstNotificationCard = shownNotificationCards.removeFirst();
-
                         //cards are reused later in notification center
                         animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
                         moveAllNotificationCardsDown();

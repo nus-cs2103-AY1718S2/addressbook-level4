@@ -2,8 +2,11 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.export.ExportType;
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
 
 //@@author daviddalmaso
 /**
@@ -23,6 +26,12 @@ public class ExportCommand extends UndoableCommand {
 
     public static final String CALENDAR_MESSAGE_SUCCESS =
             "Successfully exported birthdays and appointments to Google Calendar";
+
+    public static final String CALENDAR_ACCESS_DENIED_MESSAGE =
+            "Unable to export calendar: access denied";
+
+    public static final String CONNECTIVITY_ISSUE_MESSAGE =
+            "Unable to export calendar: no internet connection";
 
     public final UserPrefs userPrefs = new UserPrefs();
 
@@ -44,15 +53,21 @@ public class ExportCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() {
+    protected CommandResult executeUndoableCommand() throws CommandException {
         requireNonNull(model);
-        if (typeToExport.equals(ExportType.PORTFOLIO)) {
-            model.exportPortfolio(filePath);
-            return new CommandResult(String.format(PORTFOLIO_MESSAGE_SUCCESS,
-                    filePath));
-        } else {
-            model.exportCalendar();
-            return new CommandResult(CALENDAR_MESSAGE_SUCCESS);
+        try {
+            if (typeToExport.equals(ExportType.PORTFOLIO)) {
+                model.exportPortfolio(filePath);
+                return new CommandResult(String.format(PORTFOLIO_MESSAGE_SUCCESS,
+                        filePath));
+            } else {
+                model.exportCalendar();
+                return new CommandResult(CALENDAR_MESSAGE_SUCCESS);
+            }
+        } catch (CalendarAccessDeniedException e) {
+            throw new CommandException(CALENDAR_ACCESS_DENIED_MESSAGE);
+        } catch (ConnectivityIssueException e) {
+            throw new CommandException(CONNECTIVITY_ISSUE_MESSAGE);
         }
     }
 }

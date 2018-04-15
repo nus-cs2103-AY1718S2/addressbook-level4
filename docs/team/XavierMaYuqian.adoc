@@ -67,12 +67,12 @@ include::../DeveloperGuide.adoc[tag=Login/Logout]
 
 include::../DeveloperGuide.adoc[tag=SortCommand]
 
+include::../DeveloperGuide.adoc[tag=ExportCommand]
+
 include::../DeveloperGuide.adoc[tag=DeleteTag]
 
 include::../DeveloperGuide.adoc[tag=TotalPersonStatusBar]
 
 include::../DeveloperGuide.adoc[tag=AddComment]
-
-include::../DeveloperGuide.adoc[tag=ExportCommand]
 
 ---

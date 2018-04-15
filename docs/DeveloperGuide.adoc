@@ -766,6 +766,7 @@ and the default page which shows keyboard shortcuts.
 // end::BrowserPanel[]
 //@@author
 
+//@@melvintzw
 //tag::ModelTwoImplementation[]
 === New Model
 
@@ -824,6 +825,187 @@ The result is as such:
 
 image::PersonListPanel.PNG[width="600"]
 //end::ModelTwoImplementation[]
+//@@author
+
+//@@author jonleeyz
+// tag::home[]
+=== Home View Enhancement
+
+In the original AddressBook, there was no real way to clear the CommandBox or ResultDisplay without entering a new
+command. The current implementation allows the User to press kbd:[F1] to return to the "home" view, where the
+ResultDisplay and BrowserPanel display helpful information to the User, while the CommandBox is emptied and focused
+so that the User may immediately start typing into the CommandBox.
+
+==== Basic Enhancement
+
+This home "command" is implemented in the same way as the other <<keyboardshortcuts, keyboard shortcuts>> but it does not have a corresponding text
+command. It is only associated with its menu item and upon keypress, will raise a HomeRequestEvent that will be handled
+by the CommandBox, ResultDisplay and BrowserPanel UI elements.
+
+Code for `handleHome()`:
+----
+@FXML
+    private void handleHome() {
+        raise(new HomeRequestEvent("undo"));
+    }
+----
+
+The CommandBox handles the HomeRequestEvent by clearing all its text and requesting focus.
+
+----
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        replaceText("");
+        commandTextField.requestFocus();
+    }
+----
+
+The ResultDisplay handles the HomeRequestEvent by replacing its existing text with an informative message that tells
+the User how to get more detailed information about the commands should they need it.
+
+----
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        setStyleToIndicateCommandSuccess();
+        Platform.runLater(() -> {
+            displayed.setValue(event.MESSAGE_HOME);
+        });
+    }
+----
+
+The BrowserPanel handles the HomeRequestEvent by loading its defauly page, which shows all available commands and their
+associated keyboard shortcuts and aliases.
+
+----
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDefaultPage();
+    }
+----
+
+==== Further Enhancement
+
+This enhancement can be taken steps further by fine-tuning the message and page displayed in the ResultDisplay and
+BrowserPanel to be more informative or actionable.
+
+Also, this enhancement could be more useful if the PersonListPanel were to update to the state before the previous
+command was executed.
+
+==== Rationale
+Implementation rationale follows from the <<keyboardshortcuts, Keyboard Shortcuts>> enhancement as both enhancements
+are implemented similarly.
+
+// end::home[]
+
+// tag::navigationshortcuts[]
+=== Navigation Shortcuts
+
+Upon the implementation of the <<keyboardshortcuts, keyboard shortcuts>> that populate the CommandBox, sometimes with
+many prefixes, it became important to have an efficient method of navigating amongst the populated prefixes and possibly
+their associated values. The implementation of this enhancement allows the User to press the kbd:[Tab] or
+kbd:[Shift+Tab] keys to navigate back and forth between different prefixes and their values. Also, pressing
+kbd:[Shift+Backspace] allows the User to immediately delete the field or prefix that the CommandBox cursor is currently
+positioned on. The combination of these navigation shortcuts along with the other keyboard shortcuts allows the User to
+quickly and efficiently populate the CommandBox with all prefixes, delete those that are not relevant and then be able
+to focus on just the input of the salient parameters before executing the Command.
+
+==== Basic Enhancement
+
+These three navigation keyboard shortcuts were implemented differently from the other
+<<keyboardshortcuts, keyboard shortcuts>>. Instead of each shortcut being an accelerator that actives a menu item,
+these three shortcuts are handled directly by the CommandBox TextField.
+
+If the CommandBox detects that kbd:[Tab], kbd:[Shift+Tab] or kbd:[Shift+Backspace] are pressed, it will call the
+appropriate method.
+
+Code for `handleKeyPress()`:
+----
+    @FXML
+    private void handleKeyPress(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+        case UP:
+            // As up and down buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        case TAB:
+            keyEvent.consume();
+            if (keyEvent.isShiftDown()) {
+                moveToPreviousPrefix();
+            } else {
+                moveToNextPrefix();
+            }
+            break;
+        case BACK_SPACE:
+            if (keyEvent.isShiftDown()) {
+                keyEvent.consume();
+                clearCurrentFieldOrPrefix();
+            }
+            break;
+        default:
+            // let JavaFx handle the keypress
+        }
+    }
+----
+
+The three helper methods, `moveToPreviousPrefix()`, `moveToNextPrefix()` and `clearCurrentFieldOrPrefix()`, call
+associated helper methods to achieve their functionality. The respective helper methods then work by executing a series
+of logical checks for whitespace, the `:` operator and other cases.
+
+As an example, the code for `moveToNextPrefix()` and its helper method `getNextPrefixPosition()` can be seen below:
+
+----
+    private void moveToNextPrefix() {
+        int currentCaretPosition = commandTextField.getCaretPosition();
+        int newCaretPosition = getNextPrefixPosition(currentCaretPosition);
+        commandTextField.positionCaret(newCaretPosition);
+    }
+
+    private int getNextPrefixPosition(int currentCaretPosition) {
+        // find next prefix position
+        int nextPrefixPosition = commandTextField.getText().indexOf(":", currentCaretPosition);
+        int newCaretPosition;
+
+        // set new caret position to be in front of chosen prefix. If prefix not found, then set at last index.
+        if (nextPrefixPosition != -1) {
+            newCaretPosition = nextPrefixPosition + 1;
+
+            // check for space in front of last prefix. If present, move forward one more index.
+            if (commandTextField.getText().substring(newCaretPosition, newCaretPosition + 1).equals(" ")) {
+                newCaretPosition += 1;
+            }
+        } else {
+            newCaretPosition = commandTextField.getText().length();
+        }
+
+        return newCaretPosition;
+    }
+----
+
+==== Further Enhancement
+
+This enhancement can be taken steps further in the coming weeks by ensuring that the navigation shortcuts pick out only
+the accepted prefixes instead of just any character sequence with a `:` following directly after.
+
+The behaviour of kbd:[Shift+Backspace] also could be fine-tuned more to improve usability.
+
+==== Rationale
+The main rationale for implementing these navigation shortcuts by handling it at the CommandBox UI element level instead of
+using menu items and accelerators similar to the other shortcuts is simply that using accelerators allow the keyboard shortcuts
+to be used through the application, even when focus is not on the CommandBox. However, this additional functionality is
+not required for these navigation shortcuts as the User will only be wanting to navigate throughout the CommandBox when
+he is typing or when he has just populated the CommandBox with a command template.
+
+As a result, implementing this enhancement using accelerators and menu items offers unneeded functionality and results
+in unnecessary abstraction.
+// end::navigationshortcuts[]
+//@@author
 
 == Documentation
 

@@ -1655,12 +1655,55 @@ _{ more test cases ... }_
 _{ more test cases ... }_
 
 // tag::calendarTesting[]
-JASON
+.  Displaying the calendar within a WebView
+.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-launch` and not logged in +
+   Expected: Error log command states that you must be logged in to use the command.
+.. Test case: `View > Open Calendar` and not logged in +
+   Expected: Calendar WebView opens and states that you must be logged in to use the feature.
+.. Test case: Press `F8` and not logged in +
+   Expected: Calendar WebView opens and states that you must be logged in to use the feature.
+.. Test case: `calendar-launch` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed.
+.. Test case: `View > Open Calendar` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed.
+.. Test case: Press `F8` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed.
+.. Test case: `logout` with open calendar WebViews open (one or many) +
+   Expected: All calendar windows close and user is logged out from signed-in calendar sessions (verify by logging as any user).
+
+.  Displaying the calendar within the scene switcher
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `switch calendar` and not logged in +
+   Expected: Switch case states that you must be logged in to use the command.
+.. Test case: `switch calendar` and logged in +
+   Expected: Scene is switched to display the calendar.
+.. Test case: `logout` and logged in +
+   Expected: User is signed out from the calendar scene session (verify by logging in as any user).
+
+.  Reauthenticating Oauth certificate for calendar use
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `reauthenticate` and not logged in +
+   Expected: Reauthenticate command states that you must be logged in to use the command.
+.. Test case: `reauthenticate` and logged in +
+   Expected: System default browser is launched and user is asked to select an account to authenticate the SLAP app to manage. Failure to do so will freeze the application. Once permission has been granted, a test event will be added and deleted.
+
+.  Adding a calendar event
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+
+.  Listing upcoming calendar events
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+
+.  Deleting a calendar event
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+
+
 // end::calendarTesting[]
 
 // tag::showScheduleTesting[]
 .  Display the user's events for a particular day in the command results box
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>>
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
 .. Test case: `show-schedule d/May 5` +
    Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
 .. Test case: `show-schedule d/On Tuesday` +
@@ -1673,14 +1716,14 @@ JASON
 // end::showScheduleTesting[]
 
 // tag::errorLogTesting[]
-.  Displaying the error log within the application
+.  Displaying the error log within a WebView
 .. Test case: `errorlog` and not logged in +
    Expected: Error log command states that you must be logged in to use the command.
 .. Test case: `View > Show Error Log` and not logged in +
    Expected: Error log WebView opens and states that you must be logged in to use the feature.
 .. Test case: `errorlog` and logged in +
    Expected: Error log WebView opens and the error log is displayed.
-.. Test case: `View > Show Error Log` not logged in +
+.. Test case: `View > Show Error Log` and logged in +
    Expected: Error log WebView opens and the error log is displayed.
 .. Test case: `logout` with open error logs WebViews open (one or many) +
    Expected: All error log windows close.

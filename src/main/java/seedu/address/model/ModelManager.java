@@ -70,8 +70,8 @@ public class ModelManager extends ComponentManager implements Model {
         this(new AddressBook(), new UserPrefs());
     }
 
+    //@@author johnnychanjx
     /**
-     * @@ author Johnny Chan
      * @param person
      * @throws IOException
      * Adds a BrowserPanel html Page into StudentPage
@@ -212,7 +212,6 @@ public class ModelManager extends ComponentManager implements Model {
 
 
     /**
-     * @@author Johnny chan
      * Deletes BrowserPanel html
      */
     public void deletePage(Person person) {
@@ -221,6 +220,7 @@ public class ModelManager extends ComponentManager implements Model {
                 + File.separator + person.getName() + ".html");
         boolean bool = f.delete();
     }
+    //@@author
 
     @Override
     public void resetData(ReadOnlyAddressBook newData) {

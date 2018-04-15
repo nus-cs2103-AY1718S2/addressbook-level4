@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.ui.DisplayCalendarRequestEvent;
 
+//@@author kengsengg
 /**
  * Shows the calendar display
  */
@@ -11,7 +12,7 @@ public class ViewCommand extends Command {
     public static final String COMMAND_WORD = "view";
 
     public static final String MESSAGE_VIEW_SUCCESS = "Calendar view displayed";
-    public static final String MESSAGE_USAGE = "test";
+    public static final String MESSAGE_USAGE = "Shows the Google Calendar page";
 
     private final String parameter;
 
@@ -29,3 +30,4 @@ public class ViewCommand extends Command {
         return this.parameter;
     }
 }
+//@@author

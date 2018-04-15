@@ -5,6 +5,7 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
+//@@author kengsengg
 /**
  * Parses the given {@code String} of arguments in the context of the ViewCommand
  * and returns an ViewCommand object for execution.
@@ -28,3 +29,4 @@ public class ViewCommandParser implements Parser<ViewCommand> {
     }
 
 }
+//@@author

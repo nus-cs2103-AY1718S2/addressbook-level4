@@ -73,8 +73,8 @@ public class BrowserPanel extends UiPart<Region> {
      * Loads the Google Calendar page
      */
     public void loadCalendarPage() {
-//        String parameter = viewCommand.getParameter();
-//        System.out.println(parameter);
+        // String parameter = viewCommand.getParameter();
+        // System.out.println(parameter);
         loadPage("https://calendar.google.com/calendar/embed?src=edubuddytest%40gmail.com&ctz=Asia%2FSingapore");
     }
 

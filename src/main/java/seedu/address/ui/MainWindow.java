@@ -48,11 +48,15 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private ChartsPanel chartsPanel;
     private CoinListPanel coinListPanel;
     private Config config;
     private UserPrefs prefs;
 
     private NotificationsWindow notificationsWindow;
+
+    @FXML
+    private StackPane chartsPlaceholder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -139,6 +143,9 @@ public class MainWindow extends UiPart<Stage> {
     void fillInnerParts() {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        chartsPanel = new ChartsPanel();
+        chartsPlaceholder.getChildren().add(chartsPanel.getRoot());
 
         coinListPanel = new CoinListPanel(logic.getFilteredCoinList());
         coinListPanelPlaceholder.getChildren().add(coinListPanel.getRoot());

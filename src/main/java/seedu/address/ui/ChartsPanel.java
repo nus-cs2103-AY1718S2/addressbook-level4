@@ -1,10 +1,15 @@
 //@@author ewaldhew
 package seedu.address.ui;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -13,6 +18,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CoinPanelSelectionChangedEvent;
+import seedu.address.model.coin.Amount;
 
 /**
  * The charts panel used to display graphs
@@ -20,6 +28,8 @@ import javafx.scene.layout.Region;
 public class ChartsPanel extends UiPart<Region> {
 
     public static final String FXML = "ChartsPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(ChartsPanel.class);
 
     @FXML
     private CategoryAxis xAxis;
@@ -30,48 +40,60 @@ public class ChartsPanel extends UiPart<Region> {
     @FXML
     private LineChart<String, Double> priceChart;
 
-    private final ArrayList<Date> testDataX = new ArrayList<>(Arrays.asList(
-            new Date(1452592800000L),
-            new Date(1452596400000L),
-            new Date(1452600000000L),
-            new Date(1452603600000L),
-            new Date(1452607200000L),
-            new Date(1452610800000L),
-            new Date(1452614400000L),
-            new Date(1452618000000L),
-            new Date(1452621600000L)
-    ));
-    private final ArrayList<Double> testDataY = new ArrayList<>(Arrays.asList(
-            0.002591,
-            0.002580,
-            0.002617,
-            0.002563,
-            0.002597,
-            0.002576,
-            0.002555,
-            0.002575,
-            0.002719
-    ));
-
     public ChartsPanel() {
         super(FXML);
-        addPlot(testDataX, testDataY);
+
+        registerAsAnEventHandler(this);
     }
 
     /**
-     * Add a new plot to the graph
+     * Adds a new plot to the graph via a coin price
+     * @param xAxis
+     * @param yAxis
+     */
+    private void addPlot(List<String> xAxis, List<Amount> yAxis) {
+        ArrayList<Date> dateList = new ArrayList<>(
+                xAxis.stream()
+                .map(str -> new Date(parseTimeStamp(str)))
+                .collect(Collectors.toList()));
+        ArrayList<Double> priceList = new ArrayList<>(
+                yAxis.stream()
+                .map(amount -> Double.valueOf(amount.toString()))
+                .collect(Collectors.toList()));
+
+        addPlot(dateList, priceList);
+    }
+
+    /**
+     * Adds a new plot to the graph
      */
     private void addPlot(ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
         Series<String, Double> dataSeries = new Series<>();
-        dataSeries.setName("Price History Series");
         populateData(dataSeries, xAxis, yAxis);
 
         priceChart.getData().add(dataSeries);
         priceChart.setCreateSymbols(false);
+
+        if (!xAxis.isEmpty()) {
+            calibrateRange(Collections.min(yAxis), Collections.max(yAxis), 5);
+        }
+    }
+
+    private long parseTimeStamp(String s) {
+        return Long.valueOf(s + "000");
     }
 
     /**
-     * Add the data from the provided lists to the data series
+     * Sets nice values for the chart axis scaling
+     */
+    private void calibrateRange(double min, double max, int steps) {
+        this.yAxis.setLowerBound(min);
+        this.yAxis.setUpperBound(max);
+        this.yAxis.setTickUnit((max - min) / (double) steps);
+    }
+
+    /**
+     * Adds the data from the provided lists to the data series
      * @param dataSeries
      * @param xAxis
      * @param yAxis
@@ -79,8 +101,20 @@ public class ChartsPanel extends UiPart<Region> {
     private void populateData(Series<String, Double> dataSeries, ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
         assert (xAxis.size() == yAxis.size());
         for (int i = 0; i < xAxis.size(); i++) {
-            final String date = DateFormat.getInstance().format(xAxis.get(i));
+            final String date = new SimpleDateFormat("dd MMM, HHmm").format(xAxis.get(i));
             dataSeries.getData().add(new Data<>(date, yAxis.get(i)));
         }
+    }
+
+    private void clearData() {
+        priceChart.getData().clear();
+    }
+
+    @Subscribe
+    private void handleCoinPanelSelectionChangedEvent(CoinPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearData();
+        addPlot(event.getNewSelection().coin.getPrice().getHistoricalTimeStamps(),
+                event.getNewSelection().coin.getPrice().getHistoricalPrices());
     }
 }

@@ -54,11 +54,14 @@
             <StackPane fx:id="coinListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340" >
-            <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
-            </padding>
-          </StackPane>
+          <SplitPane id="splitPaneInner" fx:id="splitPaneInner" orientation="VERTICAL" dividerPositions="0.5" VBox.vgrow="ALWAYS">
+            <StackPane fx:id="chartsPlaceholder" prefWidth="340" />
+            <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+              <padding>
+                <Insets top="10" right="10" bottom="10" left="10" />
+              </padding>
+            </StackPane>
+          </SplitPane>
         </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

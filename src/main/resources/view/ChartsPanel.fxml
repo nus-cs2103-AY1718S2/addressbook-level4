@@ -1,5 +1,5 @@
-<!-- @@author ewaldhew -->
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- @@author ewaldhew -->
 
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.layout.StackPane?>
@@ -13,7 +13,7 @@
       <CategoryAxis label="Price History (time)" fx:id="xAxis" />
     </xAxis>
     <yAxis>
-      <NumberAxis label="Price (USD)" fx:id="yAxis" />
+      <NumberAxis label="Price (USD)" fx:id="yAxis" autoRanging="false" />
     </yAxis>
   </LineChart>
 </StackPane>

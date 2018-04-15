@@ -60,7 +60,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setup Procedure
 
-Do the following steps to set up the project in your computer.
+This section provides a step by step guide to facilidate developer who are unfamiliar with Github to setup this project on their own computers.
+You may skip this section if you are an advanced developer.
 
 
 *Step 1:* Fork this repo, and clone the fork to your computer.
@@ -200,14 +201,15 @@ The high-level design of this application is illustrated in _Figure 9_ below.
 .Architecture diagram
 image::Architecture.png[width="600"]
 
-Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
+Given below is a quick overview of each component.
+
 `Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* at app launch: initializing other components in the correct sequence and connecting them up with each other; and
+* at app launch: initializing other components in the correct sequence and connecting them up with each other.
 * at shut down: shutting down other components and invoking cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level:
@@ -483,6 +485,74 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
     }
 ----
 {empty} +
+// tag::find[]
+===== Find a task or event
+`FindEvent` class is added to locate `Task` and `Event` objects which contains any keywords in their name.
+{empty} +
+The list showned in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the <<`Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
+which is a subclass of `Predicate` class in Java library.
+{empty} +
+{empty} +
+The following snippet shows the `executeUndoableCommand()` of the `FindCommand` class.
+`UniqueActivityList` resides in the `Model` will be filtered by setting `predicate` object to be the `Predicate` of the filterlist.
+
+[source,java]
+----
+    public CommandResult execute() {
+        model.updateFilteredActivityList(predicate);
+        return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
+    }
+----
+//end::find[]
+//tag::edit[]
+===== Editing a task or an event
+
+`Task` and `Event` objects are editable through the use of `EditCommand`.
+In this application, if a commmand requires a target to operate on,
+it will determine which `Task` or `Event` to modify by using the keywords `task` or `list` and index of the target in the displayed list,
+The `task` and `event` keyword would tell the program which list to select from. The index will indicate which `Task` or `Event` is the target.
+{empty} +
+{empty} +
+The edit command can modify every attribute decribed in the <<Adding a task, adding a task>> and <<Adding an event, adding an event>> section above.
+These fields is identified using the same prefix as the adding command.
+{empty} +
+{empty} +
+The following snippet shows the `executeUndoableCommand()` of the `EditCommand` class.
+`UniqueActivityList` resides in the `Model` will be updated by having `editedActivity` replacing `activityToEdit`..
+If `editedActitity` is identical to any `Activity` in `UniqueActivityList`, the edit operation will be aborted and a `DuplicateActivityException` will be throun.
+[source,java]
+----
+        public CommandResult executeUndoableCommand() throws CommandException {
+            try {
+                model.updateActivity(activityToEdit, editedActivity);
+            } catch (DuplicateActivityException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_ACTIVITY);
+            } catch (ActivityNotFoundException pnfe) {
+                throw new AssertionError("The target activity cannot be missing");
+            }
+            model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
+            return new CommandResult(String.format(MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity));
+        }
+----
+
+The `EditCommand` relies on two internal classes `EditEventDescriptor` and `EditTaskDescriptor` to store the information of modified attributes.
+The two classes shares many common behaviour, hence an interface `EditActivityDescriptor` is used for generic purpose.
+{empty} +
+{empty} +
+The api is given as below:
+[source,java]
+----
+    public static interface EditActivityDescriptor {
+
+        public boolean isAnyFieldEdited();
+
+        public EditActivityDescriptor getCopy();
+
+        public Activity createEditedActivity(Activity activityToEdit);
+    }
+----
+{empty} +
+// end::edit[]
 
 ===== Removing a task or an event
 `Task` and `Event` objects can be removed through the use of the `RemoveCommand`

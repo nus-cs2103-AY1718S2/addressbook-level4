@@ -41,7 +41,6 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
-        this.storage = storage;
     }
 
     /**
@@ -50,7 +49,7 @@ public abstract class Command {
      * access to the dependencies.
      */
     public void setData(Model model, Storage storage, CommandHistory history, UndoRedoStack undoRedoStack) {
-        this.model = model;
+        this.setData(model, history, undoRedoStack);
         this.storage = storage;
     }
 }

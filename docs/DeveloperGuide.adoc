@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= HuatAh! v1.5 - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -12,9 +12,10 @@ ifdef::env-github[]
 endif::[]
 :repoURL: https://github.com/se-edu/addressbook-level4/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Huat Ah Finance Ptd Ltd`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
+
 
 === Prerequisites
 
@@ -193,6 +194,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
+//tag::ModelTwo[]
 [[Design-Model]]
 === Model component
 
@@ -207,6 +209,7 @@ The `Model`,
 * stores the Address Book data.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+//end::ModelTwo[]
 
 [[Design-Storage]]
 === Storage component
@@ -384,6 +387,625 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+
+//tag::FindCommandEnhancement[]
+=== Find Command Enhancements
+
+In the original AddressBook, the `find` command only searches through the `Name` field of the `Person`. The current implementation enables the user to search through all fields in a Person. This is bound to be useful when the user may be interested in quickly finding someone whose address or tags contains a certain word. Furthermore, the current implementation allows the user to enter certain specifier parameters to narrow down the search range, which allows more relevant results to appear to the user.
+
+==== Basic Enhancement
+
+Most of the useful work done in the Find Command is done by constructing a `FindCommand` object and passing an appropriate `Predicate<>` as a parameter to it.
+
+----
+public FindCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
+    }
+
+    @Override
+    public CommandResult execute() {
+        model.updateFilteredPersonList(predicate);
+        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+    }
+----
+
+In this case, the `FindCommand` object expects a `Predicate<Person>` as an argument, and then uses that Predicate object in `execute()` to filter the list in the `Model`.
+
+All that is needed now is to create an appropriate `Predicate<Person>` class that checks the correct fields in a `Person` instance.
+
+For example, in a `PersonContainsKeywordsPredicate`, the test field is overridden as such:
+
+----
+public boolean test(Person person) {
+
+        String stringOfTags = getStringOfTags(person);
+
+        return keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword))
+                || keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(stringOfTags, keyword))
+                || keywords.stream()
+                    .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getAddress().value, keyword))
+                || keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getEmail().value, keyword))
+                || keywords.stream()
+                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getPhone().value, keyword));
+    }
+----
+
+a `stream` is generated from the user-entered keywords and each keyword is checked against all the words in specific fields such as `person.getName().fullName`.
+
+==== Further Enhancement
+
+The `find` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `FindCommandParser` then recognises the specifers and constructs the correct `FindCommand` object with the correct `Predicate<Person>`. `FindCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
+
+These are the names of the `Predicate<Person>` classes currently implemented:
+
+** PersonContainsKeywordsPredicate
+** NameContainsKeywordsPredicate
+** AddressContainsKeywordsPredicate
+** EmailContainsKeywordsPredicate
+** PhoneContainsKeywordsPredicate
+** TagsContainsKeywordsPredicate
+
+In order to implement this further enhancement, we have to modify `FindCommandParser` to recognize the specifier and then to construct the correct `FindCommand` object. The code is shown below.
+
+----
+ String[] arguments = trimmedArgs.split("\\s+");
+        String[] keywords;
+        //check arguments[0] for specifier
+
+        if (arguments[0].matches("\\p{Alnum}+.++")) {
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(arguments)));
+        }
+
+        switch (arguments[0]) {
+        case "-all":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PersonContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-n":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-p":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new PhoneContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-e":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new EmailContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-a":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new AddressContainsKeywordsPredicate(Arrays.asList(keywords)));
+        case "-t":
+            keywords = Arrays.copyOfRange(arguments, 1, arguments.length);
+            return new FindCommand(new TagsContainsKeywordsPredicate(Arrays.asList(keywords)));
+        default:
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
+        }
+----
+
+The first if-block captures the case for no specifiers, while the switch-case block captures the case for valid specifiers and throws an exception when the specifier is invalid.
+
+==== Rationale
+The rationale for improving the `find` command is the fact that users of an application containing contact data would like to be able to search for a contact easily using keywords.
+
+It was important to make sure that the `find` command would search through fields other than the Name of the Person, as relevant information may be contained in other fields.
+
+It was also important to be able to specify the field the user was interested in searching as this would increase the relevance of search results or reduce the occurence of irrelevant results. For example, if I searched "Baker" and there was a contact whose address was "Baker Street" and there was another contact who had been tagged as "Baker" I would receive two search results. But if I wanted to only view contacts who had been _tagged_ as "Baker", then I need only enter the specifier `-t` to increase the relevance of the results. This becomes more important as the size of the addressbook gets larger. Having more relevant results also increases the speed at which a user can use the application.
+
+//end::FindCommandEnhancement[]
+
+//@@author zhangriqi
+//tag::locatecommand[]
+=== Locate on Google Map
+
+The `locate` command accepts a specifier, such as `-t` or `-p` as the first argument to the program to search through a specific field. `LocateCommandParser` then recognises the specifers and constructs the correct `LocateCommand` object with the correct `Predicate<Person>`. `LocateCommand.execute()` is then called, and it searches for the keywords in the correct fields according to the Predicate that was passed to it.
+Then it gets the address of the person specified by the parameter and pass it to the method loadUrl in browerPanel in MainWindow. The user can use 'locate' / 'lo' command with a specifier as the parameter to locate a person on google map.
+
+`LocateCommand` relies on `LocateRequestEvent` which is handled by `BrowserPanel` to call the appropriate method for loading `Person` address using Google Map.
+
+The current implementation enables the user to search through all fields in a Person. If there're more than one person with the same specifier passed in by the user, it automatically locates the address of the person on top of the filteredList and ask the user to be more specific given the filtered list.
+`locate` will locate the first person on the filtered list and present a message for the user to select one from the listed persons.
+
+For example, `locate` a person without address will return a red error message.
+
+image::locate1.png[width="800"]
+
+Locate command is implemented this way:
+
+The sequence diagram for locate command is presented below:
+
+image::locateSequencediagram.png[width="800"]
+
+[source,java]
+----
+public LocateCommand(Predicate<Person> predicate) {
+        this.predicate = predicate;
+    }
+----
+
+With loadUrl, the Google Map url is passed to 'BrowserPanel'to display the location indicated by the index in BrowserPanel.
+
+----
+    @Override
+    public CommandResult execute() {
+            List<Person> lastShownList = model.getFilteredPersonList(predicate);
+
+            Person location = lastShownList.get(target);
+
+            // Open Google Map on BrowserPanel
+            MainWindow.loadUrl("https://www.google.com.sg/maps/place/"
+                    + location.getAddress().toString());
+
+            EventsCenter.getInstance().post(new LocateRequestEvent(target));
+
+            if (model.getFilteredPersonList().size() > 1) {
+                return new CommandResult(String.format(MESSAGE_LOCATE_SELECT, targetOne));
+            }
+            return new CommandResult(String.format(MESSAGE_LOCATE_SUCCESS, targetOne));
+
+        }
+----
+
+As we can see from the picture below, once the command is executed, the location is presented on Google Map is loaded in the BrowserPanel.
+
+image::locate2.png[width="800"]
+
+==== Rationale
+The rationale for implementing the `locate` command is that there's actual need of the users to find a person as easily as possible while using this application. By locating the person on Google Map in this application, the user can directly see the location of a person instead of a simple line of address that's not so useful.
+
+It was important to make sure that the `locate` command would use parameters other than the Index, as relevant information may be more easily to be obtained.
+//@@author
+//end::locatecommand[]
+
+//@@author zhangriqi
+//tag::alias[]
+=== Add Command Alias Enhancement
+In the original enhancement, all the command must be in full text to be considered as a valid command.
+----
+public class AddCommand extends UndoableCommand implements PopulatableCommand {
+
+    public static final String COMMAND_WORD = "add";
+    //@@author zhangriqi
+    public static final String COMMAND_ALIAS = "i";
+    //@@author
+
+     public CommandResult executeUndoableCommand() throws CommandException {
+            requireNonNull(model);
+            try {
+                model.addPerson(toAdd);
+                return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+            } catch (DuplicatePersonException e) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            }
+
+        }
+----
+
+The alias command for all other commands will follow a similar implementation.
+
+==== Rationale
+This feature is implemented to allow a user to enter a command without specifying the entire word of the command.
+//@@author
+//end::alias[]
+
+//@@author jonleeyz
+// tag::tagcolours[]
+=== Tag Colours Enhancement
+
+In the original AddressBook, all tags were of the same colour, irrespective of the `Person` they were tagged to or the content of the tag. Users were able to visually identify the tags a `Person` is associated with by the textual content of each tag. The current implementation enables colours for tags and tags with the same textual content will consistently bear the same colour. This is substantially more useful than the previous application as users are able to visually identify multiple `Person` objects with the same tag with much more ease. Also, users can now more easily compare and contrast the tags that two distinct `Person` objects are associated with.
+
+==== Basic Enhancement
+
+The colours for the tags are first created in `resources/main/view/DarkTheme.css`.
+
+The textual representations of the colours are then initialised and placed into a `String[]`.
+
+----
+private static final String[] TAG_COLOUR_STYLES =
+	{ "teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey" };
+----
+
+A helper method is then created to return a specific tag colour style given a `String` input. The `hashcode()` method of each `String` is utilised in this method to ensure that the colour assigned is **consistently random**: equivalent `Strings` will receive identical colours while different `Strings` will receive "random" colours that will be in most cases distinct. This behaviour is consistent over repeated runs of the Application.
+
+----
+private String getTagColourStyleFor(String tagName) {
+    return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
+}
+----
+
+All that remains to be done is to implement a new method to initialise all tags of a Person object with the appropriate colours. This method calls the above helper method, utilising it to associate each tag with a appropriate colour based on its `String` content.
+
+----
+private void initTags(Person person) {
+    person.getTags().forEach(tag -> {
+        Label tagLabel = new Label(tag.tagName);
+        tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));
+        tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));
+        tags.getChildren().add(tagLabel);
+     });
+}
+----
+
+==== Further Enhancement
+
+This enhancement can be taken steps further in the coming weeks by assigning certain set colours to certain tags instead of using the `hashCode()` method to assign colours.
+
+This would be useful in the content of our Application as it is important for the User to discern between `Runners` and `Customers`, and to be able to tell at a glance whether and what actions need to be taken or assigned to respective `Customers` or `Runners`.
+
+==== Rationale
+The rationale for adding tag colours stems from two facts: firstly, that in the context of this Application, tags are used to categorise, group and distinguish between `Person` objects and that secondly, colours are an excellent way to visually and manually group and distinguish between groups of objects.
+
+As a result, implementing tag colours utilises these two facts in tandom to make it significantly easier for the User to group different `Persons` and in combination with our newly implement `find` command, which enables wide sweeping, flexible search and filtering functionality, these tag colours add much value to the searching and filtering user experience.
+
+These tag colours will be significantly more useful with the further enhancement mentioned above and hence, this basic enhancement is the first step towards the finished product.
+// end::tagcolours[]
+// tag::keyboardshortcuts[]
+=== Keyboard shortcuts
+
+In the original AddressBook, the only keyboard shortcut that was implemented was kbd:[F1], which brought out the Help Window.
+The current implementation allows the user to use many different keyboard shortcuts to speed up common tasks.
+The new keyboard shortcuts either run their associated command immediately, or populate the `CommandBox` with the command's prefixes.
+This way, the user just needs to fill in the appropriate arguments, saving them time on typing the prefixes.
+
+==== Basic Enhancement
+
+For each of the keyboard-enabled commands, an associated menu item is created for them.
+The accelerator for each menu item is then set to its respective keyboard shortcut.
+
+The `MainWindow.fxml` file is also updated to enable the functionality and appearance of the new menu items.
+
+An event handler method is associated with each menu item, being called upon the input of the respective keyboard shortcut or upon the selection of the menu item.
+
+Each event handler will raise a new event, which will then be handled by the CommandBox and ResultDisplay UI elements.
+
+Code for `handleUndo()`:
+----
+@FXML
+    private void handleUndo() {
+        raise(new ExecuteCommandRequestEvent("undo"));
+    }
+----
+
+Upon the input of a valid keyboard shortcut, both the CommandBox and ResultDisplay UI elements handle the raised event in their own way.
+
+Both UI elements are registered as event handlers and have distinct methods to handle the two types of raised events.
+
+For `PopulatePrefixesRequestEvents`, the CommandBox replaces its current text with the given command and its prefixes.
+For `ExecuteCommandRequestEvents`, the CommandBox replaces its current text with the given command and then calls `handleCommandInputChanged()` to immediately execute the command.
+
+For `PopulatePrefixesRequestEvents`, the ResultDisplay displays the given help information for the input command.
+For `ExecuteCommandRequestEvents`, the ResultDisplay does not directly handle the event; instead the result of the keyboard shortcut input is determined by the `CommandBox` and its associated `LogicManager`.
+
+==== Further Enhancement
+
+This enhancement can be taken steps further in the coming weeks by allowing kdb:[Tab] to move between generated prefixes in the `CommandBox`.
+Ideally, the user would be able to press one keyboard shortcut to populate the CommandBox, fill in the appropriate argument for the first prefix, press kbd:[Tab] to move past the next prefix to the correct input position.
+This way, the user would be able to focus on just on the input of the salient parameters instead of worrying about the syntax of the command.
+
+Also, it would be possible to implement a confirmation dialog that could come up should the user want to make many changes at once;
+for instance, clearing the database, or tagging multiple people at once, or deleting multiple people at once.
+It is important for the application to ensure that the user does indeed want to carry out the task at hand should it result in widespread and lasting changes to the database.
+
+==== Rationale
+The rationale for implementing these keyboard shortcuts using menu items and accelerators is twofold.
+Firstly, adding the menu items to the already present menu UI element makes the application look more professional.
+Secondly, making use of accelerators allows the keyboard shortcuts to be functional even when the CommandBox is not focused.
+This is expected behaviour by the user.
+On the other hand, if the keyboard shortcuts were instead implemented at the CommandBox level, they would only be functional when the focus is on the CommandBox (eg. when the user _clicks_ on the CommandBox, not ideal).
+It would be difficult for the CommandBox to raise events and have them be handled by the ResultDisplay UI element as well, as in the current implementation, there is no interaction between the `CommandBox` and `ResultDisplay` unless a command is input.
+This would have posed problems when implementing the keyboard shortcuts that populate the CommandBox but do not run the command.
+
+Limitation: when the focus is on the BrowserPanel UI element, the implemented keyboard shortcuts do not work as a user would expect them to.
+This is a limitation of the BrowserPanel UI element.
+// end::keyboardshortcuts[]
+//@@author
+
+//@@author Der-Erlkonig
+// tag::BrowserPanel[]
+=== BrowserPanel Enhancement
+In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the `Runner` or `Customer`.
+These are important fields for a loan shark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
+
+==== Enhancement
+`SelectCommand` manages the displaying of a Person's details.
+The `loadPersonPage` method in `BrowserPanel` has been modified to show the details of a Person, rather than a dummy page, as outlined below:
+
+----
+    @Override
+    private void loadPersonPage(Person person) {
+            String personfilepath;
+            if (person instanceof Customer) {
+                htmlWriter = new HtmlWriter((Customer) person);
+                personfilepath = htmlWriter.writeCustomer();
+            } else if (person instanceof Runner) {
+                htmlWriter = new HtmlWriter((Runner) person);
+                personfilepath = htmlWriter.writeRunner();
+            } else {
+                personfilepath = "";
+            }
+            loadPage("file:///" + personfilepath);
+    }
+----
+
+A `Person` will be passed into a `HtmlWriter` and
+depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
+A HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+Both `Customer` and `Runner` will have the fields: name, phone, email, address.
+Fields exclusively for the `Customer` are: amount borrowed, amount owed, due date, and runner assigned.
+
+image::BrowserPanelCustomer.png[width="600"]
+
+Fields exclusively for the `Runner` are: a list of customers assigned to the specified runner.
+
+image::BrowserPanelRunner.png[width="600"]
+
+The BrowserPanel then displays this HTML file.
+The background and font colors are matched to the HuatAh! application.
+
+==== Rationale
+A customer's amount owed and due dates are very important variables which directly affect the PnL of the loan shark boss' enterprise.
+Being able to view a runner's list of assigned customers is important for managing human resource.
+Therefore, this feature is suitable, and definitely desirable from the perspective of a loan shark boss.
+
+==== Design Considerations
+The following methods of implementations were considered.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):** Write the data to a .html file and use the current implementation of `loadPersonPage`.
+** Pros: Does not interfere with the implementation of `LocateCommand`, default page which shows keyboard shortcuts (also in .html)
+** Cons: May not be the most native.
+* **Alternative 2:** Use `HistoryManager` for undo/redo
+** Pros: More secure as details are kept within the app.
+** Cons: Will require a new implementation of the whole BrowserPanel,
+will not be compatible with the above implementation `LocateCommand`
+and the default page which shows keyboard shortcuts.
+
+// end::BrowserPanel[]
+//@@author
+
+//@@melvintzw
+//tag::ModelTwoImplementation[]
+=== New Model
+
+==== Modelling
+.The Model class diagram illustrates the new Runner and Customer classes and the fields they contain.
+image::ModelClassDiagram.png[width="800"]
+
+a Runner class and a Customer class were created to allow our app to manage operations on subtypes of Person and to encapsulate the data belonging to these different types of persons. These are located in the *Model* package.
+
+==== Saving the new objects into XML
+In order to _save_ these new objects into the XML data file, a modification was made to the `XmlAdaptedPerson.java` file in the *Storage* package. This is shown in the code snippet below.
+
+```
+public XmlAdaptedPerson(Person source) {
+        name = source.getName().fullName;
+        phone = source.getPhone().value;
+        email = source.getEmail().value;
+        address = source.getAddress().value;
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
+        personType = source.getType();
+
+        if (source instanceof Customer) {
+            moneyBorrowed = ((Customer) source).getMoneyBorrowed();
+            standardInterest = ((Customer) source).getStandardInterest();
+            lateInterest = ((Customer) source).getLateInterest();
+            oweStartDate = ((Customer) source).getOweStartDate();
+            oweDueDate = ((Customer) source).getOweDueDate();
+            runner = new XmlAdaptedPerson(((Customer) source).getRunner());
+        }
+
+        if (source instanceof Runner) {
+            customers = new ArrayList<>();
+            for (Person person : ((Runner) source).getCustomers()) {
+                customers.add(new XmlAdaptedPerson(person));
+            }
+        }
+    }
+```
+
+==== Loading the new objects from an XML file.
+
+In order to be able to _load_ the data of Customers and Runners from the XML file into the application, the `XmlAdaptedPerson.toModelType()` method required modifications as well. The code snippet is long and is thus not shown.
+
+==== Viewing the new types through the GUI
+
+In order to view the new types on the GUI, two enhancements were implemented. 1. Display the type as *text* on the PersonCard. 2. Change the *background colour* of the PersonCard according to the person type.
+
+1. Was done by editing the PersonCard.java to have a new @FXML`Label` called personType, and calling the `Person.getType()` method then `setText()`. The FXML file PersonListCard.fxml has to be updated with a new line containing the label id personType.
+
+2. Was done by editing PersonListPanel.java's `updateItem()` method. The setStyle() method with appropriate arguments was called depending on whether the person was `instanceof Customer` or `instanceof Runner`. Appropriate changes were made in the DarkTheme.css file located in _resources/view_ as well to facilitate this change (removing the list-cell:filled:even and list-cell:filled:odd styles, setting appropriate border thickness and colours for list-cell and #cardPane etc...)
+
+The result is as such:
+
+image::PersonListPanel.PNG[width="600"]
+//end::ModelTwoImplementation[]
+//@@author
+
+//@@author jonleeyz
+// tag::home[]
+=== Home View Enhancement
+
+In the original AddressBook, there was no real way to clear the CommandBox or ResultDisplay without entering a new
+command. The current implementation allows the User to press kbd:[F1] to return to the "home" view, where the
+ResultDisplay and BrowserPanel display helpful information to the User, while the CommandBox is emptied and focused
+so that the User may immediately start typing into the CommandBox.
+
+==== Basic Enhancement
+
+This home "command" is implemented in the same way as the other <<keyboardshortcuts, keyboard shortcuts>> but it does not have a corresponding text
+command. It is only associated with its menu item and upon keypress, will raise a HomeRequestEvent that will be handled
+by the CommandBox, ResultDisplay and BrowserPanel UI elements.
+
+Code for `handleHome()`:
+----
+@FXML
+    private void handleHome() {
+        raise(new HomeRequestEvent("undo"));
+    }
+----
+
+The CommandBox handles the HomeRequestEvent by clearing all its text and requesting focus.
+
+----
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        replaceText("");
+        commandTextField.requestFocus();
+    }
+----
+
+The ResultDisplay handles the HomeRequestEvent by replacing its existing text with an informative message that tells
+the User how to get more detailed information about the commands should they need it.
+
+----
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        setStyleToIndicateCommandSuccess();
+        Platform.runLater(() -> {
+            displayed.setValue(event.MESSAGE_HOME);
+        });
+    }
+----
+
+The BrowserPanel handles the HomeRequestEvent by loading its defauly page, which shows all available commands and their
+associated keyboard shortcuts and aliases.
+
+----
+    @Subscribe
+    private void handleHomeRequestEvent(HomeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadDefaultPage();
+    }
+----
+
+==== Further Enhancement
+
+This enhancement can be taken steps further by fine-tuning the message and page displayed in the ResultDisplay and
+BrowserPanel to be more informative or actionable.
+
+Also, this enhancement could be more useful if the PersonListPanel were to update to the state before the previous
+command was executed.
+
+==== Rationale
+Implementation rationale follows from the <<keyboardshortcuts, Keyboard Shortcuts>> enhancement as both enhancements
+are implemented similarly.
+
+// end::home[]
+
+// tag::navigationshortcuts[]
+=== Navigation Shortcuts
+
+Upon the implementation of the <<keyboardshortcuts, keyboard shortcuts>> that populate the CommandBox, sometimes with
+many prefixes, it became important to have an efficient method of navigating amongst the populated prefixes and possibly
+their associated values. The implementation of this enhancement allows the User to press the kbd:[Tab] or
+kbd:[Shift+Tab] keys to navigate back and forth between different prefixes and their values. Also, pressing
+kbd:[Shift+Backspace] allows the User to immediately delete the field or prefix that the CommandBox cursor is currently
+positioned on. The combination of these navigation shortcuts along with the other keyboard shortcuts allows the User to
+quickly and efficiently populate the CommandBox with all prefixes, delete those that are not relevant and then be able
+to focus on just the input of the salient parameters before executing the Command.
+
+==== Basic Enhancement
+
+These three navigation keyboard shortcuts were implemented differently from the other
+<<keyboardshortcuts, keyboard shortcuts>>. Instead of each shortcut being an accelerator that actives a menu item,
+these three shortcuts are handled directly by the CommandBox TextField.
+
+If the CommandBox detects that kbd:[Tab], kbd:[Shift+Tab] or kbd:[Shift+Backspace] are pressed, it will call the
+appropriate method.
+
+Code for `handleKeyPress()`:
+----
+    @FXML
+    private void handleKeyPress(KeyEvent keyEvent) {
+        switch (keyEvent.getCode()) {
+        case UP:
+            // As up and down buttons will alter the position of the caret,
+            // consuming it causes the caret's position to remain unchanged
+            keyEvent.consume();
+            navigateToPreviousInput();
+            break;
+        case DOWN:
+            keyEvent.consume();
+            navigateToNextInput();
+            break;
+        case TAB:
+            keyEvent.consume();
+            if (keyEvent.isShiftDown()) {
+                moveToPreviousPrefix();
+            } else {
+                moveToNextPrefix();
+            }
+            break;
+        case BACK_SPACE:
+            if (keyEvent.isShiftDown()) {
+                keyEvent.consume();
+                clearCurrentFieldOrPrefix();
+            }
+            break;
+        default:
+            // let JavaFx handle the keypress
+        }
+    }
+----
+
+The three helper methods, `moveToPreviousPrefix()`, `moveToNextPrefix()` and `clearCurrentFieldOrPrefix()`, call
+associated helper methods to achieve their functionality. The respective helper methods then work by executing a series
+of logical checks for whitespace, the `:` operator and other cases.
+
+As an example, the code for `moveToNextPrefix()` and its helper method `getNextPrefixPosition()` can be seen below:
+
+----
+    private void moveToNextPrefix() {
+        int currentCaretPosition = commandTextField.getCaretPosition();
+        int newCaretPosition = getNextPrefixPosition(currentCaretPosition);
+        commandTextField.positionCaret(newCaretPosition);
+    }
+
+    private int getNextPrefixPosition(int currentCaretPosition) {
+        // find next prefix position
+        int nextPrefixPosition = commandTextField.getText().indexOf(":", currentCaretPosition);
+        int newCaretPosition;
+
+        // set new caret position to be in front of chosen prefix. If prefix not found, then set at last index.
+        if (nextPrefixPosition != -1) {
+            newCaretPosition = nextPrefixPosition + 1;
+
+            // check for space in front of last prefix. If present, move forward one more index.
+            if (commandTextField.getText().substring(newCaretPosition, newCaretPosition + 1).equals(" ")) {
+                newCaretPosition += 1;
+            }
+        } else {
+            newCaretPosition = commandTextField.getText().length();
+        }
+
+        return newCaretPosition;
+    }
+----
+
+==== Further Enhancement
+
+This enhancement can be taken steps further in the coming weeks by ensuring that the navigation shortcuts pick out only
+the accepted prefixes instead of just any character sequence with a `:` following directly after.
+
+The behaviour of kbd:[Shift+Backspace] also could be fine-tuned more to improve usability.
+
+==== Rationale
+The main rationale for implementing these navigation shortcuts by handling it at the CommandBox UI element level instead of
+using menu items and accelerators similar to the other shortcuts is simply that using accelerators allow the keyboard shortcuts
+to be used through the application, even when focus is not on the CommandBox. However, this additional functionality is
+not required for these navigation shortcuts as the User will only be wanting to navigate throughout the CommandBox when
+he is typing or when he has just populated the CommandBox with a command template.
+
+As a result, implementing this enhancement using accelerators and menu items offers unneeded functionality and results
+in unnecessary abstraction.
+// end::navigationshortcuts[]
+//@@author
 
 == Documentation
 
@@ -782,14 +1404,48 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Loan Shark Bosses
+* Need to manage a significant number of contacts (customers and runners).
+* Prefer desktop apps over other types since he will be operating the syndicate from his den / headquarters and not out in the field.
+* Can type fast as he is tech-savvy and is comfortable with using technology to manage data and streamline his workflow.
+* Prefer typing over mouse mouse input as he has fast fingers.
+* Is reasonable comfortable using CLI apps.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
 
+* Manage the operations of the loan shark syndicate substantially more efficiently and quickly than a typical mouse / GUI-driven app. The Application features keyboard shortcuts and quick commands.
+* Untapped market potential.
+* Integrated with map to aid in decisions to do with geographic proximity
+
+*Feature Contribution:*
+
+~Zhang Rui Qi~
+
+Major: Implementation of `Locate` command to bring up address of target on Google Maps.
+
+Minor: Addition of command aliases to improve speed of using CLI.
+
+
+~Melvin Tan~
+
+Major: Implementation of the model and all related components to enable the use of attributes and functionality related to two subclasses of Person: Customer and Runner.
+
+Minor: Enhancement to `Find` command to improve searching.
+
+~Jonathan Lee~
+
+Major: Speed up User workflow using keyboard shortcuts and other input enhancements.
+
+Minor: Implemented usability improvements by differentiating tag colours and adding context menu elements.
+
+~Choi Wi Su~
+
+Major: Implement UI element and methods for displaying summary statistics and relevant information of selected Customers or Runners.
+
+Minor: Recolouring of the GUI to improve look and feel
+
+//@@author zhangriqi
+//tag::userstories[]
 [appendix]
 == User Stories
 
@@ -798,20 +1454,72 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |view help information |find out how to use the application
 
-|`* * *` |user |add a new person |
+|`* * *` |user |list all my customers |have an overview of all customers
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |add a new customer |store the data of a new customer as well as related deals and contracts
+
+|`* * *` |user |clear the list of customers |start on a clean state
+
+|`* * *` |user |delete a customer |remove unwanted data
+
+|`* * *` |user |edit a customer's data |correct mistakes or update the data with the latest information
+
+|`* * *` |user |exit the application |call it a day
+
+|`* * *` |user |find a customer with a keyword and specify which data field to search |search up a customer quickly without looking at the whole list
+
+|`* * *` |user |view history of previously entered commands |trace my workflow
+
+|`* * *` |user |undo a command |easily revert to a previous state
+
+|`* * *` |user |redo a command |redo a command that was undone
+
+|`* * *` |user |select a person from the previously retrieved list |view more details about the particular customer
+
+|`* * *` |user |view a customer's address on Google Maps |visualize the location of the customer
+
+|`* * *` |user |back up my list |create backup copies of the current data in case of data corruption
+
+|`* * *` |user |list all my runners |get an overview of all subordinates
+
+|`* * *` |user |schedule collection of payment |plan  meetings with customers and facilitate timely collection of payments
+
+|`* * *` |user |schedule a house visit |send a friendly, personal reminder to a customer regarding payments
+
+|`* * *` |user |add a customer with partial information |add a customer entry without requiring all the details
+
+|`* * *` |user |easily make ad hoc calculations |perform simple payment calculations without disrupting my workflow
+
+|`* * *` |user |view customer or transaction statistics |make informed decisions or get relevant information about customers or transactions
+
+|`* * *` |user |rate my customers |know who the most reliable customers are
+
+|`* * *` |user |filter customers by area |make operations, collections and visitations more time and cost efficient
+
+|`* * *` |user |hide my application quickly |prevent unwanted eyes from confidential data and the activities of the syndicate
+
+|`* * *` |user |view information about a customer's collateral (family members, relatives, property)  |nalyse possible courses of action against recalcitrant customers who do not pay up
+
+|`* * *` |user |view a compact status view of customers using small symbols or pictorial representations |see general status information about customers at a glance
+
+|`* * *` |user |view different configurations of one or more routes, all together encompassing a given set of customers' locations |find the optimal route in terms of cost, time and effort that can be taken to collect from a given set of customers
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* *` |user |export data of customers and runners |view the data in another format or on another platform
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |view a route encompassing a given set of customers' locations |access the cost, time and effort involved in collecting from a set of customers
+
+|`**` |user | enter commands with aliases | type commands faster and improve speed of using the application
+
+|`*` |user |export my current view to another format |view specific information in another format or print out a hardcopy and pass the information to subordinates
+
+
 |=======================================================================
-
-_{More to be added}_
+//@@author
+//end::userstories[]
 
 [appendix]
 == Use Cases
@@ -867,9 +1575,9 @@ A contact detail that is not meant to be shared with others
 [appendix]
 == Product Survey
 
-*Product Name*
+*HuatAh!*
 
-Author: ...
+Author:
 
 Pros:
 
@@ -903,8 +1611,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -912,17 +1618,32 @@ _{ more test cases ... }_
 .. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
+//tag::ManualTestDelete[]
+.. Test Case: `delete 1`, where 1 is a CUSTOMER, and 1 is assigned to a RUNNER +
+    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Runner should no longer have that Customer assigned.
+.. Test Case: `delete 1`, where 1 is a RUNNER, and CUSTOMERS 2, 3, 4 are assigned to the RUNNER +
+    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Customers at INDEX 2, 3, 4 should no longer have that Runner assigned to them.
+//end::ManualTestDelete[]
 
-_{ more test cases ... }_
+//@@author Der-Erlkonic
+=== Select Command
 
-=== Saving data
+. Checking if the fields of a selected `Person` are displayed correctly correct.
 
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Prerequisites: Clear the list, add a `Customer` to index 1, add a `Runner` to index 2, add a (non-duplicate) `Customer` to index 3. Assign both the customers to the runner.
+.. Test case: `select 1` +
+     Expected: First contact is selected from the list. The `Person` should be a `Customer`.
+     Details of the `Customer` shown in the BrowserPanel.
+     Fields should be the same as what was entered in the Prerequisite step.
+     "Runner assigned" should be the name of `Runner` in index 2.
+.. Test case: `select 2` +
+     Expected: First contact is selected from the list. The `Person` should be a `Runner`.
+     Details of the `Runner` shown in the BrowserPanel.
+     Fields should be the same as what was entered in the Prerequisite step.
+     "Customers assigned" should indicate number two beside it, and name of `Customer` in index 1 and index 3 listed below.
+//@@author

@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.util.StringUtil;
 
+//@@author melvintzw
 /**
  * Tests that a {@code Person}'s {@code Name} matches any of the keywords given.
  */
@@ -16,7 +17,9 @@ public class NameContainsKeywordsPredicate implements Predicate<Person> {
     }
 
     @Override
+    //test existence of keywords in person's full name and tags.
     public boolean test(Person person) {
+
         return keywords.stream()
                 .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(person.getName().fullName, keyword));
     }

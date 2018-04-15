@@ -1,7 +1,6 @@
 package systemtests;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
@@ -9,8 +8,8 @@ import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
 import org.junit.Test;
 
-import guitests.GuiRobot;
 import guitests.guihandles.HelpWindowHandle;
+import javafx.scene.input.KeyCode;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.SelectCommand;
@@ -26,31 +25,8 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
             + "that this is a bug with TestFX library that we are using. If this test fails, you have to run your "
             + "tests on headless mode. See UsingGradle.adoc on how to do so.";
 
-    private final GuiRobot guiRobot = new GuiRobot();
-
     @Test
-    public void openHelpWindow() {
-        //use accelerator
-        getCommandBox().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getResultDisplay().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getPersonListPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowOpen();
-
-        getBrowserPanel().click();
-        getMainMenu().openHelpWindowUsingAccelerator();
-        assertHelpWindowNotOpen();
-
-        //use menu button
-        getMainMenu().openHelpWindowUsingMenu();
-        assertHelpWindowOpen();
-
+    public void clear() {
         //use command box
         executeCommand(HelpCommand.COMMAND_WORD);
         assertHelpWindowOpen();
@@ -62,7 +38,7 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         // assert that while the help window is open the UI updates correctly for a command execution
         executeCommand(SelectCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertEquals("", getCommandBox().getInput());
-        assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
         assertNotEquals(HelpCommand.SHOWING_HELP_MESSAGE, getResultDisplay().getText());
         assertNotEquals(BrowserPanel.DEFAULT_PAGE, getBrowserPanel().getLoadedUrl());
         assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
@@ -71,6 +47,40 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         // note: the select command tested above does not update the status bar
         executeCommand(DeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
         assertNotEquals(StatusBarFooter.SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
+    }
+
+    @Test
+    public void focusOnCommandBox_executeHelpCommand_usingAccelerator() {
+        getCommandBox().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void focusOnResultDisplay_executeHelpCommand_usingAccelerator() {
+        getResultDisplay().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void focusOnPersonListPanel_executeHelpCommand_usingAccelerator() {
+        getPersonListPanel().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void focusOnBrowserPanel_executeHelpCommand_usingAccelerator() {
+        getBrowserPanel().click();
+        executeHelpCommandUsingAccelerator();
+        assertHelpWindowOpen();
+    }
+
+    @Test
+    public void executeHelpCommand_usingMenuButton() {
+        executeHelpCommandUsingMenu();
+        assertHelpWindowOpen();
     }
 
     /**
@@ -84,11 +94,27 @@ public class HelpCommandSystemTest extends AddressBookSystemTest {
         getMainWindowHandle().focus();
     }
 
+    //@@author jonleeyz
     /**
-     * Asserts that the help window isn't open.
+     * Executes the HelpCommand using its accelerator in {@code MainMenu}
      */
+    private void executeHelpCommandUsingAccelerator() {
+        executeUsingAccelerator(KeyCode.F12);
+    }
+
+    /**
+     * Executes the HelpCommand using its menu bar item in {@code MainMenu}.
+     */
+    private void executeHelpCommandUsingMenu() {
+        executeUsingMenuItem("Help", "F12");
+    }
+    //@@author
+
+    //@@author jonleeyz-unused
+    /* Redundant, kept for legacy purposes
     private void assertHelpWindowNotOpen() {
         assertFalse(ERROR_MESSAGE, HelpWindowHandle.isWindowPresent());
     }
-
+    */
+    //@@author
 }

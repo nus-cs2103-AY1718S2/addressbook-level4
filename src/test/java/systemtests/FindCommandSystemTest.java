@@ -1,11 +1,17 @@
 package systemtests;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.BENSON;
 import static seedu.address.testutil.TypicalPersons.CARL;
 import static seedu.address.testutil.TypicalPersons.DANIEL;
+import static seedu.address.testutil.TypicalPersons.ELLE;
+import static seedu.address.testutil.TypicalPersons.FIONA;
+import static seedu.address.testutil.TypicalPersons.GEORGE;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import java.util.ArrayList;
@@ -13,7 +19,9 @@ import java.util.List;
 
 import org.junit.Test;
 
+import javafx.scene.input.KeyCode;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.PopulatePrefixesRequestEvent;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.RedoCommand;
@@ -21,8 +29,8 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 import seedu.address.model.tag.Tag;
 
+//@@author melvintzw
 public class FindCommandSystemTest extends AddressBookSystemTest {
-
     @Test
     public void find() {
         /* Case: find multiple persons in address book, command with leading spaces and trailing spaces
@@ -70,6 +78,12 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
+        //TODO: implement test cases for specifiers: -n -p -e -a -t
+        //ModelHelper.setFilteredList()
+        //refer to TypicalPersons.java and test.data.sandbox.sampleData.xml for fields to check
+
+        //-------------INVALID CASES--------------------------------------------------------------------------------->
+
         /* Case: undo previous find command -> rejected */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
@@ -111,24 +125,29 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find phone number of person in address book -> 0 persons found */
+        /* Case: find phone number of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getPhone().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find address of person in address book -> 0 persons found */
+        /* Case: find address of person in address book -> 3 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getAddress().value;
+        expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, CARL, DANIEL, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find email of person in address book -> 0 persons found */
+        /* Case: find email of person in address book -> 1 persons found */
         command = FindCommand.COMMAND_WORD + " " + DANIEL.getEmail().value;
+        ModelHelper.setFilteredList(expectedModel, DANIEL);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
-        /* Case: find tags of person in address book -> 0 persons found */
+        /* Case: find tags of person in address book -> 6 persons found */
         List<Tag> tags = new ArrayList<>(DANIEL.getTags());
         command = FindCommand.COMMAND_WORD + " " + tags.get(0).tagName;
+        ModelHelper.setFilteredList(expectedModel, ALICE, CARL, DANIEL, ELLE, FIONA, GEORGE);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -145,7 +164,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         deleteAllPersons();
         command = FindCommand.COMMAND_WORD + " " + KEYWORD_MATCHING_MEIER;
         expectedModel = getModel();
-        ModelHelper.setFilteredList(expectedModel, DANIEL);
+        ModelHelper.setFilteredList(expectedModel);
         assertCommandSuccess(command, expectedModel);
         assertSelectedCardUnchanged();
 
@@ -153,6 +172,43 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         command = "FiNd Meier";
         assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
     }
+
+    //@@author jonleeyz
+    @Test
+    public void focusOnCommandBox_populateFindCommandTemplate_usingAccelerator() {
+        //use accelerator
+        getCommandBox().click();
+        populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+    }
+
+    @Test
+    public void focusOnResultDisplay_populateFindCommandTemplate_usingAccelerator() {
+        getResultDisplay().click();
+        populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+    }
+
+    @Test
+    public void focusOnPersonListPanel_populateFindCommandTemplate_usingAccelerator() {
+        getPersonListPanel().click();
+        populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+    }
+
+    @Test
+    public void focusOnBrowserPanel_populateFindCommandTemplate_usingAccelerator() {
+        getBrowserPanel().click();
+        populateFindCommandUsingAccelerator();
+        assertPopulationSuccess();
+    }
+
+    @Test
+    public void populateFindCommandTemplate_usingMenuButton() {
+        populateFindCommandUsingMenu();
+        assertPopulationSuccess();
+    }
+    //@@author
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
@@ -162,6 +218,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
      * selected card updated accordingly, depending on {@code cardStatus}.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel) {
@@ -170,7 +227,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
-        assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
 
@@ -181,6 +238,7 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
      * error style.
+     *
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
@@ -189,7 +247,58 @@ public class FindCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
+        assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
+
+    //@@author jonleeyz
+
+    /**
+     * Asserts that population of the {@code CommandBox} with the AddCommand
+     * template was successful.
+     */
+    private void assertPopulationSuccess() {
+        assertEquals(FindCommand.COMMAND_TEMPLATE, getCommandBox().getInput());
+        assertEquals(FindCommand.MESSAGE_USAGE, getResultDisplay().getText());
+        assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof PopulatePrefixesRequestEvent);
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the FindCommand template
+     * using the associated accelerator in {@code MainWindow}.
+     */
+    private void populateFindCommandUsingAccelerator() {
+        populateUsingAccelerator(KeyCode.CONTROL, KeyCode.F);
+    }
+
+    /**
+     * Populates the {@code CommandBox} with the FindCommand template
+     * using the menu bar in {@code MainWindow}.
+     */
+    private void populateFindCommandUsingMenu() {
+        populateUsingMenu("View", "Find...");
+    }
+    //@@author
+
+    //@@author jonleeyz-unused
+    /* Redundant, kept for legacy purposes
+    private void assertPopulationFailure() {
+        FindCommand findCommand = new FindCommand();
+        assertNotEquals(findCommand.getTemplate(), getCommandBox().getInput());
+        assertNotEquals(findCommand.getUsageMessage(), getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+
+        executeCommand("invalid command");
+        assertTrue(getCommandBox().clear());
+        assertEquals(MESSAGE_UNKNOWN_COMMAND, getResultDisplay().getText());
+        guiRobot.pauseForHuman();
+    }
+    */
+    //@@author
 }

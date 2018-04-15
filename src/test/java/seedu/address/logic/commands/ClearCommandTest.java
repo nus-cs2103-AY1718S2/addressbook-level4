@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -33,4 +34,11 @@ public class ClearCommandTest {
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
+
+    //@@author jonleeyz
+    @Test
+    public void verifyGetCommandWordWorksCorrectly() {
+        assertEquals(new ClearCommand().getCommandWord(), ClearCommand.COMMAND_WORD);
+    }
+    //@@author
 }

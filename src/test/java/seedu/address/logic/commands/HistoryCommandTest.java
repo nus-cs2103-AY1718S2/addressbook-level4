@@ -47,4 +47,11 @@ public class HistoryCommandTest {
     private void assertCommandResult(HistoryCommand historyCommand, String expectedMessage) {
         assertEquals(expectedMessage, historyCommand.execute().feedbackToUser);
     }
+
+    //@@author jonleeyz
+    @Test
+    public void verifyGetCommandWordWorksCorrectly() {
+        assertEquals(new HistoryCommand().getCommandWord(), HistoryCommand.COMMAND_WORD);
+    }
+    //@@author
 }

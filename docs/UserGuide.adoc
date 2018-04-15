@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= HuatAh! v1.5 - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,20 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-F12-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Huat Ah Finance Pte Ltd`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+If you:
+
+* are a 21st Century modern loan shark boss,
+* prefer to use a desktop app for managing operations,
+* prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI),
+* can type fast and prefer a keyboard as your main input method,
+
+HuatAh! can get your operations management tasks done faster than traditional GUI apps. Interested? Read on!
 
 == Quick Start
 
@@ -27,238 +34,631 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `HuatAh.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your application.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+image::Ui-start.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+.  Type your selected command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+.  If you would like more detailed information about the commands, you may take a look at the <<Command Summary, Command Summary>>.
+Keyboard shortcuts and aliases are also available for you to speed up your workflow!
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+====
+ list
 
-.  Refer to <<Features>> for details of each command.
+_Lists all persons._
+====
+====
+ add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: The Fullerton s: today d: 7 June 2018 m: 31415926535897 i: 9.71 t: richxiaoming t: HighSES t: mingdynasty
 
-[[Features]]
-== Features
+_Adds a new `Customer` named "Xiao Ming"._
+====
+====
+ delete 3
+
+Deletes the third person displayed in the current view.
+====
+====
+ exit
+
+_Exits the application._
+====
+
+//@@author melvintzw
+== Known Issues
+* Default date is January 1, 1970 (default Java Date value), when no start date or due date
+is specified when adding a customer.
+//@@author
+
+//@@author jonleeyz
+// tag::commandsummary[]
+== Command Summary
+[NOTE]
+====
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n: NAME`, `NAME` is a parameter which can be used as `add n: John Doe`.
+* Items in square brackets are optional e.g `n: NAME [t: TAG]` can be used as `n: John Doe t: friend` or as `n: John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t: TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t: friend`, `t: friend t: family` etc.
+* Parameters can be in any order e.g. if the command specifies `n: NAME p: PHONE_NUMBER`, `p: PHONE_NUMBER n: NAME` is also acceptable.
+====
+
+[%header,cols="1,2,7"]
+|===
+|Command
+|Keyboard shortcut
+|Syntax
+
+|help
+|kbd:[F12]
+|`help`
+
+|<<home, home>>
+|kbd:[F1]
+|
+
+|<<list, list>>
+|kbd:[F2]
+|`list`
+
+|<<history, history>> (`h`)
+|kbd:[F3]
+|`history`
+
+|<<add, add>> (`i`)
+|kbd:[Ctrl+I]
+|`add ty: r(or c) n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
+
+|<<assign, assign>> (`a`)
+|kbd:[Ctrl+Shift+A]
+|`assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX] ...`
+
+|<<clear, clear>> (`c`)
+|kbd:[Ctrl+Shift+C]
+|`clear`
+
+|<<delete, delete>> (`d`)
+|kbd:[Ctrl+D]
+|`delete INDEX`
+
+|<<edit, edit>> (`e`)
+|kbd:[Ctrl+E]
+|`edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...`
+
+|<<find, find>> (`f`)
+|kbd:[Ctrl+F]
+|`find [SPECIFIER] KEYWORD [KEYWORD] ...`
+
+|<<locate, locate>> (`l`)
+|kbd:[Ctrl+L]
+|`locate [SPECIFIER] KEYWORD [KEYWORD] ...`
+
+|<<select, select>> (`s`)
+|kbd:[Ctrl+S]
+|`select INDEX`
+
+|<<undo, undo>> (`u`)
+|kbd:[Ctrl+Z]
+|`undo`
+
+|<<redo, redo>> (`r`)
+|kbd:[Ctrl+Y]
+|`redo`
+
+|exit
+|kbd:[Alt+Q]
+|`exit`
+
+|===
+// end::commandsummary[]
+
+// tag::navigationshortcuts[]
+== Navigation shortcuts [since v1.5]
+[NOTE]
+====
+* These keyboard shortcuts may be used to traverse or delete text from the CommandBox.
+* These keyboard shortcuts are best used with the keyboard shortcuts that populate command templates
+(eg. <<add, add: kbd:[Ctrl+I]>>, <<edit, edit: kbd:[Ctrl+E]>>, <<locate, locate: kbd:[Ctrl+L]>>, etc). This integrated
+functionality will allow you to quickly and efficiently manage your data with minimal typing.
+* Try them out to see how they work!
+====
+
+[%header,cols="1,4"]
+|===
+|Keyboard shortcut
+|Function
+
+|kbd:[Tab]
+|Positions the cursor after the next prefix. +
+If no prefixes are present, positions the cursor after the last character in the CommandBox.
+
+|kbd:[Shift+Tab]
+|Positions the cursor after the previous prefix. +
+If no prefixes are present, brings the cursor before the first character in the CommandBox.
+
+|kbd:[Shift+Backspace]
+|Deletes the text in between the cursor and the previous prefix. +
+If the cursor is on a prefix, deletes the prefix. +
+If no prefixes, deletes all text before the cursor.
+|===
+// end::navigationshortcuts[]
+
+== Feature details
+
+// tag::home[]
+=== Displaying the home view : kbd:[F1] [since v1.5] [[home]]
+
+[NOTE]
+====
+* Utilising this keyboard shortcut will display the home view.
+** The CommandBox will be empty and focused (will be ready to receive input).
+** The ResultDisplay will show a welcome message.
+** The BrowserPanel will display a list of commands, as well as their respective aliases and
+keyboard shortcuts.
+====
+<<Command Summary, Back to Command Summary>>
+// end::home[]
+
+***
+=== Displaying all Runners and Customers : `list`, kbd:[F2] [[list]]
+
+*Syntax:*
+====
+ list
+====
+
+[NOTE]
+====
+* This command will display all `Runners` and `Customers` in the database.
+* The `Runners` and `Customers` will be displayed in the order they were added into the database,
+with the latest addition at the bottom.
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+=== Showing history of commands entered : `history`, kbd:[F3] [[history]]
+
+*Syntax:*
+====
+ history
+====
+
+[NOTE]
+====
+* This command will list all the commands that you have previously entered in *reverse chronological order*.
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+=== Adding a person: `add`, kbd:[Ctrl+I] [since v1.3] [[add]]
+
+*Syntax:*
+====
+ add ty: r(or c) n: NAME [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] ...
+====
+
+[NOTE]
+====
+* This command adds a new `Customer` or `Runner` with the specified details.
+* A person can have any number of tags (including 0).
+* `NAME` and `TYPE` must be provided. The other details are optional.
+* The additional details after type and name can be entered in any order.
+* The start and end dates can be specified in natural language (eg. "today", "this Friday", etc).
+* Interest will be compounded weekly.
+====
+
+*Usage examples:*
 
 ====
-*Command Format*
+ add ty: c n: Xiao Ming p: 88888888 e: xiao@ming.com a: The Fullerton s: today d: 7 June 2018 m: 31415926535897 i: 9.71 t: richxiaoming t: HighSES t: mingdynasty
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+_Adds a new `Customer` named "Xiao Ming", with phone number "88888888", email address "xiao@ming.com", address
+"The Fullerton", and tags "richxiaoming", "HighSES" and mingdynasty", who borrows $31 415 926 535 897 at a weekly
+interest rate of 9.71% on the date this command is entered and is due to return the full amount on 7 June 2018._
 ====
 
-=== Viewing help : `help`
+====
+ add ty: c  p: 88888888 n: Xiao Ming e: xiao@ming.com s: today a: The Fullerton d: 5 May 2018 m: 314159265 i: 9.71 t: richxiaoming t: mingdynasty t: HighSES
 
-Format: `help`
+_Adds the same `Customer` as above, just with values specified in a different order._
+====
 
-=== Adding a person: `add`
+====
+ add ty: r n: Ping An p: 93698369 e: pingan@houseofahlong.com a: Ang Mo Kio Police Divison HQ t: UndercoverRunner t: TripleAgent t: Joker
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+_Adds a new `Runner` named "Ping An", with phone number "93698369", email address "pingan@houseofahlong.com",
+address "Ang Mo Kio Police Divison HQ" and tags "UndercoverRunner", "TripleAgent" and "Joker"._
+====
+<<Command Summary, Back to Command Summary>>
 
-[TIP]
-A person can have any number of tags (including 0)
+***
+//@@author
+//@@author melvintzw
+//tag::AssignCommand[]
+=== Assigning one or more Customers to a Runner : `assign`, kbd:[Ctrl+Shift+A] [since v1.4] [[assign]]
 
-Examples:
+*Syntax:*
+====
+ assign RUNNER-INDEX c: CUSTOMER-INDEX [CUSTOMER-INDEX] ...
+====
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+[NOTE]
+====
+* This command assigns one or more `Customers` to a `Runner` according to a specified `RUNNER-INDEX`
+and `CUSTOMER-INDICES`.
+** Each `INDEX` refers to the index number shown in the last person listing.
+** Each `INDEX` must be a *positive integer*: 1, 2, 3, ...
+* The `RUNNER-INDEX` must always be specified and at least one `CUSTOMER-INDEX` must be specified as well.
 
-=== Listing all persons : `list`
+====
 
-Shows a list of all persons in the address book. +
-Format: `list`
+*Usage examples:*
 
-=== Editing a person : `edit`
+====
+`assign 1 c: 2`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+_Assigns the Customer associated with index `2` to the Runner associated with index `1` based on the last shown listing._
+====
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+====
+`assign 1 c: 2 5 8`
+
+_Assigns the Customers associated with indices `2`, `5`, `8` to the Runner associated with index `1` based on the last shown listing._
+====
+<<Command Summary, Back to Command Summary>>
+//end::AssignCommand[]
+
+***
+//@@author
+//@@author jonleeyz
+=== Clearing the database : `clear`, kbd:[Ctrl+Shift+C] [[clear]]
+
+*Syntax:*
+====
+ clear
+====
+
+[NOTE]
+====
+* This command will clear all `Runners` and `Customers` from the database.
+* This command may be undone.
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+// tag::deletecommand[]
+=== Deleting a person : `delete`, kbd:[Ctrl+D] [[delete]]
+
+*Syntax:*
+====
+ delete INDEX
+====
+
+[NOTE]
+====
+* This command deletes the person associated with the specified `INDEX`.
+** The `INDEX` refers to the index number shown in the most recent listing.
+** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
+====
+
+*Usage examples:*
+
+====
+ list
+ delete 2
+
+_Deletes the second person in the database._
+====
+
+====
+ find Betsy
+ delete 1
+
+_Deletes the first person in the results of the `find` command._
+====
+<<Command Summary, Back to Command Summary>>
+// end::deletecommand[]
+
+***
+=== Editing a person : `edit`, kbd:[Ctrl+E] [since v1.3] [[edit]]
+
+*Syntax:*
+====
+ edit INDEX [n: NAME] [p: PHONE_NUMBER] [e: EMAIL] [a: ADDRESS] [s: OWE_START_DATE] [d: OWE_DUE_DATE] [m: MONEY_OWED] [i: INTEREST_RATE] [t: TAG] …
+====
+
+[NOTE]
+====
+* This command edits the person associated with the specified `INDEX`.
+** The `INDEX` refers to the index number shown in the last person listing.
+** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+* When editing tags, the existing tags of the person will be replaced i.e adding of tags is not cumulative.
+* You can remove all the person's tags by typing `t:` without specifying any tags after it.
+* You cannot Edit a Runner with Customer-only fields
+====
 
-Examples:
+*Usage examples:*
+====
+ edit 1 p: 999 e: ahlong@houseofhuat.com
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+_Edits the phone number and email address of the first person to be `999` and `ahlong@houseofhuat.com` respectively._
+====
 
-=== Locating persons by name: `find`
+====
+ edit 2 n: Kimmy Aunty t:
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+_Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags from that person._
+====
+***
+//tag::FindCommand[]
+=== Searching for relevant persons : `find`, kbd:[Ctrl+F] [since v1.1] [[find]]
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+*Syntax:*
+====
+ find [SPECIFIER] KEYWORD [KEYWORD] ...
+====
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+* This command searches for relevant persons with the specified information.
+* Name, phone, email, address and tags are searched by default (no `SPECIFIER` or `-all` `SPECIFIERS`)
+* `Customer` and `Runner` specific fields cannot be searched in this version [coming in v2.0]
+* Only one `SPECIFIER` can be used at a time.
+* If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
+* Description of `SPECIFIERS`:
+** `-n` to search only names.
+** `-p` to search only phones.
+** `-e` to search only emails.
+** `-a` to search only addresses.
+** `-t` to search only tags.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+*Usage examples:*
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+====
+ find John
+
+_Returns all persons with name, address or tags matching `John`._
+====
+
+====
+ find -all John
+
+_Returns all persons with name, address or tags matching `John`._
+====
+
+====
+ find Betsy Tim John
+
+_Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `John`._
+====
+
+====
+ find -p 91234567
+
+_Returns all persons with phone number "91234567"._
+====
+<<Command Summary, Back to Command Summary>>
+//end::FindCommand[]
+
+//@@author zhangriqi
+//tag::locatecommand[]
+***
+=== Displaying a person's address using Google Maps : `locate`, kbd:[Ctrl+L] [[locate]]
+
+*Syntax:*
+====
+ locate [SPECIFIER] KEYWORD [KEYWORD] ...
+====
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* This command searches for relevant persons with the specified information then displays the first relevant person's address on google maps.
+* Name, phone, email, address and tags are searched by when no `SPECIFIER` or the `-all` `SPECIFIER` is input)
+* `Customer` and `Runner` specific fields are not queried in this version [coming in v2.0]
+* Select using Index when more than one person with the same information are found is not provided in this version [coming in v2.0]
+* Only one `SPECIFIER` can be used at a time.
+* If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
+* Description of `SPECIFIERS`:
+** `-n` to search only names.
+** `-p` to search only phones.
+** `-e` to search only emails.
+** `-a` to search only addresses.
+** `-t` to search only tags.
+
 ====
 
-Examples:
+*Usage examples:*
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+====
+ locate David
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+_Locates any persons with name, address or tag "David" and displays the address associated with the first result on Google Maps._
+====
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+====
+ locate -n David
 
-=== Redoing the previously undone command : `redo`
+_Locates any persons with name "David" and displays the address associated with the first result on Google Maps._
+====
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+====
+ locate -a Blk 30
 
-Examples:
+_Locates the address "Blk 30" on Google Maps and displays the person with that address in the PersonListPanel._
+====
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+====
+ locate -p 91234567
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+_Locates any persons with phone number "91234567" and displays the address associated with the first result on Google Maps._
+====
+<<Command Summary, Back to Command Summary>>
+//@@author
+//end::locatecommand[]
+***
+=== Selecting and displaying details about a person : `select`, kbd:[Ctrl+S] [since v1.4] [[select]]
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+*Syntax:*
+====
+ select INDEX
+====
 
-=== Clearing all entries : `clear`
+[NOTE]
+====
+* This command selects and displays details about the person associated with the specified `INDEX`.
+** The `INDEX` refers to the index number shown in the last person listing.
+** The `INDEX` must be a *positive integer*: 1, 2, 3, ...
+====
 
-Clears all entries from the address book. +
-Format: `clear`
+*Usage examples:*
 
-=== Exiting the program : `exit`
+====
+ list
+ select 2
 
-Exits the program. +
-Format: `exit`
+_Selects the second person in the database._
+====
 
-=== Saving the data
+====
+ find Betsy
+ select 1
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+_Selects the first person from the results of the `find` command._
+====
+<<Command Summary, Back to Command Summary>>
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+***
+=== Undoing the last undoable command : `undo`, kbd:[Ctrl+Z] [[undo]]
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+*Syntax:*
+====
+ undo
+====
 
+[NOTE]
+====
+* Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+* Only undoable commands can be undone.
+====
+
+*Usage examples:*
+
+====
+ delete 1
+ list
+ undo (reverses the "delete 1" command)
+====
+
+====
+ select 1
+ list
+ undo
+
+_The `undo` command fails as there are no undoable commands executed previously._
+====
+
+====
+ delete 1
+ clear
+ undo (reverses the "clear" command)
+ undo (reverses the "delete 1" command)
+====
+<<Command Summary, Back to Command Summary>>
+
+***
+=== Redoing the previously undone command : `redo`, kbd:[Ctrl+Y] [[redo]]
+
+*Syntax:*
+====
+ redo
+====
+
+*Usage examples:*
+
+====
+ delete 1
+ undo (reverses the "delete 1" command)
+ redo (reapplies the "delete 1" command)
+====
+
+====
+ delete 1
+ redo
+
+_The `redo` command fails as there are no `undo` commands executed previously._
+====
+
+====
+ delete 1
+ clear
+ undo (reverses the "clear" command)
+ undo (reverses the "delete 1" command)
+ redo (reapplies the "delete 1" command)
+ redo (reapplies the "clear" command)
+====
+<<Command Summary, Back to Command Summary>>
+//@@author
+
+// tag::v2features[]
+//@@author melvintzw
+== Features coming in v2.0
+
+*Improvements to existing features:*
+
+* `Find` Command: Searching fields specific to Runners and Customers.
+* `Find` Command: ability to filter the currently displayed list further
+* `Locate` Command: ability to select by index when there are conflicts
+
+*Other New Features:*
+
+* *Functional:*
+** `Unassign` customers from a runner
+** Add multiple persons by inputting a file
+** `Schedule` dates for runners to visit customers
+** Change the status of customers (whether they've paid or not)
+** Display countdown timers for Customers' due dates
+** `Sort` customers and runners by certain fields
+** More useful statistics on the home page
+* *Cosmetic:*
+** Improvement of the UI to display one list of Customers and a separate list of Runners
+** Aesthetic improvements for the display of data
+** `Theme` command to choose and switch between UI theme/colours
+//@@author
+// end::v2features[]
+
+// tag::FAQ[]
+//@@author jonleeyz
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+[qanda]
+How do I transfer my data to another Computer?::
+Install the app in the other computer and overwrite the empty data file it creates with the file that contains
+the data of your previous Address Book folder. By default, the path for the data file is "data/addressbook.xml".
 
-== Command Summary
+How do I save my data?::
+The state of the database is saved in the hard disk automatically after any command that changes the data.
+Therefore, there is no need to save manually.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+How can I report a bug or suggest improvements to this application?::
+Open an issue https://github.com/CS2103JAN2018-F12-B4/main/issues[here]! We would love to hear your feedback! :)
+
+What if I am not a loan shark boss yet?::
+Work hard and collect more protection money! Maybe one day you'll make it! ;)
+
+What if I am a law enforcement officer?::
+Huat Ah Finance Pte Ltd takes no responsibility for the actions of its users.
+We just like to make software that makes a positive impact on the world! :)
+
+*On a serious note, this is just a student project with a humourous stance.*
+
+//@@author
+// end::FAQ[]

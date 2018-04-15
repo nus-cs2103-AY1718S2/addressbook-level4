@@ -1,6 +1,9 @@
 package seedu.address.testutil;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import seedu.address.model.person.Address;
@@ -8,6 +11,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.Customer;
+import seedu.address.model.person.customer.LateInterest;
+import seedu.address.model.person.customer.MoneyBorrowed;
+import seedu.address.model.person.customer.StandardInterest;
+import seedu.address.model.person.runner.Runner;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -28,12 +36,35 @@ public class PersonBuilder {
     private Address address;
     private Set<Tag> tags;
 
+    //@@author melvintzw
+    //Customer fields
+    private MoneyBorrowed moneyBorrowed;
+    private Date oweStartDate;
+    private Date oweDueDate;
+    private StandardInterest standardInterest;
+    private LateInterest lateInterest;
+    private Person runner;
+
+    //Runner fields:
+    private List<Person> customers;
+
     public PersonBuilder() {
         name = new Name(DEFAULT_NAME);
         phone = new Phone(DEFAULT_PHONE);
         email = new Email(DEFAULT_EMAIL);
         address = new Address(DEFAULT_ADDRESS);
         tags = SampleDataUtil.getTagSet(DEFAULT_TAGS);
+
+        //Customer fields
+        moneyBorrowed = new MoneyBorrowed();
+        oweStartDate = new Date(0);
+        oweDueDate = new Date(0);
+        standardInterest = new StandardInterest();
+        lateInterest = new LateInterest();
+        runner = new Runner();
+
+        //Runner fields:
+        customers = new ArrayList<>();
     }
 
     /**
@@ -45,6 +76,19 @@ public class PersonBuilder {
         email = personToCopy.getEmail();
         address = personToCopy.getAddress();
         tags = new HashSet<>(personToCopy.getTags());
+
+        if (personToCopy instanceof Customer) {
+            moneyBorrowed = ((Customer) personToCopy).getMoneyBorrowed();
+            oweStartDate = ((Customer) personToCopy).getOweStartDate();
+            oweDueDate = ((Customer) personToCopy).getOweDueDate();
+            standardInterest = ((Customer) personToCopy).getStandardInterest();
+            lateInterest = ((Customer) personToCopy).getLateInterest();
+            runner = ((Customer) personToCopy).getRunner();
+        }
+
+        if (personToCopy instanceof Runner) {
+            customers = new ArrayList<>();
+        }
     }
 
     /**
@@ -87,8 +131,80 @@ public class PersonBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code MoneyBorrowed} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMoneyBorrowed(MoneyBorrowed moneyBorrowed) {
+        this.moneyBorrowed = moneyBorrowed;
+        return this;
+    }
+
+    /**
+     * Sets the {@code OweStartDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withOweStartDate(Date date) {
+        this.oweStartDate = date;
+        return this;
+    }
+
+    /**
+     * Sets the {@code OweDueDate} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withOweDueDate(Date date) {
+        this.oweDueDate = date;
+        return this;
+    }
+
+    /**
+     * Sets the {@code StandardInterest} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withStandardInterest(StandardInterest interest) {
+        this.standardInterest = interest;
+        return this;
+    }
+
+    /**
+     * Sets the {@code LateInterest} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withLateInterest(LateInterest interest) {
+        this.lateInterest = interest;
+        return this;
+    }
+
+    /**
+     * Sets the {@code Runner} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRunner(Runner runner) {
+        this.runner = runner;
+        return this;
+    }
+
+    /**
+     * Sets the {@code customers} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withCustomers(List<Person> customers) {
+        this.customers = customers;
+        return this;
+    }
+
+    /**
+     * Constructs a Person
+     */
     public Person build() {
         return new Person(name, phone, email, address, tags);
     }
 
+    /**
+     * Constructs a Customer
+     */
+    public Customer buildCustomer() {
+        return new Customer(name, phone, email, address, tags, moneyBorrowed,
+                oweStartDate, oweDueDate, standardInterest, lateInterest, runner);
+    }
+
+    public Runner buildRunner() {
+        return new Runner(name, phone, email, address, tags, customers);
+    }
+
 }
+

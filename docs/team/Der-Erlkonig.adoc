@@ -1,0 +1,52 @@
+= Choi Wi Su - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HuatAh!
+
+---
+
+//@@author Der-Erlkonig
+== Overview
+
+HuatAh! is a desktop loan shark manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to view the various details of Customers and Runners on the BrowserPanel*
+** What it does: Upon executing a valid `SelectCommand`, all the Person's  details will be shown on the BrowserPanel.
+Depending on whether the Person is a Customer or Runner, their respective fields will be shown accordingly.
+** Justification: This feature improves the product significantly because a Loanshark manager can easily see the details of his Customers and Runners at a quick glance, enhancing productivity.
+** Highlights: This feature makes use of the same BrowserPanel which displays the GoogleMaps.
+** Credits: https://www.w3schools.com/html/ for to introduction to html syntax.
+
+* *Minor enhancement*: Modify the color scheme of the new application.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/functional/Der-Erlkonig.md[functional]] [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/test/Der-Erlkonig.md[test]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed and reviewed pull requests
+** Enhancements to existing features:
+*** Tweaked the defaultpage to show a summary of keyboard shortcuts instead of a blank page.
+** Documentation:
+*** Added a section on manual testing in the Developer Guide.
+** Community:
+*** Reported bugs for other teams in the class (examples:  https://github.com/CS2103JAN2018-T16-B2/main/issues/156[#156], https://github.com/CS2103JAN2018-T16-B2/main/issues/158[#158])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=BrowserPanel]
+//@@author

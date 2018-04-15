@@ -1,0 +1,69 @@
+= Zhang Ruiqi - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HuatAh!
+
+---
+
+== Overview
+
+HuatAh! is a desktop loan shark manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+== Summary of contributions
+
+* *Major enhancement*: added the feature of locating a person on Google Map
+** What it does: allows the user to locate a person using any fields of a person (e.g, name/phone/email...) on Google Map, and it perfectly helps the user to keep track of the person.
+** Justification: Allowing the target users of this app - loan shark managers, to know where their customers are is very important because it's both cost-efficient and time-efficient to assign the customers to the nearest runners if the managers can see the location of the customers on a map.
+** Highlights: This enhancement includes the use Google Map which allows for much more future possibilities to integrate with Google. It makes integrating with other Google functions in the future easier.
+** Credits: Google Maps URLs
+
+* *Minor enhancement*: added alias for command that allows the user to use a command more easily, minor change to ui-app logo
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/functional/zhangriqi.md[Functional code]] [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/test/zhangriqi.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed release `v1.4 - v1.5rc` on GitHub
+*** Collated code for 'v1.4' on Github
+** Enhancements to existing features:
+*** Updated the GUI: removed the redundancy (Pull requests https://github.com/CS2103JAN2018-F12-B4/main/pull/76, https://github.com/CS2103JAN2018-F12-B4/main/pull/6)
+** Documentation:
+*** Updated User Guide and Developer Guide to stay up to date
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com[#74], https://github.com[#76], https://github.com[#9]
+*** PRs approved of: https://github.com/CS2103JAN2018-F12-B4/main/pull/136
+*** Contributed to forum discussions: https://github.com/CS2103JAN2018-F12-B4/main/issues/96
+*** Reported bugs and suggestions for other teams in the class:
+https://github.com/CS2103JAN2018-W13-B2/main/issues/129,
+https://github.com/CS2103JAN2018-F12-B4/main/pull/183
+** Tools:
+*** Integrated Google Map to the project (https://github.com[#42])
+
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+
+|===
+
+include::../UserGuide.adoc[tag=locatecommand]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+
+|===
+
+include::../DeveloperGuide.adoc[tag=locatecommand]
+include::../DeveloperGuide.adoc[tag=alias]
+include::../DeveloperGuide.adoc[tag=userstories]
+---
+
+

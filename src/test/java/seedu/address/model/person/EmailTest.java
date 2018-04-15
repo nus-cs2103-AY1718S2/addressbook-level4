@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -14,11 +16,13 @@ public class EmailTest {
         Assert.assertThrows(NullPointerException.class, () -> new Email(null));
     }
 
+    /* not invalid
     @Test
     public void constructor_invalidEmail_throwsIllegalArgumentException() {
         String invalidEmail = "";
         Assert.assertThrows(IllegalArgumentException.class, () -> new Email(invalidEmail));
     }
+    */
 
     @Test
     public void isValidEmail() {
@@ -26,7 +30,7 @@ public class EmailTest {
         Assert.assertThrows(NullPointerException.class, () -> Email.isValidEmail(null));
 
         // blank email
-        assertFalse(Email.isValidEmail("")); // empty string
+        //not invalid -- assertFalse(Email.isValidEmail("")); // empty string
         assertFalse(Email.isValidEmail(" ")); // spaces only
 
         // missing parts
@@ -59,4 +63,21 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com"));   // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
     }
+
+    //@@author jonleeyz
+    @Test
+    public void testHashcode_symmetric() {
+        Email emailA = new Email();
+        Email emailB = new Email();
+        Email emailC = new Email("test@email.com");
+        Email emailD = new Email("test@email.com");
+
+        assertEquals(emailA.hashCode(), emailB.hashCode());
+        assertEquals(emailC.hashCode(), emailD.hashCode());
+        assertNotEquals(emailA.hashCode(), emailC.hashCode());
+        assertNotEquals(emailA.hashCode(), emailD.hashCode());
+        assertNotEquals(emailB.hashCode(), emailC.hashCode());
+        assertNotEquals(emailB.hashCode(), emailD.hashCode());
+    }
+    //@@author
 }

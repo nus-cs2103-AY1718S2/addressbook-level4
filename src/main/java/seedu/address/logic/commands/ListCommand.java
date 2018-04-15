@@ -5,11 +5,10 @@ import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 /**
  * Lists all persons in the address book to the user.
  */
-public class ListCommand extends Command {
+public class ListCommand extends Command implements ImmediatelyExecutableCommand {
 
     public static final String COMMAND_WORD = "list";
-
-    public static final String MESSAGE_SUCCESS = "Listed all persons";
+    public static final String MESSAGE_SUCCESS = "Listed all persons.";
 
 
     @Override
@@ -17,4 +16,11 @@ public class ListCommand extends Command {
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    //@@author jonleeyz
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+    //@@author
 }

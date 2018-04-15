@@ -1,5 +1,6 @@
 package seedu.address.logic.commands;
 
+import static org.junit.Assert.assertEquals;
 import static seedu.address.logic.UndoRedoStackUtil.prepareStack;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -54,4 +55,11 @@ public class UndoCommandTest {
         // no command in undoStack
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
     }
+
+    //@@author jonleeyz
+    @Test
+    public void verifyGetCommandWordWorksCorrectly() {
+        assertEquals(new UndoCommand().getCommandWord(), UndoCommand.COMMAND_WORD);
+    }
+    //@@author
 }

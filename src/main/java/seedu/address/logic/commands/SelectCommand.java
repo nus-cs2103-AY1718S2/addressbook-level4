@@ -12,14 +12,22 @@ import seedu.address.model.person.Person;
 /**
  * Selects a person identified using it's last displayed index from the address book.
  */
-public class SelectCommand extends Command {
+public class SelectCommand extends Command implements PopulatableCommand {
 
     public static final String COMMAND_WORD = "select";
+    public static final String COMMAND_ALIAS = "s";
+    public static final String COMMAND_TEMPLATE = COMMAND_WORD + " ";
+    public static final String MESSAGE_USAGE =
+            COMMAND_WORD + " | Selects the person identified by the index number used in the last person listing. "
+            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Selects the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
+            + "\n\t"
+            + "Parameters:\t"
+            + COMMAND_WORD + " "
+            + "INDEX (must be a positive integer)"
+
+            + "\n\t"
+            + "Example:\t\t" + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_PERSON_SUCCESS = "Selected Person: %1$s";
 
@@ -28,6 +36,14 @@ public class SelectCommand extends Command {
     public SelectCommand(Index targetIndex) {
         this.targetIndex = targetIndex;
     }
+
+    /**
+     * For call in PopulatePrefixRequestEvent class, to assign string values.
+     */
+    public SelectCommand() {
+        targetIndex = null;
+    }
+
 
     @Override
     public CommandResult execute() throws CommandException {
@@ -49,4 +65,26 @@ public class SelectCommand extends Command {
                 || (other instanceof SelectCommand // instanceof handles nulls
                 && this.targetIndex.equals(((SelectCommand) other).targetIndex)); // state check
     }
+
+    //@@author jonleeyz
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+
+    @Override
+    public String getTemplate() {
+        return COMMAND_TEMPLATE;
+    }
+
+    @Override
+    public int getCaretIndex() {
+        return getTemplate().length();
+    }
+
+    @Override
+    public String getUsageMessage() {
+        return MESSAGE_USAGE;
+    }
+    //@@author
 }

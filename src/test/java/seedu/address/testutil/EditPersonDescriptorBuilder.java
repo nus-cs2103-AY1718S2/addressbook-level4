@@ -4,12 +4,16 @@ import java.util.Set;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.customer.MoneyBorrowed;
+import seedu.address.model.person.customer.StandardInterest;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -78,6 +82,38 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code MoneyBorrowed} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMoneyBorrowed(String moneyBorrowed) {
+        descriptor.setMoneyBorrowed(new MoneyBorrowed(Double.parseDouble(moneyBorrowed)));
+        return this;
+    }
+
+    /**
+     * Sets the {@code OweStartDate} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withOweStartDate(String date) throws IllegalValueException {
+        descriptor.setOweStartDate(ParserUtil.parseDate(date));
+        return this;
+    }
+
+    /**
+     * Sets the {@code OweDueDate} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withOweDueDate(String date) throws IllegalValueException {
+        descriptor.setOweDueDate(ParserUtil.parseDate(date));
+        return this;
+    }
+
+    /**
+     * Sets the {@code StandardInterest} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withStandardInterest(String standardInterest) {
+        descriptor.setStandardInterest(new StandardInterest(Double.parseDouble(standardInterest)));
         return this;
     }
 

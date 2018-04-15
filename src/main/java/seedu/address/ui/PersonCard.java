@@ -13,7 +13,10 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-
+    //@@author jonleeyz-reused
+    private static final String[] TAG_COLOUR_STYLES =
+        {"teal", "red", "yellow", "blue", "orange", "brown", "green", "pink", "black", "grey"};
+    //@@author
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -37,6 +40,8 @@ public class PersonCard extends UiPart<Region> {
     @FXML
     private Label email;
     @FXML
+    private Label personType;
+    @FXML
     private FlowPane tags;
 
     public PersonCard(Person person, int displayedIndex) {
@@ -47,8 +52,33 @@ public class PersonCard extends UiPart<Region> {
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        personType.setText(person.getType().name());
+        initTags(person);
     }
+
+    //@@author jonleeyz-reused
+    // given a tagName, returns the String representation of a colour style
+    private String getTagColourStyleFor(String tagName) {
+        // hash code of tag name used to generate random colour
+        // colour of tags changes between different runs of the application
+        // might want to tweak this behaviour in the LoanShark Tycoon context
+        return TAG_COLOUR_STYLES[Math.abs(tagName.hashCode()) % TAG_COLOUR_STYLES.length];
+    }
+
+    /**
+     * Creates the Labels fot a given {@code Person}.
+     * 1. Creates a new Label object for each tag, initialised with the respective tag.
+     * 2. Adds a style colour attribute to each Label based on its tag.
+     * 3. Adds each properly initialised Label to the containing FlowPane object.
+     */
+    private void initTags(Person person) {
+        person.getTags().forEach(tag -> {
+            Label tagLabel = new Label(tag.tagName);
+            tagLabel.getStyleClass().add(getTagColourStyleFor(tag.tagName));    // getStyleClass(): Node class method
+            tags.getChildren().add(tagLabel);
+        });
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

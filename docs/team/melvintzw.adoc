@@ -1,0 +1,91 @@
+= Melvin Tan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HuatAh!
+
+---
+
+== Overview
+
+HuatAh! is a desktop loan shark manager application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
+
+== Summary of contributions
+
+* *Major enhancement*: implemented the critical backend infrastructure required for the user, a loan shark syndicate boss, to be able to manage Customers and Runners. Also ensured that all commands are functional with respect to the new model. In addition, I implemented a new command `Assign` to provide basic functionality for the user to delegate his subordinates (Runners) to be in charge of one or more Customers.
+
+** What it does: allows developers to develop new functionality and users to benefit from new functionality pertaining specifically to two subtypes of `Person`, namely `Customer` and `Runner`. This allows for proper delineation or separation of certain attributes and behaviours specific to each subclass.
+
+** Justification: Implementation of this feature was necessary for ensuring that features specific to our target-user could be developed and enjoyed.
+
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth understanding of the entire code-base from the early development stages. The implementation was extremely challenging as it required significant updates to many commands (`Add`, `Edit, `Delete`) and touched all components (Model, Logic, Storage, UI).
+
+* *Minor enhancement*: Improved the `Find` command to allow the user to search through more fields like Name, Phone, Email, Address, Tags. I also added the capability to specify a _particular_ field to search. This enhancement was necessary to enable the user (the syndicate boss) to easily find relevant personnel from a large number of contacts stored in the application. This would help the user to manage his data and his syndicate operations better.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/functional/melvintzw.md[functional]][https://github.com/CS2103JAN2018-F12-B4/main/blob/master/collated/test/melvintzw.md[test]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.4` (2 releases) on GitHub
+*** Managed pull requests from teammates
+*** Scheduled Meetings
+*** Assigned issues to teammates
+*** Used Projects features in Github to better organize the development of major features and other aspects of the development
+
+** Enhancements to other existing features:
+*** Improved `Add` command by letting it accept optional fields. This is useful for situations whereby not all personal details are available or when the user would like to quickly create a new contact. <include links>
+*** Modified various command messages to improve readability.
+*** Modified commands such as `Add` and `Edit`, to accept new parameters relevant to Customer and Runner.
+*** Modified 'Delete` command to exhibit proper behaviour (update the data corretly) with respect to the new functionality of assigning customers ro runners.
+*** Fixed various bugs. Examples: (
+https://github.com/CS2103JAN2018-F12-B4/main/pull/155[1]
+https://github.com/CS2103JAN2018-F12-B4/main/issues/188[2]
+)
+
+** Documentation:
+*** Ensured that documentation was up-to-date with current implementations: https://github.com/CS2103JAN2018-F12-B4/main/pull/50[#50], https://github.com/CS2103JAN2018-F12-B4/main/pull/47[#47], https://github.com/CS2103JAN2018-F12-B4/main/pull/95[#95], https://github.com/CS2103JAN2018-F12-B4/main/pull/118[#118], https://github.com/CS2103JAN2018-F12-B4/main/pull/164[#164]
+
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-W14-B3/main/issues/107[1],
+ https://github.com/CS2103JAN2018-W14-B3/main/issues/106[2],
+ https://github.com/CS2103JAN2018-W14-B3/main/issues/98[3],
+ https://github.com/CS2103JAN2018-W14-B3/main/issues/94[4])
+*** Wrote code that was eventually reused in the implementation of another teammate's feature (my enhanced `Find` command used in the new `Locate` command)
+
+** Tools:
+*** Integrated a third party library (Natty) to the project (https://github.com/CS2103JAN2018-F12-B4/main/pull/80[#42])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=AssignCommand]
+
+---
+
+include::../UserGuide.adoc[tag=FindCommand]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=FindCommandEnhancement]
+
+---
+
+include::../DeveloperGuide.adoc[tag=ModelTwo]
+
+---
+
+include::../DeveloperGuide.adoc[tag=ManualTestDelete]
+
+---
+
+include::../DeveloperGuide.adoc[tag=ModelTwoImplementation]

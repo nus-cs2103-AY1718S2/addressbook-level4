@@ -7,11 +7,15 @@ import seedu.address.model.AddressBook;
 /**
  * Clears the address book.
  */
-public class ClearCommand extends UndoableCommand {
+public class ClearCommand extends UndoableCommand implements ImmediatelyExecutableCommand {
 
     public static final String COMMAND_WORD = "clear";
-    public static final String MESSAGE_SUCCESS = "Address book has been cleared!";
+    public static final String COMMAND_ALIAS = "c";
+    public static final String MESSAGE_SUCCESS =
+            "Database cleared!"
 
+            + "\n\n"
+            + "Press Ctrl + Z or type \"undo\" to restore the cleared entries.";
 
     @Override
     public CommandResult executeUndoableCommand() {
@@ -19,4 +23,11 @@ public class ClearCommand extends UndoableCommand {
         model.resetData(new AddressBook());
         return new CommandResult(MESSAGE_SUCCESS);
     }
+
+    //@@author jonleeyz
+    @Override
+    public String getCommandWord() {
+        return COMMAND_WORD;
+    }
+    //@@author
 }

@@ -1548,6 +1548,29 @@ Currently, there is a glitch in the scaling of the calendar Year Page due to bug
 [TIP]
 After each test, you can use the `undo` command to restore the initial state of the address book for subsequent tests.
 
+=== Importing Contacts
+
+Importing contacts must be done with a .csv file with similar syntax command as exporting contacts.
+
+It is important to note the Name, Email, Address, and Phone number need to be in the correct order in the .csv file for the contacts to be imported correctly.
+
+More information is given in the  User Guide.
+
+=== Exporting Contacts
+
+For manual testing type `ec` or `export_contacts` followed by the absolute path of a .csv file you would like to export to. It is important to note a couple things:
+
+[NOTE]
+* The file must be a .csv file
+** Therefore, the file path should end in ".csv". Make sure to include the file ending at the end of the file.
+*** For example if you are using a Mac and the file is a .csv file on your Desktop named "test", you could type `~/Users/[username]/Desktop/test.csv` to export the contacts. If the file doesn't exist, it will be automatically created.
+
+What you should see is the excel file (even if it didn't exist before) with the Name, Address, Phone, and Email of the contacts in the address book.
+
+=== Sorting
+
+This function can simply be tested by typing `sort` and/or `so` in the CLI.
+
 === Deleting dated persons
 
 . Deleting all persons matching the specified tags added before the specified date.
@@ -1564,41 +1587,6 @@ After each test, you can use the `undo` command to restore the initial state of 
    Expected: No person is deleted. Date constraints message is shown in the result box. Status bar remains the same.
 .. Test case: Missing any parameter +
    Expected: No person is deleted. Invalid command message is shown in the result box. Status bar remains the same.
-
-=== Importing Contacts
-
-[CAUTION]
-All tests should be done using the Command Line Interface(CLI). There should be no modification done to the calendar by clicking on it (GUI).
-
-Importing contacts must be done with a .csv file with similar syntax command as exporting contacts.
-
-It is important to note the Name, Email, Address, and Phone number need to be in the correct order in the .csv file for the contacts to be imported correctly.
-
-More information is given in the  User Guide.
-
-=== Exporting Contacts
-
-[CAUTION]
-All tests should be done using the Command Line Interface(CLI). There should be no modification done to the calendar by clicking on it (GUI).
-
-For manual testing type `ec` or `export_contacts` followed by the absolute path of a .csv file you would like to export to. It is important to note a couple things:
-
-[NOTE]
-* The file must be a .csv file
-** Therefore, the file path should end in ".csv". Make sure to include the file ending at the end of the file.
-*** For example if you are using a Mac and the file is a .csv file on your Desktop named "test", you could type `~/Users/[username]/Desktop/test.csv` to export the contacts. If the file doesn't exist, it will be automatically created.
-
-What you should see is the excel file (even if it didn't exist before) with the Name, Address, Phone, and Email of the contacts in the address book.
-
-
-
-=== Sorting
-
-[CAUTION]
-All tests should be done using the Command Line Interface(CLI). There should be no modification done to the calendar by clicking on it (GUI).
-
-This function can simply be tested by typing `sort` and/or `so` in the CLI.
-
 
 === Adding an appointment
 
@@ -1632,7 +1620,6 @@ All tests should be done using the Command Line Interface(CLI). There should be 
 .. Test case: Missing any parameter +
    Expected: No appointment is deleted. Invalid command message is shown in the result box. Status bar remains the same.
 
-
 === Zooming in calendar view
 
 . Zooming in the calendar panel to show a more detailed calendar view.
@@ -1656,7 +1643,6 @@ All tests should be done using the Command Line Interface(CLI). There should be 
    Expected: The calendar panel is now showing the Year Page. Success message is shown in the result box.
 .. Test case: `zoomout` +
    Expected: The calendar does not zoom out anymore. Error message is shown in the result box.
-
 
 === Going backward on calendar view
 

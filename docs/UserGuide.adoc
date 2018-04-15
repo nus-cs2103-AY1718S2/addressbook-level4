@@ -714,6 +714,8 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *Filter* : `filter [y/KEYWORD] [r/RATING]` +
 e.g. `filter y/2019`
+* *Interview* : `interview INDEX DATE_TIME_EXPRESSION` +
+e.g. `interview 1 next Friday at 3pm`
 * *Status* : `status INDEX STATUS_INDEX` +
 e.g. `status 1 2`
 * *List* : `list`
@@ -728,6 +730,8 @@ e.g. `rating-edit 1 t/4.5 c/3`
 e.g. `rating-delete 1`
 * *Sort* : `sort FIELD o/SORT ORDER` +
 e.g. `sort gpa o/asc`
+* *Show* : `show PANEL` +
+e.g. `show resume`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

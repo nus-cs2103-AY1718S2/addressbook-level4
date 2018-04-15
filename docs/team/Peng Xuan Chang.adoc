@@ -24,6 +24,9 @@ This application was built upon an existing code base for an address book for th
 ** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands. It has greatly changed the original GUI.
 
 * *Minor enhancement*: Added NRIC field in Owner’s profile
+** What it does: The NRIC field will help the veterinarians and their assistants to better locate an owner using their unique ID.
+** Justification: The feature helps user to avoid confusion when there are patients who share the same name. It also helps to tie pets to a certain user. When pets have duplicated names, they can be differentiated by their tagged NRICs.
+
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/Robert-Peng.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/Robert-Peng.md[Test code]] _{give links to collated code files}_
 
@@ -50,7 +53,7 @@ This application was built upon an existing code base for an address book for th
 
 include::../UserGuide.adoc[tag=listcommand]
 
-include::../UserGuide.adoc[tag=dataencryption]
+include::../UserGuide.adoc[tag=undoredo]
 
 == Contributions to the Developer Guide
 
@@ -63,8 +66,3 @@ include::../DeveloperGuide.adoc[tag=ListPets]
 include::../DeveloperGuide.adoc[tag=calendar]
 
 
-== PROJECT:
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

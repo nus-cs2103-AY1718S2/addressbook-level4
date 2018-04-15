@@ -15,6 +15,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
 import java.util.logging.Logger;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 
 import com.google.common.eventbus.Subscribe;
@@ -26,15 +28,8 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.AddCommand;
-import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
-import seedu.address.logic.commands.HelpCommand;
-import seedu.address.logic.commands.HistoryCommand;
-import seedu.address.logic.commands.ListCommand;
-import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.CliSyntax;
 
 //@@author aquarinte
@@ -93,7 +88,7 @@ public class Autocomplete {
             return getCommandWordSuggestions();
         }
 
-        if (!targetWord.equals("")) {
+        if (!targetWord.equals("") && hasOptionsAndPrefixes()) {
             if (hasAddCommandReferNric() || hasEditCommandReferNric() || hasFindCommandReferNric()) {
                 return getNricSuggestions();
             }
@@ -122,13 +117,11 @@ public class Autocomplete {
                 return getTagSuggestions();
             }
 
-            if (hasOptionsAndPrefixes() && targetWord.startsWith("-")) {
+            if (targetWord.startsWith("-")) {
                 return getOptionSuggestions();
             }
 
-            if (hasOptionsAndPrefixes()) {
-                return getPrefixSuggestions();
-            }
+            return getPrefixSuggestions();
 
         } else {
 
@@ -144,35 +137,11 @@ public class Autocomplete {
      * Returns false if the command is one that does not require any options or prefixes in its syntax.
      */
     private boolean hasOptionsAndPrefixes() {
-        if (commandWord.equals(ClearCommand.COMMAND_WORD)) {
-            return false;
+        if (logic.getCommandWordsWithOptionPrefix().contains(commandWord)) {
+            return true;
         }
 
-        if (commandWord.equals(ListCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (commandWord.equals(ExitCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (commandWord.equals(UndoCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (commandWord.equals(RedoCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (commandWord.equals(HelpCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (commandWord.equals(HistoryCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        return true;
+        return false;
     }
 
     /**
@@ -226,40 +195,14 @@ public class Autocomplete {
     }
 
     /**
-     * Checks if command input {@code trimmedCommandInputArray} has reference to existing pet patients' names, and
-     * determine if autocomplete for pet patient names is necessary.
-     *
-     * Returns false if it is an add new pet patient command.
-     * Returns false if it is an add new owner, new pet patient & new appointment command.
-     * Returns false if it is an edit command.
-     * Returns false if it is a find command.
+     *Returns true if command input {@code trimmedCommandInput} is the syntax for adding a new appointment.
      */
     private boolean hasReferenceToExistingPetPatientNames() {
-        // Add new pet patient
-        if (commandWord.equals(AddCommand.COMMAND_WORD)
-                && trimmedCommandInputArray[2].equals(OPTION_PETPATIENT)
-                && targetWord.startsWith(PREFIX_NAME.toString())) {
-            return false;
-        }
+        final Pattern addNewAppointment = Pattern.compile(AddCommand.COMMAND_WORD + " -(a)+(?<apptInfo>.*)"
+                + "-(o)+(?<ownerNric>.*)" + "-(p)+(?<petName>.*)");
+        final Matcher matcherForNewAppt = addNewAppointment.matcher(trimmedCommandInput);
 
-        // Add new owner, new pet patient & new appointment
-        if (commandWord.equals(AddCommand.COMMAND_WORD)
-                && trimmedCommandInputArray[2].equals(OPTION_OWNER)
-                && trimmedCommandInputArray[trimmedCommandInputArray.length - 3].equals(OPTION_PETPATIENT)
-                && targetWord.startsWith(PREFIX_NAME.toString())) {
-            return false;
-        }
-
-        if (commandWord.equals(EditCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (commandWord.equals(FindCommand.COMMAND_WORD)) {
-            return false;
-        }
-
-        if (trimmedCommandInputArray[trimmedCommandInputArray.length - 3].equals(OPTION_PETPATIENT)
-                && targetWord.startsWith(PREFIX_NAME.toString())) {
+        if (matcherForNewAppt.matches()) {
             return true;
         }
 
@@ -272,9 +215,9 @@ public class Autocomplete {
     private void setOption() {
         option = "nil";
 
-        int o = trimmedCommandInput.lastIndexOf("-o");
-        int p = trimmedCommandInput.lastIndexOf("-p");
-        int a = trimmedCommandInput.lastIndexOf("-a");
+        int o = trimmedCommandInput.lastIndexOf(OPTION_OWNER);
+        int p = trimmedCommandInput.lastIndexOf(OPTION_PETPATIENT);
+        int a = trimmedCommandInput.lastIndexOf(OPTION_APPOINTMENT);
 
         int index = (a > p) ? a : p;
         index = (index > o) ? index : o;
@@ -535,7 +478,7 @@ public class Autocomplete {
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
         init(this.logic);
-        logger.info(LogsCenter.getEventHandlingLogMessage(a, "Local data changed,"
+        logger.info(LogsCenter.getEventHandlingLogMessage(a, "Local data has changed,"
                 + " update autocomplete data"));
     }
 

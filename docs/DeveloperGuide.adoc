@@ -377,6 +377,86 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::autocompleteDG[]
+=== Autocomplete
+
+The autocomplete feature serves to enhance user experience in using the Command Line Interface (CLI). It currently supports command words, options, prefixes, and parameters such as tags, contact's NRIC, pet patient's name, breed, species, colour and blood type.
+
+==== Current Implementation
+
+The implementation logic of the autocomplete feature resides in the `UI` component. The autocomplete feature is driven by a `ChangeListener` attached to `commandTextField.textProperty()` in `CommandBox.java`. Once the `ChangeListener` registers any changes in the content of `commandTextField`, `triggerAutocomplete()` will be executed. +
+
+Suppose that the user is launching Medeina. Before the Graphical User Interface (GUI) is ready, a `CommandBox` object will be initialized for the user to enter commands. The following diagram illustrates a sequence of method calls, starting with the initialization of `CommandBox`, followed by the initialization of an instance of `Autocomplete`, and then calling 3 set attribute methods in the `Logic` component. Subsequently, suppose the user has typed `add -p n/Happy s/Cat b/Persian c/Calico bt/A -o nr/`. The diagram shows a sequence of method calls, starting with triggerAutocomplete(), to get autocomplete suggestions for NRIC to be shown in a context menu.
+
+.Sequence diagram for autocomplete feature
+image::autocompleteSequenceDiagram.png[width="800"]
+
+{empty} +
+`Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are retrieved from the `Logic` component. All data required by `Autocomplete` are consolidated in a similar way in the `Logic` component.
+
+The following code shows how contact's NRIC and tags are consolidated:
+[source,java]
+----
+public void setAttributesForPersonObjects() {
+    nricInModel = new HashSet<>();
+    personTagsInModel = new HashSet<>();
+
+    for (Person p : model.getAddressBook().getPersonList()) {
+        nricInModel.add(p.getNric().toString());
+        personTagsInModel.addAll(p.getTags());
+    }
+}
+
+public Set<String> getAllNric() {
+    return nricInModel;
+}
+
+public Set<String> getAllPersonTags() {
+    Set<String> personTags = personTagsInModel.stream()
+            .map(pt -> pt.tagName)
+            .collect(Collectors.toSet());
+    return personTags;
+}
+----
+
+You may have noticed that in sequence diagram above (Figure 11), `Autocomplete` is a singleton class that is initialized only once, and there is only 1 instance of `CommandBox` in the application. You may be wondering "can the 3 set attribute methods in the `Logic` component be called only once?". If you are currently unsure, imagine that the user is constantly adding new contacts to Medeina. However, `Autocomplete` uses only data from when Medeina was launched. +
+
+The answer to the question is definitely no. The set attributes methods have to be called whenever there is a change in Medeina's data, otherwise the autocomplete suggestions will not be up to date.
+
+The following code snippet ensures that the data used by `Autocomplete` is kept updated.
+[source,java]
+----
+public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
+    init(this.logic); // calls the 3 set attributes methods
+    logger.info(LogsCenter.getEventHandlingLogMessage(a, "Local data has changed, update autocomplete data"));
+}
+----
+
+==== Design considerations
+
+===== Aspect: Updating autocomplete data
+
+* **Alternative 1 (current choice):** All Data is updated only when `AddressBookChangedEvent` is raised.
+** Pros: Efficient and with minimal redundant updates.
+** Cons: Implementation is less straight-forward.
+* **Alternative 2 :** Updates the specific required data e.g. NRIC, whenever autocomplete is triggered.
+** Pros: Easy to implement.
+** Cons: Redundant updates. Required data will remain the same, except only when add, delete, or edit commands are executed.
+* **Alternative 3:** All Data is updated whenever autocomplete is triggered.
+** Pros: Easy to implement.
+** Cons: Many redundant data updates. Running for-loops in the `Logic` component for every character the user types, is resource-intensive.
+
+===== Aspect: Event-driven or user-driven
+
+* **Alternative 1 (current choice):** Implement change listener to automatically track user input and provide autocomplete suggestions.
+** Pros: Great improvement in user experience, as Medeina has long and complex command syntax.
+** Cons: Logic for handling caret position and command syntax parsing is complicated and can be prone to bugs.
+* **Alternative 2:** User has to press a specific key e.g. tab to invoke autocompletion.
+** Pros: Less logic to account for, and is thus easier to implement.
+** Cons: User experience is compromised.
+
+// end::autocompleteDG[]
+
 // tag::addcommandDG[]
 === Add Command
 
@@ -443,6 +523,8 @@ Linking of pet patients to their respective owners and appointments will be impl
 ==== Current Implemaentation
 Since Veterinarians and their assistants have the need to view the PetPatients as a list and see how many PetPatients belong to the same Owner. It is necessary to implement the PetPatient List feature.
 
+image::List_Command.PNG[width:650]
+
 ==== Design Consideration
 * **Alternative 1:** Use tab function to switch between PetPatientList and PersonList
 
@@ -469,6 +551,9 @@ Since veterinarians and their assistants have the need to constantly check their
 
 Third party API `CalendarFX` is used as a Java calendar frame to show Appointments.
 
+image::Show_Appointment.PNG[width:650]
+
+
 ==== Design Consideration
 * **Alternative 1:** Use `iCalendar` from Jfxtra library
 
@@ -481,89 +566,13 @@ Third party API `CalendarFX` is used as a Java calendar frame to show Appointmen
 
 ==== Current Limitations
 
-As of now, the appointment class is yet to be properly developed, thus we are not able to show appointments inside the calendar yet.
+There's a known issue in CalendarFx, when switch from a year with appointments inside to a year without, the CalendarFx will still color the same appointment data despite there's no entry on that date.
 
-Only the UI of CalendarFX is integrated to show calendar view.
+Users and developers should know that this issue is embedded inside CalendarFx, and hopefully can be resolved in future versions of CalendarFx.
 
 ==== Future Work
-
-After the appointment class being finished, we'll be able to implement `setAppointment` function in CalendarFX, the user will then be able to see future appointments in either All-day/weekly/monthly/yearly view.
-
-We may also make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
+We may be able to make enhancements to the Medeina's UI such as changing theme colour to match the UI colour of CalendarFX.
 // end::calendar[]
-
-// tag::autocompleteDG[]
-=== Autocomplete
-==== Current Implementation
-
-Attach a change listener to command box to detect user input.
-[source,java]
-----
-public CommandBox() {
-	// ...logic for CommandBox...
-
-	autocompleteListener = new ChangeListener<String>() {
-        @Override
-        public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
-            Platform.runLater(new Runnable() {
-                public void run() {
-                    triggerAutocomplete(newValue);
-                }
-            });
-        }
-    };
-
-	commandTextField.textProperty().addListener(autocompleteListener);
-}
-----
-
-How descriptions in the autocomplete suggestions are handled:
-[source,java]
-----
-private void triggerAutocomplete(String newValue) {
-	// ...logic for context menu "suggestionBox"...
-
-	for (String s : suggestions) {
-        MenuItem m = new MenuItem(s);
-        String autocompleteValue = StringUtil.removeDescription(s);
-        m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
-        suggestionBox.getItems().add(m);
-    }
-
-	// ...logic for context menu "suggestionBox"...
-}
-----
-
-Toggle autocomplete on/off using kbd:[F2] when command box is focused.
-[source,java]
-----
-@FXML
-private void handleKeyPress(KeyEvent keyEvent) {
-	// ...logic for handling key press...
-	 case F2:
-        if (isAutocompleting) {
-            commandTextField.textProperty().removeListener(getAutocompleteListener());
-            isAutocompleting = false;
-        } else {
-            commandTextField.textProperty().addListener(getAutocompleteListener());
-            isAutocompleting = true;
-        }
-        break;
-	// ...logic for handling key press...
-}
-----
-
-===== Aspect: Improving user-friendliness
-
-image::autocomplete.png[width="500"]
-
-* Command syntax auto-complete suggestions
-** Auto-complete suggestions of command words, options and prefixes shown on a ContextMenu.
-** User can traverse through the suggestions in the ContextMenu using kbd:[Up] and kbd:[Down], or kbd:[Tab].
-** Press kbd:[Enter] to select the suggestion in the ContextMenu and the command box will be updated.
-** Provide experienced users with the option of toggling autocomplete off in the event that they find the context menu distracting.
-
-// end::autocompleteDG[]
 
 // tag::find[]
 === Finding a Contact or Pet Patient
@@ -1288,12 +1297,18 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [width="59%",cols="22%,<23%,<25%",options="header",]
 |=======================================================================
 |Name |Major enhancement(s) |Minor enhancement(s)
-|Jacqueline Cheong|
-*Make command syntax more user friendly and closer to natural language*
+|Jacqueline Cheong
+a|
+* *Autocomplete*
 
-To enhance user experience and usage efficiency by improving the command syntax to be more intuitive and simple to use |
+To enhance user experience and usage efficiency of the CLI by providing autocomplete suggestions
 
-*Add support to change theme*
+* *Add command*
+
+A single add command with options to add a contact, pet patient and appointment to Medeina. Users don't have to remember multiple commands performing similar functions. The new add command also enables the user to all 3 objects at one go to reduce typing.
+
+a|
+* *Add support to change theme (persistent beyond app restart)*
 
 This allows Vets to change the application's appearance to better suit their preferences and working environment (e.g. dark theme for night time)
 
@@ -1411,45 +1426,32 @@ _{More to be added}_
 (For all use cases below, the *System* is the `Medeina` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: View full details of an appointment
+=== Use case: list appointments
 
 *MSS*
 
-1.  User requests to list appointments
-2.  Medeina shows a list of appointments for the current month
-3.  User requests to view a specific appointment in the list
-4.  Medeina shows the full details of the specified appointment
+1.  User requests to view appointments for current month
+2.  Medeina updates calendarFx to show appointments for the current month
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. There are no appointments for the month.
 +
 Use case ends.
-
-* 2b. To retrieve a list of all upcoming appointments, use the command "list -a appointments"
 +
-[none]
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. Medeina shows an error message.
-+
-Use case resumes at step 2.
 
 [discrete]
-=== Use case: Update pet owner's contact information
+=== Use case: Update pet patient's point of contact
 
 *MSS*
 
 1.  User requests to find a pet patient with the name "Joseph"
-2.  Medeina shows a list of pet patients with the name "Joseph"
-3.  User requests to view contact information of a specific pet patient
-4.  Medeina shows the pet patient's owner's contact information
-5.  User requests to modify the pet patient's owner's contact information
-6.  Medeina shows the pet patient's updated contact information
+2.  Medeina shows a list of pet patients with the name "Joseph" in the pet patient card panel and updates the contacts card panel with their point of contact.
+3.  User requests to modify the pet patient's point of contact
+4.  Medeina shows the pet patient's updated information
 +
 Use case ends.
 
@@ -1467,22 +1469,20 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-* 5a. The given command is invalid.
+* 3b. The given command is invalid.
 +
 [none]
-** 5a1. Medeina shows the correct command usage to edit pet patient's information.
+** 3b1. Medeina shows the correct command usage to edit pet patient's information.
 +
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Retrieve medical history of a pet patient
+=== Use case: Retrieve pet patient information under a particular contact
 
 *MSS*
 
-1.  User requests to find a pet patient with the name "Joseph"
-2.  Medeina shows a list of pet patients with the name "Joseph"
-3.  User requests to view medical history of a specific pet patient
-4.  Medeina shows the pet patient's medical history
+1.  User requests to find a contact named "Mavis"
+2.  Medeina shows a list of contacts with "Mavis" as part of their name and updates the pet patient card panel with pet patients under them
 +
 Use case ends.
 
@@ -1493,101 +1493,13 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. Medeina shows an error message.
-+
-Use case resumes at step 2.
-
-* 4a. No medical history (empty).
-+
-Use case ends.
-
 [discrete]
-=== Use case: Retrieve information of a particular owner (contact details, pet patients owned by him/her, and appointments made)
+=== Use case: Add tag(s) to a contact
 
 *MSS*
 
-1.  User requests to find an owner named "Mavis"
-2.  Medeina shows a list of owners with "Mavis" as part of their name
-3.  User requests to view information of a specific owner
-4.  Medeina shows information about the owner
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. Medeina shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Generate a pdf report of a pet patient's medical history and owner's contact information
-
-*MSS*
-
-1.  User requests to find a pet patient with the name "Joseph"
-2.  Medeina shows a list of pet patients with the name "Joseph"
-3.  User requests for a pdf report of a specific pet patient on the list
-4.  Medeina generates a pdf report for the user
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. Medeina shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Generate a pdf report of a particular owner's full information e.g. contact details, list of pet patients under this owner and their medical histories
-*MSS*
-
-1.  User requests to find an owner with the name "Mavis"
-2.  Medeina shows a list of owners with the name "Mavis"
-3.  User requests for a pdf report of a specific owner on the list
-4.  Medeina generates a pdf report for the user
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. Medeina shows an error message.
-+
-Use case resumes at step 2.
-
-[discrete]
-=== Use case: Add tag(s) to a pet owner
-
-*MSS*
-
-1.  User requests to find an owner with the name "Mavis"
-2.  Medeina shows a list of owners with the name "Mavis"
+1.  User requests to find an contacts with the name "Mavis"
+2.  Medeina shows a list of contacts with the name "Mavis" and updates the pet patient card panel with pet patients under them
 3.  User requests to add tags to a specific owner on the list
 4.  Medeina shows updated owner information
 +
@@ -1610,11 +1522,9 @@ Use case resumes at step 2.
 * 3b. The given tag(s) is/are invalid.
 +
 [none]
-** 3b1. Medeina shows a list of valid tags.
+** 3b1. Medeina shows an error message.
 +
 Use case resumes at step 2.
-
-_{More to be added}_
 
 [appendix]
 == Non Functional Requirements
@@ -1695,7 +1605,61 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Change theme
+
+. dark theme
+
+.. Type "theme dark" in the command box to switch to dark theme. +
+.. Re-launch the app by double-clicking the jar file. +
+   Expected: The app is using dark theme. The change of theme persists beyond app restart.
+
+=== Autocomplete
+
+. Command word
+
+.. In an empty command box (with no user input), type a space. You should see a drop down list of commands supported by Medeina.
+.. Continue typing spaces in the command box. The same drop down list of command words will be suggested.
+
+. Prefixes
+.. Type "add " you should see a list of prefixes supported by Medeina.
+.. Type "edit " you should see a list of prefixes supported by Medeina.
+.. Type "find " you should see a list of prefixes supported by Medeina.
+.. Type "delete " you should see a list of prefixes supported by Medeina.
+.. Type "listappt " you should see a list of prefixes supported by Medeina.
+.. There will be no prefixes suggested for all other preceeding words e.g. "sdfkljsdlkfjs ", "help ".
+
+. Options
+
+.. Type "add -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "edit -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "find -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "delete -" you should see a list of options (starting with "-") supported by Medeina.
+.. Type "listappt -" you should see a list of options (starting with "-") supported by Medeina.
+.. There will be no options suggested for all other preceeding words e.g. "sdfkljsdlkfjs -", "help -".
+
+. Species, breed, colour and blood type
+
+.. Typing s/, b/, c/ and bt/ after a word (and a space) in the command box, will show their respective suggestions.
+
+. Pet patient names
+
+.. Type "add -a -o -p n/" and you will see a list of pet patient name suggestions (cap at 13).
+.. Type "add -p n/" and there will be no pet patient name suggestions.
+
+. NRIC
+
+.. Type "add -p -o nr/" and you will see a list of NRIC suggestions (cap at 13).
+.. Type "add -p n/Mikey s/Cat b/Persian c/Calico bt/A -o nr/" and you will see a list of NRIC suggestions (cap at 13).
+.. Type "add -p n/Mikey s/Cat b/Persian c/Calico bt/A -o nr/T" and you will see a list of NRIC suggestions starting with "T" (cap at 13).
+.. Type "edit 1 -p nr/" to see a list of NRIC suggestions (cap at 13).
+.. Type "edit 1 -p n/hello nr/" to see a list of NRIC suggestions (cap at 13).
+.. Type "find -o nr/" to see a list of NRIC suggestions (cap at 13).
+
+. Toggle on/off
+
+.. Press F2 when the command box is in focus to off/on autocomplete.
+
+=== Adding contact, pet patient, appointment
 
 === Deleting a person
 
@@ -1710,6 +1674,14 @@ _{ more test cases ... }_
    Expected: Similar to previous.
 
 _{ more test cases ... }_
+
+=== Listing owners and petPatients
+. Listing out all owners and petPatients
+
+.. Prerequisites: Conduct `find` command. More than one person or petPatient in the lists.
+.. Testcase: `find -o n/Alex` + `list` +
+    Expected: Medeina will display the located person and then list out all owners and petPatients in Medeina's storage.
+
 
 === Saving data
 

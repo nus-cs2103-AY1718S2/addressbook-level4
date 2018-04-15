@@ -88,7 +88,9 @@ public class CalendarPanel extends UiPart<Region> {
                 LocalDateTime startDateTime = event.getStartDateTime().getLocalDateTime();
                 LocalDateTime endDateTime = event.getEndDateTime().getLocalDateTime();
                 Entry entry = new Entry(event.getName().fullName, new Interval(startDateTime, endDateTime));
-                entry.setLocation(event.getLocation().value);
+                if (event.getLocation().value.length() != 0) {
+                    entry.setLocation(event.getLocation().value);
+                }
                 eventCalendar.addEntry(entry);
             }
         }
@@ -96,7 +98,7 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
-    private void handleActivityListChangeCalendarEvent(DeskBoardChangedEvent event) {
+    private void handleDeskBoardChangedEvent(DeskBoardChangedEvent event) {
         syncCalendarWithActivities(event.data.getActivityList());
     }
 

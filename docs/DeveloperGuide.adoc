@@ -1252,6 +1252,7 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+//tag::OngKuanYangTestCases[]
 === Add appointment
 
 . Adding an appointment
@@ -1310,6 +1311,7 @@ _{ more test cases ... }_
    Expected: Theme is switched from dark to light and vice-versa.
 .. Test case: Close and open the application. +
    Expected: Theme is saved across restarts.
+// end::OngKuanYangTestCases[]
 
 === Lock
 

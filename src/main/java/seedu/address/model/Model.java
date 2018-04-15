@@ -34,7 +34,9 @@ public interface Model {
     ReadOnlyAddressBook getAddressBook();
 
     /** Deletes the given student. */
-    void deleteStudent(Student target) throws StudentNotFoundException, LessonNotFoundException;
+    void deleteStudent(Student target)
+            throws DuplicateLessonException, InvalidLessonTimeSlotException,
+            StudentNotFoundException, LessonNotFoundException;
 
     /** Adds the given student */
     void addStudent(Student student) throws DuplicateStudentException;

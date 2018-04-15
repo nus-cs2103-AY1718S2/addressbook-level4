@@ -8,6 +8,8 @@ import java.util.Objects;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
@@ -44,6 +46,13 @@ public class DeleteCommand extends UndoableCommand {
             throw new AssertionError("The target student cannot be missing");
         } catch (LessonNotFoundException lnfe) {
             throw new AssertionError("The target lesson cannot be missing");
+        } catch (InvalidLessonTimeSlotException iltse) {
+            throw new AssertionError(
+                    "Removing the target student lessons cannot result in clashing lessons");
+        } catch (DuplicateLessonException dle) {
+            throw new AssertionError(
+                    "Removing the target student cannot result in duplicate lessons");
+
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS,  studentToDelete));

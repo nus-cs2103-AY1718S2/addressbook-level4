@@ -5,6 +5,8 @@ import static java.util.Objects.requireNonNull;
 import java.util.List;
 
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.lesson.exceptions.DuplicateLessonException;
+import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
@@ -39,6 +41,13 @@ public class FindAndDeleteCommand extends UndoableCommand {
             throw new AssertionError("The target student cannot be missing");
         } catch (LessonNotFoundException lnfe) {
             throw new AssertionError("The target student's lessons cannot be missing");
+        } catch (InvalidLessonTimeSlotException iltse) {
+            throw new AssertionError(
+                    "Removing the target student's lessons cannot result in clashing lessons");
+        } catch (DuplicateLessonException dle) {
+            throw new AssertionError(
+                    "Removing the target student cannot result in duplicate lessons");
+
         }
         return new CommandResult(String.format(MESSAGE_DELETE_STUDENT_SUCCESS,  studentToDelete));
     }

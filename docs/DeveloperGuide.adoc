@@ -641,7 +641,7 @@ The code below shows how the the method is called with the parameter of the requ
 
 	public void displayStudentDetailsOnBrowserPanel(Student target) throws StudentNotFoundException,
             StorageFileMissingException {
-        addressBook.checkForStudentInAdressBook(target);
+        addressBook.checkForStudentInAddressBook(target);
         checkIfStorageFileExists();
         indicateRequiredStudentIndexChange(filteredStudents.indexOf(target));
         indicateBrowserPanelToDisplayStudent(target);
@@ -1748,4 +1748,67 @@ Single or multiple students in the list. Your current schedule would preferably 
 .. Test case: `deleteLesson 0` +
    Expected:
 * No lesson will be added due to invalid student index. Error details shown in results screen.
-.. Other incorrect deleteLessons to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson.
+.. Other incorrect `deleteLessons` commands to try: `deleteLesson`, `deleteLesson x` where x is larger than the index of the last lesson.
+
+=== Logging in to Google Accounts
+
+The testing will only include interactions with Codeducator. Login procedure to Google Accounts is handled by Google
+
+. Prerequisites: Valid Google account, you know your username and password, ending in @gmail.com
+. Test case: Successfully logging in after executing `login` command. +
+   Expected:
+* Message shows login success
+* Now able to sync data.
+* Now able to logout.
+* Trying to login again results in error message that you are already logged in.
+
+. Test case: Unable to login successfully to Google Accounts within 45 seconds. +
+Expected
+* Error message shows timeout.
+* Unable to sync data.
+* Unable to logout.
+* Able to login again.
+
+. Test case: Ignoring the login screen for 45 seconds. +
+Expected
+* Same as unable to login successfully
+
+. Test case: Wrong Google account username and password. +
+Expected
+* Same as unable to login successfully
+
+=== Logging out of Google Accounts.
+
+. Prerequisites: Valid Google account, you know your username and password, ending in @gmail.com. Already logged in
+. Test case: Successfully logging in after executing `logout` command
+* Message shows logout success
+* Unable to sync data.
+* Unable to logout.
+* Able to login again.
+. Test case: Execute `logout` without logging in first. +
+  Expected
+* Error message shows not logged in
+
+=== Syncing data
+
+. Prerequisites:
+* Valid Google account, you know your username and password, ending in @gmail.com. +
+Expected:
+* Already logged in
+* Some contact data and schedule data
+. Test case: executing `sync` +
+Expected:
+* May take some time to sync
+* In link:[contacts.google.com], you can see your contacts data synced. Codeducator contacts are grouped under the label "Students".
+* In link:[calendar.google.com], you can see your schedule synced. Codeducator events are grouped under the calendar "Student lessons"
+* Message shows sync success.
+* Message
+. Test case: executing `sync` again after editing some data e.g. `add`, `edit`, `delete`, `addLesson`, `deleteLesson` +
+Expected:
+* May take some time to sync
+* In link:[contacts.google.com], you can see your contacts data synced. Updated Codeducator contacts are grouped under the label "Students".
+* In link:[calendar.google.com], you can see your schedule synced. Updated Codeducator events are grouped under the calendar "Student lessons"
+* Message shows sync success.
+. Test case: Executing `sync` without logging in. +
+Expected:
+* Error message shows not logged in

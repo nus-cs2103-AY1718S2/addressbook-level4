@@ -42,26 +42,6 @@ public class PasswordBoxHandle extends NodeHandle<TextField> {
     }
 }
 ```
-###### \java\guitests\guihandles\PasswordWindowHandle.java
-``` java
-/**
- * Provides a handle for {@code PasswordWindow}.
- */
-public class PasswordWindowHandle extends StageHandle {
-
-    private final PasswordBoxHandle passwordBox;
-
-    public PasswordWindowHandle(Stage stage) {
-        super(stage);
-
-        passwordBox = new PasswordBoxHandle(getChildNode(PasswordBoxHandle.PASSWORD_INPUT_FIELD_ID));
-    }
-
-    public PasswordBoxHandle getPasswordBox() {
-        return passwordBox;
-    }
-}
-```
 ###### \java\guitests\guihandles\PersonCardHandle.java
 ``` java
     public List<String> getTagStyleClasses(String tag) {
@@ -302,6 +282,141 @@ public class SecurityUtilTest {
     @After
     public void reset() throws Exception {
         SecurityUtil.decrypt(VALID_DATA_FILE, hashedPassword);
+    }
+}
+```
+###### \java\seedu\address\commons\util\StringUtilTest.java
+``` java
+    //---------------- Tests for isOddEven --------------------------------------
+
+    @Test
+    public void isOddEven() {
+
+        // EP: empty strings
+        assertFalse(StringUtil.isOddEven("")); // Boundary value
+        assertFalse(StringUtil.isOddEven("  "));
+
+        // EP: odd with white space
+        assertFalse(StringUtil.isOddEven(" odd ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isOddEven("od d"));  // Spaces in the middle
+
+        // EP: even with white space
+        assertFalse(StringUtil.isOddEven(" even ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isOddEven("ev en"));  // Spaces in the middle
+
+        // EP: multiple words
+        assertFalse(StringUtil.isOddEven("odd even"));
+        assertFalse(StringUtil.isOddEven("even asd"));
+        assertFalse(StringUtil.isOddEven("odd dsa"));
+
+        // EP: valid odd or even, should return true
+        assertTrue(StringUtil.isOddEven("odd"));
+        assertTrue(StringUtil.isOddEven("even"));
+
+        //EP: valid odd or even with different upper and lower case, should return true
+        assertTrue(StringUtil.isOddEven("OdD"));
+        assertTrue(StringUtil.isOddEven("EvEn"));
+    }
+
+    //---------------- Tests for getOddEven --------------------------------------
+
+    /*
+     * Equivalence Partitions: null, empty String, one word, multiple words, odd, even
+     * and with different upper and lower case
+     */
+
+    @Test
+    public void getOddEven_nullGiven_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        StringUtil.getOddEven(null);
+    }
+
+    @Test
+    public void getOddEven_invalidStringGiven_nullReturned() {
+        assertTrue(StringUtil.getOddEven("") == null);
+        assertTrue(StringUtil.getOddEven("word") == null);
+        assertTrue(StringUtil.getOddEven("words words") == null);
+        assertTrue(StringUtil.getOddEven("odd odd") == null);
+    }
+
+    @Test
+    public void getOddEven_validStringGiven_correctResult() {
+        assertEquals(StringUtil.getOddEven("even"), Index.fromZeroBased(0));
+        assertEquals(StringUtil.getOddEven("odd"), Index.fromZeroBased(1));
+        assertEquals(StringUtil.getOddEven("eVeN"), Index.fromZeroBased(0));
+        assertEquals(StringUtil.getOddEven("oDd"), Index.fromZeroBased(1));
+
+    }
+
+    //---------------- Tests for isDay --------------------------------------
+
+    @Test
+    public void isDay() {
+
+        // EP: empty strings
+        assertFalse(StringUtil.isDay("")); // Boundary value
+        assertFalse(StringUtil.isDay("  "));
+
+        // EP: days with white space
+        assertFalse(StringUtil.isDay(" monday ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isDay("mon day"));  // Spaces in the middle
+
+        assertFalse(StringUtil.isDay(" tuesday ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isDay("tues day"));  // Spaces in the middle
+
+        assertFalse(StringUtil.isDay(" wednesday ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isDay("wed day"));  // Spaces in the middle
+
+        assertFalse(StringUtil.isDay(" thursday ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isDay("thurs day"));  // Spaces in the middle
+
+        assertFalse(StringUtil.isDay(" friday ")); // Leading/trailing spaces
+        assertFalse(StringUtil.isDay("fri day"));  // Spaces in the middle
+
+        // EP: multiple words
+        assertFalse(StringUtil.isDay("friday monday"));
+        assertFalse(StringUtil.isDay("monday asd"));
+        assertFalse(StringUtil.isDay("asd dsa"));
+
+        // EP: valid days, should return true
+        assertTrue(StringUtil.isDay("monday"));
+        assertTrue(StringUtil.isDay("tuesday"));
+        assertTrue(StringUtil.isDay("wednesday"));
+        assertTrue(StringUtil.isDay("thursday"));
+        assertTrue(StringUtil.isDay("friday"));
+
+
+        //EP: valid odd or even with different upper and lower case,  should return true
+        assertTrue(StringUtil.isDay("MoNdaY"));
+        assertTrue(StringUtil.isDay("TueSday"));
+        assertTrue(StringUtil.isDay("weDNesDAy"));
+        assertTrue(StringUtil.isDay("THURSDAY"));
+        assertTrue(StringUtil.isDay("FriDAY"));
+    }
+
+    //---------------- Tests for capitalize --------------------------------------
+
+    /*
+     * Equivalence Partitions: null, empty String, one letter, one word and one word with multiple cases
+     */
+
+    @Test
+    public void capitalize_nullGiven_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        StringUtil.capitalize(null);
+    }
+
+    @Test
+    public void capitalize_emptyStringGiven_throwsIndexOutOfBoundException() {
+        thrown.expect(IndexOutOfBoundsException.class);
+        StringUtil.capitalize("");
+    }
+
+    @Test
+    public void capitalize_validStringGiven_correctResult() {
+        assertEquals(StringUtil.capitalize("e"), "E");
+        assertEquals(StringUtil.capitalize("even"), "Even");
+        assertEquals(StringUtil.capitalize("eVeN"), "Even");
     }
 }
 ```
@@ -561,6 +676,34 @@ public class RemovePasswordCommandTest {
         assertEquals(new ImportCommand("/data/addressbook.xml", "test"), command);
     }
 ```
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
+``` java
+    private static final String VALID_ODD = "odd";
+    private static final String VALID_EVEN = "even";
+    private static final String INVALID_ODDEVEN = "ord";
+```
+###### \java\seedu\address\logic\parser\ParserUtilTest.java
+``` java
+    @Test
+    public void parseOddEven_validOddEven() throws Exception {
+        assertEquals(VALID_ODD, ParserUtil.parseOddEven(VALID_ODD));
+        assertEquals(VALID_EVEN, ParserUtil.parseOddEven(VALID_EVEN));
+
+        //with trailing and leading spaces
+        assertEquals(VALID_ODD, ParserUtil.parseOddEven(" " + VALID_ODD + " "));
+        assertEquals(VALID_EVEN, ParserUtil.parseOddEven(" " + VALID_EVEN + " "));
+    }
+
+    @Test
+    public void  parseOddEven_nullGive_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseOddEven(null));
+    }
+
+    @Test
+    public void  parseOddEven_invalidOddEven_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseOddEven(INVALID_ODDEVEN));
+    }
+```
 ###### \java\seedu\address\logic\parser\PasswordCommandParserTest.java
 ``` java
 /**
@@ -756,6 +899,16 @@ public class XmlAdaptedPasswordTest {
                                         SecurityUtil.hashPassword(TEST_PASSWORD))).get();
         assertEquals(original, new AddressBook(readBack));
     }
+```
+###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+``` java
+    @After
+    public void reset() throws Exception {
+        String filePath = "TempEncryptedAddressBook.xml";
+        File file = new File(TEST_DATA_FOLDER + filePath);
+        SecurityUtil.decrypt(file, SecurityUtil.hashPassword("wrongPassword"));
+    }
+}
 ```
 ###### \java\seedu\address\testutil\AddressBookBuilder.java
 ``` java

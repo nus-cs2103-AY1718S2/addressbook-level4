@@ -61,7 +61,9 @@ of the deleted celebrity from the appointments he/she is attending, as well as t
 *** Created TypicalCelebrities, modified getTypicalPersons to facilitate testing of new features
 (Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/121)
 ** Documentation:
-*** Standardised the language of existing contents of the User Guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/179/files
+*** Standardised the language of existing contents of the User Guide and Developer Guide: +
+https://github.com/CS2103JAN2018-W14-B4/main/pull/179 +
+https://github.com/CS2103JAN2018-W14-B4/main/pull/188
 *** Collated codes for `v1.4` release
 ** Community:
 *** Reported bugs and suggestions for other teams in the class

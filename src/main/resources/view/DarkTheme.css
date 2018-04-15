@@ -353,7 +353,7 @@
     -fx-background-radius: 2;
     -fx-font-size: 11;
 }
-
+/* @@author Sebry9 */
 #tags .yellow {
     -fx-text-fill: black;
     -fx-background-color: yellow;
@@ -388,7 +388,7 @@
     -fx-text-fill: black;
     -fx-background-color: grey;
     }
-
+/* @@author Sebry9 */
 #insurances {
     -fx-hgap: 7;
     -fx-vgap: 3;

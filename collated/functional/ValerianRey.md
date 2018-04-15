@@ -24,7 +24,7 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.policy.Policy;
 
 /**
- * Add a policy to an existing person in the address book.
+ * Add a policy to an existing person in the Smart Insurance Collection.
  */
 public class AddPolicyCommand extends UndoableCommand {
 
@@ -45,7 +45,7 @@ public class AddPolicyCommand extends UndoableCommand {
             + PREFIX_ISSUE + "car_damage";
 
     public static final String MESSAGE_POLICY_ADDED_SUCCESS = "Added policy";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Smart Insurance Collection.";
     public static final String MESSAGE_ALREADY_ENROLLED = "This person already applied to a policy "
             + "(use edit_policy instead).";
 
@@ -164,7 +164,7 @@ import seedu.address.model.policy.Policy;
 import seedu.address.model.policy.Price;
 
 /**
- * Edits an existing policy of a person in the address book.
+ * Edits an existing policy of a person in the Smart Insurance Collection.
  */
 public class EditPolicyCommand extends UndoableCommand {
 
@@ -183,7 +183,7 @@ public class EditPolicyCommand extends UndoableCommand {
             + PREFIX_ISSUE + "car_damage";
 
     public static final String MESSAGE_POLICY_EDITED_SUCCESS = "Edited policy";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Smart Insurance Collection.";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_PERSON_NOT_ENROLLED = "This person did not enroll in a policy yet "
             + "(use add_policy to make it happen)";

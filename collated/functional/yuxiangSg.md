@@ -32,7 +32,7 @@ public class CalendarUnfocusEvent extends BaseEvent {
 ###### \java\seedu\address\logic\commands\AddAppointmentCommand.java
 ``` java
 /**
- * Adds a appointment to the address book's calendar.
+ * Adds a appointment to the Smart Insurance Collection's calendar.
  */
 
 public class AddAppointmentCommand extends UndoableCommand {
@@ -86,7 +86,7 @@ public class AddAppointmentCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\commands\EditAppointmentCommand.java
 ``` java
 /**
- * Edit an appointment in the address book's calendar.
+ * Edit an appointment in the Smart Insurance Collection's calendar.
  */
 public class EditAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "edit_appointment";
@@ -292,7 +292,7 @@ public class LookDateCommand extends Command {
 ###### \java\seedu\address\logic\commands\RemoveAppointmentsCommand.java
 ``` java
 /**
- * removes appointment whose title match with the searchText in the address book's calendar.
+ * removes appointment whose title match with the searchText in the Smart Insurance Collection's calendar.
  */
 
 public class RemoveAppointmentsCommand extends UndoableCommand {
@@ -820,7 +820,7 @@ public class EditAppointmentFailException extends Exception {
 ###### \java\seedu\address\model\calendar\InsuranceCalendar.java
 ``` java
 /**
- * The calendar in the address book.
+ * The calendar in the Smart Insurance Collection.
  */
 public class InsuranceCalendar {
 

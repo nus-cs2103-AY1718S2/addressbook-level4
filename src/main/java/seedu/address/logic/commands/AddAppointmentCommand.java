@@ -10,7 +10,7 @@ import seedu.address.model.calendar.AppointmentEntry;
 import seedu.address.model.calendar.exceptions.DuplicateAppointmentException;
 //@@author yuxiangSg
 /**
- * Adds a appointment to the address book's calendar.
+ * Adds a appointment to the Smart Insurance Collection's calendar.
  */
 
 public class AddAppointmentCommand extends UndoableCommand {

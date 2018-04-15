@@ -17,7 +17,6 @@ endif::[]
 
 * This is a desktop Address Book and Calendar application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 
-
 == Site Map
 
 * <<UserGuide#, User Guide>>

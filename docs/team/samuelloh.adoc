@@ -50,8 +50,7 @@ However, it is relatively small. Moreover, some details like Next-Of-Kin contact
 *** Corrected and improved on some language and grammar errors.
 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W11-B3/main/issues/125[1], https://github.com/CS2103JAN2018-W11-B3/main/issues/123[2], https://github.com/CS2103JAN2018-W11-B3/main/issues/113m[3], https://github.com/CS2103JAN2018-W11-B3/main/issues/105[4], https://github.com/CS2103JAN2018-W11-B3/main/issues/105[5])
 
 
 == Contributions to the User Guide

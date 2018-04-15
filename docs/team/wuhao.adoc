@@ -25,6 +25,8 @@ Delivery is for those who *prefer to use a desktop app for managing orders*. Mor
 ** Highlights: This enhancement affects existing "add" command and commands to be added in future. It requires extensions of Model, Storage and Events components and interaction with local files.
 
 * *Minor enhancement*: added an alias to each command.
+** What it does: Added a short cut (e.g. "a" for "add", "d" for "delete" etc) for each command.
+** Justification: This feature improves the speed and efficiency to key in the inputs especially for those experienced users who are familiar with the commands.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/functional/Wuhao-ooo.md[Functional code]] [https://github.com/CS2103JAN2018-F11-B4/main/blob/master/collated/test/Wuhao-ooo.md[Test code]]
 

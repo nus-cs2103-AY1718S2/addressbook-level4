@@ -918,13 +918,13 @@ For storing of the user account data in hard disk, it is handled by the `XmlAcco
 
 **Aspect:** Storing of user account data +
 
-**Alternative 1 (current choice):** Stores user account data in the same file with the main data. +
-**Pros**: +
-**Cons**: Data in contactHeRo becomes lost if user forgets the customized username or password. +
+**Alternative 1 (current choice):** Stores user account data in a separate file.+
+**Pros**: User can still retrieve their data if they forget their customize username or password by simply removing the file storing account data and logging in with their default username and password. +
+**Cons**: Data is not very secure as everyone can access the data through the default username and password. +
 
-**Alternative 2:** Stores user account data in a separate file.+
-**Pros**:  User can still retrieve their data if they forget their customize username or password by simply removing the file storing account data and restart with a +
-**Cons**: Data becomes insecure as now everyone can access the data through the default username and password. +
+**Alternative 2:** Stores user account data in the same file with the main data. +
+**Pros**: Resolves problem of accessing data from default account. +
+**Cons**: Data in contactHeRo becomes lost if user forgets the customized username or password. +
 
 **Aspect:** How login UI is implemented +
 

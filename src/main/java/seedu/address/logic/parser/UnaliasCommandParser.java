@@ -11,9 +11,10 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Parses input arguments and creates a new UnaliasCommand object
  */
 public class UnaliasCommandParser implements Parser<UnaliasCommand> {
+
     private static final String SPLIT_TOKEN = "\\s+";
     private static final int CORRECT_ARGS_LENGTH = 1;
-    
+
     /**
      * Parses the given {@code String} of arguments in the context of the UnaliasCommand
      * and returns an UnaliasCommand object for execution.

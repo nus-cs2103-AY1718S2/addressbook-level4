@@ -17,7 +17,7 @@ public class UploadCommand extends Command {
 
     public static final String COMMAND_WORD = "upload";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of StardyTogether "
             + "and saves it as specified filename in Google Drive. "
             + "Parameters: FILENAME PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "

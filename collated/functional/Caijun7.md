@@ -41,11 +41,11 @@
 /**
  * Exports an address book to the existing address book.
  */
-public class ExportCommand extends UndoableCommand {
+public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of StardyTogether "
             + "to specified filepath. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
@@ -53,10 +53,9 @@ public class ExportCommand extends UndoableCommand {
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
-            + "Addressbook are successfully exported.";
+            + "StardyTogether are successfully exported.";
     public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
             + "Please give another filepath.";
-    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
 
     private final String filepath;
     private final Password password;
@@ -83,15 +82,13 @@ public class ExportCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.exportAddressBook(filepath, password);
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
-        } catch (WrongPasswordException e) {
-            throw new CommandException(MESSAGE_INVALID_PASSWORD);
         }
     }
 
@@ -180,11 +177,11 @@ public class ImportCommand extends UndoableCommand {
 /**
  * Uploads an address book to the existing address book.
  */
-public class UploadCommand extends UndoableCommand {
+public class UploadCommand extends Command {
 
     public static final String COMMAND_WORD = "upload";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Uploads the current view of StardyTogether "
             + "and saves it as specified filename in Google Drive. "
             + "Parameters: FILENAME PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "
@@ -192,10 +189,8 @@ public class UploadCommand extends UndoableCommand {
             + "testpassword";
 
     public static final String MESSAGE_SUCCESS = "Current list of Persons, tags, or aliases from "
-            + "Addressbook are successfully uploaded.";
-    public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to given filepath. "
-            + "Please give another filepath.";
-    public static final String MESSAGE_INVALID_PASSWORD = "Password is in invalid format for Addressbook file.";
+            + "StardyTogether are successfully uploaded.";
+    public static final String MESSAGE_FILE_UNABLE_TO_SAVE = "Unable to save or overwrite to Google Drive. ";
     public static final String MESSAGE_NO_AUTHORIZATION = "Unable to access your Google Drive. "
             + "Please grant authorization.";
     public static final String MESSAGE_REQUEST_TIMEOUT = "Authorization request timed out. Please try again.";
@@ -225,7 +220,7 @@ public class UploadCommand extends UndoableCommand {
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
         requireNonNull(model);
         try {
             model.uploadAddressBook(filepath, password);
@@ -236,8 +231,6 @@ public class UploadCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_REQUEST_TIMEOUT);
         } catch (IOException ioe) {
             throw new CommandException(MESSAGE_FILE_UNABLE_TO_SAVE);
-        } catch (WrongPasswordException e) {
-            throw new CommandException(MESSAGE_INVALID_PASSWORD);
         }
     }
 
@@ -1007,7 +1000,7 @@ public class WeekDay {
      * @param filepath
      * @param password
      */
-    void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException;
+    void exportAddressBook(String filepath, Password password) throws IOException;
 
     /**
      * Exports the current view of {@code AddressBook} to the googledrive folder of local storage.
@@ -1017,7 +1010,7 @@ public class WeekDay {
      * @param filepath
      * @param password
      */
-    void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+    void uploadAddressBook(String filepath, Password password) throws IOException,
             GoogleAuthorizationException, RequestTimeoutException;
 ```
 ###### \java\seedu\address\model\Model.java
@@ -1055,15 +1048,11 @@ public class WeekDay {
      * @param password
      */
     @Override
-    public void exportAddressBook(String filepath, Password password) throws IOException, WrongPasswordException {
+    public void exportAddressBook(String filepath, Password password) throws IOException {
         requireNonNull(filepath);
-        try {
-            XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
-            xmlAddressBook.exportAddressBook(filepath, password, filteredPersons);
-            indicateAddressBookChanged();
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError();
-        }
+        XmlAddressBookStorage xmlAddressBook = new XmlAddressBookStorage(filepath);
+        xmlAddressBook.exportAddressBook(filepath, password, filteredPersons, addressBook.getAliasList(),
+                                         addressBook.getTagList());
     }
 
     /**
@@ -1075,16 +1064,16 @@ public class WeekDay {
      * @param password
      */
     @Override
-    public void uploadAddressBook(String filepath, Password password) throws IOException, WrongPasswordException,
+    public void uploadAddressBook(String filepath, Password password) throws IOException,
             GoogleAuthorizationException, RequestTimeoutException {
-        GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage("googledrive/" + filepath);
-        exportAddressBook("googledrive/" + filepath, password);
+        GoogleDriveStorage googleDriveStorage = new GoogleDriveStorage(filepath);
+        String exportFilePath = googleDriveStorage.getUploadFilePath();
+        exportAddressBook(exportFilePath, password);
         googleDriveStorage.uploadFile();
     }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java
-
     /**
      * Retrieves weekday schedule of all {@code Room}s in the {@code Building} in an ArrayList of ArrayList.
      *
@@ -1308,20 +1297,33 @@ public interface ReadOnlyVenueInformation {
      * @throws WrongPasswordException   If password is in wrong format
      * @throws DuplicatePersonException Impossible since AddressBook is newly created
      */
-    public void exportAddressBook(String filePath, Password password, ObservableList<Person> filteredPersons)
-            throws IOException, WrongPasswordException, DuplicatePersonException {
+    public void exportAddressBook(String filePath, Password password, ObservableList<Person> filteredPersons,
+                                  ObservableList<Alias> aliases, ObservableList<Tag> tags)
+            throws IOException {
         requireNonNull(filePath);
 
         if (UserPrefs.getUserAddressBookFilePath().equals(filePath)) {
             logger.warning("Filepath is same as AddressBook storage filepath, storage file should not be overwritten!");
             throw new IOException();
         }
-        File file = new File(filePath);
-        FileUtil.createIfMissing(file);
-        AddressBook addressBook = new AddressBook();
-        addressBook.setPersons(filteredPersons);
-        XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
-        SecurityUtil.encryptFile(file, password);
+        try {
+            File file = new File(filePath);
+            FileUtil.createIfMissing(file);
+            AddressBook addressBook = new AddressBook();
+            addressBook.setPersons(filteredPersons);
+            for (Alias alias : aliases) {
+                addressBook.importAlias(alias);
+            }
+            for (Tag tag : tags) {
+                addressBook.importTag(tag);
+            }
+            XmlFileStorage.saveDataToFile(file, new XmlSerializableAddressBook(addressBook));
+            SecurityUtil.encryptFile(file, password);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("New AddressBook should not contain duplicate persons");
+        } catch (WrongPasswordException e) {
+            throw new AssertionError("There should not be any decryption");
+        }
     }
 ```
 ###### \java\seedu\address\storage\XmlSerializableAddressBook.java

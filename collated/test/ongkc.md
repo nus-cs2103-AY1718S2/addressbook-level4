@@ -441,27 +441,14 @@ public class AddTransactionCommandTest {
         }
 
         @Override
-        public boolean hasNoTransactionWithPayer(Person person) {
+        public boolean personNotFoundInTransaction(Person person) {
             fail("This method should not be called.");
             return true;
         }
-
         @Override
-        public boolean hasNoTransactionWithPayee(Person person) {
-            fail("This method should not be called.");
-            return true;
-        }
-
-        @Override
-        public List<Transaction> findTransactionsWithPayer(Person person) {
+        public List<Transaction> findTransactionsWithPerson(Person person) {
             return null;
         }
-
-        @Override
-        public List<Transaction> findTransactionsWithPayee(Person person) {
-            return null;
-        }
-
         @Override
         public ObservableList<Transaction> getFilteredTransactionList() {
             return null;

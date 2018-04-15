@@ -59,7 +59,7 @@
         XmlAdaptedTransaction transaction = new XmlAdaptedTransaction(VALID_TRANSACTION_TYPE,
                 VALID_PAYER, VALID_AMOUNT, VALID_DESCRIPTION, validPayees, null,
                 VALID_SPLIT_METHOD_EVENLY, VALID_EMPTY_LIST, VALID_EMPTY_LIST);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, Date.class.getSimpleName());
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT_DATE, Date.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, transaction::toModelType);
     }
 
@@ -127,6 +127,7 @@
         String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT, SplitMethod.class.getSimpleName());
         Assert.assertThrows(IllegalValueException.class, expectedMessage, transaction::toModelType);
     }
+
 
 }
 ```

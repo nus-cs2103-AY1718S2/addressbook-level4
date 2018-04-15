@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Alias {
 
-    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias names should be alphanumeric";
+    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias arguments should be alphanumeric";
     public static final String ALIAS_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private final String command;

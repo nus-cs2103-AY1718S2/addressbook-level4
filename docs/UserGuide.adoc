@@ -191,11 +191,13 @@ The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
 Examples:
 
 * `birthdays` +
-Displays a list of all birthdays
+Displays a list of all birthdays +
+image::birthdaysList.PNG[width="790"]
+
 * `birthdays today` +
 Displays a window with the birthdays today +
 
-image::birthdaysToday.png[width="790"]
+image::birthdaysToday.PNG[width="790"]
 
 // end::birthdays[]
 
@@ -204,7 +206,7 @@ image::birthdaysToday.png[width="790"]
 // tag::union[]
 ==== Viewing common time slots in timetable: `union` (since v1.5)
 
-To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in ST.(Minimum: 2) +
+To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in ST. (Minimum: 2) +
 Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
 
 [TIP]

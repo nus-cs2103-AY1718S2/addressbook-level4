@@ -479,6 +479,7 @@ There is no need to save manually.
 
 == Upcoming Features
 We have a few exciting ideas to further improve ST for you!
+
 === Use current location to find vacant rooms _(coming in v2.0)_
 
 === Modules Tag _(coming in v2.0)_

@@ -70,7 +70,3 @@ include::../UserGuide.adoc[tag=dashboard]
 include::../DeveloperGuide.adoc[tag=favourites]
 
 include::../DeveloperGuide.adoc[tag=dashboard]
-
-include::../DeveloperGuide.adoc[tag=favTest]
-
-include::../DeveloperGuide.adoc[tag=dashboardTest]

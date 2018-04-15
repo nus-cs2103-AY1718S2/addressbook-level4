@@ -1,4 +1,4 @@
-= contactHeRo - User Guide
+= image:../../src/main/resources/images/displayscreenimage.png[width="80"] contactHeRo - User Guide
 :toc:
 :toclevels: 6
 :toc-title:

@@ -34,23 +34,297 @@
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=add]
+// tag::add[]
+[[Add]]
+=== Adding a book: `add`
 
-include::../UserGuide.adoc[tag=edit]
 
-include::../UserGuide.adoc[tag=help]
+Format: `add n/TITLE a/AUTHOR i/ISBN av/AVAIL  [t/TAG]...`
+Privilege Level: 2(Librarian)
 
-include::../UserGuide.adoc[tag=select]
+[TIP]
+A book can have any number of tags (including 0)
 
-include::../UserGuide.adoc[tag=commandsummary]
+****
+* All of the fields must be provided.
+* The provided field must be valid.
+** TITLE must be alphanumeric.
+** AUTHOR must be alphanumeric.
+** ISBN must contain 13 numbers and be unique.
+** AVAIL must be `Available`, `Borrowed` or `Reserved`.
+****
+
+Examples:
+
+* `add t/Animal Farm a/George Orwell i/9780736692427 av/Borrowed`
+* `add t/Breaking Dawn tag/fiction av/Borrowed a/Stephenie Meyer i/9780316067928 tag/young adults`
+// end::add[]
+
+// tag::edit[]
+=== Editing a book : `edit`
+
+Edits an existing book in the catalogue. +
+Format: `edit INDEX t/TITLE a/AUTHOR i/ISBN av/AVAIL tag/TAG...` +
+Privilege Level: 2(Librarian)
+
+****
+* Edits the book at the specified `INDEX`. The index refers to the index number shown in the last book listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* The provided field must be valid. (Refer to <<Add>>)
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the book will be removed i.e adding of tags is not cumulative.
+* You can remove all the book's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 i/9780736692426 av/Available` +
+Edits the isbn number and availability author of the 1st book to be `9780736692426` and `Available` respectively.
+* `edit 2 t/Breaking Dawn tag/` +
+Edits the title of the 2nd book to be `Breaking Dawn` and clears all existing tags.
+// end::edit[]
+
+
+//tag::help[]
+=== Viewing help : `help`
+
+Format: `help` +
+Format: kbd:[F1] +
+Privilege Level: 0(Guest)
+//end::help[]
+
+// tag::select[]
+=== Selecting a book : `select`
+
+Selects the book identified by the index number used in the last book listing. +
+Format: `select INDEX` +
+Privilege Level: 0(Guest)
+
+****
+* Selects the book and loads the Goodreads webpage of the book at the specified `INDEX` with internet connection.
+* Selects the book and display error message specified `INDEX` without internet connection.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd book in the catalogue.
+* `find Breaking` +
+`select 1` +
+Selects the 1st book in the results of the `find` command.
+
+[TIP]
+Press TAB after writing `select` to use the auto-complete function.
+
+Examples:
+
+* `select` --> (press TAB) --> `select 1`
+// end::select[]
+
+// tag::commandsummary[]
+== Command Summary
+
+[width="59%",cols="30%, 20%,<50%",options="header",]
+|=======================================================================
+|Privileges |Command |Format
+|All |*Help* |`help`
+|All |*Find Book* |`find KEYWORD [MORE_KEYWORDS]` +
+ e.g. `find Animal Dawn`
+|All |*List Book* |`list`
+|All |*Select Book* |`select INDEX` +
+ e.g.`select 2`
+|Librarian |*Add Book* |`add t/TITLE a/AUTHOR i/ISBN av/AVAIL [tag/TAG]...` +
+ e.g. `add n/Animal Farm a/George Orwell i/9780736692427 av/Borrowed t/political t/satire`
+|Librarian |*Delete Book* |`delete INDEX` +
+ e.g. `delete 3`
+|Librarian |*Edit Book* |`edit INDEX [n/TITLE] [a/AUTHOR] [i/ISBN] [av/AVAIL] [t/TAG]...` +
+ e.g. `edit 2 n/Animal Farm e/Available`
+|Librarian |*Borrow Book* |`borrow INDEX` +
+  e.g. `borrow 1`
+|Librarian |*Return Book* |`return INDEX` +
+  e.g. `return 2`
+|Librarian |*Reserve Book* |`reserve INDEX` +
+  e.g. `reserve 2`
+|Librarian |*Clear Catalogue* |`clear`
+|Librarian |*Add Account* |`addAccount n/NAME u/USERNAME p/PASSWORD m/MATRICNUMBER l/PRIVILEGE LEVEL` +
+ e.g. `addAccount n/Jack Morgan u/jacky p/jack123 m/A0123456J l/1`
+|Librarian |*Delete Account* |`deleteAccount USERNAME` +
+ e.g. `deleteAccount tiongley`
+|Librarian |*Clear Account List* |`cleara`
+|Librarian |*History* |`history`
+|Librarian |*Undo* |`undo`
+|Librarian |*Redo* |`redo`
+|=======================================================================
+// end::commandsummary[]
 
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
-include::../DeveloperGuide.adoc[tag=model]
+//tag::model
+[[Design-Model]]
+=== Model component
 
-include::../DeveloperGuide.adoc[tag=usecaseAddEditHelpSelect]
+.Structure of the Model Component
 
-include::../DeveloperGuide.adoc[tag=manualtestAddEditHelpSelect]
+*API* : link:{repoURL}/blob/master/src/main/java/seedu/address/model/Model.java[`Model.java`]
+
+The `Model`,
+
+* stores a `UserPref` object that represents the user's preferences.
+* stores the Catalogue data.
+* stores the AccountList data
+* exposes an unmodifiable `ObservableList<Book>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* maintains the privilege level
+* handles authentication
+* does not depend on any of the other three components.
+//end::model
+
+// tag::usecaseAddEditHelpSelect[]
+=== Use case: Add book
+
+*MSS*
+
+1.  User requests to add book with TITLE, AUTHOR, ISBN, AVAIL, [TAGS]
+2.  Catalogue adds book
+3.  Catalogue list books
+
+*Extensions*
+[none]
+
+* 1a. The TITLE or AUTHOR or ISBN or AVAIL is not valid or ISBN is not unique.
++
+[none]
+** 1a1. Catalogue shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Edit book
+
+*MSS*
+
+1.  User requests to list books
+2.  Catalogue shows a list of books
+3.  User requests to edit a specific book in the list with [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS]
+4.  Catalogue edit book
+5.  Catalogue list books
++
+Use case ends.
+
+*Extensions*
+[none]
+
+* 2a. The list is empty
++
+Use case ends.
+[none]
+* 3a. The given index is invalid or the [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS] is invalid
++
+** 3a1. Catalogue shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Help
+
+*MSS*
+
+1.  User requests to help
+2.  Help window pops out
++
+Use case ends.
+
+[discrete]
+=== Use case: Select
+
+*MSS*
+
+1.  User requests to list books
+2.  Catalogue shows a list of books
+3.  User requests to select books with index
+4.  Catalogue shows Goodreads search of the selected book.
++
+Use case ends.
+
+*Extensions*
+[none]
+
+* 2a. The list is empty
++
+Use case ends.
+[none]
+* 3a. The given index is invalid
++
+** 3a1. Catalogue shows an error message.
++
+[none]
+* 4a. There is no internet access.
++
+** 4a1. Catalogue shows an error message.
++
+Use case ends.
+
+[discrete]
+// end::usecaseAddEditHelpSelect[]
+
+// tag::manualtestAddEditHelpSelect[]
+=== Adding a book
+
+. Adding a book
+
+.. Prerequisites: Log in using the `log in` command.
+.. Test case: `add t/You a/Caroline Kepnes i/9781476785592 av/Borrowed` +
+   Expected: Book is added to the list at last index. Details of the added book shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `add t/You a/Caroline Kepnes i/9781476785592 av/Borrowed` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/Yo$ a/Caroline Kepnes i/0000000000001 av/Borrowed` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/You a/Caroline Kepne$ i/0000000000002 av/Borrowed` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/You a/Caroline Kepnes i/000000000000a av/Borrowed` again +
+    Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `add t/You a/Caroline Kepnes i/0000000000004 av/not sure` again +
+   Expected: No book is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect add commands to try: `add`, `add t/`
+   Expected: Similar to previous.
+
+=== Editing a book
+
+. Editing a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `edit 1 t/Animal` +
+   Expected: Title of first book is edit in the list. Details of the edited book shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `delete 0 t/Animal` +
+   Expected: No book is edited. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `edit t/Animal`, `edit x t/Animal` (where x is larger than the list size) +
+   Expected: Similar to previous.
+
+=== Help
+
+. Display Help window
+
+.. Test case: `help` +
+   Expected: Help window pops out. Action shown in the status message. Status bar remains the same.
+.. Test case: 'F1' +
+   Expected: Help window pops out. Action shown in the status message. Status bar remains the same.
+
+=== Selecting a book
+
+. Selecting a book while all books are listed
+
+.. Prerequisites: List all books using the `list` command. Multiple books in the list.
+.. Test case: `select 1` (With internet) +
+   Expected: First book is selected from the list. Action shown in the status message. Goodreads webpage of the book is loaded in the information section. Timestamp in the status bar is updated.
+.. Test case: `select 1` (Without internet) +
+   Expected: First book is selected from the list. Action shown in the status message. Error message shown in information system. Timestamp in the status bar is updated.
+.. Test case: `select 0` +
+   Expected: No book is selected. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `select`, `select x` (where x is larger than the list size) +
+   Expected: Similar to previous.
+// end::manualtestAddEditHelpSelect[]

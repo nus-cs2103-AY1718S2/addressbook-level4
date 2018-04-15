@@ -25,7 +25,7 @@
 ** Justification: This feature allows the system to parse the parameters necessary to create the user account in the system. The reserve command tests ensures that the reserveCommand can properly serve its function to reserve a "borrowed" book.
 ** Highlights: This enhancement affects existing commands (addAccount Command and deleteAccount Command) and future commands such as an “edit Account Command”. The implementation required creation of new methods inside the model manager and account sub-classes.
 
-* *Code contributed*:https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/functional/chantiongley.md[Functional] | https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/test/chantiongley.md[Test]
+* *Code contributed*: https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/functional/chantiongley.md[Functional] | https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/test/chantiongley.md[Test]
 
 * *Other contributions*:
 

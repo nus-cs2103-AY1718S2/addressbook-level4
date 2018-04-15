@@ -40,6 +40,7 @@ public class LogicManager extends ComponentManager implements Logic {
         undoRedoStack = new UndoRedoStack();
     }
 
+    //@@author victortardieu
     /**
      * @param myString
      * @return auto, the string that holds the autocomplete string of the chosen command

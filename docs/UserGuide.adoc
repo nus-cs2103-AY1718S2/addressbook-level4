@@ -193,7 +193,7 @@ Examples:
 * `birthdays` +
 Displays a list of all birthdays +
 
-image::birthdaysList.png[width="790"]
+image::birthdaysList.PNG[width="790"]
 
 * `birthdays today` +
 Displays a window with the birthdays today +

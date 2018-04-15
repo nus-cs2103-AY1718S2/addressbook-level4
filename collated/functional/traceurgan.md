@@ -10,7 +10,7 @@
 <fx:root onCloseRequest="#handleJournalClose" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8.0.141"
          xmlns:fx="http://javafx.com/fxml/1">
     <scene>
-        <Scene>j
+        <Scene>
             <ScrollPane fitToHeight="true" fitToWidth="true">
                 <StackPane fx:id="journalTextPlaceholder"/>
             </ScrollPane>
@@ -146,8 +146,6 @@ public class JournalWindow extends UiPart<Stage> {
 
     private static final String FXML = "JournalWindow.fxml";
 
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
     private JournalEntryText journalEntryText;
     private String date;
 
@@ -172,7 +170,6 @@ public class JournalWindow extends UiPart<Stage> {
 
         root.setTitle(date + " - Journal");
         root.initModality(Modality.APPLICATION_MODAL);
-
     }
 
     public JournalWindow(String date, String text) {
@@ -218,6 +215,28 @@ public class JournalWindow extends UiPart<Stage> {
 
     public boolean isShowing() {
         return getRoot().isShowing();
+    }
+
+}
+```
+###### /java/seedu/address/ui/ListPanel.java
+``` java
+    /**
+     * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
+     */
+    class JournalEntryListViewCell extends ListCell<JournalEntryCard> {
+
+        @Override
+        protected void updateItem(JournalEntryCard journalEntryCard, boolean empty) {
+            super.updateItem(journalEntryCard, empty);
+
+            if (empty || journalEntryCard == null) {
+                setGraphic(null);
+                setText(null);
+            } else {
+                setGraphic(journalEntryCard.getRoot());
+            }
+        }
     }
 
 }
@@ -281,52 +300,42 @@ public class JournalChangedEvent extends BaseEvent {
     /** Returns an unmodifiable view of the list of journal entries */
     ObservableList<JournalEntry> getJournalEntryList();
 
-```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-    @Subscribe
-    public void handleSaveEntryEvent(SaveEntryEvent event) {
-        try {
-            model.addJournalEntry(event.journalEntry);
-        } catch (Exception e) {
-            logger.warning("Save failed");
-            JournalWindow journalWindow =
-                    new JournalWindow(event.journalEntry.getDate(), String.format(
-                            "Save failed. Copy your text and try again.\n" + event.journalEntry.getText()));
-            journalWindow.show();
-        }
-    }
+    ObservableList<ReadOnlyPerson> getPersonAsList();
 
-    @Subscribe
-    private void handleShowJournalWindowRequestEvent(ShowJournalWindowRequestEvent event) {
-        JournalWindow journalWindow;
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        if (model.getJournal().getLast().getDate().equals(event.date)) {
-            journalWindow = new JournalWindow(event.date, model.getJournal().getLast().getText());
-        } else {
-            journalWindow = new JournalWindow(event.date);
-        }
-        journalWindow.show();
-    }
+    ReadOnlyPerson getPartner();
 
-```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-    @Override
-    public ObservableList<JournalEntry> getJournalEntryList() {
-        return model.getJournal().getJournalEntryList();
-    }
-
+    /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
+    ListElementPointer getHistorySnapshot();
+}
 ```
 ###### /java/seedu/address/storage/Storage.java
 ``` java
+
+    String getPersonFilePath();
+
+    Optional<ReadOnlyPerson> readPerson() throws DataConversionException, IOException;
+
+    Optional<ReadOnlyPerson> readPerson(String filePath) throws DataConversionException, IOException;
+
+    void savePerson(ReadOnlyPerson person) throws IOException;
+
+    void savePerson(ReadOnlyPerson person, String filePath) throws IOException;
+
     /**
-     * Saves the current version of the Journal Book to the hard disk.
+     * Saves the current Person to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    @Subscribe
+    void handlePersonChangedEvent(PersonChangedEvent event);
+
+    /**
+     * Saves the current version of the Journal to the hard disk.
      *   Creates the data file if it is missing.
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleJournalChangedEvent(JournalChangedEvent jce);
-}
+
 ```
 ###### /java/seedu/address/storage/StorageManager.java
 ``` java
@@ -357,7 +366,11 @@ public class JournalChangedEvent extends BaseEvent {
         journalStorage.saveJournal(journal, filePath);
     }
 
-    @Override
+    /**
+     * Saves the current version of the Journal Book to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
     @Subscribe
     public void handleJournalChangedEvent(JournalChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
@@ -367,7 +380,9 @@ public class JournalChangedEvent extends BaseEvent {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-}
+
+    // ================ Timetable methods ==============================
+
 ```
 ###### /java/seedu/address/storage/XmlAdaptedJournalEntry.java
 ``` java
@@ -610,8 +625,8 @@ public class UniqueJournalEntryList implements Iterable <JournalEntry> {
     /**
      * Returns last entry
      */
-    public JournalEntry getLast() {
-        return internalList.get(internalList.size() - 1);
+    public int getLast() {
+        return (internalList.size() - 1);
     }
 
     /**
@@ -665,8 +680,16 @@ public class UniqueJournalEntryList implements Iterable <JournalEntry> {
                 && this.internalList.equals(((UniqueJournalEntryList) other).internalList));
     }
 
-    public void updateJournalEntry(JournalEntry journalEntry, JournalEntry oldVersion) {
-        JournalEntry.updateJournalEntry(journalEntry, oldVersion);
+    public void updateJournalEntry(JournalEntry journalEntry, int last) {
+        internalList.set(last, journalEntry);
+    }
+
+    public String getDate(int last) {
+        return internalList.get(last).getDate();
+    }
+
+    public JournalEntry getJournalEntry(int index) {
+        return internalList.get(index);
     }
 }
 ```
@@ -722,7 +745,7 @@ public class JournalEntry {
         return Objects.hash(date);
     }
 
-    public static void updateJournalEntry(JournalEntry journalEntry, JournalEntry oldVersion) {
+    static void updateJournalEntry(JournalEntry journalEntry, JournalEntry oldVersion) {
         oldVersion.setText(journalEntry);
     }
 }
@@ -757,13 +780,13 @@ public class Journal implements ReadOnlyJournal {
      */
     public Journal(ReadOnlyJournal toBeCopied) {
         this();
-        resetData(toBeCopied);
+        resetJournalData(toBeCopied);
     }
 
     /**
-     * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * Resets the existing data of this {@code Journal} with {@code newData}.
      */
-    public void resetData(ReadOnlyJournal newData) {
+    public void resetJournalData(ReadOnlyJournal newData) {
         requireNonNull(newData);
         List<JournalEntry> syncedJournalEntryList = newData.getJournalEntryList().stream()
                 .collect(Collectors.toList());
@@ -803,8 +826,13 @@ public class Journal implements ReadOnlyJournal {
     }
 
     @Override
-    public JournalEntry getLast() {
+    public int getLast() {
         return journalEntries.getLast();
+    }
+
+    @Override
+    public JournalEntry getJournalEntry(int index) {
+        return journalEntries.getJournalEntry(index);
     }
 
     @Override
@@ -820,26 +848,22 @@ public class Journal implements ReadOnlyJournal {
         return Objects.hash(journalEntries);
     }
 
-    public void updateJournalEntry(JournalEntry journalEntry, JournalEntry oldVersion) {
-        journalEntries.updateJournalEntry(journalEntry, oldVersion);
+    void updateJournalEntry(JournalEntry journalEntry, int last) {
+        journalEntries.updateJournalEntry(journalEntry, last);
+    }
+
+    public String getDate(int last) {
+        return journalEntries.getDate(last);
     }
 }
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
-
     /**
-     * Raises an event to indicate the journal model has changed
+     * Raises an event to indicate the journal model has changed.
      */
     private void indicateJournalChanged() {
         raise(new JournalChangedEvent(journal));
-    }
-
-    @Override
-    public synchronized void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
-        addressBook.addPerson(person);
-        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        indicateAddressBookChanged();
     }
 
 ```
@@ -852,44 +876,120 @@ public class Journal implements ReadOnlyJournal {
 
     @Override
     public synchronized void addJournalEntry(JournalEntry journalEntry) throws Exception {
-        if (journal.getLast().getDate().equals(journalEntry.getDate())) {
+        if ((this.getJournalEntryList().size() != 0) && (
+                checkDate(journal.getLast()).equals(journalEntry.getDate()))) {
             journal.updateJournalEntry(journalEntry, journal.getLast());
+            logger.info("Journal entry updated.");
         } else {
             journal.addJournalEntry(journalEntry);
-            logger.info("journal entry added");
+            logger.info("Journal entry added.");
         }
         indicateJournalChanged();
     }
 
-    @Override
-    public synchronized void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        addressBook.removePerson(target);
-        indicateAddressBookChanged();
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Subscribe
+    public void handleSaveEntryEvent(SaveEntryEvent event) {
+        try {
+            addJournalEntry(event.journalEntry);
+        } catch (Exception e) {
+            logger.warning("Save failed");
+            JournalWindow journalWindow =
+                    new JournalWindow(event.journalEntry.getDate(), String.format(
+                            "Save failed. Copy your text and try again.\n" + event.journalEntry.getText()));
+            journalWindow.show();
+        }
     }
+
+    @Subscribe
+    private void handleShowJournalWindowRequestEvent(ShowJournalWindowRequestEvent event) {
+        JournalWindow journalWindow;
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if ((getJournalEntryList().size() != 0) && (checkDate(getLast()).equals(event.date))) {
+            journalWindow = new JournalWindow(
+                    event.date, getJournal().getJournalEntry(getLast()).getText());
+        } else {
+            journalWindow = new JournalWindow(event.date);
+        }
+        journalWindow.show();
+    }
+
+    /**
+     * Adds appointment to a person in the internal list.
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+        Person person = (Person) getPartner();
+        List<Appointment> list = target.getAppointments();
+        list.add(appointment);
+        person.setAppointment(list);
+        indicatePersonChanged(person);
+    }
+
+    /**
+     * Removes an appointment from a person in the internal list
+     *
+     * @throws PersonNotFoundException if no such person exist in the internal list
+     */
+    public void removeAppointment(ReadOnlyPerson target, Appointment appointment)
+            throws PersonNotFoundException {
+        requireNonNull(target);
+        requireNonNull(appointment);
+
+        Person person = (Person) getPartner();
+        List<Appointment> newApptList = person.getAppointments();
+        newApptList.remove(appointment);
+        person.setAppointment(newApptList);
+        indicatePersonChanged(person);
+
+    }
+
+    @Override
+    public String checkDate(int last) {
+        return journal.getDate(last);
+    }
+
+    //=========== Filtered Journal List Accessors =============================================================
+
 
 ```
 ###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public ObservableList<JournalEntry> getJournalEntryList() {
-        return FXCollections.unmodifiableObservableList(journal.getJournalEntryList());
+        return journal.getJournalEntryList();
     }
 
-    public JournalEntry getLast() {
+    @Override
+    public int getLast() {
         return journal.getLast();
     }
 
     @Override
-    public void addAppointment(ReadOnlyPerson target, Appointment appointments) throws PersonNotFoundException {
-        addressBook.addAppointment(target, appointments);
-        indicateAddressBookChanged();
+    public boolean equals(Object obj) {
+        // short circuit if same object
+        if (obj == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(obj instanceof ModelManager)) {
+            return false;
+        }
+
+        // state check
+        ModelManager other = (ModelManager) obj;
+        return ((partner == null && other.partner == null)
+                || (partner != null && other.partner != null && partner.equals(other.partner)))
+                && journal.equals(other.journal);
     }
 
-    @Override
-    public void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException {
-        addressBook.removeAppointment(target, appointment);
-        indicateAddressBookChanged();
-    }
+}
 ```
 ###### /java/seedu/address/model/ReadOnlyJournal.java
 ``` java
@@ -904,7 +1004,9 @@ public interface ReadOnlyJournal {
      */
     ObservableList<JournalEntry> getJournalEntryList();
 
-    JournalEntry getLast();
+    int getLast();
+
+    JournalEntry getJournalEntry(int index);
 }
 ```
 ###### /java/seedu/address/model/Model.java
@@ -917,5 +1019,7 @@ public interface ReadOnlyJournal {
 
     /** Returns an unmodifiable view of the journal entry list */
     ObservableList<JournalEntry> getJournalEntryList();
+
+    ObservableList <ReadOnlyPerson> getPersonAsList();
 
 ```

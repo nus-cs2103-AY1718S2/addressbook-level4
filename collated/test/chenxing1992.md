@@ -38,7 +38,7 @@ public class AppointmentSystemTest extends AddressBookSystemTest {
     /**
      * Performs verification that the expected model is the same after command is executing
 
-    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd, Appointment appointment) {
+    private void assertCommandSuccess(String command, ReadOnlyPerson toAdd, appointment appointment) {
         Model expectedModel = getModel();
         String expectedResultMessage;
 
@@ -62,7 +62,7 @@ public class AppointmentSystemTest extends AddressBookSystemTest {
      * display box displays {@code expectedResultMessage} and the model related components equal to
      * {@code expectedModel}.
      *
-     * //@see AppointmentSystemTest#assertCommandSuccess(String, ReadOnlyPerson, Appointment)
+     * //@see AppointmentSystemTest#assertCommandSuccess(String, ReadOnlyPerson, appointment)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         executeCommand(command);
@@ -78,7 +78,7 @@ public class AppointmentSystemTest extends AddressBookSystemTest {
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
         guiRobot.interact(() -> browserPanel =
-                new BrowserPanel(TypicalPersons.getTypicalAddressBook().getPersonList()));
+                new BrowserPanel(TypicalPersons.getTypicalPerson()));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());
@@ -124,14 +124,14 @@ public class AddAppointmentParserTest {
     @Test
     public void nonParsableString() throws ParseException {
         thrown.expect(ParseException.class);
-        parser.parse("appt 1 d/lunch ,cant parse this string");
+        parser.parse("appt d/lunch ,cant parse this string");
     }
     @Test
     public void parseDateExpression() throws ParseException, java.text.ParseException {
 
         AddAppointmentCommand command = parser.parse("appt 1 d/Lunch, tomorrow 5pm");
         Appointment appointment = AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm");
-        assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), appointment), command);
+        assertEquals(new AddAppointmentCommand(appointment), command);
 
     }
 
@@ -141,7 +141,7 @@ public class AddAppointmentParserTest {
         try {
             AddAppointmentCommand command = parser.parse("appt 1 d/Lunch, tomorrow 5pm to 7pm");
             Appointment appointment = AddAppointmentParser.getAppointmentFromString("Lunch, tomorrow 5pm to 7pm");
-            assertEquals(new AddAppointmentCommand(Index.fromOneBased(1), appointment), command);
+            assertEquals(new AddAppointmentCommand(appointment), command);
         } catch (ParseException e) {
             e.printStackTrace();
         }
@@ -191,35 +191,25 @@ public class AddAppointmentCommandTest {
 
 
     @Test
-    public void equals() throws ParseException, seedu.address.logic.parser.exceptions.ParseException {
-        String arg = "Lunch, tomorrow 5pm";
-
-        AddAppointmentCommand command = new AddAppointmentCommand(Index.fromOneBased(1), setAppointment(arg));
-        AddAppointmentCommand command2 = new AddAppointmentCommand(Index.fromOneBased(1), setAppointment(arg));
-        assertEquals(command, command2);
-        assertNotEquals(command, new AddAppointmentCommand(Index.fromOneBased(2), setAppointment(arg)));
-    }
-
-    @Test
     public void execute() throws ParseException, CommandException {
 
-        Index index1 = Index.fromOneBased(1);
+
         try {
             //Invalid date
             String arg = "lunch, yesterday 5pm";
-            Command command = setCommand(index1, setAppointment(arg));
+            Command command = setCommand(setAppointment(arg));
             CommandResult result = command.execute();
             assertEquals(result.feedbackToUser, AddAppointmentCommand.INVALID_DATE);
 
             //Set to valid date
             arg = "lunch, tomorrow 5pm";
-            command = setCommand(index1, setAppointment(arg));
+            command = setCommand(setAppointment(arg));
             result = command.execute();
             assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS);
 
             //Set to valid date with end time
             arg = "lunch, tomorrow 5pm to 7pm";
-            command = setCommand(index1, setAppointment(arg));
+            command = setCommand(setAppointment(arg));
             result = command.execute();
             assertEquals(result.feedbackToUser, AddAppointmentCommand.MESSAGE_SUCCESS);
         } catch (seedu.address.logic.parser.exceptions.ParseException ive) {
@@ -228,24 +218,20 @@ public class AddAppointmentCommandTest {
 
     }
 
-    @Test
-    public void outOfBoundsIndex() throws CommandException, seedu.address.logic.parser.exceptions.ParseException {
-        thrown.expect(CommandException.class);
-        setCommand(Index.fromOneBased(100),
-                AddAppointmentParser.getAppointmentFromString("lunch,tomorrow 5pm")).execute();
-    }
 
     /**
      * Util methods to set appointment command
      */
-    private Command setCommand(Index index, Appointment appointment) {
-        AddAppointmentCommand command = new AddAppointmentCommand(index, appointment);
-        Model model = new ModelManager(getTypicalAddressBook(), getTypicalJournal(), new UserPrefs());
-        command.setData(model);
+    private Command setCommand(Appointment appointment) {
+        AddAppointmentCommand command = new AddAppointmentCommand(appointment);
+
+        Model model = new ModelManager(getTypicalPerson(), getTypicalJournal(), new UserPrefs());
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
     private Appointment setAppointment(String str) throws seedu.address.logic.parser.exceptions.ParseException {
+
         return AddAppointmentParser.getAppointmentFromString(str);
     }
 
@@ -267,39 +253,50 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void indicateTimetableChanged(Timetable timetable) {
+
+        }
+
+        @Override
+        public void requestHideTimetable() {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void requestShowTimetable() {
+
+        }
+
+        @Override
+        public int getLast() {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
+        public void resetPersonData(ReadOnlyPerson newData) {
             fail("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
+        public ReadOnlyPerson getPartner() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void resetJournalData(ReadOnlyJournal newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyPerson> getPersonAsList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
         public ReadOnlyJournal getJournal() {
-            fail("This method should not be called.");
-            return null;
-        }
-```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
-``` java
-        @Override
-        public void deletePerson(ReadOnlyPerson target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(ReadOnlyPerson target, ReadOnlyPerson editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-
-
-        @Override
-        public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
         }
@@ -311,7 +308,7 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate) {
+        public void deletePerson() {
             fail("This method should not be called.");
         }
     }
@@ -321,13 +318,13 @@ public class AddAppointmentCommandTest {
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(ReadOnlyPerson person) throws DuplicatePersonException {
+        public void addPerson(seedu.address.model.person.ReadOnlyPerson person) throws DuplicatePersonException {
             throw new DuplicatePersonException();
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyPerson getPartner() {
+            return new Person(ALICE);
         }
     }
 
@@ -344,8 +341,8 @@ public class AddAppointmentCommandTest {
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyPerson getPartner() {
+            return new Person(ALICE);
         }
     }
 

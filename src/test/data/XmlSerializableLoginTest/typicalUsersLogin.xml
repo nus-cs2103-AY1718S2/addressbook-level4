@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <!-- AddressBook save file which contains the same User values as in
 {@code TypicalUsers#getTypicalLoginManager()}-->
-<loginmanager>
+<addressbook>
     <users>
         <username>JOHNDOE</username>
         <password>12345678</password>
@@ -34,4 +34,4 @@
         <username>GEORGE</username>
         <password>george123</password>
     </users>
-</loginmanager>
+</addressbook>

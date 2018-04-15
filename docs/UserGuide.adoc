@@ -171,13 +171,13 @@ There are two ways to navigate through the different weeks in the timetable:
 . Using Keyboard Shortcuts
 +
 * For Windows:
-** kbd:[Ctrl] + kbd:[Shift] + kbd:[->] : Navigates timetable to the next week.
-** kbd:[Ctrl] + kbd:[Shift] + kbd:[<-] : Navigates timetable to the previous week.
-** kbd:[Ctrl] + kbd:[Shift] + kbd:[↓] : Navigates timetable to the current week.
+** kbd:[Ctrl] + kbd:[Shift] + kbd:[&rarr;] : Navigates timetable to the next week.
+** kbd:[Ctrl] + kbd:[Shift] + kbd:[&larr;] : Navigates timetable to the previous week.
+** kbd:[Ctrl] + kbd:[Shift] + kbd:[&darr;] : Navigates timetable to the current week.
 * For Mac:
-** kbd:[Command] + kbd:[Shift] + kbd:[->] : Navigates timetable to the next week.
-** kbd:[Command] + kbd:[Shift] + kbd:[<-] : Navigates timetable to the previous week.
-** kbd:[Command] + kbd:[Shift] + kbd:[↓] : Navigates timetable to the current week.
+** kbd:[Command] + kbd:[Shift] + kbd:[&rarr;] : Navigates timetable to the next week.
+** kbd:[Command] + kbd:[Shift] + kbd:[&larr;] : Navigates timetable to the previous week.
+** kbd:[Command] + kbd:[Shift] + kbd:[&darr;] : Navigates timetable to the current week.
 . Using Mouse Clicks
 +
 * At the top of the timetable, there is a navigation bar with two arrow buttons which you can click on.
@@ -1000,6 +1000,7 @@ Shows a list of all employees in PTMan. +
 *Shorthand:* `l`
 
 // tag::timetableInteractions[]
+
 [[Viewshift]]
 ==== Listing all employees: `viewshift`
 

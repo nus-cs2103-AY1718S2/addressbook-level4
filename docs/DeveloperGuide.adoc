@@ -510,7 +510,7 @@ image::ShiftIndexGood.png[width=800]
 // tag::timetable[]
 === Timetable Feature
 
-We have a timetable that increases interactivity between users and the shifts in PTMan.
+PTMan has a timetable that increases interactivity between users and shifts.
 _<<fig-Feature_Timetable1>>_ below shows how the timetable looks like.
 
 [[fig-Feature_Timetable1]]
@@ -520,8 +520,8 @@ image::Feature_Timetable1.png[width=800]
 ==== Reason for implementation
 
 A timetable is useful for both employers and employees, as it allows them to visualise the shifts and access them via their indexes.
-The timetable also instantly reflects any changes to the shifts and allows selected employee's shifts to be highlighted.
-On top of these, users are allowed to export the timetable as an image for future reference.
+The timetable instantly reflects any changes to the shifts and allows selected employee's shifts to be highlighted.
+Users are also allowed to export the timetable as image for future reference.
 All in all, the timetable feature improves user experience and brings convenience to the user.
 
 ==== How it is implemented
@@ -532,11 +532,11 @@ The timetable is created with the help of the https://github.com/dlemmermann/Cal
 `TimetablePanel` contains the following JavaFX components:
 
 . A `CalendarView` object.
-`CalendarView` is an object from CalendarFX, and it is responsible for displaying the timetable in the `TimetablePanel`.
+`CalendarView` is a class in CalendarFX, and it is responsible for displaying the timetable in the `TimetablePanel`.
 . A `BorderPane` object.
 `BorderPane` is the object in charge of displaying the navigation bar of the timetable.
 . A `Label` object.
-`Label` is the object in charge of displaying the text (in this case, the month) in the navigation bar.
+`Label` is the object in charge of displaying the text (in this case, the month and year) in the navigation bar.
 . Two `Button` objects.
 Each of the `Button` object is in charge of displaying the left/right buttons in the navigation bar.
 It allows users to click on them to navigate through the weeks in the timetable.
@@ -594,14 +594,14 @@ image::updateTimetableViewSequenceDiagram.png[width="750"]
 Here are some examples of when `updateTimetableView()` is called: +
 
 * A `Shift` is added, removed, or altered:
-`PartTimeManagerChangedEvent` is posted which calls `updateTimetableView()` to rebuild the timetable with the changed shifts.
+`PartTimeManagerChangedEvent` is posted which is handled by calling `updateTimetableView()` to rebuild the timetable with the changed shifts.
 * `OutletInformation` is edited:
-`PartTimeManagerChangedEvent` is posted which calls `updateTimetableView()` to rebuild the timetable to fit in the updated operating hours.
-* The user wants to navigate the timetable to the next/previous week:
-`TimetableWeekChangeRequestEvent` is posted which calls `navigateToNextWeek()` or `navigateToPreviousWeek()` accordingly.
-Both of these methods call `updateTimetableView()` to rebuild the timetable showing the appropriate weeks.
-* Selection of an employee:
-`EmployeePanelSelectionChangedEvent` is posted which calls `loadEmployeeTimetable` or `loadMainTimetable` accordingly. Both of these
+`OutletInformationChangedEvent` is posted which is handled by calling `updateTimetableView()` to rebuild the timetable and fit in the updated operating hours.
+* The user wants to navigate the timetable to the next/previous/current week:
+`TimetableWeekChangeRequestEvent` is posted which is handled by calling `navigateToNextWeek()`, `navigateToPreviousWeek()` or `navigateToCurrWeek()` accordingly.
+All of these methods call `updateTimetableView()` to rebuild the timetable displaying the appropriate weeks.
+* Selection/Deselection of an employee:
+`EmployeePanelSelectionChangedEvent` is posted which is handled by calling `loadEmployeeTimetable(employee)` or `loadDefaultTimetable()` accordingly. Both of these
 methods call `updateTimetableView()` to rebuild the timetable with the appropriate colours of the entries.
 
 
@@ -609,15 +609,15 @@ methods call `updateTimetableView()` to rebuild the timetable with the appropria
 
 The following are commands that are supported as part of the timetable feature:
 
-. <<Viewing of individual employee's shifts, `SelectCommand`>>: Selects an employee and highlight their shifts on the timetable.
-. <<Returning to main view of timetable , `MainCommand`>>: Returns the timetable back to the default view of the current week.
-. <<Exporting timetable, `ExportCommand`>>: Exports timetable as an image.
+. <<Select, `SelectCommand`>>: Selects an employee and highlight their shifts on the timetable.
+. <<Deselect, `DeselectCommand`>>: Returns the timetable back to the default view of the current week.
+. <<Export, `ExportCommand`>>: Exports timetable as an image.
 
-
+[[Select]]
 ===== Viewing of individual employee's shifts
 
-PTMan allows employees to highlight their own shifts on the timetable GUI through `SelectCommand`. When a particular employee is
-being selected, an `EmployeePanelSelectionChangedEvent` is posted with the selected employee as the argument to indicate the change. +
+PTMan allows employees to highlight their own shifts on the timetable through `SelectCommand`. When a particular employee is
+being selected, `EmployeePanelSelectionChangedEvent` is posted with the selected employee as its argument. +
 
 `EmployeePanelSelectionChangedEvent` has the following constructor:
 ----
@@ -627,15 +627,17 @@ public EmployeePanelSelectionChangedEvent(EmployeeCard newSelection)
 `TimetablePanel` subscribes to this event and handles it by calling the `loadEmployeeTimetable` method for the `newSelection`. +
  +
 
+[[Deselect]]
 ===== Returning to default view of timetable
 
-The returning to default timetable view is called through `DefaultViewCommand`, which also posts an `EmployeePanelSelectionChangedEvent` event
-with null as the argument.
+The `DeselectCommand` deselects any selected employee and returns the timetable back to its default style.
+`EmployeePanelSelectionChangedEvent` is posted with `null` as its argument.
 
-`TimetablePanel` subscribes to this event and handles it by calling the `loadMainTimetable` method. +
+`TimetablePanel` subscribes to this event and handles it by calling the `loadDefaultTimetable` method. +
  +
 
-====== Exporting timetable
+[[Export]]
+===== Exporting timetable
 
 Exporting of the timetable is triggered by `ExportCommand`, which:
 
@@ -644,10 +646,11 @@ Exporting of the timetable is triggered by `ExportCommand`, which:
 
 The former posts an `ExportTimetableAsImageRequestEvent`, while the latter posts an `ExportTimetableAsImageAndEmailRequestEvent`,
 both of which are subscribed to by `TimetablePanel`. +
-`TimetablePanel` handles them by calling `exportTimetableAsImage` and `exportTimetableAsImageAndEmail` methods respectively.
-How the exporting works is that a Snapshot is first taken of the `timetableView` Node, and then being written into a file locally.
-If `exportTimetableAsImageAndEmail` is called instead of `exportTimetableAsImage`, we will go on further to email this image
-through the `EmailService` class, and then finally delete the local file containing the Snapshot.
+
+`TimetablePanel` handles them by calling `exportTimetableAsImage` or `exportTimetableAsImageAndEmail` accordingly.
+The exporting works by taking a Snapshot of the `timetableView` node, and then writing it into a local file.
+If `exportTimetableAsImageAndEmail` is called instead of `exportTimetableAsImage`, this image
+will be emailed through the `EmailService` class, and then deleted from local storage.
 
 // end::timetable[]
 

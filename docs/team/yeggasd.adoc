@@ -33,7 +33,7 @@ StardyTogether is a desktop contacts and venues manager application specially fo
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-W11-B4/main/pull/79[#79] https://github.com/CS2103JAN2018-W11-B4/main/pull/105[#105] https://github.com/CS2103JAN2018-W11-B4/main/pull/161[#161]
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W11-B4/main/pull/135[#135], https://github.com/CS2103JAN2018-W11-B4/main/pull/138[#138], https://github.com/CS2103JAN2018-W11-B4/main/pull/191[#191]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T09-B2/main/issues/178[1], https://github.com/CS2103JAN2018-T09-B2/main/issues/191[2], https://github.com/CS2103JAN2018-T09-B2/main/issues/186[3])
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T09-B2/main/issues/178[1], https://github.com/CS2103JAN2018-T09-B2/main/issues/183[2], https://github.com/CS2103JAN2018-T09-B2/main/issues/186[3])
 
 == Contributions to the User Guide
 
@@ -53,6 +53,6 @@ include::../UserGuide.adoc[tag=dataencryption]
 
 include::../DeveloperGuide.adoc[tag=dataencryption]
 
-include::../DeveloperGuide.adoc[tag=timetable]
+include::../DeveloperGuide.adoc[tag=autocomplete]
 
 

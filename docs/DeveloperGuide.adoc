@@ -487,6 +487,7 @@ Users can change their password using the command `encrypt` and decrypt it perma
 
 When an 'encrypt' command is issued, the argument is parsed and hashed. Is is then passed to the Model.
 
+.Password Sequence Diagram for Logic Component
 image::PasswordSdForLogic.png[width="800"]
 
 The `ModelManager` then updates the password in the `AddressBook` as shown below:
@@ -510,13 +511,13 @@ private void checkPasswordChanged() {
 ----
 This change would cause the `PasswordWindow` to display instead of the `MainWindow`, requesting for a password input by the user.
 
-.Passard Box UI
+.Password Box UI
 image::passwordBox.png[width="800"]
 
 If the password the user input is unable to decrypt `addressbook.xml`, a `WrongPasswordEvent` is raised which will cause the `PasswordUiManager` to display the following dialog to the user:
 
-.Wrong Password Popup
-image::wrongPasswordDialog.png[width="800"]
+.Wrong Password Dialog UI
+image::wrongpassworddialog.png[width="800"]
 
 If the password the user input successfully decrypts `addressbook.xml`, a `CorrectPasswordEvent` is raised. This event is handled by the `PasswordUiManager` which will start the `UiManager`.
 The application would behave as if it is not encrypted from here on.
@@ -903,6 +904,69 @@ The `InfoPanel` will swap between `UserDetailsPanel`, `BirthdayList`, `VenueTabl
 Current implementation is the best in terms of variability and ease of implementation.
 // end::timetable[]
 
+// tag::autocomplete[]
+=== Auto Complete or Correct feature
+==== Proposed Implementation
+Currently, some commands such as `add` and `edit` requires many different fills to be filled in for it to work.
+This makes it extremely tedious as users have to remember what fills are there to be included.
+Spelling mistakes are also very costly as users would need to retype the command.
+
+When the user press the `Tab` key, commands ,and parameters carets will auto complete or auto correct.
+Pressing `Tab` again would give the next suggested input.
+
+The Auto Correct can be implemented in `CommandBox` as all user inputs can be easily accessed in it.
+Editing the text already entered can also be done easily in `CommandBox`.
+
+Since all commands are in the form of `String`, we can use a `TreeSet` of the current input's character to find the closest matching command
+and traverse the `TreeSet` to get other suggestions.
+
+To prevent a situation of the need to differentiate between a auto completion of the next parameter or getting the next suggestion of the current command or parameter,
+next suggestion is always chosen before a space is entered and auto completion only happen for non-empty strings.
+
+Suppose that the user wants to type the `encrypt` command, he can press `Tab` to auto complete.
+
+.Auto Completion of Command
+image::commandautocomplete.png[width="800"]
+
+If he were to have a spelling error typing `encrytp` instead, the `Tab` key would instead correct it to `encrypt`
+
+.Auto Correction of Command
+image::commandautocorrect.png[width="800"]
+
+Now suppose he is trying to add a friend, once he types `p/123` and press `Tab` after the space, `e/` caret will be auto completed for him.
+
+.Auto Completion of Parameter
+image::parameterautocomplete.png[width="800"]
+
+
+==== Design Considerations
+
+===== Aspect: What is done after user presses `Tab` key
+* **Alternative 1 (Suggested):** Automatically completes for the user.
+** Pros: Easy and improves efficiency of typing. Familiar for users who uses CLI frequently.
+** Cons: Can be confusing as can be auto complete or next suggested input.
+* **Alternative 2:** Suggest to user what is expected
+** Pros: Does not change the user's current input making it less confusing.
+** Cons: Does not really improve the user experience by much.
+
+===== Aspect: Where to implement it
+* **Alternative 1 (Suggested):** In `CommandBox`.
+** Pros: `CommandBox` has access to the text showing what is already keyed in, making it easy to implement there.
+** Cons: `CommandBox` has to do an extra task of determining suggested commands and input, increasing coupling as it would need access to the parser or list of commands.
+* **Alternative 2:** In `Parser`
+** Pros: Does not increase the coupling of `CommandBox`.
+** Cons: Makes changing the current input display a difficult task which may require access to the `CommandBox`.
+
+===== Aspect: What to auto correct or complete
+* **Alternative 1 (Suggested):** Commands and Parameters.
+** Pros: Makes it easy for users as everything can be auto completed or corrected.
+** Cons: Makes it more confusing as sometimes it completes commands while other times it completes the parameters.
+Also makes the implementation complicated as a clear distinction of Command and Parameters have to be made for completion and correction.
+* **Alternative 2:** Only Commands or Parameters
+** Pros: Easier to understand.
+** Cons: Not as efficient for the user.
+
+// end::autocomplete[]
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -1340,4 +1404,31 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect upload commands to try: `upload`, `upload filename   password  ` (notice the spaces) +
    Expected: Invalid command error message will be shown
 
+=== Encrypting and Decrypting
 
+. Encrypting data
+
+.. Test case: Set password using `encrypt` command +
+   Expected: `addressbook.xml` is no longer in plaintext. +
+.. Test case: Set password using `encrypt` command and reopen StardyTogether +
+   Expected: Application prompt you to input password, opens with correct password keyed in and
+   error dialog with incorrect password.
+
+. Decrypting data
+
+.. Test case: Set password using `encrypt` command, then decrypt using `decrypt` command and reopen StardyTogether+
+   Expected: Application opens with all data.
+
+=== Selecting a person
+
+. Selecting person
+
+.. Prerequisites: Add a new person.
+.. Test case: Click on the person +
+   Expected: Card with Details of the person shows up with his/her even week Timetable
+.. Test case: `select INDEX even` where `INDEX` is the index of the person in the list+
+   Expected: Card with Details of the person shows up with his/her even week Timetable
+.. Test case: `select INDEX odd` where `INDEX` is the index of the person in the list+
+   Expected: Card with Details of the person shows up with his/her odd week Timetable
+
+_{ more test cases ... }_

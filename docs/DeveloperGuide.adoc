@@ -247,7 +247,7 @@ The following diagram shows the class diagram of the `Model` component.
 It describes the overall structure of the `Model` component, along with all its sub-components.
 
 .Class diagram of the `Model` component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.jpg[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -255,6 +255,9 @@ The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores a `StorageCalendar` object that contains all appointments.
+* stores a `CalendarSource` object that is used to display the calendar.
+* stores a list of appointments which will be displayed for `listAppointment` command.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -2045,14 +2048,7 @@ This section includes instructions to test the `estimateRoute` command of the ap
    _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing marker or route._
 .. Type other incorrect  command such as `estimateRoute`, `estimateRoute Punggol NUS`, `estimateRoute sma/Punggol NUS`, `estimateRoute NUS ema/Punggol` in command box and press enter. +
    _Expected: Similar to previous._
-////
-=== Saving data
 
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-////
-   
 === Viewing a celebrity's calendar
 This section includes instructions to test the `viewCalendar` command of the application.
 [NOTE]
@@ -2068,7 +2064,7 @@ Prerequisites: At least one celebrity in the last shown list and the celebrity's
    _Expected: No change in calendar. Error details shown in the status message._   
 .. Type other incorrect `viewCalendar` commands such as `viewCalendar`, `viewCalendar x` (where `x` is larger than the last shown contact list size or not a valid index number or the index of the celebrity whose calendar is currently displayed) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-   
+
 === Viewing the combined calendar
 This section includes instructions to test the `viewCombinedCalendar` command of the application.
 [NOTE]
@@ -2098,7 +2094,7 @@ Prerequisites: Calendar is currently in `day` view.
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type other incorrect `viewCalendarBy` commands such as `viewCalendarBy`, `viewCalendarBy x` (where x is not `day`, `week`, `month` or mixed uppercase and lowercase of one of them) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-   
+
 === Viewing a particular day's calendar
 This section includes instructions to test the `viewDate` command of the application.
 [NOTE]
@@ -2132,4 +2128,3 @@ Preprequisites: The file is a valid .xml file for storage calendar, and is named
 .. Replace the old `storagecalendar.xml` with the the new `storagecalendar.xml` file.
 .. Restart the application.
    _Expected: The new appointments data from `storagecalendar.xml` is reflected in the calendar panel._
-

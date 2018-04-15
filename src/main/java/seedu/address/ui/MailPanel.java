@@ -34,7 +34,7 @@ import seedu.address.commons.core.LogsCenter;
  */
 //@@author glorialaw
 public class MailPanel extends UiPart<VBox> {
-    private static final long freq = 60;
+    private static final long freq = 30;
     private static final String FXML = "EmailPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(MailPanel.class);
     private final ObservableList<EmailCard> emailList = FXCollections.observableArrayList();
@@ -120,7 +120,6 @@ public class MailPanel extends UiPart<VBox> {
                 });
                 return messages;
             } catch (NoSuchProviderException e) {
-                e.printStackTrace();
                 return null;
             } catch (MessagingException e) {
                 e.printStackTrace();
@@ -169,10 +168,9 @@ public class MailPanel extends UiPart<VBox> {
             inbox = (IMAPFolder) store.getFolder("INBOX");
             return (IMAPFolder) inbox;
         } catch (NoSuchProviderException e) {
-            System.out.println("NoSuchProviderException");
+            e.printStackTrace();
             return null;
         } catch (MessagingException e) {
-            System.out.println("Caught MessagingException @MailPanel");
             System.out.println(e.getCause());
             return null;
         }

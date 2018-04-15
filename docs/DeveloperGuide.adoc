@@ -1045,6 +1045,7 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 ==== Gloria Law
 * *Major*: An email feature comprised of an email inbox panel and the ability to compose, reply and forward emails.
 * *Minor*: A time zone feature which allows the sales person to add the timezone details of their clients.
+* *Minor*: An enhancement that changes incorrect commands to red.
 
 ==== Ma Yuqian
 * *Major*: A login/logout & reset password function that allows the user to verify his/her identity when he/she starts using this APP to protect his/her privacy
@@ -1377,12 +1378,78 @@ _{ more test cases ... }_
 
 . Add comments to contacts
 
-.. Prerequisite: There are already some contactss in the addressbook.
+.. Prerequisite: There are already some contacts in the addressbook.
 .. Test case: Run `add n/David p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 tz/PST c/interested in football t/friends t/owesMoney` . +
    Expected: A contact is created with comment interested in football.
 .. Test case: Run `edit 1 c/interested in basketball` . +
    Expected: The first contact's comment is modified to interested in basketball.
 //end::XavierMaYuqianTestCases[]
+
+//tag::GloriaLawTestCases[]
+=== Incorrect time zones are rejected
+
+. Time zone abbreviations unknown to Java are rejected
+
+.. Prerequisite: There is at least one contact in Sell IT
+.. Test case: Run `add n/David p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 tz/PST c/interested in football t/friends` . +
+   Expected: A contact is created with the time zone PST is created.
+.. Test case: Run `edit 1 tz/PST` .+
+   Expected: The client with index 1 has their time zone changed to PST
+.. Test case: Run `add n/David p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 tz/ c/interested in football t/friends` . +
+   Expected: Error message: `Time zones should be have the standard time zone abbreviations, and should not be blank`.
+.. Test case: Run `edit 1 tz/P$T` . +
+   Expected: Error message: `Time zones should be have the standard time zone abbreviations, and should not be blank`.
+
+=== Send an email to a client
+
+. Send an email to a client
+
+.. Prerequisite: There is at least one email in Sell IT
+.. Test case: Click a client's email in the person panel and enter a subject and the email message body and click the send button. +
+   Expected: Email sent successfully window.
+.. Test case: Click the new email button after clicking an email in the inbox and do not enter any recipients and click the send button. +
+   Expected: Could not send email due to an error window.
+.. Test case: Click the new email button after clicking an email in the inbox and enter `abcde` as the recipient and click the send button. +
+   Expected: Could not send email due to an error window.
+.. Test case: Click the new email button after clicking an email in the inbox and enter `@gmail.com` as the recipient and click the send button. +
+   Expected: Could not send email due to an error window.
+
+=== Reply to an client email
+
+. Reply to an email an email received from a client
+
+.. Prerequisite: There is at least one email in Sell IT.
+.. Test case: Click the reply button after clicking an email in the inbox and type some text in the email body. +
+   Expected: Email sent successfully window.
+.. Test case: Click the reply button after clicking an email in the inbox and add an invalid recipient such as `asdf`. +
+   Expected: Could not send email due to an error window.
+
+=== Forward a client email
+
+. Forward an email received from a client
+
+.. Prerequisite: There is at least one contact or email in Sell IT
+.. Test case: Click the forward button after clicking an email in the inbox and enter a valid email and click send +
+   Expected: Email sent successfully window.
+.. Test case: Click the forward button after clicking an email in the inbox and enter an invalid recipient such as `asdf`. +
+   Expected: Could not send email due to an error window.
+
+=== Load all client emails.
+
+. Load all client emails.
+
+.. Prerequisite: There is at least one email message received in Sell IT
+.. Test case: See which emails are loaded onto the email panel. On a browser, log onto the gmail with the email "sg.salesperson@gmail.com" and password "gloriacs2103" and verify they are the same. +
+   Expected: Email inbox should be the same as what is shown on gmail.
+
+=== Receive a client email
+
+. Receive an email from a client.
+
+.. Prerequisite: None
+.. Test case: From an email you have access to, send an plain text email to "sg.salesperson@gmail.com". +
+   Expected: Email appears on the email panel within 30 seconds and the full view is opened in a pop up when clicked.
+//end::GloriaLawTestCases[]
 
 === Saving data
 

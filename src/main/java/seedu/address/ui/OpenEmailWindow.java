@@ -99,9 +99,9 @@ public class OpenEmailWindow {
                 msgContent.setText("This message is in an unsupported format.");
             }
         } catch (IOException e) {
-            System.out.println("ioexception");
+            e.printStackTrace();
         } catch (MessagingException e) {
-            System.out.println("messaging exception");
+            e.printStackTrace();
         }
 
     }
@@ -128,7 +128,7 @@ public class OpenEmailWindow {
         try {
             ComposeEmailWindow cew = new ComposeEmailWindow("", "", "", "");
         } catch (IOException e) {
-            System.out.println("IOException");
+            e.printStackTrace();
         }
     }
 
@@ -141,7 +141,7 @@ public class OpenEmailWindow {
             ComposeEmailWindow cew = new ComposeEmailWindow("RE: ", this.fromContent.getText(),
                     this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
-            System.out.println("IOException");
+            e.printStackTrace();
         }
     }
 
@@ -151,10 +151,10 @@ public class OpenEmailWindow {
     @FXML
     private void openForwardWindow() {
         try {
-            ComposeEmailWindow cew = new ComposeEmailWindow("FWD: ", this.fromContent.getText(),
+            ComposeEmailWindow cew = new ComposeEmailWindow("FWD: ", "",
                      this.subjectContent.getText(), this.msgContent.getText());
         } catch (IOException e) {
-            System.out.println("IOException");
+            e.printStackTrace();
         }
     }
 

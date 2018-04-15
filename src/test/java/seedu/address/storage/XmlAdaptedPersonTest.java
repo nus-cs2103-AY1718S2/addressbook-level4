@@ -123,6 +123,7 @@ public class XmlAdaptedPersonTest {
                 VALID_APPOINTMENT, VALID_GROUP, invalidInsurances);
         Assert.assertThrows(IllegalValueException.class, person::toModelType);
     }
+    //@@author
 
     @Test
     public void toModelType_invalidTags_throwsIllegalValueException() {

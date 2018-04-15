@@ -70,7 +70,7 @@ For instance, typing `help` and pressing kbd:[Enter] will open the help window f
 ** **`delete`** `3` : deletes the 3rd contact shown in the current list.
 ** *`exit`* : exits the application.
 
-*  Refer to <<Contact Features>> and <<Task, To-do list and Calendar Features>> for details of each command.
+*  Refer to <<Contact Features>> and <<TaskList_Feature>> for details of each command.
 
 [[Features]]
 

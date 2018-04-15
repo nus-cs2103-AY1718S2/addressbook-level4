@@ -45,7 +45,7 @@ If you have already set up Medeina, head on to <<CLI>>. +
 If you are already familiar with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
 
 {empty} +
-
+// tag::GUI[]
 == Quick Start
 
 To successsfully install and run Medeina, you need to:
@@ -60,9 +60,10 @@ You can download the latest version of Java link:https://java.com/en/download//[
 .  Copy the file to the folder you want to use as the home folder for Medeina.
 .  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds.
 +
+
 .Medeina's GUI
 image::Interface.png[width="1000"]
-
+// end::GUI[]
 {empty} +
 
 // tag::cliUG[]
@@ -282,7 +283,7 @@ a| * At least one of the optional fields must be provided.
 image::edit_examples.PNG[width="800"]
 {empty} +
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the above exmaples**
 ----
 edit -o 1 p/91234567 e/alexyeoh@anotherexample.com
 
@@ -713,6 +714,8 @@ Medeina will have support to run concurrently on different systems. The data wil
 *Q*: What should I do if I find a bug? +
 *A*: We are very sorry about this. Please help us out by creating an issue in our GitHub link:{repoURL}/issues[here]. We will get back to you shortly!
 
+// tag::FAQ[]
+
 *Q*: There's no scroll-bar in calendar entry views, what happens when a have a long list of appointments on that week? +
 *A*: The calendar entry view is implemented by default without a scroll-bar, yet user can still scroll up and down using mouse wheel.
 
@@ -728,6 +731,8 @@ Medeina will have support to run concurrently on different systems. The data wil
 *Q*: Suppose I want to make an appointment for a pet patient named "Happy". However, the contact that "Happy" is assigned under, has yet another pet patient that is named "Happy" as well. I end up making an appointment for the other "Happy" instead. What can I do?
 *A*: Medeina is developed with the assumption that no pet patients under the same contact will share a name. However, there is a solution for such rare cases. Edit one of the pet patients to a name with a slight variation e.g. "Happy dog" to include species in the name for differentiation, or "Happy 1" to indicate the older pet patient for differentiation.
 
+=======
+// end::FAQ[]
 {empty} +
 
 // tag::commandsummaryUG[]

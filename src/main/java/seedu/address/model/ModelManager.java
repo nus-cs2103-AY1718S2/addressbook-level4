@@ -194,11 +194,12 @@ public class ModelManager extends ComponentManager implements Model {
         filteredTasks.setPredicate(predicate);
     }
 
+    //@@author Alaru
     //=========== Item List Accessors ======================================================================
     public List<String> getItemList() {
         return Collections.unmodifiableList(filteredDeleteItems);
     }
-
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object

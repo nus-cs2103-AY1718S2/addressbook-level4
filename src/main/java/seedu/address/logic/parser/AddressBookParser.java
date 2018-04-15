@@ -16,6 +16,7 @@ import seedu.address.logic.commands.AppointmentCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.commands.DeleteCcaCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteInjuriesHistoryCommand;
@@ -34,6 +35,7 @@ import seedu.address.logic.commands.StreamCommand;
 import seedu.address.logic.commands.TagDeleteCommand;
 import seedu.address.logic.commands.TagReplaceCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -117,6 +119,10 @@ public class AddressBookParser {
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentCommandParser().parse(arguments);
 
+        case DeleteAppointmentCommand.COMMAND_WORD:
+        case DeleteAppointmentCommand.COMMAND_ALIAS:
+            return new DeleteAppointmentCommandParser().parse(arguments);
+
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
@@ -153,8 +159,9 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-
-
+            
+        case ViewCommand.COMMAND_WORD:
+            return new ViewCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

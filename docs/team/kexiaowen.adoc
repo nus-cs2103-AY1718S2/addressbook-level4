@@ -8,7 +8,7 @@
 
 == Overview
 
-HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately kLOC.
+HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately 33 kLOC.
 
 
 == Summary of contributions

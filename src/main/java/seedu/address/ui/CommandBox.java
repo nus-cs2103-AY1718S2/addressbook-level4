@@ -120,6 +120,7 @@ public class CommandBox extends UiPart<Region> {
         commandInput.positionCaret(commandInput.getText().length());
     }
 
+    //@@author Ang-YC
     private void setupInputChange() {
         commandInput.textProperty().addListener((obs, old, inputText) -> {
             String result = "Enter a command...";
@@ -170,6 +171,8 @@ public class CommandBox extends UiPart<Region> {
             }
         });
     }
+    //@@author
+
     /**
      * Handles the Enter button pressed event.
      */

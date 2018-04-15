@@ -27,11 +27,9 @@ public class ShowCommand extends Command {
     public static final String PANEL_INFO = "info";
     public static final String PANEL_RESUME = "resume";
 
-    private static final String MESSAGE_NOT_SELECTED = "A person must be selected before showing a panel.";
-    private static final String MESSAGE_RESUME_NA = "The selected person doesn't have a resume";
-    private static final String MESSAGE_INVALID_PANEL =
-            "Invalid panel requested. Only 'info' and 'resume' are allowed.";
-    private static final String MESSAGE_SHOW_SUCCESS = "Showing the requested panel";
+    public static final String MESSAGE_NOT_SELECTED = "A person must be selected before showing a panel.";
+    public static final String MESSAGE_RESUME_NA = "The selected person doesn't have a resume";
+    public static final String MESSAGE_SHOW_SUCCESS = "Showing the requested panel";
 
     /**
      * Enumeration of acceptable panel
@@ -66,7 +64,7 @@ public class ShowCommand extends Command {
                 }
                 break;
             default:
-                throw new CommandException(MESSAGE_INVALID_PANEL);
+                break;
             }
 
             return new CommandResult(MESSAGE_SHOW_SUCCESS);

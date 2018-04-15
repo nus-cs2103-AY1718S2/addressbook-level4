@@ -98,4 +98,8 @@ public class MainWindowHandle extends StageHandle {
     public Rectangle2D getSceenBound() {
         return Screen.getPrimary().getVisualBounds();
     }
+
+    public boolean isMinimized() {
+        return stage.isIconified();
+    }
 }

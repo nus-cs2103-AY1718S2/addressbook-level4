@@ -255,7 +255,7 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
                 + UNIVERSITY_DESC_AMY + EXPECTED_GRADUATION_YEAR_DESC_AMY + MAJOR_DESC_AMY
                 + GRADE_POINT_AVERAGE_DESC_AMY + JOB_APPLIED_DESC_AMY + RESUME_DESC_AMY
                 + PROFILE_IMAGE_DESC_AMY + COMMENT_DESC_BOB + TAG_DESC_FRIEND;
-        assertCommandSuccess(command, toAdd);
+        assertCommandFailure(command, MESSAGE_DUPLICATE_PERSON);
 
         /* Case: add to empty address book -> added */
         deleteAllPersons();

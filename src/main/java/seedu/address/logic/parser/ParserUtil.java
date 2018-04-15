@@ -349,15 +349,15 @@ public class ParserUtil {
         if (trimmedScore.equals("")) {
             throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
         }
+        double scoreValue;
         try {
-            if (!Rating.isValidScore(Double.parseDouble(trimmedScore))) {
+            scoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedScore);
+            if (!Rating.isValidScore(scoreValue)) {
                 throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
             }
         } catch (NumberFormatException nfe) {
             throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
         }
-
-        double scoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedScore);
         return scoreValue;
     }
 

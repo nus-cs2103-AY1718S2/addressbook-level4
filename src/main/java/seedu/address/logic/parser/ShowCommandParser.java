@@ -10,7 +10,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 /**
  * Parses input arguments and creates a new ShowCommand object
  */
-public class ShowCommandParser {
+public class ShowCommandParser implements Parser<ShowCommand> {
 
     /**
      * Parses the given {@code String} of arguments in the context of the ShowCommand

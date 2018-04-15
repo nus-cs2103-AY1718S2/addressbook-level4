@@ -180,8 +180,6 @@ public class CalendarPanelHandle extends NodeHandle<StackPane> {
 
 import java.time.LocalDate;
 
-import com.calendarfx.model.Calendar;
-
 import javafx.scene.layout.StackPane;
 
 /**
@@ -202,9 +200,29 @@ public class CenterPanelHandle extends NodeHandle<StackPane> {
      * Sets Up {@code CalendarPanelHandle}.
      * This method is only invoked only after {@code CenterPanel} adds {@code CalendarPanel} to its root node.
      */
-    public void setUpCalendarPanelHandle(Calendar calendar) {
+    public void setUpCalendarPanelHandle() {
         calendarPanelHandle = new CalendarPanelHandle(getChildNode(CalendarPanelHandle.CALENDAR_PANEL_ID));
     }
+
+    public CalendarPanelHandle getCalendarPanelHandle() {
+        setUpCalendarPanelHandle();
+        return calendarPanelHandle;
+    }
+
+    /**
+     * Sets Up {@code PersonPanelHandle}.
+     * This method is only invoked only after {@code CenterPanel} adds {@code PersonPanel} to its root node.
+     */
+    public void setUpPersonPanelHandle() {
+        personPanelHandle = new PersonPanelHandle(getChildNode(PersonPanelHandle.PERSON_PANEL_ID));
+    }
+
+    public PersonPanelHandle getPersonPanelHandle() {
+        setUpPersonPanelHandle();
+        return personPanelHandle;
+    }
+
+    // CalendarPanelHandle-related operations
 
     /**
      * Returns the current view of the calendar.
@@ -226,6 +244,9 @@ public class CenterPanelHandle extends NodeHandle<StackPane> {
     public LocalDate getCalendarTodayDate() {
         return calendarPanelHandle.getTodayDate();
     }
+
+    // PersonPanelHandle-related operations
+
 }
 ```
 ###### /java/seedu/address/commons/util/DateUtilTest.java
@@ -298,10 +319,10 @@ public class DateUtilTest {
 ``` java
 
 import static junit.framework.TestCase.fail;
-import static VALID_END_DATE_MEET_SUPPLIER;
-import static VALID_END_TIME_SUPPLIER;
-import static VALID_START_DATE_MEET_SUPPLIER;
-import static VALID_START_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
 
 import org.junit.Rule;
 import org.junit.Test;
@@ -320,10 +341,10 @@ public class EntryTimeConstraintsUtilTest {
 
     @Test
     public void checkCalendarEntryTimeConstraints_validInputs_success() throws IllegalValueException {
-        StartDate startDate = new StartDate(VALID_START_DATE_MEET_BOSS);
-        EndDate endDate = new EndDate(VALID_END_DATE_MEET_BOSS);
-        StartTime startTime = new StartTime(VALID_START_TIME_MEET_BOSS);
-        EndTime endTime = new EndTime(VALID_END_TIME_MEET_BOSS);
+        StartDate startDate = new StartDate(VALID_START_DATE_MEET_SUPPLIER);
+        EndDate endDate = new EndDate(VALID_END_DATE_MEET_SUPPLIER);
+        StartTime startTime = new StartTime(VALID_START_TIME_MEET_SUPPLIER);
+        EndTime endTime = new EndTime(VALID_END_TIME_MEET_SUPPLIER);
 
         try {
             EntryTimeConstraintsUtil.checkCalendarEntryTimeConstraints(startDate, endDate, startTime, endTime);
@@ -336,9 +357,9 @@ public class EntryTimeConstraintsUtilTest {
     public void checkCalendarEntryTimeConstraints_startDateLaterThanEndDate_throwsIllegalValueException()
             throws IllegalValueException {
         StartDate invalidStartDate = new StartDate("06-06-2100"); //Start Date is after End Date
-        EndDate endDate = new EndDate(VALID_END_DATE_MEET_BOSS);
-        StartTime startTime = new StartTime(VALID_START_TIME_MEET_BOSS);
-        EndTime endTime = new EndTime(VALID_END_TIME_MEET_BOSS);
+        EndDate endDate = new EndDate(VALID_END_DATE_MEET_SUPPLIER);
+        StartTime startTime = new StartTime(VALID_START_TIME_MEET_SUPPLIER);
+        EndTime endTime = new EndTime(VALID_END_TIME_MEET_SUPPLIER);
 
         String expectedMessage = EntryTimeConstraintsUtil.START_AND_END_DATE_CONSTRAINTS;
         thrown.expect(IllegalValueException.class);
@@ -350,10 +371,10 @@ public class EntryTimeConstraintsUtilTest {
     public void checkCalendarEntryTimeConstraints_startTimeLaterThanEndTime_throwsIllegalValueException()
             throws IllegalValueException {
 
-        StartDate startDate = new StartDate(VALID_START_DATE_MEET_BOSS);
-        EndDate endDate = new EndDate(VALID_END_DATE_MEET_BOSS);
+        StartDate startDate = new StartDate(VALID_START_DATE_MEET_SUPPLIER);
+        EndDate endDate = new EndDate(VALID_END_DATE_MEET_SUPPLIER);
         StartTime invalidStartTime = new StartTime("23:59");
-        EndTime endTime = new EndTime(VALID_END_TIME_MEET_BOSS);
+        EndTime endTime = new EndTime(VALID_END_TIME_MEET_SUPPLIER);
 
         String expectedMessage = EntryTimeConstraintsUtil.START_AND_END_TIME_CONSTRAINTS;
         thrown.expect(IllegalValueException.class);
@@ -650,7 +671,7 @@ public class AddEntryCommandTest {
         }
 
         @Override
-        public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
+        public void updateFilteredCalendarEntryList(Predicate<CalendarEntry> predicate) {
             fail("This method should not be called.");
         }
 
@@ -1212,10 +1233,10 @@ public class DeletePreferenceCommandTest {
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static DESC_GET_BOOKS;
-import static DESC_MEET_SUPPLIER;
-import static VALID_ENTRY_TITLE_GET_BOOKS;
-import static VALID_START_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_BOOKS;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
@@ -1269,12 +1290,12 @@ public class EditEntryCommandTest {
         CalendarEntry lastEntry = model.getFilteredCalendarEntryList().get(indexLastEntry.getZeroBased());
 
         CalendarEntryBuilder entryInList = new CalendarEntryBuilder(lastEntry);
-        CalendarEntry editedEntry = entryInList.withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS)
-                .withStartTime(VALID_START_TIME_GET_STOCKS).build();
+        CalendarEntry editedEntry = entryInList.withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withStartTime(VALID_START_TIME_GET_BOOKS).build();
 
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS)
-                .withStartTime(VALID_START_TIME_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withStartTime(VALID_START_TIME_GET_BOOKS).build();
         EditEntryCommand editEntryCommand = prepareCommand(indexLastEntry, descriptor);
 
         String expectedMessage = String.format(EditEntryCommand.MESSAGE_EDIT_ENTRY_SUCCESS, editedEntry);
@@ -1313,7 +1334,7 @@ public class EditEntryCommandTest {
     public void execute_invalidCalendarEntryIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEntryList().size() + 1);
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).build();
         EditEntryCommand editEntryCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         assertCommandFailure(editEntryCommand, model, Messages.MESSAGE_INVALID_ENTRY_DISPLAYED_INDEX);
@@ -1350,7 +1371,7 @@ public class EditEntryCommandTest {
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCalendarEntryList().size() + 1);
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).build();
         EditEntryCommand editEntryCommand = prepareCommand(outOfBoundIndex, descriptor);
 
         // execution failed -> editEntryCommand not pushed into undoRedoStack
@@ -1364,10 +1385,10 @@ public class EditEntryCommandTest {
 
     @Test
     public void equals() throws Exception {
-        final EditEntryCommand firstCommand = prepareCommand(INDEX_FIRST_ENTRY, DESC_MEET_BOSS);
+        final EditEntryCommand firstCommand = prepareCommand(INDEX_FIRST_ENTRY, DESC_MEET_SUPPLIER);
 
         // same values -> returns true
-        EditEntryDescriptor copyDescriptor = new EditEntryDescriptor(DESC_MEET_BOSS);
+        EditEntryDescriptor copyDescriptor = new EditEntryDescriptor(DESC_MEET_SUPPLIER);
         EditEntryCommand firstCommandCopy = prepareCommand(INDEX_FIRST_ENTRY, copyDescriptor);
         assertTrue(firstCommand.equals(firstCommandCopy));
 
@@ -1385,10 +1406,10 @@ public class EditEntryCommandTest {
         assertFalse(firstCommand.equals(1));
 
         // different index -> returns false
-        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_SECOND_ENTRY, DESC_MEET_BOSS)));
+        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_SECOND_ENTRY, DESC_MEET_SUPPLIER)));
 
         // different descriptor -> returns false
-        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_FIRST_ENTRY, DESC_GET_STOCKS)));
+        assertFalse(firstCommand.equals(new EditEntryCommand(INDEX_FIRST_ENTRY, DESC_GET_BOOKS)));
     }
 
     /**
@@ -1405,13 +1426,13 @@ public class EditEntryCommandTest {
 ``` java
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static DESC_GET_BOOKS;
-import static DESC_MEET_SUPPLIER;
-import static VALID_END_DATE_MEET_SUPPLIER;
-import static VALID_END_TIME_SUPPLIER;
-import static VALID_ENTRY_TITLE_MEET_SUPPLIER;
-import static VALID_START_DATE_MEET_SUPPLIER;
-import static VALID_START_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
 
 import org.junit.Test;
 
@@ -1423,41 +1444,44 @@ public class EditEntryDescriptorTest {
     public void equals() {
 
         // same values -> returns true
-        EditEntryDescriptor descriptorWithSameValues = new EditEntryDescriptor(DESC_GET_STOCKS);
-        assertTrue(DESC_GET_STOCKS.equals(descriptorWithSameValues));
+        EditEntryDescriptor descriptorWithSameValues = new EditEntryDescriptor(DESC_GET_BOOKS);
+        assertTrue(DESC_GET_BOOKS.equals(descriptorWithSameValues));
 
         // same object -> returns true
-        assertTrue(DESC_GET_STOCKS.equals(DESC_GET_STOCKS));
+        assertTrue(DESC_GET_BOOKS.equals(DESC_GET_BOOKS));
 
         // null -> returns false
-        assertFalse(DESC_GET_STOCKS.equals(null));
+        assertFalse(DESC_GET_BOOKS.equals(null));
 
         // different types -> returns false
-        assertFalse(DESC_GET_STOCKS.equals(5));
+        assertFalse(DESC_GET_BOOKS.equals(5));
 
         // different values -> returns false
-        assertFalse(DESC_GET_STOCKS.equals(DESC_MEET_BOSS));
+        assertFalse(DESC_GET_BOOKS.equals(DESC_MEET_SUPPLIER));
 
         // different entry title -> returns false
-        EditEntryDescriptor editedBoss = new EditEntryDescriptorBuilder(DESC_GET_STOCKS)
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS).build();
-        assertFalse(DESC_GET_STOCKS.equals(editedBoss));
+        EditEntryDescriptor editedBoss = new EditEntryDescriptorBuilder(DESC_GET_BOOKS)
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER).build();
+        assertFalse(DESC_GET_BOOKS.equals(editedBoss));
 
         // different start date -> returns false
-        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_STOCKS).withStartDate(VALID_START_DATE_MEET_BOSS).build();
-        assertFalse(DESC_GET_STOCKS.equals(editedBoss));
+        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_BOOKS).withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+                .build();
+        assertFalse(DESC_GET_BOOKS.equals(editedBoss));
 
         // different end date -> returns false
-        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_STOCKS).withEndDate(VALID_END_DATE_MEET_BOSS).build();
-        assertFalse(DESC_GET_STOCKS.equals(editedBoss));
+        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_BOOKS).withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+                .build();
+        assertFalse(DESC_GET_BOOKS.equals(editedBoss));
 
         // different start time -> returns false
-        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_STOCKS).withStartTime(VALID_START_TIME_MEET_BOSS).build();
-        assertFalse(DESC_GET_STOCKS.equals(editedBoss));
+        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_BOOKS).withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+                .build();
+        assertFalse(DESC_GET_BOOKS.equals(editedBoss));
 
         // different end time -> returns false
-        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_STOCKS).withEndTime(VALID_END_TIME_MEET_BOSS).build();
-        assertFalse(DESC_GET_STOCKS.equals(editedBoss));
+        editedBoss = new EditEntryDescriptorBuilder(DESC_GET_BOOKS).withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
+        assertFalse(DESC_GET_BOOKS.equals(editedBoss));
     }
 }
 ```
@@ -2125,12 +2149,12 @@ public class ViewTodayCommandTest {
 ###### /java/seedu/address/logic/parser/AddEntryCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_MEET_SUPPLIER;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ENTRY_TITLE_DESC;
@@ -2140,15 +2164,15 @@ import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_DE
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_LATER_THAN_END_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_LESS_THAN_FIFTEEN_MINUTES_FROM_END_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
-import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_GET_STOCKS;
-import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_BOSS;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_BOSS;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
 import static seedu.address.logic.parser.AddEntryCommandParser.STANDARD_START_TIME;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
@@ -2175,46 +2199,47 @@ public class AddEntryCommandParserTest {
     @Test
     public void parse_allFieldsPresent_success() {
         CalendarEntry expectedCalEvent = new CalendarEntryBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
-                .withStartDate(VALID_START_DATE_MEET_BOSS)
-                .withEndDate(VALID_END_DATE_MEET_BOSS)
-                .withStartTime(VALID_START_TIME_MEET_BOSS)
-                .withEndTime(VALID_END_TIME_MEET_BOSS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+                .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+                .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
 
         // whitespace only preamble
         assertParseSuccess(parser, PREAMBLE_WHITESPACE
-                        + START_DATE_DESC_MEET_BOSS + ENTRY_TITLE_DESC_MEET_BOSS
-                        + END_DATE_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+                        + START_DATE_DESC_MEET_SUPPLIER + ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + END_DATE_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
 
         // multiple entry title strings - last entry title string accepted
-        assertParseSuccess(parser, ENTRY_TITLE_DESC_GET_STOCKS + START_DATE_DESC_MEET_BOSS
-                        + ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, ENTRY_TITLE_DESC_GET_BOOKS + START_DATE_DESC_MEET_SUPPLIER
+                        + ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
+
                 new AddEntryCommand(expectedCalEvent));
 
         // multiple start date strings - last start date string accepted
-        assertParseSuccess(parser, START_DATE_DESC_GET_STOCKS + START_DATE_DESC_MEET_BOSS
-                        + ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, START_DATE_DESC_GET_BOOKS + START_DATE_DESC_MEET_SUPPLIER
+                        + ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
 
         // multiple end date strings - last end date string accepted
-        assertParseSuccess(parser, END_DATE_DESC_GET_STOCKS + START_DATE_DESC_MEET_BOSS
-                        + ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, END_DATE_DESC_GET_BOOKS + START_DATE_DESC_MEET_SUPPLIER
+                        + ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
 
         // multiple start time strings - last start time string accepted
-        assertParseSuccess(parser, START_TIME_DESC_GET_STOCKS + START_DATE_DESC_MEET_BOSS
-                        + ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, START_TIME_DESC_GET_BOOKS + START_DATE_DESC_MEET_SUPPLIER
+                        + ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
 
         // multiple end time strings - last end time string accepted
-        assertParseSuccess(parser, END_TIME_DESC_GET_STOCKS + START_DATE_DESC_MEET_BOSS
-                        + ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, END_TIME_DESC_GET_BOOKS + START_DATE_DESC_MEET_SUPPLIER
+                        + ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
     }
 
@@ -2223,41 +2248,41 @@ public class AddEntryCommandParserTest {
 
         // No start Date - Start Date should match End Date
         CalendarEntry expectedCalEvent = new CalendarEntryBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
-                .withStartDate(VALID_END_DATE_MEET_BOSS)
-                .withEndDate(VALID_END_DATE_MEET_BOSS)
-                .withStartTime(VALID_START_TIME_MEET_BOSS)
-                .withEndTime(VALID_END_TIME_MEET_BOSS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+                .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
 
 
-        assertParseSuccess(parser, ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
 
         // No Start Time - Start Time equals to 00:00
         expectedCalEvent = new CalendarEntryBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
-                .withStartDate(VALID_START_DATE_MEET_BOSS)
-                .withEndDate(VALID_END_DATE_MEET_BOSS)
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+                .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
                 .withStartTime(STANDARD_START_TIME)
-                .withEndTime(VALID_END_TIME_MEET_BOSS).build();
+                .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
 
 
-        assertParseSuccess(parser, ENTRY_TITLE_DESC_MEET_BOSS + START_DATE_DESC_MEET_BOSS
-                        + END_DATE_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, ENTRY_TITLE_DESC_MEET_SUPPLIER + START_DATE_DESC_MEET_SUPPLIER
+                        + END_DATE_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
 
         // No Start Date and No Start Time
         expectedCalEvent = new CalendarEntryBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
-                .withStartDate(VALID_END_DATE_MEET_BOSS)
-                .withEndDate(VALID_END_DATE_MEET_BOSS)
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
                 .withStartTime(STANDARD_START_TIME)
-                .withEndTime(VALID_END_TIME_MEET_BOSS).build();
+                .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
 
 
-        assertParseSuccess(parser, ENTRY_TITLE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + END_TIME_DESC_MEET_BOSS,
+        assertParseSuccess(parser, ENTRY_TITLE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + END_TIME_DESC_MEET_SUPPLIER,
                 new AddEntryCommand(expectedCalEvent));
     }
 
@@ -2265,26 +2290,26 @@ public class AddEntryCommandParserTest {
     public void parse_compulsoryFieldMissing_failure() {
 
         // Missing Event Title prefix
-        assertParseFailure(parser,  VALID_ENTRY_TITLE_MEET_BOSS
-                        + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + END_TIME_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser,  VALID_ENTRY_TITLE_MEET_SUPPLIER
+                        + START_DATE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + END_TIME_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER,
                 MESSAGE_INVALID_FORMAT);
 
         // Missing End Date prefix
-        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_BOSS
-                        + START_DATE_DESC_MEET_BOSS + VALID_END_DATE_MEET_BOSS
-                        + END_TIME_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + START_DATE_DESC_MEET_SUPPLIER + VALID_END_DATE_MEET_SUPPLIER
+                        + END_TIME_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER,
                 MESSAGE_INVALID_FORMAT);
 
         // Missing End Time prefix
-        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_BOSS
-                        + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + VALID_END_TIME_MEET_BOSS + START_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + START_DATE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + VALID_END_TIME_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER,
                 MESSAGE_INVALID_FORMAT);
         // All prefixes missing
-        assertParseFailure(parser,  VALID_ENTRY_TITLE_MEET_BOSS
-                        + VALID_START_DATE_MEET_BOSS + VALID_END_DATE_MEET_BOSS
-                        + VALID_END_TIME_MEET_BOSS + VALID_START_TIME_MEET_BOSS,
+        assertParseFailure(parser,  VALID_ENTRY_TITLE_MEET_SUPPLIER
+                        + VALID_START_DATE_MEET_SUPPLIER + VALID_END_DATE_MEET_SUPPLIER
+                        + VALID_END_TIME_MEET_SUPPLIER + VALID_START_TIME_MEET_SUPPLIER,
                 MESSAGE_INVALID_FORMAT);
 
     }
@@ -2294,49 +2319,49 @@ public class AddEntryCommandParserTest {
 
         // Invalid Event Title
         assertParseFailure(parser,  INVALID_ENTRY_TITLE_DESC
-                        + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + END_TIME_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS,
+                        + START_DATE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + END_TIME_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER,
                 EntryTitle.MESSAGE_ENTRY_TITLE_CONSTRAINTS);
 
         // Invalid Start Date
-        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_BOSS
-                        + INVALID_START_DATE_DESC + END_DATE_DESC_MEET_BOSS
-                        + END_TIME_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + INVALID_START_DATE_DESC + END_DATE_DESC_MEET_SUPPLIER
+                        + END_TIME_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER,
                 StartDate.MESSAGE_START_DATE_CONSTRAINTS);
 
         // Invalid End Date
-        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_BOSS
-                        + START_DATE_DESC_MEET_BOSS + INVALID_END_DATE_DESC
-                        + END_TIME_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + START_DATE_DESC_MEET_SUPPLIER + INVALID_END_DATE_DESC
+                        + END_TIME_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER,
                 EndDate.MESSAGE_END_DATE_CONSTRAINTS);
 
         // Invalid Start Time
-        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_BOSS
-                        + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + END_TIME_DESC_MEET_BOSS + INVALID_START_TIME_DESC,
+        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + START_DATE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + END_TIME_DESC_MEET_SUPPLIER + INVALID_START_TIME_DESC,
                 StartTime.MESSAGE_START_TIME_CONSTRAINTS);
 
         // Invalid End Time
-        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_BOSS
-                        + START_DATE_DESC_MEET_BOSS + END_DATE_DESC_MEET_BOSS
-                        + INVALID_END_TIME_DESC + START_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser,  ENTRY_TITLE_DESC_MEET_SUPPLIER
+                        + START_DATE_DESC_MEET_SUPPLIER + END_DATE_DESC_MEET_SUPPLIER
+                        + INVALID_END_TIME_DESC + START_TIME_DESC_MEET_SUPPLIER,
                 EndTime.MESSAGE_END_TIME_CONSTRAINTS);
 
         // Start Date later than End Date
-        assertParseFailure(parser, ENTRY_TITLE_DESC_MEET_BOSS + INVALID_START_DATE_LATER_THAN_END_DATE_DESC
-                        + END_DATE_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser, ENTRY_TITLE_DESC_MEET_SUPPLIER + INVALID_START_DATE_LATER_THAN_END_DATE_DESC
+                        + END_DATE_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER,
                 EntryTimeConstraintsUtil.START_AND_END_DATE_CONSTRAINTS);
 
         // Start Time later than End Time for same Start Date and End Date
-        assertParseFailure(parser, ENTRY_TITLE_DESC_MEET_BOSS + START_DATE_DESC_MEET_BOSS
-                        + END_DATE_DESC_MEET_BOSS + INVALID_START_TIME_LATER_THAN_END_TIME_DESC
-                        + END_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser, ENTRY_TITLE_DESC_MEET_SUPPLIER + START_DATE_DESC_MEET_SUPPLIER
+                        + END_DATE_DESC_MEET_SUPPLIER + INVALID_START_TIME_LATER_THAN_END_TIME_DESC
+                        + END_TIME_DESC_MEET_SUPPLIER,
                 EntryTimeConstraintsUtil.START_AND_END_TIME_CONSTRAINTS);
 
         // Start Time less than 15 minutes from End Time for same Start Date and End Date
-        assertParseFailure(parser, ENTRY_TITLE_DESC_MEET_BOSS + START_DATE_DESC_MEET_BOSS
-                        + END_DATE_DESC_MEET_BOSS + INVALID_START_TIME_LESS_THAN_FIFTEEN_MINUTES_FROM_END_TIME_DESC
-                        + END_TIME_DESC_MEET_BOSS,
+        assertParseFailure(parser, ENTRY_TITLE_DESC_MEET_SUPPLIER + START_DATE_DESC_MEET_SUPPLIER
+                        + END_DATE_DESC_MEET_SUPPLIER + INVALID_START_TIME_LESS_THAN_FIFTEEN_MINUTES_FROM_END_TIME_DESC
+                        + END_TIME_DESC_MEET_SUPPLIER,
                 EntryTimeConstraintsUtil.ENTRY_DURATION_CONSTRAINTS);
     }
 }
@@ -2384,31 +2409,31 @@ public class CalendarJumpCommandParserTest {
 ###### /java/seedu/address/logic/parser/EditEntryCommandParserTest.java
 ``` java
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static END_DATE_DESC_GET_BOOKS;
-import static END_DATE_DESC_MEET_SUPPLIER;
-import static END_TIME_DESC_GET_BOOKS;
-import static END_TIME_DESC_MEET_SUPPLIER;
-import static ENTRY_TITLE_DESC_GET_BOOKS;
-import static ENTRY_TITLE_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.END_DATE_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.END_TIME_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.ENTRY_TITLE_DESC_MEET_SUPPLIER;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_END_TIME_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_ENTRY_TITLE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_DATE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.INVALID_START_TIME_DESC;
-import static START_DATE_DESC_GET_BOOKS;
-import static START_DATE_DESC_MEET_SUPPLIER;
-import static START_TIME_DESC_GET_BOOKS;
-import static START_TIME_DESC_MEET_SUPPLIER;
-import static VALID_END_DATE_GET_BOOKS;
-import static VALID_END_DATE_MEET_SUPPLIER;
-import static VALID_END_TIME_GET_BOOKS;
-import static VALID_END_TIME_SUPPLIER;
-import static VALID_ENTRY_TITLE_GET_BOOKS;
-import static VALID_ENTRY_TITLE_MEET_SUPPLIER;
-import static VALID_START_DATE_GET_BOOKS;
-import static VALID_START_DATE_MEET_SUPPLIER;
-import static VALID_START_TIME_GET_BOOKS;
-import static VALID_START_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.START_DATE_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.START_TIME_DESC_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ENTRY;
@@ -2437,7 +2462,7 @@ public class EditEntryCommandParserTest {
     @Test
     public void parse_missingParts_failure() {
         // no index specified
-        assertParseFailure(parser, VALID_ENTRY_TITLE_MEET_BOSS, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, VALID_ENTRY_TITLE_MEET_SUPPLIER, MESSAGE_INVALID_FORMAT);
 
         // no field specified
         assertParseFailure(parser, "1", EditEntryCommand.MESSAGE_NOT_EDITED);
@@ -2449,10 +2474,10 @@ public class EditEntryCommandParserTest {
     @Test
     public void parse_invalidPreamble_failure() {
         // negative index
-        assertParseFailure(parser, "-5" + ENTRY_TITLE_DESC_MEET_BOSS, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "-5" + ENTRY_TITLE_DESC_MEET_SUPPLIER, MESSAGE_INVALID_FORMAT);
 
         // zero index
-        assertParseFailure(parser, "0" + ENTRY_TITLE_DESC_MEET_BOSS, MESSAGE_INVALID_FORMAT);
+        assertParseFailure(parser, "0" + ENTRY_TITLE_DESC_MEET_SUPPLIER, MESSAGE_INVALID_FORMAT);
 
         // invalid arguments being parsed as preamble
         assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
@@ -2479,30 +2504,30 @@ public class EditEntryCommandParserTest {
                 EndTime.MESSAGE_END_TIME_CONSTRAINTS); // invalid end time
 
         // invalid entry title followed by valid start date
-        assertParseFailure(parser, "1" + INVALID_ENTRY_TITLE_DESC + START_DATE_DESC_MEET_BOSS,
+        assertParseFailure(parser, "1" + INVALID_ENTRY_TITLE_DESC + START_DATE_DESC_MEET_SUPPLIER,
                 EntryTitle.MESSAGE_ENTRY_TITLE_CONSTRAINTS);
 
         // valid start date followed by invalid start date
-        assertParseFailure(parser, "1" + START_DATE_DESC_MEET_BOSS + INVALID_START_DATE_DESC,
+        assertParseFailure(parser, "1" + START_DATE_DESC_MEET_SUPPLIER + INVALID_START_DATE_DESC,
                 StartDate.MESSAGE_START_DATE_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
         assertParseFailure(parser, "1" + INVALID_END_DATE_DESC + INVALID_END_TIME_DESC
-                + VALID_ENTRY_TITLE_MEET_BOSS, EndDate.MESSAGE_END_DATE_CONSTRAINTS);
+                + VALID_ENTRY_TITLE_MEET_SUPPLIER, EndDate.MESSAGE_END_DATE_CONSTRAINTS);
     }
 
     @Test
     public void parse_allFieldsSpecified_success() {
         Index targetIndex = INDEX_SECOND_ENTRY;
-        String userInput = targetIndex.getOneBased() + ENTRY_TITLE_DESC_MEET_BOSS + START_DATE_DESC_MEET_BOSS
-                + END_DATE_DESC_MEET_BOSS + START_TIME_DESC_MEET_BOSS + END_TIME_DESC_MEET_BOSS;
+        String userInput = targetIndex.getOneBased() + ENTRY_TITLE_DESC_MEET_SUPPLIER + START_DATE_DESC_MEET_SUPPLIER
+                + END_DATE_DESC_MEET_SUPPLIER + START_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_MEET_SUPPLIER;
 
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS)
-                .withStartDate(VALID_START_DATE_MEET_BOSS)
-                .withEndDate(VALID_END_DATE_MEET_BOSS)
-                .withStartTime(VALID_START_TIME_MEET_BOSS)
-                .withEndTime(VALID_END_TIME_MEET_BOSS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+                .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+                .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
         EditEntryCommand expectedCommand = new EditEntryCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -2511,11 +2536,11 @@ public class EditEntryCommandParserTest {
     @Test
     public void parse_someFieldsSpecified_success() {
         Index targetIndex = INDEX_FIRST_ENTRY;
-        String userInput = targetIndex.getOneBased() + ENTRY_TITLE_DESC_GET_STOCKS + END_DATE_DESC_GET_STOCKS;
+        String userInput = targetIndex.getOneBased() + ENTRY_TITLE_DESC_GET_BOOKS + END_DATE_DESC_GET_BOOKS;
 
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS)
-                .withEndDate(VALID_END_DATE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withEndDate(VALID_END_DATE_GET_BOOKS).build();
         EditEntryCommand expectedCommand = new EditEntryCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -2526,37 +2551,37 @@ public class EditEntryCommandParserTest {
         Index targetIndex = INDEX_THIRD_ENTRY;
 
         // entry title
-        String userInput = targetIndex.getOneBased() + ENTRY_TITLE_DESC_GET_STOCKS;
+        String userInput = targetIndex.getOneBased() + ENTRY_TITLE_DESC_GET_BOOKS;
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).build();
         EditEntryCommand expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // start date
-        userInput = targetIndex.getOneBased() + START_DATE_DESC_GET_STOCKS;
+        userInput = targetIndex.getOneBased() + START_DATE_DESC_GET_BOOKS;
         descriptor = new EditEntryDescriptorBuilder()
-                .withStartDate(VALID_START_DATE_GET_STOCKS).build();
+                .withStartDate(VALID_START_DATE_GET_BOOKS).build();
         expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // end date
-        userInput = targetIndex.getOneBased() + END_DATE_DESC_GET_STOCKS;
+        userInput = targetIndex.getOneBased() + END_DATE_DESC_GET_BOOKS;
         descriptor = new EditEntryDescriptorBuilder()
-                .withEndDate(VALID_END_DATE_GET_STOCKS).build();
+                .withEndDate(VALID_END_DATE_GET_BOOKS).build();
         expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // start time
-        userInput = targetIndex.getOneBased() + START_TIME_DESC_GET_STOCKS;
+        userInput = targetIndex.getOneBased() + START_TIME_DESC_GET_BOOKS;
         descriptor = new EditEntryDescriptorBuilder()
-                .withStartTime(VALID_START_TIME_GET_STOCKS).build();
+                .withStartTime(VALID_START_TIME_GET_BOOKS).build();
         expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // end time
-        userInput = targetIndex.getOneBased() + END_TIME_DESC_GET_STOCKS;
+        userInput = targetIndex.getOneBased() + END_TIME_DESC_GET_BOOKS;
         descriptor = new EditEntryDescriptorBuilder()
-                .withEndTime(VALID_END_TIME_GET_STOCKS).build();
+                .withEndTime(VALID_END_TIME_GET_BOOKS).build();
         expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
     }
@@ -2565,16 +2590,16 @@ public class EditEntryCommandParserTest {
     public void parse_multipleRepeatedFields_acceptsLast() {
         Index targetIndex = INDEX_SECOND_ENTRY;
         String userInput = targetIndex.getOneBased()
-                + ENTRY_TITLE_DESC_MEET_BOSS + ENTRY_TITLE_DESC_GET_STOCKS
-                + START_DATE_DESC_GET_STOCKS + START_DATE_DESC_MEET_BOSS
-                + END_DATE_DESC_MEET_BOSS + END_DATE_DESC_GET_STOCKS
-                + START_TIME_DESC_GET_STOCKS + START_TIME_DESC_MEET_BOSS
-                + END_TIME_DESC_MEET_BOSS + END_TIME_DESC_GET_STOCKS;
+                + ENTRY_TITLE_DESC_MEET_SUPPLIER + ENTRY_TITLE_DESC_GET_BOOKS
+                + START_DATE_DESC_GET_BOOKS + START_DATE_DESC_MEET_SUPPLIER
+                + END_DATE_DESC_MEET_SUPPLIER + END_DATE_DESC_GET_BOOKS
+                + START_TIME_DESC_GET_BOOKS + START_TIME_DESC_MEET_SUPPLIER
+                + END_TIME_DESC_MEET_SUPPLIER + END_TIME_DESC_GET_BOOKS;
 
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).withStartDate(VALID_START_DATE_MEET_BOSS)
-                .withEndDate(VALID_END_DATE_GET_STOCKS).withStartTime(VALID_START_TIME_MEET_BOSS)
-                .withEndTime(VALID_END_TIME_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+                .withEndDate(VALID_END_DATE_GET_BOOKS).withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+                .withEndTime(VALID_END_TIME_GET_BOOKS).build();
 
         EditEntryCommand expectedCommand = new EditEntryCommand(targetIndex, descriptor);
 
@@ -2585,20 +2610,20 @@ public class EditEntryCommandParserTest {
     public void invalidValueFollowedByValidValue_success() {
         // no other valid values specified
         Index targetIndex = INDEX_FIRST_ENTRY;
-        String userInput = targetIndex.getOneBased() + INVALID_ENTRY_TITLE_DESC + ENTRY_TITLE_DESC_GET_STOCKS;
+        String userInput = targetIndex.getOneBased() + INVALID_ENTRY_TITLE_DESC + ENTRY_TITLE_DESC_GET_BOOKS;
         EditEntryDescriptor descriptor = new EditEntryDescriptorBuilder()
-                .withEntryTitle(VALID_ENTRY_TITLE_GET_STOCKS).build();
+                .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS).build();
 
         EditEntryCommand expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
 
         // other valid values specified
-        userInput = targetIndex.getOneBased() + END_TIME_DESC_MEET_BOSS + INVALID_START_DATE_DESC
-                + ENTRY_TITLE_DESC_MEET_BOSS + START_DATE_DESC_MEET_BOSS;
+        userInput = targetIndex.getOneBased() + END_TIME_DESC_MEET_SUPPLIER + INVALID_START_DATE_DESC
+                + ENTRY_TITLE_DESC_MEET_SUPPLIER + START_DATE_DESC_MEET_SUPPLIER;
 
         descriptor = new EditEntryDescriptorBuilder()
-                .withEndTime(VALID_END_TIME_MEET_BOSS).withStartDate(VALID_START_DATE_MEET_BOSS)
-                .withEntryTitle(VALID_ENTRY_TITLE_MEET_BOSS).build();
+                .withEndTime(VALID_END_TIME_MEET_SUPPLIER).withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+                .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER).build();
 
         expectedCommand = new EditEntryCommand(targetIndex, descriptor);
         assertParseSuccess(parser, userInput, expectedCommand);
@@ -3226,20 +3251,6 @@ public class UniqueCalendarEntryListTest {
     }
 
     @Test
-    public void asOrderInsensitiveList_compareListsWithSameItemsInDiffOrder_assertEqual()
-            throws DuplicateCalendarEntryException {
-
-        UniqueCalendarEntryList firstEntriesList =  new UniqueCalendarEntryList();
-        firstEntriesList.add(MEETING_BOSS);
-        firstEntriesList.add(GET_STOCKS);
-        UniqueCalendarEntryList secondEntries = new UniqueCalendarEntryList();
-        secondEntries.add(GET_STOCKS);
-        secondEntries.add(MEETING_BOSS);
-
-        assertTrue(firstEntriesList.equalsOrderInsensitive(secondEntries));
-    }
-
-    @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         UniqueCalendarEntryList calendarEntriesList = new UniqueCalendarEntryList();
         thrown.expect(UnsupportedOperationException.class);
@@ -3829,6 +3840,17 @@ public class TypicalBaseEvents {
 ``` java
 package seedu.address.testutil;
 
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_END_TIME_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ENTRY_TITLE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_DATE_MEET_SUPPLIER;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_GET_BOOKS;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_START_TIME_MEET_SUPPLIER;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -3869,6 +3891,21 @@ public class TypicalCalendarEntries {
             .withEndDate("29-05-2018")
             .withStartTime("10:00")
             .withEndTime("15:00").build();
+
+    // Manually added - Calendar Entry's details found in {@code CommandTestUtil}
+    public static final CalendarEntry MEET_SUPPLIER = new CalendarEntryBuilder()
+            .withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+            .withStartDate(VALID_START_DATE_MEET_SUPPLIER)
+            .withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+            .withStartTime(VALID_START_TIME_MEET_SUPPLIER)
+            .withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
+
+    public static final CalendarEntry GET_BOOKS = new CalendarEntryBuilder()
+            .withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+            .withStartDate(VALID_START_DATE_GET_BOOKS)
+            .withEndDate(VALID_END_DATE_GET_BOOKS)
+            .withStartTime(VALID_START_TIME_GET_BOOKS)
+            .withEndTime(VALID_END_TIME_GET_BOOKS).build();
 
     private TypicalCalendarEntries() {} // prevents instantiation
 
@@ -4090,12 +4127,11 @@ import guitests.guihandles.CenterPanelHandle;
  */
 public class CalendarPanelTest extends GuiUnitTest {
 
-    private static final Calendar calendar = new Calendar();
-
     private CenterPanelHandle centerPanelHandle;
 
     @Before
     public void setUp() {
+        Calendar calendar = new Calendar();
         calendar.setReadOnly(true);
         calendar.setStyle(Calendar.Style.STYLE1);
         CenterPanel centerPanel = new CenterPanel(calendar);
@@ -4108,7 +4144,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void handleChangeCalendarViewRequestEvent() {
-        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+        centerPanelHandle.setUpCalendarPanelHandle();
 
         postNow(CHANGE_TO_MONTH_EVENT);
         guiRobot.pauseForHuman();
@@ -4125,7 +4161,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void handleChangeCalendarPageRequestEvent() {
-        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+        centerPanelHandle.setUpCalendarPanelHandle();
 
         LocalDate originalDate = centerPanelHandle.getCalendarCurrentDate();
         postNow(CHANGE_TO_NEXT_PAGE_EVENT);
@@ -4150,7 +4186,7 @@ public class CalendarPanelTest extends GuiUnitTest {
 
     @Test
     public void handleChangeCalendarDateRequestEvent() {
-        centerPanelHandle.setUpCalendarPanelHandle(calendar);
+        centerPanelHandle.setUpCalendarPanelHandle();
 
         LocalDate previousDate = centerPanelHandle.getCalendarCurrentDate();
         postNow(CHANGE_DATE_EVENT);
@@ -4160,6 +4196,35 @@ public class CalendarPanelTest extends GuiUnitTest {
         assertEquals(LEAP_YEAR_DATE, centerPanelHandle.getCalendarCurrentDate());
     }
 }
+```
+###### /java/systemtests/AddressBookSystemTest.java
+``` java
+    /**
+     * Deletes all calendar entries in the calendar manager.
+     */
+    protected void deleteAllCalendarEntries() {
+        executeCommand(EntryListClearCommand.COMMAND_WORD);
+        assertEquals(0, getModel().getCalendarManager().getCalendarEntryList().size());
+    }
+```
+###### /java/systemtests/AddressBookSystemTest.java
+``` java
+    /**
+     * Asserts that {@code OrderListPanel} is displayed, and order list panel displays orders in model correctly.
+     */
+    protected void assertOrderListDisplaysExpected(Model expectedModel) {
+        assertNotNull(getOrderListPanel());
+        assertOrderListMatching(getOrderListPanel(), expectedModel.getFilteredOrderList());
+    }
+
+    /**
+     * Asserts that {@code CalendarEntryListPanel} is displayed, and calendar entry list panel
+     * displays calendar entries in model correctly.
+     */
+    protected void assertCalendarEntryListDisplaysExpected(Model expectedModel) {
+        assertNotNull(getCalendarEntryListPanel());
+        assertCalendarEntryListMatching(getCalendarEntryListPanel(), expectedModel.getFilteredCalendarEntryList());
+    }
 ```
 ###### /java/systemtests/DeleteGroupCommandSystemTest.java
 ``` java

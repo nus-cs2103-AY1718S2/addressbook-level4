@@ -455,7 +455,7 @@ public class EditOrderCommand extends UndoableCommand {
             + "[" + PREFIX_ORDER_INFORMATION + "ORDER INFORMATION] "
             + "[" + PREFIX_PRICE + "PRICE] "
             + "[" + PREFIX_QUANTITY + "QUANTITY] "
-            + "[" + PREFIX_DELIVERY_DATE + "DELIVERY DATE] ";
+            + "[" + PREFIX_DELIVERY_DATE + "DELIVERY DATE]";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the order identified "
             + "by the index number used in the last order listing. "
@@ -1239,9 +1239,10 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
      * Parses a {@code String filename} into an {@code filename}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code filename} is invalid.
+     * @throws IllegalFilenameException if the given {@code filename} is invalid.
+     * @throws FileExistsException if the given {@code filename} already exists.
      */
-    public static String parseFilename(String filename) throws IllegalValueException {
+    public static String parseFilename(String filename) throws IllegalFilenameException, FileExistsException  {
         //requireNonNull(filename);
         filename = filename.trim();
         String filenameVerified = "";
@@ -1256,8 +1257,12 @@ public class EditOrderCommandParser implements Parser<EditOrderCommand> {
             }
         }
 
+        File outputFile = new File(filenameVerified + ".csv");
+
         if (filenameLength < 1 || filenameLength > 30 || !(filename.equals(filenameVerified))) {
-            throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
+            throw new IllegalFilenameException(MESSAGE_FILENAME_CONSTRAINTS);
+        } else if (outputFile.exists()) {
+            throw new FileExistsException(MESSAGE_FILE_ALREADY_EXISTS);
         }
 
         return filename;
@@ -1385,7 +1390,7 @@ import java.text.SimpleDateFormat;
 public class DeliveryDate {
 
     public static final String MESSAGE_DELIVERY_DATE_CONSTRAINTS =
-            "Date should be DD-MM-YYYY, and it should not be blank";
+            "Date should be DD-MM-YYYY, and it should not be invalid or blank.";
 
     public static final String DELIVERY_DATE_VALIDATION_REGEX = "\\d{2}-\\d{2}-\\d{4}"; // format
     public static final String DELIVERY_DATE_VALIDATION_DATE_FORMAT = "dd-MM-yyyy"; // legal dates
@@ -1555,7 +1560,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class OrderInformation {
     public static final String MESSAGE_ORDER_INFORMATION_CONSTRAINTS =
-            "Order information should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Order information should only contain alphanumeric characters and spaces, and it should not be blank.";
 
     public static final String ORDER_INFORMATION_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
@@ -1817,6 +1822,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Set;
 
 import javafx.collections.FXCollections;
@@ -1844,7 +1850,7 @@ public class UniqueOrderList implements Iterable<Order> {
      * Creates a UniqueOrderList using given orders.
      * Enforces no nulls.
      */
-    public UniqueOrderList(Set<Order> orders) {
+    public UniqueOrderList(List<Order> orders) {
         requireAllNonNull(orders);
         internalList.addAll(orders);
 
@@ -1885,10 +1891,17 @@ public class UniqueOrderList implements Iterable<Order> {
     /**
      * Replaces the Orders in this list with those in the argument order list.
      */
-    public void setOrders(Set<Order> orders) {
+    public void setOrders(List<Order> orders) throws DuplicateOrderException {
         requireAllNonNull(orders);
-        internalList.setAll(orders);
-        assert CollectionUtil.elementsAreUnique(internalList);
+        final UniqueOrderList replacement = new UniqueOrderList();
+        for (final Order order : orders) {
+            replacement.add(order);
+        }
+        setOrders(replacement);
+    }
+
+    public void setOrders(UniqueOrderList replacement) {
+        this.internalList.setAll(replacement.internalList);
     }
 
     /**
@@ -1956,16 +1969,6 @@ public class UniqueOrderList implements Iterable<Order> {
         return other == this // short circuit if same object
                 || (other instanceof UniqueOrderList // instanceof handles nulls
                 && this.internalList.equals(((UniqueOrderList) other).internalList));
-    }
-
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueOrderList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
     }
 
     @Override

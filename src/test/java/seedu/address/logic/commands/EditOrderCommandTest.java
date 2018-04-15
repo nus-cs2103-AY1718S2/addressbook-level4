@@ -110,6 +110,7 @@ public class EditOrderCommandTest {
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
     }
+    //@@author
 
     /**
      * This test is failing on Gradle, but passing on IntelliJ JUnit Test.
@@ -124,6 +125,7 @@ public class EditOrderCommandTest {
     }
     */
 
+    //@@author amad-person
     @Test
     public void execute_invalidOrderIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredOrderList().size() + 1);

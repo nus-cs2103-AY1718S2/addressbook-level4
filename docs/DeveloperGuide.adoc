@@ -2023,4 +2023,29 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+=== Toggling a tab view
+
+. Navigate to another tab view
+
+.. Test case: `view exercise` +
+   Expected: UI toggles the tab view to the Exercise tab. A list of exercises should be displayed.
+.. Test case: `view exercise 5` +
+   Expected: UI toggles the tab view to the Exercise tab. Week 5's list of exercises should be displayed.
+.. Test case: `view invalidtype` +
+   Expected: No such tab found. Error details shown in the status message.
+.. Other incorrect view commands to try: `view`, `view exercise x` (where x is an input not within 2 to 11 (inclusive) +
+   Expected: Similar to previous.
+
+=== Answering an exercise
+
+. Answer an exercise and see the suggested answer
+
+.. Prerequisites: UI view is on the Exercise tab, showing week 11's exercises.
+.. Test case: `ans 11.1.1 a` +
+   Expected: Question index 11.1.1 turns green. Answer `a` is reflected under "Your Answer" and suggested answer for question index 11.1.1 is revealed.
+.. Test case: `view 11` +
+   Expected: Given question index does not exist. Error details shown in the status message.
+.. Other incorrect answer commands to try: `ans`, `ans 11.2` +
+   Expected: Similar to previous.
+
 Back to <<Setting up,TOP>>

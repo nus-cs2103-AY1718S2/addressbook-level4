@@ -1368,7 +1368,7 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Application opens with an address book with dummy data.
 .. Test case: Corrupt `addressbook.xml` by editing it +
    Expected: Application opens with an address book with empty data.
-   
+
 === Birthdays function
 
 . Using the `birthdays` and `birthdays today` function

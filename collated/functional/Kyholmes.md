@@ -1,2262 +1,36 @@
 # Kyholmes
-###### \.idea\workspace.xml
-``` xml
-      <find>queue</find>
-      <find>select</find>
-      <find>contains</find>
-      <find>addappointment</find>
-      <find>getPatientFromList</find>
-    </findStrings>
-    <dirStrings>
-      <dir>C:\Users\KaiYong\Documents\CS2103T Software Engineering\project\main\src\test\java</dir>
-      <dir>C:\Users\KaiYong\Documents\CS2103T Software Engineering\project\main\src\test\data\XmlSerializableImdbTest</dir>
-    </dirStrings>
-  </component>
-  <component name="Git.Settings">
-    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
-  </component>
-  <component name="GradleLocalSettings">
-    <option name="myGradleHomes">
-      <map>
-        <entry key="$PROJECT_DIR$" value="C:\Users\KaiYong\.gradle\wrapper\dists\gradle-2.12-all\8ywkdai6puj5z81fume4e7njw\gradle-2.12" />
-      </map>
-    </option>
-    <option name="myGradleVersions">
-      <map>
-        <entry key="$PROJECT_DIR$" value="2.12" />
-      </map>
-    </option>
-    <option name="availableProjects">
-      <map>
-        <entry>
-          <key>
-            <ExternalProjectPojo>
-              <option name="name" value="main" />
-              <option name="path" value="$PROJECT_DIR$" />
-            </ExternalProjectPojo>
-          </key>
-          <value>
-            <list>
-              <ExternalProjectPojo>
-                <option name="name" value="main" />
-                <option name="path" value="$PROJECT_DIR$" />
-              </ExternalProjectPojo>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="availableTasks">
-      <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <list>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the sub-projects of root project 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="projects" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Run Checkstyle analysis for test classes" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="checkstyleTest" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Runs this project as a JVM application" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="run" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="wrapper" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="allTests" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Creates OS specific scripts to run the project as a JVM application." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="startScripts" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles a jar archive containing the main classes." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="jar" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the configuration model of root project 'main'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="model" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Processes main resources." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="processResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the tasks runnable from root project 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="tasks" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles the main distributions" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="assembleDist" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Initializes a new Gradle build. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="init" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Runs the unit tests." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="test" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Compiles main Java source." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="compileJava" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Runs all checks." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="check" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Installs the project as a JVM application along with libs and OS specific scripts." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="installApp" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="coveralls" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all dependencies declared in root project 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="dependencies" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Processes test resources." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="processTestResources" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Bundles the project as a JVM application with libs and OS specific scripts." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="distShadowTar" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles and tests this project and all projects it depends on." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="buildNeeded" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Bundles the project as a JVM application with libs and OS specific scripts." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="distShadowZip" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Create a combined JAR of project and runtime dependencies" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="shadowJar" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Bundles the project as a distribution." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="distTar" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Bundles the project as a distribution." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="distZip" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="copyStylesheets" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="nonGuiTests" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the components produced by root project 'main'. [incubating]" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="components" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles and tests this project and all projects that depend on it." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="buildDependents" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles main classes." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="classes" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Installs the project as a JVM application along with libs and OS specific scripts." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="installShadowApp" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays all buildscript dependencies declared in root project 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="buildEnvironment" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles test classes." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="testClasses" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Generates Javadoc API documentation for the main source code." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="javadoc" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Run Checkstyle analysis for main classes" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="checkstyleMain" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Runs this project as a JVM application using the shadow jar" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="runShadow" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Creates OS specific scripts to run the project as a JVM application using the shadow jar" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="startShadowScripts" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Installs the project as a distribution as-is." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="installDist" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Do you know who knows?" />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="knows" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="coverage" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="copyDummySearchPage" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Converts AsciiDoc files and copies the output files and related resources to the build directory." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="asciidoctor" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="guiTests" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the insight into a specific dependency in root project 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="dependencyInsight" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="jacocoTestReport" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles the outputs of this project." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="assemble" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Deletes the build directory." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="clean" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Compiles test Java source." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="compileTestJava" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="headless" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays a help message." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="help" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Assembles and tests this project." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="build" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="deployOfflineDocs" />
-              </ExternalTaskPojo>
-              <ExternalTaskPojo>
-                <option name="description" value="Displays the properties of root project 'main'." />
-                <option name="linkedExternalProjectPath" value="$PROJECT_DIR$" />
-                <option name="name" value="properties" />
-              </ExternalTaskPojo>
-            </list>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="modificationStamps">
-      <map>
-        <entry key="$PROJECT_DIR$" value="4563627658687" />
-        <entry key="$PROJECT_DIR$/build.gradle" value="2624008113" />
-        <entry key="$PROJECT_DIR$/gradle.properties" value="3799709408" />
-        <entry key="$PROJECT_DIR$/gradle/wrapper/gradle-wrapper.properties" value="1635719916" />
-      </map>
-    </option>
-    <option name="projectBuildClasspath">
-      <map>
-        <entry key="$PROJECT_DIR$">
-          <value>
-            <ExternalProjectBuildClasspathPojo>
-              <option name="modulesBuildClasspath">
-                <map>
-                  <entry key="$PROJECT_DIR$">
-                    <value>
-                      <ExternalModuleBuildClasspathPojo>
-                        <option name="entries">
-                          <list>
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kt3k.gradle.plugin/coveralls-gradle-plugin/2.4.0/59f0ec93b7f5a478dd818c92f3d7ed95081cb399/coveralls-gradle-plugin-2.4.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.kt3k.gradle.plugin/coveralls-gradle-plugin/2.4.0/b2ffd6d9c68921658bf4e37776985f2898b10960/coveralls-gradle-plugin-2.4.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jengelman.gradle.plugins/shadow/1.2.3/7b10b9c4a397b19ebfb80a9a6c4330325ea5606a/shadow-1.2.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.github.jengelman.gradle.plugins/shadow/1.2.3/52bbde5e384f0860df145abe24070d74dd8ed590/shadow-1.2.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.asciidoctor/asciidoctor-gradle-plugin/1.5.6/7aebdcb8e0de13edc6579a79a51eb1ed02cd3893/asciidoctor-gradle-plugin-1.5.6-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.asciidoctor/asciidoctor-gradle-plugin/1.5.6/3e8937ae9c26d7e45022b8842f3b520e80a5a698/asciidoctor-gradle-plugin-1.5.6.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3/c63e2141841cf16866a730f882951db0fd5f4ee6/httpmime-4.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpmime/4.3/5b0002c5fb66867ca919be0fbd86de1cfaf76da7/httpmime-4.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jgit/org.eclipse.jgit/3.6.0.201412230720-r/9f8ced1e1f5c9ba6a3084e35004a19a24776478a/org.eclipse.jgit-3.6.0.201412230720-r-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.eclipse.jgit/org.eclipse.jgit/3.6.0.201412230720-r/b005b69d9f5b4dba636a95403d5cb62bad5c486d/org.eclipse.jgit-3.6.0.201412230720-r.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy.modules.http-builder/http-builder/0.7.1/a7396f0103337835621526d95021afc06c65c7b2/http-builder-0.7.1-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy.modules.http-builder/http-builder/0.7.1/a21771ae3da5ce9f5c4d7a60c1e716666aa2acf9/http-builder-0.7.1.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.5/769f3cca4ce92088288be3d0238ef96ef787e82f/jdom2-2.0.5-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.jdom/jdom2/2.0.5/2001db51c131e555bafdb77fc52af6a9408c505e/jdom2-2.0.5.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/f0f24f6666c1a15c7e202e91610476bd4ce59368/asm-5.0.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm/5.0.3/dcc2193db20e19e1feca8b1240dbbc4e190824fa/asm-5.0.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.0.3/f0f24f6666c1a15c7e202e91610476bd4ce59368/asm-commons-5.0.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-commons/5.0.3/a7111830132c7f87d08fe48cb0ca07630f8cb91c/asm-commons-5.0.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/f2d8698c46d1167ff24b06a840a87d91a02db891/commons-io-2.4-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-io/commons-io/2.4/b1b6ea3b7e4aa4f492509a4952029cd8e48019ad/commons-io-2.4.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant/1.9.4/ffa48418a72bff1cbd24a651861e003318129eb6/ant-1.9.4-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant/1.9.4/6d473e8653d952045f550f4ef225a9591b79094a/ant-1.9.4.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/2.0.6/794dbb2673e674e7ae55948657c119342fe2e448/plexus-utils-2.0.6-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.plexus/plexus-utils/2.0.6/3a20c424a712a7c02b02af61dcad5f001b29a9fd/plexus-utils-2.0.6.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-backports-compat23/2.4.4/8c7351852ffdd79f8e06b4052f662cc996e3598c/groovy-backports-compat23-2.4.4-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.codehaus.groovy/groovy-backports-compat23/2.4.4/db18ea377b154334e5323451835d329802222fa/groovy-backports-compat23-2.4.4.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.3/bd3975547ae313d9436c3315740e6ba213236a20/httpclient-4.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpclient/4.3/abe99a8183c7c154ba1fd0f4b6a3bd42ae67d115/httpclient-4.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jcraft/jsch/0.1.50/b6eca0935acca8dcd773df56f0fccec5d9877252/jsch-0.1.50-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.jcraft/jsch/0.1.50/fae4a0b1f2a96cb8f58f38da2650814c991cea01/jsch-0.1.50.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.javaewah/JavaEWAH/0.7.9/a50d78eb630e05439461f3130b94b3bcd1ea6f03/JavaEWAH-0.7.9-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/com.googlecode.javaewah/JavaEWAH/0.7.9/eceaf316a8faf0e794296ebe158ae110c7d72a5a/JavaEWAH-0.7.9.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.json-lib/json-lib/2.3/f35340c0a0380141f62c72b76c8fb4bfa638d8c1/json-lib-2.3-jdk15.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.nekohtml/nekohtml/1.9.16/2d40ea21fae95418331ddc66efb6744a38bf59a/nekohtml-1.9.16-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sourceforge.nekohtml/nekohtml/1.9.16/61e35204e5a8fdb864152f84e2e3b33ab56f50ab/nekohtml-1.9.16.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xml-resolver/xml-resolver/1.2/6b72432ea1c5296783007365bb7c9a6b39dfb730/xml-resolver-1.2-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xml-resolver/xml-resolver/1.2/3d0f97750b3a03e0971831566067754ba4bfd68c/xml-resolver-1.2.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.0.3/f0f24f6666c1a15c7e202e91610476bd4ce59368/asm-tree-5.0.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.ow2.asm/asm-tree/5.0.3/287749b48ba7162fb67c93a026d690b29f410bed/asm-tree-5.0.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant-launcher/1.9.4/b7ae945463dece0e58f3ebbf6d3d4c773277e1b2/ant-launcher-1.9.4-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.ant/ant-launcher/1.9.4/334b62cb4be0432769679e8b94e83f8fd5ed395c/ant-launcher-1.9.4.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.3/738a12248cd70aa816499cb6b42dd493bc3a34cd/httpcore-4.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.apache.httpcomponents/httpcore/4.3/11393498b38e9695d0850cac26fde5613ae268b9/httpcore-4.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/28bb0405fddaf04f15058fbfbe01fe2780d7d3b6/commons-logging-1.1.3-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-logging/commons-logging/1.1.3/f6f66e966c70a83ffbdb6f17a0919eaf7c8aca7f/commons-logging-1.1.3.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/61e9f9d11fe3e12ec62f633006e99d75fd7f19c8/commons-codec-1.6-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-codec/commons-codec/1.6/b7f0fc8f61ecadeb3695f0b9464755eee44374d4/commons-codec-1.6.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.8.0/2818502bbb50bbcbd3f57e92a2bfe4d496f37688/commons-beanutils-1.8.0-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-beanutils/commons-beanutils/1.8.0/c651d5103c649c12b20d53731643e5fffceb536/commons-beanutils-1.8.0.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/fa095ef874374e5b2a11f8b06c26a5d68c7cb3a4/commons-collections-3.2.1-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-collections/commons-collections/3.2.1/761ea405b9b37ced573d2df0d1e3a4e0f9edc668/commons-collections-3.2.1.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/2b8c4b3035e45520ef42033e823c7d33e4b4402c/commons-lang-2.4-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/commons-lang/commons-lang/2.4/16313e02a793435009f1e458fa4af5d879f6fb11/commons-lang-2.4.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.6/298992280d62b944afd0ae9bfe3329f5487dd434/ezmorph-1.0.6-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/net.sf.ezmorph/ezmorph/1.0.6/1e55d2a0253ea37745d33062852fd2c90027432/ezmorph-1.0.6.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xerces/xercesImpl/2.9.1/e30837a0843d5ea477b9334efdb730e66ffbd253/xercesImpl-2.9.1-sources.jar" />
-                            <option value="$USER_HOME$/.gradle/caches/modules-2/files-2.1/xerces/xercesImpl/2.9.1/1136d197e2755bbde296ceee217ec5fe2917477b/xercesImpl-2.9.1.jar" />
-                          </list>
-                        </option>
-                        <option name="path" value="$PROJECT_DIR$" />
-                      </ExternalModuleBuildClasspathPojo>
-                    </value>
-                  </entry>
-                </map>
-              </option>
-              <option name="name" value="main" />
-              <option name="projectBuildClasspath">
-                <list>
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/announce" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/antlr" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/base-services" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/base-services-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/build-comparison" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/build-init" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/cli" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/code-quality" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/core" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/dependency-management" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/diagnostics" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/ear" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/ide" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/ide-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/internal-integ-testing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/internal-testing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/ivy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/jacoco" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/javascript" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/jetty" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/language-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/language-java" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/language-jvm" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/language-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/language-scala" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/launcher" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/maven" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/messaging" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/model-core" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/model-groovy" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/open-api" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/osgi" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/platform-base" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/platform-jvm" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/platform-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/platform-play" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/plugin-development" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/plugin-use" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/plugins" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/publish" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/reporting" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/resources" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/resources-http" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/resources-s3" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/resources-sftp" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/scala" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/signing" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/sonar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/test-kit" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/testing-base" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/testing-jvm" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/testing-native" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/tooling-api" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/tooling-api-builders" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/ui" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/src/wrapper" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/ant-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/ant-launcher-1.9.3.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-base-services-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-base-services-groovy-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-cli-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-core-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-docs-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-launcher-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-messaging-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-model-core-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-model-groovy-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-native-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-open-api-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-resources-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-tooling-api-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-ui-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/gradle-wrapper-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/groovy-all-2.4.4.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-announce-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-antlr-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-build-comparison-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-build-init-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-code-quality-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-dependency-management-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-diagnostics-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-ear-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-ide-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-ide-native-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-ivy-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-jacoco-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-javascript-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-jetty-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-language-groovy-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-language-java-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-language-jvm-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-language-native-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-language-scala-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-maven-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-osgi-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-platform-base-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-platform-jvm-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-platform-native-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-platform-play-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-plugin-development-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-plugin-use-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-plugins-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-publish-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-reporting-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-resources-http-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-resources-s3-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-resources-sftp-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-scala-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-signing-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-sonar-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-test-kit-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-testing-base-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-testing-jvm-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-testing-native-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/gradle-tooling-api-builders-2.12.jar" />
-                  <option value="$USER_HOME$/.gradle/wrapper/dists/gradle-2.12-all/8ywkdai6puj5z81fume4e7njw/gradle-2.12/lib/plugins/ivy-2.2.0.jar" />
-                  <option value="$PROJECT_DIR$/buildSrc/src/main/java" />
-                  <option value="$PROJECT_DIR$/buildSrc/src/main/groovy" />
-                </list>
-              </option>
-            </ExternalProjectBuildClasspathPojo>
-          </value>
-        </entry>
-      </map>
-    </option>
-    <option name="externalProjectsViewState">
-      <projects_view />
-    </option>
-    <option name="projectSyncType">
-      <map>
-        <entry key="$PROJECT_DIR$" value="RE_IMPORT" />
-      </map>
-    </option>
-  </component>
-  <component name="IdeDocumentHistory">
-    <option name="CHANGED_PATHS">
-      <list>
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/AddPatientQueueCommandTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/ModelManagerTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/AddPatientQueueCommandParserTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/parser/RemovePatientQueueCommandParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/Model.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/AddCommandTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/UniquePatientVisitingQueue.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/RemovePatientQueueCommandTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/ImdbTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/ImdbParserTest.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/commands/RemovePatientQueueCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/ui/CalendarPanel.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/commons/events/ui/ShowPatientAppointmentRequestEvent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/commands/AddAppointmentCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/commands/ViewAppointmentCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/CalendarPanel.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/commons/events/model/AppointmentChangedEvent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/commons/events/ui/ShowCalendarViewRequestEvent.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/commands/DeleteAppointmentCommand.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/parser/AddAppointmentCommandParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/parser/DeleteAppointmentCommandParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/parser/ViewAppointmentCommandParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/logic/parser/ImdbParser.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/Appointment.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/AppointmentEntry.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/DateTime.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/UniqueAppointmentEntryList.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/UniqueAppointmentList.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/Imdb.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/ModelManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/model/ReadOnlyImdb.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/storage/StorageManager.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlAdaptedAppointment.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlAdaptedQueue.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/ui/AppointmentCard.java" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/ui/MainWindow.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/AppointmentCard.fxml" />
-        <option value="$PROJECT_DIR$/src/main/resources/view/PatientAppointmentPanel.fxml" />
-        <option value="$PROJECT_DIR$/src/main/java/seedu/address/ui/PatientAppointmentPanel.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/AddAppointmentCommandTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/DeleteAppointmentCommandTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/ViewAppointmentCommandTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/AddAppointmentCommandParserTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/DeleteAppointmentCommandParserTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/RemovePatientQueueCommandParserTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/ViewAppointmentCommandParserTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/appointment/AppointmentEntryTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/appointment/AppointmentTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/appointment/DateTimeTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/UniqueAppointmentListTest.java" />
-        <option value="$PROJECT_DIR$/src/test/java/seedu/address/model/UniquePatientVisitingQueueTest.java" />
-      </list>
-    </option>
-  </component>
-  <component name="JsBuildToolGruntFileManager" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsBuildToolPackageJson" detection-done="true" sorting="DEFINITION_ORDER" />
-  <component name="JsGulpfileManager">
-    <detection-done>true</detection-done>
-    <sorting>DEFINITION_ORDER</sorting>
-  </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="312" />
-    <option name="y" value="-27" />
-    <option name="width" value="1536" />
-    <option name="height" value="1038" />
-  </component>
-  <component name="ProjectInspectionProfilesVisibleTreeState">
-    <entry key="Project Default">
-      <profile-state>
-        <expanded-state>
-          <State>
-            <id />
-          </State>
-          <State>
-            <id>Checkstyle</id>
-          </State>
-        </expanded-state>
-        <selected-state>
-          <State>
-            <id>CheckStyle</id>
-          </State>
-        </selected-state>
-      </profile-state>
-    </entry>
-  </component>
-  <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
-      <flattenPackages />
-      <showMembers />
-      <showModules />
-      <showLibraryContents />
-      <hideEmptyPackages />
-      <abbreviatePackageNames />
-      <autoscrollToSource />
-      <autoscrollFromSource ProjectPane="true" />
-      <sortByType />
-      <manualOrder />
-      <foldersAlwaysOnTop value="true" />
-    </navigator>
-    <panes>
-      <pane id="Scope" />
-      <pane id="PackagesPane" />
-      <pane id="ProjectPane">
-        <subPane>
-          <expand>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="events" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="events" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="events" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="events" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="login" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="parser" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="record" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="appointment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="patient" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="storage" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="data" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="images" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="resources" type="462c0819:PsiDirectoryNode" />
-              <item name="view" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="guitests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="guitests" type="462c0819:PsiDirectoryNode" />
-              <item name="guihandles" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="core" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="commons" type="462c0819:PsiDirectoryNode" />
-              <item name="util" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="commands" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="logic" type="462c0819:PsiDirectoryNode" />
-              <item name="parser" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-              <item name="appointment" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="testutil" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="address" type="462c0819:PsiDirectoryNode" />
-              <item name="ui" type="462c0819:PsiDirectoryNode" />
-              <item name="testutil" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="main" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="src" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="8a07ba80:GradleTreeStructureProvider$GradleModuleDirectoryNode" />
-              <item name="java" type="462c0819:PsiDirectoryNode" />
-              <item name="systemtests" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="jfxrt.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="jfxrt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="javafx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="jfxrt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="javafx" type="462c0819:PsiDirectoryNode" />
-              <item name="collections" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="jfxrt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="javafx" type="462c0819:PsiDirectoryNode" />
-              <item name="scene" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="&lt; 1.8 &gt;" type="70bed36:NamedLibraryElementNode" />
-              <item name="jfxrt.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="javafx" type="462c0819:PsiDirectoryNode" />
-              <item name="scene" type="462c0819:PsiDirectoryNode" />
-              <item name="control" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.calendarfx:view:8.4.2" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.calendarfx:view:8.4.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="view-8.4.2.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.calendarfx:view:8.4.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="view-8.4.2.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="calendarfx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.calendarfx:view:8.4.2" type="70bed36:NamedLibraryElementNode" />
-              <item name="view-8.4.2.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="calendarfx" type="462c0819:PsiDirectoryNode" />
-              <item name="model" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:19.0" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:19.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-19.0.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:19.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-19.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:19.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-19.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:19.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-19.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="eventbus" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:21.0" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:21.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-21.0.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:21.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-21.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:21.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-21.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: com.google.guava:guava:21.0" type="70bed36:NamedLibraryElementNode" />
-              <item name="guava-21.0.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="google" type="462c0819:PsiDirectoryNode" />
-              <item name="common" type="462c0819:PsiDirectoryNode" />
-              <item name="collect" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: junit:junit:4.12" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: junit:junit:4.12" type="70bed36:NamedLibraryElementNode" />
-              <item name="junit-4.12.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: junit:junit:4.12" type="70bed36:NamedLibraryElementNode" />
-              <item name="junit-4.12.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="junit" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: junit:junit:4.12" type="70bed36:NamedLibraryElementNode" />
-              <item name="junit-4.12.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="junit" type="462c0819:PsiDirectoryNode" />
-              <item name="runner" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-              <item name="api" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="finder" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="finder" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="query" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="main" type="b2602c69:ProjectViewProjectNode" />
-              <item name="External Libraries" type="cb654da1:ExternalLibrariesNode" />
-              <item name="Gradle: org.testfx:testfx-core:4.0.7-alpha" type="70bed36:NamedLibraryElementNode" />
-              <item name="testfx-core-4.0.7-alpha.jar" type="462c0819:PsiDirectoryNode" />
-              <item name="testfx" type="462c0819:PsiDirectoryNode" />
-              <item name="service" type="462c0819:PsiDirectoryNode" />
-              <item name="query" type="462c0819:PsiDirectoryNode" />
-              <item name="impl" type="462c0819:PsiDirectoryNode" />
-            </path>
-          </expand>
-          <select />
-        </subPane>
-      </pane>
-      <pane id="AndroidView" />
-      <pane id="Scratches" />
-    </panes>
-  </component>
-  <component name="PropertiesComponent">
-    <property name="nodejs_interpreter_path.stuck_in_default_project" value="undefined stuck path" />
-    <property name="project.structure.last.edited" value="Modules" />
-    <property name="project.structure.proportion" value="0.15" />
-    <property name="project.structure.side.proportion" value="0.2" />
-    <property name="settings.editor.selected.configurable" value="org.infernus.idea.checkstyle.CheckStyleConfigurable" />
-    <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="aspect.path.notification.shown" value="true" />
-    <property name="last_opened_file_path" value="$USER_HOME$/Desktop/calendarfx-8.4.0-bin/ext/license4j-1.4.0.jar!/" />
-    <property name="SearchEverywhereHistoryKey" value="&#9;FILE&#9;file://C:/Users/KaiYong/Documents/CS2103T Software Engineering/project/main/src/main/resources/view/CalendarPanel.fxml" />
-  </component>
-  <component name="RecentsManager">
-    <key name="MoveClassesOrPackagesDialog.RECENTS_KEY">
-      <recent name="seedu.address.model.appointment" />
-    </key>
-    <key name="CopyFile.RECENT_KEYS">
-      <recent name="C:\Users\KaiYong\Documents\CS2103T Software Engineering\project\main\src\main\resources\data" />
-      <recent name="C:\Users\KaiYong\Documents\CS2103T Software Engineering\project\main\data" />
-    </key>
-  </component>
-  <component name="RunDashboard">
-    <option name="ruleStates">
-      <list>
-        <RuleState>
-          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
-        </RuleState>
-        <RuleState>
-          <option name="name" value="StatusDashboardGroupingRule" />
-        </RuleState>
-      </list>
-    </option>
-  </component>
-  <component name="RunManager" selected="Application.MainApp">
-    <configuration default="true" type="Applet" factoryName="Applet">
-      <option name="WIDTH" value="400" />
-      <option name="HEIGHT" value="300" />
-      <option name="POLICY_FILE" value="$APPLICATION_HOME_DIR$/bin/appletviewer.policy" />
-      <module />
-    </configuration>
-    <configuration name="MainApp" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="seedu.address.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <option name="MAIN_CLASS_NAME" value="seedu.address.MainApp" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="main_main" />
-      <envs />
-    </configuration>
-    <configuration default="true" type="Application" factoryName="Application">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="VM_PARAMETERS" />
-      <option name="PROGRAM_PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="ENABLE_SWING_INSPECTOR" value="false" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <module name="" />
-      <envs />
-    </configuration>
-    <configuration name="ImdbParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="seedu.address.logic.parser.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="main_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="seedu.address.logic.parser" />
-      <option name="MAIN_CLASS_NAME" value="seedu.address.logic.parser.ImdbParserTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration name="ImdbTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="seedu.address.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="main_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="seedu.address.model" />
-      <option name="MAIN_CLASS_NAME" value="seedu.address.model.ImdbTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration name="RemovePatientQueueCommandParserTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="seedu.address.logic.parser.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="main_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="seedu.address.logic.parser" />
-      <option name="MAIN_CLASS_NAME" value="seedu.address.logic.parser.RemovePatientQueueCommandParserTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration name="UniquePatientVisitingQueueTest" type="JUnit" factoryName="JUnit" temporary="true" nameIsGenerated="true">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea">
-        <pattern>
-          <option name="PATTERN" value="seedu.address.model.*" />
-          <option name="ENABLED" value="true" />
-        </pattern>
-      </extension>
-      <module name="main_test" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" value="seedu.address.model" />
-      <option name="MAIN_CLASS_NAME" value="seedu.address.model.UniquePatientVisitingQueueTest" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration default="true" type="JUnit" factoryName="JUnit">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="TEST_OBJECT" value="class" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <envs />
-      <patterns />
-    </configuration>
-    <configuration default="true" type="Remote" factoryName="Remote">
-      <option name="USE_SOCKET_TRANSPORT" value="true" />
-      <option name="SERVER_MODE" value="false" />
-      <option name="SHMEM_ADDRESS" value="javadebug" />
-      <option name="HOST" value="localhost" />
-      <option name="PORT" value="5005" />
-    </configuration>
-    <configuration default="true" type="TestNG" factoryName="TestNG">
-      <extension name="coverage" enabled="false" merge="false" sample_coverage="true" runner="idea" />
-      <module name="" />
-      <option name="ALTERNATIVE_JRE_PATH_ENABLED" value="false" />
-      <option name="ALTERNATIVE_JRE_PATH" />
-      <option name="SUITE_NAME" />
-      <option name="PACKAGE_NAME" />
-      <option name="MAIN_CLASS_NAME" />
-      <option name="METHOD_NAME" />
-      <option name="GROUP_NAME" />
-      <option name="TEST_OBJECT" value="CLASS" />
-      <option name="VM_PARAMETERS" value="-ea" />
-      <option name="PARAMETERS" />
-      <option name="WORKING_DIRECTORY" value="%MODULE_WORKING_DIR%" />
-      <option name="OUTPUT_DIRECTORY" />
-      <option name="ANNOTATION_TYPE" />
-      <option name="ENV_VARIABLES" />
-      <option name="PASS_PARENT_ENVS" value="true" />
-      <option name="TEST_SEARCH_SCOPE">
-        <value defaultName="singleModule" />
-      </option>
-      <option name="USE_DEFAULT_REPORTERS" value="false" />
-      <option name="PROPERTIES_FILE" />
-      <envs />
-      <properties />
-      <listeners />
-    </configuration>
-    <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
-      <module name="" />
-      <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
-      <option name="PROGRAM_PARAMETERS" />
-      <predefined_log_file id="idea.log" enabled="true" />
-    </configuration>
-    <list size="5">
-      <item index="0" class="java.lang.String" itemvalue="JUnit.RemovePatientQueueCommandParserTest" />
-      <item index="1" class="java.lang.String" itemvalue="JUnit.UniquePatientVisitingQueueTest" />
-      <item index="2" class="java.lang.String" itemvalue="JUnit.ImdbTest" />
-      <item index="3" class="java.lang.String" itemvalue="JUnit.ImdbParserTest" />
-      <item index="4" class="java.lang.String" itemvalue="Application.MainApp" />
-    </list>
-    <recent_temporary>
-      <list size="5">
-        <item index="0" class="java.lang.String" itemvalue="Application.MainApp" />
-        <item index="1" class="java.lang.String" itemvalue="JUnit.ImdbParserTest" />
-        <item index="2" class="java.lang.String" itemvalue="JUnit.ImdbTest" />
-        <item index="3" class="java.lang.String" itemvalue="JUnit.UniquePatientVisitingQueueTest" />
-        <item index="4" class="java.lang.String" itemvalue="JUnit.RemovePatientQueueCommandParserTest" />
-      </list>
-    </recent_temporary>
-  </component>
-  <component name="ShelveChangesManager" show_recycled="false">
-    <option name="remove_strategy" value="false" />
-  </component>
-  <component name="SvnConfiguration">
-    <configuration />
-  </component>
-  <component name="TaskManager">
-    <task active="true" id="Default" summary="Default task">
-      <changelist id="b72635a6-b4f8-4af1-97f2-fd3b66b8ba96" name="Default" comment="" />
-      <created>1520173556539</created>
-      <option name="number" value="Default" />
-      <option name="presentableId" value="Default" />
-      <updated>1520173556539</updated>
-      <workItem from="1520173558305" duration="3057000" />
-      <workItem from="1520176723136" duration="312000" />
-      <workItem from="1520177061274" duration="666000" />
-      <workItem from="1520222761098" duration="4721000" />
-      <workItem from="1520227954355" duration="333000" />
-      <workItem from="1520232855690" duration="1346000" />
-      <workItem from="1520247874413" duration="19084000" />
-      <workItem from="1520340446916" duration="1249000" />
-      <workItem from="1520398093765" duration="1406000" />
-      <workItem from="1520407427318" duration="1196000" />
-      <workItem from="1520439890262" duration="44000" />
-      <workItem from="1520493663252" duration="9000" />
-      <workItem from="1520857802557" duration="15000" />
-      <workItem from="1520862024818" duration="6834000" />
-      <workItem from="1520908408319" duration="134000" />
-      <workItem from="1520931702917" duration="4185000" />
-      <workItem from="1520942050159" duration="19961000" />
-      <workItem from="1521002454414" duration="8726000" />
-      <workItem from="1521012016410" duration="156000" />
-      <workItem from="1521012200590" duration="474000" />
-      <workItem from="1521207182140" duration="15000" />
-      <workItem from="1521296521815" duration="12391000" />
-      <workItem from="1521341236316" duration="9294000" />
-      <workItem from="1521379383529" duration="23000" />
-      <workItem from="1521381463766" duration="101000" />
-      <workItem from="1521383700615" duration="10000" />
-      <workItem from="1521441775863" duration="6229000" />
-      <workItem from="1521452120345" duration="23001000" />
-      <workItem from="1521520621652" duration="821000" />
-      <workItem from="1521525614655" duration="15000" />
-      <workItem from="1521532320570" duration="34497000" />
-      <workItem from="1521608988090" duration="3274000" />
-      <workItem from="1521616075933" duration="1973000" />
-      <workItem from="1521772892488" duration="6000" />
-      <workItem from="1522041945910" duration="1715000" />
-      <workItem from="1522047394023" duration="1701000" />
-      <workItem from="1522069688875" duration="14123000" />
-      <workItem from="1522123590692" duration="5145000" />
-      <workItem from="1522130979818" duration="3822000" />
-      <workItem from="1522140440458" duration="873000" />
-      <workItem from="1522146606025" duration="22009000" />
-      <workItem from="1522202761062" duration="5441000" />
-      <workItem from="1522208592157" duration="5644000" />
-      <workItem from="1522218320428" duration="1674000" />
-      <workItem from="1522225105943" duration="11000" />
-      <workItem from="1522504182234" duration="7001000" />
-      <workItem from="1522581750981" duration="13191000" />
-      <workItem from="1522645288933" duration="5014000" />
-      <workItem from="1522656329265" duration="14017000" />
-      <workItem from="1522679954914" duration="216000" />
-      <workItem from="1522680732367" duration="5837000" />
-      <workItem from="1522688239526" duration="39000" />
-      <workItem from="1522733510215" duration="10731000" />
-      <workItem from="1522746098508" duration="2306000" />
-      <workItem from="1522748686187" duration="1185000" />
-      <workItem from="1522749894113" duration="1754000" />
-      <workItem from="1522751795463" duration="1799000" />
-      <workItem from="1522753751851" duration="3631000" />
-      <workItem from="1522759701138" duration="17128000" />
-      <workItem from="1522807741812" duration="4562000" />
-      <workItem from="1522813179371" duration="6375000" />
-      <workItem from="1522906843590" duration="14593000" />
-      <workItem from="1522924542658" duration="5791000" />
-      <workItem from="1522993399819" duration="28000" />
-      <workItem from="1523177079761" duration="18025000" />
-      <workItem from="1523254680391" duration="17714000" />
-      <workItem from="1523348558130" duration="20113000" />
-    </task>
-    <servers />
-  </component>
-  <component name="TestHistory">
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 23m 01s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 26m 43s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 26m 55s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 30m 45s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 31m 24s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 32m 51s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbParserTest - 2018.04.10 at 20h 33m 05s.xml">
-      <configuration name="ImdbParserTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbTest - 2018.04.10 at 20h 15m 58s.xml">
-      <configuration name="ImdbTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbTest - 2018.04.10 at 20h 17m 42s.xml">
-      <configuration name="ImdbTest" configurationId="JUnit" />
-    </history-entry>
-    <history-entry file="ImdbTest - 2018.04.10 at 20h 18m 43s.xml">
-      <configuration name="ImdbTest" configurationId="JUnit" />
-    </history-entry>
-  </component>
-  <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="398766000" />
-  </component>
-  <component name="ToolWindowManager">
-    <frame x="-9" y="-9" width="1938" height="1048" extended-state="6" />
-    <editor active="true" />
-    <layout>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14937286" sideWeight="0.4774436" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973147" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.21094641" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18129988" sideWeight="0.4538131" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.49570355" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18015963" sideWeight="0.52255636" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.23603192" sideWeight="0.43823844" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25655645" sideWeight="0.48711064" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.10687433" sideWeight="0.7294833" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.44414607" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.11815252" sideWeight="0.27051672" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40494093" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-    </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.14937286" sideWeight="0.4774436" order="8" side_tool="true" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Tool" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="2" side_tool="false" content_ui="combo" />
-      <window_info id="Build" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.24973147" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3621684" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.18129988" sideWeight="0.4538131" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Image Layers" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Capture Analysis" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.49570355" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30330673" sideWeight="0.52255636" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.40494093" sideWeight="0.5" order="9" side_tool="true" content_ui="tabs" />
-      <window_info id="CheckStyle" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.19156215" sideWeight="0.43823844" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.28392246" sideWeight="0.48711064" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.18850698" sideWeight="0.48367953" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3295325" sideWeight="0.44414607" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Gradle" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Theme Preview" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.1632653" sideWeight="0.51632047" order="5" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
-  </component>
-  <component name="TypeScriptGeneratedFilesManager">
-    <option name="version" value="1" />
-  </component>
-  <component name="VcsContentAnnotationSettings">
-    <option name="myLimit" value="2678400000" />
-  </component>
-  <component name="XDebuggerManager">
-    <breakpoint-manager>
-      <breakpoints>
-        <line-breakpoint enabled="true" type="java-method">
-          <url>file://$PROJECT_DIR$/src/test/java/guitests/guihandles/PatientListPanelHandle.java</url>
-          <line>26</line>
-          <properties class="guitests.guihandles.PatientListPanelHandle" method="getHandleToSelectedCard">
-            <option name="EMULATED" value="true" />
-          </properties>
-          <option name="timeStamp" value="96" />
-        </line-breakpoint>
-      </breakpoints>
-      <breakpoints-dialog>
-        <breakpoints-dialog />
-      </breakpoints-dialog>
-      <option name="time" value="106" />
-    </breakpoint-manager>
-    <watches-manager />
-  </component>
-  <component name="antWorkspaceConfiguration">
-    <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
-    <option name="FILTER_TARGETS" value="false" />
-  </component>
-  <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/UniqueAppointmentEntryList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/appointment/UniqueAppointmentList.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/Imdb.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="327" column="14" lean-forward="false" selection-start-line="327" selection-start-column="14" selection-end-line="327" selection-end-column="14" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/UniquePatientVisitingQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="189">
-          <caret line="20" column="13" lean-forward="false" selection-start-line="20" selection-start-column="13" selection-end-line="20" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/ReadOnlyImdb.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="171">
-          <caret line="24" column="23" lean-forward="false" selection-start-line="24" selection-start-column="23" selection-end-line="24" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/UserPrefs.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/ImdbStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="12" column="17" lean-forward="false" selection-start-line="12" selection-start-column="17" selection-end-line="12" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/JsonUserPrefsStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-123">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/Storage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-333">
-          <caret line="16" column="17" lean-forward="false" selection-start-line="16" selection-start-column="17" selection-end-line="16" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/ModelManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-625">
-          <caret line="167" column="0" lean-forward="false" selection-start-line="167" selection-start-column="0" selection-end-line="167" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/UserPrefsStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="3">
-          <caret line="11" column="17" lean-forward="false" selection-start-line="11" selection-start-column="17" selection-end-line="11" selection-end-column="17" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/StorageManager.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-18">
-          <caret line="97" column="23" lean-forward="false" selection-start-line="97" selection-start-column="23" selection-end-line="97" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlAdaptedPatient.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3609">
-          <caret line="28" column="13" lean-forward="false" selection-start-line="28" selection-start-column="13" selection-end-line="28" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlAdaptedAppointment.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlAdaptedTag.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="10" column="13" lean-forward="false" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlFileStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-60">
-          <caret line="13" column="13" lean-forward="false" selection-start-line="13" selection-start-column="13" selection-end-line="13" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlImdbStorage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-858">
-          <caret line="19" column="13" lean-forward="false" selection-start-line="19" selection-start-column="13" selection-end-line="19" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlSerializableImdb.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-879">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/storage/XmlAdaptedQueue.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/ui/CalendarPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="24" column="13" lean-forward="false" selection-start-line="24" selection-start-column="13" selection-end-line="24" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/ui/MainWindow.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="66">
-          <caret line="218" column="23" lean-forward="false" selection-start-line="218" selection-start-column="23" selection-end-line="218" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/ui/QueueCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="11" column="13" lean-forward="false" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/ui/QueuePanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="168">
-          <caret line="21" column="13" lean-forward="false" selection-start-line="21" selection-start-column="13" selection-end-line="21" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/MainApp.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="147">
-          <caret line="40" column="13" lean-forward="false" selection-start-line="40" selection-start-column="13" selection-end-line="40" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/model/Model.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="619">
-          <caret line="65" column="59" lean-forward="false" selection-start-line="65" selection-start-column="59" selection-end-line="65" selection-end-column="59" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/CalendarPanel.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="0" lean-forward="false" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/MainWindow.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="123">
-          <caret line="64" column="8" lean-forward="true" selection-start-line="64" selection-start-column="8" selection-end-line="64" selection-end-column="33" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/AppointmentCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/QueueCard.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/QueueListPanel.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/view/PatientAppointmentPanel.fxml">
-      <provider editor-type-id="JavaFX-Scene-Builder">
-        <state />
-      </provider>
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="21">
-          <caret line="1" column="25" lean-forward="false" selection-start-line="1" selection-start-column="25" selection-end-line="1" selection-end-column="25" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/ui/PatientAppointmentPanel.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/AddPatientQueueCommandTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/seedu/address/ui/AppointmentCard.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="19" lean-forward="false" selection-start-line="0" selection-start-column="19" selection-end-line="0" selection-end-column="19" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/AddAppointmentCommandTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/RemovePatientQueueCommandTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="23" column="13" lean-forward="false" selection-start-line="23" selection-start-column="13" selection-end-line="23" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/DeleteAppointmentCommandTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/commands/ViewAppointmentCommandTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/AddPatientQueueCommandParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="12" column="13" lean-forward="false" selection-start-line="12" selection-start-column="13" selection-end-line="12" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/AddAppointmentCommandParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/ImdbParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-7641">
-          <caret line="49" column="13" lean-forward="false" selection-start-line="49" selection-start-column="13" selection-end-line="49" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/DeleteAppointmentCommandParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/RemovePatientQueueCommandParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/logic/parser/ViewAppointmentCommandParserTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/appointment/AppointmentEntryTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/ImdbTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-3420">
-          <caret line="32" column="13" lean-forward="false" selection-start-line="32" selection-start-column="13" selection-end-line="32" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/appointment/DateTimeTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="105">
-          <caret line="9" column="13" lean-forward="false" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/ModelManagerTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-711">
-          <caret line="17" column="13" lean-forward="false" selection-start-line="17" selection-start-column="13" selection-end-line="17" selection-end-column="13" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/appointment/AppointmentTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/UniqueAppointmentListTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="24" lean-forward="false" selection-start-line="0" selection-start-column="24" selection-end-line="0" selection-end-column="24" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/java/seedu/address/model/UniquePatientVisitingQueueTest.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="336">
-          <caret line="28" column="27" lean-forward="true" selection-start-line="28" selection-start-column="27" selection-end-line="28" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-  </component>
-  <component name="masterDetails">
-    <states>
-      <state key="ArtifactsStructureConfigurable.UI">
-        <settings>
-          <artifact-editor />
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="FacetStructureConfigurable.UI">
-        <settings>
-          <last-edited>No facets are configured</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="GlobalLibrariesConfigurable.UI">
-        <settings>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="JdkListConfigurable.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ModuleStructureConfigurable.UI">
-        <settings>
-          <last-edited>main_main|main</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectJDKs.UI">
-        <settings>
-          <last-edited>1.8</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-      <state key="ProjectLibrariesConfigurable.UI">
-        <settings>
-          <last-edited>Gradle: com.fasterxml.jackson.core:jackson-annotations:2.7.0</last-edited>
-          <splitter-proportions>
-            <option name="proportions">
-              <list>
-                <option value="0.2" />
-              </list>
-            </option>
-          </splitter-proportions>
-        </settings>
-      </state>
-    </states>
-  </component>
-</project>
+###### \build\resources\main\view\AppointmentCard.fxml
+``` fxml
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="id" minWidth="-Infinity" text="Label" />
+                        <Label fx:id="dateTime" text="Label" />
+                     </children></HBox>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </children>
+</VBox>
 ```
 ###### \build\resources\main\view\CalendarPanel.fxml
 ``` fxml
@@ -2281,6 +55,64 @@
           </HBox>
         </StackPane>
 
+```
+###### \build\resources\main\view\PatientAppointmentPanel.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+        <items>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ListView fx:id="pastAppointmentCardListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets right="5.0" />
+                           </VBox.margin></ListView>
+                     </children>
+                     <StackPane.margin>
+                        <Insets top="30.0" />
+                     </StackPane.margin>
+                  </VBox>
+                  <Label text="Past Appointments" textFill="WHITE" textOverrun="CLIP" StackPane.alignment="TOP_LEFT">
+                     <StackPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </StackPane.margin></Label>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ListView fx:id="upcomingAppointmentCardListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ListView>
+                     </children>
+                     <StackPane.margin>
+                        <Insets top="30.0" />
+                     </StackPane.margin>
+                  </VBox>
+                  <Label text="Upcoming Appointments" textFill="WHITE" StackPane.alignment="TOP_LEFT">
+                     <StackPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+            </StackPane>
+        </items>
+      </SplitPane>
+   </children>
+</StackPane>
 ```
 ###### \build\resources\main\view\QueueCard.fxml
 ``` fxml
@@ -2314,6 +146,50 @@
    </children>
 </HBox>
 ```
+###### \out\production\resources\view\AppointmentCard.fxml
+``` fxml
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="100.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane alignment="CENTER" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <VBox prefHeight="200.0" prefWidth="100.0">
+               <children>
+                  <HBox prefHeight="100.0" prefWidth="200.0">
+                     <children>
+                        <Label fx:id="id" minWidth="-Infinity" text="Label" />
+                        <Label fx:id="dateTime" text="Label" />
+                     </children></HBox>
+               </children>
+            </VBox>
+         </children>
+      </GridPane>
+   </children>
+</VBox>
+```
+###### \out\production\resources\view\CalendarPanel.fxml
+``` fxml
+<?import com.calendarfx.view.page.MonthPage?>
+<?import javafx.scene.layout.StackPane?>
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <MonthPage fx:id="calendarView" enableHyperlinks="false" prefHeight="200.0" prefWidth="200.0" selectionMode="SINGLE" />
+   </children>
+</StackPane>
+```
 ###### \out\production\resources\view\MainWindow.fxml
 ``` fxml
         <StackPane VBox.vgrow="NEVER" fx:id="queueList" styleClass="pane-with-border"
@@ -2326,6 +202,64 @@
           </HBox>
         </StackPane>
 
+```
+###### \out\production\resources\view\PatientAppointmentPanel.fxml
+``` fxml
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+
+<StackPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <SplitPane dividerPositions="0.5" prefHeight="160.0" prefWidth="200.0">
+        <items>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ListView fx:id="pastAppointmentCardListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets right="5.0" />
+                           </VBox.margin></ListView>
+                     </children>
+                     <StackPane.margin>
+                        <Insets top="30.0" />
+                     </StackPane.margin>
+                  </VBox>
+                  <Label text="Past Appointments" textFill="WHITE" textOverrun="CLIP" StackPane.alignment="TOP_LEFT">
+                     <StackPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </StackPane.margin></Label>
+               </children>
+            </StackPane>
+            <StackPane prefHeight="150.0" prefWidth="200.0">
+               <children>
+                  <VBox prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <ListView fx:id="upcomingAppointmentCardListView" prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS">
+                           <VBox.margin>
+                              <Insets />
+                           </VBox.margin>
+                        </ListView>
+                     </children>
+                     <StackPane.margin>
+                        <Insets top="30.0" />
+                     </StackPane.margin>
+                  </VBox>
+                  <Label text="Upcoming Appointments" textFill="WHITE" StackPane.alignment="TOP_LEFT">
+                     <StackPane.margin>
+                        <Insets left="5.0" top="5.0" />
+                     </StackPane.margin>
+                  </Label>
+               </children>
+            </StackPane>
+        </items>
+      </SplitPane>
+   </children>
+</StackPane>
 ```
 ###### \out\production\resources\view\QueueCard.fxml
 ``` fxml
@@ -2381,28 +315,6 @@ public class AppointmentChangedEvent extends BaseEvent {
     @Override
     public String toString() {
         return "Appointment records changed";
-    }
-}
-```
-###### \src\main\java\seedu\address\commons\events\model\QueueChangedEvent.java
-``` java
-package seedu.address.commons.events.model;
-
-import seedu.address.commons.events.BaseEvent;
-import seedu.address.model.ReadOnlyImdb;
-
-/** Indicates the queue in the model has changed*/
-public class QueueChangedEvent extends BaseEvent {
-
-    public final ReadOnlyImdb data;
-
-    public QueueChangedEvent(ReadOnlyImdb data) {
-        this.data = data;
-    }
-
-    @Override
-    public String toString() {
-        return "number of patients in queue " + data.getUniquePatientQueue().size();
     }
 }
 ```
@@ -2465,10 +377,14 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -2480,33 +396,33 @@ public class AddAppointmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient appointment. "
             + "Parameters: "
-            + "NAME "
-            + "DATE "
-            + "TIME";
+            + "INDEX (must be a positive integer) "
+            + "DATE TIME (24-hour clock) \n "
+            + "*DATE must be after today's date \n"
+            + "Example: " + COMMAND_WORD + " 1 2/4/2018 1300";
 
-    public static final String MESSAGE_SUCCESS = "A new appointment is added.";
+    public static final String MESSAGE_SUCCESS = "A new appointment is added.\n"
+            + "Enter view appointment command to get updated calendar view.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exist.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
-    private final NameContainsKeywordsPredicate predicate;
-    private final String dateTimeString;
+    private final Index targetPatientIndex;
+    private final DateTime dateTime;
 
-    public AddAppointmentCommand(NameContainsKeywordsPredicate predicate, String dateString, String timeString) {
-        requireAllNonNull(predicate, dateString, timeString);
-        this.predicate = predicate;
+    public AddAppointmentCommand(Index targetPatientIndex, DateTime dateTime) {
+        requireAllNonNull(targetPatientIndex, dateTime);
+        this.targetPatientIndex = targetPatientIndex;
 
-        this.dateTimeString = dateString + " " + timeString;
+        this.dateTime = dateTime;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        Patient patientFound = model.getPatientFromList(predicate);
 
-        if (patientFound == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
+        preprocess();
+
+        Patient patientFound = model.getPatientFromListByIndex(targetPatientIndex);
 
         try {
-            model.addPatientAppointment(patientFound, dateTimeString);
+            model.addPatientAppointment(patientFound, dateTime);
             return new CommandResult(MESSAGE_SUCCESS);
         } catch (UniqueAppointmentList.DuplicatedAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
@@ -2515,12 +431,23 @@ public class AddAppointmentCommand extends Command {
         }
     }
 
+    /**
+     * Preprocess checking if index is valid and not out of bound of the patient list
+     */
+    private void preprocess() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetPatientIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof AddAppointmentCommand
-                && predicate.equals(((AddAppointmentCommand) other).predicate)
-                && dateTimeString.equals(((AddAppointmentCommand) other).dateTimeString));
+                && this.targetPatientIndex.equals(((AddAppointmentCommand) other).targetPatientIndex)
+                && this.dateTime.equals(((AddAppointmentCommand) other).dateTime));
     }
 }
 ```
@@ -2534,32 +461,32 @@ import java.util.List;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
-import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Add patient to visiting queue (registration)
  */
-public class AddPatientQueueCommand extends Command {
+public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "addq";
     public static final String COMMAND_ALIAS = "aq";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient into vising queue. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient into visiting queue. "
             + "Parameters: "
-            + "INDEX (must be a positive integer)\n "
+            + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "%1$s is registered in the waiting list";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This patient already registered.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
+    public static final String MESSAGE_SUCCESS = "%1$s is added into visiting queue";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This patient already added into visiting queue.";
     private final Index targetIndex;
-
+    private Index actualSourceIndex;
 
     /**
-     * Creates an AddCommand to add the specified {@code Patient}
+     * Creates an AddPatientQueueCommand to add the specified patient by its list index
      */
     public AddPatientQueueCommand(Index index) {
         requireNonNull(index);
@@ -2567,31 +494,40 @@ public class AddPatientQueueCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
-
-        List<Patient> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         Patient toQueue;
 
         try {
-            toQueue = model.addPatientToQueue(targetIndex);
+            toQueue = model.addPatientToQueue(actualSourceIndex);
         } catch (DuplicatePatientException e) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PatientNotFoundException e) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
         }
 
         return new CommandResult(String.format(MESSAGE_SUCCESS, toQueue.getName().fullName));
     }
 
     @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        String actualIndexInString = model.getPatientSourceIndexInList(targetIndex.getZeroBased()) + "";
+
+        try {
+            actualSourceIndex = ParserUtil.parseIndex(actualIndexInString);
+        } catch (IllegalValueException e) {
+            throw new AssertionError("The target patient cannot be missing");
+        }
+    }
+
+    @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddPatientQueueCommand // instanceof handles nulls
+        return other == this
+                || (other instanceof AddPatientQueueCommand
                 && this.targetIndex.equals(((AddPatientQueueCommand) other).targetIndex));
     }
 }
@@ -2600,9 +536,13 @@ public class AddPatientQueueCommand extends Command {
 ``` java
 package seedu.address.logic.commands;
 
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.appointment.DateTime;
+import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -2615,45 +555,56 @@ public class DeleteAppointmentCommand extends Command {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a patient's appointment."
             + "Parameters: "
-            + "NAME"
-            + "INDEX_NO";
+            + "INDEX (must be a positive integer) "
+            + "DATE TIME (24-hour clock) \n "
+            + "Example: " + COMMAND_WORD + " 1 2/4/2018 1300";
 
-    public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled";
+    public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled. \n "
+            + "Enter view appointment command to get updated calendar view.";
 
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
+    public static final String MESSAGE_APPOINTMENT_CANNOT_BE_FOUND = "Appointment cannot be found.";
 
-    public static final String MESSAGE_APPOINTMENT_NOT_FOUND = "The appointment cannot be found";
+    private final Index targetPatientIndex;
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final DateTime targetAppointmentDateTime;
 
-    private final Index targetIndex;
-
-    public DeleteAppointmentCommand(NameContainsKeywordsPredicate predicate, Index targetIndex) {
-        this.predicate = predicate;
-        this.targetIndex = targetIndex;
+    public DeleteAppointmentCommand(Index targetPatientIndex, DateTime targetAppointmentDateTime) {
+        this.targetPatientIndex = targetPatientIndex;
+        this.targetAppointmentDateTime = targetAppointmentDateTime;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
-        Patient patientFound = model.getPatientFromList(predicate);
 
-        if (patientFound == null) {
-            throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-        }
+        preprocess();
 
-        if (model.deletePatientAppointment(patientFound, targetIndex)) {
+        Patient patientFound = model.getPatientFromListByIndex(targetPatientIndex);
+
+        try {
+            model.deletePatientAppointment(patientFound, targetAppointmentDateTime);
             return new CommandResult(MESSAGE_DELETE_SUCCESS);
+        } catch (UniqueAppointmentList.AppoinmentNotFoundException e) {
+            throw new CommandException(MESSAGE_APPOINTMENT_CANNOT_BE_FOUND);
         }
+    }
 
-        throw new CommandException(MESSAGE_APPOINTMENT_NOT_FOUND);
+    /**
+     * Preprocess checking if index is valid and not out of bound of the patient list
+     */
+    private void preprocess() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (targetPatientIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof DeleteAppointmentCommand)
-                && predicate.equals(((DeleteAppointmentCommand) other).predicate)
-                && targetIndex.equals(((DeleteAppointmentCommand) other).targetIndex);
+                && this.targetPatientIndex.equals(((DeleteAppointmentCommand) other).targetPatientIndex)
+                && this.targetAppointmentDateTime.equals(((DeleteAppointmentCommand) other).targetAppointmentDateTime);
     }
 }
 ```
@@ -2663,18 +614,17 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.List;
-
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
 
 /**
  * Remove patient from visiting queue (checkout)
  */
-public class RemovePatientQueueCommand extends Command {
+public class RemovePatientQueueCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "removeq";
     public static final String COMMAND_ALIAS = "rq";
@@ -2687,38 +637,42 @@ public class RemovePatientQueueCommand extends Command {
             + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the waiting list";
-    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "This patient is not in the waiting list";
-    public static final String MESSAGE_QUEUE_EMPTY = "Waiting list is empty";
+    public static final String MESSAGE_REMOVE_SUCCESS = "%1$s is removed from the visiting queue.";
+    public static final String MESSAGE_PERSON_NOT_FOUND_QUEUE = "This patient is not in the visiting queue.";
+    public static final String MESSAGE_QUEUE_EMPTY = "Visiting queue is empty";
 
-    public final boolean indexIsExist;
+    public final boolean indexArguementIsExist;
     private Index targetIndex;
 
     public RemovePatientQueueCommand() {
-        indexIsExist = false;
+        indexArguementIsExist = false;
 
     }
 
     public RemovePatientQueueCommand(Index targetIndex) {
         requireNonNull(targetIndex);
-        indexIsExist = true;
+        indexArguementIsExist = true;
         this.targetIndex = targetIndex;
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    protected void preprocessUndoableCommand() throws CommandException {
+        if (indexArguementIsExist) {
+            //Unfilter patient list
+            model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
 
-        if (indexIsExist) {
-            List<Patient> lastShownList = model.getFilteredPersonList();
-
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            if (targetIndex.getZeroBased() >= model.getFilteredPersonList().size()) {
                 throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
             }
         }
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
 
         try {
             Patient patientToRemove;
-            if (indexIsExist) {
+            if (indexArguementIsExist) {
                 patientToRemove = model.removePatientFromQueueByIndex(targetIndex);
             } else {
                 patientToRemove = model.removePatientFromQueue();
@@ -2738,7 +692,7 @@ public class RemovePatientQueueCommand extends Command {
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof RemovePatientQueueCommand)
-                && this.indexIsExist == ((RemovePatientQueueCommand) other).indexIsExist
+                && this.indexArguementIsExist == ((RemovePatientQueueCommand) other).indexArguementIsExist
                 && this.targetIndex.equals(((RemovePatientQueueCommand) other).targetIndex);
     }
 }
@@ -2749,11 +703,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.List;
+
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.commons.events.ui.ShowPatientAppointmentRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -2764,55 +721,72 @@ public class ViewAppointmentCommand extends Command {
     public static final String COMMAND_WORD = "viewappt";
     public static final String COMMAND_ALIAS = "va";
 
-    public static final String MESSAGE_USAGE_PATIENT = COMMAND_WORD + ": View list of appointments of a patient. "
+    public static final String MESSAGE_USAGE_PATIENT_WITH_INDEX = COMMAND_WORD
+            + ": View list of appointments of a patient. "
             + "Parameters: "
-            + "NAME";
+            + "INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": View all patient appointments. ";
 
     public static final String MESSAGE_SUCCESS = "Listed all appointments";
     public static final String MESSAGE_SUCCESS_PATIENT = "Listed all appointments made by %1$s";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database";
-    private final NameContainsKeywordsPredicate predicate;
+    private Index targetIndex;
+    private final boolean indexArgumentIsExist;
 
     /**
      * Creates an ViewAppointmentCommand to view list of appointments
      */
     public ViewAppointmentCommand() {
-        this.predicate = null;
+        this.indexArgumentIsExist = false;
     }
 
     /**
      * Creates an ViewAppointmentCommand to view list of appointments the specified {@code Patient}
      */
-    public ViewAppointmentCommand(NameContainsKeywordsPredicate predicate) {
-        requireNonNull(predicate);
-        this.predicate = predicate;
+    public ViewAppointmentCommand(Index targetIndex) {
+        requireNonNull(targetIndex);
+        this.indexArgumentIsExist = true;
+        this.targetIndex = targetIndex;
     }
 
     @Override
     public CommandResult execute() throws CommandException {
 
-        if (this.predicate != null) {
+        preprocess();
 
-            Patient patientFound = model.getPatientFromList(predicate);
+        Patient targetPatient;
 
-            if (patientFound == null) {
-                throw new CommandException(MESSAGE_PERSON_NOT_FOUND);
-            }
-
-            EventsCenter.getInstance().post(new ShowPatientAppointmentRequestEvent(patientFound));
-
-            return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, patientFound.getName()));
+        if (indexArgumentIsExist) {
+            targetPatient = model.getPatientFromListByIndex(targetIndex);
+            EventsCenter.getInstance().post(new ShowPatientAppointmentRequestEvent(targetPatient));
+            return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, targetPatient.getName().fullName));
         } else {
             EventsCenter.getInstance().post(new ShowCalendarViewRequestEvent(model.getAppointmentEntryList()));
         }
+
         return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    /**
+     * Preprocess checking if index is valid and not out of bound of the patient list
+     */
+    private void preprocess() throws CommandException {
+        if (indexArgumentIsExist) {
+            List<Patient> lastShownList = model.getFilteredPersonList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this
                 || (other instanceof ViewAppointmentCommand
-                && predicate.equals(((ViewAppointmentCommand) other).predicate));
+                && this.indexArgumentIsExist == ((ViewAppointmentCommand) other).indexArgumentIsExist
+                && this.targetIndex.equals(((ViewAppointmentCommand) other).targetIndex));
     }
 }
 ```
@@ -2823,16 +797,21 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
-
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.appointment.DateTime;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object
  */
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
+
+    private static final int NO_OF_ARGUMENTS = 3;
+    private static final int PATIENT_INDEX_INDEX = 0;
+    private static final int DATE_INDEX = 1;
+    private static final int TIME_INDEX = 2;
 
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommandParser
@@ -2851,12 +830,24 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
         String[] argsArray = trimmedArgs.split("\\s");
 
-        if (argsArray.length < 3) {
+        if (argsArray.length < NO_OF_ARGUMENTS) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAppointmentCommand.MESSAGE_USAGE));
         }
-        return new AddAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(argsArray)), argsArray[1],
-                argsArray[2]);
+
+        try {
+            Index targetPatientIndex = ParserUtil.parseIndex(argsArray[PATIENT_INDEX_INDEX]);
+            DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[DATE_INDEX] + " "
+                    + argsArray[TIME_INDEX]);
+            if (DateTime.isBefore(argsArray[DATE_INDEX] + " " + argsArray[TIME_INDEX])) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        AddAppointmentCommand.MESSAGE_USAGE));
+            }
+            return new AddAppointmentCommand(targetPatientIndex, appointmentDateTime);
+        } catch (IllegalValueException e) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
+        }
     }
 }
 ```
@@ -2904,18 +895,22 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.appointment.DateTime;
 
 /**
  * Parses input arguments and creates a new DeleteAppointmentCommand object
  */
 public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
+
+    private static final int NO_OF_ARGUMENTS = 3;
+    private static final int PATIENT_INDEX_INDEX = 0;
+    private static final int DATE_INDEX = 1;
+    private static final int TIME_INDEX = 2;
+
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
      * and returns an DeleteAppointmentCommand object for execution.
@@ -2930,18 +925,22 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
                     DeleteAppointmentCommand.MESSAGE_USAGE));
         }
 
-        String[] nameKeywords = trimmedArgs.split("\\s");
+        String[] argsArray = trimmedArgs.split("\\s");
 
-        Index index;
-
-        try {
-            index = ParserUtil.parseIndex(nameKeywords[nameKeywords.length - 1]);
-        } catch (IllegalValueException ive) {
+        if (argsArray.length < NO_OF_ARGUMENTS) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     DeleteAppointmentCommand.MESSAGE_USAGE));
         }
 
-        return new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeywords)), index);
+        try {
+            Index targetPatientIndex = ParserUtil.parseIndex(argsArray[PATIENT_INDEX_INDEX]);
+            DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[DATE_INDEX] + " "
+                    + argsArray[TIME_INDEX]);
+            return new DeleteAppointmentCommand(targetPatientIndex, appointmentDateTime);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteAppointmentCommand.MESSAGE_USAGE));
+        }
     }
 }
 ```
@@ -2952,6 +951,20 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
                         LoginCommand.MESSAGE_USAGE));
 
             case ViewAppointmentCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case DeleteAppointmentCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+
+            case DeleteAppointmentCommand.COMMAND_ALIAS:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+            case AddAppointmentCommand.COMMAND_WORD:
+                throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
+                        LoginCommand.MESSAGE_USAGE));
+            case AddAppointmentCommand.COMMAND_ALIAS:
                 throw new ParseException(String.format(LoginCommand.MESSAGE_NOT_LOGGED_IN,
                         LoginCommand.MESSAGE_USAGE));
 
@@ -3028,6 +1041,9 @@ public class RemovePatientQueueCommandParser implements Parser<RemovePatientQueu
     /**
      * Parses the given {@code String} of arguments in the context of the RemovePatientQueueCommand
      * and returns an RemovePatientQueueCommand object for execution.
+     * If argument is empty, construct RemovePatientQueueCommand object without parameter and return the object.
+     * If arguement is not empty, parse argument to {@Index} object and construct RemovePatientQueueCommand object with
+     * parameter and return the object.
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override
@@ -3051,11 +1067,12 @@ public class RemovePatientQueueCommandParser implements Parser<RemovePatientQueu
 ``` java
 package seedu.address.logic.parser;
 
-import java.util.Arrays;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.ViewAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new ViewAppointmentCommand object
@@ -3065,6 +1082,9 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
     /**
      * Parses the given {@code String} of arguments in the context of the ViewAppointmentCommandParser
      * and returns an ViewAppointmentCommandParser object for execution.
+     * If argument is empty, construct ViewAppointmentCommand object without parameter and return the object.
+     * If arguement is not empty, parse argument to {@Index} object and construct ViewAppointmentCommand object with
+     * parameter and return the object.
      * @throws ParseException if the user input does not conform the expected format
      */
     @Override
@@ -3073,11 +1093,13 @@ public class ViewAppointmentCommandParser implements Parser<ViewAppointmentComma
             return new ViewAppointmentCommand();
         }
 
-        String trimmedArgs = args.trim();
-
-        String[] nameKeys = trimmedArgs.split("\\s");
-
-        return new ViewAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(nameKeys)));
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new ViewAppointmentCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    ViewAppointmentCommand.MESSAGE_USAGE_PATIENT_WITH_INDEX)));
+        }
     }
 }
 ```
@@ -3110,9 +1132,8 @@ public class Appointment {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Appointment // instanceof handles nulls
-                && this.appointmentDateTime.equals(((Appointment) other).appointmentDateTime)); // state check
+        return other == this || (other instanceof Appointment
+                && this.appointmentDateTime.equals(((Appointment) other).appointmentDateTime));
     }
 
     @Override
@@ -3136,9 +1157,13 @@ import com.calendarfx.model.Entry;
 public class AppointmentEntry {
     private static final int TIME_INTERVAL = 1800;
     private Entry<String> appointmentEntry;
+    private final Appointment appointmennt;
+    private final String patientName;
 
     public AppointmentEntry(Appointment appointment, String patientName) {
         requireAllNonNull(appointment, patientName);
+        this.appointmennt = appointment;
+        this.patientName = patientName;
         appointmentEntry = new Entry(patientName);
         appointmentEntry.setTitle(patientName);
         appointmentEntry.changeStartDate(appointment.getAppointmentDateTime().getLocalDate());
@@ -3151,11 +1176,14 @@ public class AppointmentEntry {
         return appointmentEntry;
     }
 
+    public Appointment getAppointment() {
+        return this.appointmennt;
+    }
+
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AppointmentEntry // instanceof handles nulls
-                && this.appointmentEntry.equals(((AppointmentEntry) other).appointmentEntry)); // state check
+        return other == this || (other instanceof AppointmentEntry && this.appointmentEntry
+                .equals(((AppointmentEntry) other).appointmentEntry));
     }
 
     @Override
@@ -3173,6 +1201,7 @@ import static java.util.Objects.requireNonNull;
 import java.time.LocalDate;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
 
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -3181,6 +1210,8 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Gurantees: details are present and not null, field values are validated, immutable
  */
 public class DateTime {
+    public static  final String MESSAGE_DATE_TIME_CONSTRAINTS = "Appointment date time should be in this format: \n"
+            + "D/M/YYYY HHMM (24-hour clock)";
     private static final DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("d/M/yyyy");
     private static final DateTimeFormatter timeFormatter = DateTimeFormatter.ofPattern("HHmm");
     private String dateString;
@@ -3213,7 +1244,7 @@ public class DateTime {
 
         try {
             compareDate = LocalDate.parse(dateTimeKeys[0], dateFormatter);
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             throw new ParseException(e.getMessage());
         }
         return compareDate.isBefore(LocalDate.now());
@@ -3233,11 +1264,19 @@ public class DateTime {
 
         try {
             compareDate = LocalDate.parse(dateTimeKeys[0], dateFormatter);
-        } catch (Exception e) {
+        } catch (DateTimeParseException e) {
             throw new ParseException(e.getMessage());
         }
 
         return (compareDate.isAfter(LocalDate.now()) || compareDate.isEqual(LocalDate.now()));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof DateTime
+                && this.dateString.equals(((DateTime) other).dateString)
+                && this.timeString.equals(((DateTime) other).timeString));
     }
 
     public LocalDate getLocalDate() {
@@ -3251,6 +1290,22 @@ public class DateTime {
     public LocalTime getEndLocalTime(int minutes) {
         return getLocalTime().plusMinutes(minutes);
     }
+
+    /**
+     * Returns true if a given string is a valid date time string.
+     */
+    public static boolean isValidDateTime(String dateTimeString) {
+        String trimmedArgs = dateTimeString.trim();
+        String[] dateTimeKeys = trimmedArgs.split("\\s");
+
+        try {
+            LocalDate.parse(dateTimeKeys[0], dateFormatter);
+            LocalTime.parse(dateTimeKeys[1], timeFormatter);
+        } catch (DateTimeParseException dtpe) {
+            return false;
+        }
+        return true;
+    }
 }
 ```
 ###### \src\main\java\seedu\address\model\appointment\UniqueAppointmentEntryList.java
@@ -3260,7 +1315,6 @@ package seedu.address.model.appointment;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Set;
 
@@ -3286,24 +1340,6 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
     public UniqueAppointmentEntryList() {}
 
     /**
-     * Returns all appointment entries in this list as a Set.
-     * This set is mutable and change-insulated against the internal list.
-     */
-    public Set<AppointmentEntry> toSet() {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        return new HashSet<>(internalList);
-    }
-
-    /**
-     * Replaces the appointment entries in this list with those in the argument appointment entry list.
-     */
-    public void setAppointmentEntry(Set<AppointmentEntry> appointmentEntries) {
-        requireAllNonNull(appointmentEntries);
-        internalList.setAll(appointmentEntries);
-        assert CollectionUtil.elementsAreUnique(internalList);
-    }
-
-    /**
      * Returns true if the list contains an equivalent appointment entry as the given argument.
      */
     public boolean contains(AppointmentEntry toCheck) {
@@ -3323,8 +1359,27 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
             throw new DuplicatedAppointmentEntryException();
         }
 
+        if (checkIfAppointmentIsBooked(toAdd)) {
+            throw new DuplicatedAppointmentEntryException();
+        }
+
         internalList.addAll(toAdd);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    /**
+     * Returns true if the same appointment has been made by other patient
+     */
+    public boolean checkIfAppointmentIsBooked(AppointmentEntry toCheck) {
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointment().getAppointmentDateTime()
+                    .equals(toCheck.getAppointment().getAppointmentDateTime())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override
@@ -3350,16 +1405,6 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
     }
 
     /**
-     * Returns true if the element in this list or equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueAppointmentEntryList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
-    /**
      * Ensures every appointment entry in the argument list exists in this object.
      */
     public void mergeFrom(UniqueAppointmentList from, String patientName) throws DuplicatedAppointmentEntryException {
@@ -3368,13 +1413,30 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
         for (Appointment appt : alreadyInside) {
             AppointmentEntry newEntry = new AppointmentEntry(appt, patientName);
 
-            if (!contains(newEntry)) {
+            boolean sameAppointment = checkIfAnotherAppointmentSameValueExist(appt);
+
+            if (!contains(newEntry) && !sameAppointment) {
                 add(newEntry);
             }
         }
 
         assert CollectionUtil.elementsAreUnique(internalList);
     }
+
+    /**
+     * Checks if there is appointment in the list has same values as the given appointment
+     */
+    public boolean checkIfAnotherAppointmentSameValueExist(Appointment toCheck) {
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointment().equals(toCheck)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -3386,7 +1448,13 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
      */
     public boolean remove(AppointmentEntry toRemove) {
         requireNonNull(toRemove);
-        return internalList.remove(toRemove);
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointment().equals(toRemove.getAppointment())) {
+                return internalList.remove(apptEntry);
+            }
+        }
+        return false;
     }
 
     /**
@@ -3412,7 +1480,6 @@ import java.util.Set;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.DuplicateDataException;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -3561,16 +1628,17 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
-     * Returns true if the element is deleted..
+     * Removes an appointment from the appointment list
+     * @throws AppoinmentNotFoundException if the appointment does not exist in the list
      */
-    public boolean remove(Index index) {
-        requireNonNull(index);
-        Appointment appointmentToDelete = getAppointmentByIndex(index);
-        return internalList.remove(appointmentToDelete);
-    }
+    public void remove(Appointment targetAppointment) throws AppoinmentNotFoundException {
+        requireNonNull(targetAppointment);
 
-    public Appointment getAppointmentByIndex(Index index) {
-        return (Appointment) internalList.get(index.getZeroBased());
+        if (!contains(targetAppointment)) {
+            throw new AppoinmentNotFoundException();
+        }
+
+        internalList.remove(targetAppointment);
     }
 
     /**
@@ -3580,6 +1648,12 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         protected DuplicatedAppointmentException() {
             super("Operation would result in duplicate appointments.");
         }
+    }
+
+    /**
+     * Signals that an operation cannot be performed object that is not found
+     */
+    public static class AppoinmentNotFoundException extends Exception {
     }
 }
 ```
@@ -3608,17 +1682,18 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
 ```
 ###### \src\main\java\seedu\address\model\Imdb.java
 ``` java
+    ////appointment-level operations
     /**
      * remove a patient appointment
      * @throws UniqueAppointmentList.DuplicatedAppointmentException
      * @throws UniqueAppointmentEntryList.DuplicatedAppointmentEntryException
      */
-    public void addAppointment(Patient patient, String dateTimeString) throws
+    public void addAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
-        Appointment newAppt = new Appointment(dateTimeString);
+        Appointment newAppt = new Appointment(dateTime.toString());
         patient.addAppointment(newAppt);
-        addAppointmentEntry(newAppt, patient.getName().toString());
+        addAppointmentEntry(newAppt, patient.getName().fullName);
     }
 
     private void addAppointmentEntry(Appointment appt, String patientName) throws
@@ -3628,21 +1703,42 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     /**
+     * Remove a patient's appointment
+     */
+    public void deletePatientAppointment(Patient patient, Appointment targetAppointment) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        requireAllNonNull(patient, targetAppointment);
+        patient.deletePatientAppointment(targetAppointment);
+        deleteAppointmentEntry(targetAppointment, patient.getName().fullName);
+    }
+
+    private void deleteAppointmentEntry(Appointment targetAppointment, String patientName) {
+        AppointmentEntry appointmentEntry = new AppointmentEntry(targetAppointment, patientName);
+        appointments.remove(appointmentEntry);
+    }
+
+    //// visiting queue-level operations
+    /**
      * Adds a patient to the visiting queue.
-     * Also checks the new patient's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the patient to point to those in {@link #tags}.
-     *
-     * @throws DuplicatePatientException if an equivalent patient already exists.
+     * @throws DuplicatePatientException if an equivalent patient index already exists.
      */
     public void addPatientToQueue(int p) throws DuplicatePatientException {
         requireNonNull(p);
         visitingQueue.add(p);
     }
 
+    /**
+     * Removes the first patient from the visiting queue.
+     * @throws PatientNotFoundException if visiting queue is empty.
+     */
     public int removePatientFromQueue() throws PatientNotFoundException {
         return visitingQueue.removePatient();
     }
 
+    /**
+     * Removes a specific patient from the visiting queue by their index in the patient list.
+     * @throws PatientNotFoundException if visiting queue is empty or the patient is not in the visiting queue.
+     */
     public void removePatientFromQueueByIndex(int p) throws PatientNotFoundException {
         visitingQueue.removePatient(p);
     }
@@ -3680,49 +1776,52 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return queueList;
     }
 
-
-    /**
-     * Remove a patient's appointment
-     * @return true if the appointment is deleted successfully
-     */
-    public boolean deletePatientAppointment(Patient patient, Index index) {
-        requireAllNonNull(patient, index);
-        return patient.deletePatientAppointment(index);
-    }
-
 ```
 ###### \src\main\java\seedu\address\model\Model.java
 ``` java
-    /** Adds patient into visiting queue
-     * @throws NullPointerException if {@code Patient} is null.*/
-    Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException,
-            PatientNotFoundException;
+    /** Adds patient into visiting queue.
+     * @throws NullPointerException if {@code targetIndex} is null.
+     * @throws DuplicatePatientException if {@code targetIndex} already exist in the visiting queue.*/
+    Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException;
 
-    /** Remove the first patient from the visiting queue*/
+    /** Remove the first patient from the visiting queue
+     * @throws PatientNotFoundException if the visiting queue is empty.*/
     Patient removePatientFromQueue() throws PatientNotFoundException;
 
-    /** Remove a specific patient from the visiting queue*/
+    /** Remove a specific patient from the visiting queue
+     * @throws PatientNotFoundException if {@code targetIndex} cannot be found in the visiting queue or the visiting
+     * queue is empty.*/
     Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException;
 
-    /** Get patient visiting queue*/
+    /** Get patient visiting queue (contain patient objects)*/
     ObservableList<Patient> getVisitingQueue();
 
     /** Get Patient from the patient list */
     Patient getPatientFromList(Predicate<Patient> predicate);
 
+    /** Get patient visiting queue (contain patient index)*/
+    ObservableList<Integer> getPatientListIndexInQueue();
+
+    /** Get patient source index in the patient filtered list */
+    int getPatientSourceIndexInList(int targetIndex);
+
+    /** Check if the patient is in the queue */
+    boolean checkIfPatientInQueue(Patient targetPatient);
+
+    /** Get Patient from the patient list by index */
+    Patient getPatientFromListByIndex(Index targetIndex);
+
     /** Delete a patient's appointment*/
-    boolean deletePatientAppointment(Patient patient, Index index);
+    void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws
+            UniqueAppointmentList.AppoinmentNotFoundException;
 
     /** Get appointment entries*/
     ObservableList<AppointmentEntry> getAppointmentEntryList();
 
-    /** Delete a patient's appointment*/
-    void addPatientAppointment(Patient patient, String dateTimeString) throws
+    /** Add a patient's appointment*/
+    void addPatientAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
-
-    /** Get list index of patient in the queue*/
-    ObservableList<Integer> getPatientListIndexInQueue();
 }
 ```
 ###### \src\main\java\seedu\address\model\ModelManager.java
@@ -3731,18 +1830,10 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         raise(new AppointmentChangedEvent(patient, imdb));
     }
 
-    private void indicateCalendarChanged() {
-        raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
-    }
-
-
-    private void indicateQueueChanged() {
-        raise(new QueueChangedEvent(imdb));
-    }
-
 ```
 ###### \src\main\java\seedu\address\model\ModelManager.java
 ``` java
+    @Override
     public Patient getPatientFromList(Predicate<Patient> predicate) {
         filteredPatients.setPredicate(predicate);
         if (filteredPatients.size() > 0) {
@@ -3754,25 +1845,25 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     }
 
     @Override
-    public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
-        requireAllNonNull(patient, index);
-        boolean isDeleteSuccess = patient.deletePatientAppointment(index);
-        indicateAppointmentChanged(patient);
-        return isDeleteSuccess;
+    public Patient getPatientFromListByIndex(Index targetIndex) {
+        return filteredPatients.get(targetIndex.getZeroBased());
     }
 
     @Override
-    public ObservableList<AppointmentEntry> getAppointmentEntryList() {
-        return imdb.getAppointmentEntryList();
+    public int getPatientSourceIndexInList(int targetIndex) {
+        return filteredPatients.getSourceIndex(targetIndex) + 1;
     }
 
+    //=========== Visiting Queue Accessors =============================================================
+
     @Override
-    public synchronized void addPatientAppointment(Patient patient, String dateTimeString) throws
-            UniqueAppointmentList.DuplicatedAppointmentException,
-            UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
-        requireNonNull(patient, dateTimeString);
-        imdb.addAppointment(patient, dateTimeString);
-        indicateAppointmentChanged(patient);
+    public boolean checkIfPatientInQueue(Patient patientToDelete) {
+        int targetIndex = filteredPatients.getSourceIndex(filteredPatients.indexOf(patientToDelete));
+        if (imdb.getUniquePatientQueueNo().contains(targetIndex)) {
+            return true;
+        }
+
+        return false;
     }
 
     @Override
@@ -3783,9 +1874,10 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     @Override
     public synchronized Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
         requireNonNull(targetIndex);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         int patientIndex = filteredPatients.getSourceIndex(targetIndex.getZeroBased());
         imdb.addPatientToQueue(patientIndex);
-        indicateQueueChanged();
+        indicateAddressBookChanged();
 
         return filteredPatients.get(targetIndex.getZeroBased());
     }
@@ -3793,14 +1885,15 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     @Override
     public synchronized Patient removePatientFromQueue() throws PatientNotFoundException {
         int patientIndexToRemove = imdb.removePatientFromQueue();
-        indicateQueueChanged();
+        indicateAddressBookChanged();
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return filteredPatients.get(patientIndexToRemove);
     }
 
     @Override
     public Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException {
         imdb.removePatientFromQueueByIndex(targetIndex.getZeroBased());
-        indicateQueueChanged();
+        indicateAddressBookChanged();
         return filteredPatients.get(targetIndex.getZeroBased());
     }
 
@@ -3809,6 +1902,30 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
         return imdb.getUniquePatientQueue();
     }
 
+    //=========== Appointment List Accessors =============================================================
+
+    @Override
+    public synchronized void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        requireAllNonNull(patient, targetAppointmentDateTime);
+        Appointment targetAppointment = new Appointment(targetAppointmentDateTime.toString());
+        imdb.deletePatientAppointment(patient, targetAppointment);
+        indicateAppointmentChanged(patient);
+    }
+
+    @Override
+    public ObservableList<AppointmentEntry> getAppointmentEntryList() {
+        return imdb.getAppointmentEntryList();
+    }
+
+    @Override
+    public synchronized void addPatientAppointment(Patient patient, DateTime dateTime) throws
+            UniqueAppointmentList.DuplicatedAppointmentException,
+            UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
+        requireAllNonNull(patient, dateTime);
+        imdb.addAppointment(patient, dateTime);
+        indicateAppointmentChanged(patient);
+    }
 ```
 ###### \src\main\java\seedu\address\model\ReadOnlyImdb.java
 ``` java
@@ -3819,14 +1936,14 @@ public class UniqueAppointmentList implements Iterable<Appointment> {
     ObservableList<AppointmentEntry> getAppointmentEntryList();
 
     /**
-     * Returns an unmodifiable view of the patient queue.
+     * Returns an unmodifiable view of the patient visiting queue.
      * This list will not contain any duplicate patient in the queue.
      */
     ObservableList<Patient> getUniquePatientQueue();
 
     /**
-     * Returns an unmodifiable view of the patient queue. no
-     * This list will not contain any duplicate patient in the queue.
+     * Returns an unmodifiable view of the patient visiting queue indices.
+     * This list will not contain any duplicate patient index in the queue.
      */
     ObservableList<Integer> getUniquePatientQueueNo();
 }
@@ -3861,9 +1978,10 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Adds a patient to the visiting queue.
+     * Adds a patient into visiting queue.
      *
-     * @throws DuplicatePatientException if the patient index to add is a duplicate of an existing patient in the queue.
+     * @throws DuplicatePatientException if the patient index to add is a duplicate of an existing patient index in the
+     * queue.
      */
     public void add(int patientIndex) throws DuplicatePatientException {
         requireNonNull(patientIndex);
@@ -3873,10 +1991,6 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
         }
 
         visitingQueue.add(patientIndex);
-    }
-
-    public int getNextPatient() {
-        return visitingQueue.peekFirst();
     }
 
     /**
@@ -3916,11 +2030,10 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Returns true if the queue contains an equivalent patient as the given argument.
+     * Returns true if the queue contains an equivalent patient index as the given argument.
      */
     public boolean contains(int toCheck) {
         requireNonNull(toCheck);
-        boolean exist = visitingQueue.contains(toCheck);
         return visitingQueue.contains(toCheck);
     }
 
@@ -3931,8 +2044,8 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniquePatientVisitingQueue // instanceof handles nulls
+        return other == this
+                || (other instanceof UniquePatientVisitingQueue
                 && this.visitingQueue.equals(((UniquePatientVisitingQueue) other).visitingQueue));
     }
 
@@ -3950,10 +2063,11 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
     }
 
     /**
-     * Replaces the Queue in this list with those in the argument queue list.
+     * Replaces the visiting queue in this list with those in the argument visiting queue.
      */
     public void setVisitingQueue(Set<Integer> queueNos) {
         requireAllNonNull(queueNos);
+        visitingQueue.clear();
         visitingQueue.addAll(queueNos);
         assert CollectionUtil.elementsAreUnique(visitingQueue);
     }
@@ -3967,13 +2081,6 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleAppointmentChangedEvent(AppointmentChangedEvent ace);
-
-    /**
-     * Saves the current version of the IMDB to the hard disk.
-     *   Creates the data file if it is missing.
-     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
-     */
-    void handleQueueChangedEvent(QueueChangedEvent qce);
 }
 ```
 ###### \src\main\java\seedu\address\storage\StorageManager.java
@@ -3988,18 +2095,6 @@ public class UniquePatientVisitingQueue implements Iterable<Integer> {
             raise(new DataSavingExceptionEvent(e));
         }
     }
-
-    @Override
-    @Subscribe
-    public void handleQueueChangedEvent(QueueChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event, "Local data changed, saving to file"));
-        try {
-            saveAddressBook(event.data);
-        } catch (IOException e) {
-            raise(new DataSavingExceptionEvent(e));
-        }
-    }
-
 }
 ```
 ###### \src\main\java\seedu\address\storage\XmlAdaptedAppointment.java
@@ -4201,9 +2296,11 @@ public class CalendarPanel extends UiPart<Region> {
         super(FXML);
         calendarSource = new CalendarSource("calendar");
         calendar = new Calendar("calendar");
-        calendar.setReadOnly(true);
         calendar.setStyle(Calendar.Style.STYLE2);
         calendarSource.getCalendars().add(calendar);
+
+        diabledEventHandlerForEntrySelectionEvent();
+        disabledCreateEntryWithDoubleClicked();
 
         setConnections(entries);
         registerAsAnEventHandler(this);
@@ -4218,19 +2315,25 @@ public class CalendarPanel extends UiPart<Region> {
         for (AppointmentEntry entry : entries) {
             calendar.addEntry(entry.getAppointmentEntry());
         }
+        calendarView.getCalendarSources().add(calendarSource);
+    }
 
+    /**
+     * Disabled double click to add new entry in calendar
+     */
+    public void disabledCreateEntryWithDoubleClicked() {
         calendarView.setEntryFactory(new Callback<DateControl.CreateEntryParameter, Entry<?>>() {
             @Override
             public Entry<?> call(DateControl.CreateEntryParameter param) {
                 return null;
             }
         });
-
-        calendarView.getCalendarSources().add(calendarSource);
-        setEventHandlerForEntrySelectionEvent();
     }
 
-    public void setEventHandlerForEntrySelectionEvent() {
+    /**
+     * Disable pop over when clicked on the appointment entry
+     */
+    public void diabledEventHandlerForEntrySelectionEvent() {
         calendarView.setEntryDetailsPopOverContentCallback(new Callback<DateControl.EntryDetailsPopOverContentParameter,
                 Node>() {
             @Override
@@ -4277,6 +2380,15 @@ public class CalendarPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handlePatientPanelSelectionChangedEvent(PatientPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        browserPanel = new BrowserPanel();
+        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPanel.loadPersonPage(event.getNewSelection().patient);
+    }
+
+
+    @Subscribe
     private void handleShowCalendarAppointment(ShowCalendarViewRequestEvent scvre) {
         logger.info(LogsCenter.getEventHandlingLogMessage(scvre));
         calendarPanel = new CalendarPanel(scvre.appointmentEntries);
@@ -4294,7 +2406,7 @@ import javafx.scene.layout.Region;
 import seedu.address.model.patient.Patient;
 
 /**
- * An UI component that displays information of a {@code queue}.
+ * An UI component that displays {@code Patient}'s name in the visiting queue.
  */
 public class QueueCard extends UiPart<Region> {
 
@@ -4335,8 +2447,6 @@ public class QueueCard extends UiPart<Region> {
 ``` java
 package seedu.address.ui;
 
-import java.util.logging.Logger;
-
 import org.fxmisc.easybind.EasyBind;
 
 import com.google.common.eventbus.Subscribe;
@@ -4346,17 +2456,15 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.QueueChangedEvent;
+import seedu.address.commons.events.model.ImdbChangedEvent;
 import seedu.address.model.patient.Patient;
 
 /**
- * Panel containing the queue.
+ * Panel containing the visiting queue.
  */
 public class QueuePanel extends UiPart<Region> {
 
     private static final String FXML = "QueueListPanel.fxml";
-    private final Logger logger = LogsCenter.getLogger(QueuePanel.class);
 
     @FXML
     private ListView<QueueCard> queueCardListView;
@@ -4376,8 +2484,8 @@ public class QueuePanel extends UiPart<Region> {
     }
 
     @Subscribe
-    public void handleQueueChangedEvent(QueueChangedEvent qce) {
-        setConnections(qce.data.getUniquePatientQueue(), qce.data.getUniquePatientQueueNo());
+    public void handleImdbChangedEvent(ImdbChangedEvent ice) {
+        setConnections(ice.data.getUniquePatientQueue(), ice.data.getUniquePatientQueueNo());
     }
 
     /**

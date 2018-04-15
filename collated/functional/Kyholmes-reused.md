@@ -103,13 +103,6 @@
      */
     public static void assertCardDisplaysPerson(Patient expectedPatient, PatientCardHandle actualCard) {
         assertEquals(expectedPatient.getName().fullName, actualCard.getName());
-        assertEquals(expectedPatient.getNric().value, actualCard.getNric());
-        assertEquals(expectedPatient.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPatient.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPatient.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPatient.getDob().value, actualCard.getDob());
-        assertEquals(expectedPatient.getBloodType().value, actualCard.getBloodType());
-        assertEquals(expectedPatient.getRemark().value, actualCard.getRemark());
         assertEquals(expectedPatient.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
                 actualCard.getTags());
     }

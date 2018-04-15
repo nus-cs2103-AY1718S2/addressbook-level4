@@ -17,7 +17,7 @@ Responsibilities: Logic, UI, Storage
 
 '''
 
-=== Ryan Ang
+=== Ryan Ang Jia Yong
 image::ryanangjy.jpeg[width="144", align="left"]
 {empty}https://github.com/RyanAngJY[github] | <<RyanAng#,portfolio>>
 
@@ -35,7 +35,7 @@ Responsibilities: Logic, UI, Model
 
 '''
 
-=== Nicholas Ang
+=== Nicholas Ang Cheng Xue
 image::nicholasangcx.jpeg[width="144", align="left"]
 {empty}https://github.com/nicholasangcx[github] | <<NicholasAng#, portfolio>>
 

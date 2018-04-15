@@ -16,7 +16,7 @@ endif::[]
 By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 [.print-only]
-Please visit the https://recirecipe.netlify.com/developerguide[online page] to view the Developer Guide in full formatting.
+Please visit the https://recirecipe.netlify.com/developerguide[online page] to view the Developer Guide in full formatting (some images may only be viewable on the online page).
 
 ---
 
@@ -685,6 +685,15 @@ public static Optional<Url> parseUrlOnInitialAdd(Optional<String> url) throws Il
 * **Alternative 2:** Store URL property in the same fashion as tag labels.
 ** Pros: The `_Recipe_` class has better separation of optional and compulsory properties.
 ** Cons: The more complex implementation may confuse new developers, and the interaction with other components may become needlessly complex.
+
+===== Aspect: Checking for URL validity.
+
+* **Alternative 1:** Ping the given URL to check if the URL is valid.
+** Pros: Ensures that all embedded URL are loadable on the browser panel.
+** Cons: Adding a URL requires Internet connection. Otherwise, a valid URL may be considered invalid as it cannot be pinged.
+* **Alternative 2 (current choice):** Check if given URL follows standard URL format (eg. starts with https://).
+** Pros: User has no need for Internet connection to add a valid URL.
+** Cons: User is responsible for ensuring URL is loadable on a browser.
 // end::embedded-url[]
 
 // tag::facebook-compatibility[]
@@ -1123,6 +1132,30 @@ public static boolean isColorDark(String color) {
 ** Cons: The implementation is slightly more complicated.
 // end::randomised-tag-colors[]
 
+=== Searching by ingredients
+[discrete]
+// tag::ingredient-search[]
+==== Current implementation
+The user input is parsed and separated into a `_String_` array of keywords that represent each ingredient in `_IngredientCommandParser_`. This array is then passed to `_IngredientContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their ingredients. The matching is case-insensitive and the predicate will only be true when the recipe contains ALL ingredients in the parsed array.
+The implementation of that can be seen below:
+[source,java]
+----
+@Override
+public boolean test(Recipe recipe) {
+    int matches = 0;
+    String ingredients = recipe.getIngredient().toString().replaceAll(",", " ");
+    for (String keyword : keywords) {
+        if (StringUtil.containsWordIgnoreCase(ingredients, keyword)) {
+            matches++;
+        }
+    }
+    return matches == keywords.size();
+}
+----
+This entire list of predicates is then passed into `_IngredientCommand_` which uses the `updateFilteredRecipeList()` method of `Model` to change the list of recipes displayed to those that matched the ingredients.
+Since the sequence is very similar to searching by tags, the sequence diagram of this entire process can be seen in the <<fig-TagCommandSD>> under <<tagSearch>> below.
+// end::ingredient-search[]
+
 [[tagSearch]]
 === Searching by tags
 [discrete]
@@ -1226,30 +1259,6 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
 ** Pros: This approach is significantly easier to implement, requiring only 3-4 lines in `_BrowserPanel_`.
 ** Cons: However, we don't get any extra information for pre-processing and this could lead to redundant requests to the server.
 // end::internet-search-consideration[]
-
-=== Searching by ingredients
-[discrete]
-// tag::ingredient-search[]
-==== Current implementation
-The user input is parsed and separated into a `_String_` array of keywords that represent each ingredient in `_IngredientCommandParser_`. This array is then passed to `_IngredientContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their ingredients. The matching is case-insensitive and the predicate will only be true when the recipe contains ALL ingredients in the parsed array.
-The implementation of that can be seen below:
-[source,java]
-----
-@Override
-public boolean test(Recipe recipe) {
-    int matches = 0;
-    String ingredients = recipe.getIngredient().toString().replaceAll(",", " ");
-    for (String keyword : keywords) {
-        if (StringUtil.containsWordIgnoreCase(ingredients, keyword)) {
-            matches++;
-        }
-    }
-    return matches == keywords.size();
-}
-----
-This entire list of predicates is then passed into `_IngredientCommand_` which uses the `updateFilteredRecipeList()` method of `Model` to change the list of recipes displayed to those that matched the ingredients.
-Since the sequence is very similar to searching by tags, the sequence diagram of this entire process can be seen in the <<fig-TagCommandSD>> under <<tagSearch>> below.
-// end::ingredient-search[]
 
 === Undo/Redo feature
 ==== Current implementation
@@ -2170,9 +2179,112 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app.
 * Expected outcome: The most recent window size and location is retained.
 
-=== Commands
+=== Features / Commands
 
-Sample commands can be found in the cheatsheet in the User Guide. Here are some corner cases for some of the commands:
+Sample commands can be found in the cheatsheet in the User Guide. Here are some test cases for some of the features:
+
+==== Changing theme
+
+. Changing theme using the `theme` command:
+* Steps:
+.. Use a new version of the app you just downloaded and have yet to launch.
+.. Launch the app.
+.. Type `*theme*` into the command box, submit the command.
+* Expected outcome: Initially, the app should have a clean white theme. After the command execution, the theme is changed into a pinkish-orange one.
+
+. Changing theme using the shortcut kbd:[F2]:
+* Steps:
+.. Use a new version of the app you just downloaded and have yet to launch.
+.. Launch the app.
+.. Press kbd:[F2].
+* Expected outcome: Initially, the app should have a clean white theme. After the command execution, the theme is changed into a pinkish-orange one.
+
+==== Downloading an image
+
+. Downloading an online image normally:
+* Steps:
+.. Ensure that you have Internet connection.
+.. Copy this command into the command box: `*add name/Doge img/https://i.imgur.com/FhRsgCK.jpg url/https://google.com*` then submit the command.
+* Expected outcome: A dummy recipe is added to the recipe book with the image downloaded. You can find the image at "data/images/2A78C63135CCB8BCECEF189FE0CD834C.jpg".
+
+. Trying to download a non-image link:
+* Steps:
+.. Ensure that you have Internet connection.
+.. Copy this command into the command box: `*add name/Doge img/https://google.com*` then submit the command.
+* Expected outcome: The app should inform you that the image path given is invalid.
+
+. Adding an online image without Internet connection:
+* Steps:
+.. Copy this command into the command box: `*search hainanese chicken rice*`, execute the command.
+.. Select the first result, execute `*parse*` but *do not* submit the `add` command.
+.. Disconnect your machine from the Internet.
+.. Now execute the `add` command.
+* Expected outcome: The recipe will still be added normally as it should but the image field will take a null reference instead of the image URL as the app cannot download the image.
+
+==== Embedding a URL
+
+* Steps:
+.. Select a recipe.
+.. Edit the URL of the recipe to another valid URL.
+* Expected outcome: The browser panel will update to show the new embedded URL.
+
+==== Inserting an image
+
+. Dealing with changed image path name:
+* Steps:
+.. Add an image to a recipe (you can use the *`edit`* command).
+.. Change the original image file name or re-locate it to another folder.
+.. Re-launch the app.
+* Expected outcome: The app will still show the added image.
+
+. Dealing with deleted image:
+* Steps:
+.. Add an image to a recipe.
+.. Delete the original image file.
+.. Re-launch the app.
+* Expected outcome: The app will still show the added image.
+
+==== Keyboard shortcuts
+
+Please see the User Guide for the full list of keyboard shortcuts.
+
+==== Multiple lines input
+
+. Submitting an `add` command with multiple lines:
+* Steps:
+.. Type this in the command box: `*add name/Doge*`, then press kbd:[Shift]+kbd:[Enter], then type `*url/https://google.com*`.
+.. Submit the command.
+* Expected outcome: The recipe will be added normally.
+
+. Pasting a command with multiple lines:
+* Steps:
+.. You can copy the code block below into the command box: +
++
+```
+add
+name/Spaghetti alla Amatriciana
+ingredient/olive oil, onion, garlic, bacon, white wine, tomatoes, salt, pepper, oregano, spaghetti, Parmesan cheese
+instruction/In pan, heat oil (olive or sunflower oil) over medium heat.
+When oil is hot, add onion and garlic.
+Fry, stirring occasionally for 5 to 7 minutes or until onion is soft but not brown.
+Stir in the bacon and cook for another 4 minutes.
+Stir constantly.
+Add wine and bring liquid to boil.
+Boil rapidly for 2 minutes, then add the tomatoes.
+Stir in the salt, pepper and oregano and bring liquid to boil again.
+Reduce heat to medium low and continue cooking for 15 minutes more.
+Stir occasionally.
+Remove from heat.
+Put spaghetti in large deep serving dish and pour over the sauce, using 2 large spoons.
+Toss mixture until thoroughly coated with sauce.
+Sprinkle over the grated cheese and serve at once.
+img/https://vignette.wikia.nocookie.net/recipes/images/1/1d/Spaghettiamatriciana.jpg/revision/latest/scale-to-width-down/340?cb=20150922183313
+url/http://recipes.wikia.com/wiki/Spaghetti_alla_Amatriciana?useskin=wikiamobile tag/Onion tag/Garlic tag/Bacon tag/WhiteWine tag/Tomato tag/Spaghetti tag/ParmesanCheese
+```
+.. Submit the command.
+* Expected outcome: The recipe will be added normally.
+
+==== Searching and parsing a recipe
 
 . Searching without Internet connection:
 * Steps:
@@ -2185,12 +2297,38 @@ Sample commands can be found in the cheatsheet in the User Guide. Here are some 
 .. Type `*search*` in the command box then press kbd:[Enter].
 * Expected outcome: The result box will say that it is an invalid command and show the correct command format.
 
-. Adding an online image without Internet connection:
+. Parsing a recipe:
 * Steps:
-.. Run `search hainanese chicken rice`, select the first result, run `parse` *but do not submit the `add` command*.
-.. Disconnect your machine from the Internet.
-.. Now execute the `add` command.
-* Expected outcome: The recipe will still be added normally as it should but the image field will take a null reference instead of the image URL as the app cannot download the image.
+.. Clear the recipe book with the command `clear`.
+.. Copy this command into the command box: `*search hainanese chicken rice*`, execute the command.
+.. Select the first result, execute `*parse*`.
+* Expected outcome: An `add` command with all data pre-filled will appear in the command box.
+
+. Parsing a blank page:
+* Steps:
+.. Close the app then reopen it.
+.. Execute `*parse*`.
+* Expected outcome: Nothing will appear in the command box.
+
+==== Sharing a recipe
+
+. Sharing a recipe with an embedded URL:
+* Steps:
+.. Execute share command on a recipe with an embedded URL.
+.. Log in to Facebook account
+* Expected outcome: A Facebook dialog feed will appear with an embedded URL link.
+
+. Sharing a recipe with an embedded but invalid URL:
+* Steps:
+.. Execute share command on a recipe with an embedded invalid URL.
+.. Log in to Facebook account
+* Expected outcome: Your Facebook feed will appear.
+
+. Sharing a recipe without an embedded URL:
+* Steps:
+.. Execute share command on a recipe without an embedded URL.
+.. Log in to Facebook account
+* Expected outcome: Your Facebook feed will appear.
 
 === Missing/corrupted data
 
@@ -2208,7 +2346,7 @@ Sample commands can be found in the cheatsheet in the User Guide. Here are some 
 
 . Dealing with missing images:
 * Steps:
-.. Delete the data/images folder.
+.. Delete the "data/images" folder.
 .. Re-launch the app.
 * Expected outcome: All images will not display and all recipes will have a null image reference for the image field instead of the old file path.
 

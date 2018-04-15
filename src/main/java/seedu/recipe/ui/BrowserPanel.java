@@ -121,7 +121,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
-     * Returns true if BrowserPanel is loaded with a page that is neither null nor default
+     * Returns true if BrowserPanel is loaded with a page that is neither null nor default nor a non-URL display
      */
     private boolean isLoaded() {
         URL lightTheme = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE_LIGHT);
@@ -135,8 +135,8 @@ public class BrowserPanel extends UiPart<Region> {
             try {
                 loadedUrl = new URL(loadedUrlString);
             } catch (MalformedURLException murle) {
-                throw new AssertionError("Something wrong happened when the app is trying to read the "
-                        + "url loaded inside BrowserPanel. This should not happen.", murle);
+                logger.info("BrowserPanel is loaded with a custom recipe display.");
+                return true;
             }
             boolean isLightThemeLoaded = loadedUrl.equals(lightTheme);
             boolean isGirlThemeLoaded = loadedUrl.equals(girlTheme);

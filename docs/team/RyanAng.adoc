@@ -75,6 +75,7 @@ Listed below are other contributions I have made to the ReciRecipé project:
 
 * Other Documentation Contributions:
 ** Contributed to User Stories and Use Cases.
+** Contributed to instructions for manual testing of the listed features above.
 
 ---
 

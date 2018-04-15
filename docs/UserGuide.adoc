@@ -17,7 +17,7 @@ endif::[]
 By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 [.print-only]
-Please visit the https://recirecipe.netlify.com/userguide[online page] to view the User Guide in full formatting.
+Please visit the https://recirecipe.netlify.com/userguide[online page] to view the User Guide in full formatting (some images may only be viewable on the online page).
 
 ---
 
@@ -50,7 +50,7 @@ This app will not work with earlier versions of Java 8.
 +
 [[java-download]]
 .JRE license agreement
-image::JREDownload.PNG[width="500"]
+image::JREdownload.png[width="500"]
 +
 .. Then select the version according to what system you are running on. The file you need to download will be around 60-80MB in size. +
 +
@@ -64,7 +64,7 @@ If you don't know whether to download the x64 or x86 version, you can download a
 +
 [[recirecipe-gui]]
 .ReciRecipé's user interface
-image::Ui.PNG[width="790"]
+image::Ui.png[width="790"]
 {nbsp} +
 Referring to <<recirecipe-gui>> above:
 .. On the left section, we have the display page that gives more details about a specific recipe selected.
@@ -227,6 +227,7 @@ Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INST
 * At least one of the optional fields *must* be provided.
 * Existing values will be updated to the input values.
 * To remove an image attached to a recipe, use "-" as a placeholder (eg. *`edit 1 img/-`*).
+* To remove an embedded URL of a recipe, use "-" as a placeholder (eg. *`edit 1 url/-`*).
 * When editing tags, the existing tags of the recipe will be removed, i.e. adding of tags is not cumulative.
 * You can remove all the recipe's tags by typing `t/` without specifying any tags after it.
 ****
@@ -429,6 +430,9 @@ Format: `select INDEX`
 
 ****
 * If the selected recipe has a URL, the in-app browser will load that URL. Otherwise, it will load the recipe contents.
+* If the selected recipe has a valid embedded URL, the in-app browser will load that URL.
+* If the selected recipe has an invalid embedded URL, the in-app browser will not update upon a recipe selection change.
+* If the recipe has no embedded URL, the in-app browser will load the recipe contents.
 * The result box will always show the recipe content regardless of whether there is an embedded URL or not.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer*, e.g. "1, 2, 3, ...".
@@ -674,16 +678,16 @@ Uploads the 6th recipe in the recipe book to the server.
 As a work around, hold kbd:[Shift] and right click on any blank space in the folder you are using as the home folder for ReciRecipé (refer to <<right-click-windows>>). +
 [[right-click-windows]]
 .Windows context menu
-image::WindowsContext.PNG[width="276"]
+image::WindowsContext.png[width="276"]
 {nbsp} +
 Select *Open command window here* (earlier versions of Windows) or *Open PowerShell window here* (Windows 10), type in `java -jar recipebook.jar`. +
 After this step, you should get something like <<powershell>> or <<cmd>> depending on the version of Windows you are running:
 [[powershell]]
 .Windows PowerShell
-image::WindowsPowerShell.PNG[width="400"]
+image::WindowsPowerShell.png[width="400"]
 [[cmd]]
 .Windows command
-image::WindowsCMD.PNG[width="400"]
+image::WindowsCMD.png[width="400"]
 {nbsp} +
 Then press kbd:[Enter] to launch ReciRecipé.
 

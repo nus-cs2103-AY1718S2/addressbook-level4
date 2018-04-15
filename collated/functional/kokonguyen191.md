@@ -1161,8 +1161,8 @@ public class ImageDownloader {
             try {
                 loadedUrl = new URL(loadedUrlString);
             } catch (MalformedURLException murle) {
-                throw new AssertionError("Something wrong happened when the app is trying to read the "
-                        + "url loaded inside BrowserPanel. This should not happen.", murle);
+                logger.info("BrowserPanel is loaded with a custom recipe display.");
+                return true;
             }
             boolean isLightThemeLoaded = loadedUrl.equals(lightTheme);
             boolean isGirlThemeLoaded = loadedUrl.equals(girlTheme);

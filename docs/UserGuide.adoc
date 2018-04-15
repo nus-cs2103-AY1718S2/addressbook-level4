@@ -101,7 +101,7 @@ image::ui_walkthrough.png[width="990"]
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Some commands have aliases that can be used to replace the command word. e.g. `add n/John Doe` can be written as `a n/John Doe` instead. For more details, please check the format of each command or refer to <<Command Aliases>>.
+* Some commands have aliases that can be used to replace the command word. e.g. `add n/John Doe` can be written as `a n/John Doe` instead. For more details, please refer to <<Command Aliases>>.
 * Items in square brackets are optional e.g `n/NAME [c/CONDITION]` can be used as `n/John Doe c/peanuts` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[c/CONDITION]...` can be used as `{nbsp}` (i.e. 0 times), `c/peanuts`, `c/G6PD c/aspirin` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.

@@ -67,8 +67,24 @@ public class UniqueAppointmentEntryList implements Iterable<AppointmentEntry> {
             throw new DuplicatedAppointmentEntryException();
         }
 
+        if (checkIfAppointmentIsBooked(toAdd)) {
+            throw new DuplicatedAppointmentEntryException();
+        }
+
         internalList.addAll(toAdd);
         assert CollectionUtil.elementsAreUnique(internalList);
+    }
+
+    public boolean checkIfAppointmentIsBooked(AppointmentEntry toCheck) {
+        for (Object apptEntry : internalList) {
+            AppointmentEntry current = (AppointmentEntry) apptEntry;
+            if (current.getAppointmentt().getAppointmentDateTime()
+                    .equals(toCheck.getAppointmentt().getAppointmentDateTime())) {
+                return true;
+            }
+        }
+
+        return false;
     }
 
     @Override

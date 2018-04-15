@@ -6,7 +6,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 
 /**
- * An event requesting to view the help page.
+ * An event requesting to switch theme.
  */
 public class SwitchThemeRequestEvent extends BaseEvent {
 
@@ -16,6 +16,114 @@ public class SwitchThemeRequestEvent extends BaseEvent {
     }
 
 }
+```
+###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
+
+import java.util.List;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentName;
+import seedu.address.model.appointment.AppointmentTime;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+
+/**
+ * Adds a person to the address book.
+ */
+public class AddAppointmentCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "addappointment";
+    public static final String COMMAND_ALIAS = "aa";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Adds an appointment to the address book, persons are identified "
+            + "by the index number used in the last person listing. "
+            + "Parameters: "
+            + "[INDEX (must be a positive integer)]... "
+            + PREFIX_NAME + "NAME "
+            + PREFIX_DATETIME + "DATETIME "
+            + PREFIX_TIMEZONE + "TIMEZONE\n"
+            + "Example: " + COMMAND_WORD + " "
+            + "1 2 "
+            + PREFIX_NAME + "Promote laptop "
+            + PREFIX_DATETIME + "2018-06-13 13:25 "
+            + PREFIX_TIMEZONE + "America/New_York";
+
+    public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book";
+
+    private Appointment toAdd;
+    private final AppointmentName name;
+    private final AppointmentTime time;
+    private final List<Index> indexes;
+
+    /**
+     * Creates an AddAppointmentCommand to add the specified {@code Appointment}
+     */
+    public AddAppointmentCommand(AppointmentName name, AppointmentTime time, List<Index> indexes) {
+        requireNonNull(name);
+        requireNonNull(time);
+        requireNonNull(indexes);
+        this.name = name;
+        this.time = time;
+        this.indexes = indexes;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addAppointment(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateAppointmentException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        }
+
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        UniquePersonList persons = new UniquePersonList();
+
+        for (Index index : indexes) {
+            if (index.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+
+            try {
+                persons.add(lastShownList.get(index.getZeroBased()));
+            } catch (DuplicatePersonException e) {
+                // Ignore duplicate
+            }
+        }
+
+        toAdd = new Appointment(name, time, persons);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof AddAppointmentCommand // instanceof handles nulls
+                && toAdd.equals(((AddAppointmentCommand) other).toAdd)
+                && name.equals(((AddAppointmentCommand) other).name)
+                && time.equals(((AddAppointmentCommand) other).time)
+                && indexes.equals(((AddAppointmentCommand) other).indexes));
+    }
+}
+//@@ author
 ```
 ###### /java/seedu/address/logic/commands/ArchiveCommand.java
 ``` java
@@ -80,178 +188,6 @@ public class ArchiveCommand extends UndoableCommand {
                 && Objects.equals(this.personToArchive, ((ArchiveCommand) other).personToArchive));
     }
 }
-```
-###### /java/seedu/address/logic/commands/UnarchiveCommand.java
-``` java
-/**
- * Unarchives a person identified using it's last displayed index from the address book.
- */
-public class UnarchiveCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "unarchive";
-    public static final String COMMAND_ALIAS = "uar";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Unarchives the person identified by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer)\n"
-            + "Example: " + COMMAND_WORD + " 1";
-
-    public static final String MESSAGE_ARCHIVE_PERSON_SUCCESS = "Unarchived Person: %1$s";
-    public static final String MESSAGE_PERSON_ALREADY_UNARCHIVED = "Person is already not archived!";
-
-    private final Index targetIndex;
-
-    private Person personToUnarchive;
-
-    public UnarchiveCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
-    }
-
-
-    @Override
-    public CommandResult executeUndoableCommand() {
-        requireNonNull(personToUnarchive);
-        try {
-            model.unarchivePerson(personToUnarchive);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-
-        model.updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
-        return new CommandResult(String.format(MESSAGE_ARCHIVE_PERSON_SUCCESS, personToUnarchive));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        personToUnarchive = lastShownList.get(targetIndex.getZeroBased());
-
-        if (!personToUnarchive.isArchived()) {
-            throw new CommandException(MESSAGE_PERSON_ALREADY_UNARCHIVED);
-        }
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UnarchiveCommand // instanceof handles nulls
-                && this.targetIndex.equals(((UnarchiveCommand) other).targetIndex) // state check
-                && Objects.equals(this.personToUnarchive, ((UnarchiveCommand) other).personToUnarchive));
-    }
-}
-```
-###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
-
-import java.util.List;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.appointment.Appointment;
-import seedu.address.model.appointment.AppointmentName;
-import seedu.address.model.appointment.AppointmentTime;
-import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-
-/**
- * Adds a person to the address book.
- */
-public class AddAppointmentCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "addappointment";
-    public static final String COMMAND_ALIAS = "aa";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Adds an appointment to the address book, persons are identified "
-            + "by the index number used in the last person listing. "
-            + "Parameters: "
-            + "[INDEX (must be a positive integer)]... "
-            + PREFIX_NAME + "NAME "
-            + PREFIX_DATETIME + "DATETIME "
-            + PREFIX_TIMEZONE + "TIMEZONE\n"
-            + "Example: " + COMMAND_WORD + " "
-            + "1 2 "
-            + PREFIX_NAME + "Promote laptop "
-            + PREFIX_DATETIME + "2018-06-13 13:25 "
-            + PREFIX_TIMEZONE + "America/New_York";
-
-    public static final String MESSAGE_SUCCESS = "New appointment added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This appointment already exists in the address book";
-
-    private Appointment toAdd;
-    private final AppointmentName name;
-    private final AppointmentTime time;
-    private final List<Index> indexes;
-
-    /**
-     * Creates an AddCommand to add the specified {@code Person}
-     */
-    public AddAppointmentCommand(AppointmentName name, AppointmentTime time, List<Index> indexes) {
-        requireNonNull(name);
-        requireNonNull(time);
-        requireNonNull(indexes);
-        this.name = name;
-        this.time = time;
-        this.indexes = indexes;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addAppointment(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateAppointmentException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        }
-
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-        UniquePersonList persons = new UniquePersonList();
-
-        for (Index index : indexes) {
-            if (index.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-
-            try {
-                persons.add(lastShownList.get(index.getZeroBased()));
-            } catch (DuplicatePersonException e) {
-                // Ignore duplicate
-            }
-        }
-
-        toAdd = new Appointment(name, time, persons);
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && toAdd.equals(((AddAppointmentCommand) other).toAdd)
-                && name.equals(((AddAppointmentCommand) other).name)
-                && time.equals(((AddAppointmentCommand) other).time)
-                && indexes.equals(((AddAppointmentCommand) other).indexes));
-    }
-}
-//@@ author
 ```
 ###### /java/seedu/address/logic/commands/DeleteAppointmentCommand.java
 ``` java
@@ -324,6 +260,298 @@ public class DeleteAppointmentCommand extends UndoableCommand {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/EditAppointmentCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
+import static seedu.address.logic.parser.ParserUtil.parseAppointmentTime;
+
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import javafx.collections.ObservableList;
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.AppointmentName;
+import seedu.address.model.appointment.AppointmentTime;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+
+/**
+ * Edits the details of an existing appointment in the address book.
+ */
+public class EditAppointmentCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "editappointment";
+    public static final String COMMAND_ALIAS = "ea";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the appointment identified "
+            + "by the index number used in the last appointment listing. "
+            + "Existing values will be overwritten by the input values.\n"
+            + "For person indexes, if person is in appointment, he will be added. Otherwise, he will be removed.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + "[PERSON INDEX (must be a positive integer)]..."
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_DATETIME + "DATETIME] "
+            + "[" + PREFIX_TIMEZONE + "TIMEZONE]\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + "3 4 "
+            + PREFIX_NAME + "Sell laptop "
+            + PREFIX_DATETIME + "2018-06-13 13:25";
+
+    public static final String MESSAGE_EDIT_APPOINTMENT_SUCCESS = "Edited Appointment: %1$s";
+    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
+    public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in the address book.";
+
+    private final Index index;
+    private final List<Index> personIndexes;
+    private final EditAppointmentDescriptor editAppointmentDescriptor;
+
+    private Appointment appointmentToEdit;
+    private Appointment editedAppointment;
+
+    /**
+     * @param index of the appointment in the filtered appointment list to edit
+     * @param editAppointmentDescriptor details to edit the appointment with
+     */
+    public EditAppointmentCommand(Index index, EditAppointmentDescriptor editAppointmentDescriptor,
+                                  List<Index> personIndexes) {
+        requireNonNull(index);
+        requireNonNull(editAppointmentDescriptor);
+        requireNonNull(personIndexes);
+
+        this.index = index;
+        this.editAppointmentDescriptor = new EditAppointmentDescriptor(editAppointmentDescriptor);
+        this.personIndexes = personIndexes;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updateAppointment(appointmentToEdit, editedAppointment);
+        } catch (DuplicateAppointmentException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
+        } catch (AppointmentNotFoundException anfe) {
+            throw new AssertionError("The target appointment cannot be missing");
+        }
+        return new CommandResult(String.format(MESSAGE_EDIT_APPOINTMENT_SUCCESS, editedAppointment));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Appointment> lastShownList = model.getFilteredAppointmentList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        }
+
+        appointmentToEdit = lastShownList.get(index.getZeroBased());
+
+        List<Person> lastShownPersonList = model.getFilteredPersonList();
+        UniquePersonList personList = new UniquePersonList();
+
+        for (Index index : personIndexes) {
+            if (index.getZeroBased() >= lastShownPersonList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+            try {
+                personList.add(lastShownPersonList.get(index.getZeroBased()));
+            } catch (DuplicatePersonException e) {
+                // Ignore duplicate
+            }
+        }
+
+        if (!personIndexes.isEmpty()) {
+            editAppointmentDescriptor.setPersons(personList);
+        }
+
+        editedAppointment = createEditedAppointment(appointmentToEdit, editAppointmentDescriptor);
+    }
+
+    /**
+     * Creates and returns a {@code Appointment} with the details of {@code appointmentToEdit}
+     * edited with {@code editAppointmentDescriptor}.
+     */
+    private static Appointment createEditedAppointment(Appointment appointmentToEdit,
+                                                       EditAppointmentDescriptor editAppointmentDescriptor)
+                                 throws CommandException {
+        assert appointmentToEdit != null;
+
+        AppointmentName updatedName = editAppointmentDescriptor.getName().orElse(appointmentToEdit.getName());
+        AppointmentTime updatedTime;
+        AppointmentTime originalTime = appointmentToEdit.getTime();
+
+        if (!editAppointmentDescriptor.getDateTime().isPresent()
+                && !editAppointmentDescriptor.getTimeZone().isPresent()) {
+            updatedTime = originalTime;
+        } else {
+
+            String dateTime = editAppointmentDescriptor.getDateTime()
+                    .orElse(originalTime.time.format(DateTimeFormatter.ofPattern("uuuu-MM-dd HH:mm")));
+
+            String timeZone = editAppointmentDescriptor.getTimeZone()
+                    .orElse(originalTime.time.format(DateTimeFormatter.ofPattern("VV")));
+
+            try {
+                updatedTime = parseAppointmentTime(dateTime, timeZone);
+            } catch (IllegalValueException ive) {
+                throw new CommandException(ive.getMessage());
+            }
+        }
+
+        UniquePersonList updatedPersons = new UniquePersonList();
+
+        Optional<ObservableList<Person>> optionalPersonList = editAppointmentDescriptor.getPersons();
+        if (!optionalPersonList.isPresent()) {
+            try {
+                updatedPersons.setPersons(appointmentToEdit.getPersons());
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("Impossible to have duplicate. Persons are from appointment");
+            }
+        } else {
+            List<Person> original = new ArrayList(appointmentToEdit.getPersons());
+            List<Person> newList = optionalPersonList.get();
+
+            for (Person person : newList) {
+                if (original.contains(person)) {
+                    original.remove(person);
+                } else {
+                    original.add(person);
+                }
+            }
+
+            try {
+                updatedPersons.setPersons(original);
+            } catch (DuplicatePersonException e) {
+                // Ignore duplicate
+            }
+        }
+
+        return new Appointment(updatedName, updatedTime, updatedPersons);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditAppointmentCommand)) {
+            return false;
+        }
+
+        // state check
+        EditAppointmentCommand e = (EditAppointmentCommand) other;
+        return index.equals(e.index)
+                && editAppointmentDescriptor.equals(e.editAppointmentDescriptor)
+                && Objects.equals(appointmentToEdit, e.appointmentToEdit);
+    }
+
+    /**
+     * Stores the details to edit the appointment with. Each non-empty field value will replace the
+     * corresponding field value of the person.
+     */
+    public static class EditAppointmentDescriptor {
+        private AppointmentName name;
+        private String  dateTime;
+        private String timeZone;
+        private UniquePersonList persons;
+
+        public EditAppointmentDescriptor() {}
+
+        /**
+         * Copy constructor.
+         * A defensive copy of {@code persons} is used internally.
+         */
+        public EditAppointmentDescriptor(EditAppointmentDescriptor toCopy) {
+            setName(toCopy.name);
+            setDateTime(toCopy.dateTime);
+            setTimeZone(toCopy.timeZone);
+            if (!Objects.isNull(toCopy.persons)) {
+                UniquePersonList newPersons = new UniquePersonList();
+                newPersons.setPersons(toCopy.persons);
+                setPersons(newPersons);
+            }
+        }
+
+        /**
+         * Returns true if at least one field is edited.
+         */
+        public boolean isAnyFieldEdited() {
+            return CollectionUtil.isAnyNonNull(this.name, this.dateTime, this.timeZone, this.persons);
+        }
+
+        public void setName(AppointmentName name) {
+            this.name = name;
+        }
+
+        public Optional<AppointmentName> getName() {
+            return Optional.ofNullable(name);
+        }
+
+        public void setDateTime(String dateTime) {
+            this.dateTime = dateTime;
+        }
+
+        public Optional<String> getDateTime() {
+            return Optional.ofNullable(dateTime);
+        }
+
+        public void setTimeZone(String timeZone) {
+            this.timeZone = timeZone;
+        }
+
+        public Optional<String> getTimeZone() {
+            return Optional.ofNullable(timeZone);
+        }
+
+        public void setPersons(UniquePersonList persons) {
+            this.persons = persons;
+        }
+
+        public Optional<ObservableList<Person>> getPersons() {
+            return Optional.ofNullable(Objects.isNull(persons) ? null : persons.asObservableList());
+        }
+
+        @Override
+        public boolean equals(Object other) {
+            // short circuit if same object
+            if (other == this) {
+                return true;
+            }
+
+            // instanceof handles nulls
+            if (!(other instanceof EditAppointmentDescriptor)) {
+                return false;
+            }
+
+            // state check
+            EditAppointmentDescriptor e = (EditAppointmentDescriptor) other;
+
+            return getName().equals(e.getName())
+                    && getDateTime().equals(e.getDateTime())
+                    && getTimeZone().equals(e.getTimeZone())
+                    && getPersons().equals(e.getPersons());
+        }
+    }
+}
+```
 ###### /java/seedu/address/logic/commands/ListAllCommand.java
 ``` java
 package seedu.address.logic.commands;
@@ -371,52 +599,68 @@ public class SwitchThemeCommand extends Command {
 
 }
 ```
-###### /java/seedu/address/logic/parser/ArchiveCommandParser.java
+###### /java/seedu/address/logic/commands/UnarchiveCommand.java
 ``` java
 /**
- * Parses input arguments and creates a new ArchiveCommand object
+ * Unarchives a person identified using it's last displayed index from the address book.
  */
-public class ArchiveCommandParser implements Parser<ArchiveCommand> {
+public class UnarchiveCommand extends UndoableCommand {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the ArchiveCommand
-     * and returns an ArchiveCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public ArchiveCommand parse(String args) throws ParseException {
+    public static final String COMMAND_WORD = "unarchive";
+    public static final String COMMAND_ALIAS = "uar";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Unarchives the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
+
+    public static final String MESSAGE_ARCHIVE_PERSON_SUCCESS = "Unarchived Person: %1$s";
+    public static final String MESSAGE_PERSON_ALREADY_UNARCHIVED = "Person is already not archived!";
+
+    private final Index targetIndex;
+
+    private Person personToUnarchive;
+
+    public UnarchiveCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(personToUnarchive);
         try {
-            Index index = ParserUtil.parseIndex(args);
-            return new ArchiveCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ArchiveCommand.MESSAGE_USAGE));
+            model.unarchivePerson(personToUnarchive);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+
+        model.updateFilteredPersonList(PREDICATE_SHOW_UNARCHIVED_PERSONS);
+        return new CommandResult(String.format(MESSAGE_ARCHIVE_PERSON_SUCCESS, personToUnarchive));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        personToUnarchive = lastShownList.get(targetIndex.getZeroBased());
+
+        if (!personToUnarchive.isArchived()) {
+            throw new CommandException(MESSAGE_PERSON_ALREADY_UNARCHIVED);
         }
     }
 
-}
-```
-###### /java/seedu/address/logic/parser/UnarchiveCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new UnarchiveCommand object
- */
-public class UnarchiveCommandParser implements Parser<UnarchiveCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the UnarchiveCommand
-     * and returns an UnarchiveCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public UnarchiveCommand parse(String args) throws ParseException {
-        try {
-            Index index = ParserUtil.parseIndex(args);
-            return new UnarchiveCommand(index);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnarchiveCommand.MESSAGE_USAGE));
-        }
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UnarchiveCommand // instanceof handles nulls
+                && this.targetIndex.equals(((UnarchiveCommand) other).targetIndex) // state check
+                && Objects.equals(this.personToUnarchive, ((UnarchiveCommand) other).personToUnarchive));
     }
-
 }
 ```
 ###### /java/seedu/address/logic/parser/AddAppointmentCommandParser.java
@@ -478,6 +722,130 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
         }
     }
 
+}
+```
+###### /java/seedu/address/logic/parser/ArchiveCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new ArchiveCommand object
+ */
+public class ArchiveCommandParser implements Parser<ArchiveCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the ArchiveCommand
+     * and returns an ArchiveCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public ArchiveCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new ArchiveCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, ArchiveCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/DeleteAppointmentCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new DeleteAppointmentCommand object
+ */
+public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
+     * and returns an DeleteAppointmentCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteAppointmentCommand parse(String args) throws ParseException {
+        try {
+            Index index = ParserUtil.parseIndex(args);
+            return new DeleteAppointmentCommand(index);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAppointmentCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/EditAppointmentCommandParser.java
+``` java
+package seedu.address.logic.parser;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DATETIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TIMEZONE;
+
+import java.util.List;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditAppointmentCommand;
+import seedu.address.logic.commands.EditAppointmentCommand.EditAppointmentDescriptor;
+import seedu.address.logic.parser.exceptions.ParseException;
+
+/**
+ * Parses input arguments and creates a new EditAppointmentCommand object
+ */
+public class EditAppointmentCommandParser implements Parser<EditAppointmentCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the EditAppointmentCommand
+     * and returns an EditCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public EditAppointmentCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argMultimap =
+                ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_DATETIME, PREFIX_TIMEZONE);
+
+        List<Index> indexes;
+
+        try {
+            indexes = ParserUtil.parseIndexes(argMultimap.getPreamble());
+
+            if (indexes.isEmpty()) {
+                throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                        EditAppointmentCommand.MESSAGE_USAGE));
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    EditAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        EditAppointmentDescriptor editAppointmentDescriptor = new EditAppointmentDescriptor();
+
+        try {
+            ParserUtil.parseAppointmentName(argMultimap.getValue(PREFIX_NAME))
+                    .ifPresent(editAppointmentDescriptor::setName);
+            argMultimap.getValue(PREFIX_DATETIME).ifPresent(editAppointmentDescriptor::setDateTime);
+            argMultimap.getValue(PREFIX_TIMEZONE).ifPresent(editAppointmentDescriptor::setTimeZone);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!editAppointmentDescriptor.isAnyFieldEdited() && indexes.size() == 1) {
+            throw new ParseException(EditAppointmentCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditAppointmentCommand(indexes.get(0), editAppointmentDescriptor,
+                indexes.subList(1, indexes.size()));
+    }
 }
 ```
 ###### /java/seedu/address/logic/parser/ParserUtil.java
@@ -584,38 +952,207 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
     }
 
 ```
-###### /java/seedu/address/logic/parser/DeleteAppointmentCommandParser.java
+###### /java/seedu/address/logic/parser/UnarchiveCommandParser.java
 ``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.DeleteAppointmentCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
 /**
- * Parses input arguments and creates a new DeleteAppointmentCommand object
+ * Parses input arguments and creates a new UnarchiveCommand object
  */
-public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
+public class UnarchiveCommandParser implements Parser<UnarchiveCommand> {
 
     /**
-     * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
-     * and returns an DeleteAppointmentCommand object for execution.
+     * Parses the given {@code String} of arguments in the context of the UnarchiveCommand
+     * and returns an UnarchiveCommand object for execution.
      * @throws ParseException if the user input does not conform the expected format
      */
-    public DeleteAppointmentCommand parse(String args) throws ParseException {
+    public UnarchiveCommand parse(String args) throws ParseException {
         try {
             Index index = ParserUtil.parseIndex(args);
-            return new DeleteAppointmentCommand(index);
+            return new UnarchiveCommand(index);
         } catch (IllegalValueException ive) {
             throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAppointmentCommand.MESSAGE_USAGE));
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnarchiveCommand.MESSAGE_USAGE));
         }
     }
 
 }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+
+    /**
+     * Archives person.
+     * @param target
+     * @throws PersonNotFoundException
+     */
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        target.setArchived(true);
+        try {
+            persons.setPerson(target, target);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("Archiving a person only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        }
+    }
+
+    /**
+     * Unarchives person.
+     * @param target
+     * @throws PersonNotFoundException
+     */
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        target.setArchived(false);
+        try {
+            persons.setPerson(target, target);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("Unrchiving a person only should not result in a duplicate. "
+                    + "See Person#equals(Object).");
+        }
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+    //// appointment-level operations
+
+    /**
+     * Adds an appointment to the address book.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     */
+    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        appointments.add(appointment);
+        appointments.sort();
+    }
+
+    /**
+     * Removes {@code key} from this {@code AddressBook}.
+     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
+        if (appointments.remove(key)) {
+            appointments.sort();
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
+    }
+
+    /**
+     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if updating the appointment's details
+     *      causes the appointment to be equivalent toanother existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     */
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireNonNull(editedAppointment);
+
+        appointments.setAppointment(target, editedAppointment);
+        appointments.sort();
+    }
+```
+###### /java/seedu/address/model/AddressBook.java
+``` java
+
+    /**
+     * Removes a person from all appointments.
+     * @param person person to remove
+     */
+    private void removePersonFromAppointments(Person person) {
+        for (Appointment appointment : appointments) {
+            UniquePersonList newPersons = new UniquePersonList();
+
+            try {
+                newPersons.setPersons(appointment.getPersons());
+            } catch (DuplicatePersonException e) {
+                throw new AssertionError("Impossible to have duplicate. Persons is from appointment.");
+            }
+
+            if (!newPersons.contains(person)) {
+                return;
+            }
+
+            try {
+                newPersons.remove(person);
+            } catch (PersonNotFoundException e) {
+                throw new AssertionError("Impossible. We just checked the existence of person.");
+            }
+
+            Appointment newAppointment = new Appointment(appointment.getName(), appointment.getTime(), newPersons);
+
+            try {
+                updateAppointment(appointment, newAppointment);
+            } catch (AppointmentNotFoundException e) {
+                throw new AssertionError("Impossible. Appointment is in addressbook.");
+            } catch (DuplicateAppointmentException e) {
+                throw new AssertionError("Impossible. We are modifying an existing appointment's person list.");
+            }
+        }
+    }
+
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Deletes the given apppointment. */
+    void deleteAppointment(Appointment target) throws AppointmentNotFoundException;
+
+    /** Adds the given appointment */
+    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+
+    /**
+     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if updating the appointment's details
+     *      causes the apppointment to be equivalent to another existing appointment in the list.
+     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException;
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /** Archives the given person. */
+    void archivePerson(Person target) throws PersonNotFoundException;
+
+    /** Unarchive the given person. */
+    void unarchivePerson(Person target) throws PersonNotFoundException;
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
+        addressBook.addAppointment(appointment);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateAppointment(Appointment target, Appointment editedAppointment)
+            throws DuplicateAppointmentException, AppointmentNotFoundException {
+        requireAllNonNull(target, editedAppointment);
+
+        addressBook.updateAppointment(target, editedAppointment);
+        indicateAddressBookChanged();
+    }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void archivePerson(Person target) throws PersonNotFoundException {
+        addressBook.archivePerson(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void unarchivePerson(Person target) throws PersonNotFoundException {
+        addressBook.unarchivePerson(target);
+        indicateAddressBookChanged();
+    }
 ```
 ###### /java/seedu/address/model/appointment/Appointment.java
 ``` java
@@ -699,154 +1236,6 @@ public class Appointment {
         return builder.toString();
     }
 
-}
-```
-###### /java/seedu/address/model/appointment/UniqueAppointmentList.java
-``` java
-package seedu.address.model.appointment;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-
-import java.util.Iterator;
-import java.util.List;
-
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
-import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
-import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-
-/**
- * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
- *
- * Supports a minimal set of list operations.
- *
- * @see Appointment#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
- */
-public class UniqueAppointmentList implements Iterable<Appointment> {
-
-    private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
-
-    /**
-     * Returns true if the list contains an equivalent appointment as the given argument.
-     */
-    public boolean contains(Appointment toCheck) {
-        requireNonNull(toCheck);
-        return internalList.contains(toCheck);
-    }
-
-    /**
-     * Adds an appointment to the list.
-     *
-     * @throws DuplicateAppointmentException if the person to add is a duplicate of an existing person in the list.
-     */
-    public void add(Appointment toAdd) throws DuplicateAppointmentException {
-        requireNonNull(toAdd);
-        if (contains(toAdd)) {
-            throw new DuplicateAppointmentException();
-        }
-        internalList.add(toAdd);
-    }
-
-    /**
-     * Replaces the appointment {@code target} in the list with {@code editedAppointment}.
-     *
-     * @throws DuplicateAppointmentException if the replacement is equivalent
-     *         to another existing appointment in the list.
-     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
-     */
-    public void setAppointment(Appointment target, Appointment editedAppointment)
-            throws DuplicateAppointmentException, AppointmentNotFoundException {
-        requireNonNull(editedAppointment);
-
-        int index = internalList.indexOf(target);
-        if (index == -1) {
-            throw new AppointmentNotFoundException();
-        }
-
-        if (!target.equals(editedAppointment) && internalList.contains(editedAppointment)) {
-            throw new DuplicateAppointmentException();
-        }
-
-        internalList.set(index, editedAppointment);
-    }
-
-    /**
-     * Removes the equivalent appointment from the list.
-     *
-     * @throws AppointmentNotFoundException if no such appointment could be found in the list.
-     */
-    public boolean remove(Appointment toRemove) throws AppointmentNotFoundException {
-        requireNonNull(toRemove);
-        final boolean appointmentFoundAndDeleted = internalList.remove(toRemove);
-        if (!appointmentFoundAndDeleted) {
-            throw new AppointmentNotFoundException();
-        }
-        return appointmentFoundAndDeleted;
-    }
-
-    public void setAppointments(UniqueAppointmentList replacement) {
-        this.internalList.setAll(replacement.internalList);
-    }
-
-    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
-        requireAllNonNull(appointments);
-        final UniqueAppointmentList replacement = new UniqueAppointmentList();
-        for (final Appointment appointment : appointments) {
-            replacement.add(appointment);
-        }
-        setAppointments(replacement);
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Appointment> asObservableList() {
-        return FXCollections.unmodifiableObservableList(internalList);
-    }
-
-    @Override
-    public Iterator<Appointment> iterator() {
-        return internalList.iterator();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniqueAppointmentList // instanceof handles nulls
-                        && this.internalList.equals(((UniqueAppointmentList) other).internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
-}
-```
-###### /java/seedu/address/model/appointment/exceptions/AppointmentNotFoundException.java
-``` java
-package seedu.address.model.appointment.exceptions;
-
-/**
- * Signals that the operation is unable to find the specified appointment.
- */
-public class AppointmentNotFoundException extends Exception {}
-```
-###### /java/seedu/address/model/appointment/exceptions/DuplicateAppointmentException.java
-``` java
-package seedu.address.model.appointment.exceptions;
-
-import seedu.address.commons.exceptions.DuplicateDataException;
-
-/**
- * Signals that the operation will result in duplicate Appointment objects.
- */
-public class DuplicateAppointmentException extends DuplicateDataException {
-    public DuplicateAppointmentException() {
-        super("Operation would result in duplicate appointments");
-    }
 }
 ```
 ###### /java/seedu/address/model/appointment/AppointmentName.java
@@ -1012,180 +1401,163 @@ public class AppointmentTime {
 
 }
 ```
-###### /java/seedu/address/model/Model.java
+###### /java/seedu/address/model/appointment/UniqueAppointmentList.java
 ``` java
-    /** Deletes the given apppointment. */
-    void deleteAppointment(Appointment target) throws AppointmentNotFoundException;
+package seedu.address.model.appointment;
 
-    /** Adds the given appointment */
-    void addAppointment(Appointment appointment) throws DuplicateAppointmentException;
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import java.util.Iterator;
+import java.util.List;
+
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import seedu.address.commons.util.CollectionUtil;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+
+/**
+ * A list of appointments that enforces uniqueness between its elements and does not allow nulls.
+ *
+ * Supports a minimal set of list operations.
+ *
+ * @see Appointment#equals(Object)
+ * @see CollectionUtil#elementsAreUnique(Collection)
+ */
+public class UniqueAppointmentList implements Iterable<Appointment> {
+
+    private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
 
     /**
-     * Replaces the given appointment {@code target} with {@code editedAppointment}.
+     * Returns true if the list contains an equivalent appointment as the given argument.
+     */
+    public boolean contains(Appointment toCheck) {
+        requireNonNull(toCheck);
+        return internalList.contains(toCheck);
+    }
+
+    /**
+     * Adds an appointment to the list.
      *
-     * @throws DuplicateAppointmentException if updating the appointment's details
-     *      causes the apppointment to be equivalent to another existing appointment in the list.
+     * @throws DuplicateAppointmentException if the person to add is a duplicate of an existing person in the list.
+     */
+    public void add(Appointment toAdd) throws DuplicateAppointmentException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateAppointmentException();
+        }
+        internalList.add(toAdd);
+    }
+
+    /**
+     * Replaces the appointment {@code target} in the list with {@code editedAppointment}.
+     *
+     * @throws DuplicateAppointmentException if the replacement is equivalent
+     *         to another existing appointment in the list.
      * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
      */
-    void updateAppointment(Appointment target, Appointment editedAppointment)
-            throws DuplicateAppointmentException, AppointmentNotFoundException;
-```
-###### /java/seedu/address/model/Model.java
-``` java
-    /** Archives the given person. */
-    void archivePerson(Person target) throws PersonNotFoundException;
-
-    /** Unarchive the given person. */
-    void unarchivePerson(Person target) throws PersonNotFoundException;
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
-        addressBook.removeAppointment(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public synchronized void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
-        addressBook.addAppointment(appointment);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void updateAppointment(Appointment target, Appointment editedAppointment)
-            throws DuplicateAppointmentException, AppointmentNotFoundException {
-        requireAllNonNull(target, editedAppointment);
-
-        addressBook.updateAppointment(target, editedAppointment);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/ModelManager.java
-``` java
-    @Override
-    public void archivePerson(Person target) throws PersonNotFoundException {
-        addressBook.archivePerson(target);
-        indicateAddressBookChanged();
-    }
-
-    @Override
-    public void unarchivePerson(Person target) throws PersonNotFoundException {
-        addressBook.unarchivePerson(target);
-        indicateAddressBookChanged();
-    }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-
-    /**
-     * Archives person.
-     * @param target
-     * @throws PersonNotFoundException
-     */
-    public void archivePerson(Person target) throws PersonNotFoundException {
-        target.setArchived(true);
-        try {
-            persons.setPerson(target, target);
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("Archiving a person only should not result in a duplicate. "
-                    + "See Person#equals(Object).");
-        }
-    }
-
-    /**
-     * Unarchives person.
-     * @param target
-     * @throws PersonNotFoundException
-     */
-    public void unarchivePerson(Person target) throws PersonNotFoundException {
-        target.setArchived(false);
-        try {
-            persons.setPerson(target, target);
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("Unrchiving a person only should not result in a duplicate. "
-                    + "See Person#equals(Object).");
-        }
-    }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-    //// appointment-level operations
-
-    /**
-     * Adds an appointment to the address book.
-     *
-     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
-     */
-    public void addAppointment(Appointment appointment) throws DuplicateAppointmentException {
-        appointments.add(appointment);
-    }
-
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     * @throws AppointmentNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removeAppointment(Appointment key) throws AppointmentNotFoundException {
-        if (appointments.remove(key)) {
-            return true;
-        } else {
-            throw new AppointmentNotFoundException();
-        }
-    }
-
-    /**
-     * Replaces the given appointment {@code target} in the list with {@code editedAppointment}.
-     *
-     * @throws DuplicateAppointmentException if updating the appointment's details
-     *      causes the appointment to be equivalent toanother existing appointment in the list.
-     * @throws AppointmentNotFoundException if {@code target} could not be found in the list.
-     */
-    public void updateAppointment(Appointment target, Appointment editedAppointment)
+    public void setAppointment(Appointment target, Appointment editedAppointment)
             throws DuplicateAppointmentException, AppointmentNotFoundException {
         requireNonNull(editedAppointment);
 
-        appointments.setAppointment(target, editedAppointment);
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new AppointmentNotFoundException();
+        }
+
+        if (!target.equals(editedAppointment) && internalList.contains(editedAppointment)) {
+            throw new DuplicateAppointmentException();
+        }
+
+        internalList.set(index, editedAppointment);
     }
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
 
     /**
-     * Removes a person from all appointments.
-     * @param person person to remove
+     * Removes the equivalent appointment from the list.
+     *
+     * @throws AppointmentNotFoundException if no such appointment could be found in the list.
      */
-    private void removePersonFromAppointments(Person person) {
-        for (Appointment appointment : appointments) {
-            UniquePersonList newPersons = new UniquePersonList();
-
-            try {
-                newPersons.setPersons(appointment.getPersons());
-            } catch (DuplicatePersonException e) {
-                throw new AssertionError("Impossible to have duplicate. Persons is from appointment.");
-            }
-
-            if (!newPersons.contains(person)) {
-                return;
-            }
-
-            try {
-                newPersons.remove(person);
-            } catch (PersonNotFoundException e) {
-                throw new AssertionError("Impossible. We just checked the existence of person.");
-            }
-
-            Appointment newAppointment = new Appointment(appointment.getName(), appointment.getTime(), newPersons);
-
-            try {
-                updateAppointment(appointment, newAppointment);
-            } catch (AppointmentNotFoundException e) {
-                throw new AssertionError("Impossible. Appointment is in addressbook.");
-            } catch (DuplicateAppointmentException e) {
-                throw new AssertionError("Impossible. We are modifying an existing appointment's person list.");
-            }
+    public boolean remove(Appointment toRemove) throws AppointmentNotFoundException {
+        requireNonNull(toRemove);
+        final boolean appointmentFoundAndDeleted = internalList.remove(toRemove);
+        if (!appointmentFoundAndDeleted) {
+            throw new AppointmentNotFoundException();
         }
+        return appointmentFoundAndDeleted;
     }
 
+    public void setAppointments(UniqueAppointmentList replacement) {
+        this.internalList.setAll(replacement.internalList);
+    }
+
+    public void setAppointments(List<Appointment> appointments) throws DuplicateAppointmentException {
+        requireAllNonNull(appointments);
+        final UniqueAppointmentList replacement = new UniqueAppointmentList();
+        for (final Appointment appointment : appointments) {
+            replacement.add(appointment);
+        }
+        setAppointments(replacement);
+    }
+
+    /**
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
+     */
+    public ObservableList<Appointment> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
+
+    /**
+     * Sorts based on decreasing time of appointment. Note that time is based on instant not local time.
+     *
+     */
+
+    public void sort() {
+        internalList.sort((appointmentA, appointmentB) -> (
+            -(appointmentA.getTime().time.compareTo(appointmentB.getTime().time))));
+    }
+
+    @Override
+    public Iterator<Appointment> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniqueAppointmentList // instanceof handles nulls
+                        && this.internalList.equals(((UniqueAppointmentList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
+    }
+}
+```
+###### /java/seedu/address/model/appointment/exceptions/AppointmentNotFoundException.java
+``` java
+package seedu.address.model.appointment.exceptions;
+
+/**
+ * Signals that the operation is unable to find the specified appointment.
+ */
+public class AppointmentNotFoundException extends Exception {}
+```
+###### /java/seedu/address/model/appointment/exceptions/DuplicateAppointmentException.java
+``` java
+package seedu.address.model.appointment.exceptions;
+
+import seedu.address.commons.exceptions.DuplicateDataException;
+
+/**
+ * Signals that the operation will result in duplicate Appointment objects.
+ */
+public class DuplicateAppointmentException extends DuplicateDataException {
+    public DuplicateAppointmentException() {
+        super("Operation would result in duplicate appointments");
+    }
+}
 ```
 ###### /java/seedu/address/storage/XmlAdaptedAppointment.java
 ``` java
@@ -1375,8 +1747,6 @@ import java.util.logging.Logger;
 
 import org.fxmisc.easybind.EasyBind;
 
-import com.google.common.eventbus.Subscribe;
-
 import javafx.application.Platform;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
@@ -1385,7 +1755,6 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.AppointmentPanelSelectionChangedEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.appointment.Appointment;
 
 /**
@@ -1433,12 +1802,6 @@ public class AppointmentListPanel extends UiPart<Region> {
         });
     }
 
-    @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        scrollTo(event.targetIndex);
-    }
-
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code AppointmentCard}.
      */
@@ -1457,6 +1820,113 @@ public class AppointmentListPanel extends UiPart<Region> {
         }
     }
 
+}
+```
+###### /java/seedu/address/ui/CalendarPanel.java
+``` java
+package seedu.address.ui;
+
+import java.time.format.DateTimeFormatter;
+import java.util.logging.Logger;
+
+import com.calendarfx.model.Calendar;
+import com.calendarfx.model.CalendarSource;
+import com.calendarfx.model.Entry;
+import com.calendarfx.view.CalendarView;
+import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorInput;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.appointment.Appointment;
+
+/**
+ * The Browser Panel of the App.
+ */
+public class CalendarPanel extends UiPart<Region> {
+
+    private static final String FXML = "CalendarPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private CalendarView calendarView;
+
+    private ObservableList<Appointment> appointmentList;
+
+    private Calendar calendar;
+
+    public CalendarPanel(ObservableList<Appointment> appointmentList) {
+        super(FXML);
+        registerAsAnEventHandler(this);
+
+        calendarView.setShowAddCalendarButton(false);
+        calendarView.setShowPrintButton(false);
+        calendarView.showMonthPage();
+
+        // Set CSS
+        String fullPath = getClass().getResource("/view/calendar.css").toExternalForm();
+        calendarView.getStylesheets().removeAll();
+        calendarView.getStylesheets().add(fullPath);
+
+        calendar = new Calendar("Appointments");
+        calendar.setReadOnly(true);
+
+        CalendarSource myCalendarSource = new CalendarSource("My Calendars");
+        myCalendarSource.getCalendars().addAll(calendar);
+        calendarView.getCalendarSources().addAll(myCalendarSource);
+
+        this.appointmentList = appointmentList;
+        syncAppointments();
+    }
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        calendarView = null;
+    }
+
+    /**
+     * Switch to dark theme
+     */
+    public void switchDarkTheme() {
+        Blend blendEffect = new Blend(BlendMode.DIFFERENCE);
+        ColorInput colorInput = new ColorInput(0, 0, 2000, 2000, Color.gray(1.0));
+        blendEffect.setTopInput(colorInput);
+        calendarView.setEffect(blendEffect);
+    }
+
+    /**
+     * Switch to light theme
+     */
+    public void switchLightTheme() {
+        calendarView.setEffect(null);
+    }
+
+    /**
+     * Synchronises the appointments and calendar entries
+     */
+    private void syncAppointments() {
+        calendar.clear();
+        for (Appointment appointment : appointmentList) {
+            Entry<String> entry = new Entry(appointment.getName().name);
+            entry.setInterval(appointment.getTime().time);
+            entry.setLocation(appointment.getTime().time.format(DateTimeFormatter.ofPattern("VV")));
+            calendar.addEntry(entry);
+        }
+    }
+
+    @Subscribe
+    private void handleAddressBookChangedEvent(AddressBookChangedEvent event) {
+        syncAppointments();
+    }
 }
 ```
 ###### /java/seedu/address/ui/MainWindow.java
@@ -1482,8 +1952,10 @@ public class AppointmentListPanel extends UiPart<Region> {
 
         if (this.theme.equals(LIGHT_THEME)) {
             this.theme = DARK_THEME;
+            calendarPanel.switchDarkTheme();
         } else {
             this.theme = LIGHT_THEME;
+            calendarPanel.switchLightTheme();
         }
 
         fullPath = getClass().getResource(this.theme).toExternalForm();

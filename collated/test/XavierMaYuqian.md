@@ -1,5 +1,5 @@
 # XavierMaYuqian
-###### \main-master\src\test\java\guitests\guihandles\StatusBarFooterHandle.java
+###### /java/guitests/guihandles/StatusBarFooterHandle.java
 ``` java
     /**
      * Returns the text of the 'total persons' portion of the status bar.
@@ -16,7 +16,7 @@
     }
 
 ```
-###### \main-master\src\test\java\guitests\guihandles\StatusBarFooterHandle.java
+###### /java/guitests/guihandles/StatusBarFooterHandle.java
 ``` java
     /**
      * Remembers the content of the sync status portion of the status bar.
@@ -64,7 +64,7 @@
     }
 }
 ```
-###### \main-master\src\test\java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public void sort() {
@@ -132,7 +132,7 @@
         }
 
 ```
-###### \main-master\src\test\java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public String getPassword() {
@@ -141,7 +141,7 @@
         }
 
 ```
-###### \main-master\src\test\java\seedu\address\logic\commands\AddCommandTest.java
+###### /java/seedu/address/logic/commands/AddCommandTest.java
 ``` java
         @Override
         public void setPassword(String e) {
@@ -199,7 +199,7 @@
 
 }
 ```
-###### \main-master\src\test\java\seedu\address\logic\commands\SortCommandTest.java
+###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 /**
  * Including integration tests and unit tests of the SortCommand.
@@ -225,7 +225,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \main-master\src\test\java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void updatePersonDetailsChangedPersonsAndTagsListUpdated() throws Exception {
@@ -238,7 +238,7 @@ public class SortCommandTest {
     }
 
 ```
-###### \main-master\src\test\java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void removeTagNonExistentTagAddressBookUnchanged() throws Exception {
@@ -250,7 +250,7 @@ public class SortCommandTest {
     }
 
 ```
-###### \main-master\src\test\java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void removeTagTagUsedByMultiplePersonsTagRemoved() throws Exception {
@@ -296,7 +296,7 @@ public class SortCommandTest {
         }
 
 ```
-###### \main-master\src\test\java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
         @Override
         public String getPassword() {
@@ -306,7 +306,7 @@ public class SortCommandTest {
 
 }
 ```
-###### \main-master\src\test\java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void deleteTagNonExistentTagModelUnchanged() throws Exception {
@@ -320,7 +320,7 @@ public class SortCommandTest {
     }
 
 ```
-###### \main-master\src\test\java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void deleteTagTagUsedByMultiplePersonsTagRemoved() throws Exception {
@@ -376,7 +376,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \main-master\src\test\java\seedu\address\storage\XmlAdaptedPersonTest.java
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
 ``` java
     @Test
     public void toModelType_invalidComment_throwsIllegalValueException() {
@@ -389,7 +389,7 @@ public class SortCommandTest {
 
 }
 ```
-###### \main-master\src\test\java\seedu\address\testutil\EditPersonDescriptorBuilder.java
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
 ``` java
     /**
      * Sets the {@code Comment} of the {@code EditPersonDescriptor} that we are building.
@@ -414,7 +414,7 @@ public class SortCommandTest {
     }
 }
 ```
-###### \main-master\src\test\java\seedu\address\testutil\PersonBuilder.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
     /**
      * Sets the {@code Comment} of the {@code Person} that we are building.
@@ -430,16 +430,7 @@ public class SortCommandTest {
 
 }
 ```
-###### \main-master\src\test\java\systemtests\AddCommandSystemTest.java
-``` java
-        /* Case: blank comment -> rejected */
-        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
-                + ADDRESS_DESC_AMY + TIMEZONE_DESC_AMY + INVALID_COMMENT_DESC
-                + TAG_DESC_FRIEND;
-        assertCommandFailure(command, Comment.MESSAGE_COMMENT_CONSTRAINTS);
-
-```
-###### \main-master\src\test\java\systemtests\AddressBookSystemTest.java
+###### /java/systemtests/AddressBookSystemTest.java
 ``` java
     /**
      * Asserts that the sync status in the status bar was changed to the timing of
@@ -483,4 +474,13 @@ public class SortCommandTest {
         return testApp.getModel();
     }
 }
+```
+###### /java/systemtests/AddCommandSystemTest.java
+``` java
+        /* Case: blank comment -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + TIMEZONE_DESC_AMY + INVALID_COMMENT_DESC
+                + TAG_DESC_FRIEND;
+        assertCommandFailure(command, Comment.MESSAGE_COMMENT_CONSTRAINTS);
+
 ```

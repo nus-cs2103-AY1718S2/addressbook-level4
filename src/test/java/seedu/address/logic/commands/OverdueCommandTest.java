@@ -2,23 +2,15 @@ package seedu.address.logic.commands;
 
 import static junit.framework.TestCase.assertEquals;
 import static seedu.address.logic.commands.OverdueCommand.SHOWN_OVERDUE_MESSAGE;
-import static seedu.address.testutil.TypicalActivities.OVERDUETASK2;
-import static seedu.address.testutil.TypicalActivities.OVERDUETASK1;
 import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ScheduledExecutorService;
-import java.util.concurrent.TimeUnit;
 
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.OverdueChecker;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.commands.util.OverdueTagPredicate;
 import seedu.address.model.DeskBoard;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -28,8 +20,8 @@ import seedu.address.model.activity.Activity;
 //@@author Kyomian
 public class OverdueCommandTest {
 
+    // private static final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
     private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-    private static final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
 
     @Test
     public void execute_noOverdueTask() {

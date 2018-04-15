@@ -426,6 +426,11 @@ otherwise the application will hang.
 * `vt com`
 * `vt *`
 
+The screenshot below shows what you can see with command `vt com`.
+
+.Result of `vt com` Command
+image::viewTaskResult.png[width="800"]
+
 ===== Completing a task: `complete` OR `ct`
 
 You can mark the task as completed when you finish it. You cannot use undo command to undo it, but can use `reset INDEX` command to obtain the same effect. +
@@ -446,6 +451,11 @@ otherwise the application will hang.
 
 * `complete 1`
 * `ct 1`
+
+Tasks that have not been completed are in red box while green boxes mean these tasks are already completed. The screenshot below shows what you can see with command `ct 2` on the compulsory list.
+
+.Result of `ct 2` Command
+image::completeTaskResult.png[width="800"]
 
 ===== Resetting a task as not completed: `reset` OR `rt`
 
@@ -488,6 +498,11 @@ otherwise the application will hang.
 
  * `goto 1`
  * `go 1`
+
+The screenshot below shows what you can see with command `go 2` on the compulsory list.
+
+.Result of `ct 2` Command
+image::goToTaskUrlResult.png[width="800"]
 
 ===== Send reminder email when a deadline is near `[coming in v2.0]`
 

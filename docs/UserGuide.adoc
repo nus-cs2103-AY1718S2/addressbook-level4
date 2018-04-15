@@ -45,7 +45,7 @@ image::Login.png[width="500"]
 
 .The main Application GUI upon login.
 //update this image also
-image::UiInitial.png[width="800"]
+image::Ui.png[width="800"]
 
 Tips on using the command box:
 
@@ -88,7 +88,7 @@ Password: Iamanewuser
 Upon typing in the credentials, a new instance of `Your TA` will start up as seen in figure 3 below.
 
 .The main Application GUI upon login.
-image::UiInitial.png[width="800"]
+image::Ui.png[width="800"]
 
 If you log out and then log back in using the same username but a wrong password, say "Iamnotanewuser".
 The error message will be displayed indicating a wrong password as seen in Figure 4 below.
@@ -142,7 +142,7 @@ Both the display picture and tags fields are optional, and a person can have any
 [NOTE]
 ====
 ** The tags "lecturer", "TA" "student" and "T1" will appear red, yellow, blue and green respectively.
-** Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+** Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 ====
 
 [WARNING]
@@ -242,14 +242,15 @@ Format: `edit INDEX [n/NAME] [m/MATRICULATION NUMBER] [p/PHONE] [e/EMAIL] [a/ADD
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* Replaced display pictures will be removed from storage upon the next start up of Your TA.
+* Replaced display pictures will be removed from storage upon the logging in to the same account during the next start up of Your TA.
+* Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
 [NOTE]
-Do refrain from using high resolution images as display pictures, the optimum resolution is 300 x 300 pixels.
+Do refrain from using high resolution images as display pictures, the optimum resolution is 500 x 500 pixels.
 
 Examples:
 
@@ -258,8 +259,8 @@ Address book starts with the following as shown in Figure 13:
 .Application Before Edit. +
 image::AllListed.png[width="300"]
 
-Command entered: `edit 2 p/91234567 e/johndoe@example.com` +
-This changes the details of the person with index 2 (Betsy Crowe), in this case, her phone number and email address and writes over his original saved details (Figure 14).
+Command entered: `edit 2 p/91234567 e/johndoe@example.com dp/C:\Users\Name\Desktop\betsy.jpg` +
+This changes the details of the person with index 2 (Betsy Crowe), in this case, her phone number, email address, display picture and writes over her original saved details (Figure 14).
 
 .Phone Number and Email of 2nd Person (Betsy Crowe) Edited. +
 image::FirstEdit.png[width="300"]
@@ -310,7 +311,7 @@ image::markPart2David.png[width="300"]
 `markPart 1 marks/70` +
 Adds 70 marks to the 1st person in the results of the `find` command, in this case, David. We note that it has exceeded the cap of 100, hence the marks was set to 100 (Figure 19).
 
-.David's marks updated
+.David's marks updated, frame updated
 image::markPartupdateDavid.png[width="300"]
 
 // end::participation[]
@@ -325,7 +326,7 @@ Format: `updateDP INDEX dp/[IMAGE PATH]`
 ****
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-* Do note that unused display pictures will be deleted upon the next application startup.
+* Do note that unused display pictures will be deleted upon the next application startup when logging in to the same account that created it.
 * You can reset a person's display picture to default by typing `dp/` with no [IMAGE PATH] written after it.
 * The aspect ratio of the image will be used to fill a circle for the display picture, thus using an image with an aspect ratio close to 1:1 pixels would be optimal.
 ****
@@ -336,7 +337,7 @@ Do refrain from using high resolution images as display pictures, the optimum re
 Examples:
 
 Command(s) entered: `list` +
-Lists all people in Your TA (Figure 20). +
+Lists all people in Your TA (Figure 20). We can see that Alex Yeoh has a display picture. +
 
 .Listing everyone in Your TA
 image::updateDPJack1.png[width="300"]
@@ -370,14 +371,14 @@ Format: `delete INDEX`
 ****
 
 [NOTE]
-The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA.
+The display picture that is stored on your hard disk will only be removed upon the next start up of Your TA when you log into the same account that created it.
 
 Examples:
 
 Address book starts with the following as shown in Figure 22:
 
 .Application before Delete. +
-image::UiAfterSecond.png[width="800']
+image::UiFromDelete.png[width="800']
 
 Command(s) entered: `list`, `delete 2` +
 The 2nd person listed in the address book is deleted (Figure 23).
@@ -408,7 +409,7 @@ Examples:
 Your TA starts with the following as shown in Figure 25:
 
 .Application before Select. +
-image::UiAfterSecond.png[width="800"]
+image::UiFromDelete.png[width="800"]
 
 Command(s) entered: `list`, `select 1` +
 Lists all people in address book and selects the 1st person (Figure 26).
@@ -454,7 +455,7 @@ Current date: 15-04-2018 +
 The application initially starts with no tasks:
 
 .Initial application view. +
-image::UiAfterSecond.png[width="800"]
+image::UiFromDelete.png[width="800"]
 
 Command entered: `addTask title/Grade Exams desc/Grade mid-terms by/20-04-2018 priority/2` +
 This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 30).
@@ -582,7 +583,7 @@ Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit`, `markPart`, `updateDP`, and `clear`).
 ====
 
 Examples:
@@ -590,7 +591,7 @@ Examples:
 Address book starts with the following as shown in Figure 19:
 
 .Application before any Commands +
-image::UiAfterSecond.png[width="800"]
+image::UiFromDelete.png[width="800"]
 
 Command(s) entered: `delete 1`, `list`, `undo` +
 The `delete 1` command will be reversed. +
@@ -612,7 +613,7 @@ Format: `redo`
 
 Examples:
 
-Address book starts with the same one in Figure 19.
+Your TA starts with the same one in Figure 19.
 
 Command(s) entered: `delete 1`, `undo`, `redo` +
 The delete command is reversed, then reapplied (Figure 20).

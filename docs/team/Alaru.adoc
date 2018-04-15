@@ -17,11 +17,11 @@ Your TA is build upon https://github.com/se-edu/addressbook-level4[AddressBook -
 == Summary of contributions
 
 * *Major enhancement*: Added a display picture/status to all persons in the application.
-** What it does: It allows the user to save a display picture to any student in the application.
+** What it does: It allows the user to save a display picture to any student in the application. It also allows the tutor to have a quick glance to check if the student has been participating enough.
 
 ** Justification: This feature provides the tutor with a visual stimulus on how the student looks. This way, the tutor would be able to quickly associate the student's name and their face
 which in turn allow the tutor to remember their students better. This would encourage a more holistic environment for teaching and learning as it would make it more
-personal between the tutor and the student. Additionally, it also contains a drop shadow frame which shows whether the student has at least participated sufficiently in classes.
+personal between the tutor and the student. It utilizes a drop shadow frame which shows whether the student has at least participated sufficiently in classes.
 
 ** Highlights: This enhancement fully supports the existing undo and redo even though image files are stored outside the `AddressBook` memory.
 The existing commands (add, edit, delete and clear) were also updated to support the adding and changing of display pictures.
@@ -38,13 +38,14 @@ The existing commands (add, edit, delete and clear) were also updated to support
 
 ** Project management:
 *** Managed releases `v1.3` - `v1.4` (2 releases) on GitHub
-*** Managed the Issue Tracker, assigned issues and added labels to the issues.
-*** Help resolve merge conflicts.
+*** Managed the Issue Tracker, assigned issues and created/added labels to the issues. Also managed the milestones.
+*** Help resolve merge conflict for teammate. (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/104[#104])
 *** Set up Travis for the organization repo.
-*** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66]), changed application icon and name.
 ** Documentation:
-*** Updated the screenshots used in the User Guide: https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57]
-*** Edited the developer guide for english, added prefaces, updated images, made explanations clearer and added manual testing cases.
+*** Help update README (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/66[#66]), changed application icon (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/108[#108]) and name (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/123[#123]).
+*** Updated screenshots used in the User Guide: (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/57[#57], PR https://github.com/CS2103JAN2018-F09-B1/main/pull/130[#130])
+*** Edited the developer guide for English usage, added prefaces, updated images, made explanations clearer (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/123[#123]) and added manual testing cases.
+*** Sequence diagram was added (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/108[#108]) and was edited and used by teammate (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/124[#124]).
 ** Community:
 *** Reported bugs and suggestions for another team in the class (examples:  https://github.com/CS2103JAN2018-F12-B2/main/issues/83[1], https://github.com/CS2103JAN2018-F12-B2/main/issues/80[2], https://github.com/CS2103JAN2018-F12-B2/main/issues/76[3])
 
@@ -62,7 +63,7 @@ include::../UserGuide.adoc[tag=display]
 == Contributions to the Developer Guide
 
 |===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|_Given below are sections I contributed to the Developer Guide. Additional manual test cases were also added. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
 include::../DeveloperGuide.adoc[tag=participation]

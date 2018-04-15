@@ -1,0 +1,150 @@
+= Mukesh Gadupudi - Project Portfolio
+ifdef::env-github,env-browser[:outfilesuffix: .adoc]
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== Project: TeachConnect
+
+== 1. Overview
+*TeachConnect (TC)* is command line application designed to assist teachers and other educational professionals in *managing their contacts, appointments and tasks*. It is an application for a user who loves to type - in other words, it uses a *Command Line Interface (CLI)*. All output is displayed on a *Graphical User Interface (GUI)* - which is just the computer application screen. If you can type fast, TeachConnect will manage your contacts faster than traditional contact books.
+
+== 2. Purpose of Portfolio Page
+
+This portfolio was made to document all contributions I made to the project. +
+The contents included are:
+
+. The external behavior of my contributions.
+. The justification for their implementation.
+. Details of the implementation.
+
+It also includes some of the other contributions I made – Testing, PR reviews and Project Management.
+
+== 3. Summary of Contributions
+
+*Major enhancement*: Sharing of Contacts +
+*What it does*: allows users to import or export contacts in various file formats depending on conditions the user gives. +
+*Justification* : Teachers in general take up new classes and hence it is necessary for them to share the contact details of all the students in the class. They are also very sociable people and exchanging contacts between themselves should be made as simple and seamless as possible.
+
+*Minor enhancements*: Creating Personalised Shortcuts for any command +
+*What it does*: allows users to set multiple shortcuts for any command they wish. They can also choose to delete shortcuts. +
+*Justification* : TeachConnect comes with a lot of features and each feature has its own command word. The most gruelling part is remembering the exact command word as stated in the user guide. To overcome this the shortcut command helps keep aliases to the commands there by helping teachers better remember the command words they are comfortable with.
+
+*Code Contributed* : [https://github.com/CS2103JAN2018-W14-B1/main/blob/master/collated/functional/shanmu9898.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B1/main/blob/master/collated/test/shanmu9898.md[Test code]]
+
+*Other contributions* :
+
+** Created and set up the team repo including the Travis checks,Coveralls,Auto Publishing and Badges.
+** Managed all Issues and Milestones by managing the project and assigning work.
+** Wrote additional tests to increase coverage.
+** Took the role of Team Leader to make important decisions regarding development of the product.
+** Managed GitHub effectively to keep track of issues, merging Pull requests by resolving conflicts and keeping track of deadlines so that the weekly releases are made on time with a working product.
+** Fixed various(5+) bugs in the product including some bugs which existed previously in the product. link:https://github.com/CS2103JAN2018-W14-B1/main/pull/144[`Pull Request Bug Fix Example`]
+** Added several Use Cases for features in Developer Guide.
+** Improved User Interface design by changing the orientation and location of various parts of UI.
+** Helped teammate create his PR along with helping him setup git and checkstyle. link:https://github.com/CS2103JAN2018-W14-B1/main/pull/82[`Pull Request AutoSort`].
+** Contributed to User Guide and Developer Guide to enhance its language link:https://github.com/CS2103JAN2018-W14-B1/main/pull/54[`Pull Request Developer Guide Update`].
+** Helped people on the forum with their technical difficulties.
+** Managed all final submissions for CS2103T and CS2101.
+** Helped in Collating of codes of everyone link:https://github.com/CS2103JAN2018-W14-B1/main/pull/124[`Pull Request Collate`].
+
+== 4. Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. It shows my ability to contribute and write documentation aimed at end users._
+|===
+
+=== 4.1 Major Enhancement: Sharing Contacts
+
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=import]
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract (from User Guide)#
+
+=== 4.2 Minor Enhancement: Personalised Shortcut Commands
+
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=shortcut]
+
+include::../UserGuide.adoc[tag=deleteshortcut]
+
+#End of Extract (from User Guide)#
+
+== 4. Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. It shows my ability to write technical documentation and the technical depth of my contributions._
+|===
+
+=== 5.1 Major Enhancement: Sharing of Contacts
+
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=export]
+
+#End of Extract (from Developer Guide)#
+
+=== 5.2 Minor Enhancement: Personalised Shortcut Commands
+
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=shortcut]
+
+#End of Extract (from Developer Guide)#
+
+== Appendix A : Proposed Enhancement
+
+=== A.1 Other features Implemented
+
+==== Contributions to the User Guide
+
+* Minor Enhancement: Personalised Shortcut Commands
+
+#Start of Extract (from User Guide)#
+
+include::../UserGuide.adoc[tag=list]
+
+#End of Extract (from User Guide)#
+
+==== Contributions to the Developer Guide
+
+* Major Enhancement: Sharing of Contacts
+
+#Start of Extract (from DeveloperGuide)#
+
+include::../DeveloperGuide.adoc[tag=import]
+
+#End of Extract (from DeveloperGuide)#
+
+* Minor Enhancement: Personalised Shortcut Commands
+
+#Start of Extract (from Developer Guide)#
+
+include::../DeveloperGuide.adoc[tag=deleteshortcut]
+
+#End of Extract (from Developer Guide)#
+
+
+=== A.2 Enhancement Proposed: Using Natural Language Processing for Detecting Events
+
+==== External Behaviour
+
+This feature will help in integrating the mails we receive and appointments in those mails with TeachConnect. TeachConnect will be automatically be able to predict the events and suggest appointments/tasks using NLP in the emails.
+
+==== Justification
+
+This feature will make it easier for teachers to set appointments with students who mail them regarding extra classes or consultation. This will also increase the scope of the product to help teachers make and set tasks for various other factors not related to students.
+
+==== Implementation
+
+A connection will be first established between TeachConnect and the user's default email service provider.
+
+Through the following use case diagram, the teacher will be able to set appointments with students or other people.
+
+
+image::useCase.PNG[width="800"]
+    Figure 1 : Use case Diagram
+

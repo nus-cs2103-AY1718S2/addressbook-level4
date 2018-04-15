@@ -5,9 +5,12 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -39,6 +42,11 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_STUDENT = "student";
+    public static final String VALID_TAG_NOTUSED = "notused";
+    public static final String VALID_TITLE = "Consultation";
+    public static final String VALID_START_TIME = "10/10/2018 10:00";
+    public static final String VALID_END_TIME = "10/10/2018 12:00";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -49,7 +57,15 @@ public class CommandTestUtil {
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
     public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
+    public static final String TAG_DESC_STUDENT = " " + PREFIX_TAG + VALID_TAG_STUDENT;
     public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String VALID_CLASS_MATH = "Math101";
+    public static final String VALID_CLASS_PHYSICS = "Physics";
+    public static final String VALID_SUBJECT_MATH = "Mathematics";
+    public static final String VALID_SUBJECT_PHYS = "Physics";
+    public static final String VALID_START_DATE = "10/10/2018";
+    public static final String VALID_END_DATE = "10/10/2019";
+    public static final String VALID_DATE = "28/12/2018";
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
@@ -57,8 +73,29 @@ public class CommandTestUtil {
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
+    public static final String TITLE_DESC = " " + PREFIX_TITLE + VALID_TITLE;
+    public static final String START_TIME_DESC = " " + PREFIX_START_TIME + VALID_START_TIME;
+    public static final String END_TIME_DESC = " " + PREFIX_END_TIME + VALID_END_TIME;
+
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "  "; // spaces only
+    public static final String INVALID_START_TIME_DESC = " " + PREFIX_START_TIME + "911afddf"; // not a time stamp
+    public static final String INVALID_END_TIME_DESC =
+            " " + PREFIX_END_TIME + "May 20, 2018 10am"; // not in correct format
+
+    public static final String CLASS_MATH_DESC = " " + PREFIX_NAME + VALID_CLASS_MATH;
+    public static final String CLASS_PHYS_DESC = " " + PREFIX_NAME + VALID_CLASS_PHYSICS;
+    public static final String START_DATE_DESC = " " + PREFIX_START_TIME + VALID_START_DATE;
+    public static final String END_DATE_DESC = " " + PREFIX_END_TIME + VALID_END_DATE;
+
+    public static final String INVALID_CLASS_NAME_DESC = " " + PREFIX_NAME + "Cl@s$";
+    public static final String INVALID_START_DATE_DESC = " " + PREFIX_START_TIME + "10-10-2018";
+    public static final String INVALD_END_DATE_DESC = " " + PREFIX_END_TIME + "10 Oct 2019";
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
+    public static final String PREAMBLE_STUDENT = " student ";
+    public static final String PREAMBLE_SUBJECT_MATH = " Mathematics";
+    public static final String PREAMBLE_SUBJECT_PHYS = " Physics";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;

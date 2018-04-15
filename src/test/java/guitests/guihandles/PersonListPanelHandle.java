@@ -4,8 +4,8 @@ import java.util.List;
 import java.util.Optional;
 
 import javafx.scene.control.ListView;
-import seedu.address.model.person.Person;
-import seedu.address.ui.PersonCard;
+import seedu.progresschecker.model.person.Person;
+import seedu.progresschecker.ui.PersonCard;
 
 /**
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
@@ -114,7 +114,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * Returns true if the selected {@code PersonCard} is different from the value remembered by the most recent
      * {@code rememberSelectedPersonCard()} call.
      */
-    public boolean isSelectedPersonCardChanged() {
+    public boolean  isSelectedPersonCardChanged() {
         List<PersonCard> selectedItems = getRootNode().getSelectionModel().getSelectedItems();
 
         if (selectedItems.size() == 0) {

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= ProgressChecker - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,11 +10,33 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T09-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B3`      Since: `Feb 2018`      Licence: `MIT`
+
+== Introduction
+
+ProgressChecker is for *students* who *prefer to use a desktop app* to keep track of their learning progressthroughout the certain module. (Current version is available for CS2103/T) +
+
+For the current version, you can add your teammates details into ProgressChecker. You can also create a new task list through google task. By default, app will display all the link:DeveloperGuide.adoc#Learning-Outcomes[Learning Outcomes] taken from the https://nus-cs2103-ay1718s2.github.io/website/index.html[CS2103/T module website] for this week in the task list. Students can use this task list to track their weekly homework and the progress of the project.
+
+More importantly, ProgressChecker is *optimized for students who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (link:DeveloperGuide.adoc#GUI[GUI]).
+If you can type fast, ProgressChecker can get your learning outcome tasks done faster than traditional GUI apps. +
+
+Now you are ready to jump to the <<Setting-up,Setting up>> to get started. Enjoy!
+
+== Icons Meaning
+You will be seeing these icons throughout the guide. Each icon display specific information.
+
+[TIP]
+This lightbulb icon means tips that you can try when using ProgressChecker.
+
+[NOTE]
+This info icon means notes that you should pay attention to when using ProgressChecker.
 
 == Setting up
+
+There are some things you will need to set up before getting started in contributing to ProgressChecker. Below lists the important key elements you will have to configure.
 
 === Prerequisites
 
@@ -34,21 +56,27 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
+. https://www.atlassian.com/git/tutorials/comparing-workflows#forking-workflow[Fork] this repo, and https://nus-cs2103-ay1718s2.github.io/website/book/gitAndGithub/init/index.html[clone] the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
+... Click `Configure` > `Project Defaults` > `Project Structure`
+image:setup2.png[width="600"] +
+_step 3.i_
+... Click `New...` and find the directory of the JDK
 . Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
+. Locate the `build.gradle` file and select it. Click `OK` +
+image:setup3.png[width="600"]  +
+_step 5_
 . Click `Open as Project`
 . Click `OK` to accept the default settings
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
+image:setup5.png[width="600"]  +
+_step 8_
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `gradlew.bat run` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
@@ -68,7 +96,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-T09-B3/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-T09-B3/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -86,28 +114,33 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+Now you are ready to start coding! You can:
 
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
+1. Get some sense of the overall design by reading <<Design-Architecture,Design Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
 
 [[Design-Architecture]]
+
+ProgressChecker consists of multiple components that work together via an event-driven structure. This section will break down the various components in details to help you jump straight into understanding the architecture in depth.
+
 === Architecture
+
+The *_Architecture Diagram_* given below explains the high-level design of the App. Given below is a quick overview of each component.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
-
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
-
+{sp} +
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+{sp} +
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/progresschecker/MainApp.java[`MainApp`]. It is responsible for: +
+
+* Initializing the components in the correct sequence, and connects them up with each other at app launch.
+* Shutting down the components and invokes cleanup method where necessary.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
 
@@ -131,24 +164,35 @@ For example, the `Logic` component (see the class diagram given below) defines i
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+{sp}+
+
 [discrete]
 ==== Events-Driven nature of the design
 
 The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
+
 image::SDforDeletePerson.png[width="800"]
 
+{sp}+
+
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `ProgressCheckerChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+{sp} +
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
+{sp} +
+
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+
+{sp} +
 
 The sections below give more details of each component.
 
@@ -158,11 +202,13 @@ The sections below give more details of each component.
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+{sp}+
+
+*API* : link:{repoURL}/src/main/java/seedu/progresschecker/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/progresschecker/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
 The `UI` component,
 
@@ -177,15 +223,19 @@ The `UI` component,
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
+{sp}+
+
 .Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+{sp}+
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+*API* :
+link:{repoURL}/src/main/java/seedu/progresschecker/logic/Logic.java[`Logic.java`]
+
+.  `Logic` uses the `ProgressCheckerParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a teammate) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
 Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
@@ -199,7 +249,7 @@ image::DeletePersonSdForLogic.png[width="800"]
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:{repoURL}/src/main/java/seedu/progresschecker/model/Model.java[`Model.java`]
 
 The `Model`,
 
@@ -214,7 +264,9 @@ The `Model`,
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+{sp}+
+
+*API* : link:{repoURL}/src/main/java/seedu/progresschecker/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
@@ -224,7 +276,7 @@ The `Storage` component,
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+Classes used by multiple components are in the `seedu.progresschecker.commons` package.
 
 == Implementation
 
@@ -234,13 +286,16 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the ProgressChecker (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Structure of Commands in the Logic Component
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+{sp}+
+
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the ProgressChecker before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,95 +330,831 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th teammate in the ProgressChecker. The current state of the ProgressChecker is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.Undo/Redo Stack at Starting Point
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+{sp}+
 
+As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new teammate.
+
+.Undo/Redo Stack with New Command `add`
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+
+{sp}+
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the teammate was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the ProgressChecker to the state before the `add` command executed.
 
+.Undo/Redo Stack with Command `undo`
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+
+{sp}+
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
 The following sequence diagram shows how the undo operation works:
 
+.Sequence Diagram of Undo/Redo
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+{sp}+
+
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the ProgressChecker to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Undo/Redo Stack with New Command `clear`
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+
+{sp}+
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.Undo/Redo Stack with Command `list`
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+
+{sp}+
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram of Undo/Redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
 
 ===== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+|===
+|Alternative | Pros | Cons
+
+|**Add a new abstract method `executeUndoableCommand()`** +
+(current choice)
+|We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
+|Hard for new developers to understand the template pattern.
+
+|**Override `execute()`**
+|Does not involve the template pattern, easier for new developers to understand.
+|Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
+
+|===
+
+{sp}+
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+|===
+|Alternative | Pros | Cons
+|**Save the entire ProgressChecker** +
+(current choice)
+|Easy to implement.
+|May have performance issues in terms of memory usage.
 
+|**Individual command knows how to undo/redo by itself**
+|Will use less memory (e.g. for `delete`, just save the teammate being deleted).
+|We must ensure that the implementation of each individual command are correct.
+
+|===
+
+{sp} +
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
-* **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+|===
+|Alternative | Pros | Cons
+|**Only include commands that modifies the ProgressChecker (`add`, `clear`, `edit`)** +
+(current choice)
+|We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+|User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+
+|**Include all commands**
+|Might be more intuitive for the user.
+| User have no way of skipping such commands if he or she just want to reset the state of the ProgressChecker and not the view.
+
+|===
+
+[NOTE]
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
+{sp} +
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+|===
+|Alternative | Pros | Cons
+
+|**Use separate stack for undo and redo** +
+(current choice)
+|Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
+|Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+
+|**Use `HistoryManager` for undo/redo**
+|We do not need to maintain a separate stack, and just reuse what is already in the codebase.
+|Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+
+|===
+
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::upload[]
+=== Upload feature
+==== Planned Implementation
 
-_{Explain here how the data encryption feature will be implemented}_
+The Upload command will allow users to upload their preferred image to replace the default profile photo.
 
-// end::dataencryption[]
+The valid photo to be upload will be copies from local path inside resources folder under /images/contact. The name of the file will be renamed according to the time that the photo is uploaded.
+
+Upload can be undoable. The diagram below shows how the `EventsCenter` reacts to `uploadPhoto` event.
+
+.Component Interactions for `uploadPhoto` Command
+image::SDforUploadPhoto.png[width="800"]
+
+{sp} +
+
+UploadCommand is implemented this way:
+[source,java]
+----
+public class UploadCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(personToUpdate);
+        try {
+            model.addPhoto(photoPath);
+            model.uploadPhoto(personToUpdate, savePath);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        } catch (DuplicatePhotoException e) {
+            throw new CommandException(MESSAGE_IMAGE_DUPLICATE);
+        } catch (DuplicatePersonException e) {
+            throw new CommandException(MESSAGE_IMAGE_DUPLICATE);
+        }
+    }
+}
+----
+
+[NOTE]
+Users are allowed to reload the image if they want to update the profile photo.
+
+Here is the code to copy the photo from local path inside resources folder.
+[source,java]
+----
+public String copyLocalPhoto(String localPath) throws IOException {
+    File localFile = new File(localPath);
+    String newPath = createSavePath(localPath);
+    if (!localFile.exists()) {
+        throw new FileNotFoundException(MESSAGE_LOCAL_PATH_CONSTRAINTS);
+    }
+    createSavedPhoto(newPath);
+    try {
+        copyFile(localPath, newPath);
+    } catch (IOException e) {
+        throw new IOException(MESSAGE_COPY_FAIL);
+    }
+    return newPath;
+}
+----
+
+[NOTE]
+If the local path is invalid or the image cannot be found, the upload will not be successful. The extension of the file can only be 'jpg', 'jpeg' or 'png'. User will be asked to write the correct path to image again.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `UploadCommand`
+
+|===
+|Alternative | Pros | Cons
+
+|**User will provide the path of image** +
+(current choice)
+|The path can be used directly to find the image and display it in the app.
+|Image may be a local file. When other users open the app, they cannot see the update.
+
+|**User will upload image into our github folder manually**
+|Everyone can see the update of profile photo.
+|Quite trobulesome to upload photo manually first.
+
+|===
+// end::upload[]
+
+// tag::search[]
+=== Dynamic Search Implementation
+==== Current Implementation
+
+The `find` command shows the searched contact currently. However, the user does not need to type the complete name press enter, the whole search is dynamic. As soon as the user types the command `find` dynamic search state is toggled. After typing `find` command, whichever character is entered by the user, the results which contain
+ the typed keywords appear.
+
+To implement the dynamic search, we used the following method - as soon as the user enters any character in the command box, the text is retrieved from
+the command box and checked if it is the `find` command. If it is the `find` command, dynamic search is started. After the `find` command is detected in the
+command box, every key that is pressed is parsed and sent to the `find` command parser. After that the basic functionality of find is used and the results are displayed.
+
+The code snippet for the implementation is:
+[source,java]
+----
+if ((commandTextField.getText().trim().equalsIgnoreCase(CORRECT_COMMAND_WORD)
+                        || isCorrectCommandWord)) {
+                    isCorrectCommandWord = !commandTextField.getText().trim().isEmpty();
+                    CommandResult commandResult;
+                    if (keyEvent.getCode() != KeyCode.BACK_SPACE && keyEvent.getCode() != KeyCode.DELETE) {
+                        commandResult = logic.execute(commandTextField.getText() + keyEvent.getText());
+                    } else {
+                        commandResult = logic.execute(commandTextField.getText().substring(0,
+                                commandTextField.getText().length() - 1));
+                    }
+                    // process result of the command
+                    logger.info("Result: " + commandResult.feedbackToUser);
+                    raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+                }
+    }
+----
+[NOTE]
+The entered key is not instantly updated in the command box thats why after the `commandTextField.getText()` is executed we need to append\delete a character for the
+ code to the result to process the right input - the one that the user can see on their screens.
+
+==== Design consideration
+===== Aspect: User Interface (UI)
+
+|===
+|Alternative | Pros | Cons
+
+|**Show the search results without actually highlighting the keywords** +
+(current choice)
+|Allows more readability of the of the results as they contain multiple fields and not just user name.
+|User needs to manually search for the keywords entered by him in the search results.
+
+|**Show the search results WITH highlighting the keywords in the searched name** +
+|It will make it easier for the user to view the user to identify the searched keyword in the displayed results.
+|Adding highlights to the results might make the displayed results a bit too cluttered specially with the presence of tags which are colored as well.
+
+|===
+// end::search[]
+
+// tag::view[]
+=== Toggling between tab views
+==== Current Implementation
+
+This command toggles the view between the different type of tabs in the software. +
+
+.Reference of the tab view in the software
+image::TabView.png[width="600"]
+
+{sp} +
+
+It inherits `Command` and executes on an _Event Driven_ design between the Logic and UI component.
+
+Suppose that the user is on the `Task` tab and wants to toggle to the `Exercise` tab. The user executes a new `Command`, `view exercise`, to switch to the `Exercise` tab. The _Sequence Diagram_ below shows how the components interact with each other.
+
+.Logic and UI component interaction for `view exercise` command (part 1)
+image::SDforViewExercise.png[width="600"]
+
+{sp} +
+
+[NOTE]
+Note how the `Logic` simply raises a `TabLoadChangedEvent` when the `view` command gets executed. The `TabLoadChangedEvent` is implemented as follows:
+[source,java]
+----
+public class TabLoadChangedEvent extends BaseEvent {
+    public final String type;
+
+    public TabLoadChangedEvent(String type) {
+        this.type = type;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getTabName() {
+        return type;
+    }
+}
+----
+
+The diagram below shows how the `EventCenter` reacts to that event, which eventually results in the UI updating to which tab view is to be in selection.
+
+.Logic and UI component interaction for `view exercise` command (part 2)
+image::SDforViewExerciseEventHandling.png[width="600"]
+
+{sp} +
+
+[NOTE]
+The UI scene's elements are automatically populated in `MainWindow.java` due to using JavaFX FXML Controller. That is, a reference to a particular UI element will be available as long as it has its `fx:id` specified in `MainWindow.fxml`.
+
+The code snippet below shows how the UI component executes the toggling of tab view upon receiving the event change.
+[source,java]
+----
+@Subscribe
+private void handleTabLoadChangedEvent(TabLoadChangedEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    SingleSelectionModel<Tab> selectionModel = tabPlaceholder.getSelectionModel();
+    switch (event.getTabName()) {
+    case "profile":
+        selectionModel.select(profilePlaceholder);
+        break;
+    case "task":
+        selectionModel.select(taskPlaceholder);
+        break;
+    case "exercise":
+        selectionModel.select(exercisePlaceholder);
+        break;
+    case "issues":
+        selectionModel.select(issuePlaceholder);
+        break;
+    default:
+        selectionModel.select(selectionModel.getSelectedItem());
+    }
+}
+----
+// end::view[]
+
+// tag::answer[]
+=== View, answer, and save for an exercise
+==== Current Implementation
+
+This command allows user to answer an exercise based on the question index shown in the software.
+
+.Reference of the question index in the software
+image::QuestionIndexIndication.png[width="300"]
+
+{sp} +
+
+It inherits `UndoableCommand` and executes through all four components in the code base.
+
+Suppose that the user wants to answer an exercise with index 11.1.1. The user executes a new `Command`, `ans 11.1.1 a`, to answer the exercise. The Sequence Diagram below shows how the components interact with each other.
+
+.Component interactions for `ans 11.1.1 a` command (part 1)
+image::SDforAnswerExercise.png[width="800"]
+
+{sp}+
+
+[NOTE]
+Note how the `Model` simply raises a `ProgressCheckerChangedEvent` when the ProgressChecker data has been changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+{sp} +
+
+The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk.
+
+.Component interactions for `ans 11.1.1 a` command (part 2)
+image::SDforAnswerExerciseEventHandling.png[width="800"]
+
+{sp} +
+
+Before the `Logic` component executes the `Undoable Command` which calls the `Model`, it prepares the exercise that needs to be updated by going through the internal list of exercises stored in model. The code that searches for the exercise is as follows:
+[source,java]
+----
+for (Exercise e : exerciseList) {
+    if (e.getQuestionIndex().toString().equals(questionIndex.toString())) {
+        exerciseToEdit = exerciseList.get(exerciseList.indexOf(e));
+        editedExercise = createEditedExercise(exerciseToEdit, studentAnswer);
+        isFound = true;
+        break;
+    }
+}
+----
+
+The internal list, `exerciseList`, is implemented as an observable list of filtered exercises in `Model`. Upon calling the `ProgressCheckerChangedEvent`, `Storage` will run `saveProgressChecker`. Subsequently, to load the data on the next software start up requires parsing of xml data into `Model`. The following code snippet shows how `Storage` does so:
+[source,java]
+----
+public Exercise toModelType() throws IllegalValueException {
+    if (this.questionIndex == null) {
+        throw new IllegalValueException(
+                String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                QuestionIndex.class.getSimpleName()));
+    }
+    if (!QuestionIndex.isValidIndex(this.questionIndex)) {
+        throw new IllegalValueException(QuestionIndex.MESSAGE_INDEX_CONSTRAINTS);
+    }
+    final QuestionIndex questionIndex = new QuestionIndex(this.questionIndex);
+
+    if (this.questionType == null) {
+        throw new IllegalValueException(
+                String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                QuestionType.class.getSimpleName()));
+    }
+    if (!QuestionType.isValidType(this.questionType)) {
+        throw new IllegalValueException(QuestionType.MESSAGE_TYPE_CONSTRAINTS);
+    }
+    final QuestionType questionType = new QuestionType(this.questionType);
+
+    ...
+
+    return new Exercise(questionIndex, questionType, question, studentAnswer, modelAnswer);
+}
+----
+
+Additionally, since it is an observable list, the UI element harboring this list will update any changes made to this list accordingly. In viewing of exercises by week, the list is filtered with predicate as follows:
+[source,java]
+----
+model.updateFilteredExerciseList(exercise -> exercise.getQuestionIndex().getWeekNumber()
+                == editedExercise.getQuestionIndex().getWeekNumber());
+----
+
+==== Design Considerations
+===== Aspect: Viewing of exercises by week
+
+|===
+|Alternative | Pros | Cons
+
+|**Adapt from `View Command` by adding additional WEEK_NUMBER parameter to type `exercise`** +
+(current choice)
+|Not required to create a new command and hence more cohesive with the existing commands as well as one less command for users to learn
+|`ViewCommandParser` requires additional parser check to separate between the `View Command` that can take in WEEK_NUMBER to one that doesn't which might violate SLAP principle
+
+|**Create a new command to list exercises by week** +
+|Standalone from existing commands and hence easier to be built upon or removed without consequences
+|Creates an extra unnecessary complication for users having to learn a new command when the existing `View Command` essentially does something similar
+
+|===
+
+===== Aspect:  Loading of exercises data on fresh start
+
+|===
+|Alternative | Pros | Cons
+
+|**Include all exercises data in `SampleDataUtil` and read from there** +
+(current choice)
+|No additional processing required, is easy to modify whenever default data needs to be changed
+|Is directly affected by the `Clear Command` that is meant for the list of `Persons` which user may not expect it to be for
+
+|**Read from stored text file, parse accordingly, and load into software on fresh start** +
+|Standalone data and will not be affected by changes made to list of `Persons`
+|Incurs extra overhead when parsing the text file into Java objects
+
+|===
+// end::answer[]
+
+// tag::tasks[]
+=== Tasks
+==== Current Implementation
+
+The default LOs for all weeks would be stored in a local file, which will be loaded as input to create a task list on the
+user's Google Account with Google Tasks API.
+
+There are several commands related to tasks, including `newtasklist` to add and upload the default task list, `viewtasklist FILTER_KEYWORD`
+to view the default task list with filtering, `completetask INDEX`/`resettask INDEX` to mark a task as completed/not completed,
+and `goto INDEX` to open the URL of a task. As an example, the _High Level Sequence Diagram_ and _Sequence Diagram_ below shows how the components interact
+for the scenario where the user issues the command `viewtasklist 5`.
+
+.Component Interactions for `viewtasklist 5` Command (High Level)
+image::HighLevelSDforViewTaskListCommand.png[width="800"]
+
+{sp} +
+
+.Component Interactions for `viewtasklist 5` Command
+image::SDforViewTaskListCommand.png[width="800"]
+
+{sp} +
+
+We apply Google Tasks API to help us save user tasks data online. This offers back up data which allow our users to recover
+their tasks and status of each task even after uninstalling the application. The task list will be ready to display once the user
+reinstall and open the application.
+To use Google Tasks API, we fist need to register this project on google developer console and retrieve a client credential file (client_id.json) to authorize our project.
+Then, add corresponding dependencies to build.gradle, the library files will be downloaded automatically upon project rebuild.
+
+Here is the code snippet to add dependencies:
+[source,java]
+----
+compile (
+    ['com.google.api-client:google-api-client:1.23.0'],
+    ['com.google.apis:google-api-services-tasks:v1-rev49-1.23.0'],
+    ['com.google.oauth-client:google-oauth-client-jetty:1.23.0'],
+)
+----
+[NOTE]
+Simply downloading JAR files without editing gradle is not suggested. JARs are not in git thus our co-developers will rely on the dependencies to retrieve the libraries.
+Also, set gradleVersion to 4.6 if it is an older version, otherwise runtime compilation of Google API library will affect Junit tests.
+
+We write a program to authorize our project (by loading the aforementioned client credential file), trigger user loggin and build service.
+Note that when users are using ProgressChecker, only the first tasks command requires them to log in and authorize ProgressChecker to access
+their Google Tasks data with their google accounts.
+
+Google Tasks API helps us save time building massive data structures (ie. Tasks, TaskLists, Lists of TaskLists, as well as many methods and exceptions).
+However, we do have a few classes (eg. TaskUtil, TaskListUtil) in the modeling part that further add customized methods which are useful for current commands and even future commands.
+In this way, we avoid repetition of code snippet and having big chunks of import statements in numerous commands.
+
+Here is a code snippet that can find a task list by its title (while the native method only finds task by its id which is not memorable or even known by our users):
+[source,java]
+----
+/**
+ * Finds the task list with title {@code String listTitle} from the user's task lists
+ *
+ * @param listTitle title of the task list we look for
+ * @return the task list instance
+ */
+public static TaskList searchTaskList(String listTitle) throws CommandException {
+    TaskList taskList = null;
+    ConnectTasksApi connection = new ConnectTasksApi();
+    try {
+        connection.authorize();
+    } catch (Exception e) {
+        throw new CommandException(AUTHORIZE_FAILURE);
+    }
+    Tasks service = connection.getTasksService();
+    try {
+    TaskLists taskLists = service.tasklists().list().execute();
+        taskList = taskLists.getItems().stream()
+                .filter(t -> t.getTitle().equals(listTitle))
+                .findFirst()
+                .orElse(null);
+    } catch (IOException ioe) {
+        throw new CommandException(LOAD_FAILURE);
+    }
+
+    return taskList;
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of tasks commands
+
+* All these commands extend `Command` but not extend `UndoableCommand`. `AddDefaultTasksCommand`, `CompleteTaskCommand` and `ResetTaskCommand` make
+ external changes that update task list in users' Google account, which is out of the scope of undo command. `ViewTaskListCommand` and
+ `GoToTaskUrlCommand` do not make changes to the data, thus no applicable to undo command.
+
+===== Aspect: How `AddDefaultTasksCommand` is executed
+
+* This command will load the tasks from local storage and add a task list filled with these tasks to the user's Google account.
+|===
+|Alternative | Pros | Cons
+|**Find the user's Google task list with ID "@default" (this is the default task list in Google Task and not removable). Create a new
+task list and transfer the tasks from @default to the new one. Then change the title of @default to "CS2103 LOs", and add the tasks
+loaded from local storage** +
+(current choice)
+|The other tasks commands will only need to refer to the ID "@default" to find the task list, which is faster and more accurate than searching with title (
+as list ID is unique while list title can duplicate and the native API method only supports finding list with ID).
+|It requires more steps, thus slower (but fortunately this command should only be executed ONCE in the lifetime of this application).
+
+|**Create a new list with title "CS2103 LOs", then load and push all tasks from local storage**
+|Will be a bit faster.
+|The other task commands will be slower since they will be finding the list with title. The commands may also encounter error if
+there are task list with the same name in the user's Google account.
+
+|===
+
+{sp} +
+
+===== Aspect: How `ViewTaskListCommand` is executed
+
+* This command will load the tasks from task list @default from the user's Google account and apply user-specified filter before displaying
+|===
+|Alternative | Pros | Cons
+|**Find the user's @default task list and load the whole list. Then apply user-specified filter to select applicable
+tasks to form a new list. The new list will be ready to be displayed** +
+(current choice)
+|Easy to implement, well modularized.
+|More repetitions of list traversal.
+
+|**Find the user's @default task list and load the whole list. Then apply user-specified filter to select applicable
+   tasks while processing the methods to display it**
+|Easy to implement.
+|Might lead to complicated methods to display list (eg. multi-level abstraction).
+
+|===
+
+{sp} +
+
+===== Aspect: How `CompleteTaskCommand` and `ResetTaskCommand` is executed
+
+* This command will set the task with user-input index number as completed/ not completed.
+|===
+|Alternative | Pros | Cons
+|**Find the user's @default task list and retrieve the task with user-input index number. Check if it needs update, and update it
+if necessary.** +
+(current choice)
+|Easy to implement.
+|
+
+|===
+
+{sp} +
+
+===== Aspect: How `GoToTaskUrl` is executed
+
+* This command will open the URL of the task with the user-input index number.
+|===
+|Alternative | Pros | Cons
+|**Find the user's @default task list and retrieved the task based on the input index. Get the URL in the task object and open it in
+the browser panel** +
+(current choice)
+|Easy to implement.
+|
+
+|**No need for implementation, the user can click the hyperlink while viewing the task list**
+|No need for implementation.
+|Not command line based.
+
+|===
+
+{sp} +
+
+===== Aspect: What UI structure to show the task list
+
+|===
+|Alternative | Pros | Cons
+|**Use a browser panel.** +
+(current choice)
+|Can show task list and external websites linked to tasks in the same panel.
+|Exercise list, issue list and person list are all shown in a list panel. The handling of browser panel and list panel is different,
+which leads to inconsistency.
+
+|**Use a list panel to display tasks, and a browser panel to display external webpages**
+|Guarantees consistency between task list, exercise list, issue list and person list.
+|Takes more space.
+
+|===
+
+{sp} +
+
+===== Aspect: What can we improve / what command can we add in v2.0
+
+* Send reminder email to the user when a deadline is near
+* Back/Forward the browser panel
+* View teammates' task list and progress (Google Tasks does not support it. Thus, a possible implementation is to sync data
+with the help of Google Drive API. After every transaction with Google Tasks, we retrieve the task list and save in Google Drive.
+Students in the same team will use a shared folder on Google Drive, thus can access each other's task list data. ProgressChecker will
+retrieve teammate task list data from the shared folder in Google Drive).
+
+{sp} +
+// end::tasks[]
+
+// tag::github[]
+
+=== Github Login
+==== Current Implemetation
+
+The `GitDetails` represents an object that is used to authenticate github. It contains `Username`, `Passcode`, and `Repository` object which represent the github account's username, password and repository respectively.
+[NOTE]
+All fields are compulsory for github authentication.
+.UML diagram for github details
+image::gitdetails.png[width="800"]
+
+
+`GitDetails` object is not stored locally as it can violate user's data and privacy.
+To manage the github account following command classes can be used:
+****
+* GitLoginCommand
+* GitLogoutCommand
+****
+
+`GitLoginCommand` needs to be used for tracking any issue activity on the ProgressChecker application. After the `GitDetails` object is created, its member's are used to create a `Github` object from the Github API library which is used to authenticate github.
+
+Implementation of github login and issue tracking is done with the help of GitHub API for Java (org.kohsuke.github).
+==== Logging into github
+
+User can log into github after using the `GitLoginCommand`. After executing the command, a `GitDetails` object is created
+
+Given below is a sequence diagram for authenticating github.
+
+.UML Diagram for Github details
+image::gitlogin1.png[width="800"]
+
+
+The following code snippet shows how GitLoginCommand#execute() will update the model by creating `Github` object which will be used to authenticate github.
+
+----
+public class GitLoginCommand extends Command {
+@Override
+    public CommandResult execute() throws CommandException {
+
+        try {
+            model.loginGithub(toAuthenticate);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(ce.getMessage());
+        }
+    }
+}
+----
+
+==== Design considerations
+
+===== Aspect: Using password for authentication
+
+|===
+|Alternative | Pros | Cons
+|**Used github password for authentication** +
+(current choice)
+|User easily remebers his password, thus logging in is easy.
+|Password cannot be stored offline to protect users data and privacy.
+
+|**Using OAuth token for authentication**
+|OAuth token can be stored offline which can provide one-time login functionality, as we can restrict the token's usage for only ProgressChecker application.
+|Manually generating a token by the user is a tedious task and github tokens expire regularly which can be a pain for the user.
+|===
+=== Github Issue Tracker
+==== Current Implementation
+The `Issue` object represents an issue that is to be created on github. It contains `Title`, `Assignees`, `Milestone`, `Body`, and `Labels` which are the different attributes of an issue on github.
+[NOTE]
+Only the `Title` field is compulsory for `Issue` as this the only limitation set by github.
+
+.UML diagram for github Issue
+image::issueobject.png[width="800"]
+
+
+`Issue` objects are not stored in memory after an issue is created on github. The issues are not stored in a local file to protect users confidential data and privacy.
+
+Issue tracking is done by several command classes, namely:
+****
+* CreateIssueCommand
+* CloseIssueCommand
+* EditIssueCommand
+* ReopenIssueCommand
+* ListIssueCommand
+****
+
+All the above commands will only work after you have logged into github. Use 'gitLogin' command to login.
+
+==== Creating an issue
+An issue is created on github using the CreateIssueCommand. After executing the command, an `Issue` object is created which is then converted to a `GHIssue` object present in the Github Library. GHIssue is then posted online using the Github API library.
+
+Given below is the sequence diagram for creating an issue on github.
+
+.High level sequence diagram for creating a new issue on github
+image::finalcreateIssue.png[width="800"]
+
+
+The following code snippet shows how `CreateIssueCommand#execute()` will update the model of the application by creating an issue `toCreate` on github and later updating the `GitIssueList`.
+Note: This an issue will not be created if you haven't logged into github.
+
+----
+public class CloseIssueCommandTest {
+...
+@Override
+    public CommandResult execute() throws CommandException {
+
+        try {
+            model.createIssueOnGitHub(toCreate);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (IOException | CommandException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+    }
+    ...
+}
+----
+
+The issue created will be shown on the `Issues` tab in the application.
+
+==== Closing an issue
+
+An issue can be closed on github using the CloseIssueCommand. After executing the command, a `GHIssue` object of the specified index is retrieved from the Github database. The state of the GHIssue is checked and it is marked as closed if it is open.
+
+Given below is the sequence diagram for closing an issue.
+
+.High Level Sequence Diagram for closing an issue on github
+image::closeissue.png[width="800"]
+
+The following code snippet shows how `CloseIssueCommand#execute()` will update the model of application by closing an issue updating the `GitIssueList`.
+Note: The entered index number should be a valid issue index, and the user should be logged into github before using the command.
+
+----
+public class CloseIssueCommand extends Command {
+@Override
+    public CommandResult execute() throws CommandException {
+        try {
+            model.closeIssueOnGithub(targetIndex);
+        } catch (IOException ie) {
+            throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(MESSAGE_AUTHENTICATION_FAILURE);
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
+    }
+}
+----
+The issue created will be removed from the `Issues` tab in the application, as by default only open issues are displayed.
+
+==== Design considerations
+
+===== Aspect: Storing issues on a local file
+
+|===
+|Alternative | Pros | Cons
+|**Not storing the issues offline** +
+(current choice)
+|Users data and privacy is protected, as issues on github might contain very confidential data regarding the product's information.
+|The user cannot view the exisitng issues offline and he can not use the software to work offline and then push everything online once the internet connection is available.
+
+|**Implementing data encryption so that the issues can be stored offline**
+|User will be able work offline on issues and post changes when internet connection is availabe.
+|In order to do offline authentication and decrypt the issue data, the application will have to store the user credentials offline which might violate Github's API policy.
+|===
+
+// end::github[]
 
 === Logging
 
@@ -387,7 +1178,7 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use asciidoc for writing documentation. This section talks about how you can modify and publish the existing documentations.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -418,30 +1209,7 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
-=== Running Tests
-
-There are three ways to run tests.
-
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
-
-*Method 1: Using IntelliJ JUnit test runner*
-
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
-
-*Method 2: Using Gradle*
-
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
-
-[NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
-
-*Method 3: Using Gradle (headless)*
-
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
-
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+ProgressChecker uses JUnit tests to check for its correctness. This section covers the type of tests and how to run them.
 
 === Types of tests
 
@@ -449,14 +1217,14 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.progresschecker.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
+e.g. `seedu.progresschecker.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
+e.g. `seedu.progresschecker.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+e.g. `seedu.progresschecker.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
@@ -486,7 +1254,7 @@ When a pull request has changes to asciidoc files, you can use https://www.netli
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link:{repoURL}/src/main/java/seedu/progresschecker/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
@@ -501,7 +1269,7 @@ b. Require developers to download those libraries manually (this creates extra w
 [appendix]
 == Suggested Programming Tasks to Get Started
 
-Suggested path for new programmers:
+It might be your first time working with a large code base. If so, here is a suggested path for new programmers to kick start your first functionality:
 
 1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
 
@@ -520,14 +1288,14 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove teammates in the list.
 +
 ****
 * Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
+** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/progresschecker/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/progresschecker/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
+** link:{repoURL}/src/main/java/seedu/progresschecker/logic/parser/ProgressCheckerParser.java[`ProgressCheckerParser`] is responsible for analyzing command words.
 * Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
+** Modify the switch statement in link:{repoURL}/src/main/java/seedu/progresschecker/logic/parser/ProgressCheckerParser.java[`ProgressCheckerParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
 ** Add new tests for each of the aliases that you have added.
 ** Update the user guide to document the new aliases.
 ** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
@@ -536,36 +1304,36 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the ProgressChecker, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the ProgressChecker.
 +
 ****
 * Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
+** The link:{repoURL}/src/main/java/seedu/progresschecker/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/progresschecker/model/ProgressChecker.java[`ProgressChecker`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/progresschecker/model/ProgressChecker.java[`ProgressChecker`] and link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/progresschecker/model/ProgressChecker.java[`ProgressChecker`] allows you to update a teammate, and link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/progresschecker/model/ProgressChecker.java[`ProgressChecker`]. Loop through each teammates, and remove the `tag` from each teammate.
+** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/progresschecker/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/progresschecker/model/ModelManager.java[`ModelManager`] should call `ProgressChecker#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
+*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/progresschecker/model/ProgressChecker.java[`ProgressChecker`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
 *** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
 ****
 
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your ProgressChecker application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last teammate in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside teammate cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
@@ -577,7 +1345,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 +
 ****
 * Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/progresschecker/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
 ** Use the .css attribute `-fx-background-color` to add a color.
 ** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
 * Solution
@@ -586,7 +1354,7 @@ image::getting-started-ui-tag-after.png[width="300"]
 *** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
 ****
 
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
+. Modify link:{repoURL}/src/main/java/seedu/progresschecker/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/progresschecker/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
 +
 **Before**
 +
@@ -598,19 +1366,19 @@ image::getting-started-ui-result-after.png[width="200"]
 +
 ****
 * Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
+** link:{repoURL}/src/main/java/seedu/progresschecker/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/progresschecker/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/progresschecker/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
+** Refer to link:{repoURL}/src/main/java/seedu/progresschecker/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
 * Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
+** Modify link:{repoURL}/src/main/java/seedu/progresschecker/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
+** Modify link:{repoURL}/src/main/java/seedu/progresschecker/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
 ** You can write two different kinds of tests to ensure that the functionality works:
 *** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
+*** The system tests link:{repoURL}/src/test/java/systemtests/ProgressCheckerSystemTest.java[`ProgressCheckerSystemTest#assertCommandBoxShowsDefaultStyle() and ProgressCheckerSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
 ** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/progresschecker/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the ProgressChecker.
 +
 **Before**
 +
@@ -623,29 +1391,29 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/progresschecker/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the ProgressChecker is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/progresschecker/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of teammates when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/progresschecker/ui/StatusBarFooter.java[`StatusBarFooter#handleProgressCheckerChangedEvent(ProgressCheckerChangedEvent)`] to update the number of teammates whenever there are new changes to the progresschecker.
 ** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/ProgressCheckerSystemTest.java[`ProgressCheckerSystemTest`] to also verify the new total number of teammates status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
 
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the ProgressChecker to the cloud. However, the current implementation of the application constantly saves the ProgressChecker after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the ProgressChecker storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupProgressChecker(ReadOnlyProgressChecker)`, so that the ProgressChecker can be saved in a fixed temporary location.
 +
 ****
 * Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
+** Add the API method in link:{repoURL}/src/main/java/seedu/progresschecker/storage/ProgressCheckerStorage.java[`ProgressCheckerStorage`] interface.
+** Implement the logic in link:{repoURL}/src/main/java/seedu/progresschecker/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/progresschecker/storage/XmlProgressCheckerStorage.java[`XmlProgressCheckerStorage`] class.
 * Solution
 ** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
 ****
@@ -655,18 +1423,18 @@ Do take a look at <<Design-Storage>> before attempting to modify the `Storage` c
 
 By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
 
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+*Scenario:* You are a software maintainer for `progresschecker`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a teammate specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first teammate to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first teammate.
 
 ==== Step-by-step Instructions
 
@@ -675,13 +1443,13 @@ Let's start by teaching the application how to parse a `remark` command. We will
 
 **Main:**
 
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
+. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/progresschecker/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
+. Modify link:{repoURL}/src/main/java/seedu/progresschecker/logic/parser/ProgressCheckerParser.java[`ProgressCheckerParser`] to accept a `RemarkCommand`.
 
 **Tests:**
 
 . Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
+. Add new test method to link:{repoURL}/src/test/java/seedu/progresschecker/logic/parser/ProgressCheckerParserTest.java[`ProgressCheckerParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
 
 ===== [Step 2] Logic: Teach the app to accept 'remark' arguments
 Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
@@ -690,33 +1458,33 @@ Let's teach the application to parse arguments that our `remark` command will ac
 
 . Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
 . Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
+. Modify link:{repoURL}/src/main/java/seedu/progresschecker/logic/parser/ProgressCheckerParser.java[`ProgressCheckerParser`] to use the newly implemented `RemarkCommandParser`.
 
 **Tests:**
 
 . Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
 . Add `RemarkCommandParserTest` that tests different boundary values
 for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
+. Modify link:{repoURL}/src/test/java/seedu/progresschecker/logic/parser/ProgressCheckerParserTest.java[`ProgressCheckerParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/progresschecker/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
 
 **Main:**
 
 . Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/progresschecker/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
 
 **Tests:**
 
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -724,16 +1492,16 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Person.java[`Person`].
 
 **Main:**
 
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Person.java[`Person`].
 . You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Modify link:{repoURL}/src/main/java/seedu/progresschecker/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `progressChecker.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
+We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/progresschecker/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
 
 **Main:**
 
@@ -741,33 +1509,33 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `invalidAndValidPersonProgressChecker.xml`, `typicalPersonsProgressChecker.xml`, `validProgressChecker.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/progresschecker/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/progresschecker/model/person/Person.java[`Person`].
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/progresschecker/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Try and use the method on any sample `us` in link:{repoURL}/src/test/java/seedu/progresschecker/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
+Our remark label in link:{repoURL}/src/main/java/seedu/progresschecker/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
 
 **Main:**
 
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
+. Modify link:{repoURL}/src/main/java/seedu/progresschecker/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
+. Modify link:{repoURL}/src/test/java/seedu/progresschecker/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
 
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a teammate.
 
 **Tests:**
 
@@ -780,18 +1548,61 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+This section covers what ProgressChecker is meant to be and what it can do for the users.
+
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
+* is taking CS2103T in NUS
+* has a need to manage a up to 4 contacts
+* wants to have a centralized hub for managing his/her learning and software development
+* wants to keep track on his/her learning outcomes and progress
+* wants to save and refer to their answers for the weekly CS2103/T exercises
+* wants to manage GitHub issues efficiently
+* prefers desktop apps over other platforms
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* keep track of your teammates' details
+* keep track of your own progress on a week by week basis
+* never miss any learning outcomes due to missing them out in nested collapsible list
+* keep track of completed and incomplete (compulsory) learning outcomes
+* view and save your answers for the exercises (as proof of completion and for future revision)
+* manage issues from GitHub straight from the software along with other tracking
+
+[appendix]
+== Feature Contribution
+
+The names of the contributors and their contributions to the project are listed here in brief.
+
+=== Koh Yee Ru
+
+. (Major) View, answer and save responses for weekly CS2103/T exercises
+. (Minor) View command that toggles the tab view
+image:TabView.png[width="600"]
+
+=== Kang Anmin
+
+. (Major) Task management: Add LOs to google tasks (the users google account, load tasks and sign completion.
+. (Minor) Progress Bar: to give a graphic view of tasks completeness
+. (Minor) Change/Add more fields of information for teammates in the contact list, in order to fit the specific context of this software. It also lays a foundation for other operations.
+
+=== Lai Liwen
+
+. (Major) Revamp the UI: rearrange the different sections and panels to best suit audience's needs
+. (Major) Upload profile photo: students will be able to upload a photo to their profile
+. (Minor) HighLight the key word: the key word will be highlighted in command find
+
+=== Aditya Agarwal
+
+. (Major) Create a github issue tracker which will be used to track issues on github using the ProgressChecker application.
+. (Minor) Implement dynamic search
 
 [appendix]
 == User Stories
+
+This section lists the actions that both new and long-time users can and may want to perform with ProgressChecker.
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
@@ -800,91 +1611,505 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |new user |fill in my details such as name, email, 8 digits phone number |provide necessary information for platform maintenance
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |new user |fill in optional fields such as faculty, year of study, etc. |help my teammates know me better
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |update information of certain field(s) |keep my information up-to-date
+
+|`* * *` |user |add a teammate's details |help myself to track my current teammates' progress
+
+|`* * *` |user |delete a teammate's details |remove an entry of a teammate's details that I'm no longer grouped with
+
+|`* * *` |new user |upload a photo for myself or my teammates |help me to recognize my teammates
+
+|`* * *` |user |view my to-do <<learning outcomes,learning outcomes>> |know all the weekly deliverables and not miss them out
+
+|`* * *` |user |mark a to-do learning outcome as completed |focus on the tasks I have not done
+
+|`* * *` |user |answer and save my responses for the weekly exercises |show to tutor as proof of my learning outcome and revise before exams
+
+|`* * *` |user |know if my answer for an exercise is correct |learn from any mistakes I made
+
+|`* * *` |user |list issues (tasks) on GitHub |easily inform my teammates of my upcoming plans even before I send any pull requests to the team's repository
+
+|`* * *` |user |assign issues (tasks) to my teammates |track who is doing what
+
+|`* * *` |user |see the issues (tasks) listed on GitHub |easily know the upcoming plans of my teammates even before they send any pull requests to the team's repository
+
+|`* * *` |user |close issues (tasks) on GitHub |easily inform my teammates of a completed task if no particular pull requests closes it
+
+|`* *` |user |see the timeline showing the learning progress of me and my teammates |make sure everyone is on track
+
+|`* *` |new user |load a photo of myself or my teammates from GitHub |help me to recognize my teammates
+
+|`* *` |user |see the list of completed/incomplete <<learning outcomes,learning outcomes>> of my teammates |help to remind my teammate of the task or know which task to offer help with if they are having difficulties
+
+|`* *` |user |search information in our module website based on keywords |navigate and reference the information I need quickly
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user with many teammates in the ProgressChecker |sort teammates by name |locate a teammate easily
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+This section list the sequence of events for a feature. It includes possible scenarios in which a feature is not interacted with as intended which you can defense against.
 
+(For all use cases below, the *System* is the `ProgressChecker` and the *Actor* is the `user`, unless specified otherwise)
+
+// tag::viewusecase[]
 [discrete]
-=== Use case: Delete person
+=== Use case: View (toggle) a different tab
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to view a specific tab type
+2.  ProgressChecker toggles tab view to show the requested tab
 +
 Use case ends.
 
 *Extensions*
 
+* 1a. The given tab type is invalid.
++
 [none]
+** 1a1. ProgressChecker shows an error message.
+Use case ends.
+
+[none]
+* 2a. There is no content to be shown.
++
+Use case ends.
+// end::viewusecase[]
+
+[discrete]
+=== Use case: Add teammate
+
+*MSS*
+
+1.  User requests to add a specific teammate in the list
+2.  ProgressChecker add the teammate
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The teammate has already been existing in the list.
++
+
+** 1a1. ProgressChecker shows an error message.
++
+Use case resumes at step 1.
+
+* 1a. The given information is invalid.
++
+
+** 1a1. ProgressChecker shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Add the default task list
+
+*MSS*
+
+1.  User requests to add the task list
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker loads and parses local file, adds the task list to user's google account
++
+Use case ends.
+
+*Extensions*
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The file is not found.
++
+Use case ends.
+
+* 3b. The file is corrupted.
++
+Use case ends.
+
+[discrete]
+=== Use case: View Task List
+
+*MSS*
+
+1.  User requests to view the task list with a filter argument
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker makes request to the user's google account to load the task list.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The argument is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+[discrete]
+=== Use case: Complete a task
+
+*MSS*
+
+1.  User requests to mark a task as completed
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker marks the task as completed
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The index is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The index is valid but out of bound.
++
+Use case ends.
+
+[discrete]
+=== Use case: Reset a task
+
+*MSS*
+
+1.  User requests to reset a task as not completed
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker resets the task as not completed
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The index is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The index is valid but out of bound.
++
+Use case ends.
+
+[discrete]
+=== Use case: Open URL of a task
+
+*MSS*
+
+1.  User requests to open URL of a task
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker opens the URL and show in browser panel
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The index is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The index is valid but out of bound.
++
+Use case ends.
+
+// tag::answerusecase[]
+[discrete]
+=== Use case: Answer a question and save
+
+*MSS*
+
+1.  User requests to view the exercise tab of week X
+2.  ProgressChecker toggles to exercise tab and list week X's exercises
+3.  User requests to key in and save an answer to a question
+4.  ProgressChecker takes in input and saves
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The given tab type is invalid.
++
+[none]
+** 1a1. ProgressChecker shows an error message.
+Use case ends.
+
+* 1b. Specified week does not exist.
++
+[none]
+** 1b1. ProgressChecker shows an error message.
++
+Use case ends.
+
+[none]
+* 2a. There are no exercises to be shown.
++
+Use case ends.
+
+* 3a. User did not provide a question index.
++
+[none]
+** 3a1. ProgressChecker shows an error message.
++
+Use case ends.
+
+* 3b. User did not provide an answer.
++
+[none]
+** 3b1. ProgressChecker shows an error message.
++
+Use case ends.
+
+* 3c. The given question index does not exists.
++
+[none]
+** 3c1. ProgressChecker shows an error message.
++
+Use case ends.
+// end::answerusecase[]
+
+[discrete]
+=== Use case: Assign an issue to a teammate
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Autocomplete a command
+
+*MSS*
+
+1.  User types an incomplete command
+2.  User presses `tab` key to complete the command
+3.  ProgessChecker returns the completed command with dummy fields if there exists a specific format
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Specified command does not exist.
++
+[none]
+** 1a1. ProgressChecker doesn't do anything and waits for the right key/command to be entered.
+** 1a2. It waits for the right letter to be pressed or the correct command to be entered.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete teammate
+
+*MSS*
+
+1.  User requests to list teammates
+2.  ProgressChecker shows a list of teammates
+3.  User requests to delete a specific teammate in the list
+4.  ProgressChecker deletes the teammate
++
+Use case ends.
+
+*Extensions*
+
 * 2a. The list is empty.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
-[none]
-** 3a1. AddressBook shows an error message.
+
+** 3a1. ProgressChecker shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Close an issue
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Find teammate
+
+*MSS*
+
+1.  User types find
+2.  ProgressChecker automatically shows the list dynamically without the user needing to press enter key
+3.  User need not need to type the whole name, substrings will generate results
+4.  ProgressChecker displays the necessary results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The contact list is empty.
++
+Use case resumes at step 2.
+
+* 3a. The given substring doesn't exist in any name
++
+[none]
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+
+[discrete]
+=== Use case: List an issue
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Mark a learning outcome as completed
+
+*MSS*
+
+1.  User requests to list tasks(LOs)
+2.  ProgressChecker shows a list of tasks(LOs)
+3.  User provides an index to requests to mark the corresponding LO in the list as completed
+4.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+5.  ProgressChecker executes command to mark the LO as completed in google tasks under the user's google account
++
+Use case ends.
+
+*Extensions*
+
+* 2a. The list is empty.
++
+Use case ends.
+
+* 2b. The list has not been created yet (invalid list name).
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+
+** 3a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Search for information
+
+_{ to be added }_
+
+[discrete]
+=== Use case: Upload a photo for the profile
+
+*MSS*
+
+1.  User requests to view their profile
+2.  ProgressChecker shows the profile of the user
+3.  User requests to upload a new photo to the profile
+4.  ProgressChecker adds a new photo to the profile of user
+5.  Profile displays the new photo
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Picture intented to add cannot be found.
++
+[none]
+** 1a1. ProgressChecker shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+This sections list the criteria needed for the system and software.
 
-_{More to be added}_
+.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The data cannot be retrieved from outside.
+.  The product may need 3-5 minutes to build up for the first time.
+.  User need to authenticate with their Google Tasks credentials.
 
 [appendix]
 == Glossary
 
+[[Build-Automation]] Build Automation::
+Build automation is the process of automating the creation of a software build and the associated processes including: compiling computer source code into binary code, packaging binary code, and running automated tests.
+
+[[Gradle]] Gradle::
+Gradle is an open-source build automation system.
+
+[[GUI]] GUI::
+Graphical User Interface.
+
+[[Learning-Outcomes (LO)]] Learning Outcomes::
+Exercises that need to be done through GitHub for module CS2103/T.
+
 [[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X
+Windows, Linux, Unix, MAC-OS(OS-X).
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+[[sequence-diagram]] Sequence Diagram::
+A <<sequence diagram,sequence diagram>> shows object interactions shown in time sequence.
 
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+You may want to do manual testing to familiarise yourself with the software. Given below are instructions to test the app manually.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
@@ -903,21 +2128,100 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Deleting a teammate
 
-=== Deleting a person
+. Deleting a teammate while all teammates are listed
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all teammates using the `list` command. Multiple teammates in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No teammate is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Log into Github
+
+. Logging in to github when not not logged in
+
+.. Prerequisites: User shouldn't have logged into github
+.. Test case: `gitlogin gu/USERNAME pc/PASSCODE r/REPOSITORY` +
+   Expected: You have successfully logged into github!
+.. Test case: `gitlogin gu/WRONG_USERNAME pc/PASSCODE r/REPOSITORY` +
+   Expected: Enter correct username and password. +
+.. Other incorrect gitlogin commands to try: `gitlogin`, +
+   Expected: Invalid command format.
+
+=== Create an issue on github
+
+. Create issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `+issue ti/Test b/test body ms/v1.1 a/johndoe l/bug` +
+  Expected: You have successfully created an issue on github!
+.. Test case: `+issue ti/Test b/test body ms/INVALID_MILESTONE a/johndoe l/bug` +
+  Expected: Enter correct milestone. +
+.. Other incorrect +issue commands to try: `+issue`, +
+  Expected: Invalid command format.
+
+=== Edit an issue on github
+
+. Edit issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `editissue 123 ti/Test b/test body ms/v1.1 a/johndoe l/bug` +
+  Expected: You have successfully editted an issue on github!
+.. Test case: `editissue 99999 ti/Test b/test body ms/v1.1 a/johndoe l/bug` +
+  Expected: Issue not edited. Enter correct index number. +
+.. Other incorrect editissue commands to try: `editissue`, +
+  Expected: Invalid command format.
+
+=== Close an issue on github
+
+. Close an issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `-issue 37` +
+  Expected: Issue #37 has successfully been closed!
+.. Test case: `-issue 9999` +
+  Expected: Issue not closed. Enter correct index number. +
+.. Other incorrect close issue commands to try: `-issue 3 text`, +
+  Expected: Invalid command format.
+
+=== Reopen an issue on github
+
+. Reopen an issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `reopenissue 37` +
+  Expected: Issue #37 has successfully been reopened!
+.. Test case: `reopenissue 9999` +
+  Expected: Issue not reopened. Enter correct index number. +
+.. Other incorrect reopen issue commands to try: `reopen 3 text`, +
+  Expected: Invalid command format.
+
+=== List issues on github
+
+. List issues on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `listissues OPEN` +
+  Expected: All open issues are listed!
+.. Test case: `listissues ssxss` +
+  Expected: Enter correct state value. +
+.. Other incorrect list issues commands to try: `listissues`, +
+  Expected: Invalid command format.
+
+=== Logout of Github
+
+. Log out of github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `gitlogout` +
+  Expected: You have successfully logged out of github!
+.. Prerequisites: User should not have logged into github
+.. Test case: `gitlogout` +
+  Expected: Please log into github first to logout. +
 
 === Saving data
 
@@ -926,3 +2230,30 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Toggling a tab view
+
+. Navigate to another tab view
+
+.. Test case: `view exercise` +
+   Expected: UI toggles the tab view to the Exercise tab. A list of exercises should be displayed.
+.. Test case: `view exercise 5` +
+   Expected: UI toggles the tab view to the Exercise tab. Week 5's list of exercises should be displayed.
+.. Test case: `view invalidtype` +
+   Expected: No such tab found. Error details shown in the status message.
+.. Other incorrect view commands to try: `view`, `view exercise x` (where x is an input not within 2 to 11 (inclusive) +
+   Expected: Similar to previous.
+
+=== Answering an exercise
+
+. Answer an exercise and see the suggested answer
+
+.. Prerequisites: UI view is on the Exercise tab, showing week 11's exercises.
+.. Test case: `ans 11.1.1 a` +
+   Expected: Question index 11.1.1 turns green. Answer `a` is reflected under "Your Answer" and suggested answer for question index 11.1.1 is revealed.
+.. Test case: `view 11` +
+   Expected: Given question index does not exist. Error details shown in the status message.
+.. Other incorrect answer commands to try: `ans`, `ans 11.2` +
+   Expected: Similar to previous.
+
+Back to <<Setting up,TOP>>

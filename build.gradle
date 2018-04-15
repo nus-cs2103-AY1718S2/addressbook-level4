@@ -16,7 +16,7 @@ plugins {
 }
 
 // Specifies the entry point of the application
-mainClassName = 'seedu.address.MainApp'
+mainClassName = 'seedu.progresschecker.MainApp'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -46,6 +46,15 @@ dependencies {
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
     compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
     compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile (
+            ['com.google.api-client:google-api-client:1.23.0'],
+            ['com.google.apis:google-api-services-tasks:v1-rev49-1.23.0'],
+            ['com.google.oauth-client:google-oauth-client-jetty:1.23.0'],
+    )
+
+    // https://mvnrepository.com/artifact/org.kohsuke/github-api
+    compile group: 'org.kohsuke', name: 'github-api', version: '1.92'
+
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
     testCompile group: 'org.testfx', name: 'testfx-core', version: testFxVersion
@@ -57,13 +66,13 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "progresschecker.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '4.6'
 }
 
 task coverage(type: JacocoReport) {
@@ -132,16 +141,16 @@ test {
         }
 
         if (runNonGuiTests) {
-            test.include 'seedu/address/**'
+            test.include 'seedu/progresschecker/**'
         }
 
         if (runGuiTests) {
             test.include 'systemtests/**'
-            test.include 'seedu/address/ui/**'
+            test.include 'seedu/progresschecker/ui/**'
         }
 
         if (!runGuiTests) {
-            test.exclude 'seedu/address/ui/**'
+            test.exclude 'seedu/progresschecker/ui/**'
         }
     }
 }

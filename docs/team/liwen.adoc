@@ -1,0 +1,61 @@
+= Lai Liwen - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: ProgressChecker
+
+---
+
+== Overview
+
+ProgressChecker is *a desktop application for CS2103/T students to have a centralized hub that tracks their learning progress and project development* throughout the module. The current release is meant to be used alongside with CS2103/T module website. ProgressChecker has a JavaFX GUI, but users will interact with it via CLI for efficiency.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to upload profile photo*
+** *What it does:* allows students to upload any photos as their own or teammates's profile photo.
+** *Justification:* this feature solves the issue that students may have teammates with the same name. Profile photo can help students to recognize each other better.
+** *Highlights:* This enhancement touches on all 4 components in the code base. It required an in-depth analysis of the existing architecture on how each components work with one another in order to implement it in an optimal way.
+** *Credits:* The format and style of the codes are heavily inspired by the existing code, like `addCommand`.
+
+* *Minor enhancement*: add a theme command to change the theme of ProgressChecker
+
+* *Extra feature*: improve the UI from current version with another new theme
+
+* *Extra feature*: add a sort command to display teammates with their name in lexicological order
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/functional/Livian1107.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/test/Livian1107.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Updated the documentations and assured them are in the consistent format
+*** Helped to review and merge the pull requests on our team repo
+** Enhancements to existing features:
+*** Improved the UI https://github.com/CS2103JAN2018-T09-B3/main/pull/103[#226]
+** Documentation:
+*** Updated first draft for User Guide and Developer Guide https://github.com/CS2103JAN2018-T09-B3/main/pull/117[#115]https://github.com/CS2103JAN2018-T09-B3/main/pull/123[#116]
+*** Updated documentations after the consultation https://github.com/CS2103JAN2018-T09-B3/main/pull/209[#227] https://github.com/CS2103JAN2018-T09-B3/main/pull/203[#227]
+** Community:
+*** Pull requests reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T09-B3/main/pull/220[#220]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=upload]
+
+include::../UserGuide.adoc[tag=sort]
+
+include::../UserGuide.adoc[tag=theme]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=upload]

@@ -33,6 +33,15 @@ public class BrowserPanelHandle extends NodeHandle<Node> {
         }));
     }
 
+    //@@author EdwardKSG
+    /**
+     * Returns the {@code String title} of the currently loaded page.
+     */
+    public String getLoadedTitle() {
+        return WebViewUtil.getLoadedTitle(getChildNode(BROWSER_ID));
+    }
+    //@@author
+
     /**
      * Returns the {@code URL} of the currently loaded page.
      */

@@ -3,6 +3,8 @@
 <person>
     <phone>9482424</phone>
     <email>hans@example</email>
-    <address>4th street</address>
+    <username>HansGithub</username>
+    <major>Computer Science</major>
+    <year>2</year>
     <tagged>friends</tagged>
 </person>

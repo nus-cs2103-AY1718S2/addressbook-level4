@@ -36,6 +36,7 @@ public class XmlAdaptedPerson {
     private String timeZone;
     @XmlElement(required = true)
     private Boolean isArchived;
+
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 

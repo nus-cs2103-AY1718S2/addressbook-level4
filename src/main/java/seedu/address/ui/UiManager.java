@@ -16,6 +16,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
+import seedu.address.login.Login;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -35,15 +36,20 @@ public class UiManager extends ComponentManager implements Ui {
     private Logic logic;
     private Config config;
     private UserPrefs prefs;
+    private Login login;
     private MainWindow mainWindow;
+    private LoginWindow loginWindow;
+    private Stage primaryStage;
 
-    public UiManager(Logic logic, Config config, UserPrefs prefs) {
+    public UiManager(Logic logic, Config config, UserPrefs prefs, Login login) {
         super();
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.login = login;
     }
 
+    //@@author ngshikang
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting UI...");
@@ -64,11 +70,40 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        try {
+            prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+            mainWindow.hide();
+            mainWindow.releaseResources();
+        } catch (NullPointerException e) {
+            logger.info("Illegal exit occurred. Please click proper exit button in the future.");
+            throw new NullPointerException();
+        }
     }
 
+    @Override
+    public void startLogin(Stage primaryStage) {
+        logger.info("Starting Login...");
+        this.primaryStage = primaryStage;
+
+        try {
+            primaryStage.setHeight(600);
+            primaryStage.setWidth(400);
+            loginWindow = new LoginWindow(primaryStage, login);
+            loginWindow.show();
+            loginWindow.fillPane();
+
+        } catch (Throwable e) {
+            logger.severe(StringUtil.getDetails(e));
+            showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
+        }
+    }
+
+    @Override
+    public void stopLogin() {
+        loginWindow.hide();
+    }
+
+    //@@author
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {
         final String content = details + ":\n" + cause.toString();
         showAlertDialogAndWait(AlertType.ERROR, FILE_OPS_ERROR_DIALOG_STAGE_TITLE, description, content);

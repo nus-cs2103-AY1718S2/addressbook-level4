@@ -1,6 +1,9 @@
 package seedu.address.logic;
 
+import java.io.IOException;
 import java.util.logging.Logger;
+
+import com.google.maps.errors.ApiException;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
@@ -23,16 +26,19 @@ public class LogicManager extends ComponentManager implements Logic {
     private final CommandHistory history;
     private final AddressBookParser addressBookParser;
     private final UndoRedoStack undoRedoStack;
+    private final Autocompleter autocompleter;
 
     public LogicManager(Model model) {
         this.model = model;
         history = new CommandHistory();
         addressBookParser = new AddressBookParser();
         undoRedoStack = new UndoRedoStack();
+        autocompleter = new Autocompleter(model.getAddressBook().getPersonList());
     }
 
     @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
+    public CommandResult execute(String commandText) throws CommandException, ParseException,
+            InterruptedException, ApiException, IOException {
         logger.info("----------------[USER COMMAND][" + commandText + "]");
         try {
             Command command = addressBookParser.parseCommand(commandText);
@@ -53,5 +59,11 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public String autocomplete(String query) {
+        autocompleter.updateFields(model.getAddressBook().getPersonList());
+        return autocompleter.autocomplete(query);
     }
 }

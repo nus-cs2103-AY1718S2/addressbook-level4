@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Pigeons - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,27 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T16-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `T16-B2`
 
+// tag::introductionSK[]
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Pigeons is a delivery-tracking tool for both business-owners and delivery drivers who *prefer to use a desktop app for managing their delivery process*.
+Pigeons is *optimized for those who prefer to work with a Command Line Interface* (CLI)
+while still having the benefits of a Graphical User Interface (GUI).
+If you can type fast, Pigeons can get your delivery management tasks done faster than traditional GUI apps.
+
+The recommended way to use Pigeons is to first load in the delivery data by a centralised administrator for each delivery driver,
+and then allow each driver to login to their own account and filter by today's date to retrieve the route for the deliveries
+they have for the day.
+// end::introductionSK[]
+
+* Users will be able to add individuals to the address book and route out deliveries based on the day
+* The program will return attributes that will make the delivery mans life easier such as distance to destination and best time to leave
+
+Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,22 +41,36 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+// tag::quickStartModification[]
+.  Run the MainApp scripts / jar file and await for the GUI to open
+.  A login screen such as the one below should appear.
++
+image::LoginScreen2.PNG[width="300"]
++
+. Create a profile with desired username and password (non case-sensitive) if using for the first time.
+If profile has previously already been created, or after creation of profile, click login.
++
+[NOTE]
+You can use `Tab` to switch to the next field/button and `Enter` to submit/create/exit. `Enter` will not work on the
+username field but only on the password field and buttons.
++
+The application should open into the following screen:
 +
 image::Ui.png[width="790"]
 +
+
+// end::quickStartModification[]
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/2018-06-14` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
+.  Refer to <<User Testing>> for a quick list of the sequence of commands you can try in this app.
 
 [[Features]]
 == Features
@@ -63,15 +91,19 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS d/DELIVERY_DATE [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
+[TIP]
+Tags are used to categorize the different deliveries, some are already used by default like `repeat` which corresponds to a delivery that wasn't completed earlier and has been rescheduled
+[TIP]
+The date must be in the format "YYYY-MM-DD"
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 d/2018-03-24`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 d/2018-06-17 t/criminal`
 
 === Listing all persons : `list`
 
@@ -117,6 +149,26 @@ Examples:
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+
+// tag::filter[]
+=== Filtering person by date: `filter`
+
+Filers the list of people by date (only one date)
+Format: `filter DATE`
+
+****
+* Recommended date format is YYYY-MM-DD
+****
+
+When you filter by date the back end of the program will create an optimized route
+for all the people on that date and display the route on the map.
+****
+* The search can only look for one date
+* Persons with the delivery date matching the argument will be returned
+* This filter can be used to obtain a delivery route for a day
+****
+
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -223,6 +275,48 @@ The `redo` command fails as there are no `undo` commands executed previously.
 Clears all entries from the address book. +
 Format: `clear`
 
+// tag::distance[]
+=== Finding distance : `distance`
+
+Finds the distance from the headquarter to the person address. +
+Format: `distance INDEX (INDEX)`
+
+****
+* Selects the person and loads the distance from the headquarter to the person address `INDEX`. Or selects 2 person and
+load the distance from the first person to the second person.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* **The person(s) address(es) should be valid, existing. Else, the program might auto-generated some other address(ed).**
+****
+
+Examples:
+
+* `list` +
+`distance 2 3` +
+Return the distance from the 2nd person to the 3rd person in the address book.
+* `find Betsy` +
+`distance 1` +
+Return the distance from the headquarter to the 1st person name Betsy in the address book.
+
+// end::distance[]
+
+=== Setting the HeadQuarters `[coming in v2.0]`
+User is able to set the address of the headquarters with `sethq` command
+
+// tag::email[]
+=== Emailing the customers : `email`
+
+Sends an email to the filtered list of customers to remind them when their delivery is coming
+and the itinerary to the driver with the list of all the addresses
+ordered so that it corresponds to the shortest journey. +
+Format: `email`
+
+This command will email every user listed on the UI screen when the email command is run. +
+
+[NOTE]
+Remind to first filter the customers by date.
+// end::email[]
+
 === Exiting the program : `exit`
 
 Exits the program. +
@@ -233,16 +327,61 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+[NOTE]
+====
+All data are saved to files unique to the user  logged in. +
+You will not see data from that of another user profile.
+====
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Users may be able to encrypt/decrypt their Pigeons addressbook files from v2.0 onwards.
 // end::dataencryption[]
+
+// tag::centralisedLoading[]
+
+=== Centralised loading in of data `[coming in v2.0]`
+Users may be able to load in large amounts of addressees into their Pigeons addressbook files from v2.0 onwards.
+// end::centralisedLoading[]
+
+=== Drivers can edit the route to match their needs `[coming in v2.0]`
+
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+
+// tag::testing[]
+== User Testing
+
+When testing and using our system for the first time, here are some commands you can try to get the full experience.
+Feel free to try other commands outlined above when you get the feel of our program as well.
+
+*1.* add n/John Doa a/321 Clementi Ave p/67340028 e/pigeonscs2103@gmail.com d/2018-03-24
+****
+* John Doa should be added to the list of addressees.
+****
+
+*2.* filter 2018-03-24
+****
+* All addressees with 2018-03-24 in their delivery date should be listed.
+* Additionally, a map routing all the shown addressees should be generated.
+****
+
+*3.* find John
+****
+* All addressees with John in their name should be listed.
+****
+
+*4.* delete 1
+****
+* John, which we added at the start, should be removed.
+* 1-index numbering system (i.e. the first addressee has index 1)
+****
+// end::testing[]
+
 
 == Command Summary
 
@@ -259,6 +398,16 @@ e.g. `find James Jake`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Distance* : `distance INDEX (INDEX)` +
+e.g.`distance 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+
+// tag::shortcuts[]
+== Shortcuts
+
+* kbd:[tab] : autocomplete a command or a field
+* kbd:[&uarr;] : previous input
+* kbd:[&darr;] : next input
+// end::shortcuts[]

@@ -8,13 +8,15 @@ lib/*
 *.log
 *.log.*
 *.csv
-config.json
+*.json
 src/test/data/sandbox/
 preferences.json
 .DS_Store
 ./screenshot*.png
 classes/
 /data/
+data
+!data/demoaddressbook.xml
 /bin/
 src/main/resources/docs/
 out/

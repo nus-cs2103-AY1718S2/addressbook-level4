@@ -1,9 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.text.Font?>
+<?import javafx.scene.text.Text?>
 
-<StackPane styleClass="anchor-pane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" promptText="Enter command here..."/>
+<!--@@author ngshikang -->
+<StackPane opacity="0.91" prefHeight="26.0" prefWidth="377.0" styleClass="anchor-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+  <TextField fx:id="commandTextField" onAction="#handleCommandInputChanged" onKeyPressed="#handleKeyPress" prefHeight="23.0" prefWidth="215.0" promptText="Enter command here...">
+      <StackPane.margin>
+         <Insets left="145.0" />
+      </StackPane.margin>
+      <font>
+         <Font name="ADAM.CGPRO" size="12.0" />
+      </font></TextField>
+   <Text fill="#ffffff" fontSmoothingType="LCD" strokeType="OUTSIDE" strokeWidth="0.0" text="COMMAND LINE " textAlignment="LEFT" textOrigin="CENTER" translateY="0.5" wrappingWidth="120.0" StackPane.alignment="CENTER_LEFT">
+      <font>
+         <Font name="ADAM.CGPRO" size="14.0" />
+      </font>
+      <StackPane.margin>
+         <Insets left="5.0" />
+      </StackPane.margin>
+   </Text>
 </StackPane>
-

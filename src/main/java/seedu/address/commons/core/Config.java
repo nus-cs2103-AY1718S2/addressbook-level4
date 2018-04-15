@@ -11,9 +11,10 @@ public class Config {
     public static final String DEFAULT_CONFIG_FILE = "config.json";
 
     // Config values customizable through config file
-    private String appTitle = "Address App";
+    private String appTitle = "Your Trustworthy Pigeons AddressBook brought to you by T16-B2";
     private Level logLevel = Level.INFO;
     private String userPrefsFilePath = "preferences.json";
+    private String userPassFilePath = "userpass.json";
 
     public String getAppTitle() {
         return appTitle;
@@ -39,6 +40,14 @@ public class Config {
         this.userPrefsFilePath = userPrefsFilePath;
     }
 
+    public String getUserPassFilePath() {
+        return userPassFilePath;
+    }
+
+    public void setUserPassFilePath(String userPassFilePath) {
+        this.userPassFilePath = userPassFilePath;
+    }
+
     @Override
     public boolean equals(Object other) {
         if (other == this) {
@@ -52,12 +61,13 @@ public class Config {
 
         return Objects.equals(appTitle, o.appTitle)
                 && Objects.equals(logLevel, o.logLevel)
-                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath);
+                && Objects.equals(userPrefsFilePath, o.userPrefsFilePath)
+                && Objects.equals(userPassFilePath, o.userPassFilePath);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(appTitle, logLevel, userPrefsFilePath);
+        return Objects.hash(appTitle, logLevel, userPrefsFilePath, userPassFilePath);
     }
 
     @Override
@@ -66,6 +76,7 @@ public class Config {
         sb.append("App title : " + appTitle);
         sb.append("\nCurrent log level : " + logLevel);
         sb.append("\nPreference file Location : " + userPrefsFilePath);
+        sb.append("\nUserPass file Location : " + userPassFilePath);
         return sb.toString();
     }
 

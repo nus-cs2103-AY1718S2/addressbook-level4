@@ -3,53 +3,50 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+Pigeons is a delivery-tracking tool for both business-owners and delivery drivers,
+ developed by T16-B2 from the CS2103 course. We are a team comprised of students from NUS as well as
+students doing exchange from around the world.
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== MEERA KANANI
+image::meerakanani10.png[width="150", align="left"]
+{empty}[https://github.com/meerakanani[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/meerakanani.adoc[porfolio]]
+{empty}
 
-Role: Project Advisor
+Main Role: Route Logic Developer
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Also in charge of: Team lead; Code quality
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== NG SHI KANG
+image::ngshikang.png[width="150", align="left"]
+{empty}[http://github.com/ngshikang[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ngshikang.adoc[portfolio]]
 
-Role: Developer +
-Responsibilities: Data
+Main Role: User Profile Developer
 
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Also in charge of: Deliverables and deadlines; Scheduling and tracking
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== MATTHIEU MARIE EMMANUEL BUOT DE L'EPINE
+image::mattbuot.png[width="150", align="left"]
+{empty}[http://github.com/mattbuot[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/mattbuot.adoc[portfolio]]
 
-Role: Developer +
-Responsibilities: UI
+Main Role: Communication Developer
+
+Also in charge of: Integration; Documentation
 
 '''
+
+=== NGO CHANH ANH MINH
+image::ncaminh.png[width="150", align="left"]
+{empty}[http://github.com/ncaminh[github]] [https://github.com/CS2103JAN2018-T16-B2/main/blob/master/docs/team/ncaminh.adoc[portfolio]]
+
+Main Role: Mapping Visualization Developer
+
+Also in charge of: Maps API Expert; Testing
+
+'''
+

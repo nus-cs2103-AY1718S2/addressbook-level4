@@ -1,6 +1,8 @@
 package seedu.address;
 
+import java.io.File;
 import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -15,11 +17,16 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ExitLoginRequestEvent;
+import seedu.address.commons.events.ui.LoginAccessGrantedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.login.Login;
+import seedu.address.login.LoginManager;
+import seedu.address.login.UserPassStorage;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -27,6 +34,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.JsonUserPassStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
@@ -35,12 +43,13 @@ import seedu.address.storage.XmlAddressBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
+
 /**
  * The main entry point to the application.
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 2, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -50,7 +59,8 @@ public class MainApp extends Application {
     protected Model model;
     protected Config config;
     protected UserPrefs userPrefs;
-
+    protected Login login;
+    protected UserPassStorage userPassStorage;
 
     @Override
     public void init() throws Exception {
@@ -62,7 +72,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        UserPassStorage userPassStorage = new JsonUserPassStorage(config.getUserPassFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
+        StorageManager storageManager = (StorageManager) storage;
 
         initLogging(config);
 
@@ -70,11 +82,31 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        login = new LoginManager(storageManager);
+
+        ui = new UiManager(logic, config, userPrefs, login);
 
         initEventsCenter();
     }
 
+    //@@author ngshikang
+    /**
+     * Reinitialises components to match previous state of specific user profile
+     */
+    private void reInit(Login login) {
+        String profile = login.getUsername();
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(profile + config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        userPrefs.setAddressBookFileName(profile);
+        AddressBookStorage addressBookStorage =
+                new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, userPassStorage);
+        model = initModelManager(storage, userPrefs);
+        logic = new LogicManager(model);
+        ui = new UiManager(logic, config, userPrefs, login);
+    }
+
+    //@@author
     private String getApplicationParameter(String parameterName) {
         Map<String, String> applicationParameters = getParameters().getNamed();
         return applicationParameters.get(parameterName);
@@ -181,11 +213,91 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    //@@author ngshikang
     @Override
     public void start(Stage primaryStage) {
+        logger.info("Starting Login to Pigeons AddressBook " + MainApp.VERSION);
+        ui.startLogin(primaryStage);
+    }
+
+    /**
+     * Starts Application after login success
+     */
+    public void startApp(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+        reInit(login);
+        readWelcomeMessage();
         ui.start(primaryStage);
     }
+
+    //@@author ncaminh
+    /**
+     * read welcome "username" message
+     */
+    private void readWelcomeMessage() {
+        try {
+            readWelcomeScriptForMac();
+        } catch (IOException notMac) {
+            try {
+                createFolderIfNeeded();
+                createScriptIfNeeded();
+                readWelcomeScript();
+            } catch (IOException e) {
+                logger.warning("Unable to read Welcome script");
+            }
+        }
+    }
+
+    /**
+     * Read welcome script for Mac
+     */
+    private void readWelcomeScriptForMac() throws IOException {
+        Runtime runtime = Runtime.getRuntime();
+        String[] argument = { "osascript", "-e", "say \"Welcome user\" using \"Alex\" "
+                + "speaking rate 180 pitch 42 modulation 60" };
+
+        Process process = runtime.exec(argument);
+        logger.info("Running welcome script on Mac");
+    }
+
+    /**
+     * Read welcome script for Window
+     */
+    private void readWelcomeScript() throws IOException {
+        Runtime.getRuntime().exec("wscript.exe script\\Welcome.vbs");
+        logger.info("Running welcome script on Window");
+    }
+
+    /**
+     * create script file if not exist
+     */
+    private void createScriptIfNeeded() throws IOException {
+        File f = new File("script\\Welcome.vbs");
+        if (!f.exists()) {
+            File file1 = new File("script\\Welcome.txt");
+            logger.info("Creating script Welcome.txt");
+            file1.createNewFile();
+            logger.info("Writing to Welcome.txt");
+            PrintWriter writer = new PrintWriter("script\\Welcome.txt", "UTF-8");
+            writer.println("CreateObject(\"sapi.spvoice\").Speak \"Welcome back user\"");
+            writer.close();
+            logger.info("Converting Welcome.txt to Welcome.vbs");
+            File file2 = new File("script\\Welcome.vbs");
+            file1.renameTo(file2);
+        }
+    }
+
+    /**
+     * create script folder if not exist
+     */
+    private void createFolderIfNeeded() {
+        File dir = new File("script");
+        if (!dir.exists()) {
+            logger.info("Creating script directory");
+            boolean successful = dir.mkdirs();
+        }
+    }
+    //@@author
 
     @Override
     public void stop() {
@@ -206,6 +318,22 @@ public class MainApp extends Application {
         this.stop();
     }
 
+    //@@author ngshikang
+    @Subscribe
+    public void handleExitLoginRequestEvent(ExitLoginRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @Subscribe
+    public void handleAccessGrantedEvent(LoginAccessGrantedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ui.stopLogin();
+        this.startApp(new Stage());
+    }
+
+    //@@author
     public static void main(String[] args) {
         launch(args);
     }

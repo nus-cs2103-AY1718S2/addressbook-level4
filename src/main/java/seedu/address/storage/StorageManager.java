@@ -11,6 +11,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.login.UserPassStorage;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
 
@@ -22,14 +23,28 @@ public class StorageManager extends ComponentManager implements Storage {
     private static final Logger logger = LogsCenter.getLogger(StorageManager.class);
     private AddressBookStorage addressBookStorage;
     private UserPrefsStorage userPrefsStorage;
+    private UserPassStorage userPassStorage;
 
-
-    public StorageManager(AddressBookStorage addressBookStorage, UserPrefsStorage userPrefsStorage) {
+    //@@author ngshikang
+    public StorageManager(AddressBookStorage addressBookStorage,
+                          UserPrefsStorage userPrefsStorage,
+                          UserPassStorage userPassStorage) {
         super();
         this.addressBookStorage = addressBookStorage;
         this.userPrefsStorage = userPrefsStorage;
+        this.userPassStorage = userPassStorage;
     }
 
+    // ================ UserPass methods ==============================
+
+    public UserPassStorage getUserPassStorage() {
+        return userPassStorage;
+    }
+    public void setUserPassStorage(UserPassStorage userPassStorage) {
+        this.userPassStorage = userPassStorage;
+    }
+
+    //@@author
     // ================ UserPrefs methods ==============================
 
     @Override

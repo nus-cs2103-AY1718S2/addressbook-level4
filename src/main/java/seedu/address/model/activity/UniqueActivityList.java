@@ -78,16 +78,12 @@ public class UniqueActivityList implements Iterable<Activity> {
         }
 
         internalList.set(index, editedActivity);
-
-
         Collections.sort(internalList, dateTimeComparator);
 
     }
 
     public void setActivity(UniqueActivityList replacement) {
         this.internalList.setAll(replacement.internalList);
-
-
         Collections.sort(internalList, dateTimeComparator);
     }
 
@@ -98,8 +94,6 @@ public class UniqueActivityList implements Iterable<Activity> {
             replacement.add(activity);
         }
         setActivity(replacement);
-
-        //@@author karenfrilya97
         Collections.sort(internalList, dateTimeComparator);
     }
 

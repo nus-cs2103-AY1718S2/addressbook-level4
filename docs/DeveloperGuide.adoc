@@ -766,6 +766,7 @@ and the default page which shows keyboard shortcuts.
 // end::BrowserPanel[]
 //@@author
 
+//tag::ModelTwoImplementation[]
 === New Model
 
 ==== Modelling
@@ -822,6 +823,7 @@ In order to view the new types on the GUI, two enhancements were implemented. 1.
 The result is as such:
 
 image::PersonListPanel.PNG[width="600"]
+//end::ModelTwoImplementation[]
 
 == Documentation
 
@@ -1439,10 +1441,12 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
+//tag::ManualTestDelete[]
 .. Test Case: `delete 1`, where 1 is a CUSTOMER, and 1 is assigned to a RUNNER +
     Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Runner should no longer have that Customer assigned.
 .. Test Case: `delete 1`, where 1 is a RUNNER, and CUSTOMERS 2, 3, 4 are assigned to the RUNNER +
     Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Customers at INDEX 2, 3, 4 should no longer have that Runner assigned to them.
+//end::ManualTestDelete[]
 
 //@@author Der-Erlkonic
 === Select Command

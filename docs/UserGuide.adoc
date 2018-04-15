@@ -276,6 +276,7 @@ address "Ang Mo Kio Police Divison HQ" and tags "UndercoverRunner", "TripleAgent
 // end::addcommand[]
 //@@author
 //@@author melvintzw
+//tag::AssignCommand[]
 === Assigning one or more Customers to a Runner : `assign`, kbd:[Ctrl+Shift+A] [since v1.4] [[assign]]
 
 *Syntax:*
@@ -307,6 +308,7 @@ _Assigns the Customer associated with index `2` to the Runner associated with in
 _Assigns the Customers associated with indices `2`, `5`, `8` to the Runner associated with index `1` based on the last shown listing._
 ====
 <<Command Summary, Back to Command Summary>>
+//end::AssignCommand[]
 
 ***
 //@@author
@@ -390,6 +392,7 @@ _Edits the phone number and email address of the first person to be `999` and `a
 _Edits the name of the second person to be `Kimmy Aunty` and clears all existing tags from that person._
 ====
 ***
+//tag::FindCommand[]
 === Searching for relevant persons : `find`, kbd:[Ctrl+F] [since v1.1] [[find]]
 
 *Syntax:*
@@ -442,6 +445,7 @@ _Returns all persons with names, addresses or tags matching `Betsy`, `Tim`, or `
 _Returns all persons with phone number "91234567"._
 ====
 <<Command Summary, Back to Command Summary>>
+//end::FindCommand[]
 
 //@@author zhangriqi
 //tag::locatecommand[]

@@ -38,6 +38,7 @@ public class MiscellaneousInfo {
         this.nextOfKinPhone = nextOfKinPhone;
         this.remarks = remarks;
 
+
     }
 
     /**
@@ -88,5 +89,6 @@ public class MiscellaneousInfo {
     public Remarks getRemarks() {
         return remarks;
     }
+
 }
 //@@author

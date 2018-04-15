@@ -64,7 +64,8 @@ public class XmlAdaptedStudent {
      */
     public XmlAdaptedStudent(String uniqueKey, String name, String phone, String email, String address,
                              String programmingLanguage, List<XmlAdaptedTag> tagged, String favourite,
-                             XmlAdaptedDashboard dashboard, XmlAdaptedMiscInfo miscellaneousInfo) {
+                             String profilePicturePath, XmlAdaptedDashboard dashboard,
+                             XmlAdaptedMiscInfo miscellaneousInfo) {
         this.key = uniqueKey;
         this.name = name;
         this.phone = phone;
@@ -74,6 +75,7 @@ public class XmlAdaptedStudent {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.profilePicturePath = profilePicturePath;
         this.miscellaneousInfo = miscellaneousInfo;
         this.favourite = favourite;
         if (dashboard != null) {

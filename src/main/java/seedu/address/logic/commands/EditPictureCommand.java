@@ -7,6 +7,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE_PATH;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_STUDENTS;
 
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import seedu.address.commons.core.Messages;
@@ -31,7 +32,7 @@ import seedu.address.model.tag.Tag;
  * Edits the profile picture of an existing student in the address book.
  */
 //@@author samuelloh
-public class EditPictureCommand extends UndoableCommand {
+public class EditPictureCommand extends Command {
 
     public static final String COMMAND_WORD = "editPicture";
 
@@ -42,7 +43,7 @@ public class EditPictureCommand extends UndoableCommand {
             + PREFIX_INDEX + "INDEX (must be a positive integer) "
             + PREFIX_PICTURE_PATH + "URL OF NEW PICTURE.\n"
             + "Example: " + COMMAND_WORD + " " + PREFIX_INDEX + "1 "
-            + PREFIX_INDEX + "C:\\example.jpg";
+            + PREFIX_PICTURE_PATH + "C:\\example.jpg";
 
     public static final String MESSAGE_EDIT_STUDENT_SUCCESS = "Edited profile picture of Student: %1$s";
     private final Index index;
@@ -61,7 +62,10 @@ public class EditPictureCommand extends UndoableCommand {
     }
 
     @Override
-    protected CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult execute() throws CommandException {
+
+        preProcessCommand();
+
         try {
             model.updateProfilePicture(studentToEditPicture, pictureEditedStudent, finalPictureEditedStudent);
         } catch (DuplicateStudentException dpe) {
@@ -70,11 +74,14 @@ public class EditPictureCommand extends UndoableCommand {
             throw new AssertionError("The target student cannot be missing");
         }
         model.updateFilteredStudentList(PREDICATE_SHOW_ALL_STUDENTS);
-        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, pictureEditedStudent));
+        return new CommandResult(String.format(MESSAGE_EDIT_STUDENT_SUCCESS, finalPictureEditedStudent));
     }
 
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
+    /**
+     * Preprocesses the {@code EditPictureCommand} before executing it.
+     * @throws CommandException
+     */
+    protected void preProcessCommand() throws CommandException {
         studentToEditPicture = getStudentToEdit();
         pictureEditedStudent = createPictureEditedStudent(studentToEditPicture);
         finalPictureEditedStudent = createFinalEditedStudent(pictureEditedStudent);
@@ -137,6 +144,24 @@ public class EditPictureCommand extends UndoableCommand {
                 tags, isFavourite, dashboard, profilePicturePath, miscellaneousInfo);
     }
 
+    @Override
+    public boolean equals(Object other) {
+        // short circuit if same object
+        if (other == this) {
+            return true;
+        }
+
+        // instanceof handles nulls
+        if (!(other instanceof EditPictureCommand)) {
+            return false;
+        }
+
+        // state check
+        EditPictureCommand e = (EditPictureCommand) other;
+        return index.equals(e.index)
+                && newProfilePicturePath.equals(e.newProfilePicturePath)
+                && Objects.equals(studentToEditPicture, e.studentToEditPicture);
+    }
 
 }
 //@@author

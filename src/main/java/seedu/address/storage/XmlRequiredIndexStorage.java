@@ -41,7 +41,15 @@ public class XmlRequiredIndexStorage {
 
     }
 
-
+    public static RequiredStudentIndex getData(String filePath) {
+        File file = new File(filePath);
+        try {
+            RequiredStudentIndex ris = XmlUtil.getDataFromFile(file, RequiredStudentIndex.class);
+            return ris;
+        } catch (Exception e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage());
+        }
+    }
 
 }
 //@@author

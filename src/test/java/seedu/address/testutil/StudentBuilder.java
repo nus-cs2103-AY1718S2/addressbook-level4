@@ -19,8 +19,12 @@ import seedu.address.model.student.dashboard.Task;
 import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneException;
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.Allergies;
 import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
+import seedu.address.model.student.miscellaneousinfo.NextOfKinName;
+import seedu.address.model.student.miscellaneousinfo.NextOfKinPhone;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousinfo.Remarks;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -139,14 +143,6 @@ public class StudentBuilder {
     }
 
     /**
-     * Sets the {@code programminglanguage} of the {@code Student} that we are building.
-     */
-    public StudentBuilder withProgrammingLanguage(String progLang) {
-        this.programmingLanguage = new ProgrammingLanguage(progLang);
-        return this;
-    }
-
-    /**
      * Adds a new {@code milestone} to the {@code dashboard} of the {@code Student} that we are building.
      *
      * @throws DuplicateMilestoneException if the new milestone is a duplicate of an existing milestone
@@ -175,6 +171,54 @@ public class StudentBuilder {
 
         return this;
     }
+
+    //@@author samuelloh
+    /**
+     * Sets the {@code programminglanguage} of the {@code Student} that we are building.
+     */
+    public StudentBuilder withProgrammingLanguage(String progLang) {
+        this.programmingLanguage = new ProgrammingLanguage(progLang);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withAllergies(String allergies) {
+        this.miscellaneousInfo = new MiscellaneousInfo(new Allergies(allergies), miscellaneousInfo.getNextOfKinName(),
+                miscellaneousInfo.getNextOfKinPhone(), miscellaneousInfo.getRemarks());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withNextOfKinName(String nextOfKinName) {
+        this.miscellaneousInfo = new MiscellaneousInfo(miscellaneousInfo.getAllergies(),
+                new NextOfKinName(nextOfKinName), miscellaneousInfo.getNextOfKinPhone(),
+                miscellaneousInfo.getRemarks());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withNextOfKinPhone(String nextOfKinPhone) {
+        this.miscellaneousInfo = new MiscellaneousInfo(miscellaneousInfo.getAllergies(),
+                miscellaneousInfo.getNextOfKinName(), new NextOfKinPhone(nextOfKinPhone),
+                miscellaneousInfo.getRemarks());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withRemarks(String remarks) {
+        this.miscellaneousInfo = new MiscellaneousInfo(miscellaneousInfo.getAllergies(),
+                miscellaneousInfo.getNextOfKinName(), miscellaneousInfo.getNextOfKinPhone(), new Remarks(remarks));
+        return this;
+    }
+    //@@author
 
     /**
      * Builds the student with given attributes

@@ -11,7 +11,7 @@ public class ProgrammingLanguage {
 
     public static final String MESSAGE_PROGRAMMING_LANGUAGE_CONSTRAINTS = "Programming language should be a visible "
             + "character";
-    public static final String PROGRAMMING_LANGUAGE_VALIDATION_REGEX = "\\p{Graph}+";
+    public static final String PROGRAMMING_LANGUAGE_VALIDATION_REGEX = "\\p{Print}+";
 
     public final String programmingLanguage;
 

@@ -89,7 +89,7 @@ public class SortPersonCommandTest {
         sortSchool.setData(model, new CommandHistory(), new UndoRedoStack());
         String expectedMessage = String.format(SortPersonCommand.MESSAGE_SUCCESS);
         assertCommandSuccess(sortSchool, expectedMessage,
-                Arrays.asList(AMYTUTEE, ALICETUTEE, BOBTUTEE, DANIEL));
+                Arrays.asList(ALICETUTEE, AMYTUTEE, BOBTUTEE, DANIEL));
     }
 
     @Test

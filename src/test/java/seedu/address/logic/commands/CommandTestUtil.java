@@ -28,6 +28,7 @@ import seedu.address.model.Task;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -66,21 +67,18 @@ public class CommandTestUtil {
     public static final String VALID_GRADE_BOB = "A1";
     public static final String VALID_EDUCATION_LEVEL_AMY = "secondary";
     public static final String VALID_EDUCATION_LEVEL_BOB = "junior college";
+    public static final String VALID_EDUCATION_LEVEL_ROBERT = "primary";
     public static final String VALID_SCHOOL_AMY = "nan hua high school";
     public static final String VALID_SCHOOL_BOB = "victoria junior college";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String NAME_DESC_ROBERT = " " + PREFIX_NAME + VALID_NAME_ROBERT;
     public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
     public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
-    public static final String PHONE_DESC_ROBERT = " " + PREFIX_PHONE + VALID_PHONE_ROBERT;
     public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
-    public static final String EMAIL_DESC_ROBERT = " " + PREFIX_EMAIL + VALID_EMAIL_ROBERT;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String ADDRESS_DESC_ROBERT = " " + PREFIX_ADDRESS + VALID_ADDRESS_ROBERT;
     public static final String SUBJECT_DESC_AMY = " " + PREFIX_SUBJECT + VALID_SUBJECT_AMY;
     public static final String SUBJECT_DESC_BOB = " " + PREFIX_SUBJECT + VALID_SUBJECT_BOB;
     public static final String GRADE_DESC_AMY = " " + PREFIX_GRADE + VALID_GRADE_AMY;
@@ -102,13 +100,14 @@ public class CommandTestUtil {
     public static final String INVALID_EDUCATION_LEVEL = " " + PREFIX_EDUCATION_LEVEL + "university";
     public static final String INVALID_SCHOOL = " " + PREFIX_SCHOOL + "hanyang@1"; // should only be alphabetic
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_TUTEE_TAG_DESC = " " + PREFIX_TAG + "Tutee"; // 'tutee' tag not allowed in person
 
+    public static final String TUTEE_TAG = "Tutee";
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
-    public static final EditCommand.EditPersonDescriptor DESC_ROBERT;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -117,9 +116,6 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
-        DESC_ROBERT = new EditPersonDescriptorBuilder().withName(VALID_NAME_ROBERT)
-                .withPhone(VALID_PHONE_ROBERT).withEmail(VALID_EMAIL_ROBERT).withAddress(VALID_ADDRESS_ROBERT)
-                .build();
     }
 
     /**
@@ -189,6 +185,21 @@ public class CommandTestUtil {
     }
 
     /**
+     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
+     * {@code model}'s address book.
+     */
+    /*
+    public static void showTaskAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredTaskList().size());
+
+        Task task = model.getFilteredTaskList().get(targetIndex.getZeroBased());
+        final String[] splitName = task.getDescription().split("\\s+");
+        model.updateFilteredTaskList(new TaskContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+
+        assertEquals(1, model.getFilteredTaskList().size());
+    }
+*/
+    /**
      * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
      */
     public static void deleteFirstPerson(Model model) {
@@ -197,6 +208,18 @@ public class CommandTestUtil {
             model.deletePerson(firstPerson);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+        }
+    }
+
+    /**
+     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     */
+    public static void deleteFirstTask(Model model) {
+        Task firstTask = model.getFilteredTaskList().get(0);
+        try {
+            model.deleteTask(firstTask);
+        } catch (TaskNotFoundException pnfe) {
+            throw new AssertionError("Task in filtered list must exist in model.", pnfe);
         }
     }
 

@@ -1,7 +1,6 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_TASK_TIMING_CLASHES;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.time.LocalDateTime;
@@ -10,8 +9,8 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.model.person.exceptions.TimingClashException;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.model.task.exceptions.TimingClashException;
 
 /**
  * A list of tasks that enforces uniqueness between its elements and does not allow nulls.
@@ -21,11 +20,10 @@ import seedu.address.model.task.exceptions.TaskNotFoundException;
  */
 //@@author a-shakra
 public class UniqueTaskList implements Iterable<Task> {
+
     private static final String HOUR_DELIMITER = "h";
     private static final String MINUTE_DELIMITER = "m";
-
     private final ObservableList<Task> internalList = FXCollections.observableArrayList();
-
 
     /**
      * Constructs empty TaskList.
@@ -41,15 +39,28 @@ public class UniqueTaskList implements Iterable<Task> {
     public void add(Task toAdd) throws TimingClashException {
         requireNonNull(toAdd);
         if (isTimeClash(toAdd.getTaskDateTime(), toAdd.getDuration())) {
-            throw new TimingClashException(MESSAGE_TASK_TIMING_CLASHES);
+            throw new TimingClashException();
         }
         internalList.add(toAdd);
     }
-    //@@author
+
     //@@author a-shakra
     /**
+     * Replaces the person {@code target} in the list with {@code editedPerson}.
+     */
+    public void setTask(Task target, Task editedTask) throws TaskNotFoundException {
+        requireNonNull(editedTask);
+
+        int index = internalList.indexOf(target);
+        if (index == -1) {
+            throw new TaskNotFoundException();
+        }
+        internalList.set(index, editedTask);
+    }
+
+
+    /**
      * Removes the equivalent task from the list.
-     *
      */
     public boolean remove(Task toRemove) throws TaskNotFoundException {
         requireNonNull(toRemove);
@@ -63,6 +74,7 @@ public class UniqueTaskList implements Iterable<Task> {
     public void setTasks(UniqueTaskList replacement) {
         this.internalList.setAll(replacement.internalList);
     }
+
 
     public void setTasks(List<Task> tasks) throws TimingClashException {
         requireAllNonNull(tasks);
@@ -119,7 +131,7 @@ public class UniqueTaskList implements Iterable<Task> {
         taskEndTime = startDateTime.plusHours(hoursInDuration).plusMinutes(minutesInDuration);
         return taskEndTime;
     }
-    //@@author
+
     //@@author a-shakra
     @Override
     public Iterator<Task> iterator() {

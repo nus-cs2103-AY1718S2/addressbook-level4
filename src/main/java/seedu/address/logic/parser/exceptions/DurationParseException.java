@@ -1,4 +1,4 @@
-package seedu.address.model.person.exceptions;
+package seedu.address.logic.parser.exceptions;
 
 //@@author ChoChihTun
 /**

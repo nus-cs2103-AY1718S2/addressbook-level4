@@ -140,7 +140,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when the <<address-book,Address Book>> data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -158,7 +158,7 @@ The sections below give more details of each component.
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API* : link:{https://github.com/CS2103JAN2018-T11-B1/main}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
@@ -181,7 +181,7 @@ image::LogicClassDiagram.png[width="800"]
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:{https://github.com/CS2103JAN2018-T11-B1/main}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
@@ -193,34 +193,38 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
+// tag::classDiagram[]
 [[Design-Model]]
+
 === Model component
 
 .Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram2.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+*API* : link:{https://github.com/CS2103JAN2018-T11-B1/main}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Person>` and `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+// end::classDiagram[]
 
+// tag::storageDiagram[]
 [[Design-Storage]]
 === Storage component
 
 .Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+image::StorageClassDiagram2.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API* : link:{https://github.com/CS2103JAN2018-T11-B1/main}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
 * can save the Address Book data in xml format and read it back.
-
+// end::storageDiagram[]
 [[Design-Commons]]
 === Common classes
 
@@ -235,9 +239,9 @@ This section describes some noteworthy details on how certain features are imple
 ==== Current Implementation
 
 ===== Reason for Implementation
-As the user of this application is the tutor, he or she will need to add the tutees' contact details.
-Since a tutee contains more details specific to them compared to a non-tutee, tutee contacts should not be mixed with the non-tutee contacts so that all the contacts are organized and can be managed easily.
-Therefore, AddTuteeCommand is used to add only the tutees' contact details.
+As the user of this application is a private tutor, he or she will need to add the <<tutee,tutees'>> contact details.
+Since a tutee contains more details specific to them compared to a person, tutee contacts should not be mixed with the <<person, person>> contacts so that all the contacts are organized and can be managed easily.
+Therefore, AddTuteeCommand is used to add only the <<tutee-details,tutees' details>>.
 
 ===== How it is implemented
 The AddTuteeCommand is an extension of the Undoable Command, which is part of the Logic Component.
@@ -268,32 +272,36 @@ public class AddTuteeCommand extends UndoableCommand {
 }
 ----
 
-The following sequence diagram shows how the addtutee operation works:
+The following [underline]#*sequence diagram*# shows how the addtutee operation works:
 
 image::AddTuteeCommandSequenceDiagram.png[width="800"]
 
 As shown in the sequence diagram, after Tutee object has been created, it is being passed to Model. Model manager will add the Tutee object to the person list in TuitionConnect.
-By having a combined list of tutee and non-tutee, we can manage the contacts using one command, such as delete command, instead of having 1 command for tutee and 1 command for non-tutee.
+By having a combined list of tutee and person, we can manage the contacts using one command, such as delete command, instead of having 1 command for tutee and 1 command for person.
 The combined list is achieved through the use of inheritance, whereby Tutee class inherits the Person class as shown in the diagram below.
 
-image:TuteeClassDiagram.jpg[width="800"]
+image:TuteeClassDiagram.jpg[width="600" height="400"]
 
 Since a tutee is a person, we can carried out inheritance by extending the Person class.
 Both Tutee and Person class objects have the same fields such as Name, Phone, Email and Address.
-However, Tutee class object has additional fields such as Subject, Grade, EducationLevel and School, which are irrelevant to a Person class object (non-tutee).
+However, Tutee class object has additional details such as Subject, Grade, EducationLevel and School, which are irrelevant to a Person class object.
 
 [NOTE]
-If the person already exists, either as tutee or non-tutee, in the contact list, DuplicatePersonException will be thrown.
+If the person already exists, either as tutee or person, in the contact list, DuplicatePersonException will be thrown.
+
+The following [underline]#*activity diagram*# shows the workflow when adding a tutee.
+
+image:AddTuteeActivityDiagram.png[width="800]
 
 ==== Design Consideration
 
 * **Alternative 1 (current choice):** Create a new command "addtutee" and a tutee class, which extends person class
-** Pros: Non-tutee will not have any detail that is specific to tutee only. This saves memory especially when there are numerous non-tutee objects.
-** Cons: A tutee cannot simply convert into a non-tutee when tutor stops teaching him/her. Tutor has to delete the tutee and add him/her again as a non-tutee.
+** Pros: Person will not have any detail that is specific to tutee only. This saves memory especially when there are numerous person objects.
+** Cons: A tutee cannot simply convert into a person object when tutor stops teaching him/her. Tutor has to delete the tutee and add him/her again as a person.
 
 * **Alternative 2:** Modify the current AddCommand and add more fields to the person class
 ** Pros: Features can be implemented easily without modifying much to the existing code.
-** Cons: Non-tutee object creates unrelated field objects such as "subject" and "school" and these objects will waste the memory space. This problem will be significant when there are a lot of non-tutee objects.
+** Cons: Person object creates unrelated field objects such as "subject" and "school" and these objects will waste the memory space. This problem will be significant when there are a lot of person objects.
 // end::addtutee[]
 
 // tag::undoredo[]
@@ -423,6 +431,53 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+// tag::sortpersoncommand[]
+=== Sort Person Command
+
+==== Reason for Implementation
+As the amount of contacts stored grows, it would be harder to browse the address book. Hence, Sort Person Command is created
+to ease users's experience in organizing their address book.
+
+==== How it is implemented
+The following sequence diagram shows the general idea of how sort person command works:
+
+image::SortPersonSequenceDiagram.png[width="800"]
+
+As shown in the sequence diagram, the Logic command's call for execution results in Sort Person command to request for a Comparator object from PersonSortUtil class.
+A comparator object is required since the sorting implementation utilizes JavaFX8's SortedList class.
+(Refer to https://docs.oracle.com/javase/8/javafx/api/javafx/collections/transformation/SortedList.html for more information)
+Here, PersonSortUtil class is responsible in providing a suitable comparator that matches the sorting behaviour requested by the user. Upon receiving the comparator, SortPersonCommand
+calls the sortFilteredPersonList() method which utilises a SortedList object to perform the sorting.
+// end::sortpersoncommand[]
+
+// tag::natural[]
+=== Natural Language Identifier
+
+==== Reason for Implementation
+Figuring out the exact date for a tuition appointment can be tedious in some extent. Tutors would need to flip over a calendar, or to perform some
+operations in the context of this app. Based on this concern, as our goal is to simplify the life of tutor,
+we feel the importance of introducing a feature where tutors are able to set a tuition appointment not only by date,
+but also by using common terms such as: `today`, `next month`, etc.
+
+==== Current Implementation Limitation
+In the current implementation, common terms (or Natural Languages) are only identifiable by the `Find Task` command parser.
+
+==== How it is implemented
+A class named NaturalLanguageIdentifier applys the singleton design pattern as the class stores a private attribute that records the current time of the system clock.
+As this reference time must be the same throughout the entire execution of a command, this class should only be instantiated once.
+
+This class is responsible for identifying whether a given user input is a recognizable natural language and convert it
+into the desired format when applicable. In achieving this purpose, the public methods within this class are called by
+the command parsers that inherit Address Book parser. In general, these public methods have a certain characteristic.
+These methods always take in a user's input as parameter and either return the same input if it is not recognized as a valid natural language
+or return a processable form of the natural language. For example, given *this month* (a valid natural language) as user input,
+the getMonthAsString() method will return *April* (the current month).
+
+Valid or recognized natural languages are determined by a static list inside the NaturalLanguageIdentifier class.
+This list of Strings stores common terms used by tutors. If a given user input matches one of the terms in the list, that input
+is treated as a valid natural language.
+// end::natural[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -858,93 +913,78 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 === Feature Contribution
 
-*Raymond*:
-
-. *Support for Tasks (Major)*:
-.. *Delete task command*: Allows tutors to delete tasks.
-.. *Edit task command*: Tutors are allowed to edit their tasks, if necessary.
-.. *View task command*: Tutors are able to view their own task.
-
-With this added support for tasks, tutors will be able to customise their schedules more easily by some of these commands.
-
 *Chih Tun*:
 
 * *Major Enhancement*: Integrated a calendar into TuitionConnect using third party software, CalendarFX.
-Configured TuitionConnect's main window to display day, week, month or year view of the calendar. A daily agenda list is showed together with the calendar's day view.
-In addition, the calendar reflects any changes to the schedule such as adding of a new task or deleting an existing task.
+. Revamp UI layout and colour so as to incorporate calendar to the UI
+. Implemented change command to display day, week, month or year view of the calendar. A daily agenda list is showed together with the calendar's day view.
+. In addition, the calendar reflects any changes to the schedule such as adding of a new task, deleting an existing task or undo.
 
 * *Minor Enhancement*:
 . Created command to add a new tutee.
 . Implemented tutee, tuition, personal task classes and relevant field classes to support all the commands.
-. Modify select command to conduct name search on google search pop up page.
+. Modify edit command to be able to edit tutee's details.
 
 
-*Buyung*:
+*Eka Buyung Lienadi*:
 
-. *ViewFiltered & View Sort* [Major Enhancement]
-This command lets tutors to view a filtered list of their stored tasks. As there are 2 kinds of tasks implemented in Tuition Connect,
-personal and tuition task, each kind of task has its own filter category.
-Within the current version, Tutors are able to utilize one of these filtering.
-First, tutors can filter their tasks by month, hence, allowing tutors to view all of their task within the specified month.
-Second, tutors can filter their tutee by the tutee's school, grade or subject.
+* *Scheduling features [Major Enhancement]* +
+. Implemented task addition, deletion, filtering and sorting features.
+. Implemented features to recognize natural language, which aids in task filtering.
 
-For the purpose of illustrating the implementation, this sequence diagram depicts the procedure when
-user desires to view a list of their tutee after being filtered by grade.
-
-image::viewFiltered-sequence-diagram.jpeg[width="800"]
-
-This view filter command is created with the purpose of simplifying tutor's life in navigating through their packed schedule.
-By having this command, tutors are able to locate their desired tasks easily.
-
-Within future version, this command would have a sorting capability. The filtered tutee
-shall be displayed after their name is sorted lexicographically.
+* [Minor Enhancement]
+. Implemented tutee listing feature.
+. Implemented tutee filtering and sorting features.
 
 *Anas*:
+// tag::taskClass[]
+. *Integrating the Task class into the Addressbook* [Major Enhancement]
 
-. *CompleteCommand* [Major Enhancement]
-
-An important feature for the tutor is the ability to manage financial records that pertain to his/her work.
-To that end, the CompleteCommand functionality is implemented. This feature allows the user to update the amount
-of work completed and the financial compensation he/she is entitled based on the units of work completed.
-
-The CompleteCommand is an extension of the Undoable Command, which is part of the logic component.
-Much like many other commands in this application, the CompleteCommand was chosen to extend the undoable command, instead of the command, class in order
-to provide users with the flexibility to undo any unwanted commands. In summary, the CompleteCommand will extend the undoable command class which, itself,
-extends the command class.
+The Task class forms the foundation of TuitionConnect as it allows the user to manage their various
+"tasks". The task class comes in two forms, a personal task and a tuition task. The following is the
+interface:
 
 [source,java]
 ----
-public abstract class UndoableCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... undo logic ...
+public interface Task {
+    // Consider changing the location of the three string values below
 
-        executeUndoableCommand();
-    }
-}
+    String MESSAGE_DESCRIPTION_CONSTRAINTS = "Tasks Should have a non-empty description";
 
-public class CompleteCommand extends UndoableCommand {
-    @Override
-    public CommandResult executeUndoableCommand() {
-        // ... add Complete logic ...
-    }
+    String MESSAGE_DURATION_CONSTRAINTS = "Duration must be a non-null value";
+
+    String MESSAGE_DATETIME_CONSTRAINTS = "Date and time must be a non-null value";
+
+    LocalDateTime getTaskDateTime();
+
+    String getStringTaskDateTime();
+
+    String getDescription();
+
+    String getDuration();
+
+    Entry getEntry();
 }
 ----
 
-Note: The above snippet will be updated when the complete code for this command is completed.
+Below is a representation of the Task object. The form below is as an XmlAdaptedTask object
+which allows the information contained in a Task object to be represented in a certain
+format. Note that while the Task object has a Tuition Task and a Personal Task variant,
+the XmlAdaptedTask object represented below embodies both aspects. Moreover, the
+XmlAdaptedTask consists of String objects only, as opposed to the methods and variables
+of various types that populate the Task interface above.
 
-The following diagram demonstrates the functioning of the CompleteCommand operation:
+image::taskStorage.jpg[width=""]
 
-image::LogicCompleteCommandClassDiagram.jpg[width="800"]
+// end::taskClass[]
 
-Essentially, the complete command will work by receiving an object of type task as its parameter and "marking" this task as completed.
+// tag::listCommand[]
+. *listTask Command* [Minor Enhancement]
 
-. *ViewTutee* [Minor(?) Enhancement]
-
-This feature allows the tutor to look at his/her current list of students. The idea behind this feature is for it to allow the tutor to
-see all the potential subscribers to his/her lessons and, by doing so, allowing them to associate these tutees with user-generated tasks.
-This feature is inspired by the "resources" concept in Microsoft Project whereby a "resource" is assigned to a work task.
-
+This feature allows the user to see all tasks stored in the addressbook. It is useful when a user has entered a command
+that displays only a single task. If the user then wants to see other tasks, he/she can input listTask
+and display the tasks again.
+// end::listCommand[]
 [appendix]
 == User Stories
 
@@ -1140,7 +1180,7 @@ Use case ends.
 
 * *a. At any time, user can cancel the request.
 [none]
-** *a1 TC requests confirmation of the cancelation.
+** *a1 TC requests confirmation of the cancellation.
 ** *a2. User confirms the cancellation.
 ** Use case ends.
 
@@ -1208,8 +1248,32 @@ An application for storing the contact details.
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
+[[natural-language]] Natural Language::
+This refers to some predetermined common terms that may be provided as user input.
+
+[[person]] Person::
+A non tutee contact
+
+[[personal-task]] Personal Task::
+Non-tuition activity
+
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[task]] Task::
+This refers to the activities you want to add into your 'to-do-list'
+
+[[tuition-task]] Tuition Task::
+Teaching a specified tutee in contact list.
+
+[[tutee]] Tutee::
+A student whom you are giving tuition to
+
+[[tutee-details]] Tutee Details::
+These are details that are owned only by tutees, which include tutee's education level, grade, subject and school
+
+[[task-list]] Task List / Schedule::
+These terms are used interchangeably to refer to the list of tasks located in the middle of the app.
 
 [appendix]
 == Product Survey

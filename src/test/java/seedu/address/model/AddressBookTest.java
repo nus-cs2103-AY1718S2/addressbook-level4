@@ -2,6 +2,7 @@ package seedu.address.model;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.PersonBuilder.DEFAULT_TAGS;
+import static seedu.address.testutil.TypicalTasks.EXAMPLE1;
 import static seedu.address.testutil.typicaladdressbook.TypicalAddressBookCompiler.getTypicalAddressBook1;
 import static seedu.address.testutil.typicaladdressbook.TypicalPersons.ALICE;
 
@@ -54,12 +55,25 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Task> newTasks = Arrays.asList(EXAMPLE1);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newTasks);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
     }
+    //@@author a-shakra
+    @Test
+    public void resetData_withDuplicateTasks_throwsAssertionError() {
+        // Repeat EXAMPLE1 twice
+        List<Person> newPersons = Arrays.asList(ALICE);
+        List<Tag> newTags = new ArrayList<>(ALICE.getTags());
+        List<Task> newTasks = Arrays.asList(EXAMPLE1, EXAMPLE1);
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newTasks);
 
+        thrown.expect(AssertionError.class);
+        addressBook.resetData(newData);
+    }
+    //@@author
     @Test
     public void getPersonList_modifyList_throwsUnsupportedOperationException() {
         thrown.expect(UnsupportedOperationException.class);
@@ -71,7 +85,13 @@ public class AddressBookTest {
         thrown.expect(UnsupportedOperationException.class);
         addressBook.getTagList().remove(0);
     }
-
+    //@@author a-shakra
+    @Test
+    public void getTaskList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getTaskList().remove(0);
+    }
+    //@@author
     @Test
     public void removeTag_existingTag_tagRemoved() throws Exception {
         Person person = new PersonBuilder().build();
@@ -91,7 +111,7 @@ public class AddressBookTest {
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
         private final ObservableList<Task> tasks = FXCollections.observableArrayList();
 
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags, Collection<Task> tasks) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
             this.tasks.setAll(tasks);

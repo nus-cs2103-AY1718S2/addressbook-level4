@@ -15,7 +15,7 @@ import seedu.address.model.task.TaskSortUtil;
  */
 public class SortTaskCommand extends Command {
     public static final String COMMAND_WORD = "sorttaskby";
-
+    public static final String COMMAND_ALIAS = "stb";
     public static final String MESSAGE_SUCCESS = "sorted list of tasks successfully";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
@@ -32,7 +32,7 @@ public class SortTaskCommand extends Command {
     public SortTaskCommand(String category) {
         requireNonNull(category);
         this.category = category;
-        comparator = new TaskSortUtil().getComparator(category);
+        comparator = TaskSortUtil.getComparator(category);
     }
 
     @Override

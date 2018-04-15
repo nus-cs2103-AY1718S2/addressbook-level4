@@ -54,4 +54,20 @@
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">chicago ave</address>
     </persons>
+    <!-- @@author a-shakra -->
+    <tasks>
+        <description>exampleTask1</description>
+        <duration>3h20m</duration>
+        <dateAndTime>2018-05-02T03:20</dateAndTime>
+    </tasks>
+    <tasks>
+        <description>exampleTask2</description>
+        <duration>3h20m</duration>
+        <dateAndTime>2018-06-02T03:20</dateAndTime>
+    </tasks>
+    <tasks>
+        <description>exampleTask3</description>
+        <duration>3h20m</duration>
+        <dateAndTime>2018-07-02T03:20</dateAndTime>
+    </tasks>
 </addressbook>

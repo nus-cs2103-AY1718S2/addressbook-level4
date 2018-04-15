@@ -28,8 +28,8 @@ import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.Task;
-import seedu.address.model.person.exceptions.TimingClashException;
 import seedu.address.model.personal.PersonalTask;
+import seedu.address.model.task.exceptions.TimingClashException;
 import seedu.address.testutil.ModelStub;
 import seedu.address.testutil.TaskBuilder;
 
@@ -114,8 +114,10 @@ public class AddPersonalTaskCommandTest {
     private class ModelStubThrowingTimingClashException extends ModelStub {
         @Override
         public void addTask(Task task) throws TimingClashException {
-            throw new TimingClashException(MESSAGE_TASK_TIMING_CLASHES);
+            throw new TimingClashException();
         }
+
+
 
         @Override
         public ReadOnlyAddressBook getAddressBook() {

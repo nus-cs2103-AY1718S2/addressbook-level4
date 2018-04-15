@@ -12,9 +12,9 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 
 import seedu.address.logic.commands.AddTuitionTaskCommand;
+import seedu.address.logic.parser.exceptions.DurationParseException;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-import seedu.address.model.person.exceptions.DurationParseException;
 
 //@@author yungyung04
 /**

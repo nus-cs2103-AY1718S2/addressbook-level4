@@ -11,7 +11,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHOOL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SUBJECT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
-import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
@@ -61,11 +60,10 @@ public class AddTuteeCommandParser implements Parser<AddTuteeCommand> {
             EducationLevel educationLevel = ParserUtil.parseEducationLevel(
                     argMultimap.getValue(PREFIX_EDUCATION_LEVEL)).get();
             School school = ParserUtil.parseSchool(argMultimap.getValue(PREFIX_SCHOOL)).get();
-            Set<Tag> tagList = new HashSet<>();
-            tagList.add(new Tag("Tutee"));
-            tagList.addAll(ParserUtil.parseTags(argMultimap.getAllValues(PREFIX_TAG)));
+            Set<Tag> tagList = ParserUtil.parseTuteeTags(argMultimap.getAllValues(PREFIX_TAG));
 
             Tutee person = new Tutee(name, phone, email, address, subject, grade, educationLevel, school, tagList);
+
             return new AddTuteeCommand(person);
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);

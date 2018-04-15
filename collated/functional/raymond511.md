@@ -1,6 +1,28 @@
-# raymond511
-###### \java\seedu\address\commons\util\EncryptionUtil.java
-``` java
+package seedu.address.commons.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.util.logging.Logger;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import seedu.address.commons.core.LogsCenter;
+
+/**
+ * A Class that encrypts and decrypts XML files stored on the hard disk.
+ *
+ */
+//@@author raymond511
 public class EncryptionUtil {
 
     /**
@@ -160,4 +182,3 @@ public class EncryptionUtil {
         return secretKeySpec;
     }
 }
-```

@@ -7,12 +7,11 @@ import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
 import static seedu.address.logic.parser.ParserUtil.parseDateTime;
 import static seedu.address.logic.parser.ParserUtil.parseDuration;
+import static seedu.address.testutil.TaskUtil.FORMATTER;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.format.ResolverStyle;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashSet;
@@ -24,11 +23,11 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.parser.exceptions.DurationParseException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DurationParseException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tutee.EducationLevel;
 import seedu.address.model.tutee.Grade;
@@ -47,9 +46,6 @@ public class ParserUtilTest {
     private static final String INVALID_EDUCATIONAL_LEVEL = "University";
     private static final String INVALID_SCHOOL = "school12";
     private static final String INVALID_TIME_UNIT = "year";
-    private static final String INVALID_DATE_END_OF_FEBRUARY = "29/02/2018";
-    private static final String INVALID_DATE_END_OF_APRIL = "31/04/2018";
-    private static final String INVALID_TIME = " 25:00";
     private static final String INVALID_DURATION = "1.5h";
 
     private static final String VALID_NAME = "Rachel Walker";
@@ -64,13 +60,14 @@ public class ParserUtilTest {
     private static final String VALID_SCHOOL = "valid primary school";
     private static final String VALID_TIME_UNIT = "y";
     private static final String VALID_DATE = "25/04/2018";
-    private static final String VALID_DATE_LEAP_YEAR = "29/02/2020";
     private static final String VALID_TIME = "08:01";
     private static final String VALID_DURATION = "1h30m";
     private static final String VALID_DESCRIPTION = "homework";
     private static final String VALID_TASK_WITHOUT_DESCRIPTION = VALID_DATE + " " + VALID_TIME + " " + VALID_DURATION;
     private static final String VALID_TASK_WITH_DESCRIPTION = VALID_TASK_WITHOUT_DESCRIPTION + " " + VALID_DESCRIPTION;
 
+    private static final String TUTEE_TAG = "Tutee";
+    private static final String CAPITAL_TUTEE_TAG = "TUTEE";
     private static final String WHITESPACE = " \t\r\n";
     private static final int MAXIMUM_AMOUNT_OF_PARAMETERS = 4;
 
@@ -252,6 +249,7 @@ public class ParserUtilTest {
         assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
     }
 
+
     @Test
     public void parseTags_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
@@ -278,6 +276,78 @@ public class ParserUtilTest {
     }
 
     //@@author ChoChihTun
+    @Test
+    public void parseTags_collectionWithValidTagsAndTuteeTag_returnsTagSet() throws Exception {
+        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, CAPITAL_TUTEE_TAG));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(TUTEE_TAG)));
+
+        assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parsePersonTags_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parsePersonTags(null);
+    }
+
+    @Test
+    public void parsePersonTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePersonTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+    }
+
+    @Test
+    public void parsePersonTags_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parsePersonTags(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parsePersonTags_collectionWithValidTags_returnsTagSet() throws Exception {
+        Set<Tag> actualTagSet = ParserUtil.parsePersonTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+
+        assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parsePersonTags_collectionWithTuteeTags_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePersonTags(Arrays.asList(VALID_TAG_1, TUTEE_TAG));
+    }
+
+    @Test
+    public void parseTuteeTags_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parseTuteeTags(null);
+    }
+
+    @Test
+    public void parseTuteeTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseTuteeTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+    }
+
+    @Test
+    public void parseTuteeTags_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseTuteeTags(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parseTuteeTags_collectionWithValidTags_returnsTagSet() throws Exception {
+        Set<Tag> actualTagSet = ParserUtil.parseTuteeTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+
+        assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    @Test
+    public void parseTuteeTags_collectionWithValidAndTuteeTags_returnsTagSet() throws Exception {
+        Set<Tag> actualTagSet = ParserUtil.parseTuteeTags(Arrays.asList(VALID_TAG_1, TUTEE_TAG));
+        Set<Tag> expectedTagSet = new HashSet<>(Arrays.asList(new Tag(VALID_TAG_1)));
+
+        assertEquals(expectedTagSet, actualTagSet);
+    }
+
     @Test
     public void parseSubject_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseSubject((String) null));
@@ -438,25 +508,52 @@ public class ParserUtilTest {
         //null date and time
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDateTime(null));
 
-        //invalid date
+        //invalid date in non leap year
         Assert.assertThrows(DateTimeParseException.class, () -> ParserUtil
-                .parseDateTime(INVALID_DATE_END_OF_FEBRUARY + VALID_TIME));
+                .parseDateTime("29/02/2018 " + VALID_TIME));
 
+        //invalid date in century year
         Assert.assertThrows(DateTimeParseException.class, () -> ParserUtil
-                .parseDateTime(INVALID_DATE_END_OF_APRIL + VALID_TIME));
+                .parseDateTime("29/02/1900 " + VALID_TIME));
 
-        //invalid time
+        //invalid date in month with 30 days
         Assert.assertThrows(DateTimeParseException.class, () -> ParserUtil
-                .parseDateTime(VALID_DATE + INVALID_TIME));
+                .parseDateTime("31/04/2018 " + VALID_TIME));
+
+        //invalid date in month with 31 days
+        Assert.assertThrows(DateTimeParseException.class, () -> ParserUtil
+                .parseDateTime("32/03/2018 " + VALID_TIME));
+
+        //invalid hour
+        Assert.assertThrows(DateTimeParseException.class, () -> ParserUtil
+                .parseDateTime(VALID_DATE + " 25:00"));
+
+        //invalid minute
+        Assert.assertThrows(DateTimeParseException.class, () -> ParserUtil
+                .parseDateTime(VALID_DATE + "12:60"));
     }
 
     @Test
     public void parseDateTime_validInput_parsedSuccessfully() {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm")
-                .withResolverStyle(ResolverStyle.STRICT);
-        LocalDateTime expectedDateTime = LocalDateTime.parse(VALID_DATE + " " + VALID_TIME, formatter);
+        //beginning of the month
+        LocalDateTime expectedDateTime = LocalDateTime.parse("01/10/2018 " + VALID_TIME, FORMATTER);
+        assertEquals(expectedDateTime, parseDateTime("01/10/2018 " + VALID_TIME));
 
-        assertEquals(expectedDateTime, parseDateTime(VALID_DATE + " " + VALID_TIME));
+        //leap year
+        expectedDateTime = LocalDateTime.parse("29/02/2020 " + VALID_TIME, FORMATTER);
+        assertEquals(expectedDateTime, parseDateTime("29/02/2020 " + VALID_TIME));
+
+        //month with 30 days
+        expectedDateTime = LocalDateTime.parse("30/04/2020 " + VALID_TIME, FORMATTER);
+        assertEquals(expectedDateTime, parseDateTime("30/04/2020 " + VALID_TIME));
+
+        //month with 31 days
+        expectedDateTime = LocalDateTime.parse("31/03/2020 " + VALID_TIME, FORMATTER);
+        assertEquals(expectedDateTime, parseDateTime("31/03/2020 " + VALID_TIME));
+
+        //valid time at boundary value
+        expectedDateTime = LocalDateTime.parse(VALID_DATE + " 12:00", FORMATTER);
+        assertEquals(expectedDateTime, parseDateTime(VALID_DATE + " 12:00"));
     }
 
     @Test

@@ -19,12 +19,13 @@ import seedu.address.model.person.PersonSortUtil;
  */
 public class SortPersonCommand extends Command {
     public static final String COMMAND_WORD = "sortpersonby";
+    public static final String COMMAND_ALIAS = "spb";
 
     public static final String MESSAGE_SUCCESS = "sorted list of persons successfully";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": sorts all visible persons lexicographically according to the specified sorting category.\n"
-            + "Persons who are not Tutees will be listed last when a tutee detail is a selected category "
+            + "Persons who are not Tutees will be listed last when a tutee detail is the selected category "
             + "(refer to User Guide)\n"
             + "Parameter: sort_category\n"
             + "Choice of sort_categories: "
@@ -40,7 +41,7 @@ public class SortPersonCommand extends Command {
 
     public SortPersonCommand(String category) {
         this.category = category;
-        comparator = new PersonSortUtil().getComparator(category);
+        comparator = PersonSortUtil.getComparator(category);
     }
 
     @Override

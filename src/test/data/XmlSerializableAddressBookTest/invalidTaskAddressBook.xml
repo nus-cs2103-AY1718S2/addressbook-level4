@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author a-shakra -->
+<addressbook>
+    <!-- Task with an invalid duration field -->
+    <tasks>
+        <description>exampleDescription</description>
+        <duration>3h2m</duration>
+        <dateandtime>02/05/2018 03:20</dateandtime>
+    </tasks>
+</addressbook>

@@ -10,8 +10,8 @@ import org.junit.Test;
 
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.exceptions.TimingClashException;
 import seedu.address.model.personal.PersonalTask;
+import seedu.address.model.task.exceptions.TimingClashException;
 import seedu.address.model.tutee.TuitionTask;
 import seedu.address.testutil.Assert;
 import systemtests.SystemTestSetupHelper;
@@ -45,7 +45,6 @@ public class UniqueTaskListTest {
         } catch (TimingClashException e) {
             throw new AssertionError("Should not have any clashed timing");
         }
-
         // New task starts at the same time as an existing task
         Assert.assertThrows(TimingClashException.class, () ->
                 uniqueTaskList.add(new PersonalTask(

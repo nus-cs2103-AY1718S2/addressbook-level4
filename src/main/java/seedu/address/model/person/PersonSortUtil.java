@@ -1,9 +1,14 @@
 package seedu.address.model.person;
 
-import java.util.Comparator;
+import static java.util.Objects.requireNonNull;
 
+import java.util.Comparator;
+import java.util.logging.Logger;
+
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.tutee.Tutee;
 
+//@@author yungyung04
 /**
  * Provides utilities for sorting a list of Persons.
  */
@@ -16,10 +21,13 @@ public class PersonSortUtil {
     public static final int NEGATIVE_DIGIT = -1;
     public static final int POSITIVE_DIGIT = 1;
 
+    private static final Logger logger = LogsCenter.getLogger(PersonSortUtil.class);
+
     /**
-     * Returns the apppropriate Person comparator given the sorting category.
+     * Returns the appropriate Person comparator given the sorting category.
      */
-    public Comparator<Person> getComparator(String sortCategory) {
+    public static Comparator<Person> getComparator(String sortCategory) {
+        requireNonNull(sortCategory);
         Comparator<Person> comparator = null;
 
         switch (sortCategory) {
@@ -39,6 +47,7 @@ public class PersonSortUtil {
             comparator = getSubjectComparator();
             break;
         default:
+            logger.severe("an invalid category is identified in PersonSortUtil class.");
             assert (false); //invalid sortCategory should be identified in parser.
         }
         return comparator;
@@ -48,7 +57,7 @@ public class PersonSortUtil {
      * Returns a comparator which is useful to sort education level of a Tutee in an increasing lexicographical order..
      * Non tutees are listed last according to their names in an increasing lexicographical order.
      */
-    private Comparator<Person> getEducationLevelComparator() {
+    private static Comparator<Person> getEducationLevelComparator() {
         return new Comparator<Person>() {
             @Override
             public int compare(Person person1, Person person2) {
@@ -66,7 +75,7 @@ public class PersonSortUtil {
                 } else if (areNotTutees(person1, person2)) {
                     result = compareNameLexicographically(person1, person2);
                 } else {
-                    assert (false); //should never reach this statement
+                    assert (false); //should never reach this statement -> works as safety measure
                 }
                 return result;
             }
@@ -77,7 +86,7 @@ public class PersonSortUtil {
      * Returns a comparator which is useful to sort grade Tutees in an increasing lexicographical order..
      * Non tutees are listed last according to their names in an increasing lexicographical order.
      */
-    private Comparator<Person> getGradeComparator() {
+    private static Comparator<Person> getGradeComparator() {
         return new Comparator<Person>() {
             @Override
             public int compare(Person person1, Person person2) {
@@ -106,7 +115,7 @@ public class PersonSortUtil {
      * Returns a comparator which is useful to sort school of Tutees in an increasing lexicographical order.
      * Non tutees are listed last according to their names in an increasing lexicographical order.
      */
-    private Comparator<Person> getSchoolComparator() {
+    private static Comparator<Person> getSchoolComparator() {
         return new Comparator<Person>() {
             @Override
             public int compare(Person person1, Person person2) {
@@ -135,7 +144,7 @@ public class PersonSortUtil {
      * Returns a comparator which is useful to sort subject of Tutees in an increasing lexicographical order.
      * Non tutees are listed last according to their names in an increasing lexicographical order.
      */
-    private Comparator<Person> getSubjectComparator() {
+    private static Comparator<Person> getSubjectComparator() {
         return new Comparator<Person>() {
             @Override
             public int compare(Person person1, Person person2) {
@@ -163,7 +172,7 @@ public class PersonSortUtil {
     /**
      * Returns a comparator which is useful to sort name of Persons in an increasing lexicographical order.
      */
-    private Comparator<Person> getNameComparator() {
+    private static Comparator<Person> getNameComparator() {
         return new Comparator<Person>() {
             @Override
             public int compare(Person person1, Person person2) {
@@ -175,39 +184,39 @@ public class PersonSortUtil {
     /**
      * Returns true if both the given {@code Person} are subclass of {@code Tutee}
      */
-    private boolean areNotTutees(Person person1, Person person2) {
+    private static boolean areNotTutees(Person person1, Person person2) {
         return !(person1 instanceof Tutee || person2 instanceof Tutee);
     }
 
     /**
      * Returns true if the given {@code person1} is the only subclass of {@code Tutee}
      */
-    private boolean isSecondTutee(Person person1, Person person2) {
+    private static boolean isSecondTutee(Person person1, Person person2) {
         return !(person1 instanceof Tutee) && person2 instanceof Tutee;
     }
 
     /**
      * Returns true if the given {@code person2} is the only subclass of {@code Tutee}
      */
-    private boolean isFirstTutee(Person person1, Person person2) {
+    private static boolean isFirstTutee(Person person1, Person person2) {
         return person1 instanceof Tutee && !(person2 instanceof Tutee);
     }
 
     /**
      * Returns true if both the given {@code Person} are not subclass of {@code Tutee}
      */
-    private boolean areBothTutees(Person person1, Person person2) {
+    private static boolean areBothTutees(Person person1, Person person2) {
         return person1 instanceof Tutee && person2 instanceof Tutee;
     }
 
     /**
-     * Compares the name of 2 given person and returns an integer according to their lexicographical relationn
-     * Integer returdned follows the behaviour of {@code compareTo} in Java.lang.String
+     * Compares the name of 2 given persons and returns an integer according to their lexicographical relationn
+     * Integer returned follows the behaviour of {@code compareTo} in Java.lang.String
      *
      * @param person1 first person to be compared
      * @param person2 second person to be compared
      */
-    private int compareNameLexicographically(Person person1, Person person2) {
+    public static int compareNameLexicographically(Person person1, Person person2) {
         String personName1 = person1.getName().toString();
         String personName2 = person2.getName().toString();
 

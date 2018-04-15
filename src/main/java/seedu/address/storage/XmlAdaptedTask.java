@@ -1,8 +1,8 @@
 package seedu.address.storage;
 
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.time.format.ResolverStyle;
+
+import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -18,8 +18,6 @@ import seedu.address.model.tutee.TuitionTask;
 public class XmlAdaptedTask {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Task's %s field is missing!";
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm")
-            .withResolverStyle(ResolverStyle.STRICT);
 
     @XmlElement(required = true)
     private String name;
@@ -39,17 +37,18 @@ public class XmlAdaptedTask {
     /**
      * Constructs an {@code XmlAdaptedTask} with given personal task details.
      */
-    public XmlAdaptedTask(String description, String duration, LocalDateTime dateAndTime) {
+    public XmlAdaptedTask(String description, String duration, String dateAndTime) {
+        //this.name = "null";
         this.description = description;
         this.duration = duration;
-        this.dateAndTime = dateAndTime.toString();
+        this.dateAndTime = dateAndTime;
     }
 
-    public XmlAdaptedTask(String name, String description, String duration, LocalDateTime dateAndTime) {
+    public XmlAdaptedTask(String name, String description, String duration, String dateAndTime) {
         this.name = name;
         this.description = description;
         this.duration = duration;
-        this.dateAndTime = dateAndTime.format(formatter);
+        this.dateAndTime = dateAndTime;
     }
 
     /**
@@ -59,7 +58,7 @@ public class XmlAdaptedTask {
     public XmlAdaptedTask(Task source) {
         description = source.getDescription();
         duration = source.getDuration();
-        dateAndTime = source.getTaskDateTime().format(formatter);
+        dateAndTime = source.getTaskDateTime().toString();
         if (source instanceof TuitionTask) {
             name = ((TuitionTask) source).getPerson();
         }
@@ -74,7 +73,7 @@ public class XmlAdaptedTask {
      */
 
     public Task toModelType() throws IllegalValueException {
-        LocalDateTime taskDateTime = LocalDateTime.parse(dateAndTime, formatter);
+        LocalDateTime taskDateTime = LocalDateTime.parse(dateAndTime);
         if (this.description == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
                     Task.MESSAGE_DESCRIPTION_CONSTRAINTS));
@@ -92,5 +91,25 @@ public class XmlAdaptedTask {
         } else {
             return new TuitionTask(name, taskDateTime, duration, description);
         }
+    }
+
+    /**
+     * Returns true if the two tasks are equal. Needs to be updated to reflect the name parameter
+     */
+    public boolean equals(Object other) {
+
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof XmlAdaptedTask)) {
+            return false;
+        }
+
+        XmlAdaptedTask otherTask = (XmlAdaptedTask) other;
+        return Objects.equals(description, otherTask.description)
+                && Objects.equals(duration, otherTask.duration)
+                && Objects.equals(dateAndTime, otherTask.dateAndTime)
+                && Objects.equals(name, otherTask.name);
     }
 }

@@ -2,7 +2,9 @@ package seedu.address.model.task;
 
 import java.time.LocalDateTime;
 import java.util.Comparator;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.model.Task;
 
 //@@author yungyung04
@@ -12,14 +14,15 @@ import seedu.address.model.Task;
 public class TaskSortUtil {
     public static final String CATEGORY_DATE_TIME = "datetime";
     public static final String CATEGORY_MONTH = "month";
-    public static final String CATEGORY_DURATION = "duration";
     public static final int NEGATIVE_DIGIT = -1;
     public static final int POSITIVE_DIGIT = 1;
 
+    private static final Logger logger = LogsCenter.getLogger(TaskSortUtil.class);
+
     /**
-     * Returns the apppropriate Task comparator given the sorting category
-    */
-    public Comparator<Task> getComparator(String sortCategory) {
+     * Returns the appropriate Task comparator given the sorting category
+     */
+    public static Comparator<Task> getComparator(String sortCategory) {
         Comparator<Task> comparator = null;
 
         switch (sortCategory) {
@@ -30,6 +33,7 @@ public class TaskSortUtil {
             comparator = getDateTimeComparator();
             break;
         default:
+            logger.severe("an invalid category is identified in TaskSortUtil class.");
             assert (false); //invalid sortCategory should be identified in parser.
         }
         return comparator;
@@ -38,7 +42,7 @@ public class TaskSortUtil {
     /**
      * Returns a comparator which is useful for sorting tasks based on the month sequence in an increasing order.
      */
-    private Comparator<Task> getMonthComparator() {
+    private static Comparator<Task> getMonthComparator() {
         return new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
@@ -55,9 +59,9 @@ public class TaskSortUtil {
     }
 
     /**
-    Returns a comparator which is useful for sorting tasks based on the date and time sequence in an increasing order.
-    */
-    private Comparator<Task> getDateTimeComparator() {
+     * Returns a comparator which is useful for sorting tasks based on the date and time sequence in increasing order.
+     */
+    private static Comparator<Task> getDateTimeComparator() {
         return new Comparator<Task>() {
             @Override
             public int compare(Task task1, Task task2) {
@@ -69,7 +73,7 @@ public class TaskSortUtil {
     /**
      * Compares the 2 given months and returns an integer according to their sequence in standard Gregorian calendar.
      */
-    private int compareByMonth(int month1, int month2) {
+    private static int compareByMonth(int month1, int month2) {
         if (month1 < month2) {
             return NEGATIVE_DIGIT;
         } else {
@@ -80,7 +84,7 @@ public class TaskSortUtil {
      * Compares the 2 given {@code LocalDateTime} and
      * Returns an integer according to their sequence in standard Gregorian calendar.
      */
-    private int compareByTime(LocalDateTime dateTime1, LocalDateTime dateTime2) {
+    private static int compareByTime(LocalDateTime dateTime1, LocalDateTime dateTime2) {
         assert (!dateTime1.isEqual(dateTime2)); //time should be different due to thrown exception when task is added
         if (dateTime1.isBefore(dateTime2)) {
             return NEGATIVE_DIGIT;

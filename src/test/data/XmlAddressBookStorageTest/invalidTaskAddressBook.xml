@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author a-shakra -->
+<addressbook>
+    <tasks>
+        <description>exampleTask1</description>
+        <duration>3333333:::</duration>
+        <dateAndTime>2018-05-02T03:20</dateAndTime>
+    </tasks>
+</addressbook>

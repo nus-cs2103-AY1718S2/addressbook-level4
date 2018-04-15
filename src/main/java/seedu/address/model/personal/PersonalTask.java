@@ -18,9 +18,9 @@ public class PersonalTask implements Task {
     private static final String HOUR_DELIMITER = "h";
     private static final String MINUTE_DELIMITER = "m";
     private static final String NULL_STRING = "";
+
     private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm")
             .withResolverStyle(ResolverStyle.STRICT);
-
     private String description;
     private String duration;
     private LocalDateTime taskDateTime;
@@ -125,7 +125,6 @@ public class PersonalTask implements Task {
         return !description.equals(NULL_STRING);
     }
 
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -134,4 +133,5 @@ public class PersonalTask implements Task {
                 && duration.equals(((PersonalTask) other).duration)
                 && description.equals(((PersonalTask) other).description));
     }
+
 }

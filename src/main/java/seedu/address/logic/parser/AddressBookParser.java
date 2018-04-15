@@ -25,7 +25,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.ListTaskCommand;
 import seedu.address.logic.commands.ListTuteeCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortPersonCommand;
 import seedu.address.logic.commands.SortTaskCommand;
 import seedu.address.logic.commands.UndoCommand;
@@ -66,10 +65,6 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-        case SelectCommand.COMMAND_ALIAS:
-            return new SelectCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD:
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
@@ -105,11 +100,9 @@ public class AddressBookParser {
             return new RedoCommand();
 
         case AddTuitionTaskCommand.COMMAND_WORD:
-            // TO DO IN FUTURE : case AddTuitionTaskCommand.COMMAND_ALIAS;
             return new AddTuitionTaskCommandParser().parse(arguments);
 
         case AddPersonalTaskCommand.COMMAND_WORD:
-            // TO DO IN FUTURE : case AddTuitionTaskCommand.COMMAND_ALIAS;
             return new AddPersonalTaskCommandParser().parse(arguments);
 
         case DeleteTaskCommand.COMMAND_WORD:
@@ -129,9 +122,11 @@ public class AddressBookParser {
             return new FindTaskCommandParser().parse(arguments);
 
         case SortPersonCommand.COMMAND_WORD:
+        case SortPersonCommand.COMMAND_ALIAS:
             return new SortPersonCommandParser().parse(arguments);
 
         case SortTaskCommand.COMMAND_WORD:
+        case SortTaskCommand.COMMAND_ALIAS:
             return new SortTaskCommandParser().parse(arguments);
 
         case ChangeCommand.COMMAND_WORD:

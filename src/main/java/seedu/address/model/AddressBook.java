@@ -15,10 +15,10 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.person.exceptions.TimingClashException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.model.task.exceptions.TimingClashException;
 import seedu.address.model.tutee.Tutee;
 
 /**
@@ -64,10 +64,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author a-shakra
     public void setTasks(List<Task> tasks) throws TimingClashException {
         this.tasks.setTasks(tasks);
     }
-
+    //@@author
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      * ---Not modified for tasks yet!!!!!!
@@ -79,7 +80,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
+        try {
+            setTasks(taskList);
+        } catch (TimingClashException e) {
+            throw new AssertionError("Timing Clash");
+        }
         try {
             setPersons(syncedPersonList);
             setTasks(taskList);
@@ -133,10 +138,10 @@ public class AddressBook implements ReadOnlyAddressBook {
      * Adds a task to the address book.
      *
      */
-
     public void addTask(Task t) throws TimingClashException {
         tasks.add(t);
     }
+
     //@@author
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
@@ -167,6 +172,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author yungyung04
     /**
      * Removes {@code Tag} from a particular {@code Person}.
      * @throws PersonNotFoundException if {@code Person} does not exist.
@@ -175,6 +181,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> newTags = new HashSet<>(person.getTags());
 
         if (!newTags.remove(tag)) {
+            return;
+        }
+
+        if (tag.tagName.equals("Tutee")) {
             return;
         }
 
@@ -189,7 +199,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             throw new AssertionError("target person does not exist.");
         }
     }
-
+    //author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.

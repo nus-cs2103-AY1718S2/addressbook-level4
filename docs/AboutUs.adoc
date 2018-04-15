@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Eka Buyung Lienadi
 image::yungyung04.jpg[width="150", align="left"]
-{empty}[http://github.com/yungyung04[github]]
+{empty}[http://github.com/yungyung04[github]] [<<ekabuyunglienadi#, portfolio>>]
 
 Role: Team Lead +
 Responsibilities: Storage + Scheduling and Tracking
@@ -20,7 +20,7 @@ Responsibilities: Storage + Scheduling and Tracking
 
 === Cho Chih Tun
 image::chochihtun.jpg[width="150", align="left"]
-{empty}[http://github.com/ChoChihTun[github]] [https://chochihtun.github.io/Profile/[portfolio]]
+{empty}[http://github.com/ChoChihTun[github]] [<<chochihtun#, portfolio>>]
 
 Role: Developer +
 Responsibilities: UI + Code Quality
@@ -38,7 +38,7 @@ Responsibilities: Model + Testing
 
 === Anas Shakra
 image::a-shakra.jpg[width="150", align="left"]
-{empty}[http://github.com/a-shakra[github]] [<<johndoe#, portfolio>>]
+{empty}[http://github.com/a-shakra[github]] [<<ashakra#, portfolio>>]
 
 Role: Developer +
 Responsibilities: Logic + Integration

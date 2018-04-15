@@ -16,12 +16,12 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.commands.ChangeCommand;
+import seedu.address.logic.parser.exceptions.DurationParseException;
 import seedu.address.logic.parser.exceptions.SameTimeUnitException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DurationParseException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tutee.EducationLevel;
 import seedu.address.model.tutee.Grade;
@@ -40,8 +40,12 @@ import seedu.address.model.tutee.Subject;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_TAG = "%1$s tag is only for tutee.";
 
     private static final String EMPTY_STRING = "";
+    private static final String TUTEE_TAG_NAME = "Tutee";
+    private static final String ZERO_DURATION_FIRST_FORMAT = "0h0m";
+    private static final String ZERO_DURATION_SECOND_FORMAT = "0h00m";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -168,18 +172,63 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses a {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
+            if (isTuteeTag(tagName)) {
+                tagName = TUTEE_TAG_NAME;
+            }
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
     }
 
     //@@author ChoChihTun
+    /**
+     * Parses a person's {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parsePersonTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            // a person should not have tutee tag
+            if (isTuteeTag(tagName)) {
+                throw new IllegalValueException(String.format(MESSAGE_INVALID_TAG, tagName));
+            }
+            tagSet.add(parseTag(tagName));
+        }
+        return tagSet;
+    }
+
+    /**
+     * Parses a tutee's {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTuteeTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            // Tutee tag is added automatically by the Tutee constructor
+            if (!isTuteeTag(tagName)) {
+                tagSet.add(parseTag(tagName));
+            }
+        }
+        return tagSet;
+    }
+
+    /**
+     * Checks if {@code String tagName} is tutee tag name
+     *
+     * @param tagName to be checked
+     * @return true if tagName is tutee tag name
+     *         false if tagName is not tutee tag name
+     */
+    private static boolean isTuteeTag(String tagName) {
+        return tagName.toLowerCase().equals(TUTEE_TAG_NAME.toLowerCase());
+    }
+
     /**
      * Parses a {@code String subject} into an {@code Subject}.
      * Leading and trailing whitespaces will be trimmed.
@@ -310,25 +359,35 @@ public class ParserUtil {
     }
 
     /**
-     * Checks if the given duration is valid.
+     * Returns a valid duration
      *
      * @throws DurationParseException if the given {@code duration} is invalid.
      */
     public static String parseDuration(String duration) throws DurationParseException {
         requireNonNull(duration);
-        String durationValidationRegex = "([0-9]|1[0-9]|2[0-3])h([0-5][0-9]|[0-9])m";
-        if (!duration.matches(durationValidationRegex)) {
+        if (!isValidDuration(duration)) {
             throw new DurationParseException(MESSAGE_INVALID_DURATION);
         }
         return duration;
     }
 
     /**
-     * Returns the description if it exists in the user input.
-     * Returns empty string otherwise.
+     * Returns true if the given duration is valid.
      */
-    public static String parseDescription(String[] userInputs, int maximumParametersGiven) {
-        if (isEmptyDescription(userInputs, maximumParametersGiven)) {
+    private static boolean isValidDuration(String duration) {
+        String durationValidationRegex = "([0-9]|1[0-9]|2[0-3])h([0-5][0-9]|[0-9])m";
+        return duration.matches(durationValidationRegex) && !duration.equals(ZERO_DURATION_FIRST_FORMAT)
+                && !duration.equals(ZERO_DURATION_SECOND_FORMAT);
+    }
+
+    /**
+     * Returns a valid task description.
+     * If description does not exist, returns an empty String.
+     */
+    public static String parseDescription(String[] userInputs, int numberOfParametersWhenDescriptionExist) {
+        requireNonNull(userInputs);
+        requireNonNull(numberOfParametersWhenDescriptionExist);
+        if (isEmptyDescription(userInputs, numberOfParametersWhenDescriptionExist)) {
             return EMPTY_STRING;
         } else {
             String description = getLastElement(userInputs);
@@ -344,9 +403,9 @@ public class ParserUtil {
     }
 
     /**
-     * Returns true if a given task arguments contain a task description.
+     * Returns true if the given task arguments contain a task description.
      */
-    private static boolean isEmptyDescription(String[] arguments, int maximumParameterssGiven) {
-        return arguments.length < maximumParameterssGiven;
+    private static boolean isEmptyDescription(String[] arguments, int numberOfParametersWhenDescriptionExist) {
+        return arguments.length < numberOfParametersWhenDescriptionExist;
     }
 }

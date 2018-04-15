@@ -1,16 +1,18 @@
 package seedu.address.testutil;
 
-import static seedu.address.testutil.TaskUtil.FORMATTER;
-
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.ResolverStyle;
 
 import seedu.address.model.personal.PersonalTask;
 import seedu.address.model.tutee.TuitionTask;
 
 /**
- * A utility class to help with building Tuition Task objects.
+ * A utility class to help with building PersonalTask and TuitionTask objects
  */
+//@@author a-shakra
 public class TaskBuilder {
+
     public static final String DEFAULT_TUTEE_NAME = "Alice Pauline";
     public static final String DEFAULT_DATE = "12/12/2016";
     public static final String DEFAULT_TIME = "12:00";
@@ -20,16 +22,20 @@ public class TaskBuilder {
 
     private static final String EMPTY_STRING = "";
 
+
     protected String name;
-    protected LocalDateTime taskDateTime;
-    protected String duration;
     protected String description;
+    protected String duration;
+    protected LocalDateTime dateAndTime;
+
+    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm")
+            .withResolverStyle(ResolverStyle.STRICT);
 
     public TaskBuilder() {
         name = DEFAULT_TUTEE_NAME;
-        taskDateTime = LocalDateTime.parse(DEFAULT_DATE_TIME, FORMATTER);
-        duration = DEFAULT_DURATION;
         description = DEFAULT_DESCRIPTION;
+        duration = DEFAULT_DURATION;
+        dateAndTime = LocalDateTime.parse(DEFAULT_DATE_TIME, formatter);
     }
 
     /**
@@ -37,19 +43,9 @@ public class TaskBuilder {
      */
     public TaskBuilder(TuitionTask taskToCopy) {
         name = taskToCopy.getPerson();
-        taskDateTime = taskToCopy.getTaskDateTime();
-        duration = taskToCopy.getDuration();
         description = taskToCopy.getDescription();
-    }
-
-    /**
-     * Initializes the TaskBuilder with the data of a given {@code Personal Task}.
-     */
-    public TaskBuilder(PersonalTask taskToCopy) {
-        name = null;
-        taskDateTime = taskToCopy.getTaskDateTime();
         duration = taskToCopy.getDuration();
-        description = taskToCopy.getDescription();
+        dateAndTime = taskToCopy.getTaskDateTime();
     }
 
     /**
@@ -57,22 +53,6 @@ public class TaskBuilder {
      */
     public TaskBuilder withTuteeName(String name) {
         this.name = name;
-        return this;
-    }
-
-    /**
-     * Sets the {@code taskDateTime} of the {@code Task} that we are building.
-     */
-    public TaskBuilder withDateTime(String taskDateTime) {
-        this.taskDateTime = LocalDateTime.parse(taskDateTime, FORMATTER);
-        return this;
-    }
-
-    /**
-     * Sets the {@code duration} of the {@code Task} that we are building.
-     */
-    public TaskBuilder withDuration(String duration) {
-        this.duration = duration;
         return this;
     }
 
@@ -92,10 +72,32 @@ public class TaskBuilder {
         return this;
     }
 
+    /**
+     * Sets the {@code duration} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withDuration(String duration) {
+        this.duration = duration;
+        return this;
+    }
+
+    /**
+     * Sets the {@code DateAndTime} of the {@code Task} that we are building.
+     */
+
+    public TaskBuilder withDateTime(String dateAndTime) {
+
+        this.dateAndTime = LocalDateTime.parse(dateAndTime, formatter);
+        return this;
+    }
+    /**
+     * Ideally, this return variable should be made to a Task class or this function should return
+     * a tuition task as well
+     */
+
     public PersonalTask buildPersonalTask() {
-        return new PersonalTask(taskDateTime, duration, description);
+        return new PersonalTask(dateAndTime, duration, description);
     }
     public TuitionTask buildTuitionTask() {
-        return new TuitionTask(name, taskDateTime, duration, description);
+        return new TuitionTask(name, dateAndTime, duration, description);
     }
 }

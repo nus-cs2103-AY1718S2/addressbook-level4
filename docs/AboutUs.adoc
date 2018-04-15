@@ -14,7 +14,7 @@ image::kush1509.png[width="150", align="left"]
 
 
 Role: Team Lead +
-Responsibilities: Logic
+Responsibilities: Deliverables and deadlines, Scheduling and tracking, Logic
 
 '''
 
@@ -24,7 +24,7 @@ image::KevinCJH.jpg[width="150", align="left"]
 
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: UI, Documentation
 
 '''
 
@@ -34,7 +34,7 @@ image::trafalgarandre.jpg[width="150", align="left"]
 
 
 Role: Developer +
-Responsibilities: Model
+Responsibilities: Quality Assurance, Model
 
 '''
 
@@ -43,6 +43,6 @@ image::Jason1im.jpg[width="150", align="left"]
 {empty}[http://github.com/Jason1im[github]] [<<LimJinShengJason#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Storage
+Responsibilities: Security, Storage
 
 '''

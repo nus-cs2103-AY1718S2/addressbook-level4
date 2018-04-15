@@ -640,7 +640,7 @@ The user will input an AddCommand or EditCommand, with the additional parameter 
 // tag::participation[]
 === Participation
 
-This feature allows the user to keep track of participation marks of a `Person`. The participation marks in this case is limited to an integer value of 1 to 100 inclusive. A new class, `Participation`, is created and is associated to the `Person` class.
+This feature allows the user to keep track of participation marks of a `Person`. The participation marks in this case is limited to an integer value of 0 to 100 inclusive. A new class, `Participation`, is created and is associated to the `Person` class.
 This utilizes the `MarkCommand` command to update the participation marks of a `Person`.
 
 ==== Current implementation

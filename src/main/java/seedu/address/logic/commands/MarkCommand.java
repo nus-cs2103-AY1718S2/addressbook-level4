@@ -28,7 +28,7 @@ public class MarkCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "Participation marked for %1$s!";
     public static final String MESSAGE_INVALID_PARAMETER_VALUE =
-            "The marks/ field cannot be empty and it must be an integer from 1 to 100 inclusive";
+            "The marks/ field cannot be empty and it must be an integer from 0 to 100 inclusive";
 
     private final Index targetIndex;
     private final Integer marks;

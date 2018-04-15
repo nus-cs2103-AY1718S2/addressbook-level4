@@ -3,6 +3,9 @@
 ``` java
 package seedu.address.commons.events.model;
 
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.model.coin.Coin;
 
@@ -13,10 +16,13 @@ public class CoinChangedEvent extends BaseEvent {
 
     private static final String FORMAT_STRING = "Coin changed [%1$s] -> [%2$s]";
 
+    public final Index index;
     public final Coin data;
 
-    public CoinChangedEvent(Coin oldCoin, Coin newCoin) {
+    public CoinChangedEvent(Index index, Coin oldCoin, Coin newCoin) {
+        requireAllNonNull(index, oldCoin, newCoin);
         assert(newCoin.getPrevState().equals(oldCoin));
+        this.index = index;
         this.data = newCoin;
     }
 
@@ -30,6 +36,7 @@ public class CoinChangedEvent extends BaseEvent {
 ``` java
 package seedu.address.commons.events.ui;
 
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.BaseEvent;
 
 /**
@@ -37,15 +44,25 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class ShowNotificationRequestEvent extends BaseEvent {
 
+    private static final String MESSAGE_NOTIFYING = "Notifying about: %1$s triggers %2$s";
+
+    /** The index of the coin that triggered this notification */
+    public final Index targetIndex;
+
+    /** The code of the coin that triggered this notification */
+    public final String codeString;
+
     private final String message;
 
-    public ShowNotificationRequestEvent(String message) {
+    public ShowNotificationRequestEvent(String message, Index index, String codeString) {
         this.message = message;
+        this.targetIndex = index;
+        this.codeString = codeString;
     }
 
     @Override
     public String toString() {
-        return "Notifying about: " + message;
+        return String.format(MESSAGE_NOTIFYING, codeString, message);
     }
 }
 ```
@@ -285,7 +302,7 @@ public class NotifyCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a new notification to be triggered "
             + "upon the specified rule. Rules are provided in the following format:\n"
             + "Parameters: TARGET OPTION/VALUE [...] \n"
-            + "Example: " + COMMAND_WORD + " BTC p/15000";
+            + "Example: " + COMMAND_WORD + " c/BTC AND p/>15000";
 
     public static final String MESSAGE_SUCCESS = "Added: %1$s";
     public static final String MESSAGE_DUPLICATE_RULE = "This notification rule already exists!";
@@ -293,6 +310,7 @@ public class NotifyCommand extends Command {
     private final NotificationRule rule;
 
     public NotifyCommand(NotificationRule rule) {
+        requireNonNull(rule);
         this.rule = rule;
     }
 
@@ -431,22 +449,43 @@ public class SellCommand extends UndoableCommand {
 package seedu.address.logic.commands;
 
 import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.BaseEvent;
+import seedu.address.commons.events.model.CoinChangedEvent;
 import seedu.address.commons.events.ui.ShowNotificationRequestEvent;
+import seedu.address.model.coin.Coin;
 
 /**
  * Spawns a pop-up notification in the corner of the screen.
  */
-public class SpawnNotificationCommand extends Command {
+public class SpawnNotificationCommand extends ActionCommand<Coin> {
 
     private final String message;
+    private Coin jumpTo;
+    private Index index;
 
     public SpawnNotificationCommand(String message) {
         this.message = message;
     }
 
     @Override
+    public void setExtraData(Coin data, BaseEvent event) {
+        assert(event instanceof CoinChangedEvent);
+
+        jumpTo = data;
+        index = ((CoinChangedEvent) event).index;
+    }
+
+    @Override
     public CommandResult execute() {
-        EventsCenter.getInstance().post(new ShowNotificationRequestEvent(message));
+        try {
+            EventsCenter.getInstance()
+                    .post(new ShowNotificationRequestEvent(message, index, jumpTo.getCode().toString()));
+        } catch (IndexOutOfBoundsException e) {
+            // Should not throw here, but do not crash anyway
+            LogsCenter.getLogger(this.getClass()).severe("Encountered invalid index in rule execute.");
+        }
         return new CommandResult("");
     }
 
@@ -456,6 +495,36 @@ public class SpawnNotificationCommand extends Command {
                 || (other instanceof SpawnNotificationCommand // instanceof handles nulls
                 && this.message.equals(((SpawnNotificationCommand) other).message)); // state check
     }
+}
+```
+###### \java\seedu\address\logic\commands\SyncCommand.java
+``` java
+            ArrayList<JsonObject> historicalPriceRawData = getHistoricalPriceRawData(code);
+
+            List<Amount> historicalPrices =
+                    historicalPriceRawData.stream()
+                            .map(obj -> new Amount(obj.get("close").getAsString()))
+                            .collect(Collectors.toList());
+            List<String> historicalTimes =
+                    historicalPriceRawData.stream()
+                            .map(obj -> obj.get("time").getAsString())
+                            .collect(Collectors.toList());
+            newPrice.setHistorical(historicalPrices, historicalTimes);
+
+            priceObjs.put(code, newPrice);
+        }
+        return priceObjs;
+    }
+
+    /**
+     * Fetches the raw data for single code historical prices
+     */
+    private ArrayList<JsonObject> getHistoricalPriceRawData(String code) {
+        List<NameValuePair> histoPriceParams = buildParams(code, HISTORICAL);
+        JsonElement histoPriceArray = getJsonObject(historicalPriceApiUrl, histoPriceParams).get("Data");
+        return new Gson().fromJson(histoPriceArray.toString(), new TypeToken<List<JsonObject>>(){}.getType());
+    }
+
 }
 ```
 ###### \java\seedu\address\logic\conditions\AmountChangeCondition.java
@@ -484,49 +553,6 @@ public abstract class AmountChangeCondition extends AmountCondition {
     public AmountChangeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
         super(amount, amountComparator);
         this.compareMode = compareMode;
-    }
-}
-```
-###### \java\seedu\address\logic\conditions\AmountHeldChangeCondition.java
-``` java
-package seedu.address.logic.conditions;
-
-import static seedu.address.logic.parser.TokenType.NUM;
-import static seedu.address.logic.parser.TokenType.PREFIX_HELD;
-
-import java.util.function.BiPredicate;
-
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.parser.TokenType;
-import seedu.address.model.coin.Amount;
-import seedu.address.model.coin.Coin;
-
-/**
- * Represents a predicate that evaluates to true when the amount held of a {@Coin} is either greater than or less than
- * (depending on the amount comparator) the amount specified.
- */
-public class AmountHeldChangeCondition extends AmountChangeCondition {
-
-    public static final TokenType PREFIX = PREFIX_HELD;
-    public static final TokenType PARAMETER_TYPE = NUM;
-
-    public AmountHeldChangeCondition(Amount amount,
-                                     BiPredicate<Amount, Amount> amountComparator,
-                                     CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
-    }
-
-    @Override
-    public boolean test(Coin coin) {
-        switch (compareMode) {
-        case RISE:
-            return amountComparator.test(coin.getChangeFromPrev().getCurrentAmountHeld(), amount);
-        case FALL:
-            return amountComparator.test(coin.getChangeToPrev().getCurrentAmountHeld(), amount);
-        default:
-            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
-            return false;
-        }
     }
 }
 ```
@@ -574,133 +600,6 @@ public class CurrentPriceChangeCondition extends AmountChangeCondition {
     }
 }
 ```
-###### \java\seedu\address\logic\conditions\DollarsBoughtChangeCondition.java
-``` java
-package seedu.address.logic.conditions;
-
-import static seedu.address.logic.parser.TokenType.NUM;
-import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT;
-
-import java.util.function.BiPredicate;
-
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.parser.TokenType;
-import seedu.address.model.coin.Amount;
-import seedu.address.model.coin.Coin;
-
-/**
- * Represents a predicate that evaluates to true when the amount bought of a {@Coin} is either greater than or less than
- * (depending on the amount comparator) the amount specified.
- */
-public class DollarsBoughtChangeCondition extends AmountChangeCondition {
-
-    public static final TokenType PREFIX = PREFIX_BOUGHT;
-    public static final TokenType PARAMETER_TYPE = NUM;
-
-    public DollarsBoughtChangeCondition(Amount amount,
-                                        BiPredicate<Amount, Amount> amountComparator,
-                                        CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
-    }
-
-    @Override
-    public boolean test(Coin coin) {
-        switch (compareMode) {
-        case RISE:
-            return amountComparator.test(coin.getChangeFromPrev().getTotalDollarsBought(), amount);
-        case FALL:
-            return amountComparator.test(coin.getChangeToPrev().getTotalDollarsBought(), amount);
-        default:
-            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
-            return false;
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\conditions\DollarsSoldChangeCondition.java
-``` java
-package seedu.address.logic.conditions;
-
-import static seedu.address.logic.parser.TokenType.NUM;
-import static seedu.address.logic.parser.TokenType.PREFIX_SOLD;
-
-import java.util.function.BiPredicate;
-
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.parser.TokenType;
-import seedu.address.model.coin.Amount;
-import seedu.address.model.coin.Coin;
-
-/**
- * Represents a predicate that evaluates to true when the amount sold of a {@Coin} is either greater than or less than
- * (depending on the amount comparator) the amount specified.
- */
-public class DollarsSoldChangeCondition extends AmountChangeCondition  {
-
-    public static final TokenType PREFIX = PREFIX_SOLD;
-    public static final TokenType PARAMETER_TYPE = NUM;
-
-    public DollarsSoldChangeCondition(Amount amount,
-                                      BiPredicate<Amount, Amount> amountComparator,
-                                      CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
-    }
-
-    @Override
-    public boolean test(Coin coin) {
-        switch (compareMode) {
-        case RISE:
-            return amountComparator.test(coin.getChangeFromPrev().getTotalDollarsSold(), amount);
-        case FALL:
-            return amountComparator.test(coin.getChangeToPrev().getTotalDollarsSold(), amount);
-        default:
-            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
-            return false;
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\conditions\MadeChangeCondition.java
-``` java
-package seedu.address.logic.conditions;
-
-import static seedu.address.logic.parser.TokenType.NUM;
-import static seedu.address.logic.parser.TokenType.PREFIX_MADE;
-
-import java.util.function.BiPredicate;
-
-import seedu.address.commons.core.LogsCenter;
-import seedu.address.logic.parser.TokenType;
-import seedu.address.model.coin.Amount;
-import seedu.address.model.coin.Coin;
-
-/**
- * Represents a predicate that evaluates to true when the amount made (dollar profit) of a {@Coin} is either
- * greater than or less than (depending on the amount comparator) the amount specified.
- */
-public class MadeChangeCondition extends AmountChangeCondition  {
-
-    public static final TokenType PREFIX = PREFIX_MADE;
-    public static final TokenType PARAMETER_TYPE = NUM;
-
-    public MadeChangeCondition(Amount amount, BiPredicate<Amount, Amount> amountComparator, CompareMode compareMode) {
-        super(amount, amountComparator, compareMode);
-    }
-
-    @Override
-    public boolean test(Coin coin) {
-        switch (compareMode) {
-        case RISE:
-            return amountComparator.test(coin.getChangeFromPrev().getTotalProfit(), amount);
-        case FALL:
-            return amountComparator.test(coin.getChangeToPrev().getTotalProfit(), amount);
-        default:
-            LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
-            return false;
-        }
-    }
-}
-```
 ###### \java\seedu\address\logic\conditions\WorthChangeCondition.java
 ``` java
 package seedu.address.logic.conditions;
@@ -730,9 +629,11 @@ public class WorthChangeCondition extends AmountChangeCondition  {
     public boolean test(Coin coin) {
         switch (compareMode) {
         case RISE:
-            return amountComparator.test(coin.getChangeFromPrev().getDollarsWorth(), amount);
+            return amountComparator.test(Amount.getDiff(
+                    coin.getDollarsWorth(), coin.getPrevState().getDollarsWorth()), amount);
         case FALL:
-            return amountComparator.test(coin.getChangeToPrev().getDollarsWorth(), amount);
+            return amountComparator.test(Amount.getDiff(
+                    coin.getPrevState().getDollarsWorth(), coin.getDollarsWorth()), amount);
         default:
             LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
             return false;
@@ -794,22 +695,14 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.TokenType.PREFIX_AMOUNT;
 import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT;
-import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT_FALL;
-import static seedu.address.logic.parser.TokenType.PREFIX_BOUGHT_RISE;
 import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
 import static seedu.address.logic.parser.TokenType.PREFIX_HELD;
-import static seedu.address.logic.parser.TokenType.PREFIX_HELD_FALL;
-import static seedu.address.logic.parser.TokenType.PREFIX_HELD_RISE;
 import static seedu.address.logic.parser.TokenType.PREFIX_MADE;
-import static seedu.address.logic.parser.TokenType.PREFIX_MADE_FALL;
-import static seedu.address.logic.parser.TokenType.PREFIX_MADE_RISE;
 import static seedu.address.logic.parser.TokenType.PREFIX_NAME;
 import static seedu.address.logic.parser.TokenType.PREFIX_PRICE;
 import static seedu.address.logic.parser.TokenType.PREFIX_PRICE_FALL;
 import static seedu.address.logic.parser.TokenType.PREFIX_PRICE_RISE;
 import static seedu.address.logic.parser.TokenType.PREFIX_SOLD;
-import static seedu.address.logic.parser.TokenType.PREFIX_SOLD_FALL;
-import static seedu.address.logic.parser.TokenType.PREFIX_SOLD_RISE;
 import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 import static seedu.address.logic.parser.TokenType.PREFIX_WORTH;
 import static seedu.address.logic.parser.TokenType.PREFIX_WORTH_FALL;
@@ -830,13 +723,13 @@ public class NotifyCommandParser implements Parser<NotifyCommand> {
 
     private static final TokenType[] EXPECTED_TOKEN_TYPES = {
         PREFIX_AMOUNT,
-        PREFIX_BOUGHT_RISE, PREFIX_BOUGHT_FALL, PREFIX_BOUGHT,
+        PREFIX_BOUGHT,
         PREFIX_CODE,
-        PREFIX_HELD_RISE, PREFIX_HELD_FALL, PREFIX_HELD,
-        PREFIX_MADE_RISE, PREFIX_MADE_FALL, PREFIX_MADE,
+        PREFIX_HELD,
+        PREFIX_MADE,
         PREFIX_NAME,
         PREFIX_PRICE_RISE, PREFIX_PRICE_FALL, PREFIX_PRICE,
-        PREFIX_SOLD_RISE, PREFIX_SOLD_FALL, PREFIX_SOLD,
+        PREFIX_SOLD,
         PREFIX_TAG,
         PREFIX_WORTH_RISE, PREFIX_WORTH_FALL, PREFIX_WORTH
     };
@@ -925,8 +818,10 @@ import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.CoinChangedEvent;
 import seedu.address.commons.events.model.RuleBookChangedEvent;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.ReadOnlyRuleBook;
 import seedu.address.model.RuleBook;
+import seedu.address.model.rule.NotificationRule;
 import seedu.address.model.rule.Rule;
 
 /**
@@ -935,7 +830,6 @@ import seedu.address.model.rule.Rule;
 public class RuleChecker {
 
     private static final Logger logger = LogsCenter.getLogger(RuleChecker.class);
-    private static final String MESSAGE_PROCESS_RULE = "Found %1$s";
 
     private final RuleBook rules;
 
@@ -953,9 +847,12 @@ public class RuleChecker {
     @Subscribe
     public void handleCoinChangedEvent(CoinChangedEvent cce) {
         for (Rule r : rules.getRuleList()) {
+            r.action.setExtraData(cce.data, cce);
+
             switch (r.type) {
             case NOTIFICATION:
-                r.checkAndFire(cce.data);
+                assert(r instanceof NotificationRule);
+                checkAndFire(r, cce.data);
                 break;
 
             default:
@@ -964,6 +861,28 @@ public class RuleChecker {
         }
     }
 
+    /**
+     * Checks the trigger condition against the provided object, then
+     * executes the command tied to it if it matches
+     *
+     * @param rule containing condition to check with
+     * @param data to check against
+     * @return Whether the command was successful.
+     */
+    private static <T> boolean checkAndFire(Rule<T> rule, T data) {
+        if (!rule.condition.test(data)) {
+            return false;
+        }
+
+        try {
+            rule.action.execute();
+            logger.info(String.format(Rule.MESSAGE_FIRED, rule, data));
+            return true;
+        } catch (CommandException e) {
+            logger.warning(e.getMessage());
+            return false;
+        }
+    }
 }
 ```
 ###### \java\seedu\address\model\coin\Amount.java
@@ -1052,15 +971,6 @@ public class Amount implements Comparable<Amount> {
     }
 
     /**
-     * Subtracts subtractAmount to the current value.
-     *
-     * @param subtractAmount amount to be subtracted.
-     */
-    public void subtractValue(Amount subtractAmount) {
-        value = value.subtract(subtractAmount.value);
-    }
-
-    /**
      * Gets the string representation of the full value.
      * Use {@code toString} instead for display purposes.
      * @see Amount#toString
@@ -1087,7 +997,9 @@ public class Amount implements Comparable<Amount> {
                               ? 0
                               : (value.precision() - value.scale()) / 3;
 
-        if (magnitude < MAGNITUDE_CHAR.length) {
+        if (0 < magnitude && magnitude < 2) {
+            return value.setScale(4, RoundingMode.UP).toPlainString();
+        } else if (magnitude < MAGNITUDE_CHAR.length) {
             // Shift the decimal point to keep the string printed at 7 digits max
             return value.movePointLeft(magnitude * 3)
                     .setScale(4, RoundingMode.UP)
@@ -1114,7 +1026,15 @@ public class Amount implements Comparable<Amount> {
      * @return (final minus initial) as a coin, where the final coin is this
      */
     public Coin getChangeFrom(Coin initialCoin) {
-        return null;
+        assert(initialCoin.code.equals(this.code));
+
+        return new Coin(initialCoin.code,
+                initialCoin.getTags(),
+                price.getChangeFrom(initialCoin.price),
+                Amount.getDiff(this.totalAmountBought, initialCoin.totalAmountBought),
+                Amount.getDiff(this.totalAmountSold, initialCoin.totalAmountSold),
+                Amount.getDiff(this.totalDollarsBought, initialCoin.totalDollarsBought),
+                Amount.getDiff(this.totalDollarsSold, initialCoin.totalDollarsSold));
     }
 
     public Coin getChangeFromPrev() {
@@ -1123,6 +1043,28 @@ public class Amount implements Comparable<Amount> {
 
     public Coin getChangeToPrev() {
         return prevState.getChangeFrom(this);
+    }
+```
+###### \java\seedu\address\model\coin\Price.java
+``` java
+    public void setHistorical(List<Amount> prices, List<String> timestamps) {
+        historicalPrices = prices;
+        historicalTimeStamps = timestamps;
+    }
+
+    public Price getChangeFrom(Price initial) {
+        Price result = new Price();
+        result.currentPrice = Amount.getDiff(currentPrice, initial.currentPrice);
+
+        return result;
+    }
+
+    public List<Amount> getHistoricalPrices() {
+        return historicalPrices;
+    }
+
+    public List<String> getHistoricalTimeStamps() {
+        return historicalTimeStamps;
     }
 ```
 ###### \java\seedu\address\model\ReadOnlyRuleBook.java
@@ -1174,7 +1116,7 @@ import seedu.address.model.coin.Coin;
  */
 public class NotificationRule extends Rule<Coin> {
 
-    private static final ActionParser parseAction = SpawnNotificationCommand::new;
+    private static final ActionParser<Coin> parseAction = SpawnNotificationCommand::new;
     private static final ConditionParser<Coin> parseCondition = NotifyCommandParser::parseNotifyCondition;
 
     public NotificationRule(String value) {
@@ -1194,8 +1136,7 @@ import java.util.logging.Logger;
 
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.commands.ActionCommand;
 
 /**
  * Represents a Rule in the rule book.
@@ -1204,18 +1145,20 @@ import seedu.address.logic.commands.exceptions.CommandException;
 public class Rule<T> {
 
     public static final String MESSAGE_RULE_INVALID = "Rule description is invalid";
+    public static final String MESSAGE_FIRED = "[Rule Match] %1$s <==> %2$s";
     private static final String RULE_FORMAT_STRING = "[%1$s]%2$s";
-    private static final String MESSAGE_FIRED = "[Rule Match] %1$s <==> %2$s";
 
     private static final Logger logger = LogsCenter.getLogger(Rule.class);
 
     public final RuleType type;
     public final String description;
 
-    private final Command action;
-    private final Predicate<T> condition;
+    public final ActionCommand<T> action;
+    public final Predicate<T> condition;
 
-    protected Rule(String description, RuleType type, ActionParser actionParser, ConditionParser<T> conditionParser) {
+    protected Rule(String description, RuleType type,
+                   ActionParser<T> actionParser,
+                   ConditionParser<T> conditionParser) {
         requireAllNonNull(description, type, actionParser, conditionParser);
         this.description = description;
         this.type = type;
@@ -1231,27 +1174,6 @@ public class Rule<T> {
             return parser.parse(conditionArgs);
         } catch (IllegalValueException e) {
             throw new IllegalArgumentException(MESSAGE_RULE_INVALID);
-        }
-    }
-
-    /**
-     * Checks the trigger condition against the provided object, then
-     * executes the command tied to it if it matches
-     * @param t The object to check against
-     * @return Whether the command was successful.
-     */
-    public boolean checkAndFire(T t) {
-        if (!condition.test(t)) {
-            return false;
-        }
-
-        try {
-            action.execute();
-            logger.info(String.format(MESSAGE_FIRED, this, t));
-            return true;
-        } catch (CommandException e) {
-            logger.warning(e.getMessage());
-            return false;
         }
     }
 
@@ -1284,8 +1206,8 @@ public class Rule<T> {
      * Represents a function type used to generate the action for this rule.
      */
     @FunctionalInterface
-    protected interface ActionParser {
-        Command parse(String args);
+    protected interface ActionParser<T> {
+        ActionCommand<T> parse(String args);
     }
 
     /**
@@ -1428,8 +1350,6 @@ public class RuleBook implements ReadOnlyRuleBook {
 ``` java
 package seedu.address.storage;
 
-import static seedu.address.model.rule.RuleType.NOTIFICATION;
-
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -1484,6 +1404,10 @@ public class XmlAdaptedRule {
             throw new IllegalValueException(
                     String.format(MISSING_FIELD_MESSAGE_FORMAT, RuleType.class.getSimpleName()));
         }
+        if (this.value == null) {
+            throw new IllegalValueException(
+                    String.format(MISSING_FIELD_MESSAGE_FORMAT, Rule.class.getSimpleName()));
+        }
 
         try {
             switch (RuleType.valueOf(type)) {
@@ -1516,10 +1440,15 @@ public class XmlAdaptedRule {
 ``` java
 package seedu.address.ui;
 
-import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Collections;
 import java.util.Date;
+import java.util.List;
+import java.util.logging.Logger;
+import java.util.stream.Collectors;
+
+import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
 import javafx.scene.chart.CategoryAxis;
@@ -1528,6 +1457,9 @@ import javafx.scene.chart.NumberAxis;
 import javafx.scene.chart.XYChart.Data;
 import javafx.scene.chart.XYChart.Series;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.CoinPanelSelectionChangedEvent;
+import seedu.address.model.coin.Amount;
 
 /**
  * The charts panel used to display graphs
@@ -1535,6 +1467,8 @@ import javafx.scene.layout.Region;
 public class ChartsPanel extends UiPart<Region> {
 
     public static final String FXML = "ChartsPanel.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(ChartsPanel.class);
 
     @FXML
     private CategoryAxis xAxis;
@@ -1545,48 +1479,60 @@ public class ChartsPanel extends UiPart<Region> {
     @FXML
     private LineChart<String, Double> priceChart;
 
-    private final ArrayList<Date> testDataX = new ArrayList<>(Arrays.asList(
-            new Date(1452592800000L),
-            new Date(1452596400000L),
-            new Date(1452600000000L),
-            new Date(1452603600000L),
-            new Date(1452607200000L),
-            new Date(1452610800000L),
-            new Date(1452614400000L),
-            new Date(1452618000000L),
-            new Date(1452621600000L)
-    ));
-    private final ArrayList<Double> testDataY = new ArrayList<>(Arrays.asList(
-            0.002591,
-            0.002580,
-            0.002617,
-            0.002563,
-            0.002597,
-            0.002576,
-            0.002555,
-            0.002575,
-            0.002719
-    ));
-
     public ChartsPanel() {
         super(FXML);
-        addPlot(testDataX, testDataY);
+
+        registerAsAnEventHandler(this);
     }
 
     /**
-     * Add a new plot to the graph
+     * Adds a new plot to the graph via a coin price
+     * @param xAxis
+     * @param yAxis
+     */
+    private void addPlot(List<String> xAxis, List<Amount> yAxis) {
+        ArrayList<Date> dateList = new ArrayList<>(
+                xAxis.stream()
+                .map(str -> new Date(parseTimeStamp(str)))
+                .collect(Collectors.toList()));
+        ArrayList<Double> priceList = new ArrayList<>(
+                yAxis.stream()
+                .map(amount -> Double.valueOf(amount.toString()))
+                .collect(Collectors.toList()));
+
+        addPlot(dateList, priceList);
+    }
+
+    /**
+     * Adds a new plot to the graph
      */
     private void addPlot(ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
         Series<String, Double> dataSeries = new Series<>();
-        dataSeries.setName("Price History Series");
         populateData(dataSeries, xAxis, yAxis);
 
         priceChart.getData().add(dataSeries);
         priceChart.setCreateSymbols(false);
+
+        if (!xAxis.isEmpty()) {
+            calibrateRange(Collections.min(yAxis), Collections.max(yAxis), 5);
+        }
+    }
+
+    private long parseTimeStamp(String s) {
+        return Long.valueOf(s + "000");
     }
 
     /**
-     * Add the data from the provided lists to the data series
+     * Sets nice values for the chart axis scaling
+     */
+    private void calibrateRange(double min, double max, int steps) {
+        this.yAxis.setLowerBound(min);
+        this.yAxis.setUpperBound(max);
+        this.yAxis.setTickUnit((max - min) / (double) steps);
+    }
+
+    /**
+     * Adds the data from the provided lists to the data series
      * @param dataSeries
      * @param xAxis
      * @param yAxis
@@ -1594,9 +1540,21 @@ public class ChartsPanel extends UiPart<Region> {
     private void populateData(Series<String, Double> dataSeries, ArrayList<Date> xAxis, ArrayList<Double> yAxis) {
         assert (xAxis.size() == yAxis.size());
         for (int i = 0; i < xAxis.size(); i++) {
-            final String date = DateFormat.getInstance().format(xAxis.get(i));
+            final String date = new SimpleDateFormat("dd MMM, HHmm").format(xAxis.get(i));
             dataSeries.getData().add(new Data<>(date, yAxis.get(i)));
         }
+    }
+
+    private void clearData() {
+        priceChart.getData().clear();
+    }
+
+    @Subscribe
+    private void handleCoinPanelSelectionChangedEvent(CoinPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearData();
+        addPlot(event.getNewSelection().coin.getPrice().getHistoricalTimeStamps(),
+                event.getNewSelection().coin.getPrice().getHistoricalPrices());
     }
 }
 ```
@@ -1612,19 +1570,27 @@ public class ChartsPanel extends UiPart<Region> {
     @Subscribe
     private void handleShowNotificationEvent(ShowNotificationRequestEvent nre) {
         logger.info(LogsCenter.getEventHandlingLogMessage(nre));
-        spawnNotification(nre.toString());
+        spawnNotification(nre.toString(), nre.targetIndex, nre.codeString);
     }
 
     /**
      * Spawns a popup notification with the given message.
      */
-    private void spawnNotification(String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("CoinBook notification");
-        alert.setHeaderText("The following rule has triggered this notification:");
-        alert.setContentText(message);
-
-        alert.show();
+    private void spawnNotification(String message, Index index, String code) {
+        Notifications.create()
+                     .title("The following rule has triggered this notification:")
+                     .text(String.format("%1$s\nClick to jump to view %2$s", message, code))
+                     .graphic(new ImageView(IconUtil.getCoinIcon(code)))
+                     .onAction(event -> {
+                         try {
+                             logic.execute(ListCommand.COMMAND_WORD);
+                             EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+                             event.consume();
+                         } catch (Exception e) {
+                             throw new RuntimeException();
+                         }
+                     })
+                     .show();
     }
 ```
 ###### \java\seedu\address\ui\NotificationsWindow.java
@@ -1709,7 +1675,6 @@ public class NotificationsWindow extends UiPart<Stage> {
 ```
 ###### \resources\view\ChartsPanel.fxml
 ``` fxml
-<?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.chart.LineChart?>
 <?import javafx.scene.layout.StackPane?>
@@ -1723,10 +1688,27 @@ public class NotificationsWindow extends UiPart<Stage> {
       <CategoryAxis label="Price History (time)" fx:id="xAxis" />
     </xAxis>
     <yAxis>
-      <NumberAxis label="Price (USD)" fx:id="yAxis" />
+      <NumberAxis label="Price (USD)" fx:id="yAxis" autoRanging="false" />
     </yAxis>
   </LineChart>
 </StackPane>
+```
+###### \resources\view\Extensions.css
+``` css
+.chart {
+    -fx-horizontal-grid-lines-visible: false;
+    -fx-vertical-grid-lines-visible: false;
+    -fx-legend-visible: false;
+}
+
+.chart-pane, .chart-plot-background {
+    -fx-background-color: #222222;
+}
+
+.chart-series-line {
+    -fx-stroke-width: 1px !important;
+    -fx-effect: null;
+}
 ```
 ###### \resources\view\NotificationsWindow.fxml
 ``` fxml

@@ -53,7 +53,8 @@ public class CoinSubredditList {
 ```
 ###### \java\seedu\address\logic\commands\FindCommand.java
 ``` java
-    public FindCommand(Predicate<Coin> coinCondition) {
+    public FindCommand(String description, Predicate<Coin> coinCondition) {
+        this.description = description;
         this.coinCondition = coinCondition;
     }
 
@@ -70,6 +71,7 @@ public class CoinSubredditList {
     @Override
     public CommandResult execute() {
         model.updateFilteredCoinList(coinCondition);
+        EventsCenter.getInstance().post(new FilterChangedEvent(description));
         return new CommandResult(getMessageForCoinListShownSummary(model.getFilteredCoinList().size()));
     }
 ```
@@ -434,48 +436,24 @@ public class ConditionGenerator {
         CompareMode compareMode = getCompareModeFromType(type);
         switch (type) {
         case PREFIX_HELD:
-        case PREFIX_HELD_RISE:
-        case PREFIX_HELD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new AmountHeldCondition(specifiedAmount, amountComparator);
-            } else {
-                return new AmountHeldChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new AmountHeldCondition(specifiedAmount, amountComparator);
 
         case PREFIX_SOLD:
-        case PREFIX_SOLD_RISE:
-        case PREFIX_SOLD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new DollarsSoldCondition(specifiedAmount, amountComparator);
-            } else {
-                return new DollarsSoldChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new DollarsSoldCondition(specifiedAmount, amountComparator);
 
         case PREFIX_BOUGHT:
-        case PREFIX_BOUGHT_RISE:
-        case PREFIX_BOUGHT_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new DollarsBoughtCondition(specifiedAmount, amountComparator);
-            } else {
-                return new DollarsBoughtChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new DollarsBoughtCondition(specifiedAmount, amountComparator);
 
         case PREFIX_MADE:
-        case PREFIX_MADE_RISE:
-        case PREFIX_MADE_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new MadeCondition(specifiedAmount, amountComparator);
-            } else {
-                return new MadeChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new MadeCondition(specifiedAmount, amountComparator);
 
         case PREFIX_PRICE:
         case PREFIX_PRICE_RISE:
@@ -514,18 +492,10 @@ public class ConditionGenerator {
 
     private CompareMode getCompareModeFromType(TokenType type) {
         switch (type) {
-        case PREFIX_HELD_RISE:
-        case PREFIX_SOLD_RISE:
-        case PREFIX_BOUGHT_RISE:
-        case PREFIX_MADE_RISE:
         case PREFIX_PRICE_RISE:
         case PREFIX_WORTH_RISE:
             return CompareMode.RISE;
 
-        case PREFIX_HELD_FALL:
-        case PREFIX_SOLD_FALL:
-        case PREFIX_BOUGHT_FALL:
-        case PREFIX_MADE_FALL:
         case PREFIX_PRICE_FALL:
         case PREFIX_WORTH_FALL:
             return CompareMode.FALL;
@@ -593,17 +563,9 @@ public class ConditionSemanticParser {
     private boolean hasCorrectParameterType(TokenType type) {
         switch (type) {
         case PREFIX_HELD:
-        case PREFIX_HELD_RISE:
-        case PREFIX_HELD_FALL:
         case PREFIX_SOLD:
-        case PREFIX_SOLD_RISE:
-        case PREFIX_SOLD_FALL:
         case PREFIX_BOUGHT:
-        case PREFIX_BOUGHT_RISE:
-        case PREFIX_BOUGHT_FALL:
         case PREFIX_MADE:
-        case PREFIX_MADE_RISE:
-        case PREFIX_MADE_FALL:
         case PREFIX_PRICE:
         case PREFIX_PRICE_RISE:
         case PREFIX_PRICE_FALL:
@@ -753,7 +715,7 @@ public class ConditionSyntaxParser {
             expectedTokenType = conditionSyntaxParser.getExpectedType();
             actualTokenType = conditionSyntaxParser.getActualType();
             logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Syntactic",
-                    expectedTokenType.description, actualTokenType.description));
+                    expectedTokenType.description, actualTokenType.typeName));
             throw new ParseException("command arguments invalid.");
         }
 
@@ -762,7 +724,7 @@ public class ConditionSyntaxParser {
             expectedTokenType = conditionSemanticParser.getExpectedType();
             actualTokenType = conditionSemanticParser.getActualType();
             logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Semantic",
-                    expectedTokenType.description, actualTokenType.description));
+                    expectedTokenType.description, actualTokenType.typeName));
             throw new ParseException("command arguments invalid.");
         }
 
@@ -958,20 +920,12 @@ public enum TokenType {
     /* Numerical values */
     PREFIX_AMOUNT("a/", "APREFIX", "a prefix"),
     // Below used for find/notify conditions
-    PREFIX_BOUGHT_RISE("b/\\+", "BRPREFIX", "a prefix"),
-    PREFIX_BOUGHT_FALL("b/\\-", "BFPREFIX", "a prefix"),
     PREFIX_BOUGHT("b/", "BPREFIX", "a prefix"),
-    PREFIX_HELD_RISE("h/\\+", "HRPREFIX", "a prefix"),
-    PREFIX_HELD_FALL("h/\\-", "HFPREFIX", "a prefix"),
     PREFIX_HELD("h/", "HPREFIX", "a prefix"),
-    PREFIX_MADE_RISE("m/\\+", "MRPREFIX", "a prefix"),
-    PREFIX_MADE_FALL("m/\\-", "MFPREFIX", "a prefix"),
     PREFIX_MADE("m/", "MPREFIX", "a prefix"),
     PREFIX_PRICE_RISE("p/\\+", "PRPREFIX", "a prefix"),
     PREFIX_PRICE_FALL("p/\\-", "PFPREFIX", "a prefix"),
     PREFIX_PRICE("p/", "PPREFIX", "a prefix"),
-    PREFIX_SOLD_RISE("s/\\+", "SRPREFIX", "a prefix"),
-    PREFIX_SOLD_FALL("s/\\-", "SFPREFIX", "a prefix"),
     PREFIX_SOLD("s/", "SPREFIX", "a prefix"),
     PREFIX_WORTH_RISE("w/\\+", "WRPREFIX", "a prefix"),
     PREFIX_WORTH_FALL("w/\\-", "WFPREFIX", "a prefix"),
@@ -1012,9 +966,13 @@ public enum TokenType {
                 || type == PREFIX_HELD
                 || type == PREFIX_MADE
                 || type == PREFIX_NAME
+                || type == PREFIX_PRICE_RISE
+                || type == PREFIX_PRICE_FALL
                 || type == PREFIX_PRICE
                 || type == PREFIX_SOLD
                 || type == PREFIX_TAG
+                || type == PREFIX_WORTH_RISE
+                || type == PREFIX_WORTH_FALL
                 || type == PREFIX_WORTH;
     }
 }

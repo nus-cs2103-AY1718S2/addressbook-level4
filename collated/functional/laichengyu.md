@@ -33,7 +33,6 @@ import static org.asynchttpclient.Dsl.asyncHttpClient;
 
 import java.io.FileNotFoundException;
 import java.io.InputStreamReader;
-import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Future;
 
 import org.asynchttpclient.AsyncHandler;
@@ -49,8 +48,6 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 
 import io.netty.handler.codec.http.HttpHeaders;
-import seedu.address.commons.core.EventsCenter;
-import seedu.address.commons.events.ui.LoadingEvent;
 
 /**
  * Retrieves data in JSON format from a specified URL
@@ -60,25 +57,19 @@ public class FetchUtil {
     private static AsyncHttpClient myAsyncHttpClient = asyncHttpClient();
 
     /**
-     * Asynchronously fetches data from the specified url and returns it as a JsonObject
+     * Returns a Future object, future from the specific url asynchronously.
+     * The HTTP request Response can be retrieved using future.get().
+     * All operations queued before future.get() are performed async and the application
+     * will be thread-blocked at future.get() to wait for the return Response.
      * @param url cannot be null
-     * @return data received as a JsonObject
-     * @throws InterruptedException when there is a thread interrupt
-     * @throws ExecutionException when there is an error in data fetching
+     * @return a Future object that can retrieve a Response which contains HTTP request data
+     * in its responseBody
      */
-    public static JsonObject asyncFetch(String url)
-            throws InterruptedException, ExecutionException {
+    public static Future<Response> asyncFetch(String url) {
         //Send HTTP request asynchronously
         BoundRequestBuilder boundReqBuilder = myAsyncHttpClient.prepareGet(url);
         AsyncHandler<Response> asyncHandler = getResponseAsyncHandler();
-        Future<Response> whenResponse = boundReqBuilder.execute(asyncHandler);
-
-        //Set loading UI
-        EventsCenter.getInstance().post(new LoadingEvent(true));
-        Response response = whenResponse.get();
-        //Return UI to normal
-        EventsCenter.getInstance().post(new LoadingEvent(false));
-        return parseStringToJsonObj(response.getResponseBody());
+        return boundReqBuilder.execute(asyncHandler);
     }
 
     /**
@@ -122,7 +113,7 @@ public class FetchUtil {
      * @param str cannot be null
      * @return JsonObject converted from String
      */
-    private static JsonObject parseStringToJsonObj(String str) {
+    public static JsonObject parseStringToJsonObj(String str) {
         JsonObject jsonObject;
 
         JsonParser parser = new JsonParser();
@@ -197,23 +188,35 @@ package seedu.address.logic;
 import java.util.Arrays;
 import java.util.List;
 
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.BuyCommand;
+import seedu.address.logic.commands.ClearCommand;
+import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FindCommand;
+import seedu.address.logic.commands.HelpCommand;
+import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NotifyCommand;
+import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.SellCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.SyncCommand;
+import seedu.address.logic.commands.TagCommand;
+import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.ViewCommand;
+
 /**
  * Stores a list of all available commands
  */
 public class CommandList {
-    private List<String> commandList;
+    public static final List<String> COMMAND_LIST = Arrays.asList(HelpCommand.COMMAND_WORD, AddCommand.COMMAND_WORD,
+            BuyCommand.COMMAND_WORD, SellCommand.COMMAND_WORD, DeleteCommand.COMMAND_WORD,
+            ClearCommand.COMMAND_WORD, TagCommand.COMMAND_WORD, ListCommand.COMMAND_WORD,
+            FindCommand.COMMAND_WORD, ViewCommand.COMMAND_WORD, NotifyCommand.COMMAND_WORD,
+            SortCommand.COMMAND_WORD, HistoryCommand.COMMAND_WORD, UndoCommand.COMMAND_WORD,
+            RedoCommand.COMMAND_WORD, SyncCommand.COMMAND_WORD, ExitCommand.COMMAND_WORD);
 
-    public CommandList() {
-        commandList = Arrays.asList("help", "add", "buy", "sell", "delete", "clear", "tag", "list", "find", "view",
-                "notify", "order", "history", "undo", "redo", "sync", "exit");
-    }
-
-    /**
-     * Returns a defensive copy of {@code commandList}.
-     */
-    public List<String> getList() {
-        return commandList;
-    }
 }
 ```
 ###### \java\seedu\address\logic\commands\SyncCommand.java
@@ -221,21 +224,28 @@ public class CommandList {
 
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.concurrent.ExecutionException;
+import java.util.concurrent.Future;
 import java.util.logging.Logger;
+import java.util.stream.Collectors;
 
 import org.apache.http.NameValuePair;
 import org.apache.http.message.BasicNameValuePair;
+import org.asynchttpclient.Response;
 
+import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
+import com.google.gson.reflect.TypeToken;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.LoadingEvent;
 import seedu.address.commons.util.FetchUtil;
 import seedu.address.commons.util.UrlBuilderUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -259,40 +269,76 @@ public class SyncCommand extends Command {
     private static final String historicalPriceApiUrl = "https://min-api.cryptocompare.com/data/histohour";
     private static final String cryptoCompareApiUrl = "https://min-api.cryptocompare.com/data/pricemultifull";
 
-    private static final String CODE_PARAM = "fsyms";
-    private static final String CURRENCY_PARAM = "tsyms";
+    private static final String HISTORICAL = "historical";
+    private static final String CURRENT = "current";
+
+    private static final String CODE_PARAM = "fsym";
+    private static final String CURRENCY_PARAM = "tsym";
+    private static final String PLURALIZE = "s";
     private static final String CURRENCY_TYPE = "USD";
     private static final String LIMIT_PARAM = "limit";
     private static final String HISTORICAL_DATA_HOURS_LIMIT = "168";
 
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            String commaSeparatedCodes = concatenateByComma(model.getCodeList());
+            HashMap<String, Price> newPriceMetrics = createPriceObjects(getCurrentPriceRawData(commaSeparatedCodes));
+            model.syncAll(newPriceMetrics);
+        } catch (DuplicateCoinException dpe) {
+            throw new CommandException("Unexpected code path!");
+        } catch (CoinNotFoundException cnfe) {
+            throw new AssertionError("The target coin cannot be missing");
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
     /**
      * Creates and returns a {@code List<NameValuePair>} with at least two key-value pairs, coin symbols and currency.
      * Additional parameters are optional based on the {@code type}
+     *
      * @param commaSeparatedCodes cannot be null
-     * @param type specifies type of data required
+     * @param type                specifies type of data required
      * @return parameters for specified API call
      */
     private List<NameValuePair> buildParams(String commaSeparatedCodes, String type) {
         List<NameValuePair> parameters = new ArrayList<>();
-        addBasicNecessaryParams(parameters, commaSeparatedCodes);
+        addBasicNecessaryParams(parameters, commaSeparatedCodes, type);
         addAdditionalParams(parameters, type);
         return parameters;
     }
 
-
-    private void addBasicNecessaryParams(List<NameValuePair> params, String commaSeparatedCodes) {
-        params.add(new BasicNameValuePair(CODE_PARAM, commaSeparatedCodes));
-        params.add(new BasicNameValuePair(CURRENCY_PARAM, CURRENCY_TYPE));
+    /**
+     * Add the API parameters to the given list
+     *
+     * @param params              List of API parameters
+     * @param commaSeparatedCodes Coin codes to use
+     * @param type                API type to get from
+     */
+    private void addBasicNecessaryParams(List<NameValuePair> params, String commaSeparatedCodes, String type) {
+        switch (type) {
+        case HISTORICAL:
+            params.add(new BasicNameValuePair(CODE_PARAM, commaSeparatedCodes));
+            params.add(new BasicNameValuePair(CURRENCY_PARAM, CURRENCY_TYPE));
+            break;
+        case CURRENT:
+            params.add(new BasicNameValuePair(CODE_PARAM + PLURALIZE, commaSeparatedCodes));
+            params.add(new BasicNameValuePair(CURRENCY_PARAM + PLURALIZE, CURRENCY_TYPE));
+            break;
+        default:
+            break;
+        }
     }
 
     /**
      * Adds any additional parameters required for the API call
+     *
      * @param params cannot be null
-     * @param type specifies type of data required
+     * @param type   specifies type of data required
      */
-    private void addAdditionalParams(List<NameValuePair> params, String type) {
+    void addAdditionalParams(List<NameValuePair> params, String type) {
         switch (type) {
-        case "historical":
+        case HISTORICAL:
             params.add(new BasicNameValuePair(LIMIT_PARAM, HISTORICAL_DATA_HOURS_LIMIT));
             break;
         default:
@@ -302,6 +348,7 @@ public class SyncCommand extends Command {
 
     /**
      * Concatenates a list of strings into one with each string separated by a comma
+     *
      * @param list of strings to be concatenated
      * @return comma separated string
      */
@@ -318,17 +365,64 @@ public class SyncCommand extends Command {
         return UrlBuilderUtil.buildUrl(url, params);
     }
 
-    private JsonObject getRawData(JsonObject data) {
-        return data.get("RAW").getAsJsonObject();
+    /**
+     * Dispatches a {@code LoadingEvent} while waiting for the Response object from the Future object
+     *
+     * @param promise that returns the desired data
+     * @return Response object retrieved from the Future
+     * @throws InterruptedException
+     * @throws ExecutionException
+     */
+    private Response waitForResponse(Future<Response> promise) throws InterruptedException, ExecutionException {
+        //Set loading UI
+        EventsCenter.getInstance().post(new LoadingEvent(true));
+        Response response = promise.get();
+        //Return UI to normal
+        EventsCenter.getInstance().post(new LoadingEvent(false));
+        return response;
+    }
+
+    /**
+     * Fetches the raw data for all codes current price.
+     */
+    private JsonObject getCurrentPriceRawData(String commaSeparatedCodes) {
+        List<NameValuePair> currentPriceParams = buildParams(commaSeparatedCodes, CURRENT);
+        JsonElement currentPriceData = getJsonObject(cryptoCompareApiUrl, currentPriceParams).get("RAW");
+        if (currentPriceData == null) {
+            return new JsonObject();
+        } else {
+            return currentPriceData.getAsJsonObject();
+        }
+    }
+
+    /**
+     * Gets the specified object from the given web API call
+     * @param url         API URL
+     * @param priceParams Parameters for API
+     */
+    private JsonObject getJsonObject(String url, List<NameValuePair> priceParams) {
+        try {
+            String priceUrl = buildApiUrl(url, priceParams);
+
+            Future<Response> promise = FetchUtil.asyncFetch(priceUrl);
+            Response response = waitForResponse(promise);
+            return FetchUtil.parseStringToJsonObj(response.getResponseBody());
+        } catch (InterruptedException ie) {
+            logger.warning("Thread interrupted");
+        } catch (ExecutionException ee) {
+            logger.warning("Data fetching error");
+        }
+        return new JsonObject();
     }
 
     /**
      * Creates and returns a {@code HashMap<String, Price>} of code and price metrics as key-value pairs.
+     *
      * @param currentPriceData contains the latest prices of each of the user's coin
      * @return HashMap containing price metrics of each coin retrieval by its code
      */
     private HashMap<String, Price> createPriceObjects(JsonObject currentPriceData) {
-        requireNonNull(currentPriceData);
+        requireAllNonNull(currentPriceData);
 
         HashMap<String, Price> priceObjs = new HashMap<>();
         List<String> codes = model.getCodeList();
@@ -340,60 +434,14 @@ public class SyncCommand extends Command {
                 continue;
             }
 
-            Price newCurrentPrice = new Price();
-            newCurrentPrice.setCurrent(new Amount(coinCurrentPriceMetrics
+            Price newPrice = new Price();
+            newPrice.setCurrent(new Amount(coinCurrentPriceMetrics
                     .getAsJsonObject()
                     .get(CURRENCY_TYPE)
                     .getAsJsonObject()
                     .get("PRICE")
                     .getAsString()));
 
-            priceObjs.put(code, newCurrentPrice);
-        }
-        return priceObjs;
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        try {
-            String commaSeparatedCodes = concatenateByComma(model.getCodeList());
-            List<NameValuePair> currentPriceParams = buildParams(commaSeparatedCodes, "current");
-            String currentPriceUrl = buildApiUrl(cryptoCompareApiUrl, currentPriceParams);
-            JsonObject currentPriceData = FetchUtil.asyncFetch(currentPriceUrl);
-            HashMap<String, Price> newPriceMetrics = createPriceObjects(getRawData(currentPriceData));
-            model.syncAll(newPriceMetrics);
-        } catch (DuplicateCoinException dpe) {
-            throw new CommandException("Unexpected code path!");
-        } catch (CoinNotFoundException cnfe) {
-            throw new AssertionError("The target coin cannot be missing");
-        } catch (InterruptedException ie) {
-            logger.warning("Thread interrupted");
-        } catch (ExecutionException ee) {
-            logger.warning("Data fetching error");
-        }
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-}
-```
-###### \java\seedu\address\logic\Logic.java
-``` java
-    /** Returns an unmodifiable view of the list of coin codes */
-    List<String> getCodeList();
-
-    /** Returns an unmodifiable view of the list of coin codes */
-    List<String> getCommandList();
-```
-###### \java\seedu\address\logic\LogicManager.java
-``` java
-    @Override
-    public List<String> getCodeList() {
-        return model.getCodeList();
-    }
-
-    @Override
-    public List<String> getCommandList() {
-        return commandList.getList();
-    }
 ```
 ###### \java\seedu\address\model\coin\Coin.java
 ``` java
@@ -421,6 +469,8 @@ public class SyncCommand extends Command {
      */
     public Price(Price toCopy) {
         this.currentPrice = toCopy.currentPrice;
+        this.historicalPrices = toCopy.historicalPrices;
+        this.historicalTimeStamps = toCopy.historicalTimeStamps;
     }
 ```
 ###### \java\seedu\address\model\CoinBook.java
@@ -518,10 +568,34 @@ public class SyncCommand extends Command {
         saveCoinBook(addressBook, backupFilePath);
     }
 ```
+###### \java\seedu\address\ui\CoinCard.java
+``` java
+    @FXML
+    private ImageView icon;
+```
+###### \java\seedu\address\ui\CoinCard.java
+``` java
+        icon.setImage(IconUtil.getCoinIcon(coinCode));
+```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
-        SuggestionProvider<String> suggestionProvider = SuggestionProvider.create(logic.getCommandList());
+        SuggestionProvider<String> suggestionProvider = SuggestionProvider.create(CommandList.COMMAND_LIST);
         TextFields.bindAutoCompletion(commandTextField, suggestionProvider);
+```
+###### \java\seedu\address\ui\IconUtil.java
+``` java
+    public static final String ICON_BASE_FILE_PATH = "/images/coin_icons/";
+    public static String getCoinFilePath(String code) {
+        return ICON_BASE_FILE_PATH + code + ".png";
+    }
+
+    public static Image getCoinIcon(String coinCode) {
+        try {
+            return AppUtil.getImage(getCoinFilePath(coinCode));
+        } catch (NullPointerException e) {
+            return AppUtil.getImage(getCoinFilePath("empty"));
+        }
+    }
 ```
 ###### \java\seedu\address\ui\MainWindow.java
 ``` java
@@ -539,13 +613,34 @@ public class SyncCommand extends Command {
      */
     @FXML
     private void handleLoading(boolean isLoading) {
-        if (isLoading) {
-            //Scene scene = new Scene(loadingAnimation, Color.TRANSPARENT);
-            //primaryStage.initStyle(StageStyle.TRANSPARENT);
-            //primaryStage.setScene(scene);
-        } else {
-            //primaryStage.setScene(new Scene(null));
-        }
+        toggleLoadingAnimation(isLoading);
+    }
+
+    /**
+     * Adds or remove the loading animation from {@code coinListPanelPlaceholder}
+     * depending on the loading status
+     * @param isLoading the loading status of the application
+     */
+    private void toggleLoadingAnimation(boolean isLoading) {
+        Platform.runLater(() -> {
+            if (isLoading) {
+                activateLoadingAnimation();
+            } else {
+                deactivateLoadingAnimation();
+            }
+        });
+    }
+
+    private void activateLoadingAnimation() {
+        loadingAnimation.setVisible(true);
+        coinListPanelPlaceholder.getChildren().add(loadingAnimation);
+        setTitle("Syncing...");
+    }
+
+    private void deactivateLoadingAnimation() {
+        loadingAnimation.setVisible(false);
+        coinListPanelPlaceholder.getChildren().remove(loadingAnimation);
+        setTitle(config.getAppTitle());
     }
 
     @Subscribe
@@ -553,4 +648,23 @@ public class SyncCommand extends Command {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleLoading(event.isLoading);
     }
+```
+###### \resources\view\CoinListCard.fxml
+``` fxml
+        <ImageView fx:id="icon" fitHeight="16.0" fitWidth="16.0">
+          <Image url="@/images/coin_icons/empty.png" />
+        </ImageView>
+        <!-- @author -->
+        <Label fx:id="code" styleClass="cell_big_label" text="\$first" />
+        <Region HBox.hgrow="ALWAYS" />
+        <Label fx:id="amount" alignment="CENTER_RIGHT" contentDisplay="TOP" styleClass="cell_big_label" text="\$amount"/>
+      </HBox>
+      <FlowPane fx:id="tags" />
+      <Label fx:id="price" styleClass="cell_small_label" text="\$price" />
+    </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+  </GridPane>
+</HBox>
 ```

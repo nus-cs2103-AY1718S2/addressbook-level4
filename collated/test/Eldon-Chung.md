@@ -38,7 +38,7 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(Predicate<Coin> coinCondition) {
         FindCommand command =
-                new FindCommand(coinCondition);
+                new FindCommand("", coinCondition);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -143,6 +143,7 @@ public class ConditionGeneratorTest {
 
     private static final Token INVALID_TAG_NAME = new Token(TokenType.STRING, "invalid-name");
     private static final Amount DECIMAL_OFFSET = new Amount("1.0");
+    private static final Price ZERO_PRICE = new Price();
     private static final Price NEW_PRICE = new Price();
     private static Amount greaterAmount;
     private static Amount lesserAmount;
@@ -161,6 +162,7 @@ public class ConditionGeneratorTest {
         greaterPrice.setCurrent(Amount.getSum(ParserUtil.parseAmount(DECIMAL_STRING), DECIMAL_OFFSET));
         lesserPrice = new Price();
         lesserPrice.setCurrent(Amount.getDiff(ParserUtil.parseAmount(DECIMAL_STRING), DECIMAL_OFFSET));
+        ZERO_PRICE.setCurrent(new Amount("0"));
         NEW_PRICE.setCurrent(new Amount("2.0"));
     }
 
@@ -371,11 +373,6 @@ public class ConditionGeneratorTest {
         conditionGenerator.generate();
     }
 
-    private static ConditionGenerator initGenerator(Token... tokens) {
-        return new ConditionGenerator(new TokenStack(new ArrayList<Token>(Arrays.asList(tokens))));
-    }
-
-}
 ```
 ###### \java\seedu\address\logic\parser\ConditionSemanticParserTest.java
 ``` java
@@ -838,36 +835,61 @@ public class TokenStackTest {
     public static final Token OR_TOKEN = new Token(TokenType.BINARYBOOL, OR_STRING);
     public static final String NOT_STRING = "NOT ";
     public static final Token NOT_TOKEN = new Token(TokenType.UNARYBOOL, NOT_STRING);
+
     public static final String LEFT_PAREN_STRING = "(";
     public static final Token LEFT_PAREN_TOKEN = new Token(TokenType.LEFTPARENTHESES, LEFT_PAREN_STRING);
     public static final String RIGHT_PAREN_STRING = ")";
     public static final Token RIGHT_PAREN_TOKEN = new Token(TokenType.RIGHTPARENTHESES, RIGHT_PAREN_STRING);
+
     public static final String GREATER_STRING = ">";
     public static final Token GREATER_TOKEN = new Token(TokenType.COMPARATOR, GREATER_STRING);
     public static final String LESS_STRING = "<";
     public static final Token LESS_TOKEN = new Token(TokenType.COMPARATOR, LESS_STRING);
     public static final String EQUALS_STRING = "=";
     public static final Token EQUALS_TOKEN = new Token(TokenType.COMPARATOR, EQUALS_STRING);
+
     public static final String PREFIX_AMOUNT_STRING = "a/";
     public static final Token PREFIX_AMOUNT_TOKEN = new Token(TokenType.PREFIX_AMOUNT, PREFIX_AMOUNT_STRING);
+
     public static final String PREFIX_BOUGHT_STRING = "b/";
     public static final Token PREFIX_BOUGHT_TOKEN = new Token(TokenType.PREFIX_BOUGHT, PREFIX_BOUGHT_STRING);
+
     public static final String PREFIX_CODE_STRING = "c/";
     public static final Token PREFIX_CODE_TOKEN = new Token(TokenType.PREFIX_CODE, PREFIX_CODE_STRING);
+
     public static final String PREFIX_HELD_STRING = "h/";
     public static final Token PREFIX_HELD_TOKEN = new Token(TokenType.PREFIX_HELD, PREFIX_HELD_STRING);
+
     public static final String PREFIX_MADE_STRING = "m/";
     public static final Token PREFIX_MADE_TOKEN = new Token(TokenType.PREFIX_MADE, PREFIX_MADE_STRING);
+
     public static final String PREFIX_NAME_STRING = "n/";
     public static final Token PREFIX_NAME_TOKEN = new Token(TokenType.PREFIX_NAME, PREFIX_NAME_STRING);
+
     public static final String PREFIX_PRICE_STRING = "p/";
     public static final Token PREFIX_PRICE_TOKEN = new Token(TokenType.PREFIX_PRICE, PREFIX_PRICE_STRING);
+    public static final String PREFIX_PRICE_RISE_STRING = "p/+";
+    public static final Token PREFIX_PRICE_RISE_TOKEN =
+            new Token(TokenType.PREFIX_PRICE_RISE, PREFIX_PRICE_RISE_STRING);
+    public static final String PREFIX_PRICE_FALL_STRING = "p/-";
+    public static final Token PREFIX_PRICE_FALL_TOKEN =
+            new Token(TokenType.PREFIX_PRICE_FALL, PREFIX_PRICE_FALL_STRING);
+
     public static final String PREFIX_SOLD_STRING = "s/";
     public static final Token PREFIX_SOLD_TOKEN = new Token(TokenType.PREFIX_SOLD, PREFIX_SOLD_STRING);
+
     public static final String PREFIX_TAG_STRING = "t/";
     public static final Token PREFIX_TAG_TOKEN = new Token(TokenType.PREFIX_TAG, PREFIX_TAG_STRING);
+
     public static final String PREFIX_WORTH_STRING = "w/";
     public static final Token PREFIX_WORTH_TOKEN = new Token(TokenType.PREFIX_WORTH, PREFIX_WORTH_STRING);
+    public static final String PREFIX_WORTH_RISE_STRING = "w/+";
+    public static final Token PREFIX_WORTH_RISE_TOKEN =
+            new Token(TokenType.PREFIX_WORTH_RISE, PREFIX_WORTH_RISE_STRING);
+    public static final String PREFIX_WORTH_FALL_STRING = "w/-";
+    public static final Token PREFIX_WORTH_FALL_TOKEN =
+            new Token(TokenType.PREFIX_WORTH_FALL, PREFIX_WORTH_FALL_STRING);
+
     public static final String NUM_STRING = "999";
     public static final Token NUM_TOKEN = new Token(TokenType.NUM, NUM_STRING);
     public static final String DECIMAL_STRING = "9.99";

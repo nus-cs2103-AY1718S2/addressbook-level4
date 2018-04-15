@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 
 import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
 import seedu.address.model.export.exceptions.ConnectivityIssueException;
+import seedu.address.model.export.exceptions.InvalidFileNameException;
 import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueGroupList;
@@ -182,30 +183,42 @@ public class AddressBook implements ReadOnlyAddressBook {
     //// export-level operations
 
     //@@author daviddalmaso
+
     /**
-     * Exports the current address book to portfolio.csv
+     * Transfers persons in reInsurance data to portfolio data
+     * @return a String representing the portfolio as a csv
      */
-    public void exportPortfolio(String filePath) {
+    private String portfolioToString() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Name,Phone,Email,Address,Birthday,Appointment,Group,Total Commission,Insurances,Tags\n");
+        for (Person person : persons) {
+            sb.append("\"" + person.getName().toString() + "\",");
+            sb.append("\"" + person.getPhone().toString() + "\",");
+            sb.append("\"" + person.getEmail().toString() + "\",");
+            sb.append("\"" + person.getAddress().toString() + "\",");
+            sb.append("\"" + person.getBirthday().toString() + "\",");
+            sb.append("\"" + person.getAppointment().toString() + "\",");
+            sb.append("\"" + person.getGroup().toString() + "\",");
+            sb.append("\"" + person.getTotalCommission() + "\",");
+            sb.append("\"" + person.getInsurance().toString() + "\",");
+            sb.append("\"" + person.getTags().toString() + "\",");
+            sb.append("\n");
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Exports the current reInsurance data to the specified file path
+     * @param filePath the file path to export the portfolio to
+     */
+    public void exportPortfolio(String filePath) throws InvalidFileNameException {
         try {
             PrintWriter pw = new PrintWriter(new File(filePath));
-            StringBuilder sb = new StringBuilder();
-            sb.append("Name,Phone,Email,Address,Tags\n");
-            for (Person person : persons) {
-                sb.append("\"" + person.getName().toString() + "\"");
-                sb.append(",");
-                sb.append("\"" + person.getPhone().toString() + "\"");
-                sb.append(",");
-                sb.append("\"" + person.getEmail().toString() + "\"");
-                sb.append(",");
-                sb.append("\"" + person.getAddress().toString() + "\"");
-                sb.append(",");
-                sb.append("\"" + person.getTags().toString() + "\"");
-                sb.append("\n");
-            }
-            pw.write(sb.toString());
+            String portfolioAsString = portfolioToString();
+            pw.write(portfolioAsString);
             pw.close();
         } catch (FileNotFoundException e) {
-            System.out.println("File was not found");
+            throw new InvalidFileNameException();
         }
     }
 

@@ -49,7 +49,7 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         expectedAliases = new Alias[][] {{toAdd_map1, toAdd_history}};
         assertCommandSuccess(command, toAdd_history, expectedAliases);
 
-        /* Case: add another alias of MAP command -> added */
+        /* Case: add another alias of MapCommand -> added */
         Alias toAdd_map2 = MAP_2;
         command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_MAP2;
         expectedAliases = new Alias[][] {{toAdd_map2, toAdd_history}, {toAdd_map1}};
@@ -65,10 +65,28 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         /* --------------------------------- Perform invalid alias operations ------------------------------------- */
 
         /* Case: add a duplicate alias -> rejected */
-        //Alias toAdd_history2 = HISTORY;
         command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_HISTORY;
         assertCommandFailure(command, AliasCommand.MESSAGE_DUPLICATE_ALIAS);
 
+        /* Case: add a nonexistent command -> rejected */
+        String message = String.format(AliasCommand.MESSAGE_INVALID_COMMAND,
+                AliasCommand.MESSAGE_INVALID_COMMAND_DESCRIPTION);
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + INVALID_COMMAND_WORD_DESC;
+        assertCommandFailure(command, message);
+
+        /* Case: add an alias which is a command word -> rejected */
+        message = String.format(AliasCommand.MESSAGE_INVALID_ALIAS,
+                AliasCommand.MESSAGE_INVALID_ALIAS_DESCRIPTION);
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + INVALID_ALIAS_WORD_DESC;
+        assertCommandFailure(command, message);
+
+        /* Case: add a command with symbols -> rejected */
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + INVALID_COMMAND_SYNTAX_DESC;
+        assertCommandFailure(command, Alias.MESSAGE_ALIAS_CONSTRAINTS);
+
+        /* Case: add an alias with symbols -> rejected */
+        command = "   " + AliasCommand.COMMAND_WORD + "  " + INVALID_ALIAS_SYNTAX_DESC;
+        assertCommandFailure(command, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
 
     /**

@@ -1,4 +1,4 @@
-﻿﻿= ReciRecipé - Developer Guide
+= ReciRecipé - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble

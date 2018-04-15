@@ -230,6 +230,79 @@ Classes used by multiple components are in the `seedu.TravelBanker.commons` pack
 
 This section describes some noteworthy details on how certain features are implemented.
 
+//tag::convert[]
+=== Currency Conversion feature
+==== Current Implementation
+
+The currency conversion feature is implemented using a currencyConverter repo that was found from github. While the converter itself was resued code, the implementation in the app was done entirely on my own. The converter itself supports quick conversion between two currencies for individual people and total balances. This was neccesary because it is not guaranteed that the people will always be using the same currency
+
+In order to allow the currency command to work, I had to create a new parser for currency. The parser `CurrencyCommandParser` parses through the command to check for the index and to/from currency codes. If the index is 0, then we know that the whole balance needs to be converted.
+
+Then those parameters are passed to the currency command class where the constructor is as follows:
+
+[source,java]
+----
+public CurrencyCommand(Index index, String fromCurrency, String toCurrency) {
+    this.index = index;
+    this.fromCurrency = fromCurrency;
+    this.toCurrency = toCurrency;
+}
+----
+
+For the new `CurrencyCommand` class, the execute code is:
+
+[source,java]
+----
+public CommandResult execute() throws CommandException {
+   List<Person> lastShownList = model.getFilteredPersonList();
+   converter.setRefreshRateSeconds(86400);
+
+   if (index.getZeroBased() > lastShownList.size()) {
+        throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+   }
+
+   if (index.getZeroBased() == 0) {
+        lastShownList = model.getFilteredPersonList();
+        for (Person person : lastShownList) {
+            double currentPersonBalance = person.getMoney().balance;
+            convertedPersonBalance = convertedPersonBalance + currentPersonBalance;
+        }
+   } else {
+        convertedPerson = lastShownList.get(index.getZeroBased() - 1);
+        convertedPersonBalance = convertedPerson.getMoney().balance;
+   }
+
+   try {
+        newAmount = converter.convertCurrency(new BigDecimal(convertedPersonBalance),
+        Currency.get(fromCurrency), Currency.get(toCurrency));
+  } catch (CurrencyNotSupportedException cnse) {
+        throw new CommandException("Currency not supported");
+  } catch (JSONException jsone) {
+        throw new AssertionError("JSON Exception");
+  } catch (StorageException se) {
+        throw new AssertionError("Storage Exception");
+  } catch (EndpointException ee) {
+        throw new AssertionError("Endpoint Exception");
+  } catch (ServiceException se) {
+        throw new AssertionError("Service Exception");
+  } catch (NullPointerException npe) {
+        throw new CommandException("Invalid currency");
+  }
+
+  if (index.getZeroBased() == 0) {
+        return new CommandResult("Your total balance in " + toCurrency + " is: " + newAmount);
+  } else {
+        return new CommandResult(convertedPerson.getName() + "'s balance in " + toCurrency + " is: " + newAmount);
+  }
+----
+
+As we see, the parameters are passed in, if the index is 0, then the balances are added up or else the balance of the individual person is found. Then in the try block, the conversion takes place and then the applicable message is returned.
+
+==== Future Additions
+
+I could further refine the currency converter to allow an amount to be converted into multiple currencies and then you can choose the currency you want. Furthermore, we could add a currency field to the whole addressbook allowing for total changes of the currency of the addressbook allowing users to select their desired currency and allow for more convienience with the addressbook.
+
+//end::convert[]
 // tag::posneg[]
 === List Positive/Negative feature
 ==== Current Implementation

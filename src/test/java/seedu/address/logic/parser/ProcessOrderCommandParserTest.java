@@ -20,7 +20,7 @@ public class ProcessOrderCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_second_throwsParseException() {
+    public void parse_invalidArgsSecond_throwsParseException() {
         assertParseFailure(parser, "#",
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProcessOrderCommand.MESSAGE_USAGE));
     }

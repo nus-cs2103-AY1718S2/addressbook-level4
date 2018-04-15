@@ -303,7 +303,7 @@ Format: `edit INDEX [s/STATUS] [p/PRIORITY] [r/RATING]`
 * `RATING` must be a valid rating from 0 to 5, or -1 to remove rating.
 ****
 
-WARNING: You can only perform `edit` when the list shown is from your book shelf.
+WARNING: You can only edit books from your book shelf.
 
 Suppose you have a few unread books in your book shelf.
 
@@ -320,10 +320,11 @@ image::EditCommandMid.png[width="650"]
 
 Other examples:
 
-* `edit 1 s/reading` +
-Marks the 1st book as `Reading`.
+* `edit 3 p/low` +
+Changes the priority of the 3rd book to `LOW`.
 * `edit 2 s/read r/5` +
-Marks the 2nd book as `Read` and changes its rating to `5`.
+Marks the 2nd book as `READ` and changes its rating to `5`.
+
 // end::edit[]
 
 [[delete-command]]
@@ -548,7 +549,7 @@ Format: `history`
 
 ****
 * Lists the previous commands in reverse chronological order.
-* Commands that deal with passwords (such as <<setKey-command, `setpw`>>) will not be recorded in history.
+* Commands that deal with passwords (such as <<setpw-command, `setpw`>>) will not be recorded in history.
 ****
 
 [NOTE]
@@ -699,7 +700,8 @@ And `theme dark`:
 
 image::ThemeDark.png[width="650"]
 
-[[setKey-command]]
+// tag::encrypt[]
+[[setpw-command]]
 === Changing/Setting a password : `setpw` _(since v1.5)_
 
 If you want to keep your data secure, you can opt to set a password for Bibliotek. This password will be used to encrypt your data.
@@ -716,10 +718,19 @@ Format: `setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]`
 NOTE: To set a password, use `setpw new/NEW_PASSWORD`. +
 Similarly, to delete the password, use `setpw old/OLD_PASSWORD`.
 
+If the `OLD_PASSWORD` that you provided is correct, Bibliotek shows `Successfully changed your password` to indicate that your password is changed.
+
+image::setpassword1.png[width="650"]
+
+On the other hand, if the `OLD_PASSWORD` that you provided is incorrect, Bibliotek shows `Incorrect old password. Please try again.` to indicate that your password is not changed.
+
+image::setpassword2.png[width="650"]
+
+NOTE: If you provide a `OLD_PASSWORD` when you in fact have no password, it is considered to be incorrect.
+
 TIP: You should remember your password after setting a new one.
 
-// tag::encrypt[]
-[[Encrypt-command]]
+[[Lock-command]]
 === Locking the app : `lock` _(since v1.5)_
 
 If you are going away for a moment and want to prevent others from messing with the application, you can perform `lock`. +
@@ -742,7 +753,7 @@ Performing any other valid commands, for example `list`, will be responded with 
 
 image::LockCommandMessage.png[width="650"]
 
-[[Decrypt-command]]
+[[Unlock-command]]
 === Unlocking the app : `unlock` _(since v1.5)_
 
 If you previously performed `lock`, use `unlock` to unlock the app. +
@@ -761,7 +772,6 @@ All the books in your book shelf will be displayed.
 image::UnlockCommand.png[width="650"]
 
 TIP: If you really forgot your password and cannot unlock the system, you can reset Bibliotek by deleting all your data files.
-
 // end::encrypt[]
 
 == Upcoming Features

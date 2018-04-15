@@ -403,7 +403,11 @@ If such updates are not done on the JavaFX thread, JavaFX will throw an `Illegal
 // end::search2[]
 
 // tag::undoredo[]
-=== Undo feature
+=== Undo previous command
+
+The `undo` command allows the user to undo a previous command that caused changes to the book shelf.
+This allows the user to easily reverse their actions.
+
 ==== Current Implementation
 
 The undo mechanism is facilitated by an `UndoStack`, which resides inside `LogicManager`. It supports undoing of commands that modifies the state of the book shelf (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -511,7 +515,9 @@ image::UndoRedoActivityDiagram.png[width="550"]
 // end::undoredo[]
 
 // tag::edit[]
-=== Edit status, priority, and rating of books: `edit` command
+=== Edit status, priority, and rating of books
+
+The `edit` command allows the user to change the priority, status and rating of books in his/her book shelf to facilitate organization and management of books.
 
 ==== Current implementation
 
@@ -529,13 +535,6 @@ Sequence Diagram
 
 image::editseq.png[width="550"]
 
-Default value of the book.
-
-image::defaultbook.png[width="550"]
-
-The book after you edit (r/4, s/r, p/h).
-
-image::newbook.png[width="550"]
 
 ==== Design considerations
 
@@ -559,7 +558,7 @@ image::newbook.png[width="550"]
 // end::edit[]
 
 // tag::recent[]
-=== View recently selected books: `recent` command
+=== View recently selected books
 
 The `recent` command allows the user to view books that he/she recently selected.
 This allows the user to easily look back for a particular book, and to add it into his/her book shelf without having to perform a search again.
@@ -635,7 +634,7 @@ by only showing these books.
 // end::recent[]
 
 // tag::library[]
-=== Check for availability of book in NLB library: `library` command
+=== Check for availability of book in NLB library
 
 The `library` command allows the user to easily check for the availability of books in NLB libraries.
 This eliminates the need to manually enter search information into the NLB catalogue. The user can use this information to decide when or whether to read a book.
@@ -801,58 +800,65 @@ The resulting command, `edit 12 s/reading p/high`, will then be parsed and execu
 // end::alias[]
 
 // tag::encrypt[]
-=== Data encryption
+=== Encrypt data
+
+This allows the user to protect his book shelf data with a password so that others cannot gain access to these data.
 
 ==== Current implementation
 
-* **When `encrypt` command is entered**
+===== Encrypt the Bookshelf.xml
+An addition class `CipherEngine` is added to the `Bookshelf` class. This class contatins some methods
+  to encrypt or decrypt file(`Bookshelf.xml`)and `password`. +
+  Note that when 'CipherEngine' encrypt the file, it will use the (encryped)`password`.
 
-. `EncryptCommand` is processed to set isEncrypt to be true.
+  * ** Every time user make change in `Bookshelf` **
 
-. The `Bibliotek` cannot be run any command except `decrypt` and `help` command.
+  . The `model manager` will post an `BookshelfChangedEvent`.
+  . Before saving the data into `Bookshelf.xml`, the system will check whether `Bookshelf` is protected by the `password`(checking
+  whether the `password` is `defaultpassword`: "").
+  . When the `password` is not default, the `Bookshelf.xml` will be encrypted.
 
-* If you enter a wrong key.
+  * ** Every time user set the new `password` **
 
-image::shouldbedecryptfirst.png[width="650"]
+  . The `Setpwcommand` will check the `password`.
+  . If the new `password` is equal to "", the `Lockmanager` will set `isProtected` to be false.
+  . The isProtect will be checked by `xmlBookshelfstorage` whether to  encrypt the "Bookshelf.xml" and save
+   the data into `Bookshelf.xml`.
 
-* **When the `Bibliotek` is encrypted and `decrypt` command is entered**
+  * ** When the system need to be encrypt **
 
-. `DecryptCommandParser` will extract key from the user input.
-. `DecryptCommandParser` creates an `DecryptCommand` the key.
-. `DecryptCommand` is preprocessed to check that key is correct(decode the key from the storage).
-. `DecryptCommand` is processed to set isEncrypt to be false.
+  . The `password` will be encode, and set it to be a key to encrypt the file(`Bookshelf.xml`).
 
-* If your entered key is correct
+===== Lock the book shelf
 
-image::correctkey.png[width="650"]
+An addition class `LockManager` is added to save the password and the situation of the locking system. +
+The default `password` provided for the new user is defaultpassword(""), which means that the `Bookshelf` is not locked.
 
-* If your entered key is wrong
-
-image::wrongkey.png[width="650"]
+  * ** When `Lock` command is entered **
+  . `LockCommand` is processed to set `isLock`(`LockManager`) to be true.
 
 
-* **When `setKey` command is entered**
+NOTE:  . The `Bookshelf` cannot be run any command except `unlock` and `help` command.
 
-. `setKeyCommandParser` will extract the old key and new key from the user input.
-. `setKeyCommandParser` checks that  two parameters are present, and that the parameters are valid.
-. `setKeyCommandParser` creates an `setPasswordCommand` with the parameters.
-. `setPasswordCommand` is preprocessed to check that oldPassword is correct.
-. If the oldKye is correct, `setPasswordCommand` will send a setKey command to LogicManager.
-. LogicManager will send set_new_key request to ModelManger.
-. ModelManager indicate the keyChangedevent and handle it, and set the bookshelf's key to be new key.
-. ModelManager will encode the key, before indicate the keyChangedevent.
-. StorageManager handle the event by update the bibliotek with the new key(encoded key).
+  * **When the `Bookshelf` is locked and `unlock` command is entered**
 
-* If you entered old key is correct.
+  . `UnlockCommandParser` will extract `password` from the user input.
+  . `UnlockCommandParser` creates an `UnlockCommand` for the `password`.
+  . `UnlockCommand` is preprocessed to execute `LockManager`'s unlock(password).
+  . If the password is corrct, the unlock will be run successfully, otherwise it will send a WRONG_PASSWORD commandresult.
+  . `UnlockCommand` is processed to set isLock(LockManager) to be false.
 
-image::setsuccess.png[width="650"]
+  * **When `setpw` command is entered**
 
-* If you entered old key is incorrect.
+  . `setpasswordCommandParser` will extract the old key and new key from the user input.
+  . `setpwParser` checks that  two parameters are valid.
+  . `setpasswordCommandParser` creates an `setpwCommand` with the parameters.
+  . `setpwCommand` is preprocessed to check that oldKey is correct using `LockManager`.
+  . If the oldKey is correct, `setpwCommand` will post a `passwordChangedevent`.
+  . MainApp will handle it, and set `UserPrefs.password` to be new encoded `password`(using cipherEngine).
 
-image::wrongkey(set).png[width="650"]
-
-* The encode key are implement in this way:
-[source,java]
+  * The encode key are implement in this way:
+  [source,java]
 ----
     public static String encrypKey(String mykey) throws Exception {
         byte[] byarray = encrypt(mykey.getBytes(ENCODE), defaultKey.getBytes(ENCODE));
@@ -905,30 +911,27 @@ image::wrongkey(set).png[width="650"]
         return cipher.doFinal(yourkey);
     }
 ----
-The default key "admin" will be stored as:
-
-image::password_admin.png[width="650"]
 // end::encrypt[]
 
 ==== Design considerations
 
 ===== Aspect: Whether to use three commands instead of only one
 
-* **Alternative 1 (current choice):** Use three commands to do the encrypt, decrypt and setkey actions
-** Pros: Users can clearly know what they can do about the key.
-** Cons: Users should learn two more commands
-* **Alternative 2:** Use only one setKey command to solve all three features.
+* **Alternative 1 (current choice):** Use three commands to do the lock, unlock and setpassword actions.
+** Pros: Users can clearly know what they can do about the password.
+** Cons: Users should learn two more commands.
+* **Alternative 2:** Use only one `setpw` command to solve all three features.
 ** Pros: Seem that users can eliminate the typing.
 ** Cons: Users will feel confuse, not so clear about the command.
 
-===== Aspect: Whether to encode the key before store it
+===== Aspect: Whether to encode the password before store it
 
-* **Alternative 1 (current choice):** Stores the encoded key.
-** Pros: Others cannot know users' key easily.
+* **Alternative 1 (current choice):** Stores the encoded password.
+** Pros: Others cannot know users' passwords easily.
 ** Cons: Difficult to implement.
-* **Alternative 2:** Store the text form key.
+* **Alternative 2:** Store the text form password.
 ** Pros: Easy to implement.
-** Cons: Others can know users' key easily.
+** Cons: Others can know users' passwords easily.
 
 === Logging
 

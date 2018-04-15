@@ -1287,4 +1287,20 @@ _{ more test cases ... }_
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
+=== Counting past orders
+
+. Counting customers' past orders based on phone numbers
+.. Test case: `add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+Expected: The customer with phone number "91111111" has accumulated 1 order. +
+The result can be found in /data/customerstats.xml
+.. Test case: (continued) `add n/Zequn p/92222222 f/Chicken Rice a/NUS` +
+Expected: Another customer with a different phone number "92222222" has accumulated 1 order. +
+The result will be updated and reflected in /data/customerstats.xml
+.. Test case: (continued)`clear` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+`clear` +
+`add n/Wu Hao p/91111111 f/Chicken Rice a/NUS` +
+Expected: Now the first customer with phone number "91111111" has placed 3 orders in total in the past. +
+The results are reflected in /data/customerstats.xml
+
 _{ more test cases ... }_

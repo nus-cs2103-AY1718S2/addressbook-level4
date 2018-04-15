@@ -112,11 +112,7 @@ public class AddressBookParser {
         case AddAppointmentCommand.COMMAND_WORD:
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentCommandParser().parse(arguments);
-
-        case DeleteAppointmentCommand.COMMAND_WORD:
-        case DeleteAppointmentCommand.COMMAND_ALIAS:
-            return new DeleteAppointmentCommandParser().parse(arguments);
-
+                
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();

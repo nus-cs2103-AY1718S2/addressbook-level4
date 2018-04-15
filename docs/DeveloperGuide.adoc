@@ -916,9 +916,7 @@ This will result in concurrent modification issues. Thus, `Semaphore` is used to
      */
     public void showNewNotification(ShowNotificationEvent event) {
         logger.info("Preparing in app notification");
-
         //...metadata update
-
         //hides notificationCard away from screen
         notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
         try {
@@ -929,14 +927,12 @@ This will result in concurrent modification issues. Thus, `Semaphore` is used to
         notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
         shownNotificationCards.add(notificationCard);
         semaphore.release();
-
         //enter animation
         Platform.runLater(new Runnable() {
             @Override
             public void run() {
                 mainStage.getChildren().add(notificationCard);
                 animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH, ENTER);
-
                 Timer timer = new Timer();
                 TimerTask timerTask = new TimerTask() {
                     @Override

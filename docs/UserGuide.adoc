@@ -129,8 +129,9 @@ Displays the scheduled events here after calling `show-schedule d/DATE`.
 . *Direction Between Events Map Panel:* +
 Displays a suggested navigation route between events after calling `navigate INDEX` where, for example `navigate 1` will display the direction between events number 1 and 2 of the day.
 
-. *Scheduled Sessions List Panel:* +
-Displays the scheduled events here after calling `show-schedule d/DATE`.
+. *Navigation Options Indicator:* +
+Displays a number of buttons at the side of map to indicate journeys available to navigate.
+This will correspond to the valid indexes for `navigate INDEX`.
 
 // tag::userInterfaceWalkthrough[]
 
@@ -413,7 +414,9 @@ It is assumed that every event location used is valid.
 ====
 
 ****
-* Displays direction between two different but adjacent events by specifying `INDEX`
+* Displays direction between two different but adjacent events by specifying `INDEX`. This will display the direction
+between `Event Num: INDEX` and `Event Num: INDEX + 1`. For example, `navigate 1` will show the directions between
+the first and the second event of the day.
 * `INDEX` must be more then `1`, but less than total events for the day minus ONE or `NUM_OF_EVENTS - 1`.
 ****
 

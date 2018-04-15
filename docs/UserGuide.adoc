@@ -307,7 +307,7 @@ Format: `addmovie n/MOVIE_NAME d/DURATION r/RATING sd/START_DATE t/TAG`
 
 [NOTE]
 ====
-* Movies can have the same name but `StartDate` must be different.
+* Movies cannot have the same `MovieName`.
 * Once a movie is tagged, you cannot add or remove tags to a movie.
 ====
 

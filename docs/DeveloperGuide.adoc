@@ -404,6 +404,28 @@ Birthday prefix "b/" has been added to the add command so that users can add the
 ** Cons: Pop ups might be unwelcomed as they can interupt current user tasks
 // end::appointments[]
 
+// tag::count[]
+=== Count command
+
+*Since V1.5*
+
+==== Current Implementation
+* The count command allows the users to view the current number of clients stored in the reInsurance application.
+
+==== Design Considerations
+
+===== Aspect: Implementation of CountCommand
+
+ *  *Alternative 1 (current)*: Return length of stored `Person` array
+ ** Pros: Simple implementation. Little room for bugs.
+ ** Cons: Does not allow for easy enhancements to be made to the command
+ *  *Alternative 2 (coming in V2.0)*: Implementation of a more robust `Statistics` command
+ ** Pros: Allows the user to specify different statistics to return about the reInsurance data other than just the number of clients
+ ** Cons: May be a difficult implementation for a feature that could possibly not get very used.
+
+// end::count[]
+
+
 // tag::sort[]
 === Sort command
 
@@ -600,26 +622,34 @@ In terms of implementation, the export command works in similar fashion to most 
 
 ==== Design Considerations
 
-* Separate the export functionality away from the rest of the commands.
-* Create a button that exports the data for the user
+==== Aspect: Implementation of Export Command
 
-==== Aspect: Parameters of export
+* *Alternative 1 (Current)*: Accepts and handles individual export types
+** Pros: Requests can be made without the user needing to craft complicated commands
+** Cons: Little flexibly in the ability to specify what data is wanted outside of provided export types
+* *Alternative 2*: General `ExportData` class
+** Pros: Can more flexibly specify export types and what pieces of data to export
+** Cons: More cumbersome to make the export request
 
-*Since v1.5rc*
 
-* The application will handle the `export` command with one argument (Format: `export EXPORT_TYPE`).
-* If the `EXPORT_TYPE` is `portfolio`, then another argument is allowed to specify output filename (Format: `export portfolio FILENAME`).
-* The export types are from an enum class at `seedu.address.model.export.ExportType`.
-* To add another export type to be caught by the user's input, simply add another value to the enum class mentioned above.
-** After adding an export type, an export function for that specific type should be created in the `seedu.address.model.AddressBook` class.
-** After adding the method in `AddressBook` class, a case should be added to the `seedu.address.model.ModelManager` class to handle when the export type is equivalent to the newly added one.
+==== Aspect: Portfolio export location
 
-*Coming in v2.0*
+* *Alternative 1 (Current)*: .csv File
+** Pros: Common file type that can be uploaded to different applications (i.e. Microsoft Excel)
+** Cons: Ugly file when viewed without application to format the data nicely
+* *Alternative 2*: .pdf File
+** Pros: Ability to layout the data in a way produce a clean looking report of the portfolio
+** Cons: Cannot easily edit contents of the file after it has been created
 
-* The `export` function will need to be abstracted out in a way that it can handle all the types of exports allowed by the command.
-* The export file type should be controlled by the arguments of the command.
-** Example: `export portfolio csv`
-*** Should download a portfolio as a csv file onto the user's computer
+===== Aspect: Calendar export location
+
+* *Alternative 1 (Current)*: Google Calendar
+** Pros: More practical place to store and view calendar events
+** Cons: Difficulty of set up and room for connectivity errors
+* *Alernative 2*: .ics file
+** Pros: Can be uploaded to calendar services other than just Google Calendar
+** Cons: Longer process to get the calendar uploaded (need to go specific service and import the file)
+
 // end::export[]
 
 === Logging

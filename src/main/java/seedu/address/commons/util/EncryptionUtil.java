@@ -84,7 +84,7 @@ public class EncryptionUtil {
     }
 
     /**
-     * Encrypts an XML file
+     * Encrypts an XML file.
      *
      * @param file path of the file to be encrypted
      * @throws IOException if file could not be found

@@ -1,6 +1,7 @@
 = Lai Cheng Yu - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+:experimental:
 
 == PROJECT: CoinBook
 
@@ -58,4 +59,5 @@ include::../UserGuide.adoc[tag=autocomplete]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+include::../DeveloperGuide.adoc[tag=sync]
 include::../DeveloperGuide.adoc[tag=autocomplete]

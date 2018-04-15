@@ -1371,6 +1371,124 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+
+[discrete]
+=== Use Case: View a student's profile page
+
+*MSS*
+
+1.  User requests to list students.
+2.  Student list panel shows a list of students.
+3.  User requests to view profile page of a student.
+4.  Browser panel shows profile page of student.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[none]
+* 3a. The given index is invalid.
+** 3a1. Error message shown.
+** 3a2. User enters another index.
++
+Use case resumes at step 3.
+
+* 3b. There is no XML data currently.
+** 3b1. Error message shown.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Edit a student's profile picture
+
+*MSS*
+
+1.  User requests to list students.
+2.  Student list panel shows a list of students.
+3.  User requests to edit a student's profile picture.
+4.  Command box shows updated picture.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends
+
+[none]
+* 3a. The given index is invalid.
+** 3a1. Error message shown.
+** 3a2. User enters another index.
++
+Use case resumes at step 3.
+
+* 3b. The file path of the picture does not exist.
+** 3b1. Error message shown.
+** 3b2. User can enter another file path to the desired picture file.
++
+Use case resumes at step 3.
+
+* 3c The file path does not end with an extension of '.png' or '.jpg'.
+** 3c1. Error message shown.
+** 3c2. User can enter another file path to the desired picture file.
++
+Use case resumes at step 3.
+
+* 4a User is at the profile page while entering `editPicture` command.
+** 4a1. Profile picture on the profile page changes
++
+Use case ends.
+
+[discrete]
+=== Use Case: Edit a student's miscellaneous information
+
+*MSS*
+
+1.  User requests to list students.
+2.  Student list panel shows a list of students.
+3.  User requests to edit a student's miscellaneous information.
+4.  Command box shows command success.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends
+
+[none]
+* 3a. The given index is invalid.
+** 3a1. Error message shown.
+** 3a2. User enters another index.
++
+Use case resumes at step 3.
+
+* 3b. No fields are entered.
+** 3b1. Error message shown.
+** 3b2. User enters command with specific fields which are desired to edit.
++
+Use case resumes at step 3.
+
+* 3c The prefixes are wrong.
+** 3c1. Error message shown.
+** 3c2. User enters command with proper prefixes to changes desired
++
+Use case resumes at step 3.
+
+* 4a User is at the profile page while entering `editMisc` command.
+** 4a1. The miscellaneous information portion is updated.
++
+Use case ends.
+
 [discrete]
 === Use case: Show a student's dashboard
 
@@ -1523,7 +1641,7 @@ Use case resumes at step 2.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+
 
 [appendix]
 == Non Functional Requirements

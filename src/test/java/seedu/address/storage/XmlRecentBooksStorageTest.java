@@ -41,9 +41,7 @@ public class XmlRecentBooksStorageTest {
     }
 
     private String addToTestDataPathIfNotNull(String prefsFileInTestDataFolder) {
-        return prefsFileInTestDataFolder != null
-                ? TEST_DATA_FOLDER + prefsFileInTestDataFolder
-                : null;
+        return prefsFileInTestDataFolder != null ? TEST_DATA_FOLDER + prefsFileInTestDataFolder : null;
     }
 
     @Test
@@ -115,7 +113,7 @@ public class XmlRecentBooksStorageTest {
     }
 
     @Test
-    public void saveRecentBooksList_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveRecentBooksList_nullFilePath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         saveRecentBooksList(new BookShelf(), null);
     }

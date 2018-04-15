@@ -6,6 +6,7 @@ import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
@@ -48,7 +49,9 @@ public class CommandTestUtil {
     public static final String VALID_SUBJECT_MALAY = "Malay A1";
     public static final String VALID_SUBJECT_BIOLOGY = "Bio A1";
     public static final String VALID_SUBJECT_HISTORY = "Hist A1";
-    public static final String VALID_REMARK = " ";
+    public static final String VALID_REMARK = "Hardworking";
+    public static final String VALID_INJURIES_HISTORY = "Right Ligament Tear";
+    public static final String INVALID_REMARK = " ";
     public static final String VALID_PHONE = "98765433";
     public static final String VALID_EMAIL = "email@gmail.com";
     public static final String VALID_RELATIONSHIP_REMARK = "Father";
@@ -72,7 +75,6 @@ public class CommandTestUtil {
     public static final String EMPTY_CCA_POSITION_DESC = " " + PREFIX_CCA + VALID_CCA + " " + PREFIX_CCA_POSITION + "";
     public static final String NO_CCA_POSITION_STATED = " " + PREFIX_CCA + VALID_CCA;
     public static final String NO_CCA_STATED = " " + PREFIX_CCA_POSITION + VALID_CCA_POSITION;
-
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
     public static final String NRIC_DESC_AMY = " " + PREFIX_NRIC + VALID_NRIC_AMY;
@@ -91,6 +93,9 @@ public class CommandTestUtil {
             + PREFIX_SUBJECT + VALID_SUBJECT_HISTORY;
     public static final String REMARK_DESC_AMY = " " + PREFIX_REMARK + VALID_REMARK;
     public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK;
+    public static final String INJURIES_HISTORY_DESC = " " + PREFIX_INJURIES_HISTORY + VALID_INJURIES_HISTORY;
+    public static final String INVALID_INJURIES_HISTORY_DESC = " " + PREFIX_INJURIES_HISTORY + INVALID_REMARK;
+    public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK + INVALID_REMARK;
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "911a"; // 'a' not allowed in phones
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
@@ -107,11 +112,12 @@ public class CommandTestUtil {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY).withNric(VALID_NRIC_AMY)
                 .withTags(VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS, VALID_SUBJECT_PHYSICS,
                         VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY, VALID_SUBJECT_BIOLOGY, VALID_SUBJECT_HISTORY)
-                .withRemark(REMARK_DESC_AMY).build();
+                .withRemark(REMARK_DESC_AMY).withInjuriesHistory(INJURIES_HISTORY_DESC).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB).withNric(VALID_NRIC_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).withSubjects(VALID_SUBJECT_MATHEMATICS,
                         VALID_SUBJECT_PHYSICS, VALID_SUBJECT_ENGLISH, VALID_SUBJECT_MALAY, VALID_SUBJECT_BIOLOGY,
-                        VALID_SUBJECT_HISTORY).withRemark(REMARK_DESC_BOB).build();
+                        VALID_SUBJECT_HISTORY).withRemark(REMARK_DESC_BOB).withInjuriesHistory(VALID_INJURIES_HISTORY)
+                        .build();
     }
 
     /**

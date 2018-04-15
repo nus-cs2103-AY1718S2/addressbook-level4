@@ -361,7 +361,7 @@ The archival feature is implemented by adding a boolean variable `isArchived` in
 //tag::switchtheme[]
 === Switch theme feature
 ==== Current Implementation
-image::SwitchSequenceDiagram.png[width="800"]
+image::SwitchSequenceDiagram.png[width="400"]
 The switch theme feature allows the salesperson to switch between dark and light thenmes as he might have to work under different lighting conditions. The theme that is in used persists across restarts
 
 See sequence diagram. The archival feature is implemented by triggering an `SwitchThemeRequestEvent()` which is then handled in `MainWindow`.

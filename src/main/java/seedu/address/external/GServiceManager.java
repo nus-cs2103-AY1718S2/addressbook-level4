@@ -29,9 +29,10 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
 
 //@@author demitycho
-
 /**
  * Manages the two Google Services, Google Contacts as well as Google Calendar
+ * The upload process is still synchronous, the UI will freeze as data is being uploaded
+ * There will be logging here to show state updates as it is difficult to show UI changes.
  */
 public class GServiceManager {
     public static final String[] SCOPES_ARRAY = new String[]{

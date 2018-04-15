@@ -21,6 +21,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
+ * NOTE: Some tests are DEPENDENT on the Customers and Runners already initalized in this list
+ * It is suggested to add elements rather than modify the elements.
  */
 public class TypicalPersons {
 

@@ -30,7 +30,6 @@ public class AssignCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
     //refer to TypicalPersons.java for the list of default Persons initialized in the model
 
-
     @Test
     public void execute_assignOneValidRunnerAndOneValidCustomer_success() throws Exception {
         int runnerIndex = 5;
@@ -139,12 +138,76 @@ public class AssignCommandTest {
         }
     }
 
-    //TODO: implement the test cases below!
     //Test_assertFailure: Assign runner to runner
-    //Test_assertFailure: Assign customer to customer
-    //Test_assertFailure: Assign runner to customer
-    //Test_assertFailure: Assign an index that exceeds filteredPersonList.size()
+    @Test
+    public void execute_assignRunnerToRunner_failure() throws Exception {
+        int runnerIndex = 5;
+        int customerIndex1 = 6;
 
+        //produce AssignCommand(runner index, customer index...)
+        AssignCommand assignCommand = prepareCommand(Index.fromZeroBased(runnerIndex));
+
+        try {
+            //get runner
+            Person runner = model.getFilteredPersonList().get(runnerIndex);
+            //get customer
+            Person customer1 = model.getFilteredPersonList().get(customerIndex1);
+
+            List<Person> customers = new ArrayList<>();
+            customers.add(customer1);
+
+            //build editedRunner (assigned with customers)
+            Person editedRunner = new PersonBuilder(runner).withCustomers(customers).buildRunner();
+            //build editedCustomer (assigned with runner)
+            Person editedCustomer1 = new PersonBuilder(customer1).withRunner((Runner) runner).buildCustomer();
+
+            String expectedMessage = String.format(AssignCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, editedRunner);
+
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.updatePerson(model.getFilteredPersonList().get(runnerIndex), editedRunner);
+            expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex1), editedCustomer1);
+
+        } catch (Exception e) {
+            assertCommandFailure(assignCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+    //Test_assertFailure: Assign runner to customer
+    @Test
+    public void execute_assignRunnerToCustomer_failure() throws Exception {
+        int runnerIndex = 2;
+        int customerIndex1 = 5;
+
+        //produce AssignCommand(runner index, customer index...)
+        AssignCommand assignCommand = prepareCommand(Index.fromZeroBased(runnerIndex));
+
+        try {
+            //get runner
+            Person runner = model.getFilteredPersonList().get(runnerIndex);
+            //get customer
+            Person customer1 = model.getFilteredPersonList().get(customerIndex1);
+
+            List<Person> customers = new ArrayList<>();
+            customers.add(customer1);
+
+            //build editedRunner (assigned with customers)
+            Person editedRunner = new PersonBuilder(runner).withCustomers(customers).buildRunner();
+            //build editedCustomer (assigned with runner)
+            Person editedCustomer1 = new PersonBuilder(customer1).withRunner((Runner) runner).buildCustomer();
+
+            String expectedMessage = String.format(AssignCommand.MESSAGE_ASSIGN_PERSON_SUCCESS, editedRunner);
+
+            Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+            expectedModel.updatePerson(model.getFilteredPersonList().get(runnerIndex), editedRunner);
+            expectedModel.updatePerson(model.getFilteredPersonList().get(customerIndex1), editedCustomer1);
+
+        } catch (Exception e) {
+            assertCommandFailure(assignCommand, model, String.format(AssignCommand.MESSAGE_NOT_A_RUNNER,
+                    runnerIndex + 1));
+        }
+    }
+
+    //TODO: implement the test cases below!
     //Test_assertSuccess: Undo
     //Test_assertSuccess: Redo
 

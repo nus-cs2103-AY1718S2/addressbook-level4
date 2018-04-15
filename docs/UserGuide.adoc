@@ -550,11 +550,11 @@ You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to on
 {empty} +
 
 .Dark theme
-image::Theme_Dark.PNG[width:790]
+image::Theme_Dark.PNG[width:"790"]
 {empty} +
 
 .Light theme
-image::Ui.png[width:790]
+image::Ui.png[width:"790"]
 // end::changethemeUG[]
 {empty} +
 

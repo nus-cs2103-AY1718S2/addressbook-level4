@@ -282,7 +282,7 @@ a| * At least one of the optional fields must be provided.
 image::edit_examples.PNG[width="800"]
 {empty} +
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the above exmaples**
 ----
 edit -o 1 p/91234567 e/alexyeoh@anotherexample.com
 

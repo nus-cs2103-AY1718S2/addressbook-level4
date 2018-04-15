@@ -48,6 +48,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
+     * @@author johnnychanjx
     * To load person page according to person name
     */
     public void loadPersonPage(Person person) throws IOException {
@@ -56,7 +57,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadPage("file:" + System.getProperty("user.home") + File.separator + "StudentPage"
                 + File.separator + person.getName() + ".html");
     }
-
+    //@@author johnnychanjx
     public void loadPage(String url) {
         Platform.runLater(() -> browser.getEngine().load(url));
     }
@@ -68,6 +69,7 @@ public class BrowserPanel extends UiPart<Region> {
         URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
         loadPage(defaultPage.toExternalForm());
     }
+    //@@author
 
     /**
      * Loads the Google Calendar page

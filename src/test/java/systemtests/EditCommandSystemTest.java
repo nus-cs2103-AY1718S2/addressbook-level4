@@ -200,6 +200,7 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
                         + BLANK_TIMEZONE_DESC,
                 CustTimeZone.MESSAGE_TIMEZONE_CONSTRAINTS);
 
+        //@@author
         /* Case: edit a person with new values same as another person's values -> rejected */
         executeCommand(PersonUtil.getAddCommand(BOB));
         assertTrue(getModel().getAddressBook().getPersonList().contains(BOB));

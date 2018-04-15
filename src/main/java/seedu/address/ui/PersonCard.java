@@ -77,6 +77,7 @@ public class PersonCard extends UiPart<Region> {
         }
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         // short circuit if same object

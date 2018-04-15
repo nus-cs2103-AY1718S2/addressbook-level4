@@ -6,11 +6,10 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 import java.util.Arrays;
 import java.util.TimeZone;
 
-//@@author glorialaw
 /**
  * Represents a person's timezone in the address book.
  */
-
+//@@author glorialaw
 public class CustTimeZone {
 
     public static final String MESSAGE_TIMEZONE_CONSTRAINTS =

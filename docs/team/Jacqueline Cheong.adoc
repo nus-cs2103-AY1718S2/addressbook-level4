@@ -7,12 +7,12 @@ This portfolio page showcases my contributions to the Medeina Project.
 
 == Overview
 
-Medeina is a free desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. Most user interactions happen through the Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created using JavaFX.
+Medeina is a free desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. User interactions happen through the Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created using JavaFX.
 
 == Summary of contributions
 
 * *Major enhancement*: Autocomplete
-** *What it does:* The autocomplete feature provides suggestions for command words, options, prefixes and parameters in a context menu as the user types. Autocomplete suggestions for options and prefixes come with descriptions to give users an overview of what the option or prefix is used for.
+** *What it does:* The autocomplete feature provides suggestions for command words, options, prefixes and parameters in a context menu as the user types. Suggestions for options and prefixes come with descriptions to give users an overview of what the option or prefix is used for.
 ** *Justification:* Medeina's command syntax involves many options, prefixes and parameters, which can be daunting for potential users. Autocomplete supports and complements Medeina's command syntax to enhance user experience. In addition, the autocomplete feature also provides users a way to reference existing data in Medeina to reduce the margin for errors in typing.
 ** *Highlights:* This enhancement requires the exploration of the singleton pattern and listeners for JavaFX. It involves an in-depth analysis of command syntax parsing e.g. to determine which group of tags (contact, pet patient, appointment) to show as autocomplete suggestions based on user input.
 ** *Credits:* https://bugs.openjdk.java.net/browse/JDK-8088614[Bug fix for JavaFx textfield caret position issue]
@@ -27,7 +27,6 @@ Medeina is a free desktop application designed to provide veterinarians and thei
 *** Managed releases `v1.2` and `v1.3` (2 releases) on GitHub
 ** Enhancements to existing features:
 *** Added a new GUI color scheme (Pull requests https://github.com/CS2103JAN2018-F14-B2/main/pull/156[#156], https://github.com/CS2103JAN2018-F14-B2/main/pull/188[#188])
-*** Added formatting for person cards (https://github.com/CS2103JAN2018-F14-B2/main/pull/231[#231])
 ** Documentation:
 *** Introduced a new format to document features and examples (https://github.com/CS2103JAN2018-F14-B2/main/pull/137[137])
 *** Re-structure contents in User Guide to improve organization and user-friendliness (https://github.com/CS2103JAN2018-F14-B2/main/pull/214[#214])

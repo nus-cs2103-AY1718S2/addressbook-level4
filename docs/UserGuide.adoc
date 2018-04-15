@@ -464,8 +464,7 @@ delete -fo 1
 
 === Listing entered commands : `history` or `his`
 
-To list all the commands that you have entered in reverse chronological order. +
-The command format should be: `history` or `his`
+If you would like to check what commands have been performed on Medeina for verification purposes, enter `history` or `his` in the command box. +
 
 image::History_Command.PNG[width="800"]
 
@@ -589,7 +588,7 @@ image::Redo_Clear.PNG[width="500"]
 
 === Clearing all entries : `clear` or `cls`
 
-You can use `clear` or `cls` to delete all entries in Medeina. +
+If you want to delete all entries in Medeina, simply use the `clear` or `cls` command. +
 
 .Executed clear command
 image::After_Clear.PNG[width="500"]
@@ -668,7 +667,7 @@ You do not need to manually encrypt your data files.
 
 === Creating other user profiles `[coming in v2.0]`
 
-Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves.
+User accounts will be implemented in Medeina, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. They can also customize Medeina to their own preferences.
 
 {empty} +
 
@@ -690,7 +689,7 @@ Information that vets should not change:
 
 === Supporting multiple users `[coming in v2.0]`
 
-Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others.
+Medeina will have support to run concurrently on different systems. The data will be synced over an internet connection. This allow veterinarians and their assistants to access Medeina simultaneously in different rooms, making it convenient to collaborate with one another.
 
 {empty} +
 

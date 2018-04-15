@@ -1052,7 +1052,7 @@ Here is the code snippet of the execution of `sort` command in `UniqueEmployeeLi
 * a new "theme" field is added in `GuiSetting`.
 // end::changeTheme[]
 
-=== Login
+=== Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 

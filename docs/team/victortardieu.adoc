@@ -16,10 +16,13 @@
 * *Major enhancement*: Added the ability to clear all the accounts of list of accounts
 ** What it does: Allows the user (logged in as a librarian) to clear in one click all the created accounts.
 ** Justification: This feature improves the product significantly because a user can quickly and efficiently remove all the accounts. It helps save time.
-** Highlights: This feature improves the product significantly because a user can quickly and efficiently remove all the accounts. It helps save time.
+** Highlights: This enhancement requires an in-depth analysis of logic and storage in order to access the latter and apply a reset function with the logic component.This enhancement required an in-depth analysis of logic and storage in order to access the latter and apply a reset function with the logic component.
 ** Credits: N/A
 
-* *Minor enhancement*: Added an autocomplete function. It adds the tags for the required functions.
+* *Minor enhancement*: Added an autocomplete function.
+** What it does: After pressing TAB, it will add the prefixes for the required function.
+** Justification: This feature significantly improve the product since it allows the user to type even faster and to remind him what to write for the function.
+** Highlights: This enhancement is related to the Logic and UI component since the autocomplete function is in Logic but it prints out in UI. It requires to take time to understand how Logic and UI interacts.
 
 * *Code contributed*: [Functional code] [Test code] [Unused code]
 
@@ -27,23 +30,21 @@
 
 ** Project management:
 
-** Enhancements to existing features:
-Tag colors: Assign a new color each time a new tag is created so that the tags have different colors. +
-Created the tests basis for the account test
+** Enhancements to existing features: +
+UI enhancement --> Tag colors: Assign a new color each time a new tag is created so that the tags have different colors. +
+Test enhancement --> Created the data files for the tests of the account functions
 
-** Documentation:
-Fixed the issues in User Guide from in-class testing session (see issues from bot. +
-Added in User Guide the new functions
+** Documentation: +
+Fixed the issues in User Guide from in-class testing session (see issues from bot). +
+Added in User Guide the new functions (AddAccount, ClearAccount, DeleteAccount, Borrow, Return, Reserve, Logout) +
+Wrote the User Stories, Use cases
 
-** Others
-Created the old book system.
+** Community: +
+Assigned issues to different team members after testing session
 
+** Others:
+Created the first book system.
 
-** Community:
-
-** Tools:
-
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -52,9 +53,32 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
 
-include::../UserGuide.adoc[tag=dataencryption]
+** Quick Start Section
+Modify it to explain the new user interface. Write sentence for every section of the UI.
+Create the new user interface picture.
+
+** Logout
+Add the following information (format, example, tips, notes) on how to use this function.
+
+** AddAccount
+Add the following information (format, example, tips, notes) on how to use this function.
+
+** DeleteAccount
+Add the following information (format, example, tips, notes) on how to use this function.
+
+** ClearAccount
+Add the following information (format, example, tips, notes) on how to use this function.
+
+** Borrow
+Add the following information (format, example, tips, notes) on how to use this function.
+
+** Return
+Add the following information (format, example, tips, notes) on how to use this function.
+
+** Renew
+Add the following information (format, example, tips, notes) on how to use this function.
+
 
 == Contributions to the Developer Guide
 
@@ -62,16 +86,28 @@ include::../UserGuide.adoc[tag=dataencryption]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=undoredo]
 
-include::../DeveloperGuide.adoc[tag=dataencryption]
+**Introduction
+include::../DeveloperGuide.adoc[tag=devguideintroduction]
 
-** Quick Start Section
-image::UI_final.png[width="790"]
-1 - Command box: type the commands in this section
-2 - Result Display: Show the result of what you typed above
-3 - Book List: List of all the books in the Central Library
-4 – Information Section: when you click on a book, the webpage on goodreads will open and display additional information
+** UI component
+Modify the UI diagram to make it about our project.
+
+** Appendix B
+Change the scope of the project
+
+** Appendix C
+Write the user stories
+Rank them by user and then by importance (*** first and * last)
+
+** Appendix D
+Write Use Cases for ClearCommand, ClearAccountCommand, HistoryCommand
+include::../DeveloperGuide.adoc[tag=usecaseclearaclearhistory]
+
+** Appendix H
+Write instructions for manual testing for ClearCommand, ClearAccountCommand, HistoryCommand
+include::../DeveloperGuide.adoc[tag=manualtestclearaclearhistory]
+
 
 == PROJECT: PowerPointLabs
 

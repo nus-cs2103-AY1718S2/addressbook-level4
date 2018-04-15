@@ -1,11 +1,9 @@
-package seedu.address.model.person.Customer;
+package seedu.address.model.person.customer;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 
 import org.junit.Test;
-
-import seedu.address.model.person.customer.LateInterest;
 
 //@@author jonleeyz
 public class LateInterestTest {

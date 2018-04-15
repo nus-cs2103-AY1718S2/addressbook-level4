@@ -30,12 +30,19 @@ import seedu.address.model.FilePath;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.XmlDeskBoardStorage;
 
 //@@author karenfrilya97
 public class ImportCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
+
+    private Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+    private Storage storage = new StorageManager(new XmlDeskBoardStorage(""), new JsonUserPrefsStorage(""));
 
     @Test
     public void constructor_nullFilePath_throwsNullPointerException() {
@@ -51,8 +58,8 @@ public class ImportCommandTest {
         expectedModel.addActivity(DEMO1);
 
         createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1), ASSIGNMENT3_DEMO1_FILE_PATH);
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        ImportCommand importCommand = getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel);
+        ImportCommand importCommand =
+                getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel, storage);
 
         assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
     }
@@ -61,8 +68,7 @@ public class ImportCommandTest {
     public void execute_nonexistentFilePath_throwsCommandException() {
         String expectedMessage = String.format(MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH);
 
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        ImportCommand importCommand = getImportCommandForGivenFilePath(MISSING_FILE_PATH, actualModel);
+        ImportCommand importCommand = getImportCommandForGivenFilePath(MISSING_FILE_PATH, actualModel, storage);
 
         assertCommandFailure(importCommand, expectedMessage);
     }
@@ -73,8 +79,7 @@ public class ImportCommandTest {
     public void execute_illegalValuesInFile_throwsCommandException() throws Throwable {
         String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, ILLEGAL_VALUES_FILE_PATH);
 
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, actualModel);
+        ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, actualModel, storage);
 
         assertCommandFailure(importCommand, expectedMessage);
     }
@@ -92,8 +97,8 @@ public class ImportCommandTest {
         expectedModel.addActivity(DEMO1);
 
         createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1, ASSIGNMENT1, CIP), DUPLICATE_ACTIVITY_FILE_PATH);
-        Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
-        ImportCommand importCommand = getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel);
+        ImportCommand importCommand =
+                getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel, storage);
 
         assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
     }
@@ -126,9 +131,9 @@ public class ImportCommandTest {
     /**
      * Generates a new ImportCommand with the given file path.
      */
-    private ImportCommand getImportCommandForGivenFilePath(String filePathString, Model model) {
+    private ImportCommand getImportCommandForGivenFilePath(String filePathString, Model model, Storage storage) {
         ImportCommand command = new ImportCommand(new FilePath(filePathString));
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        command.setData(model, storage, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 }

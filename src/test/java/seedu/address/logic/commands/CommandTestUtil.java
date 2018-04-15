@@ -195,6 +195,6 @@ public class CommandTestUtil {
 
         Storage storage = new StorageManager(new XmlDeskBoardStorage(""),
                 new JsonUserPrefsStorage(""));
-        storage.exportDeskBoard(deskBoard, filePath);
+        storage.saveDeskBoard(deskBoard, filePath);
     }
 }

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<deskboard>
+<deskBoard>
     <tasks>
         <name>CS2102Assignment</name>
         <dateTime>01/04/2018 20:00</dateTime>
@@ -17,4 +17,4 @@
         <location>COM1</location>
     </events>
     <tags>CS2102</tags>
-</deskboard>
+</deskBoard>

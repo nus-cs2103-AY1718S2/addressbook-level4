@@ -322,6 +322,10 @@ Clears all entries from Desk Board.
 
 Exports Desk Board data into an xml file in the specified directory.
 
+[NOTE]
+This command does not allow overwriting of existing file.
+If a file with the same name exists in the same directory as `FILE_PATH`, then this command will not be executed.
+
 *Format:* `export f/FILE_PATH`
 
 *Example:*

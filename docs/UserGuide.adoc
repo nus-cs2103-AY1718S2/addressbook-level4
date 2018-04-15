@@ -113,7 +113,6 @@ Format: `interview INDEX DATETIME`
 ****
 * Schedule interview for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * `DATETIME` is the English representation of the date and time
-* In `DATETIME`, a week start on Sunday and ends on the next Saturday.
 ****
 
 Examples:

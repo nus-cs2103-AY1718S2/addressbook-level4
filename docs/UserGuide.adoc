@@ -68,8 +68,7 @@ However, it only verifies that the command format is correct. Commands that are 
 For example, when you use a correct `add` command format to add a duplicate student into HR+, the real time parser shows that it is a valid command but it will not be successfully executed.
 
 [TIP]
-If you want to hide the real-time parsing panel, press kbd:[Tab]. 
-
+If you want to hide the real-time parsing panel, press kbd:[Tab].
 
 === Viewing help : `help`
 

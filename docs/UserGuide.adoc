@@ -208,7 +208,7 @@ Options are in order. For example, the add command for pet patient will have an 
 
 image::add_examples.PNG[width="800"]
 
-.**Copy & paste to try out**
+.**Copy & paste to try out the above examples**
 ----
 add -o n/Viktor Nikiforov p/91237890 e/v_nikiforov@gmail.com a/27 Skating Place nr/F0012345Z
 

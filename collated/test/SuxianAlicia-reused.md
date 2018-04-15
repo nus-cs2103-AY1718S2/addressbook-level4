@@ -80,3 +80,43 @@ public class DeletePreferenceCommandParserTest {
     }
 }
 ```
+###### /java/seedu/address/ui/testutil/GuiTestAssert.java
+``` java
+    /**
+     * Asserts that the list in {@code orderListPanelHandle} displays the details of {@code orders} correctly and
+     * in the correct order.
+     */
+    public static void assertOrderListMatching(OrderListPanelHandle orderListPanelHandle, Order... orders) {
+        for (int i = 0; i < orders.length; i++) {
+            assertCardDisplaysOrder(orders[i], orderListPanelHandle.getOrderCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code orderListPanelHandle} displays the details of {@code orders} correctly and
+     * in the correct order.
+     */
+    public static void assertOrderListMatching(OrderListPanelHandle orderListPanelHandle, List<Order> orders) {
+        assertOrderListMatching(orderListPanelHandle, orders.toArray(new Order[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code calendarEntryListPanelHandle} displays the details of {@code entries} correctly
+     * and in the correct order.
+     */
+    public static void assertCalendarEntryListMatching(
+            CalendarEntryListPanelHandle calendarEntryListPanelHandle, CalendarEntry... entries) {
+        for (int i = 0; i < entries.length; i++) {
+            assertCardDisplaysEntry(entries[i], calendarEntryListPanelHandle.getCalendarEntryCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code calendarEntryListPanelHandle} displays the details of {@code entries} correctly
+     * and in the correct order.
+     */
+    public static void assertCalendarEntryListMatching(
+            CalendarEntryListPanelHandle calendarEntryListPanelHandle, List<CalendarEntry> entries) {
+        assertCalendarEntryListMatching(calendarEntryListPanelHandle, entries.toArray(new CalendarEntry[0]));
+    }
+```

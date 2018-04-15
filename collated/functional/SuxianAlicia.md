@@ -782,7 +782,7 @@ public class ListCalendarEntryCommand extends Command {
 
     @Override
     public CommandResult execute() {
-        model.updateFilteredCalendarEventList(Model.PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        model.updateFilteredCalendarEntryList(Model.PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         EventsCenter.getInstance().post(new DisplayCalendarEntryListEvent());
         return new CommandResult(MESSAGE_SUCCESS);
     }
@@ -1761,8 +1761,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class EntryTitle {
     public static final String MESSAGE_ENTRY_TITLE_CONSTRAINTS =
-            "Event title should only contain alphanumeric characters and spaces"
-                    + "and it should not be blank";
+            "Event title should only contain alphanumeric characters and spaces and it should not be blank";
 
     public static final String ENTRY_TITLE_VALIDATION_REGEX = "[\\p{Alnum}][\\p{Alnum} ]*";
 
@@ -1956,7 +1955,6 @@ public class StartTime {
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
-import java.util.HashSet;
 import java.util.Iterator;
 import java.util.List;
 
@@ -2075,16 +2073,6 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
                 && this.internalList.equals(((UniqueCalendarEntryList) other).internalList));
     }
 
-    /**
-     * Returns true if the element in this list is equal to the elements in {@code other}.
-     * The elements do not have to be in the same order.
-     */
-    public boolean equalsOrderInsensitive(UniqueCalendarEntryList other) {
-        assert CollectionUtil.elementsAreUnique(internalList);
-        assert CollectionUtil.elementsAreUnique(other.internalList);
-        return this == other || new HashSet<>(this.internalList).equals(new HashSet<>(other.internalList));
-    }
-
     @Override
     public int hashCode() {
         assert CollectionUtil.elementsAreUnique(internalList);
@@ -2156,14 +2144,14 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
     @Override
     public void addCalendarEntry(CalendarEntry toAdd) throws DuplicateCalendarEntryException {
         calendarManager.addCalendarEntry(toAdd);
-        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         indicateCalendarManagerChanged();
     }
 
     @Override
     public void deleteCalendarEntry(CalendarEntry entryToDelete) throws CalendarEntryNotFoundException {
         calendarManager.deleteCalendarEntry(entryToDelete);
-        updateFilteredCalendarEventList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
+        updateFilteredCalendarEntryList(PREDICATE_SHOW_ALL_CALENDAR_ENTRIES);
         indicateCalendarManagerChanged();
     }
 
@@ -2183,7 +2171,7 @@ public class UniqueCalendarEntryList implements Iterable<CalendarEntry> {
     }
 
     @Override
-    public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
+    public void updateFilteredCalendarEntryList(Predicate<CalendarEntry> predicate) {
         requireNonNull(predicate);
         filteredEvents.setPredicate(predicate);
     }
@@ -3118,6 +3106,80 @@ public class CenterPanel extends UiPart<Region> {
     private void handleResetPersonPanelRequestEvent(ResetPersonPanelRequestEvent event) {
         personPanel.handleResetPersonPanelRequestEvent(event);
         displayPersonPanel();
+    }
+}
+```
+###### /java/seedu/address/ui/RightPanel.java
+``` java
+import java.util.logging.Logger;
+
+import com.google.common.eventbus.Subscribe;
+
+import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
+import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DisplayCalendarEntryListEvent;
+import seedu.address.commons.events.ui.DisplayOrderListEvent;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.order.Order;
+
+/**
+ * The Right Panel of the App that can switch between Order List Panel and CalendarEntry List Panel.
+ */
+public class RightPanel extends UiPart<Region> {
+    private static final String FXML = "RightPanel.fxml";
+
+    private OrderListPanel orderListPanel;
+    private CalendarEntryListPanel calendarEntryListPanel;
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    @FXML
+    private StackPane rightPlaceHolder;
+
+    public RightPanel(ObservableList<Order> orderList, ObservableList<CalendarEntry> calendarEntryList) {
+        super(FXML);
+
+        orderListPanel = new OrderListPanel(orderList);
+        calendarEntryListPanel = new CalendarEntryListPanel(calendarEntryList);
+
+        // Displays Order List by default.
+        displayOrderListPanel();
+        registerAsAnEventHandler(this);
+    }
+
+    /**
+     * Displays the OrderList Panel.
+     */
+    private void displayOrderListPanel() {
+        if (!rightPlaceHolder.getChildren().contains(orderListPanel.getRoot())) {
+            rightPlaceHolder.getChildren().clear();
+            rightPlaceHolder.getChildren().add(orderListPanel.getRoot());
+        }
+    }
+
+    /**
+     * Displays the CalendarEntryList Panel.
+     */
+    private void displayCalendarEntryListPanel() {
+        if (!rightPlaceHolder.getChildren().contains(calendarEntryListPanel.getRoot())) {
+            rightPlaceHolder.getChildren().clear();
+            rightPlaceHolder.getChildren().add(calendarEntryListPanel.getRoot());
+        }
+    }
+
+    @Subscribe
+    public void handleDisplayOrderListEvent(DisplayOrderListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        displayOrderListPanel();
+    }
+
+    @Subscribe
+    public void handleDisplayCalendarEntryListEvent(DisplayCalendarEntryListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        displayCalendarEntryListPanel();
     }
 }
 ```

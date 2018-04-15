@@ -326,7 +326,7 @@ public class AddOrderCommandTest {
         }
 
         @Override
-        public void updateFilteredCalendarEventList(Predicate<CalendarEntry> predicate) {
+        public void updateFilteredCalendarEntryList(Predicate<CalendarEntry> predicate) {
             fail("This method should not be called.");
         }
 
@@ -1001,16 +1001,9 @@ public class EditOrderCommandTest {
 
         assertCommandSuccess(editOrderCommand, model, expectedMessage, expectedModel);
     }
-
-    @Test
-    public void execute_duplicateOrderUnfilteredList_failure() {
-        Order firstOrder = model.getFilteredOrderList().get(INDEX_FIRST_ORDER.getZeroBased());
-        EditOrderDescriptor descriptor = new EditOrderDescriptorBuilder(firstOrder).build();
-        EditOrderCommand editOrderCommand = prepareCommand(INDEX_SECOND_ORDER, descriptor);
-
-        assertCommandFailure(editOrderCommand, model, EditOrderCommand.MESSAGE_DUPLICATE_ORDER);
-    }
-
+```
+###### /java/seedu/address/logic/commands/EditOrderCommandTest.java
+``` java
     @Test
     public void execute_invalidOrderIndexUnfilteredList_failure() {
         Index outOfBoundIndex = Index.fromOneBased(model.getFilteredOrderList().size() + 1);
@@ -2281,19 +2274,6 @@ public class UniqueOrderListTest {
     }
 
     @Test
-    public void asOrderInsensitiveList_compareListsWithSameItemsInDiffOrder_assertEqual()
-            throws DuplicateOrderException {
-        UniqueOrderList firstOrderList = new UniqueOrderList();
-        firstOrderList.add(BOOKS);
-        firstOrderList.add(CHOCOLATES);
-        UniqueOrderList secondOrderList = new UniqueOrderList();
-        secondOrderList.add(CHOCOLATES);
-        secondOrderList.add(BOOKS);
-
-        assertTrue(firstOrderList.equalsOrderInsensitive(secondOrderList));
-    }
-
-    @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
         UniqueOrderList uniqueOrderList = new UniqueOrderList();
         thrown.expect(UnsupportedOperationException.class);
@@ -2716,6 +2696,20 @@ public class OrderUtil {
 ``` java
 
     /**
+     * Returns the middle index of the calendar entry in the {@code model}'s calendar entry list.
+     */
+    public static Index getMidEntryIndex(Model model) {
+        return Index.fromOneBased(model.getCalendarManager().getCalendarEntryList().size() / 2);
+    }
+
+    /**
+     * Returns the last index of the calendar entry in the {@code model}'s calendar entry list.
+     */
+    public static Index getLastEntryIndex(Model model) {
+        return Index.fromOneBased(model.getCalendarManager().getCalendarEntryList().size());
+    }
+
+    /**
      * Returns the person in the {@code model}'s person list at {@code index}.
      */
     public static Person getPerson(Model model, Index index) {
@@ -3040,12 +3034,12 @@ public class AddOrderCommandSystemTest extends AddressBookSystemTest {
                 + DELIVERY_DATE_DESC_COMPUTER + "   ";
         assertCommandSuccess(command, index, toAdd);
 
-        /* Case: undo adding Books to the list -> Books deleted */
+        /* Case: undo adding Computer to the list -> Computer deleted */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, model, expectedResultMessage);
 
-        /* Case: redo adding Books to the list -> Books added again */
+        /* Case: redo adding Computer to the list -> Computer added again */
         command = RedoCommand.COMMAND_WORD;
         model.addOrderToOrderList(toAdd);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
@@ -3445,7 +3439,7 @@ public class EditOrderCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Index, Person, Index)} except that
+     * Performs the same verification as {@code assertCommandSuccess(String, Index, Order, Index)} except that
      * the selected card remains unchanged.
      * @param toEdit the index of the current model's filtered list
      * @see EditOrderCommandSystemTest#assertCommandSuccess(String, Index, Order, Index)
@@ -3497,6 +3491,7 @@ public class EditOrderCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         expectedModel.updateFilteredOrderList(PREDICATE_SHOW_ALL_ORDERS);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertOrderListDisplaysExpected(expectedModel);
         assertCommandBoxShowsDefaultStyle();
         if (expectedSelectedCardIndex != null) {
             assertSelectedCardChanged(expectedSelectedCardIndex);

@@ -2048,14 +2048,7 @@ This section includes instructions to test the `estimateRoute` command of the ap
    _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing marker or route._
 .. Type other incorrect  command such as `estimateRoute`, `estimateRoute Punggol NUS`, `estimateRoute sma/Punggol NUS`, `estimateRoute NUS ema/Punggol` in command box and press enter. +
    _Expected: Similar to previous._
-////
-=== Saving data
 
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-////
-   
 === Viewing a celebrity's calendar
 This section includes instructions to test the `viewCalendar` command of the application.
 [NOTE]
@@ -2068,10 +2061,10 @@ Prerequisites: At least one celebrity in the last shown list and the celebrity's
 .. Type `viewCalendar p` (where `p` is the index of a non-celebrity person) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewCalendar 0` in command box and press enter. +
-   _Expected: No change in calendar. Error details shown in the status message._   
+   _Expected: No change in calendar. Error details shown in the status message._
 .. Type other incorrect `viewCalendar` commands such as `viewCalendar`, `viewCalendar x` (where `x` is larger than the last shown contact list size or not a valid index number or the index of the celebrity whose calendar is currently displayed) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-   
+
 === Viewing the combined calendar
 This section includes instructions to test the `viewCombinedCalendar` command of the application.
 [NOTE]
@@ -2094,14 +2087,14 @@ Prerequisites: Calendar is currently in `day` view.
 .. Type `viewCalendarBy day` in command box and press enter. +
    _Expected: Calendar shows the day which is the original day._
 .. Type `viewCalendarBy day` again after executing the previous command in command box and press enter. +
-   _Expected: No change in calendar. Error details shown in the status message._ 
+   _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewCalendarBy MOnTh` in command box and press enter. +
    _Expected: Calendar shows the week which the original day is in._
 .. Type `viewCalendarBy 1` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type other incorrect `viewCalendarBy` commands such as `viewCalendarBy`, `viewCalendarBy x` (where x is not `day`, `week`, `month` or mixed uppercase and lowercase of one of them) in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
-   
+
 === Viewing a particular day's calendar
 This section includes instructions to test the `viewDate` command of the application.
 [NOTE]
@@ -2116,7 +2109,7 @@ Prerequisites: Calendar is currently in `day` view and displays the current day'
 .. Type `viewDate` again after executing the previous command in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewDate 01-04` again after executing the previous command in command box and press enter. +
-   _Expected: No change in calendar. Error details shown in the status message._ 
+   _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewDate 0` in command box and press enter. +
    _Expected: No change in calendar. Error details shown in the status message._
 .. Type `viewDate !` in command box and press enter. +
@@ -2135,4 +2128,3 @@ Preprequisites: The file is a valid .xml file for storage calendar, and is named
 .. Replace the old `storagecalendar.xml` with the the new `storagecalendar.xml` file.
 .. Restart the application.
    _Expected: The new appointments data from `storagecalendar.xml` is reflected in the calendar panel._
-

@@ -243,6 +243,7 @@ The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides insi
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Logic Command Class Diagram
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -282,10 +283,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.Undo and Redo Starting Stack
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Undo and Redo Stack after executing one Command
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -295,6 +298,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
+.Undo and Redo stack before and after Undo command execution
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -302,6 +306,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Undo Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
@@ -311,14 +316,17 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Undo and Redo stack before and after Clear command execution
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.Undo and Redo stack before and after List command execution
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Undo and Redo Activity Diagram
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -367,13 +375,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 === Customized Alias feature
 ==== Current Implementation
 
+.Alias Command Sequence Diagram for Logic Component
 image::LogicComponentAliasSequenceDiagram.png[width="800"]
 
+.Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 ==== Design Considerations
 
 ===== Aspect: How alias list is maintained
+.Model Component
 image::ModelClassDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
@@ -397,7 +408,7 @@ image::ModelClassDiagram.png[width="800"]
 ===  Data Encryption
 ==== Current Implementation
 
-We are using `javax.crypto.cipher` and `java.security.key` package for the encryption of the data. The `SecurityUtil` class is used to provide the `SHA-1` hashing and `AES` encryption/decryption required.
+We are using `javax.crypto.cipher` and `java.security.key` package provided by java for the encryption of the data. The `SecurityUtil` class is used to provide the `SHA-1` hashing and `AES` encryption/decryption required.
 
 Using a given password, it is first hashed using `SHA-1` to be used as the `AES` key.
 The first 128 bits of the digest created by the `SHA-1` hash is extracted.
@@ -407,22 +418,49 @@ This is required as `AES` requires its key to be 128 bits long.
 * The decryption can be done simply by using `SecurityUtil.decrypt()` which will decrypt the addressbook.xml.
 * Currently, decryption/encryption is done in `XmlAddressBookStorage` class before/after `readAddressBook` and `saveAddressBook`.
 
-A default password is used if the user do not set a password.
-Users can change their password using the command `password`. +
-The sequence diagram shows how the `ModelManager` updates the password:
+No encryption is done if the user do not set a password.
+Users can change their password using the command `encrypt` and decrypt it permanently using the command `decrypt`.
 
+When an 'encrypt' command is issued, the argument is parsed and hashed. Is is then passed to the Model.
+
+image::PasswordSdForLogic.png[width="800"]
+
+The `ModelManager` then updates the password in the `AddressBook` as shown below:
+
+.Password Sequence Diagram for Model Component
 image::PasswordSdForModel.png[width="800"]
 
-The 128 bit password used to encrypt `addressbook.xml` is saved in the address book to ensure that the password is not lost after every reset of the application.
-This is secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible pre-image attack.
+The 128 bit password used to encrypt `addressbook.xml` is saved in the address book as `XmlAdaptedPassword` to ensure that the password is not lost after every reset of the application.
+This is secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible second pre-image attack.
+This is because users are unable to input hashed password directly.
 
+When the user first starts the application, `ModelManager` would try to load the data from `addressbook.xml` without using any password.
+If `addressbook.xml` is encrypted, this would cause the following code to trigger which would morph the `ui` to `PasswordUiManager` instead of `UiManager`.
+[source,java]
+----
+private void checkPasswordChanged() {
+    if (passwordChanged) {
+        ui = new PasswordUiManager(storage, model, ui);
+    }
+}
+----
+This change would cause the `PasswordWindow` to display instead of the `MainWindow`, requesting for a password input by the user.
+
+image::passwordBox.png[width="800"]
+
+If the password the user input is unable to decrypt `addressbook.xml`, a `WrongPasswordEvent` is raised which will cause the `PasswordUiManager` to display the following dialog to the user:
+
+image::wrongPasswordDialog.png[width="800"]
+
+If the password the user input successfully decrypts `addressbook.xml`, a `CorrectPasswordEvent` is raised. This event is handled by the `PasswordUiManager` which will start the `UiManager`.
+The application would behave as if it is not encrypted from here on.
 
 ==== Design Considerations
 
 ===== Aspect: How to generate the AES key
 * **Alternative 1 (current choice):** Generating the key from a password
 ** Pros: Users are able to key in their own passwords
-** Cons: Default password needs to be provided which may make it as insecure as before if users do not change it.
+** Cons: Users have to input password for their data to be encrypted.
 * **Alternative 2:** Generating the key within the code into a file for user to share.
 ** Pros: It would be guaranteed to be more secure than using our own generated key.
     This is because keys generated by `java.crypto.KeyGenerator` have their algorithms reviewed by many experts in the area.
@@ -441,46 +479,137 @@ This is secure as even if a malicious user were to somehow get a copy of the 128
 * **Alternative 1 (current choice):** Save in `addressbook.xml`
 ** Pros: The password is not lost after every reload of the application.
 ** Cons: Plaintext of `addressbook.xml` contains the 128 bit `AES` key used.
-However, this is still secure as even if a malicious user were to somehow get a copy of the 128 bit password, they would still need to use a computationally unfeasible pre-image attack.
+However, this is still secure as even if a malicious user were to somehow get a copy of the 128 bit password,
+they would still need to use a computationally unfeasible second pre-image attack.
 
 * **Alternative 2:** Password not saved
 ** Pros: No chance of password being compromised.
 ** Cons: Password reset after each reload of application.
+
+===== Aspect: Default Password
+* **Alternative 1 (current choice):** `addressbook.xml` not encrypted by default
+** Pros: Users are able to choose whether they want their data to be encrypted or not as encryption and decryption
+requires computation which may make the application slower than desired.
+** Cons: Unfamiliar users may not be aware of the option of encrypting their data making it less secure.
+* **Alternative 2:** Default Password provided to encrypt `addressbook.xml`
+** Pros: Data is always encrypted.
+** Cons: A default password is, most of the time, as effective as no password and it also slows down the application more than necessary.
 // end::dataencryption[]
 
 // tag::datatransfer[]
-=== Import AddressBook feature
+=== Import StardyTogether file feature
 ==== Current Implementation
 
-The import AddressBook mechanism is facilitated by `XmlSerializableAddressBook`, which resides inside `Storage`. It allows the imported XML file to be converted into AddressBook format.
+The import StardyTogether mechanism is facilitated by `XmlSerializableAddressBook`, which resides inside `Storage`. It allows the imported XML file to be converted into StardyTogether format.
 
-The imported AddressBook must be a XML file that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
+The imported StardyTogether must be a XML file that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
 
-`Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` in the user's AddressBook will be added.
+`Person`,`Tag`, and `Alias` from imported StardyTogether file that are not a duplicate of existing `Person`, `Tag`, and `Alias` in the user's StardyTogether will be added.
 
 The following sequence diagram shows how the import operation works:
 
-image::ImportCommandSequenceDiagram.png[width="800"]
+.Import Command Sequence Diagram for Logic Component
+image::LogicComponentImportSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Imported AddressBook file format
+===== Aspect: Imported StardyTogether file format
 
 * **Alternative 1 (current choice):** Uses the same XML file format as `XmlSerializableAddressBook`
-** Pros: Same file format as saved AddressBook, users can transfer AddressBook easily without the need to indicate file format.
-** Cons: Imported AddressBook must be in XML file format that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
+** Pros: Same file format as saved StardyTogether, users can transfer StardyTogether easily without the need to indicate file format.
+** Cons: Imported StardyTogether must be in XML file format that follows `XmlAdaptedPerson`, `XmlAdaptedTag`, and `XmlAdaptedAlias` format.
 * **Alternative 2:** Uses CSV file format
 ** Pros: CSV file format is widely used and is able to transfer between different applications (eg. Microsoft Excel).
-** Cons: Different file format as saved AddressBook, implementation of converting file type from XML to CSV is needed.
+** Cons: Different file format as saved StardyTogether, implementation of converting file type from XML to CSV is needed.
 
 ===== Aspect: How import command executes
 
-* **Alternative 1 (current choice):** Adds all `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
-** Pros: User does not need to indicate which `Person`, `Tag` or `Alias` to be imported.
+* **Alternative 1 (current choice):** Adds all `Person`,`Tag`, and `Alias` from imported StardyTogether that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's StardyTogether.
+** Pros: User does not need to indicate which `Person`, `Tag` or `Alias` to be imported. Since user can select which `Person` to be exported using `export` command, we assume user has already made his selection.
 ** Cons: User is not able to select which `Person`, `Tag` or `Alias` to be imported.
-* **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported AddressBook that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's AddressBook.
+* **Alternative 2:** Adds selected `Person`,`Tag`, and `Alias` from imported StardyTogether that are not a duplicate of existing `Person`, `Tag`, and `Alias` to the user's StardyTogether.
 ** Pros: User is able to select which `Person`, `Tag` or `Alias` to be imported.
-** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported.
+** Cons: User needs to indicate which `Person`, `Tag` or `Alias` to be imported, which may lead to human errors.
+
+=== Export StardyTogether file feature
+==== Current Implementation
+
+The export StardyTogether mechanism is facilitated by `XmlFileStorage`, which resides inside `Storage`. It allows the StardyTogether's `AddressBook` to be converted into a XML file format.
+
+The exported StardyTogether file contains all `Person` in `filteredPersons`, which resides inside `ModelManager`, all `Tag`, and all `Alias` in StardyTogether.
+
+The following sequence diagram shows how the export operation works:
+
+.Export Command Sequence Diagram for Logic Component
+image::ExportCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Exported StardyTogether file format
+
+* **Alternative 1 (current choice):** Uses the same XML file format as `XmlFileStorage`
+** Pros: Same file format as saved StardyTogether, users can transfer StardyTogether easily without the need to indicate file format.
+** Cons: Can only be transferred and used by StardyTogether application.
+* **Alternative 2:** Uses CSV file format
+** Pros: CSV file format is widely used and is able to transfer between different applications (eg. Microsoft Excel).
+** Cons: Different file format as saved StardyTogether, implementation of converting file type from XML to CSV is needed.
+
+===== Aspect: How export command executes
+
+* **Alternative 1 (current choice):** Exports all `Person` in `filteredPersons`, `Tag`, and `Alias` from StardyTogether.
+** Pros: User is able to select which `Person` to be exported by using `find` command, user is not able to indicate which `Tag` or `Alias` to be exported. User can exports all `Person` by using `list` command too.
+** Cons: User is not able to select which `Tag` or `Alias` to be exported.
+* **Alternative 2:** Exports all `Person`,`Tag`, and `Alias` from StardyTogether.
+** Pros: User does not need to indicate which `Person`, `Tag` or `Alias` to be exported.
+** Cons: User is not able to select which `Person`, `Tag` or `Alias` to be exported. This is similar to copying and pasting the saved StardyTogether file using file explorer.
+
+=== Upload StardyTogether file feature
+==== Current Implementation
+
+The upload feature involves three steps, requesting for authorization, exporting, and uploading.
+
+1. Redirecting user to a Google URL to request for authorization to his/her Google Drive. User must grant StardyTogether access to his/her Google Drive to continue. If user already granted access, this step will be skipped.
+2. Exporting all `Person` in `filteredPersons`, which resides inside `ModelManager`, all `Tag`, and all `Alias` of the StardyTogether to `googledrive` folder in user's computer.
+3. Uploading the exported StardyTogether file to user's Google Drive.
+
+Please refer to <<Export StardyTogether file feature,Export StardyTogether file feature>> for implementation on export mechanism.
+
+The upload StardyTogether mechanism is facilitated by using https://developers.google.com/drive/[Google Drive API] in `GoogleDriveStorage`, which resides inside `Storage`. It allows the stored StardyTogether file in user's computer to be uploaded into user's Google Drive.
+
+The uploaded StardyTogether file is the same as exported StardyTogether file stored.
+
+
+The following sequence diagram shows how the upload operation works:
+
+.Upload Command Sequence Diagram for Logic Component
+image::UploadCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Uploaded StardyTogether file format
+
+* **Alternative 1 (current choice):** Uses the same XML file format as `XmlFileStorage`
+** Pros: Same file format as saved StardyTogether, users can transfer StardyTogether easily without the need to indicate file format.
+** Cons: Can only be transferred and used by StardyTogether application.
+* **Alternative 2:** Uses CSV file format
+** Pros: CSV file format is widely used and is able to transfer between different applications (eg. Microsoft Excel).
+** Cons: Different file format as saved StardyTogether, implementation of converting file type from XML to CSV is needed.
+
+===== Aspect: How upload command executes
+
+* **Alternative 1 (current choice):** Uploads all `Person` in `filteredPersons`, `Tag`, and `Alias` from StardyTogether.
+** Pros: User is able to select which `Person` to be uploaded by using `find` command, user is not able to indicate which `Tag` or `Alias` to be uploaded. User can uploads all `Person` by using `list` command too, storing backups in Google Drive easily.
+** Cons: User is not able to select which `Tag` or `Alias` to be uploaded.
+* **Alternative 2:** Uploads all `Person`,`Tag`, and `Alias` from StardyTogether.
+** Pros: User does not need to indicate which `Person`, `Tag` or `Alias` to be uploaded.
+** Cons: User is not able to select which `Person`, `Tag` or `Alias` to be uploaded.
+
+==== Why Download StardyTogether file feature is not implemented?
+
+===== Justification
+Downloading a file from Google Drive requires the File ID, as there can be two or more files with the same filename in the user's Google Drive. Hence, the user has to go to his/her Google Drive to get the uploaded StardyTogether File ID.
+
+Since the user is already on his/her Google Drive, he/she may download the file onto his/her computer and perform an `import` function. Steps are not reduced by implementing `download` feature. Therefore, we decided not to implement `download` feature.
 // end::datatransfer[]
 
 // tag::birthdays[]
@@ -488,10 +617,12 @@ image::ImportCommandSequenceDiagram.png[width="800"]
 ==== Current Implementation
 Birthdays Command uses the existing Events system and sends an event.
 
+.Birthdays Command Sequence Diagram for Logic Component
 image::LogicComponentBirthdaysSequenceDiagram.png[width="800"]
 
 The UI component will then receive the event and handle the data.
 
+.Birthdays Command Sequence Diagram for UI Component
 image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
@@ -526,13 +657,13 @@ image::UiComponentBirthdayListSequenceDiagram.png[width="800"]
 // tag::vacantroomfinder[]
 === Vacant Room Finder feature
 ==== Current Implementation
-We are using Venue Information JSON file from https://nusmods.com/api/2017-2018/2/venueInformation.json[NUSMods] to get the weekly timetable of the venues. To increase the performance of getting the timetable of the venue, we decided to download Venue Information JSON file and have an offline copy stored in our StardyTogether application.
+We are using Venue Information JSON file from https://nusmods.com/api/2017-2018/2/venueInformation.json[NUSMods] to retrieve the weekly timetable of the venues. To increase the performance of retrieving the timetable of the venue, we decided to download Venue Information JSON file and have an offline copy stored in our StardyTogether application.
 
 We have added the list of NUS buildings and the list of rooms in each building into the offline copy.
 
 We use `ReadOnlyJsonVenueInformation`, which resides inside `Storage` to read and store the room timetable data inside `nusVenues` in `Room` class, and also store NUS Buildings and their respective rooms inside `nusBuildingsAndRooms` in `Building` class.
 
-To avoid reading the data whenever the `vacant` command is executed, we only read the data once when the `MainApp` starts.
+To avoid reading the data from Venue Information JSON file whenever the `vacant` command is executed, we only read the data once when the `MainApp` starts.
 
 The following sequence diagram shows how the vacant command is parsed:
 
@@ -543,8 +674,10 @@ We have created `Building`, `Room`, `Week`, and `WeekDay` in `Model` to read and
 
 The following architecture diagram shows the model and storage component:
 
+.Model Componenet
 image::ModelClassDiagram.png[width="800"]
 
+.Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 The following sequence diagram shows how the logic component of Vacant Room Finder works:
@@ -579,6 +712,7 @@ The main contents of the timetable is stored as TimetableData and is accessed th
 TimetableData consists of 2 TimetableWeek, which each consist of 5 TimetableDay, which each consist of 24
 TimetableSlot (following the 24h clock)
 
+.Timetable Component
 image::TimetableComponentClassDiagram.png[width="800"]
 
 In the event the url provided is invalid or empty, a empty Timetable will be created.
@@ -801,7 +935,7 @@ b. Require developers to download those libraries manually (this creates extra w
 |=======================================================================
 |Name |Minor Enhancement |Major Enhancement
 |Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
-|Loh Cai Jun | Implementing Model and Storage component of Vacant study rooms finder feature to help user to find vacant study rooms nearby. | Importing and exporting AddressBook feature to allow user to transfer selected data to other users, transfer to different computers, store and restore backup of AddressBook easily.
+|Loh Cai Jun | Implementing Model and Storage component of Vacant study rooms finder feature to help user to find vacant study rooms nearby. | Importing, exporting, and uploading StardyTogether file feature to allow user to transfer selected data to other users, transfer to different computers, store and restore backup of StardyTogether easily.
 |Ong Jing Yin | Designing UI for finding vacant venues feature. UI will display a table of timings for the requested location, with information about whether the venue is vacant or not |Customized alias to allow users to set their own short cuts or intuitive naming for existing commands, to cater to their own preference.
 |Wayne Neo| In charge of Model and Logic for Timetable. User can enter their timetable and compare their timetables to find common slots for easy 'stardying' together| Birthdays system helps User to keep track of their friend's birthdays and remind them promptly if its their birthday today
 |=======================================================================
@@ -868,7 +1002,7 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `StardyTogether` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
@@ -876,9 +1010,9 @@ _{More to be added}_
 *MSS*
 
 1.  User requests to list persons
-2.  AddressBook shows a list of persons
+2.  StardyTogether shows a list of persons
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  StardyTogether deletes the person
 +
 Use case ends.
 
@@ -892,7 +1026,7 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. StardyTogether shows an error message.
 +
 Use case resumes at step 2.
 
@@ -902,9 +1036,9 @@ Use case resumes at step 2.
 *MSS*
 
 1.  User requests to find an available venue
-2.  AddressBook prompts user to input a faculty
+2.  StardyTogether prompts user to input a faculty
 3.  User requests venues near this faculty
-4.  AddressBook prints out a list of available venues near the specified faculty
+4.  StardyTogether prints out a list of available venues near the specified faculty
 +
 Use case ends.
 
@@ -914,23 +1048,23 @@ Use case ends.
 * 2a. No location is available
 +
 [none]
-** 2a1. AddressBook displays the empty result
+** 2a1. StardyTogether displays the empty result
 +
 Use case resumes at step 2
 
 * 3a. The given location is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. StardyTogether shows an error message.
 +
 Use case resumes at step 2.
 
-* 4a. AddressBook cannot retrieve the information online
+* 4a. StardyTogether cannot retrieve the information online
 +
 [none]
-** 4a1. AddressBook shows an error message
-** 4a2. AddressBook attempts to reconnect
-** 4a3. If problem persists, AddressBook directs User to troubleshooting
+** 4a1. StardyTogether shows an error message
+** 4a2. StardyTogether attempts to reconnect
+** 4a3. If problem persists, StardyTogether directs User to troubleshooting
 +
 Use case ends
 

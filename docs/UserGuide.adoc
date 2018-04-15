@@ -133,7 +133,7 @@ Displays a suggested navigation route between events after calling `navigate IND
 Displays a number of buttons at the side of map to indicate journeys available to navigate.
 This will correspond to the valid indexes for `navigate INDEX`.
 
-// tag::userInterfaceWalkthrough[]
+// end::userInterfaceWalkthrough[]
 
 // tag::calendarquickstart[]
 == Calendar Quick Start

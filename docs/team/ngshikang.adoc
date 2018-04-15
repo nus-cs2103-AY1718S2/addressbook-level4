@@ -66,6 +66,7 @@ The application should open into the following screen:
 image::Ui.png[width="790"]
 +
 
+
 === Centralised loading in of data `[coming in v2.0]`
 Users may be able to load in large amounts of addressees into their Pigeons addressbook files from v2.0 onwards.
 
@@ -144,3 +145,12 @@ Upon successful verification, the user will be brought to a user-customised vers
 The following sequence diagram shows how the checkLoginDetails method works:
 
 image::LoginDetails.png[width="800"]
+
+== Instructions for Manual Testing
+=== Launch and Shutdown
+
+. Login settings
+.. Create an account for the same username more than once (not case-sensitive). +
+    Expected: Creation of a profile for the same username as one that exists already should not be allowed.
+.. Try a different password than the one used for creating the account (not case-sensitive). +
+    Expected: It should deny you entry into the application until the correct password is keyed in.

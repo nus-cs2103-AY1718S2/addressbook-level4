@@ -47,7 +47,7 @@ This app will not work with earlier versions of Java 8.
 +
 image::LoginScreen2.PNG[width="300"]
 +
-. Create a profile with desired username and password if using for the first time.
+. Create a profile with desired username and password (non case-sensitive) if using for the first time.
 If profile has previously already been created, or after creation of profile, click login.
 +
 [NOTE]

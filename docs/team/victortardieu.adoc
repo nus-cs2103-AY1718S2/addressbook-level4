@@ -32,7 +32,7 @@
 
 ** Enhancements to existing features:
 Tag colors: Assign a new color each time a new tag is created so that the tags have different colors. +
-Created the tests basis for the account test
+Created the basics for the tests of the account functions
 
 ** Documentation:
 Fixed the issues in User Guide from in-class testing session (see issues from bot).
@@ -40,7 +40,7 @@ Added in User Guide the new functions (AddAccount, ClearAccount, DeleteAccount, 
 Wrote the User Stories
 
 ** Others
-Created the old book system.
+Created the first book system.
 
 
 ** Community:
@@ -61,28 +61,29 @@ include::../UserGuide.adoc[tag=undoredo]
 include::../UserGuide.adoc[tag=dataencryption]
 
 ** Quick Start Section
-Modify it to explain the new user interface. Wrote sentence for every section of the UI.
+Modify it to explain the new user interface. Write sentence for every section of the UI.
 
 ** Logout
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
 
 ** AddAccount
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
 
 ** DeleteAccount
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
 
 ** ClearAccount
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
 
 ** Borrow
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
 
 ** Return
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
 
 ** Renew
-Add all the information (format, example, tips, notes) on how to use this function.
+Add the following information (format, example, tips, notes) on how to use this function.
+
 
 == Contributions to the Developer Guide
 
@@ -94,7 +95,21 @@ include::../DeveloperGuide.adoc[tag=undoredo]
 
 include::../DeveloperGuide.adoc[tag=dataencryption]
 
-Wrote the User Stories
+** UI component
+Modify the UI diagram to make it about our project.
+
+** Appendix B
+Change the scope of the project
+
+** Appendix C
+Write the user stories
+Rank them by user and then by importance (*** first and * last)
+
+** Appendix D
+Write Use Cases for ClearCommand, ClearAccountCommand, HistoryCommand
+
+** Appendix H
+Write instructions for manual testing for ClearCommand, ClearAccountCommand, HistoryCommand
 
 
 == PROJECT: PowerPointLabs

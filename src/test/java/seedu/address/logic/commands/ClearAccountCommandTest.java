@@ -11,6 +11,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 
+//@@author victortardieu
+
 public class ClearAccountCommandTest {
 
     @Test

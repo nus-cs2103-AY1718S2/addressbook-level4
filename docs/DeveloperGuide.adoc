@@ -969,7 +969,7 @@ b. Require developers to download those libraries manually (this creates extra w
 |Name |Minor Enhancement |Major Enhancement
 |Lee Yong Ler | Adding of `TimeTable` class and into the `Person` class. This allows user to enter their time table into the address book, making it easy for them to know their time table.|Data encryption system to allow the `addressbook.xml` to be encrypted when not in use. A `password` command will also be added for user to key in their own password. This ensure that the privacy of users are respected and information in the address book is confidential. NUS students would be able to store sensitive information like time table without fear of them leaking.
 |Loh Cai Jun | Implementing Model and Storage component of Vacant study rooms finder feature to help user to find vacant study rooms nearby. | Importing, exporting, and uploading StardyTogether file feature to allow user to transfer selected data to other users, transfer to different computers, store and restore backup of StardyTogether easily.
-|Ong Jing Yin | Implementing the Logic and UI component of the Vacant Room Finder feature. Users can view the vacancy status of all the rooms in the building they have requested for. Implementing the Google Maps Feature to nagivate locations within and outside of NUS easily.|Creating the Customized Alias Feature which allows users to set their own short cuts or intuitive naming for all existing commands to enhance the personalization and user-friendliness of our application. 
+|Ong Jing Yin | Implementing the Logic and UI component of the Vacant Room Finder feature. Users can view the vacancy status of all the rooms in the building they have requested for. Implementing the Google Maps Feature to nagivate locations within and outside of NUS easily.|Creating the Customized Alias Feature which allows users to set their own short cuts or intuitive naming for all existing commands to enhance the personalization and user-friendliness of our application.
 |Wayne Neo| In charge of Model and Logic for Timetable. User can enter their timetable and compare their timetables to find common slots for easy 'stardying' together| Birthdays system helps User to keep track of their friend's birthdays and remind them promptly if its their birthday today
 |=======================================================================
 
@@ -1094,14 +1094,14 @@ Use case resumes at step 2
 * 3a. The given location is invalid.
 +
 [none]
-** 3a1. StardyTogether shows an error message.
+** 3a1. StardyTogether displays an error message.
 +
 Use case resumes at step 2.
 
 * 4a. StardyTogether cannot retrieve the information online
 +
 [none]
-** 4a1. StardyTogether shows an error message
+** 4a1. StardyTogether displays an error message
 ** 4a2. StardyTogether attempts to reconnect
 ** 4a3. If problem persists, StardyTogether directs User to troubleshooting
 +
@@ -1124,14 +1124,14 @@ Use case ends.
 * 3a. Incorrect number of arguments specified.
 +
 [none]
-** 3a1. StardyTogether shows an error message.
+** 3a1. StardyTogether displays an error message.
 +
 Use case resumes at step 3.
 
 * 4a. Invalid command or alias specified.
 +
 [none]
-** 4a1. StardyTogether shows an error message
+** 4a1. StardyTogether displays an error message
 ** 4a2. User re-enters command and alias
 Steps 4a1-4a2 are repeated until the command and alias entered are valid.
 +

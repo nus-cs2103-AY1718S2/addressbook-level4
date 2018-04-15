@@ -9,7 +9,9 @@ import java.util.Arrays;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
+import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
@@ -46,11 +48,12 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
         try {
             Index targetPatientIndex = ParserUtil.parseIndex(argsArray[PATIENT_INDEX_INDEX]);
+            DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[DATE_INDEX] + " "
+                    + argsArray[TIME_INDEX]);
+            return new AddAppointmentCommand(targetPatientIndex, appointmentDateTime);
         } catch (IllegalValueException e) {
-            e.printStackTrace();
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    DeleteAppointmentCommand.MESSAGE_USAGE));
         }
-
-        return new AddAppointmentCommand(new NameContainsKeywordsPredicate(Arrays.asList(argsArray)), argsArray[1],
-                argsArray[2]);
     }
 }

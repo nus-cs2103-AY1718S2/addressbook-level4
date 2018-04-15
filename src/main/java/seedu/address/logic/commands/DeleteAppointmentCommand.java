@@ -27,10 +27,6 @@ public class DeleteAppointmentCommand extends Command {
     public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled. \n "
             + "Enter view appointment command to get updated calendar view.";
 
-    public static final String MESSAGE_APPOINTMENT_INDEX_INVALID = "The appointment index provided is invalid";
-
-    public static final String MESSAGE_DELETE_PAST_APPOINTMENT = "Past appointments cannot be deleted.";
-
     public static final String MESSAGE_APPOINTMENT_CANNOT_BE_FOUND = "Appointment cannot be found.";
 
     private final Index targetPatientIndex;

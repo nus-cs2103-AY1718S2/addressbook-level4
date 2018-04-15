@@ -247,7 +247,7 @@ The following diagram shows the class diagram of the `Model` component.
 It describes the overall structure of the `Model` component, along with all its sub-components.
 
 .Class diagram of the `Model` component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.jpg[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
@@ -255,6 +255,9 @@ The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores a `StorageCalendar` object that contains all appointments.
+* stores a `CalendarSource` object that is used to display the calendar.
+* stores a list of appointments which will be displayed for `listAppointment` command.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
@@ -601,7 +604,7 @@ Right now, the addAppointment command takes in up to 8 parameters. They are:
 * Start Time
 * End Date
 * End Time
-* Celebrity indices
+* Celebrity Indices
 * Point of Contact Indices
 
 The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:

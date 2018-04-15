@@ -5,7 +5,6 @@ import static java.util.Objects.requireNonNull;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,8 +15,8 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 
-import seedu.address.model.person.Appointment;
-import seedu.address.model.person.Birthday;
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
 import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniqueGroupList;
@@ -213,18 +212,8 @@ public class AddressBook implements ReadOnlyAddressBook {
     /**
      * Exports the calendar events to the user's Google Calendar
      */
-    public void exportCalendar() {
-        List<Birthday> birthdays = new ArrayList<>();
-        List<Appointment> appointments = new ArrayList<>();
-        for (Person person : persons) {
-            birthdays.add(person.getBirthday());
-            appointments.add(person.getAppointment());
-        }
-        try {
-            GoogleCalendarClient.insertCalendar(persons);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
+    public void exportCalendar() throws CalendarAccessDeniedException, ConnectivityIssueException {
+        GoogleCalendarClient.insertCalendar(persons);
     }
     //@@author
 

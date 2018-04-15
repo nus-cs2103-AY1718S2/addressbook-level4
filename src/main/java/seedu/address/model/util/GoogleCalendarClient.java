@@ -1,7 +1,9 @@
 package seedu.address.model.util;
 
+import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.InetAddress;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -22,6 +24,8 @@ import com.google.api.services.calendar.model.CalendarListEntry;
 import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
+import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
+import seedu.address.model.export.exceptions.ConnectivityIssueException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 
@@ -60,10 +64,26 @@ public class GoogleCalendarClient {
     }
 
     /**
-     *
+     * Checks internet connectivity of application.
+     * Export calendar can only be run with internet access
+     * @throws ConnectivityIssueException
+     */
+    public static void checkInternetConnection() throws ConnectivityIssueException {
+        try {
+            InetAddress byName = InetAddress.getByName("www.google.com");
+            if (!byName.isReachable(1000)) {
+                throw new ConnectivityIssueException();
+            }
+        } catch (IOException e) {
+            throw new ConnectivityIssueException();
+        }
+    }
+
+    /**
+     * Authorizes a user using the authorization code flow supported by Google OAuth API
      * @return a Credential object
      */
-    public static Credential authorize() {
+    public static Credential authorize() throws CalendarAccessDeniedException, ConnectivityIssueException {
         try {
             InputStream in = GoogleCalendarClient.class.getResourceAsStream("/oAuth/client_secret.json");
             InputStreamReader inputStreamReader = new InputStreamReader(in);
@@ -72,27 +92,38 @@ public class GoogleCalendarClient {
             GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                     httpTransport, jsonFactory, clientSecrets, SCOPES
             ).build();
-
+            checkInternetConnection();
             return new AuthorizationCodeInstalledApp(flow, new LocalServerReceiver()).authorize("user");
-        } catch (Exception e) {
-            System.out.println(e);
+        } catch (IOException e) {
+            throw new CalendarAccessDeniedException();
         }
-        return null;
     }
 
-    private static void setEventDates (Event event, String date) {
+    /**
+     * @param date string in "dd-mm-yyyy" format
+     * @return string in "yyyy-mm-dd" format
+     */
+    private static String formatDate(String date) {
         String[] dates = date.split("-");
-        String day = dates[0];
-        String month = dates[1];
-        String year = dates[2];
+        return dates[2] + "-" + dates[1] + "-" + dates[0];
+    }
 
-        DateTime startDateTime = new DateTime(year + "-" + month + "-" + day + "T00:00:00+08:00");
-        EventDateTime startEventDateTime = new EventDateTime().setDateTime(startDateTime).setTimeZone("Asia/Singapore");
+    /**
+     * @param date date of the event
+     * @return an EventDateTime object for the specified date
+     */
+    private static EventDateTime createEventDateTime(String date) {
+        DateTime dateTime = new DateTime(formatDate(date));
+        return new EventDateTime().setDateTime(dateTime).setTimeZone("Asia/Singapore");
+    }
 
-        DateTime endDateTime = new DateTime(year + "-" + month + "-" + day + "T23:59:59+08:00");
-        EventDateTime endEventDateTime = new EventDateTime().setDateTime(endDateTime).setTimeZone("Asia/Singapore");
-
-        event.setStart(startEventDateTime).setEnd(endEventDateTime);
+    /**
+     * @param event event to set start and end dateTimes
+     * @param date date to use for the event
+     */
+    private static void setEventDates (Event event, String date) {
+        EventDateTime eventDateTime = createEventDateTime(date);
+        event.setStart(eventDateTime).setEnd(eventDateTime);
     }
 
     /**
@@ -134,7 +165,8 @@ public class GoogleCalendarClient {
      * @param persons UniquePersonList to make the Calendar out of
      * @throws Exception if the Google API Client fails
      */
-    public static void insertCalendar(UniquePersonList persons) throws Exception {
+    public static void insertCalendar(UniquePersonList persons)
+            throws CalendarAccessDeniedException, ConnectivityIssueException {
         Credential credentials = GoogleCalendarClient.authorize();
 
         Calendar service = new Calendar.Builder(httpTransport, jsonFactory, credentials)
@@ -143,27 +175,31 @@ public class GoogleCalendarClient {
         String existingCalendarId = getExistingCalendarId(service, "reInsurance Events");
 
         // If the reInsurance Events calendar already exists, delete it
-        if (existingCalendarId != null) {
-            service.calendars().delete(existingCalendarId).execute();
-        }
+        try {
+            if (existingCalendarId != null) {
+                service.calendars().delete(existingCalendarId).execute();
+            }
 
-        // Create a new calendar
-        com.google.api.services.calendar.model.Calendar calendar =
-                new com.google.api.services.calendar.model.Calendar();
-        calendar.setSummary("reInsurance Events");
-        calendar.setTimeZone("Asia/Singapore");
+            // Create a new calendar
+            com.google.api.services.calendar.model.Calendar calendar =
+                    new com.google.api.services.calendar.model.Calendar();
+            calendar.setSummary("reInsurance Events");
+            calendar.setTimeZone("Asia/Singapore");
 
-        // Insert the new calendar
-        com.google.api.services.calendar.model.Calendar createdCalendar =
-                service.calendars().insert(calendar).execute();
+            // Insert the new calendar into the Google Account
+            com.google.api.services.calendar.model.Calendar createdCalendar =
+                    service.calendars().insert(calendar).execute();
 
-        // Get created calendar Id
-        String calendarId = createdCalendar.getId();
+            // Get created calendar Id
+            String calendarId = createdCalendar.getId();
 
-        // Insert events into create calendar
-        List<Event> events = createEvents(persons);
-        for (Event event : events) {
-            service.events().insert(calendarId, event).execute();
+            // Insert events into create calendar
+            List<Event> events = createEvents(persons);
+            for (Event event : events) {
+                service.events().insert(calendarId, event).execute();
+            }
+        } catch (IOException e) {
+            //TODO: Handle this
         }
     }
 
@@ -178,9 +214,8 @@ public class GoogleCalendarClient {
                     return calendarListEntry.getId();
                 }
             }
-        } catch (Exception e) {
-            System.out.println("Unable to get CalendarList from Google Calendar");
-            System.out.println(e);
+        } catch (IOException e) {
+            //TODO: Handle this
         }
 
         return null;

@@ -1,69 +1,287 @@
 # AzuraAiR
-###### \java\seedu\address\commons\events\ui\BirthdayListEvent.java
+###### /resources/view/BirthdayList.fxml
+``` fxml
+<?import javafx.scene.control.ScrollPane?>
+<StackPane fx:id="birthdayPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <ScrollPane fx:id="scrollPane" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <TextArea fx:id="birthdayList" editable="false" />
+      </ScrollPane>
+   </children>
+</StackPane>
+```
+###### /resources/view/TimetableUnionPanel.fxml
+``` fxml
+
+<StackPane fx:id="timetableUnionPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <TableView fx:id="timetableUnion" stylesheets="@DarkTheme.css">
+         <columns>
+             <TableColumn fx:id="day" prefWidth="100.0" text="" />
+             <TableColumn fx:id="eightAm" prefWidth="60.0" text="0800" />
+             <TableColumn fx:id="nineAm" prefWidth="60.0" text="0900" />
+             <TableColumn fx:id="tenAm" prefWidth="60.0" text="1000" />
+             <TableColumn fx:id="elevenAm" prefWidth="60.0" text="1100" />
+             <TableColumn fx:id="twelvePm" prefWidth="60.0" text="1200" />
+             <TableColumn fx:id="onePm" prefWidth="60.0" text="1300" />
+             <TableColumn fx:id="twoPm" prefWidth="60.0" text="1400" />
+             <TableColumn fx:id="threePm" prefWidth="60.0" text="1500" />
+             <TableColumn fx:id="fourPm" prefWidth="60.0" text="1600" />
+             <TableColumn fx:id="fivePm" prefWidth="60.0" text="1700" />
+             <TableColumn fx:id="sixPm" prefWidth="60.0" text="1800" />
+             <TableColumn fx:id="sevenPm" prefWidth="60.0" text="1900" />
+             <TableColumn fx:id="eightPm" prefWidth="60.0" text="2000" />
+         </columns></TableView>
+    </children>
+</StackPane>
+```
+###### /java/seedu/address/ui/BirthdayNotification.java
 ``` java
 /**
- * Represents a call for the Birthday List to be displayed
+ * A ui for the notification dialog that is displayed at the start of the application or
+ * after `birthdays today` is called.
  */
-public class BirthdayListEvent extends BaseEvent {
+public class BirthdayNotification extends UiPart<Region> {
 
-    private final String birthdayList;
+    public static final String NOTIFICATION_TITLE = "Birthdays Today";
+    public static final String NOTIFICATION_HEADER_TEXT = "Birthday(s) on ";
 
-    public BirthdayListEvent(String newList) {
-        this.birthdayList = newList;
+    private static final String FXML = "BirthdayList.fxml";
+
+    private final Logger logger = LogsCenter.getLogger(this.getClass());
+
+    public BirthdayNotification() {
+        super(FXML);
+        registerAsAnEventHandler(this);
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
+    @Subscribe
+    private void handleBirthdayNotificationEvent(BirthdayNotificationEvent event) {
+        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
 
-    public String getBirthdayList() {
-        return birthdayList;
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
+        alert.setTitle(NOTIFICATION_TITLE);
+        alert.setHeaderText(NOTIFICATION_HEADER_TEXT + dtf.format(event.getCurrentDate()));
+        alert.setContentText(event.getBirthdayList());
+        alert.getDialogPane().setId("birthdayDialogPane");
+        alert.showAndWait();
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\BirthdayNotificationEvent.java
+###### /java/seedu/address/ui/TimetableUnionPanel.java
+``` java
+
+/**
+ * A ui for the info panel that is displayed when the timetable command is called.
+ */
+public class TimetableUnionPanel extends UiPart<Region> {
+    private static final String COLUMNHEADER_STYLE_CLASS = "column-header";
+    private static final String TABLECELL_STYLE_CLASS = "table-cell";
+    private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
+    private static final String[] MOD_COLOR_STYLES = { "modteal", "modsandybrown", "modplum", "modyellow",
+                                                         "modyellow"};
+    private static final String FXML = "TimetableUnionPanel.fxml";
+
+    private ArrayList<TableColumn<ArrayList<String>, String>> columns;
+    @FXML
+    private TableView timetableUnion;
+    @FXML
+    private TableColumn<ArrayList<String>, String> day;
+    @FXML
+    private TableColumn<ArrayList<String>, String> eightAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> nineAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> tenAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> elevenAm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> twelvePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> onePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> twoPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> threePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> fourPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> fivePm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> sixPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> sevenPm;
+    @FXML
+    private TableColumn<ArrayList<String>, String> eightPm;
+
+
+    public TimetableUnionPanel() {
+        super(FXML);
+        timetableUnion.setItems(null);
+    }
+
+    public TimetableUnionPanel(ObservableList<ArrayList<String>> schedules) {
+        super(FXML);
+        timetableUnion.setItems(schedules);
+        timetableUnion.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        initializeColumns();
+        initializeTableColumns();
+        day.setMinWidth(100);
+        day.setMaxWidth(100);
+    }
+
+    /**
+     * Initializes columns
+     */
+    private void initializeColumns() {
+        columns = new ArrayList<>();
+        columns.add(day);
+        columns.add(eightAm);
+        columns.add(nineAm);
+        columns.add(tenAm);
+        columns.add(elevenAm);
+        columns.add(twelvePm);
+        columns.add(onePm);
+        columns.add(twoPm);
+        columns.add(threePm);
+        columns.add(fourPm);
+        columns.add(fivePm);
+        columns.add(sixPm);
+        columns.add(sevenPm);
+        columns.add(eightPm);
+    }
+
+    /**
+     * Initializes table columns
+     */
+    private void initializeTableColumns() {
+        for (int i = 0; i < columns.size(); i++) {
+            final int j = i;
+            columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
+            columns.get(i).impl_setReorderable(false);
+            if (j != 0) {
+                columns.get(i).setMinWidth(75);
+                columns.get(i).setMaxWidth(200);
+            }
+
+        }
+    }
+
+    /**
+     * Sets the columns to the style for each value.
+     */
+    public void setStyle() {
+        for (int i = 0; i < columns.size(); i++) {
+            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
+            setStyleForColumn(columnToBeSet);
+        }
+    }
+
+    /**
+     * Sets the style of each column.
+     * @param columnToBeSet is the column that would be set
+     */
+    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
+        columnToBeSet.setCellFactory(column -> {
+            return setStyleForCell();
+        });
+    }
+
+    /**
+     * Sets the style of the cell given the data and return it
+     * @return the tablecell with its style set.
+     */
+    private TableCell<ArrayList<String>, String> setStyleForCell () {
+        return new TableCell<ArrayList<String>, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (item == null || empty) {
+                    setText(null);
+                    setStyle("");
+                } else {
+                    setText(item);
+                    removeAllStyle(this);
+                    if ("".equals(getItem())) {
+                        getStyleClass().add(EMPTY_STYLE_CLASS);
+                    } else if (StringUtil.isDay(getItem())) {
+                        getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
+                    } else {
+                        getStyleClass().add(getColorStyleFor(getItem()));
+                    }
+                }
+            }
+        };
+    }
+
+
+    /**
+     * Removes all styles present in cell
+     * @param tableCell Cell with its style to be removed
+     */
+    private static void removeAllStyle(TableCell<ArrayList<String>, String> tableCell) {
+        for (String color : MOD_COLOR_STYLES) {
+            tableCell.getStyleClass().remove(color);
+        }
+        tableCell.getStyleClass().remove(EMPTY_STYLE_CLASS);
+        tableCell.getStyleClass().remove(TABLECELL_STYLE_CLASS);
+    }
+
+    /**
+     * Returns a Color Style for the Module based on its hashcode.
+     * @param modName
+     * @return colorStyle for {@code modName}'s label.
+     */
+    private static String getColorStyleFor(String modName) {
+        return MOD_COLOR_STYLES[Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length];
+    }
+}
+```
+###### /java/seedu/address/ui/BirthdayList.java
 ``` java
 /**
- * Represents a call for the Birthday Notification to be displayed
+ * A ui for the birthday list that is displayed at the InfoPanel after `birthdays` is called
  */
-public class BirthdayNotificationEvent extends BaseEvent {
+public class BirthdayList extends UiPart<Region> {
 
-    private final String birthdayList;
-    private final LocalDate currentDate;
+    private static final String FXML = "BirthdayList.fxml";
 
-    public BirthdayNotificationEvent(String newList, LocalDate today) {
-        this.birthdayList = newList;
-        this.currentDate = today;
+    private final StringProperty displayed = new SimpleStringProperty("");
+
+    @FXML
+    private TextArea birthdayList;
+    @FXML
+    private ScrollPane scrollPane;
+
+    public BirthdayList() {
+        super(FXML);
+        birthdayList.textProperty().bind(displayed);
+        scrollPane.setContent(birthdayList);
+        scrollPane.setFitToWidth(true);
+        scrollPane.setFitToHeight(true);
+
     }
 
-    @Override
-    public String toString() {
-        return this.getClass().getSimpleName();
-    }
-
-    public String getBirthdayList() {
-        return birthdayList;
-    }
-
-    public LocalDate getCurrentDate() {
-        return currentDate;
+    public void loadList(String list) {
+        Platform.runLater(() -> displayed.setValue(list));
     }
 
 }
 ```
-###### \java\seedu\address\commons\exceptions\NoInternetConnectionException.java
+###### /java/seedu/address/ui/InfoPanel.java
 ``` java
-/**
- * Represents an error in trying to obtain the long url from the shortened Timetable URL
- */
-public class NoInternetConnectionException extends Exception {
-    public NoInternetConnectionException(String message) {
-        super(message);
+    @Subscribe
+    private void handleBirthdayListEvent(BirthdayListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+
+        birthdayList.loadList(event.getBirthdayList());
+        birthdayPlaceholder.toFront();
     }
-}
 ```
-###### \java\seedu\address\commons\util\timetable\Lesson.java
+###### /java/seedu/address/commons/util/timetable/Lesson.java
 ``` java
 /**
  * Represents a lesson that a module has
@@ -123,7 +341,7 @@ public class Lesson {
     }
 }
 ```
-###### \java\seedu\address\commons\util\timetable\TimetableParserUtil.java
+###### /java/seedu/address/commons/util/timetable/TimetableParserUtil.java
 ``` java
 /**
  * Utility functions to parse a shortened NUSMods url to create TimetableData
@@ -344,7 +562,251 @@ public class TimetableParserUtil {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\BirthdaysCommand.java
+###### /java/seedu/address/commons/exceptions/NoInternetConnectionException.java
+``` java
+/**
+ * Represents an error in trying to obtain the long url from the shortened Timetable URL
+ */
+public class NoInternetConnectionException extends Exception {
+    public NoInternetConnectionException(String message) {
+        super(message);
+    }
+}
+```
+###### /java/seedu/address/commons/events/ui/BirthdayNotificationEvent.java
+``` java
+/**
+ * Represents a call for the Birthday Notification to be displayed
+ */
+public class BirthdayNotificationEvent extends BaseEvent {
+
+    private final String birthdayList;
+    private final LocalDate currentDate;
+
+    public BirthdayNotificationEvent(String newList, LocalDate today) {
+        this.birthdayList = newList;
+        this.currentDate = today;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getBirthdayList() {
+        return birthdayList;
+    }
+
+    public LocalDate getCurrentDate() {
+        return currentDate;
+    }
+
+}
+```
+###### /java/seedu/address/commons/events/ui/BirthdayListEvent.java
+``` java
+/**
+ * Represents a call for the Birthday List to be displayed
+ */
+public class BirthdayListEvent extends BaseEvent {
+
+    private final String birthdayList;
+
+    public BirthdayListEvent(String newList) {
+        this.birthdayList = newList;
+    }
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+
+    public String getBirthdayList() {
+        return birthdayList;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/TimetableUnionCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new TimetableUnionCommand object
+ */
+public class TimetableUnionCommandParser implements Parser<TimetableUnionCommand> {
+    private static final String SPLIT_TOKEN = " ";
+    private static final int ODD_EVEN_INDEX = 0;
+    /**
+     * Parses the given {@code String} of arguments in the context of the TimetableUnionCommand
+     * and returns an TimetableUnionCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TimetableUnionCommand parse(String args) throws ParseException {
+        try {
+            String trimmedArgs = args.trim();
+            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+            if (splitArgs.length < 3) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimetableUnionCommand.MESSAGE_USAGE));
+            }
+            ArrayList<Index> indexes = new ArrayList<Index>();
+            String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
+
+            for (int i = ODD_EVEN_INDEX + 1; i < splitArgs.length; i++) {
+                Index indexToAdd = ParserUtil.parseIndex(splitArgs[i]);
+                if (!indexes.contains(indexToAdd)) {
+                    indexes.add(indexToAdd);
+                } else {
+                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                            TimetableUnionCommand.MESSAGE_USAGE));
+                }
+
+            }
+
+            return new TimetableUnionCommand(indexes, oddEven);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimetableUnionCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+
+```
+###### /java/seedu/address/logic/parser/BirthdaysCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new BirthdaysCommand object
+ */
+public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the BirthdaysCommand
+     * and returns an BirthdaysCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public BirthdaysCommand parse(String args) throws ParseException {
+        args = args.trim();
+        String[] trimmedArgs = args.split("\\s+");
+
+        if (trimmedArgs.length == 1) {   // Only birthdays alone is called
+            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)) {  // Check if valid
+                return new BirthdaysCommand(true);
+            } else if (trimmedArgs[0].equalsIgnoreCase("")) {
+                return new BirthdaysCommand(false);
+            } else {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
+            }
+        } else {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
+        }
+
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/TimetableUnionCommand.java
+``` java
+/**
+ * Retrieves the unified timetable of the persons identified using it's last displayed index from StardyTogether
+ */
+public class TimetableUnionCommand extends Command {
+    public static final String COMMAND_WORD = "union";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the unified timetable of the persons entered\n"
+            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 [INDEX3]..."
+            + "(There must be a minimum number of 2 indexes, "
+            + "which must be unique positive integers and separated by one space)\n"
+            + "Example: " + COMMAND_WORD + "Odd " + "1 " + "2 " + "3";
+
+    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Combined Timetable: %2$s";
+
+    private final ArrayList<Index> targetIndexes;
+    private final String oddEven;
+    private ArrayList<Person> personsToShow;
+    private ArrayList<Timetable> timetablesToShow;
+
+    public TimetableUnionCommand(ArrayList<Index> targetIndexes, String oddEven) {
+        requireNonNull(targetIndexes);
+        requireNonNull(oddEven);
+        this.targetIndexes = targetIndexes;
+        this.oddEven = oddEven;
+        personsToShow = new ArrayList<Person>();
+        timetablesToShow = new ArrayList<Timetable>();
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
+        preprocess();
+
+        int oddEvenIndex = StringUtil.getOddEven(oddEven).getZeroBased();
+        ArrayList<ArrayList<String>> commonTimeTable = Timetable.unionTimetable(timetablesToShow).get(oddEvenIndex);
+        ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(commonTimeTable);
+        EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
+        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, StringUtil.capitalize(oddEven),
+                printNames()));
+    }
+
+    /**
+     * Preprocess the required data for execution.
+     * @throws CommandException when index out of bound
+     */
+    protected void preprocess() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+        for (Index targetIndex : targetIndexes) {
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            }
+        }
+
+        for (Index targetIndex : targetIndexes) {
+            personsToShow.add(lastShownList.get(targetIndex.getZeroBased()));
+        }
+
+        for (Person person : personsToShow) {
+            timetablesToShow.add(person.getTimetable());
+        }
+
+    }
+
+    /**
+     * Prints the names in personsToShow
+     */
+    protected String printNames() {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < personsToShow.size(); i++) {
+            sb.append(personsToShow.get(i).getName());
+            if (i != personsToShow.size() - 1) {
+                sb.append(", ");
+            }
+        }
+
+        sb.append("\n");
+
+        return sb.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof TimetableUnionCommand // instanceof handles nulls
+                && this.targetIndexes.equals(((TimetableUnionCommand) other).targetIndexes) // state check
+                && this.oddEven.equals(((TimetableUnionCommand) other).oddEven)
+                && Objects.equals(this.personsToShow, ((TimetableUnionCommand) other).personsToShow));
+
+    }
+
+    @Override
+    public String toString() {
+        return targetIndexes.toString() + " " + oddEven + " " + personsToShow;
+    }
+}
+```
+###### /java/seedu/address/logic/commands/BirthdaysCommand.java
 ``` java
 /**
  * Shows either the birthday list or notification of Persons in StardyTogether
@@ -496,187 +958,7 @@ public class BirthdaysCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\TimetableUnionCommand.java
-``` java
-/**
- * Retrieves the unified timetable of the persons identified using it's last displayed index from StardyTogether
- */
-public class TimetableUnionCommand extends Command {
-    public static final String COMMAND_WORD = "union";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the unified timetable of the persons entered\n"
-            + "Parameters: INDEX ODD/EVEN INDEX1 INDEX2 [INDEX3]..."
-            + "(There must be a minimum number of 2 indexes, "
-            + "which must be unique positive integers and separated by one space)\n"
-            + "Example: " + COMMAND_WORD + "Odd " + "1 " + "2 " + "3";
-
-    public static final String MESSAGE_SELECT_PERSON_SUCCESS = "%1$s Combined Timetable: %2$s";
-
-    private final ArrayList<Index> targetIndexes;
-    private final String oddEven;
-    private ArrayList<Person> personsToShow;
-    private ArrayList<Timetable> timetablesToShow;
-
-    public TimetableUnionCommand(ArrayList<Index> targetIndexes, String oddEven) {
-        requireNonNull(targetIndexes);
-        requireNonNull(oddEven);
-        this.targetIndexes = targetIndexes;
-        this.oddEven = oddEven;
-        personsToShow = new ArrayList<Person>();
-        timetablesToShow = new ArrayList<Timetable>();
-    }
-
-    @Override
-    public CommandResult execute() throws CommandException {
-        requireNonNull(model);
-
-        preprocess();
-
-        int oddEvenIndex = StringUtil.getOddEven(oddEven).getZeroBased();
-        ArrayList<ArrayList<String>> commonTimeTable = Timetable.unionTimetable(timetablesToShow).get(oddEvenIndex);
-        ObservableList<ArrayList<String>> timeTableList = FXCollections.observableArrayList(commonTimeTable);
-        EventsCenter.getInstance().post(new TimeTableEvent(timeTableList));
-        return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, StringUtil.capitalize(oddEven),
-                printNames()));
-    }
-
-    /**
-     * Preprocess the required data for execution.
-     * @throws CommandException when index out of bound
-     */
-    protected void preprocess() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-        for (Index targetIndex : targetIndexes) {
-            if (targetIndex.getZeroBased() >= lastShownList.size()) {
-                throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-            }
-        }
-
-        for (Index targetIndex : targetIndexes) {
-            personsToShow.add(lastShownList.get(targetIndex.getZeroBased()));
-        }
-
-        for (Person person : personsToShow) {
-            timetablesToShow.add(person.getTimetable());
-        }
-
-    }
-
-    /**
-     * Prints the names in personsToShow
-     */
-    protected String printNames() {
-        StringBuilder sb = new StringBuilder();
-
-        for (int i = 0; i < personsToShow.size(); i++) {
-            sb.append(personsToShow.get(i).getName());
-            if (i != personsToShow.size() - 1) {
-                sb.append(", ");
-            }
-        }
-
-        sb.append("\n");
-
-        return sb.toString();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof TimetableUnionCommand // instanceof handles nulls
-                && this.targetIndexes.equals(((TimetableUnionCommand) other).targetIndexes) // state check
-                && this.oddEven.equals(((TimetableUnionCommand) other).oddEven)
-                && Objects.equals(this.personsToShow, ((TimetableUnionCommand) other).personsToShow));
-
-    }
-
-    @Override
-    public String toString() {
-        return targetIndexes.toString() + " " + oddEven + " " + personsToShow;
-    }
-}
-```
-###### \java\seedu\address\logic\parser\BirthdaysCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new BirthdaysCommand object
- */
-public class BirthdaysCommandParser implements Parser<BirthdaysCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the BirthdaysCommand
-     * and returns an BirthdaysCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public BirthdaysCommand parse(String args) throws ParseException {
-        args = args.trim();
-        String[] trimmedArgs = args.split("\\s+");
-
-        if (trimmedArgs.length == 1) {   // Only birthdays alone is called
-            if (trimmedArgs[0].equalsIgnoreCase(BirthdaysCommand.ADDITIONAL_COMMAND_PARAMETER)) {  // Check if valid
-                return new BirthdaysCommand(true);
-            } else if (trimmedArgs[0].equalsIgnoreCase("")) {
-                return new BirthdaysCommand(false);
-            } else {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
-            }
-        } else {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, BirthdaysCommand.MESSAGE_USAGE));
-        }
-
-    }
-
-}
-```
-###### \java\seedu\address\logic\parser\TimetableUnionCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new TimetableUnionCommand object
- */
-public class TimetableUnionCommandParser implements Parser<TimetableUnionCommand> {
-    private static final String SPLIT_TOKEN = " ";
-    private static final int ODD_EVEN_INDEX = 0;
-    /**
-     * Parses the given {@code String} of arguments in the context of the TimetableUnionCommand
-     * and returns an TimetableUnionCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public TimetableUnionCommand parse(String args) throws ParseException {
-        try {
-            String trimmedArgs = args.trim();
-            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
-            if (splitArgs.length < 3) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimetableUnionCommand.MESSAGE_USAGE));
-            }
-            ArrayList<Index> indexes = new ArrayList<Index>();
-            String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
-
-            for (int i = ODD_EVEN_INDEX + 1; i < splitArgs.length; i++) {
-                Index indexToAdd = ParserUtil.parseIndex(splitArgs[i]);
-                if (!indexes.contains(indexToAdd)) {
-                    indexes.add(indexToAdd);
-                } else {
-                    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                            TimetableUnionCommand.MESSAGE_USAGE));
-                }
-
-            }
-
-            return new TimetableUnionCommand(indexes, oddEven);
-
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimetableUnionCommand.MESSAGE_USAGE));
-        }
-    }
-
-}
-
-```
-###### \java\seedu\address\model\person\Birthday.java
+###### /java/seedu/address/model/person/Birthday.java
 ``` java
 /**
  * Represents a Person's birthday in the address book.
@@ -848,125 +1130,7 @@ public class Birthday {
 }
 
 ```
-###### \java\seedu\address\model\person\timetable\Timetable.java
-``` java
-/**
- * Represents a Person's timetable in the address book
- */
-public class Timetable {
-
-    public static final String EMPTY_LINK = "";
-    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
-    public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
-    public static final String NUSMODS_SHORT = "modsn.us";
-    public static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
-    public static final String MESSAGE_URL_CONSTRAINTS =
-            "Timetable URL should only be NUSMods shortened URLs";
-    public static final String MESSAGE_INVALID_URL =
-            "The given NUSMods URL is invalid";
-
-    public final String value;
-
-    private TimetableData data;
-
-    public Timetable(String url) {
-        requireNonNull(url);
-        String trimmedUrl = url.trim();
-        this.value = trimmedUrl;
-        // Create new empty timetable if url is empty or a dummy link
-        if (trimmedUrl.equals(EMPTY_LINK) || trimmedUrl.equals(DUMMY_LINK_ONE) || trimmedUrl.equals(DUMMY_LINK_TWO)) {
-            this.data = new TimetableData();
-            return;
-        }
-
-        checkArgument(isValidUrl(trimmedUrl), MESSAGE_URL_CONSTRAINTS);
-
-        try {
-            this.data = parseUrl(trimmedUrl);
-        } catch (ParseException pe) {
-            this.data = new TimetableData(); // Create new empty timetable if url fails
-        }
-    }
-
-    /**
-     * Checks if string is a valid shortened NUSMods url
-     * @param test
-     * @return true if it follows the format of a valid shortened NUSMods url
-     *         false if it doesn't
-     */
-    public static boolean isValidUrl(String test) {
-        Matcher matcher = Pattern.compile(URL_HOST_REGEX).matcher(test);
-        if (!matcher.find()) {
-            return false;
-        }
-
-        String hostName = matcher.group()
-                .substring(2, matcher.group().length() - 1);
-        return hostName.equals(NUSMODS_SHORT);
-    }
-
-    /**
-     * Returns the lesson at the specified slot, null if empty
-     * @param week the week the lesson is found at
-     * @param day the day the lesson is found at
-     * @param timeSlot the timeslot the lesson is found at
-     * @return Lesson found at that slot, null if slot is empty
-     * @throws IllegalValueException when week,day,timeslot are invalid values
-     */
-    public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
-        return data.getLessonFromSlot(week, day, timeSlot);
-    }
-
-    /**
-     * Adds a lesson to the timetable
-     * @param lessonToAdd lesson to be added
-     * @throws IllegalValueException when week,day,timeslot are invalid values
-     */
-    public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
-        data.addLessonToSlot(lessonToAdd);
-    }
-
-    /**
-     * Returns the timetable
-     * @return Timetable as an Array
-     */
-    public ArrayList<ArrayList<ArrayList<String>>> getTimetable() {
-        return data.getTimeTable();
-    }
-
-    /**
-     * Returns the unified timetable
-     * @return Timetable as an Array
-     */
-    public static ArrayList<ArrayList<ArrayList<String>>> unionTimetable(ArrayList<Timetable> timetables) {
-        ArrayList<TimetableData> t = new ArrayList<TimetableData>();
-
-        for (Timetable timetable : timetables) {
-            t.add(timetable.data);
-        }
-        return TimetableData.unionTimeTable(t);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Timetable // instanceof handles nulls
-                && this.value.equals(((Timetable) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-}
-```
-###### \java\seedu\address\model\person\timetable\TimetableData.java
+###### /java/seedu/address/model/person/timetable/TimetableData.java
 ``` java
 /**
  * Represents the data of the timetable
@@ -1084,178 +1248,7 @@ public class TimetableData {
 
 }
 ```
-###### \java\seedu\address\model\person\timetable\TimetableDay.java
-``` java
-/**
- * Represents a day in the timetable
- */
-public class TimetableDay {
-
-    public static final int NUM_OF_SLOTS = 24;
-    public static final String MESSAGE_INVALID_TIMESLOT = "Time slot is invalid";
-    public static final String TITLE_OCCUPIED = "Occupied";
-    public static final String EMPTY_SLOT_STRING = "";
-
-    // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
-    private TimetableSlot[] timetableSlots;
-
-    public TimetableDay() {
-        timetableSlots = new TimetableSlot[NUM_OF_SLOTS];
-        for (int i = 0; i < NUM_OF_SLOTS; i++) {
-            timetableSlots[i] = new TimetableSlot();
-        }
-    }
-
-    /**
-     * Adds a lesson at its respective slot
-     * @param lessonToAdd lesson to be added
-     * @throws IllegalValueException when slot is invalid
-     */
-    public void addLessonToDay(Lesson lessonToAdd) throws IllegalValueException {
-        int startTimeIndex = parseStartEndTime(lessonToAdd.getStartTime());
-        int endTimeIndex = parseStartEndTime(lessonToAdd.getEndTime());
-
-        for (int i = startTimeIndex; i < endTimeIndex; i++) {
-            timetableSlots[i].addLessonToSlot(lessonToAdd);
-        }
-    }
-
-    /**
-     * Parses the start and time parsed from NUSMods to a index to be used for array of slots
-     * @param time timing from NUSMods
-     * @return index for slot array
-     */
-    public static int parseStartEndTime(String time) throws IllegalValueException {
-        int value = Integer.parseInt(time) / 100;
-
-        if (isValidTimeSlot(value)) {
-            return value;
-        } else {
-            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
-        }
-    }
-
-    /**
-     * Returns the lesson at the specified slot, null if slot is empty
-     * @param timeSlot
-     * @return Lesson at the specified slot, null if slot is empty
-     * @throws IllegalValueException when timeslot is invalid value
-     */
-    public Lesson getLessonFromSlot(int timeSlot) throws IllegalValueException {
-        if (timeSlot > 0 && timeSlot <= 23) {
-            return timetableSlots[timeSlot].getLesson();
-        } else {
-            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
-        }
-    }
-
-    /**
-     * Checks if the given index is valid
-     * @param index
-     * @return true or false
-     */
-    private static boolean isValidTimeSlot(int index) {
-        return (index < NUM_OF_SLOTS && index >= 0);
-    }
-
-    /**
-     * Returns the Time Table for the day
-     * @return ArrayList with the  Time Table
-     */
-    public ArrayList<String> getDailyTimeTable() {
-        ArrayList<String> timetable = new ArrayList<>();
-        for (int i = 8; i < 22; i++) {
-            TimetableSlot t = timetableSlots[i];
-            timetable.add(t.toString());
-        }
-        return timetable;
-    }
-
-    /**
-     * Returns the unified Timetable
-     * @return ArrayList with the Time Table
-     */
-    public static ArrayList<String> unionTimetableDay(ArrayList<TimetableDay> timetables) {
-        ArrayList<String> commonTimetable = new ArrayList<>();
-        boolean checker;
-
-        for (int i = 8; i < 22; i++) {
-            checker = false;
-            for (TimetableDay timetable : timetables) {
-                TimetableSlot t = timetable.timetableSlots[i];
-                if (!t.toString().equals(EMPTY_SLOT_STRING)) {
-                    checker = true;
-                    break;
-                }
-            }
-
-            if (checker) {
-                commonTimetable.add(TITLE_OCCUPIED);
-            } else {
-                commonTimetable.add(EMPTY_SLOT_STRING);
-            }
-        }
-        return commonTimetable;
-    }
-}
-```
-###### \java\seedu\address\model\person\timetable\TimetableSlot.java
-``` java
-/**
- * Represents a slot in the timetable
- */
-public class TimetableSlot {
-
-    private ArrayList<Lesson> lessons = new ArrayList<>();
-
-    /**
-     * Fills up the slot with the given lesson
-     * @param lesson
-     */
-    public void addLessonToSlot(Lesson lesson) {
-        requireNonNull(lesson);
-
-        this.lessons.add(lesson);
-    }
-
-    public Lesson getLesson() {
-        return concat(lessons);
-    }
-
-    @Override
-    public String toString() {
-        if (lessons.size() == 0) {
-            return "";
-        }
-        String resultString = new String();
-        for (Lesson lesson: lessons) {
-            resultString += lesson + " \n";
-        }
-        return resultString;
-    }
-
-    /**
-     * Merges all the lessons in this time slot.
-     * @return a merged Lesson
-     */
-    private Lesson concat(ArrayList<Lesson> lessons) {
-        String concatModCode = new String();
-        String concatClassNo = new String();
-        String concatLessonType = new String();
-
-        for (Lesson lesson: lessons) {
-            concatModCode += lesson.getModuleCode() + " ";
-            concatClassNo += lesson.getClassNo() + " ";
-            concatLessonType += lesson.getLessonType() + " ";
-        }
-        Lesson lesson = lessons.get(0);
-        Lesson concatLesson = new Lesson(concatModCode, concatClassNo, concatLessonType, lesson.getWeekType(),
-                lesson.getDay(), lesson.getStartTime(), lesson.getEndTime());
-        return concatLesson;
-    }
-}
-```
-###### \java\seedu\address\model\person\timetable\TimetableWeek.java
+###### /java/seedu/address/model/person/timetable/TimetableWeek.java
 ``` java
 /**
  * Represents a week in the timetable
@@ -1420,285 +1413,292 @@ public class TimetableWeek {
 
 }
 ```
-###### \java\seedu\address\ui\BirthdayList.java
+###### /java/seedu/address/model/person/timetable/TimetableDay.java
 ``` java
 /**
- * A ui for the birthday list that is displayed at the InfoPanel after `birthdays` is called
+ * Represents a day in the timetable
  */
-public class BirthdayList extends UiPart<Region> {
+public class TimetableDay {
 
-    private static final String FXML = "BirthdayList.fxml";
+    public static final int NUM_OF_SLOTS = 24;
+    public static final String MESSAGE_INVALID_TIMESLOT = "Time slot is invalid";
+    public static final String TITLE_OCCUPIED = "Occupied";
+    public static final String EMPTY_SLOT_STRING = "";
 
-    private final StringProperty displayed = new SimpleStringProperty("");
+    // Cut into 24-h slots. 0000 being timetableSlots[0] and 2300 being timetableSlots[23]
+    private TimetableSlot[] timetableSlots;
 
-    @FXML
-    private TextArea birthdayList;
-    @FXML
-    private ScrollPane scrollPane;
-
-    public BirthdayList() {
-        super(FXML);
-        birthdayList.textProperty().bind(displayed);
-        scrollPane.setContent(birthdayList);
-        scrollPane.setFitToWidth(true);
-        scrollPane.setFitToHeight(true);
-
-    }
-
-    public void loadList(String list) {
-        Platform.runLater(() -> displayed.setValue(list));
-    }
-
-}
-```
-###### \java\seedu\address\ui\BirthdayNotification.java
-``` java
-/**
- * A ui for the notification dialog that is displayed at the start of the application or
- * after `birthdays today` is called.
- */
-public class BirthdayNotification extends UiPart<Region> {
-
-    public static final String NOTIFICATION_TITLE = "Birthdays Today";
-    public static final String NOTIFICATION_HEADER_TEXT = "Birthday(s) on ";
-
-    private static final String FXML = "BirthdayList.fxml";
-
-    private final Logger logger = LogsCenter.getLogger(this.getClass());
-
-    public BirthdayNotification() {
-        super(FXML);
-        registerAsAnEventHandler(this);
-    }
-
-    @Subscribe
-    private void handleBirthdayNotificationEvent(BirthdayNotificationEvent event) {
-        DateTimeFormatter dtf = DateTimeFormatter.ofPattern("dd/MM/yyyy");
-
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.getDialogPane().getStylesheets().add("view/DarkTheme.css");
-        alert.setTitle(NOTIFICATION_TITLE);
-        alert.setHeaderText(NOTIFICATION_HEADER_TEXT + dtf.format(event.getCurrentDate()));
-        alert.setContentText(event.getBirthdayList());
-        alert.getDialogPane().setId("birthdayDialogPane");
-        alert.showAndWait();
-    }
-}
-```
-###### \java\seedu\address\ui\InfoPanel.java
-``` java
-    @Subscribe
-    private void handleBirthdayListEvent(BirthdayListEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-
-        birthdayList.loadList(event.getBirthdayList());
-        birthdayPlaceholder.toFront();
-    }
-```
-###### \java\seedu\address\ui\TimetableUnionPanel.java
-``` java
-
-/**
- * A ui for the info panel that is displayed when the timetable command is called.
- */
-public class TimetableUnionPanel extends UiPart<Region> {
-    private static final String COLUMNHEADER_STYLE_CLASS = "column-header";
-    private static final String TABLECELL_STYLE_CLASS = "table-cell";
-    private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
-    private static final String[] MOD_COLOR_STYLES = { "modteal", "modsandybrown", "modplum", "modyellow",
-                                                         "modyellow"};
-    private static final String FXML = "TimetableUnionPanel.fxml";
-
-    private ArrayList<TableColumn<ArrayList<String>, String>> columns;
-    @FXML
-    private TableView timetableUnion;
-    @FXML
-    private TableColumn<ArrayList<String>, String> day;
-    @FXML
-    private TableColumn<ArrayList<String>, String> eightAm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> nineAm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> tenAm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> elevenAm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> twelvePm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> onePm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> twoPm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> threePm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> fourPm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> fivePm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> sixPm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> sevenPm;
-    @FXML
-    private TableColumn<ArrayList<String>, String> eightPm;
-
-
-    public TimetableUnionPanel() {
-        super(FXML);
-        timetableUnion.setItems(null);
-    }
-
-    public TimetableUnionPanel(ObservableList<ArrayList<String>> schedules) {
-        super(FXML);
-        timetableUnion.setItems(schedules);
-        timetableUnion.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        initializeColumns();
-        initializeTableColumns();
-        day.setMinWidth(100);
-        day.setMaxWidth(100);
-    }
-
-    /**
-     * Initializes columns
-     */
-    private void initializeColumns() {
-        columns = new ArrayList<>();
-        columns.add(day);
-        columns.add(eightAm);
-        columns.add(nineAm);
-        columns.add(tenAm);
-        columns.add(elevenAm);
-        columns.add(twelvePm);
-        columns.add(onePm);
-        columns.add(twoPm);
-        columns.add(threePm);
-        columns.add(fourPm);
-        columns.add(fivePm);
-        columns.add(sixPm);
-        columns.add(sevenPm);
-        columns.add(eightPm);
-    }
-
-    /**
-     * Initializes table columns
-     */
-    private void initializeTableColumns() {
-        for (int i = 0; i < columns.size(); i++) {
-            final int j = i;
-            columns.get(i).setCellValueFactory(cellData -> new SimpleStringProperty(cellData.getValue().get(j)));
-            columns.get(i).impl_setReorderable(false);
-            if (j != 0) {
-                columns.get(i).setMinWidth(75);
-                columns.get(i).setMaxWidth(200);
-            }
-
+    public TimetableDay() {
+        timetableSlots = new TimetableSlot[NUM_OF_SLOTS];
+        for (int i = 0; i < NUM_OF_SLOTS; i++) {
+            timetableSlots[i] = new TimetableSlot();
         }
     }
 
     /**
-     * Sets the columns to the style for each value.
+     * Adds a lesson at its respective slot
+     * @param lessonToAdd lesson to be added
+     * @throws IllegalValueException when slot is invalid
      */
-    public void setStyle() {
-        for (int i = 0; i < columns.size(); i++) {
-            TableColumn<ArrayList<String>, String> columnToBeSet = columns.get(i);
-            setStyleForColumn(columnToBeSet);
+    public void addLessonToDay(Lesson lessonToAdd) throws IllegalValueException {
+        int startTimeIndex = parseStartEndTime(lessonToAdd.getStartTime());
+        int endTimeIndex = parseStartEndTime(lessonToAdd.getEndTime());
+
+        for (int i = startTimeIndex; i < endTimeIndex; i++) {
+            timetableSlots[i].addLessonToSlot(lessonToAdd);
         }
     }
 
     /**
-     * Sets the style of each column.
-     * @param columnToBeSet is the column that would be set
+     * Parses the start and time parsed from NUSMods to a index to be used for array of slots
+     * @param time timing from NUSMods
+     * @return index for slot array
      */
-    private void setStyleForColumn (TableColumn<ArrayList<String>, String> columnToBeSet) {
-        columnToBeSet.setCellFactory(column -> {
-            return setStyleForCell();
-        });
+    public static int parseStartEndTime(String time) throws IllegalValueException {
+        int value = Integer.parseInt(time) / 100;
+
+        if (isValidTimeSlot(value)) {
+            return value;
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
+        }
     }
 
     /**
-     * Sets the style of the cell given the data and return it
-     * @return the tablecell with its style set.
+     * Returns the lesson at the specified slot, null if slot is empty
+     * @param timeSlot
+     * @return Lesson at the specified slot, null if slot is empty
+     * @throws IllegalValueException when timeslot is invalid value
      */
-    private TableCell<ArrayList<String>, String> setStyleForCell () {
-        return new TableCell<ArrayList<String>, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
+    public Lesson getLessonFromSlot(int timeSlot) throws IllegalValueException {
+        if (timeSlot > 0 && timeSlot <= 23) {
+            return timetableSlots[timeSlot].getLesson();
+        } else {
+            throw new IllegalValueException(MESSAGE_INVALID_TIMESLOT);
+        }
+    }
 
-                if (item == null || empty) {
-                    setText(null);
-                    setStyle("");
-                } else {
-                    setText(item);
-                    removeAllStyle(this);
-                    if ("".equals(getItem())) {
-                        getStyleClass().add(EMPTY_STYLE_CLASS);
-                    } else if (StringUtil.isDay(getItem())) {
-                        getStyleClass().add(COLUMNHEADER_STYLE_CLASS);
-                    } else {
-                        getStyleClass().add(getColorStyleFor(getItem()));
-                    }
+    /**
+     * Checks if the given index is valid
+     * @param index
+     * @return true or false
+     */
+    private static boolean isValidTimeSlot(int index) {
+        return (index < NUM_OF_SLOTS && index >= 0);
+    }
+
+    /**
+     * Returns the Time Table for the day
+     * @return ArrayList with the  Time Table
+     */
+    public ArrayList<String> getDailyTimeTable() {
+        ArrayList<String> timetable = new ArrayList<>();
+        for (int i = 8; i < 22; i++) {
+            TimetableSlot t = timetableSlots[i];
+            timetable.add(t.toString());
+        }
+        return timetable;
+    }
+
+    /**
+     * Returns the unified Timetable
+     * @return ArrayList with the Time Table
+     */
+    public static ArrayList<String> unionTimetableDay(ArrayList<TimetableDay> timetables) {
+        ArrayList<String> commonTimetable = new ArrayList<>();
+        boolean checker;
+
+        for (int i = 8; i < 22; i++) {
+            checker = false;
+            for (TimetableDay timetable : timetables) {
+                TimetableSlot t = timetable.timetableSlots[i];
+                if (!t.toString().equals(EMPTY_SLOT_STRING)) {
+                    checker = true;
+                    break;
                 }
             }
-        };
-    }
 
-
-    /**
-     * Removes all styles present in cell
-     * @param tableCell Cell with its style to be removed
-     */
-    private static void removeAllStyle(TableCell<ArrayList<String>, String> tableCell) {
-        for (String color : MOD_COLOR_STYLES) {
-            tableCell.getStyleClass().remove(color);
+            if (checker) {
+                commonTimetable.add(TITLE_OCCUPIED);
+            } else {
+                commonTimetable.add(EMPTY_SLOT_STRING);
+            }
         }
-        tableCell.getStyleClass().remove(EMPTY_STYLE_CLASS);
-        tableCell.getStyleClass().remove(TABLECELL_STYLE_CLASS);
-    }
-
-    /**
-     * Returns a Color Style for the Module based on its hashcode.
-     * @param modName
-     * @return colorStyle for {@code modName}'s label.
-     */
-    private static String getColorStyleFor(String modName) {
-        return MOD_COLOR_STYLES[Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length];
+        return commonTimetable;
     }
 }
 ```
-###### \resources\view\BirthdayList.fxml
-``` fxml
-<?import javafx.scene.control.ScrollPane?>
-<StackPane fx:id="birthdayPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-      <ScrollPane fx:id="scrollPane" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-            <TextArea fx:id="birthdayList" editable="false" />
-      </ScrollPane>
-   </children>
-</StackPane>
-```
-###### \resources\view\TimetableUnionPanel.fxml
-``` fxml
+###### /java/seedu/address/model/person/timetable/Timetable.java
+``` java
+/**
+ * Represents a Person's timetable in the address book
+ */
+public class Timetable {
 
-<StackPane fx:id="timetableUnionPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-    <children>
-        <TableView fx:id="timetableUnion" stylesheets="@DarkTheme.css">
-         <columns>
-             <TableColumn fx:id="day" prefWidth="100.0" text="" />
-             <TableColumn fx:id="eightAm" prefWidth="60.0" text="0800" />
-             <TableColumn fx:id="nineAm" prefWidth="60.0" text="0900" />
-             <TableColumn fx:id="tenAm" prefWidth="60.0" text="1000" />
-             <TableColumn fx:id="elevenAm" prefWidth="60.0" text="1100" />
-             <TableColumn fx:id="twelvePm" prefWidth="60.0" text="1200" />
-             <TableColumn fx:id="onePm" prefWidth="60.0" text="1300" />
-             <TableColumn fx:id="twoPm" prefWidth="60.0" text="1400" />
-             <TableColumn fx:id="threePm" prefWidth="60.0" text="1500" />
-             <TableColumn fx:id="fourPm" prefWidth="60.0" text="1600" />
-             <TableColumn fx:id="fivePm" prefWidth="60.0" text="1700" />
-             <TableColumn fx:id="sixPm" prefWidth="60.0" text="1800" />
-             <TableColumn fx:id="sevenPm" prefWidth="60.0" text="1900" />
-             <TableColumn fx:id="eightPm" prefWidth="60.0" text="2000" />
-         </columns></TableView>
-    </children>
-</StackPane>
+    public static final String EMPTY_LINK = "";
+    public static final String DUMMY_LINK_ONE = "http://modsn.us/aaaaa";
+    public static final String DUMMY_LINK_TWO = "http://modsn.us/bbbbb";
+    public static final String NUSMODS_SHORT = "modsn.us";
+    public static final String URL_HOST_REGEX = "\\/\\/.*?\\/";
+    public static final String MESSAGE_URL_CONSTRAINTS =
+            "Timetable URL should only be NUSMods shortened URLs";
+    public static final String MESSAGE_INVALID_URL =
+            "The given NUSMods URL is invalid";
+
+    public final String value;
+
+    private TimetableData data;
+
+    public Timetable(String url) {
+        requireNonNull(url);
+        String trimmedUrl = url.trim();
+        this.value = trimmedUrl;
+        // Create new empty timetable if url is empty or a dummy link
+        if (trimmedUrl.equals(EMPTY_LINK) || trimmedUrl.equals(DUMMY_LINK_ONE) || trimmedUrl.equals(DUMMY_LINK_TWO)) {
+            this.data = new TimetableData();
+            return;
+        }
+
+        checkArgument(isValidUrl(trimmedUrl), MESSAGE_URL_CONSTRAINTS);
+
+        try {
+            this.data = parseUrl(trimmedUrl);
+        } catch (ParseException pe) {
+            this.data = new TimetableData(); // Create new empty timetable if url fails
+        }
+    }
+
+    /**
+     * Checks if string is a valid shortened NUSMods url
+     * @param test
+     * @return true if it follows the format of a valid shortened NUSMods url
+     *         false if it doesn't
+     */
+    public static boolean isValidUrl(String test) {
+        Matcher matcher = Pattern.compile(URL_HOST_REGEX).matcher(test);
+        if (!matcher.find()) {
+            return false;
+        }
+
+        String hostName = matcher.group()
+                .substring(2, matcher.group().length() - 1);
+        return hostName.equals(NUSMODS_SHORT);
+    }
+
+    /**
+     * Returns the lesson at the specified slot, null if empty
+     * @param week the week the lesson is found at
+     * @param day the day the lesson is found at
+     * @param timeSlot the timeslot the lesson is found at
+     * @return Lesson found at that slot, null if slot is empty
+     * @throws IllegalValueException when week,day,timeslot are invalid values
+     */
+    public Lesson getLessonFromSlot(String week, String day, int timeSlot) throws IllegalValueException {
+        return data.getLessonFromSlot(week, day, timeSlot);
+    }
+
+    /**
+     * Adds a lesson to the timetable
+     * @param lessonToAdd lesson to be added
+     * @throws IllegalValueException when week,day,timeslot are invalid values
+     */
+    public void addLessonToSlot(Lesson lessonToAdd) throws IllegalValueException {
+        data.addLessonToSlot(lessonToAdd);
+    }
+
+    /**
+     * Returns the timetable
+     * @return Timetable as an Array
+     */
+    public ArrayList<ArrayList<ArrayList<String>>> getTimetable() {
+        return data.getTimeTable();
+    }
+
+    /**
+     * Returns the unified timetable
+     * @return Timetable as an Array
+     */
+    public static ArrayList<ArrayList<ArrayList<String>>> unionTimetable(ArrayList<Timetable> timetables) {
+        ArrayList<TimetableData> t = new ArrayList<TimetableData>();
+
+        for (Timetable timetable : timetables) {
+            t.add(timetable.data);
+        }
+        return TimetableData.unionTimeTable(t);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Timetable // instanceof handles nulls
+                && this.value.equals(((Timetable) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
+}
+```
+###### /java/seedu/address/model/person/timetable/TimetableSlot.java
+``` java
+/**
+ * Represents a slot in the timetable
+ */
+public class TimetableSlot {
+
+    private ArrayList<Lesson> lessons = new ArrayList<>();
+
+    /**
+     * Fills up the slot with the given lesson
+     * @param lesson
+     */
+    public void addLessonToSlot(Lesson lesson) {
+        requireNonNull(lesson);
+
+        this.lessons.add(lesson);
+    }
+
+    public Lesson getLesson() {
+        return concat(lessons);
+    }
+
+    @Override
+    public String toString() {
+        if (lessons.size() == 0) {
+            return "";
+        }
+        String resultString = new String();
+        for (Lesson lesson: lessons) {
+            resultString += lesson + " \n";
+        }
+        return resultString;
+    }
+
+    /**
+     * Merges all the lessons in this time slot.
+     * @return a merged Lesson
+     */
+    private Lesson concat(ArrayList<Lesson> lessons) {
+        String concatModCode = new String();
+        String concatClassNo = new String();
+        String concatLessonType = new String();
+
+        for (Lesson lesson: lessons) {
+            concatModCode += lesson.getModuleCode() + " ";
+            concatClassNo += lesson.getClassNo() + " ";
+            concatLessonType += lesson.getLessonType() + " ";
+        }
+        Lesson lesson = lessons.get(0);
+        Lesson concatLesson = new Lesson(concatModCode, concatClassNo, concatLessonType, lesson.getWeekType(),
+                lesson.getDay(), lesson.getStartTime(), lesson.getEndTime());
+        return concatLesson;
+    }
+}
 ```

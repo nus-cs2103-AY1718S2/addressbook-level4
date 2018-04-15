@@ -10,8 +10,10 @@ import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCcaCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInjuriesHistoryCommand;
-import seedu.address.logic.commands.AddNextOfKinCommand;
 import seedu.address.logic.commands.AddRemarkCommand;
+import seedu.address.logic.commands.AddSubjectCommand;
+import seedu.address.logic.commands.AppointmentCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
@@ -25,6 +27,7 @@ import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.NextOfKinCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.SortCommand;
@@ -66,8 +69,8 @@ public class AddressBookParser {
         case AddCommand.COMMAND_ALIAS:
             return new AddCommandParser().parse(arguments);
 
-        case AddNextOfKinCommand.COMMAND_WORD:
-            return new AddNextOfKinCommandParser().parse(arguments);
+        case ChangeThemeCommand.COMMAND_WORD:
+            return new ChangeThemeCommandParser().parse(arguments);
 
         case AddCcaCommand.COMMAND_WORD:
             return new AddCcaCommandParser().parse(arguments);
@@ -84,6 +87,9 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
+
+        case AddSubjectCommand.COMMAND_WORD:
+            return new AddSubjectCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -121,6 +127,9 @@ public class AddressBookParser {
         case ListCommand.COMMAND_ALIAS:
             return new ListCommand();
 
+        case NextOfKinCommand.COMMAND_WORD:
+            return new NextOfKinCommandParser().parse(arguments);
+
         case AddRemarkCommand.COMMAND_WORD:
             return new AddRemarkCommandParser().parse(arguments);
 
@@ -150,7 +159,7 @@ public class AddressBookParser {
         case RedoCommand.COMMAND_WORD:
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
-
+            
         case ViewCommand.COMMAND_WORD:
             return new ViewCommandParser().parse(arguments);
 

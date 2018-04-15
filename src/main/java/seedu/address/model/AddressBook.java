@@ -2,7 +2,6 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
-import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -16,9 +15,7 @@ import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Person;
-import seedu.address.model.person.UniqueNextOfKinList;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -39,7 +36,6 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueTagList tags;
     private final UniqueSubjectList subjects;
     private final UniqueAppointmentList appointments;
-    private final UniqueNextOfKinList nextOfKins;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -53,7 +49,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         subjects = new UniqueSubjectList();
         appointments = new UniqueAppointmentList();
-        nextOfKins = new UniqueNextOfKinList();
     }
 
     public AddressBook() {}
@@ -120,21 +115,6 @@ public class AddressBook implements ReadOnlyAddressBook {
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
         persons.add(person);
-    }
-
-    /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and subjects and updates {@link #tags #subjects} with any new
-     * tags or subjects found, and updates the Tag objects and Subject objects in the person
-     * to point to those in {@link #tags #subjects}.
-     *
-     * @throws DuplicatePersonException if an equivalent person already exists.
-     */
-    public void addNextOfKin(NextOfKin p) throws DuplicatePersonException {
-        // TODO: the tags master list will be updated even though the below line fails.
-        // This can cause the tags master list to have additional tags that are not tagged to any person
-        // in the person list.
-        nextOfKins.add(p);
     }
 
     /**
@@ -217,9 +197,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Subject> correctSubjectReferences = new HashSet<>();
         personSubjects.forEach(subject -> correctSubjectReferences.add(masterSubjectObjects.get(subject)));
         return new Person(
-                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences,
-                Collections.emptySet(), person.getRemark(), person.getCca(), person.getInjuriesHistory(),
-                person.getNameOfKin());
+                person.getName(), person.getNric(), correctTagReferences, correctSubjectReferences, person.getRemark(),
+                person.getCca(), person.getInjuriesHistory(), person.getNextOfKin());
     }
 
     /**
@@ -303,8 +282,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         Set<Tag> tagList = new HashSet<>(person.getTags());
         if (tagList.remove(tag)) {
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
-                                          person.getScores(), person.getRemark(), person.getCca(),
-                                          person.getInjuriesHistory(), person.getNameOfKin());
+                                        person.getRemark(), person.getCca(), person.getInjuriesHistory(),
+                                        person.getNextOfKin());
             try {
                 updatePerson(person, newPerson);
             } catch (DuplicatePersonException error1) {
@@ -328,8 +307,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         if (tagList.remove(tagToBeReplaced)) {
             tagList.add(tagToBePlaced);
             Person newPerson = new Person(person.getName(), person.getNric(), tagList, person.getSubjects(),
-                                          person.getScores(), person.getRemark(), person.getCca(),
-                                          person.getInjuriesHistory(), person.getNameOfKin());
+                                        person.getRemark(), person.getCca(), person.getInjuriesHistory(),
+                                        person.getNextOfKin());
 
             try {
                 updatePerson(person, newPerson);

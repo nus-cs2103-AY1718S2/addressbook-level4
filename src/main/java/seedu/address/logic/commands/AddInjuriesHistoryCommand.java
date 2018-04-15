@@ -5,7 +5,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
-import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 import java.util.Set;
@@ -17,7 +16,7 @@ import seedu.address.logic.parser.ParserUtil;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
-import seedu.address.model.person.NameOfKin;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -29,7 +28,7 @@ import seedu.address.model.tag.Tag;
 //@@author chuakunhong
 
 /**
- * Edits the details of an existing person in the address book.
+ * Adds the injuries history to an existing person in the address book.
  */
 public class AddInjuriesHistoryCommand extends UndoableCommand {
 
@@ -98,18 +97,18 @@ public class AddInjuriesHistoryCommand extends UndoableCommand {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
-        Name updatedName = personToEdit.getName();
-        Nric updatedNric = personToEdit.getNric();
-        Set<Tag> updatedTags = personToEdit.getTags();
-        Set<Subject> updatedSubjects = personToEdit.getSubjects();
-        Remark updatedRemark = personToEdit.getRemark();
-        Cca updatedCca = personToEdit.getCca();
-        InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(editPersonDescriptor
-                .getInjuriesHistory().get().toString() + "\n" + personToEdit.getInjuriesHistory());
-        NameOfKin updatedNameOfKin = editPersonDescriptor.getNameOfKin().orElse(personToEdit.getNameOfKin());
+        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
+        Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
+        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
+        InjuriesHistory updatedInjuriesHistory = ParserUtil.parseInjuriesHistory(personToEdit
+                .getInjuriesHistory().toString() + "\n" + editPersonDescriptor.getInjuriesHistory().get().toString());
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
 
-        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, Collections.emptySet(), updatedRemark,
-                          updatedCca, updatedInjuriesHistory, updatedNameOfKin);
+        return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
+                        updatedInjuriesHistory, updatedNextOfKin);
     }
 
     @Override

@@ -152,8 +152,8 @@ Format: `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the IMDB's content (`add`, `addq`, `addc`, `clear`, `delete`, `delc`,
-`edit`, `redo`, `record`, `remark`, `removeq` and `remover`).
+Undoable commands: those commands that modify the IMDB's content (`add`, `addc`, `addq`, `clear`, `delc`, `delete`,
+`edit`, `record`, `redo`, `remark`, `removeq` and `remover`).
 ====
 
 Examples:

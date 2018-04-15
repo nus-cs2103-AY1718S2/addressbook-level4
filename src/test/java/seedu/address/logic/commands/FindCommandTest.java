@@ -69,7 +69,7 @@ public class FindCommandTest {
      */
     private FindCommand prepareCommand(Predicate<Coin> coinCondition) {
         FindCommand command =
-                new FindCommand(coinCondition);
+                new FindCommand("", coinCondition);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }

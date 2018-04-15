@@ -2,12 +2,10 @@ package seedu.address.ui;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
-import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import seedu.address.commons.util.AppUtil;
 import seedu.address.model.coin.Coin;
 import seedu.address.model.tag.Tag;
 
@@ -20,10 +18,6 @@ public class CoinCard extends UiPart<Region> {
     private static final String[] TAG_STYLE_CLASSES = {
         "red", "blue", "yellow", "grey", "burlywood", "plum"
     };
-
-    //@@author laichengyu
-    private static final String ICON_BASE_FILE_PATH = "/images/coin_icons/";
-    //@@author
 
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
@@ -62,7 +56,7 @@ public class CoinCard extends UiPart<Region> {
         amount.setText(coin.getCurrentAmountHeld().toString());
         price.setText(coin.getPrice().toString());
         //@@author laichengyu
-        icon.setImage(getCoinIcon(coinCode));
+        icon.setImage(IconUtil.getCoinIcon(coinCode));
         //@@author
         coin.getTags().forEach(tag -> newTag(tag));
     }
@@ -89,20 +83,6 @@ public class CoinCard extends UiPart<Region> {
         int choice = Math.abs(tag.tagName.hashCode());
         return TAG_STYLE_CLASSES[choice % TAG_STYLE_CLASSES.length];
     }
-
-    //@@author laichengyu
-    private String getCoinFilePath(String code) {
-        return ICON_BASE_FILE_PATH + code + ".png";
-    }
-
-    private Image getCoinIcon(String coinCode) {
-        try {
-            return AppUtil.getImage(getCoinFilePath(coinCode));
-        } catch (NullPointerException e) {
-            return AppUtil.getImage(getCoinFilePath("empty"));
-        }
-    }
-    //@@author
 
     @Override
     public boolean equals(Object other) {

@@ -13,6 +13,7 @@ import javafx.geometry.Pos;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -30,6 +31,7 @@ import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.commons.events.ui.ShowNotifManRequestEvent;
 import seedu.address.commons.events.ui.ShowNotificationRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -253,13 +255,21 @@ public class MainWindow extends UiPart<Stage> {
         Notifications.create()
                      .title("The following rule has triggered this notification:")
                      .text(String.format("%1$s\nClick to jump to view %2$s", message, code))
+                     .graphic(new ImageView(IconUtil.getCoinIcon(code)))
                      .onAction(event -> {
-                         EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
-                         event.consume();
+                         try {
+                             logic.execute(ListCommand.COMMAND_WORD);
+                             EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+                             event.consume();
+                         } catch (Exception e) {
+                             throw new RuntimeException();
+                         }
                      })
-                     .showInformation();
+                     .show();
     }
     //@@author
+
+
 
     //@@author laichengyu
     /**

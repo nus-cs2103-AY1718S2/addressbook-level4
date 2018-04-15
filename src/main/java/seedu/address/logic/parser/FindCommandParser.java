@@ -46,7 +46,7 @@ public class FindCommandParser implements Parser<FindCommand> {
         TokenStack tokenStack = ArgumentTokenizer.tokenizeToTokenStack(args, EXPECTED_TOKEN_TYPES);
         try {
             Predicate<Coin> coinCondition = ParserUtil.parseCondition(tokenStack);
-            return new FindCommand(coinCondition);
+            return new FindCommand(args, coinCondition);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE));
         }

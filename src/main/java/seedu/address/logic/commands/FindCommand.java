@@ -5,6 +5,8 @@ import static seedu.address.logic.parser.TokenType.PREFIX_PRICE;
 
 import java.util.function.Predicate;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.FilterChangedEvent;
 import seedu.address.model.coin.Coin;
 
 /**
@@ -20,10 +22,12 @@ public class FindCommand extends Command {
             + "Parameters: CONDITION "
             + "Example: " + COMMAND_WORD + " " + PREFIX_CODE + "BTC AND " + PREFIX_PRICE + ">50";
 
+    private final String description;
     private final Predicate<Coin> coinCondition;
 
     //@@author Eldon-Chung
-    public FindCommand(Predicate<Coin> coinCondition) {
+    public FindCommand(String description, Predicate<Coin> coinCondition) {
+        this.description = description;
         this.coinCondition = coinCondition;
     }
 
@@ -40,7 +44,13 @@ public class FindCommand extends Command {
     @Override
     public CommandResult execute() {
         model.updateFilteredCoinList(coinCondition);
+        EventsCenter.getInstance().post(new FilterChangedEvent(description));
         return new CommandResult(getMessageForCoinListShownSummary(model.getFilteredCoinList().size()));
     }
     //@@author
+
+    @Override
+    public String toString() {
+        return description;
+    }
 }

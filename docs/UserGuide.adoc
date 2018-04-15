@@ -859,4 +859,4 @@ e.g. `editTask` `1` `title/Eat Dinner` +
 * *Help* : `help`
 * *History* : `history`
 * *Redo* : `redo`
-* *Undo* : `undo`*
+* *Undo* : `undo`

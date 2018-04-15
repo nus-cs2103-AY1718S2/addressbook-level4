@@ -48,27 +48,29 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
 
     public static final String MESSAGE_USAGE =
             COMMAND_WORD + " | assigns customers to a runner associated with the index number used in the last "
-            + "person listing."
-            + "\n\t"
-            + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
+                    + "person listing."
+                    + "\n\t"
+                    + "Refer to the User Guide (press \"F1\") for detailed information about this command!"
 
-            + "\n\t"
-            + "Parameters:\t"
-            + COMMAND_WORD + " "
-            + "RUNNER-INDEX (positive integer) "
-            + PREFIX_CUSTOMERS + " CUSTOMER-INDEX (positive integer) "
-            + "[ CUSTOMER-INDEX] ..."
+                    + "\n\t"
+                    + "Parameters:\t"
+                    + COMMAND_WORD + " "
+                    + "RUNNER-INDEX (positive integer) "
+                    + PREFIX_CUSTOMERS + " CUSTOMER-INDEX (positive integer) "
+                    + "[ CUSTOMER-INDEX] ..."
 
-            + "\n\t"
-            + "Example:\t\t"
-            + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2"
+                    + "\n\t"
+                    + "Example:\t\t"
+                    + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2"
 
-            + "\n\t"
-            + "Example:\t\t"
-            + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2 5 8";
+                    + "\n\t"
+                    + "Example:\t\t"
+                    + COMMAND_WORD + " 1 " + PREFIX_CUSTOMERS + " 2 5 8";
 
     public static final String MESSAGE_ASSIGN_PERSON_SUCCESS = "Successfully assigned!\nUpdated Runner Info:\n%1$s";
     public static final String MESSAGE_PERSON_NOT_FOUND = "The target person cannot be missing";
+    public static final String MESSAGE_INVALID_CUSTOMER_INDEX = "invalid customer index";
+    public static final String MESSAGE_NOT_A_RUNNER = "Person at index %d is not a Runner";
     // message
 
     private final Index runnerIndex;
@@ -84,7 +86,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
     private EditPersonDescriptor editRunnerDescriptor = new EditPersonDescriptor();
 
     /**
-     * @param runnerIndex of the Runner in the filtered person list to edit
+     * @param runnerIndex   of the Runner in the filtered person list to edit
      * @param customerIndex ... of the customers to add to Runner's customer list
      */
     public AssignCommand(Index runnerIndex, Index... customerIndex) {
@@ -136,7 +138,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         personToEdit = lastShownList.get(runnerIndex.getZeroBased());
 
         if (!(personToEdit instanceof Runner)) {
-            throw new CommandException(String.format("Person at index %d is not a Runner", runnerIndex.getOneBased()));
+            throw new CommandException(String.format(MESSAGE_NOT_A_RUNNER, runnerIndex.getOneBased()));
         }
         //NOTE: it is important to call these methods in this order so that the appropriate resources are generated
         generateNewCustomerList();
@@ -164,7 +166,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
             if (indexOfActualPerson >= 0) {
                 //the conditional check is necessary so that I'm only modifying valid existing runners
 
-                Person actualRunner =  pl.get(indexOfActualPerson); //getting the actual complete runner from pl
+                Person actualRunner = pl.get(indexOfActualPerson); //getting the actual complete runner from pl
 
                 //generate editPersonDescriptor with c removed from runner's customer list
                 EditPersonDescriptor runnerDescWCustRemoved = new EditPersonDescriptor();
@@ -187,9 +189,10 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
 
     /**
      * Edit each new customer with the runner to be assigned.
-     *
+     * <p>
      * Requires an accompanying list of customer descriptors describing these new customers and reflecting the assigned
      * runner.
+     *
      * @throws CommandException
      */
     private void generateUpdatedCustomerList() throws CommandException {
@@ -223,6 +226,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
 
     /**
      * generates a list of new and unique customers to be assigned to the runner.
+     *
      * @throws CommandException
      */
     private void generateNewCustomerList() throws CommandException {
@@ -230,13 +234,13 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         Person runnerToBeEdited = lastShownList.get(runnerIndex.getZeroBased());
         oldCustomers.addAll(((Runner) runnerToBeEdited).getCustomers());
 
-        for (Index index: customerIndex) {
+        for (Index index : customerIndex) {
             Person p = lastShownList.get(index.getZeroBased());
             if (!(p instanceof Customer)) {
-                throw new CommandException("invalid customer index");
+                throw new CommandException(MESSAGE_INVALID_CUSTOMER_INDEX);
             }
             if (oldCustomers.indexOf(p) >= 0) {
-                throw new CommandException(String.format("one or more customers already assigned to runner",
+                throw new CommandException(String.format("customer at %d already assigned to runner",
                         index.getOneBased()));
             }
             if (newCustomers.indexOf(p) >= 0) {
@@ -394,7 +398,8 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         //Runner fields
         private List<Person> customers;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -429,6 +434,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setName(Name name) {
             this.name = name;
         }
+
         public Optional<Name> getName() {
             return Optional.ofNullable(name);
         }
@@ -436,6 +442,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setPhone(Phone phone) {
             this.phone = phone;
         }
+
         public Optional<Phone> getPhone() {
             return Optional.ofNullable(phone);
         }
@@ -443,6 +450,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setEmail(Email email) {
             this.email = email;
         }
+
         public Optional<Email> getEmail() {
             return Optional.ofNullable(email);
         }
@@ -450,6 +458,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setAddress(Address address) {
             this.address = address;
         }
+
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
@@ -457,6 +466,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setMoneyBorrowed(MoneyBorrowed moneyBorrowed) {
             this.moneyBorrowed = moneyBorrowed;
         }
+
         public Optional<MoneyBorrowed> getMoneyBorrowed() {
             return Optional.ofNullable(moneyBorrowed);
         }
@@ -464,6 +474,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setOweStartDate(Date oweStartDate) {
             this.oweStartDate = oweStartDate;
         }
+
         public Optional<Date> getOweStartDate() {
             return Optional.ofNullable(oweStartDate);
         }
@@ -471,6 +482,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setOweDueDate(Date oweDueDate) {
             this.oweDueDate = oweDueDate;
         }
+
         public Optional<Date> getOweDueDate() {
             return Optional.ofNullable(oweDueDate);
         }
@@ -478,6 +490,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setStandardInterest(StandardInterest standardInterest) {
             this.standardInterest = standardInterest;
         }
+
         public Optional<StandardInterest> getStandardInterest() {
             return Optional.ofNullable(standardInterest);
         }
@@ -485,6 +498,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setLateInterest(LateInterest lateInterest) {
             this.lateInterest = lateInterest;
         }
+
         public Optional<LateInterest> getLateInterest() {
             return Optional.ofNullable(lateInterest);
         }
@@ -492,6 +506,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setRunner(Person runner) {
             this.runner = runner;
         }
+
         public Optional<Person> getRunner() {
             return Optional.ofNullable(runner);
         }
@@ -499,6 +514,7 @@ public class AssignCommand extends UndoableCommand implements PopulatableCommand
         public void setCustomers(List<Person> customers) {
             this.customers = customers;
         }
+
         public Optional<List<Person>> getCustomers() {
             return Optional.ofNullable(customers);
         }

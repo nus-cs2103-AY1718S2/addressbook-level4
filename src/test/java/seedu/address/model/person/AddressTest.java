@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -37,4 +39,21 @@ public class AddressTest {
         assertTrue(Address.isValidAddress("-")); // one character
         assertTrue(Address.isValidAddress("Leng Inc; 1234 Market St; San Francisco CA 2349879; USA")); // long address
     }
+
+    //@@author jonleeyz
+    @Test
+    public void testHashcode_symmetric() {
+        Address addressA = new Address();
+        Address addressB = new Address();
+        Address addressC = new Address("NUS");
+        Address addressD = new Address("NUS");
+
+        assertEquals(addressA.hashCode(), addressB.hashCode());
+        assertEquals(addressC.hashCode(), addressD.hashCode());
+        assertNotEquals(addressA.hashCode(), addressC.hashCode());
+        assertNotEquals(addressA.hashCode(), addressD.hashCode());
+        assertNotEquals(addressB.hashCode(), addressC.hashCode());
+        assertNotEquals(addressB.hashCode(), addressD.hashCode());
+    }
+    //@@author
 }

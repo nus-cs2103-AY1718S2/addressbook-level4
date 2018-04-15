@@ -1277,6 +1277,7 @@ The level of achievement in each subject is indicated by the grade obtained, wit
 |E8| 40% - 44%
 |F9| 0% - 39%
 |=======================================================================
+
 [[L1B4]] L1B4::
 A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
 The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
@@ -1299,6 +1300,11 @@ For more information, please click https://www.moe.gov.sg/admissions/direct-admi
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[NRIC]] NRIC::
+It stands for National Registration Identity Card, and it is an identification document for the residents in Singapore.
+The `NRIC` that we are referring to in the _EduBuddy_ refers to the unique identification number that comes with each `NRIC`.
+Please visit https://www.ica.gov.sg/[this website] for more details.
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
@@ -1324,25 +1330,6 @@ For example, type in: `Hist A1` *not* `History A1`
 |=======================================================================
 
 * The following subjects can be assigned to students but cannot be contributed to the results: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
-
-*_return to <<toc,Table of Contents>>_*
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 *_return to <<toc,Table of Contents>>_*
 

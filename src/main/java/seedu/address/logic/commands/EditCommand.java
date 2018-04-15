@@ -73,6 +73,13 @@ public class EditCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException, IOException {
         try {
+            //check if there is duplicate nric in the application
+            for (Person p : model.getFilteredPersonList()) {
+                if (editedPerson.getNric().equals(p.getNric()) && !editedPerson.getNric()
+                        .equals(personToEdit.getNric())) {
+                    throw new CommandException("This NRIC already exists in the address book");
+                }
+            }
             model.updatePerson(personToEdit, editedPerson);
             model.deletePage(personToEdit);
             model.addPage(editedPerson);

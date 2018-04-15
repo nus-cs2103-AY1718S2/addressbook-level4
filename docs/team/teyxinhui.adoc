@@ -29,7 +29,7 @@ calculation support will calculate the score for the teacher.
 *** Opened, closed, and verified some issues on the issue tracker.
 ** Enhancements to existing features:
 *** Allow `AddCommand` and `EditCommand` to support the `Subject` attribute of the students.
-
+*** Prevent students in the _EduBuddy_ from having the same `NRIC` number by enhancing the `AddCommand` and `EditCommand`. This is because `NRIC` number is supposed to be unique to everyone.
 ** Documentation:
 *** Did revisions to existing contents of the User Guide and Developer Guide
 

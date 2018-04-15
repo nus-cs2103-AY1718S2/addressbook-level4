@@ -232,6 +232,11 @@ image::user_guide.png[width=""]
 Changes E.T.'s theme to bright or dark. +
 Format: `changeTheme (bright | dark)`
 
+[NOTE]
+====
+`changeTheme` command is not undoable.
+====
+
 Examples:
 
 * `changeTheme bright` +
@@ -293,10 +298,10 @@ Sorts existing employees by any field +
 Format: `sort FIELD`
 
 ****
-* Sort the employees by any existing field in alphabetical order, note that rate field will be sorted in descending order.
+* Employees are sorted by any existing field in alphabetical order. Note that rate field will be sorted in descending order.
 * The field entered must be one of the following: `name`, `phone`, `email`, `address`, `rate`, `tag`.
 * Sorting is case-insensitive.
-* The sorted results is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>.
+* Sorted result is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>.
 ****
 
 Examples:
@@ -489,7 +494,7 @@ Format: `undo`
 
 [NOTE]
 ====
-_Undoable commands_ are commands that modify E.T.'s content (`add`, `addPhoto`, `changeTheme`, `clear`, `delete`, `dismiss`, `edit`, `email`, `rate`, `review`, and `sort`).
+_Undoable commands_ are commands that modify E.T.'s content (`add`, `addPhoto`, `clear`, `delete`, `dismiss`, `edit`, `email`, `rate`, `review`, and `sort`).
 ====
 
 Examples:

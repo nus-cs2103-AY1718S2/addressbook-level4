@@ -9,9 +9,9 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.CompleteOrderCommand;
+import seedu.address.logic.commands.CompleteMoreOrderCommand;
+import seedu.address.logic.commands.CompleteOneOrderCommand;
 import seedu.address.logic.commands.DeleteCommand;
-import seedu.address.logic.commands.DeleteOrderCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
@@ -65,17 +65,32 @@ public class AddressBookParser {
         case ProcessOrderCommand.COMMAND_WORD:
             return new ProcessOrderCommandParser().parse(arguments);
 
+        case ProcessOrderCommand.COMMAND_ALIAS:
+            return new ProcessOrderCommandParser().parse(arguments);
+
         case ProcessNextCommand.COMMAND_WORD:
+            return new ProcessNextCommandParser().parse(arguments);
+
+        case ProcessNextCommand.COMMAND_ALIAS:
             return new ProcessNextCommandParser().parse(arguments);
 
         case ProcessMoreCommand.COMMAND_WORD:
             return new ProcessMoreCommandParser().parse(arguments);
 
-        case DeleteOrderCommand.COMMAND_WORD:
-            return new DeleteOrderCommandParser().parse(arguments);
+        case ProcessMoreCommand.COMMAND_ALIAS:
+            return new ProcessMoreCommandParser().parse(arguments);
 
-        case CompleteOrderCommand.COMMAND_WORD:
-            return new CompleteOrderCommandParser().parse(arguments);
+        case CompleteOneOrderCommand.COMMAND_WORD:
+            return new CompleteOneOrderCommandParser().parse(arguments);
+
+        case CompleteOneOrderCommand.COMMAND_ALIAS:
+            return new CompleteOneOrderCommandParser().parse(arguments);
+
+        case CompleteMoreOrderCommand.COMMAND_WORD:
+            return new CompleteMoreOrderCommandParser().parse(arguments);
+
+        case CompleteMoreOrderCommand.COMMAND_ALIAS:
+            return new CompleteMoreOrderCommandParser().parse(arguments);
 
         case TagOrderCommand.COMMAND_WORD:
             return new TagOrderCommandParser().parse(arguments);

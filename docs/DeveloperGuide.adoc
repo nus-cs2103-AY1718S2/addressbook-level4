@@ -801,10 +801,8 @@ Below is a snippet of how `BrowserPanel` displays the details of the `Task` sele
 
 {empty} +
 
-There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe
-the implementation for each command.
-
-==== Listing of tasks and events
+[discrete]
+===== Listing tasks and events
 
 A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
 the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by

@@ -1,3 +1,4 @@
+//@@author victortardieu
 package seedu.address.ui;
 
 import java.util.Random;
@@ -116,3 +117,4 @@ public class BookCard extends UiPart<Region> {
         });
     }
 }
+//@@author

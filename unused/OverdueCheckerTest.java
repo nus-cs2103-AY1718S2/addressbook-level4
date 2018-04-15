@@ -103,4 +103,24 @@ public class OverdueCheckerTest {
 
         }
     }
+
+    //    @Test
+//    public void execute_OverdueTasksPresent() throws Throwable {
+//        // only one overdue task
+//        String expectedMessage = String.format(SHOWN_OVERDUE_MESSAGE, 1);
+//
+//        model.addActivity(OVERDUETASK1);
+//        OverdueChecker checker = new OverdueChecker(model);
+//        executor.schedule(checker, 0, TimeUnit.SECONDS);
+//        OverdueCommand command = prepareCommand();
+//        assertCommandSuccess(command, expectedMessage, Arrays.asList(OVERDUETASK1));
+//
+//        // more than one overdue tasks
+//        expectedMessage = String.format(SHOWN_OVERDUE_MESSAGE, 2);
+//        model.addActivity(OVERDUETASK2);
+//        checker = new OverdueChecker(model);
+//        executor.schedule(checker, 0, TimeUnit.SECONDS);
+//        command = prepareCommand();
+//        assertCommandSuccess(command, expectedMessage, Arrays.asList(OVERDUETASK1, OVERDUETASK2));
+//    }
 }

@@ -285,14 +285,18 @@ This section describes some noteworthy features that are implemented in CelebMan
 
 // tag::removeTag[]
 === RemoveTag Feature
+
+This feature allows the user to remove a specified tag from all the contacts.
+
 ==== Current Implementation
 
-The tag removal mechanism is facilitated by both `RemoveTagCommand`, which resides inside `LogicManager`, and
-`removeTag`, which resides in `AddressBook`. This feature removes a specified tag from each person who has it in the
-address book. `RemoveTagCommand` class inherits from the `UndoableCommand`
-class and hence supports the `undo` and `redo` features.
+The tag removal mechanism is facilitated by both `RemoveTagCommand` class, which resides inside `LogicManager`, and
+`removeTag` method, which resides in `AddressBook`. This feature removes a specified tag from each person who has it in the
+address book. `RemoveTagCommand` class inherits from the `UndoableCommand` class and hence supports the `undo` and `redo` features.
 
-The snippet code below shows the implementation of `executeUndoableCommand` in `RemoveTagCommand`:
+When a user enters `removeTag` command, an object of `RemoveTagCommand` class will be created. To understand this class’
+contribution to remove tag feature, please refer to the following code snippet which shows the implementation of
+`executeUndoableCommand` in `RemoveTagCommand`:
 
 [source,java]
 ----
@@ -328,24 +332,24 @@ public class RemoveTagCommand extends UndoableCommand {
     ...
 }
 ----
-From the snippet above, it can be seen that `RemoveTagCommand` disallows the removal of `celebrity` tag, or a non-existing
-tag. Upon successful execution, `RemoveTagCommand` will print out successful message with the number of person(s)
-affected by this removal.
+From the snippet above, `RemoveTagCommand` class filters out `celebrity` tag or a non-existent tag to disallow the removal
+of both. It is also in-charge of printing the successful message upon a successful execution.
 
-The snippet code below shows the implementation of `removeTag` in `AddressBook`:
+Within RemoveTagCommand class,  `removeTag` method is called to actually remove the tag, which calls `removeTag` method of
+`AddressBook`. The snippet code below shows the implementation of `removeTag` in `AddressBook`:
 
 [source,java]
 ----
 public class AddressBook {
     /**
-    * Removes {@code tag} from all persons in this {@code AddressBook}.
-    * @return the number of {@code person}s with this {@code tag} removed.
-    */
+     * Removes {@code tag} from all persons in this {@code AddressBook}.
+     * @return the number of {@code person}s with this {@code tag} removed.
+     */
     public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
         boolean tagExists = false;
         for (Tag existingTag: tags) {
             if (existingTag.equals(tag)) {
-                    tagExists = true;
+                tagExists = true;
             }
         }
         if (!tagExists) {
@@ -389,20 +393,10 @@ Additionally, `removeUnusedTags` is called inside `removeTag` when there is at l
 This is because `removeTag` removes the tag from each person with it and after the operation, no person in the
 address book should have the tag. Hence the unused tag should be removed from `tags` inside the address book.
 
-Suppose the current address book has two types of tags, `friends` and `husband`.
-The figure below shows a possible state of `PersonListPanel`:
+As an example, the following sequence diagram shows the interaction within classes in `Logic` package when
+the user executes `removeTag friends` successfully:
 
-.State of `PersonListPanel` before executing `removeTag friends`
-image::BeforeRemoveTag.png[width=""]
-
-After the successful execution of `removeTag friends`, `PersonListPanel` will be updated to the diagram below:
-
-.State of `PersonListPanel` after executing `removeTag friends`
-image::AfterRemoveTag.png[width=""]
-
-The following sequence diagram shows the interaction within classes in `Logic` to process `removeTag` command:
-
-.Sequence diagram of removeTag command
+.Sequence diagram of `removeTag` command
 image::RemoveTagSequenceDiagram.png[width=""]
 
 ==== Design Considerations
@@ -719,15 +713,19 @@ in UI component while appointments in Model component.
 
 // tag::deleteAppointment[]
 === DeleteAppointment Feature
+
+This feature allows the user to delete appointments.
+
 ==== Current Implementation
 
-The mechanism to delete an appointment is facilitated by the `DeleteAppointmentCommand`, which resides inside `Logic`,
-and `deleteAppointment` in `Model`. It supports the deletion of an appointment.
-Deletion of an appointment can only be done when the `CalendarPanel` is in appointment list view, instead of showing
-calendars. The command requires users to put in an index which represents the appointment to be deleted. This index is
-taken from the currently displayed appointment list.
+The mechanism to delete an appointment is facilitated by the `DeleteAppointmentCommand` class, which resides inside `Logic`,
+and `deleteAppointment` method in `Model`. The command requires the user to put in an index to refer to the appointment
+to be deleted. This index is taken from the currently displayed appointment list. As such, deletion of an appointment
+can only be done when CelebManager is showing an appointment list.
 
-The snippet code below shows the implementation of `execute` in `DeleteAppointmentCommand`:
+`DeleteAppointmentCommand` class is responsible for checking whether an appointment list is currently being shown.
+If so, `DeleteAppointmentCommand` class will call `deleteAppointment` method. Refer to the code snippet below to see
+how this method deletes the specified appointment:
 
 [source,java]
 ----
@@ -787,30 +785,18 @@ The snippet code below shows the implementation of `deleteAppointment` in `Model
 public class ModelManager extends ComponentManager implements Model {
     ...
     @Override
-    public Appointment deleteAppointment(int index) throws CommandException {
+    public Appointment deleteAppointment(int index) throws IndexOutOfBoundsException {
         Appointment apptToDelete = getChosenAppointment(index);
         apptToDelete.removeAppointment();
+        removeAppointmentFromInternalList(index);
+        currentlyDisplayedAppointments.remove(apptToDelete);
         indicateAppointmentListChanged();
-
-        apptToDelete = removeAppointmentFromInternalList(index);
-
-        if (getAppointmentList().size() < 1) {
-            setIsListingAppointments(false);
-            setCelebCalendarViewPage(DAY_VIEW_PAGE);
-        }
         return apptToDelete;
-    }
-
-    /** Makes changes to model's internal appointment list */
-    private Appointment removeAppointmentFromInternalList(int index) {
-        return getAppointmentList().remove(index);
-
     }
     ...
 }
 ----
 
-Note that `getAppointmentList()` retrieves the list of appointments currently being displayed.
 The method `removeAppointment` is in `Appointment` class, and removes all child entries of an appointment. For example,
 an appointment may have two celebrities attending. Then this appointment will have two child entries, one each in each
 attending celebrity's calendar. So when this appointment gets deleted, both entries should get removed as well.

@@ -66,7 +66,8 @@ public class CommandTestUtil {
     public static final String INVALID_NOK_REMARK_DESC = " " + PREFIX_NAME + VALID_NAME_BOB + " " + PREFIX_PHONE
             + VALID_PHONE + " " + PREFIX_EMAIL + VALID_EMAIL + " " + PREFIX_REMARK + "funny";
 
-    public static final String VALID_CCA_DESC = " " + PREFIX_CCA + VALID_CCA + " " + PREFIX_CCA_POSITION + VALID_CCA_POSITION;
+    public static final String VALID_CCA_DESC = " " + PREFIX_CCA + VALID_CCA + " " + PREFIX_CCA_POSITION
+            + VALID_CCA_POSITION;
     public static final String EMPTY_CCA_DESC = " " + PREFIX_CCA + "" + " " + PREFIX_CCA_POSITION + VALID_CCA_POSITION;
     public static final String EMPTY_CCA_POSITION_DESC = " " + PREFIX_CCA + VALID_CCA + " " + PREFIX_CCA_POSITION + "";
     public static final String NO_CCA_POSITION_STATED = " " + PREFIX_CCA + VALID_CCA;

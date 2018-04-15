@@ -70,7 +70,7 @@ public class AddCcaCommandParserTest {
         assertParseFailure(parser, userInput, MESSAGE_INVALID_FORMAT);
 
         //Cca field not stated
-        Index index= INDEX_SECOND_PERSON;
+        Index index = INDEX_SECOND_PERSON;
         String nextUserInput = index.getOneBased() + NO_CCA_STATED;
         assertParseFailure(parser, nextUserInput, MESSAGE_INVALID_FORMAT);
     }

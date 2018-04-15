@@ -92,7 +92,7 @@ a| * Medeina's syntax starts with a command word.
 a| * Aliases are short-forms that can be used to replace command words.
 
 .^a|Options
-| `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-fa**`, `**-y**`
+| `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-y**`
 a| * Options are used in `add`, `edit`, `find`, `delete` and `listappt` commands.
 * You can specify them to execute variants of a command. For example in figure 2, `**-p**` option denotes editing a pet patient.
 * If there are multiple options used in a command, the order must be preserved.

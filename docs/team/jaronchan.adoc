@@ -73,10 +73,9 @@ UI when logging out of the application. Made the user flow smoother by separatin
 
 ** UI Design:
 *** Created and added UI mock-up on behalf of team (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/26[#26])
-** Enhancements to existing features:
-*** *TO UPDATE*
+*** Designed brand logo for SLAP (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/120[#120])
 ** Documentation:
-*** *TO UPDATE*
+*** Added first-time user-friendly UI walk through (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/137[#137])
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-F09-B4/main/issues/195[1], https://github.com/CS2103JAN2018-F09-B4/main/issues/175[2], https://github.com/CS2103JAN2018-F09-B4/main/issues/211[3])
 ** Tools:
@@ -108,3 +107,5 @@ include::../DeveloperGuide.adoc[tag=mapComponents]
 include::../DeveloperGuide.adoc[tag=dailyScheduler]
 
 include::../DeveloperGuide.adoc[tag=jaronUseCases]
+
+include::../DeveloperGuide.adoc[tag=jaronManualTesting]

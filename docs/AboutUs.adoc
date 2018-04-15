@@ -12,7 +12,7 @@ to fit social worker more specifically.
 === Chan Jin Jia
 image::jaronchan.jpg[width="150", align="left"]
 
-{empty}[https://github.com/jaronchan[github]] [https://github.com[Project Portfolio Page]]
+{empty}[https://github.com/jaronchan[github]] [https://cs2103jan2018-t15-b3.github.io/main/team/jaronchan.html[Project Portfolio Page] | https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/jaronchan.adoc[Project Portfolio Page (on GitHub)]]
 
 Role: Project Developer +
 Responsibilities: Main UI, Map and Daily Scheduler

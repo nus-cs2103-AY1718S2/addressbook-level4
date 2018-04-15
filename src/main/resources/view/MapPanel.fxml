@@ -6,7 +6,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
@@ -17,16 +16,12 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
       </StackPane.margin>
       <children>
-        <VBox alignment="CENTER">
-          <children>
-            <Label id="invalidAddresseeName" fx:id="invalidAddressPersonName" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@Extensions.css" text="NAME" textAlignment="CENTER" />
-            <Label id="invalidAddressMsg" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@Extensions.css" text="address cannot be found on Google Maps" wrapText="true">
-              <font>
-                <Font size="8.0" />
-              </font>
-            </Label>
-          </children>
-        </VBox>
+        <Label id="invalidAddressMsg" prefHeight="-1.0" prefWidth="-1.0" translateX="25" translateY="40"
+               stylesheets="@Extensions.css" text="Address cannot be found on Google Maps" wrapText="true">
+          <font>
+            <Font size="13.0" />
+          </font>
+        </Label>
       </children>
     </Pane>
   </children>

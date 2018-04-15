@@ -1918,3 +1918,71 @@ _{ more test cases ... }_
    Expected: All error log windows close.
 // end::errorLogTesting[]
 
+//tag::jaronManualTesting[]
+=== UI Features and Map Components
+
+==== Switching features
+  . Switching between feature tabs through Command Line Interface.
+ .. Prerequisites: Already logged in. +
+ .. Test Case: `switch scheduler` +
+    Expected: UI switches scenes to display daily scheduler feature. Success message shown. +
+ .. Test Case (Switch to same feature) : `switch scheduler` +
+    Expected: No changes to UI. Success message shown. +
+ .. Test Case (Wrong name) : `switch detail` +
+    Expected: No changes to UI. Error message that feature target name is wrong. +
+ .. Test Case (Number used) : `switch 1` +
+    Expected: No changes to UI. Error message that feature target name is wrong.
+
+==== Selecting persons will display updated UI
+  . Updates to Map Panel.
+ .. Prerequisites: Already logged in and on `Details` feature. Person selected has a valid address. +
+ .. Test Case: `select 1` +
+     Expected: UI updates to display first indexed person's address on the map. +
+ .. Test Case: `select 2` +
+    Expected: UI updates to display second indexed person's address on the map. +
+ .. Prerequisites: Added a person with bad address such as `a/huhhuh`. For this example, imagine person index is 10. +
+ .. Test Case (Select person with unrecognisable address) : `select 10` +
+    Expected: Map Panel updates to show that Google could not retrieve address. +
+  . Updates to Session Log Panel.
+ .. Prerequisites: Already logged in and on `Details` feature. +
+ .. Test Case: `select 1` +
+    Expected: UI updates to display first indexed person's session log.
+ .. Test Case: `select 2` +
+    Expected: UI updates to display second indexed person's session log.
+ .. Test Case: `add-log 1 log/TEST` +
+    Expected: Selects first indexed person and updates UI to display that person's details including session log.
+
+==== Show-schedule updates list of scheduled events shown
+  . Updates to Events List Shown.
+ .. Prerequisites: Already logged in and on `Scheduler` feature. Date chosen, eg. 5 May and 6 May, already have at least 1 event scheduled. +
+ .. Test Case: `show-schedule d/5 May` +
+     Expected: UI updates to show information of events scheduled on 5 May. +
+ .. Test Case (Select different date with valid number of events): `show-schedule d/6 May` +
+    Expected: UI updates to show information of events scheduled on 6 May. +
+ .. Prerequisites: Date, eg. 7 May chosen has no scheduled events planned. +
+ .. Test Case (Select different date with no events): `show-schedule d/7 May` +
+    Expected: UI updates to show prompt informing user to add events or select a date with events. +
+  . Updates to Navigation Option Indicators
+ .. Prerequisites: Date chosen, eg. 8 May have at 5 events scheduled. +
+ .. Test Case: `show-schedule d/8 May` +
+    Expected: UI updates to display to show 4 buttons next to map panel. +
+ .. Prerequisites: Date chosen, eg. 9 May only have 1 event scheduled. +
+ .. Test Case (Not enough events): `show-schedule d/9 May` +
+    Expected: UI updates to not display any buttons. +
+
+==== Navigate command updates Daily Scheduler Map Panel
+  . Updates to Daily Scheduler Map Panel.
+ .. Prerequisites: Already called show-schedule for a date with sufficient events, i.e. 2 or more events. +
+ .. Test Case: `navigate 1` +
+    Expected: UI refreshes to display directions between event 1 and 2. Message success will be shown. +
+
+==== UI updates on Log Out and Log In
+  . Updates to Details Panel.
+ .. Prerequisites: Logged in, carried out a few commands and current view is details feature. +
+ .. Test Case: `logout + login u/user p/pass` +
+    Expected: UI refreshes to not display any persons details. +
+  . Updates to Daily Scheduler Panel.
+ .. Prerequisites: Logged in, carried out a few commands and current view is daily scheduler feature. +
+ .. Test Case: `logout + login u/user p/pass` +
+    Expected: UI refreshes to not display any events or directions or indicators. +
+//end::jaronManualTesting[]

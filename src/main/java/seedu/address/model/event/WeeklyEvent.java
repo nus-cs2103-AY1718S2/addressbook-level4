@@ -54,6 +54,7 @@ public class WeeklyEvent extends Event {
      * @return true if {@code this} is on {@code dayOfWeek},
      * around the time from {@code start} to {@code end}, false otherwise
      */
+    @Override
     public boolean clash(String dayOfWeek, String start, String end) {
         if (!day.equals(dayOfWeek)) {
             return false;

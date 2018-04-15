@@ -43,7 +43,22 @@ public class UniqueEventList implements Iterable<Event> {
         if (contains(toAdd)) {
             throw new DuplicateEventException();
         }
+        if (eventClash(toAdd)) {
+            throw new DuplicateEventException();
+        }
         internalList.add(toAdd);
+    }
+
+    /**
+     * @return true if the {@code event} clashes with any other event in {@code internalList}
+     */
+    private boolean eventClash(Event event) {
+        for (Event e : internalList) {
+            if (event.clash(e)) {
+                return true;
+            }
+        }
+        return false;
     }
 
     /**

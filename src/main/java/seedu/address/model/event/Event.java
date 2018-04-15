@@ -78,6 +78,27 @@ public class Event {
                 && otherEvent.getEndTime().equals(this.getEndTime());
     }
 
+    /**
+     * @return true if {@code this} clashes with the {@code event}, false otherwise
+     */
+    public boolean clash(Event event) {
+        return clash(event.getDate(), event.getStartTime(), event.getEndTime());
+    }
+
+    /**
+     * @return true if {@code this} is on {@code date},
+     * around the time from {@code start} to {@code end}, false otherwise
+     */
+    public boolean clash(String d, String start, String end) {
+        if (!date.equals(d)) {
+            return false;
+        }
+        if (Integer.parseInt(start) >= Integer.parseInt(endTime)) {
+            return false;
+        }
+        return Integer.parseInt(end) > Integer.parseInt(startTime);
+    }
+
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own

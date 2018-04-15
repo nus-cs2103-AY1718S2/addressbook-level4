@@ -1313,6 +1313,7 @@ _{ more test cases ... }_
    Expected: Theme is saved across restarts.
 // end::OngKuanYangTestCases[]
 
+//tag::XavierMaYuqianTestCases[]
 === Lock
 
 . Lock the addressbook to prevent further modification on contacts or appointment
@@ -1374,6 +1375,7 @@ _{ more test cases ... }_
    Expected: A contact is created with comment interested in football.
 .. Test case: Run `edit 1 c/interested in basketball` . +
    Expected: The first contact's comment is modified to interested in basketball.
+//end::XavierMaYuqianTestCases[]
 
 === Saving data
 

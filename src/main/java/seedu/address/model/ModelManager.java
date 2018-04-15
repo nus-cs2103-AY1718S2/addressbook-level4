@@ -14,7 +14,6 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
-import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.DateTime;
@@ -34,8 +33,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
-    private final FilteredList<AppointmentEntry> appointmentEntries;
-
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
      */
@@ -47,7 +44,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
-        appointmentEntries = new FilteredList<>(this.imdb.getAppointmentEntryList());
     }
 
     public ModelManager() {
@@ -73,10 +69,6 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author Kyholmes
     private void indicateAppointmentChanged(Patient patient) {
         raise(new AppointmentChangedEvent(patient, imdb));
-    }
-
-    private void indicateCalendarChanged() {
-        raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
     }
 
     //@@author

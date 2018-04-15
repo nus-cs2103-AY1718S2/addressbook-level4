@@ -28,7 +28,7 @@ Your TA is a desktop contact and task manager application used to manage the man
 
 ** Justification: *Your TA* is made for teaching assistants in universities, the matriculation number field and the `find` command supporting this field provides more user friendliness when searching for a student.
 
-* *Code contributed*: link:{repoURL}/collated/functional/JoonKai1995.md[functional], link:{repoURL}/collated/test/JoonKai1995.md[test].
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/JoonKai1995.md[Functional]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/JoonKai1995.md[Test]].
 
 * *Other contributions*:
 

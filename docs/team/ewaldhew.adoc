@@ -16,7 +16,8 @@ CoinBook is a desktop accounting application written in Java. It is targeted at 
 * *Major enhancement*: Added *user-set notification rules*
 ** What it does: Allows the user to set rules regarding any property of a coin, e.g. price, profitability, etc., which trigger notifications if the conditions are met upon a price data update.
 ** Justification: This feature informs the user immediately and draws their attention to the updates that is most relevant to them. Users can set notifications as suits their needs and focus on what's important.
-** Highlights: This enhancement requires various backend systems that were implemented by other team members and close coordination of the interfaces and behaviour was challenging but crucial. An Event-Driven Design drives the feature and the existing Command pattern was adapted to define custom behaviours upon rule triggers (although it is only used for creating pop-up notifications now).
+** Highlights: This enhancement requires various backend systems that were implemented by other team members and close coordination of the interfaces and behaviour was challenging but crucial. +
+An Event-Driven Design drives the feature and the existing Command pattern was adapted and combined with another design pattern to define custom behaviours upon rule triggers (although it is only used for creating pop-up notifications now).
 
 * *Proposed extensions*: The notifications features was designed with extensibility in mind. It could be upgraded in the future to handle other types of trigger-action pairs, encapsulated by the `Rule` objects. Examples: custom macros, post updates to backup server, generate suggestions from analytics.
 
@@ -33,6 +34,11 @@ CoinBook is a desktop accounting application written in Java. It is targeted at 
 ** Changes to existing features:
 *** Refactored many minor parts of the codebase to suit our new product, a good part of which was redefining existing interfaces: (Pull requests)
 {repoLinkBase}/pull/87[#87], {repoLinkBase}/pull/98[#98], {repoLinkBase}/pull/106[#106], {repoLinkBase}/pull/108[#108], {repoLinkBase}/pull/118[#118]
+*** Made various minor visual changes to the GUI: {repoLinkBase}/pull/263[#263]
+** Bug squashing:
+*** Helped as part of team effort to fix bugs discovered:
+{repoLinkBase}/pull/199[#199], {repoLinkBase}/pull/240[#240],
+{repoLinkBase}/pull/244[#244], {repoLinkBase}/pull/268[#268]
 ** Documentation:
 *** Edited layout and language of the Developer and User Guides: {repoLinkBase}/pull/115[#115]
 *** Updated diagrams in the Developer Guide: {repoLinkBase}/pull/187[#187]

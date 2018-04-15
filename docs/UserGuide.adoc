@@ -526,7 +526,7 @@ A quick refresh of what lessons you have in the week is a simple command away. Y
 .Executing the `schedule` command +
 image::scheduleResult.png[width="790"]
 +
-. See your schedule in full glory.
+. View your schedule in its entirety!
 
 ==== Adding a Lesson to your Schedule
 

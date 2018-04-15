@@ -48,18 +48,19 @@ public class ProfilePicturePath {
      * Returns true if a given string is a valid file path with extensions either '.jpg' or '.png'.
      */
     public static boolean isValidPath(String test) {
+        test = test.replace('\\', '/');
+        if (test.equals(ProfilePicturePath.DEFAULT_PROFILE_PICTURE)) {
+            return true;
+        }
+
         File testFile = new File(test);
-        if (!testFile.exists() && !validDefaultPictureExists()) {
+        if (!testFile.exists()) {
             return false;
         }
         return ProfilePicturePath.checkPictureExtension(testFile.getPath());
     }
 
-    private static boolean validDefaultPictureExists() {
-        File validDefaultPicture = new File("src/main/resources/"
-                + DEFAULT_PROFILE_PICTURE.substring(4));
-        return validDefaultPicture.exists();
-    }
+
 
     public Path getProfilePicturePath() {
         return profilePicturePath;

@@ -23,8 +23,7 @@ public class EditPictureCommandParser implements Parser<EditPictureCommand> {
         requireNonNull(userInput);
         ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(userInput, PREFIX_INDEX, PREFIX_PICTURE_PATH);
 
-        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_PICTURE_PATH)
-                || !argMultimap.getPreamble().isEmpty()) {
+        if (!arePrefixesPresent(argMultimap, PREFIX_INDEX, PREFIX_PICTURE_PATH)) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPictureCommand.MESSAGE_USAGE));
         }
         Index index;

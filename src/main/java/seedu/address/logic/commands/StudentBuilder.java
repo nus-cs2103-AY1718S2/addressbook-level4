@@ -21,7 +21,12 @@ import seedu.address.model.student.dashboard.exceptions.DuplicateMilestoneExcept
 import seedu.address.model.student.dashboard.exceptions.DuplicateTaskException;
 import seedu.address.model.student.dashboard.exceptions.MilestoneNotFoundException;
 import seedu.address.model.student.dashboard.exceptions.TaskNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.Allergies;
+import seedu.address.model.student.miscellaneousinfo.MiscellaneousInfo;
+import seedu.address.model.student.miscellaneousinfo.NextOfKinName;
+import seedu.address.model.student.miscellaneousinfo.NextOfKinPhone;
 import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
+import seedu.address.model.student.miscellaneousinfo.Remarks;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.util.SampleDataUtil;
 
@@ -49,6 +54,7 @@ public class StudentBuilder {
     private ProfilePicturePath profilePicturePath;
     private Dashboard dashboard;
     private UniqueKey uniqueKey;
+    private MiscellaneousInfo miscellaneousInfo;
 
     public StudentBuilder() {
         name = new Name(DEFAULT_NAME);
@@ -61,6 +67,7 @@ public class StudentBuilder {
         profilePicturePath = new ProfilePicturePath(DEFAULT_PROFILE_PICTURE_URL);
         dashboard = new Dashboard();
         uniqueKey = UniqueKey.generateRandomKey();
+        miscellaneousInfo = new MiscellaneousInfo();
     }
 
     /**
@@ -77,6 +84,7 @@ public class StudentBuilder {
         profilePicturePath = studentToCopy.getProfilePicturePath();
         dashboard = studentToCopy.getDashboard();
         uniqueKey = studentToCopy.getUniqueKey();
+        miscellaneousInfo = studentToCopy.getMiscellaneousInfo();
     }
 
     /**
@@ -127,6 +135,7 @@ public class StudentBuilder {
         return this;
     }
 
+    //@@author samuelloh
     /**
      * Sets the {@code programminglanguage} of the {@code Student} that we are building.
      */
@@ -145,11 +154,50 @@ public class StudentBuilder {
     }
 
     /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withAllergies(String allergies) {
+        this.miscellaneousInfo = new MiscellaneousInfo(new Allergies(allergies), miscellaneousInfo.getNextOfKinName(),
+                miscellaneousInfo.getNextOfKinPhone(), miscellaneousInfo.getRemarks());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withNextOfKinName(String nextOfKinName) {
+        this.miscellaneousInfo = new MiscellaneousInfo(miscellaneousInfo.getAllergies(),
+                new NextOfKinName(nextOfKinName), miscellaneousInfo.getNextOfKinPhone(),
+                miscellaneousInfo.getRemarks());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withNextOfKinPhone(String nextOfKinPhone) {
+        this.miscellaneousInfo = new MiscellaneousInfo(miscellaneousInfo.getAllergies(),
+                miscellaneousInfo.getNextOfKinName(), new NextOfKinPhone(nextOfKinPhone),
+                miscellaneousInfo.getRemarks());
+        return this;
+    }
+
+    /**
+     * Sets the {@code Allergies} of the student we are building
+     */
+    public StudentBuilder withRemarks(String remarks) {
+        this.miscellaneousInfo = new MiscellaneousInfo(miscellaneousInfo.getAllergies(),
+                miscellaneousInfo.getNextOfKinName(), miscellaneousInfo.getNextOfKinPhone(), new Remarks(remarks));
+        return this;
+    }
+    //@@author
+
+    /**
      * Creates and returns the Student object with the current attributes.
      */
     public Student build() {
         return new Student(uniqueKey, name, phone, email, address, programmingLanguage, tags, favourite, dashboard,
-                profilePicturePath);
+                profilePicturePath, miscellaneousInfo);
     }
 
     //@@author yapni

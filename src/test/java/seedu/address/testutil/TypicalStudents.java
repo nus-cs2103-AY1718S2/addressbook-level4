@@ -47,14 +47,14 @@ public class TypicalStudents {
             .withPhone("87652533").withEmail("cornelia@example.com")
             .withAddress("10th street").withProgrammingLanguage("Java").build();
     public static final Student ELLE = new StudentBuilder().withKey("abbcfd").withName("Elle Meyer")
-            .withPhone("9482224").withEmail("werner@example.com").withAddress("michegan ave")
+            .withPhone("9482224").withEmail("werner@example.com").withAddress("michigan ave")
             .withProgrammingLanguage("Java").build();
     public static final Student FIONA = new StudentBuilder().withKey("9d2b20").withName("Fiona Kunz")
             .withPhone("9482427").withEmail("lydia@example.com").withAddress("little tokyo")
-            .withProgrammingLanguage("Java").build();
+            .withProgrammingLanguage("Java").withAllergies("nuts").withRemarks("well behaved").build();
     public static final Student GEORGE = new StudentBuilder().withKey("4e0965").withName("George Best")
             .withPhone("9482442").withEmail("anna@example.com").withAddress("4th street")
-            .withProgrammingLanguage("Java").build();
+            .withProgrammingLanguage("Java").withNextOfKinPhone("90123456").withNextOfKinName("Sam").build();
 
     // Manually added
     public static final Student HOON = new StudentBuilder().withKey("bbcd69").withName("Hoon Meier")

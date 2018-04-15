@@ -4,10 +4,15 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ALLERGIES;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXTOFKINNAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NEXTOFKINPHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PICTURE_PATH;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PROGRAMMING_LANGUAGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARKS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -26,6 +31,8 @@ import seedu.address.model.lesson.exceptions.LessonNotFoundException;
 import seedu.address.model.student.NameContainsKeywordsPredicate;
 import seedu.address.model.student.Student;
 import seedu.address.model.student.exceptions.StudentNotFoundException;
+import seedu.address.model.student.miscellaneousinfo.ProfilePicturePath;
+import seedu.address.testutil.EditMiscDescriptorBuilder;
 import seedu.address.testutil.EditStudentDescriptorBuilder;
 
 /**
@@ -45,6 +52,20 @@ public class CommandTestUtil {
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
     public static final String VALID_PROGRAMMING_LANGUAGE_AMY = "Java";
     public static final String VALID_PROGRAMMING_LANGUAGE_BOB = "Java";
+    public static final String VALID_ALLERGIES_AMY = "milk";
+    public static final String VALID_ALLERGIES_BOB = "nuts";
+    public static final String VALID_NOKNAME_BOB = "Sam";
+    public static final String VALID_NOKNAME_AMY = "Sam";
+    public static final String VALID_NOKPHONE_AMY = "12345678";
+    public static final String VALID_NOKPHONE_BOB = "87654321";
+    public static final String VALID_REMARKS_AMY = "well behaved";
+    public static final String VALID_REMARKS_BOB = "naughty";
+    public static final String VALID_PROFILEPICTUREPATH_AMY = ProfilePicturePath.DEFAULT_PROFILE_PICTURE;
+    public static final String VALID_PROFILEPICTUREPATH_BOB = "src/main/resource/view/test.png";
+    public static final String PROFILEPICTUREPATH_DESC_AMY = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_AMY;
+    public static final String PROFILEPICTUREPATH_DESC_BOB = PREFIX_PICTURE_PATH + VALID_PROFILEPICTUREPATH_BOB;
+    public static final String INVALID_PROFILEPICTUREPATH_DESC = " " + PREFIX_PICTURE_PATH + "invalid";
+
     public static final String VALID_TAG_HUSBAND = "husband";
     public static final String VALID_TAG_FRIEND = "friend";
     public static final String VALID_TAG_UNUSED = "unused"; // do not use this tag when creating a student
@@ -72,11 +93,32 @@ public class CommandTestUtil {
     public static final String INVALID_PROGRAMMING_LANGUAGE_DESC = " "
             + PREFIX_PROGRAMMING_LANGUAGE + "\t"; // '\t' not allowed in Programming Language
 
+    public static final String ALLERGIES_DESC_AMY = " " + PREFIX_ALLERGIES + VALID_ALLERGIES_AMY;
+    public static final String ALLERGIES_DESC_BOB = " " + PREFIX_ALLERGIES + VALID_ALLERGIES_BOB;
+    public static final String NOKNAME_DESC_BOB = " " + PREFIX_NEXTOFKINNAME + VALID_NOKNAME_BOB;
+    public static final String NOKNAME_DESC_AMY = " " + PREFIX_NEXTOFKINNAME + VALID_NOKNAME_AMY;
+    public static final String NOKPHONE_DESC_BOB = " " + PREFIX_NEXTOFKINPHONE + VALID_NOKPHONE_BOB;
+    public static final String NOKPHONE_DESC_AMY = " " + PREFIX_NEXTOFKINPHONE + VALID_NOKPHONE_AMY;
+    public static final String REMARKS_DESC_BOB = " " + PREFIX_REMARKS + VALID_REMARKS_BOB;
+    public static final String REMARKS_DESC_AMY = " " + PREFIX_REMARKS + VALID_REMARKS_AMY;
+
+
+
+    public static final String INVALID_ALLERGIES_DESC = " " + PREFIX_ALLERGIES + " ";
+    public static final String INVALID_NOKNAME_DESC = " " + PREFIX_NEXTOFKINNAME + " ";
+    public static final String INVALID_NOKPHONE_DESC = " " + PREFIX_NEXTOFKINPHONE + "hello";
+    public static final String INVALID_REMARKS_DESC = " " + PREFIX_REMARKS + " ";
+
+
+
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditStudentDescriptor DESC_AMY;
     public static final EditCommand.EditStudentDescriptor DESC_BOB;
+
+    public static final EditMiscCommand.EditMiscDescriptor DESC_MISC_AMY;
+    public static final EditMiscCommand.EditMiscDescriptor DESC_MISC_BOB;
 
     static {
         DESC_AMY = new EditStudentDescriptorBuilder().withKey(VALID_KEY_AMY).withName(VALID_NAME_AMY)
@@ -86,6 +128,14 @@ public class CommandTestUtil {
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withProgrammingLanguage(VALID_PROGRAMMING_LANGUAGE_BOB).withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND)
                 .build();
+
+        DESC_MISC_AMY = new EditMiscDescriptorBuilder().withAllergies(VALID_ALLERGIES_AMY)
+                .withNextOfKinName(VALID_NOKNAME_AMY).withNextOfKinPhone(VALID_NOKPHONE_AMY)
+                .withRemarks(VALID_REMARKS_AMY).build();
+        DESC_MISC_BOB = new EditMiscDescriptorBuilder().withAllergies(VALID_ALLERGIES_BOB)
+                .withNextOfKinName(VALID_NOKNAME_BOB).withNextOfKinPhone(VALID_NOKPHONE_BOB)
+                .withRemarks(VALID_REMARKS_BOB).build();
+
     }
 
     /**

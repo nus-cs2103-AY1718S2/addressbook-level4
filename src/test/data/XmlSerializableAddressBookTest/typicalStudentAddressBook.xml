@@ -92,7 +92,7 @@
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
-        <address>michegan ave</address>
+        <address>michigan ave</address>
 		<programmingLanguage>Java</programmingLanguage>
 		<profilePicturePath>data/view/profile_photo_placeholder.png</profilePicturePath>
         <favourite>false</favourite>
@@ -117,10 +117,10 @@
         <dashboard/>
             <milestoneList/>
 		<miscellaneousInfo>
-            <allergies>Not updated</allergies>
+            <allergies>nuts</allergies>
             <nextOfKinName>Not updated</nextOfKinName>
             <nextOfKinPhone>000</nextOfKinPhone>
-            <remarks>No remarks</remarks>
+            <remarks>well behaved</remarks>
         </miscellaneousInfo>
     </students>
     <students>
@@ -136,8 +136,8 @@
             <milestoneList/>
 		<miscellaneousInfo>
             <allergies>Not updated</allergies>
-            <nextOfKinName>Not updated</nextOfKinName>
-            <nextOfKinPhone>000</nextOfKinPhone>
+            <nextOfKinName>Sam</nextOfKinName>
+            <nextOfKinPhone>90123456</nextOfKinPhone>
             <remarks>No remarks</remarks>
         </miscellaneousInfo>
     </students>

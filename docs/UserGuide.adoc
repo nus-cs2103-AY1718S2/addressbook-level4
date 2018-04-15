@@ -445,7 +445,7 @@ Command(s) entered: `find` `John`, `delete` `1` +
 
 Result: The 1st person listed in the person list, in this case, John is deleted (see Figure 24).
 
-.1st Person from `find` Deleted +
+.1st Person from Find Command Deleted +
 image::SecondDelete.png[width="300"]
 
 === Selecting a person: `select`
@@ -479,7 +479,7 @@ Command(s) entered: `find` `Betsy`, `select` `1` +
 
 Result: The 1st person in the results of the `find` command is selected, in this case, Betsy is selected (see Figure 27).
 
-.1st Person from `find` Selected +
+.1st Person from Find Command Selected +
 image::SecondSelect.png[width="300"]
 
 [[TaskList_Feature]]
@@ -531,7 +531,7 @@ Current date: 15-04-2018 +
 The application initially starts with no tasks, as seen in Figure 30 below.
 
 .Initial Application View +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command entered: `addTask` `title/Grade Exams` `desc/Grade mid-terms` `by/20-04-2018` `priority/2` +
 

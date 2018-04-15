@@ -380,7 +380,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::autocompleteDG[]
 === Autocomplete
 
-The autocomplete feature serves to enhance user experience in using the Command Line Interface (CLI). It currently supports command words, options, prefixes, and parameters such as tags, contact's NRIC, pet patient's name, breed, species, colour and blood type.
+The autocomplete feature serves to enhance user experience in using the Command Line Interface (CLI). It currently supports command words, options, prefixes, and parameters such as tags, NRIC, pet patient's name, breed, species, colour and blood type.
 
 ==== Current Implementation
 
@@ -394,7 +394,7 @@ image::autocompleteSequenceDiagram.png[width="800"]
 {empty} +
 `Autocomplete.java` encompasses the logic for parsing user input in the CLI and determining what autocomplete suggestions are to be passed back to `CommandBox.java`. Data required for autocomplete, such as a list of command words, prefixes, options and parameters in Medeina, are retrieved from the `Logic` component. All data required by `Autocomplete` are consolidated in a similar way in the `Logic` component.
 
-The following code shows how contact's NRIC and tags are consolidated:
+The following code shows how NRIC and tags from all `Person` objects are consolidated:
 [source,java]
 ----
 public void setAttributesForPersonObjects() {
@@ -455,24 +455,87 @@ public void handleAddressBookChangedEvent(AddressBookChangedEvent a) {
 ** Pros: Less logic to account for, and is thus easier to implement.
 ** Cons: User experience is compromised.
 
+===== Aspect: Expanding the autocomplete feature
+
+* **Alternative 1 (current choice):** Include descriptions in autocomplete suggestions for options and prefixes
+** Pros: Great improvement in user experience, as the autocomplete suggestions now serve as a brief overview of what each prefix and options are used for.
+** Cons: Additional implementation logic to handle descriptions e.g. descriptions should not be added to user input in the command box.
+* **Alternative 2:** Keep to just simple autocomplete
+** Pros: No additional logic required.
+** Cons: User experience is compromised.
+
+===== Aspect: Autocomplete scope
+* **Alternative 1 (current choice):** Autocomplete works only for commands that require options and prefixes.
+** Pros: Reduce unneccessary autocomplete suggestions.
+** Cons: Additional implementation logic to handle checking of command input.
+* **Alternative 2:** Autocomplete works for any user input as long as correct options and prefixes are specifed.
+** Pros: Easy to implement.
+** Cons: A whitespace after a command that doesn't require options and prefixes e.g. `help`, will bring up a list of suggested prefixes. This may cause confusion for the user.
 // end::autocompleteDG[]
 
 // tag::addcommandDG[]
 === Add Command
+This command creates new `Person`, `PetPatient` and `Appointment` objects to be added into Medeina.
 
 ==== Current Implementation
+The add command involves a combination of options to differentiate between what objects are to be added. Command syntax required for adding the different objects are shown below. Take note that the command word has been omitted.
+
+----
+ (1) Person: -o n/NAME p/PHONE e/EMAIL a/ADDRESS nr/NRIC
+ (2) PetPatient: -p n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOODTYPE -o nr/NRIC
+ (3) Appointment: -a d/DATETIME r/REMARKS t/TYPE_OF_APPOINTMENT -o nr/NRIC -p n/PET_PATIENT_NAME
+ (4) All 3 objects in one command: -o n/NAME p/PHONE e/EMAIL a/ADDRESS nr/NRIC -p n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOODTYPE -a d/DATETIME r/REMARKS t/TYPE_OF_APPOINTMENT
+----
+
+Syntax (4) is equivalent to syntaxes (1), (2), and (3), but with fewer parameters required. Syntax (4) is designed to increase efficiency for the user in using the CLI, by reducing typing of redundant parameters. The parsing of these 4 `add` command syntaxes is performed using regular expressions pattern matching in `AddCommandParser`. +
+
+The following diagram illustrates the sequence of methods that occurs when adding a new pet patient to Medeina.
+
+.Sequence diagram for autocomplete feature
+image::addCommandSequenceDiagram.png[width="800"]
+
+{empty} +
+
+A `PetPatient` object must be assigned to an existing `Person` object. The `Person` object refers to a point of contact, which could be the owner of the pet patient, or a volunteer in-charge of the pet patient. This type of dependency is verified in `AddCommand.java`.
+
+The follow code shows how dependency between `PetPatient` and `Person` object is verified:
+[source,java]
+----
+private CommandResult addNewPetPatient() throws DuplicatePetPatientException, CommandException {
+    person = getValidOwner(ownerNric);
+    model.addPetPatient(petPatient);
+    return new CommandResult(String.format(MESSAGE_SUCCESS_PETPATIENT, petPatient, person));
+}
+
+private Person getValidOwner(Nric ownerNric) throws CommandException {
+    Person validOwner = model.getPersonWithNric(ownerNric);
+    if (validOwner == null) {
+		throw new CommandException(MESSAGE_INVALID_NRIC);
+    }
+    return validOwner;
+}
+----
+
+Dependencies for `Appointment` object is also verified in a similar way in `AddCommand.java`.
 
 ==== Design considerations
 
 ===== Aspect: Consolidating similar commands
 
-* Combining variations of the same type of command into a single command with parsing options
-** **add Person** : add **-o** n/NAME p/PHONE NUMBER e/EMAIL a/ADDRESS nr/NRIC [t/TAGS]...
-** **add Pet Patient** : add **-p** n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD TYPE [t/TAGS]... **-o** [WHO IS THE OWNER]
-** **add Appointment** : add **-a** d/DATE r/REMARK [t/TAGS]... **-o** [OWNER] -p [PET PATIENT INVOLVED]
-** add **-o** [OWNER INFO] **-p** [PET INFO] **-a** [APPOINTMENT INFO]
+* **Alternative 1 (current choice):** A single `add` command with options to differentiate amongst adding of different objects.
+** Pros: It is intuitive for users to just remember just 1 `add` command. Greater flexibility in introducing "power" command like syntax (4).
+** Cons: Complex implementation logic
+* **Alternative 2:** 3 different add commands e.g. addperson, addpetpatient, addappointment
+** Pros: Easy to implement.
+** Cons: Will need a new command for syntax (4). More commands for the user to remember. 
 
-Keeping to one main command is simpler and more user-friendly as compared to having variations of the same type of command. To reduce the amount of typing required, command syntax should be kept as compact as possible. Instead of having separate `add` commands for each of the 3 classes, combine them into a one-liner command to reduce typing redundant information from dependencies.
+==== Current Limitations
+Currently, `add`  command uses up to 3 options in its syntax. The order of options must be preserved due to the use of regular expressions to match command syntax pattern. This differs from prefixes which have flexibility in ordering. As a result, the add command may be less intuitive for users.
+
+Another thing to note is that, the syntax for adding an appointment takes in the NRIC of an existing contact and a pet patient name. The pet patient that is specified must be one that assigned under the contact. However, the adding of a new appointment does not account for cases in which a particular contact has pet patients sharing the same name. The `add` command will assign the new appointment for the pet patient which has a lower index in Medeina. A simple workaround over this problem, is to edit the pet patient name with slight variation to differentiate them e.g. "Happy1", "Happy2". 
+
+==== Future Work
+The problem of multiple pet patient sharing the same name under a contact will be addressed in near future. The `add` command syntax can be modified to include an optional index to differentiate the pet patients without having to edit their names. Aside from this, further improvements can be made to simplify the command syntax of `add`.
 
 // end::addcommandDG[]
 
@@ -1616,7 +1679,6 @@ These instructions only provide a starting point for testers to work on; testers
 === Autocomplete
 
 . Command word
-
 .. In an empty command box (with no user input), type a space. You should see a drop down list of commands supported by Medeina.
 .. Continue typing spaces in the command box. The same drop down list of command words will be suggested.
 
@@ -1629,7 +1691,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. There will be no prefixes suggested for all other preceeding words e.g. "sdfkljsdlkfjs ", "help ".
 
 . Options
-
 .. Type "add -" you should see a list of options (starting with "-") supported by Medeina.
 .. Type "edit -" you should see a list of options (starting with "-") supported by Medeina.
 .. Type "find -" you should see a list of options (starting with "-") supported by Medeina.
@@ -1638,16 +1699,13 @@ These instructions only provide a starting point for testers to work on; testers
 .. There will be no options suggested for all other preceeding words e.g. "sdfkljsdlkfjs -", "help -".
 
 . Species, breed, colour and blood type
-
-.. Typing s/, b/, c/ and bt/ after a word (and a space) in the command box, will show their respective suggestions.
+.. Typing s/, b/, c/ and bt/ after any of the following command words (add, find, edit, delete, listappt) in the command box, will show their respective suggestions (cap at 13).
 
 . Pet patient names
-
 .. Type "add -a -o -p n/" and you will see a list of pet patient name suggestions (cap at 13).
 .. Type "add -p n/" and there will be no pet patient name suggestions.
 
 . NRIC
-
 .. Type "add -p -o nr/" and you will see a list of NRIC suggestions (cap at 13).
 .. Type "add -p n/Mikey s/Cat b/Persian c/Calico bt/A -o nr/" and you will see a list of NRIC suggestions (cap at 13).
 .. Type "add -p n/Mikey s/Cat b/Persian c/Calico bt/A -o nr/T" and you will see a list of NRIC suggestions starting with "T" (cap at 13).
@@ -1656,10 +1714,25 @@ These instructions only provide a starting point for testers to work on; testers
 .. Type "find -o nr/" to see a list of NRIC suggestions (cap at 13).
 
 . Toggle on/off
-
 .. Press F2 when the command box is in focus to off/on autocomplete.
 
 === Adding contact, pet patient, appointment
+
+. To add a person
+.. add -o n/Jason p/90123456 e/jason@gmail.com a/137 omputing Drive nr/S8899111G
+   Expected: Successfully added.
+   Enter this command again and you will see an error message "This contact already exists in Medeina."
+   
+. To add a pet patient
+.. add -p n/Xiao bai s/Cat b/Persian c/Black bt/A -o
+   Expected: Please check your parameters for: option -o
+   Missing prefix nr/ for NRIC.
+   
+.. add -p n/Xiao bai s/Cat b/Persian c/Black bt/A -o nr/S0123456B
+   Expected: Successfully added.
+   
+. To add an appointment
+..
 
 === Deleting a person
 

@@ -3,24 +3,19 @@
 :stylesDir: ../stylesheets
 
 == PROJECT: Medeina
-This portfolio page highlights my contributions to the Medeina Project.
----
+This portfolio page showcases my contributions to the Medeina Project.
 
 == Overview
 
-Medeina is a free desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. Most user interactions happen through the Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created using JavaFX. +
-
-It is written in Java, and has about 20 kLoC.
+Medeina is a free desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. Most user interactions happen through the Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created using JavaFX.
 
 == Summary of contributions
 
 * *Major enhancement*: Autocomplete
-** *What it does:* The autocomplete feature supports command words, options, prefixes and parameters such as tags, NRIC, pet patient name, species, breed, colour and blood type. It shows suggestions in a context menu as the user types. Autocomplete suggestions for options and prefixes come with descriptions to give users an overview of what the option or prefix is used for.
+** *What it does:* The autocomplete feature provides suggestions for command words, options, prefixes and parameters in a context menu as the user types. Autocomplete suggestions for options and prefixes come with descriptions to give users an overview of what the option or prefix is used for.
 ** *Justification:* Medeina's command syntax involves many options, prefixes and parameters, which can be daunting for potential users. Autocomplete supports and complements Medeina's command syntax to enhance user experience. In addition, the autocomplete feature also provides users a way to reference existing data in Medeina to reduce the margin for errors in typing.
-** *Highlights:* This enhancement requires the exploration of the singleton pattern and listeners for JavaFX. It involves an in-depth analysis of command syntax parsing e.g. to determine which group of tags (contact, pet patient, appointment) to show as autocomplete suggestions based on user input. In the process of development, a bug was encountered. The caret position in JavaFX textfield is not updated in sync with textfield's content.
+** *Highlights:* This enhancement requires the exploration of the singleton pattern and listeners for JavaFX. It involves an in-depth analysis of command syntax parsing e.g. to determine which group of tags (contact, pet patient, appointment) to show as autocomplete suggestions based on user input.
 ** *Credits:* https://bugs.openjdk.java.net/browse/JDK-8088614[Bug fix for JavaFx textfield caret position issue]
-
-* *Major enhancement*: Add command for contacts, pet patients and appointments
 
 * *Minor enhancement*: Support for changing theme that is persistent beyond app restart.
 
@@ -37,9 +32,7 @@ It is written in Java, and has about 20 kLoC.
 *** Introduced a new format to document features and examples (https://github.com/CS2103JAN2018-F14-B2/main/pull/137[137])
 *** Re-structure contents in User Guide to improve organization and user-friendliness (https://github.com/CS2103JAN2018-F14-B2/main/pull/214[#214])
 *** Added a section to describe command format/syntax used (https://github.com/CS2103JAN2018-F14-B2/main/pull/244)
-*** Wrote key features and introduction for README.adoc (https://github.com/CS2103JAN2018-F14-B2/main/pull/76[76])
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
 *** Reported bugs and suggestions for other teams (examples:  https://github.com/CS2103JAN2018-F11-B1/main/issues/170[#170], https://github.com/CS2103JAN2018-F11-B1/main/issues/179[#179])
 ** Tools:
 *** Integrated a new Github plugin (CircleCI) to the team repo https://github.com/CS2103JAN2018-F14-B2/main/pull/207[#207]
@@ -52,7 +45,7 @@ It is written in Java, and has about 20 kLoC.
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=cliUG]
+include::../UserGuide.adoc[tag=autocompleteUG]
 
 include::../UserGuide.adoc[tag=addcommandUG]
 

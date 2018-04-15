@@ -12,8 +12,8 @@ public class AliasListHandle extends NodeHandle<TableView> {
 
     public static final String ALIAS_LIST_ID = "#aliasList";
 
-    public AliasListHandle(TableView AliasListNode) {
-        super(AliasListNode);
+    public AliasListHandle(TableView aliasListNode) {
+        super(aliasListNode);
     }
 
     /**

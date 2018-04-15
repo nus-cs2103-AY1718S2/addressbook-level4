@@ -66,8 +66,3 @@ include::../DeveloperGuide.adoc[tag=ListPets]
 include::../DeveloperGuide.adoc[tag=calendar]
 
 
-== PROJECT:
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_

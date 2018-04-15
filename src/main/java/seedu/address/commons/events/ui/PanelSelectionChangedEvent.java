@@ -8,11 +8,12 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class PanelSelectionChangedEvent extends BaseEvent {
 
-
     private final Object newSelection;
+    private final String activityType;
 
-    public PanelSelectionChangedEvent(Object newSelection) {
+    public PanelSelectionChangedEvent(Object newSelection, String activityType) {
         this.newSelection = newSelection;
+        this.activityType = activityType;
     }
 
     @Override
@@ -24,4 +25,7 @@ public class PanelSelectionChangedEvent extends BaseEvent {
         return newSelection;
     }
 
+    public String getActivityType() {
+        return activityType;
+    }
 }

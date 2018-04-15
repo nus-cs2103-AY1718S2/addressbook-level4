@@ -29,10 +29,6 @@ public class TaskCard extends UiPart<Region> {
     @FXML
     private Label dateTime;
     @FXML
-    private Label remark;
-    @FXML
-    private FlowPane tags;
-    @FXML
     private FlowPane status;
 
     public TaskCard(Activity task, int displayedIndex) {
@@ -41,12 +37,6 @@ public class TaskCard extends UiPart<Region> {
         id.setText(displayedIndex + ". ");
         name.setText(this.task.getName().fullName);
         dateTime.setText(getDisplayedDateTime(this.task));
-        if (this.task.getRemark() != null) {
-            remark.setText(this.task.getRemark().value);
-        } else {
-            remark.setVisible(false);
-        }
-        task.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         if (task.isCompleted()) {
             status.getChildren().add(new Label("Completed"));
         } else {
@@ -71,4 +61,9 @@ public class TaskCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && task.equals(card.task);
     }
+
+    public Task getTask() {
+        return task;
+    }
+
 }

@@ -1826,6 +1826,8 @@ _{ more test cases ... }_
 _{ more test cases ... }_
 
 // tag::calendarTesting[]
+
+=== Calendar Tools
 .  Displaying the calendar within a WebView
 .. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
 .. Test case: `calendar-launch` and not logged in +

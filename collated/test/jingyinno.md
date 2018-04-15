@@ -1,4 +1,29 @@
 # jingyinno
+###### \java\guitests\guihandles\AliasListHandle.java
+``` java
+/**
+ * A handler for the {@code AliasList} of the UI
+ */
+public class AliasListHandle extends NodeHandle<TableView> {
+
+    public static final String ALIAS_LIST_ID = "#aliasList";
+
+    public AliasListHandle(TableView aliasListNode) {
+        super(aliasListNode);
+    }
+
+    /**
+     * Returns the tables in the alias list
+     */
+    public ObservableList<TableColumn> getTables() {
+        return getRootNode().getColumns();
+    }
+
+    public boolean getFront() {
+        return getRootNode().getChildrenUnmodifiable().get(0).equals(this);
+    }
+}
+```
 ###### \java\guitests\guihandles\GoogleMapsDisplayHandle.java
 ``` java
 /**
@@ -165,101 +190,6 @@ public class AliasCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTag(Tag tag) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePassword(byte[] password)  {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeAlias(String toRemove) throws AliasNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void exportAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void uploadAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addAlias(Alias alias) throws DuplicateAliasException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public HashMap<String, String> getAliasList() {
-            return new HashMap<String, String>();
-        }
-
-        @Override
-        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
-                throws BuildingNotFoundException {
-            fail("This method should not be called.");
-            return null;
-        }
-    }
-
-    /**
      * A Model stub that always throw a DuplicatePersonException when trying to add a person.
      */
     private class ModelStubThrowingDuplicateAliasException extends ModelStub {
@@ -273,7 +203,6 @@ public class AliasCommandTest {
             return new AddressBook();
         }
     }
-
 
     /**
      * A Model stub that always accept the alias being added.
@@ -392,7 +321,6 @@ public class AliasCommandTest {
 
     public static final String VALID_THREE_LOCATIONS = VALID_LOCATION_ADDRESS_1 + "/"
             + VALID_LOCATION_BUILDING_LOWERCASE + "/" + VALID_LOCATION_POSTAL_2;
-
 ```
 ###### \java\seedu\address\logic\commands\MapCommandTest.java
 ``` java
@@ -517,104 +445,6 @@ public class UnaliasCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
-     */
-    /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTag(Tag tag) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePassword(byte[] password)  {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeAlias(String toRemove) throws AliasNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void exportAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void uploadAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addAlias(Alias alias) throws DuplicateAliasException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public HashMap<String, String> getAliasList() {
-            return new HashMap<String, String>();
-        }
-
-        @Override
-        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
-                throws BuildingNotFoundException {
-            fail("This method should not be called.");
-            return null;
-        }
-    }
-
-    /**
      * A Model stub that always accept the alias being removed.
      */
     private class ModelStubAcceptingUnaliasAdded extends ModelStub {
@@ -716,102 +546,6 @@ public class VacantCommandTest {
     }
 
     /**
-     * A default model stub that have all of the methods failing.
-     */
-    private class ModelStub implements Model {
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void deleteTag(Tag tag) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePassword(byte[] password)  {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void removeAlias(String toRemove) throws AliasNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void exportAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void uploadAddressBook(String filepath, Password password) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void addAlias(Alias alias) throws DuplicateAliasException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public HashMap<String, String> getAliasList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
-                throws BuildingNotFoundException {
-            fail("This method should not be called.");
-            return null;
-        }
-    }
-
-    /**
      * A Model stub that always accept the building being requested.
      */
     private class ModelStubAcceptingBuilding extends ModelStub {
@@ -842,7 +576,8 @@ public class VacantCommandTest {
     @Test
     public void parseCommand_alias() throws Exception {
         Alias alias = new AliasBuilder().build();
-        AliasCommand command = (AliasCommand) parser.parseCommand(AliasUtil.getAliasCommand(alias));
+        String[] input = parser.extractCommandArgs(AliasUtil.getAliasCommand(alias));
+        AliasCommand command = (AliasCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new AliasCommand(alias), command);
     }
 
@@ -850,22 +585,26 @@ public class VacantCommandTest {
     public void parseCommand_unalias() throws Exception {
         Alias toUnalias = new AliasBuilder().build();
         String unalias = toUnalias.getAlias();
-        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(AliasUtil.getUnliasCommand(unalias));
+        String[] input = parser.extractCommandArgs(AliasUtil.getUnliasCommand(unalias));
+        UnaliasCommand command = (UnaliasCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new UnaliasCommand(unalias), command);
     }
 
     @Test
     public void parseCommand_vacant() throws Exception {
         Building building = new BuildingBuilder().build();
-        VacantCommand command = (VacantCommand) parser.parseCommand(VacantCommand.COMMAND_WORD
-                + " " + building.getBuildingName());
+        String vacant = VacantCommand.COMMAND_WORD + " " + building.getBuildingName();
+        String[] input = parser.extractCommandArgs(vacant);
+        VacantCommand command = (VacantCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new VacantCommand(building), command);
     }
 
     @Test
     public void parseCommand_map() throws Exception {
         String locations = "com1";
-        MapCommand command = (MapCommand) parser.parseCommand(MapCommand.COMMAND_WORD + " " + locations);
+        String map = MapCommand.COMMAND_WORD + " " + locations;
+        String[] input = parser.extractCommandArgs(map);
+        MapCommand command = (MapCommand) parser.parseCommand(input[COMMAND_INDEX], input[ARG_INDEX]);
         assertEquals(new MapCommand(locations), command);
     }
 ```
@@ -1115,6 +854,11 @@ public class VacantCommandParserTest {
 
         @Override
         public HashMap<String, String> getAliasMapping() {
+            return new HashMap<>();
+        }
+
+        @Override
+        public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
             return null;
         }
 
@@ -1150,7 +894,7 @@ public class AliasTest {
 
         // valid alias
         assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_ADD));
-        assertTrue(Alias.isValidUnaliasName(VALID_ALIAS_NUMBER));
+        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_NUMBER));
     }
 
     @Test
@@ -1159,19 +903,133 @@ public class AliasTest {
         Assert.assertThrows(NullPointerException.class, () -> new Alias(null, null));
 
         // invalid unalias
-        assertFalse(Alias.isValidUnaliasName("")); // empty string
-        assertFalse(Alias.isValidUnaliasName(" ")); // spaces only
-        assertFalse(Alias.isValidUnaliasName(INVALID_ALIAS)); // only non-alphanumeric characters
+        assertFalse(Alias.isValidAliasParameter("")); // empty string
+        assertFalse(Alias.isValidAliasParameter(" ")); // spaces only
+        assertFalse(Alias.isValidAliasParameter(INVALID_ALIAS)); // only non-alphanumeric characters
 
         // valid unalias
-        assertTrue(Alias.isValidUnaliasName(VALID_ALIAS_ADD));
-        assertTrue(Alias.isValidUnaliasName(VALID_ALIAS_NUMBER));
+        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_ADD));
+        assertTrue(Alias.isValidAliasParameter(VALID_ALIAS_NUMBER));
     }
 
     @Test
     public void equals() {
         Alias clear = new Alias(VALID_ALIAS_CLEAR_COMMAND, VALID_ALIAS_CLEAR);
         assertEquals(clear, new Alias(VALID_ALIAS_CLEAR_COMMAND, VALID_ALIAS_CLEAR));
+    }
+}
+```
+###### \java\seedu\address\model\ModelStub.java
+``` java
+/**
+ * A default model stub that have all of the methods failing.
+ */
+public class ModelStub implements Model {
+    @Override
+    public void addPerson(Person person) throws DuplicatePersonException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void resetData(ReadOnlyAddressBook newData) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void resetData(ReadOnlyAddressBook newData, HashMap<String, String> newAliasList) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public ReadOnlyAddressBook getAddressBook() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void deletePerson(Person target) throws PersonNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void updatePerson(Person target, Person editedPerson)
+            throws DuplicatePersonException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public ObservableList<Person> getFilteredPersonList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public void updateFilteredPersonList(Predicate<Person> predicate) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void updateAliasesMapping(HashMap<String, String> aliases) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void deleteTag(Tag tag) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void updatePassword(byte[] password)  {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void removeAlias(String toRemove) throws AliasNotFoundException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void importAddressBook(String filepath, byte[] password) throws DataConversionException, IOException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void exportAddressBook(String filepath, Password password) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void uploadAddressBook(String filepath, Password password) {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public void addAlias(Alias alias) throws DuplicateAliasException {
+        fail("This method should not be called.");
+    }
+
+    @Override
+    public HashMap<String, String> getAliasList() {
+        return new HashMap<String, String>();
+    }
+
+    @Override
+    public String getCommandFromAlias(String aliasKey) {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> getUiFormattedAliasList() {
+        fail("This method should not be called.");
+        return null;
+    }
+
+    @Override
+    public ArrayList<ArrayList<String>> retrieveAllRoomsSchedule(Building building)
+            throws BuildingNotFoundException {
+        fail("This method should not be called.");
+        return null;
     }
 }
 ```
@@ -1182,75 +1040,131 @@ public class UniqueAliasListTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private UniqueAliasList uniqueAliasList;
+
+    @Before
+    public void setUp() {
+        uniqueAliasList = new UniqueAliasList();
+    }
+
+    @After
+    public void clean() throws AliasNotFoundException {
+        clearAliasList();
+    }
+
     @Test
     public void asObservableList_modifyList_throwsUnsupportedOperationException() {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
+        uniqueAliasList = new UniqueAliasList();
         thrown.expect(UnsupportedOperationException.class);
         uniqueAliasList.asObservableList().remove(0);
     }
 
     @Test
     public void addAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
-        clearAliasList();
     }
 
     @Test
     public void removeAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
-        UniqueAliasList.remove(validAlias.getAlias());
+        uniqueAliasList.remove(validAlias.getAlias());
 
         UniqueAliasList expectedList = new UniqueAliasList();
         assertEquals(uniqueAliasList.getAliasObservableList(), expectedList.asObservableList());
-        clearAliasList();
     }
 
     @Test
     public void removeAlias_invalidAlias_failure() throws AliasNotFoundException {
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         thrown.expect(AliasNotFoundException.class);
-        UniqueAliasList.remove(validAlias.getAlias());
-        clearAliasList();
+        uniqueAliasList.remove(validAlias.getAlias());
     }
 
     @Test
     public void getAliasCommand_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
 
         String command = uniqueAliasList.getCommandFromAlias(validAlias.getAlias());
         String expected = validAlias.getCommand();
         assertEquals(command, expected);
-        clearAliasList();
     }
 
     @Test
     public void importAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        Alias validAlias = new AliasBuilder().build();
+        Alias validAlias = ADD;
         uniqueAliasList.importAlias(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
-        clearAliasList();
     }
 
     @Test
-    public void setAlias_validAliasSet_success() throws DuplicateAliasException, AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
-        HashSet<Alias> toBeSet = new HashSet<Alias>();
-        Alias help = new AliasBuilder().withCommand(VALID_ALIAS_HELP_COMMAND).withAlias(VALID_ALIAS_HELP).build();
-        toBeSet.add(help);
-        uniqueAliasList.add(help);
+    public void extractAliasMapping_noAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+        ArrayList<String> expectedList = new ArrayList<String>();
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
 
-        uniqueAliasList.setAliases(toBeSet);
-        ArrayList<Alias> expectedList = new ArrayList<Alias>(toBeSet);
-        assertEquals(expectedList, uniqueAliasList.getAliasObservableList());
-        clearAliasList();
+    @Test
+    public void extractAliasMapping_validAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+        uniqueAliasList.add(ADD);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void extractAliasMapping_differentCommandAliases_success() throws DuplicateAliasException,
+            AliasNotFoundException {
+        uniqueAliasList.add(ADD);
+        uniqueAliasList.add(EDIT);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, EDIT}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void extractAliasMapping_sameCommandAliases_success() throws DuplicateAliasException,
+            AliasNotFoundException {
+        uniqueAliasList.add(MAP_1);
+        uniqueAliasList.add(MAP_2);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_2}, {MAP_1}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void extractAliasMapping_mixedCommandAliases_success() throws DuplicateAliasException,
+            AliasNotFoundException {
+        uniqueAliasList.add(ADD);
+        uniqueAliasList.add(MAP_1);
+        uniqueAliasList.add(MAP_2);
+
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_2}, {MAP_1}});
+        assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    /**
+     * Generates an expected list with the aliases in the testAliasList inserted at their correct positions.
+     */
+    private ArrayList<ArrayList<String>> generateExpectedList(Alias[][] testAliasList) {
+        ArrayList<ArrayList<String>> expectedList = new ArrayList<ArrayList<String>>();
+        for (Alias[] row : testAliasList) {
+            ArrayList<String> innerList = populateEmptyAlias();
+            insertAliasAtPositions(row, innerList);
+            expectedList.add(innerList);
+        }
+        return expectedList;
+    }
+
+    /**
+     * Inserts the alias command at their respective positions in the array.
+     */
+    private void insertAliasAtPositions(Alias[] testInnerAliasList, ArrayList<String> innerList) {
+        for (Alias alias : testInnerAliasList) {
+            innerList.set(AliasCommand.getCommands().indexOf(alias.getCommand()), alias.getAlias());
+        }
     }
 
     /**
@@ -1259,10 +1173,21 @@ public class UniqueAliasListTest {
      * @throws AliasNotFoundException if the Alias to add is not an existing Alias in the list.
      */
     private void clearAliasList() throws AliasNotFoundException {
-        UniqueAliasList uniqueAliasList = new UniqueAliasList();
         for (Alias alias : uniqueAliasList.getAliasObservableList()) {
-            UniqueAliasList.remove(alias.getAlias());
+            uniqueAliasList.remove(alias.getAlias());
         }
+    }
+
+    /**
+     * Creates an empty arraylist of size number of commands.
+     */
+    private ArrayList<String> populateEmptyAlias() {
+        ArrayList<String> emptyList = new ArrayList<String>();
+        int size = AliasCommand.getCommands().size();
+        for (int i = 0; i < size; i++) {
+            emptyList.add("");
+        }
+        return emptyList;
     }
 }
 ```
@@ -1367,12 +1292,14 @@ public class TypicalAliases {
     public static final Alias REDO = new AliasBuilder().withCommand("redo").withAlias("redo1").build();
     public static final Alias UNDO = new AliasBuilder().withCommand("undo").withAlias("undo1").build();
     public static final Alias UNKNOWN = new AliasBuilder().withCommand("unknownCommand").withAlias("add1").build();
+    public static final Alias MAP_1 = new AliasBuilder().withCommand("map").withAlias("map1").build();
+    public static final Alias MAP_2 = new AliasBuilder().withCommand("map").withAlias("map2").build();
 
 
     private TypicalAliases() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical aliases.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();
@@ -1391,6 +1318,53 @@ public class TypicalAliases {
     }
 }
 ```
+###### \java\seedu\address\ui\AliasListTest.java
+``` java
+public class AliasListTest extends GuiUnitTest {
+    private AliasList aliasList;
+    private AliasListHandle aliasListHandle;
+
+    @Before
+    public void setUp() {
+        aliasList = new AliasList();
+        uiPartRule.setUiPart(aliasList);
+        aliasListHandle = new AliasListHandle(getChildNode(aliasList.getRoot(), aliasListHandle.ALIAS_LIST_ID));
+    }
+
+    @Test
+    public void checkTable() {
+        // Populate expectedAliases
+        String[][] expected = new String[][] {{"add1", "alias1"}, {"add2"}};
+
+        // Init alias list and post event
+        ArrayList<ArrayList<String>> expectedList = GuiTestAssert.populateExpectedAliases(expected);
+        ObservableList<ArrayList<String>> obsExpected = FXCollections.observableArrayList(expectedList);
+        AliasListEvent aliasListEventStub = new AliasListEvent(obsExpected);
+
+        aliasList.init(obsExpected);
+        postNow(aliasListEventStub);
+        guiRobot.pauseForHuman();
+        ObservableList<TableColumn> a = aliasListHandle.getTables();
+        // Assert content of the table
+        GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
+
+        // Populate expectedAliases
+        expected = new String[][] {{"add1"}};
+        expectedList = GuiTestAssert.populateExpectedAliases(expected);
+
+        // Init alias list and post event
+        obsExpected = FXCollections.observableArrayList(expectedList);
+        aliasListEventStub = new AliasListEvent(obsExpected);
+
+        aliasList.init(obsExpected);
+        postNow(aliasListEventStub);
+        guiRobot.pauseForHuman();
+
+        // Assert content of the table
+        GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
+    }
+}
+```
 ###### \java\seedu\address\ui\GoogleMapsDisplayTest.java
 ``` java
 public class GoogleMapsDisplayTest extends GuiUnitTest {
@@ -1400,7 +1374,7 @@ public class GoogleMapsDisplayTest extends GuiUnitTest {
     private GoogleMapsEvent googleMapsChangedStub;
 
     @Before
-    public void setUp() {
+    public void setUp() throws IOException {
         guiRobot.interact(() -> googleMapsDisplay = new GoogleMapsDisplay());
         uiPartRule.setUiPart(googleMapsDisplay);
         googleMapsChangedStub = new GoogleMapsEvent(VALID_LOCATION_ADDRESS_1, true);
@@ -1423,23 +1397,62 @@ public class GoogleMapsDisplayTest extends GuiUnitTest {
     }
 }
 ```
+###### \java\seedu\address\ui\testutil\GuiTestAssert.java
+``` java
+    /**
+     * Asserts that the content in {@code aliasListTable} matches all the string in {@code expected}
+     */
+    public static void assertTableContent(ObservableList<TableColumn> aliasListTable, String[][] expected) {
+        ArrayList<ArrayList<String>> expectedList = populateExpectedAliases(expected);
+        for (int i = 0; i < expectedList.size(); i++) {
+            for (int j = 0; j < expectedList.get(i).size(); j++) {
+                TableColumn column = aliasListTable.get(j);
+
+                // Current Row value at column
+                assertEquals(expectedList.get(i).get(j), column.getCellObservableValue(i).getValue());
+            }
+        }
+    }
+
+    /**
+     * Helper method to populate expectedTable with unused empty Alias
+     */
+    public static ArrayList<ArrayList<String>> populateExpectedAliases(String[][] expected) {
+        String emptyAlias = "";
+        ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
+        for (String[] inner : expected) {
+            ArrayList<String> innerList = new ArrayList<>();
+            // Add expected alias for command
+            for (String alias : inner) {
+                innerList.add(alias);
+            }
+            // Generate empty alias ("") for no alias command
+            while (innerList.size() < AliasCommand.getCommands().size()) {
+                innerList.add(emptyAlias);
+            }
+            expectedList.add(innerList);
+        }
+        return expectedList;
+    }
+```
 ###### \java\systemtests\AddressBookSystemTest.java
 ``` java
     public GoogleMapsDisplayHandle getGoogleMapsDisplay() {
         return mainWindowHandle.getMapPanel();
     }
+
+    public AliasListHandle getAliasList() {
+        return mainWindowHandle.getAliasList();
+    }
+
 ```
 ###### \java\systemtests\AddressBookSystemTest.java
 ``` java
-    /**
-     * Asserts that the {@code CommandBox} displays {@code expectedCommandInput}, the {@code ResultDisplay} displays
-     * {@code expectedResultMessage}, the model and storage contains the same alias objects as {@code expectedModel}
-     */
-    protected void assertEqualAlias(String expectedCommandInput, String expectedResultMessage, Model expectedModel) {
-        assertEquals("", getCommandBox().getInput());
+    protected void assertTableDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
+                                               String[][] table) {
+        assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
-        assertEquals(expectedModel, getModel());
-        assertEquals(expectedModel.getAddressBook(), testApp.readStorageAddressBook());
+        GuiTestAssert.assertTableContent(getAliasList().getTables(), table);
     }
 
     /**
@@ -1609,6 +1622,112 @@ public class MapCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertMapDisplayChanged(isOneLocation, query);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays {@code command}.<br>
+     * 2. Command box has the error style class.<br>
+     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
+}
+```
+###### \java\systemtests\ModelHelper.java
+``` java
+    /**
+     * Updates {@code model}'s aliases list to display only {@code aliases}.
+     */
+    public static void setAliases(Model model, HashMap<String, String> aliases) {
+        model.updateAliasesMapping(aliases);
+    }
+```
+###### \java\systemtests\VacantCommandSystemTest.java
+``` java
+/**
+ * A system test class for the Venue Table table view, which contains interaction with other UI components.
+ */
+public class VacantCommandSystemTest extends AddressBookSystemTest {
+    @Test
+    public void vacant() {
+        /* ----------------------------------- Perform valid vacant operations  ----------------------------------- */
+
+        /* Case: find building COM2, command with no leading and trailing spaces -> retrieved */
+        String command = VacantCommand.COMMAND_WORD + " " + VALID_BUILDING_1;
+        assertCommandSuccess(command);
+
+        /* Case: find building COM2, command with leading spaces and trailing spaces
+         * -> retrieved
+         */
+        command = "   " + VacantCommand.COMMAND_WORD + "   " + VALID_BUILDING_1 + "   ";
+        assertCommandSuccess(command);
+
+        /* Case: undo previous command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* ----------------------------------- Perform invalid vacant operations ----------------------------------- */
+
+        /* Case: no parameters -> rejected */
+        assertCommandFailure(VacantCommand.COMMAND_WORD + " ",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, VacantCommand.MESSAGE_USAGE));
+
+        /* Case: invalid number of parameters -> rejected */
+        assertCommandFailure(VacantCommand.COMMAND_WORD + " " + INVALID_BUILDING_2,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, VacantCommand.MESSAGE_USAGE));
+
+        /* Case: invalid building regex -> rejected */
+        assertCommandFailure(VacantCommand.COMMAND_WORD + " " + INVALID_BUILDING_1,
+                String.format(MESSAGE_BUILDING_CONSTRAINTS));
+
+        /* Case: invalid building name -> rejected */
+        assertCommandFailure(VacantCommand.COMMAND_WORD + " " + INVALID_BUILDING_3,
+                String.format(MESSAGE_INVALID_BUILDING));
+
+        /* Case: mixed case command word -> rejected */
+        assertCommandFailure(MIXED_CASE_VACANT_COMMAND_WORD + " " + VALID_BUILDING_1, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and asserts that the,<br>
+     * 1. Command box displays an empty string.<br>
+     * 2. Command box has the default style class.<br>
+     * 3. Result display box displays the success message of executing select command with the
+     * {@code expectedSelectedCardIndex} of the selected person.<br>
+     * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
+     * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
+     * 6. Status bar remains unchanged.<br>
+     * Verifications 1, 3 and 4 are performed by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command) {
+        Model expectedModel = getModel();
+        String expectedResultMessage = String.format(MESSAGE_SUCCESS);
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchanged();
     }

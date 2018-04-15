@@ -8,7 +8,8 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="329.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<!-- @@author yeggasd -->
+<VBox fx:id="personDetailsCard" prefHeight="329.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <VBox prefHeight="378.0" prefWidth="372.0">
          <children>

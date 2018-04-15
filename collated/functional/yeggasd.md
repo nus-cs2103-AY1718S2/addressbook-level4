@@ -2,9 +2,23 @@
 ###### \java\seedu\address\commons\events\ui\PasswordCorrectEvent.java
 ``` java
 /**
- * Indicates a request for App termination
+ * Indicates a request for App start for Correct Password
  */
 public class PasswordCorrectEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
+}
+```
+###### \java\seedu\address\commons\events\ui\PasswordWrongEvent.java
+``` java
+
+/**
+ * Indicates a request to show Wrong Passowrd Dialog
+ */
+public class PasswordWrongEvent extends BaseEvent {
 
     @Override
     public String toString() {
@@ -31,7 +45,7 @@ public class TimeTableEvent extends BaseEvent {
 
     @Override
     public String toString() {
-        return timetable.toString();
+        return "TimeTableEvent";
     }
 }
 ```
@@ -54,11 +68,10 @@ public class WrongPasswordException extends Exception {
  */
 public class SecurityUtil {
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-    private static final String DEFAULT_PASSWORD = "";
     private static final String XML = "xml";
 
     /**
-     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Encrypts the given file using AES key created by the hash of the password.
      *
      * @param file Points to a valid file containing data
      * @param password Used to decrypt file
@@ -66,12 +79,14 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encrypt(String file, String password)throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         byte[] hashedPassword = hashPassword(password);
         encrypt(new File(file), hashedPassword);
     }
 
     /**
-     * Encrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Encrypts the given file using AES key created by hashed password.
      *
      * @param file Points to a valid file containing data
      * @param password Used to decrypt file
@@ -79,13 +94,17 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void encrypt(File file, byte[] password)throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         try {
+            logger.info("Encrypting...");
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.ENCRYPT_MODE, secretAesKey);
             processFile(cipher, file);
+            logger.info("Encrypted");
         } catch (InvalidKeyException ike) {
-            logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
+            logger.warning("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             logger.severe("ERROR: Cannot find AES or padding in library.");
@@ -94,20 +113,21 @@ public class SecurityUtil {
     }
 
     /**
-     * Test to see if the given file is plaintext using AES key created by DEFAULT_PASSWORD.
+     * Test to see if the given file is plaintext using the by checking if it is a xml file.
      *
      * @param file Points to a valid file containing data
      * @throws IOException thrown if cannot open file
      * @throws WrongPasswordException if password used is wrong
      */
     public static void decrypt(File file)throws IOException, WrongPasswordException {
-        if (!checkPlainText(file)) {
+        requireNonNull(file);
+        if (!checkXmlPlainText(file)) {
             throw new WrongPasswordException("File Encrypted!");
         }
     }
 
     /**
-     * Decrypts the given file using AES key created by DEFAULT_PASSWORD.
+     * Decrypts the given file using AES key created by hashed password.
      *
      * @param file Points to a file to be decrypted
      * @param password Used to decrypt file
@@ -115,13 +135,17 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     public static void decrypt(File file, byte[] password) throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         try {
+            logger.info("Decrypting...");
             Key secretAesKey = createKey(password);
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
             cipher.init(Cipher.DECRYPT_MODE, secretAesKey);
             processFile(cipher, file);
+            logger.info("Decrypted");
         } catch (InvalidKeyException ike) {
-            logger.severe("ERROR: Wrong key length " + StringUtil.getDetails(ike));
+            logger.warning("ERROR: Wrong key length " + StringUtil.getDetails(ike));
             throw new AssertionError("Wrong key length");
         } catch (NoSuchAlgorithmException | NoSuchPaddingException e) {
             logger.severe("ERROR: Cannot find AES or padding in library.");
@@ -138,7 +162,9 @@ public class SecurityUtil {
      * @throws WrongPasswordException if password used is wrong
      */
     private static void processFile(Cipher cipher, File file) throws IOException, WrongPasswordException {
-        byte[] inputBytes = "Dummy".getBytes();
+        requireNonNull(file);
+        requireNonNull(cipher);
+        byte[] inputBytes = null;
         try {
 
             FileInputStream inputStream = new FileInputStream(file);
@@ -148,7 +174,7 @@ public class SecurityUtil {
 
             FileOutputStream outputStream = new FileOutputStream(file);
             outputStream.write(outputBytes);
-            checkPlainText(outputBytes);
+            checkXmlPlainText(outputBytes);
             inputStream.close();
             outputStream.close();
 
@@ -160,9 +186,12 @@ public class SecurityUtil {
     }
 
     /**
-     * Hashes the DEFAULT_PASSWORD to meet the required length for AES.
+     * Hashes the password provided to meet the required length for AES.
+     * @param password to be hashed.
+     * @return byte[] of the hashed password.
      */
     public static byte[] hashPassword(String password) {
+        requireNonNull(password);
         try {
             MessageDigest md = MessageDigest.getInstance("SHA-1");
             try {
@@ -179,14 +208,16 @@ public class SecurityUtil {
     }
 
     /**
-     * Decrypt the given file with the current and if it fails the previous password
-     * if password is null, will not try to decrypt
-     * @param file Points to the file to be decrypted
-     * @param password Used to decrypt file
-     * @throws IOException if file cannot be opened
-     * @throws WrongPasswordException if password used is wrong
+     * Decrypt the given file with the current and if it fails the previous password.
+     * if password is null, will not try to decrypt.
+     * @param file Points to the file to be decrypted.
+     * @param password Used to decrypt file.
+     * @throws IOException if file cannot be opened.
+     * @throws WrongPasswordException if password used is wrong.
      */
     public static void decryptFile (File file, Password password) throws IOException, WrongPasswordException {
+        requireNonNull(file);
+        requireNonNull(password);
         if (password.getPassword() != null) {
             try {
                 decrypt(file, password.getPassword());
@@ -198,14 +229,15 @@ public class SecurityUtil {
     }
 
     /**
-     * Encrypt the given file with the current
-     * if password is null, will not try to encrypt
-     * @param file Points to the file to be decrypted
-     * @param password Used to decrypt file
-     * @throws IOException if file cannot be opened
-     * @throws WrongPasswordException if password used is wrong
+     * Encrypt the given file with the current.
+     * if password is null, will not try to encrypt.
+     * @param file Points to the file to be decrypted.
+     * @param password Used to decrypt file.
+     * @throws IOException if file cannot be opened.
+     * @throws WrongPasswordException if password used is wrong.
      */
     public static void encryptFile (File file, Password password) throws IOException, WrongPasswordException {
+        requireNonNull(file);
         if (password != null && password.getPassword() != null) {
             encrypt(file, password.getPassword());
         }
@@ -218,14 +250,14 @@ public class SecurityUtil {
     }
 
     /**
-     * Handles {@code BadPaddingException} by determining whether it is plain text or other case
-     * @param inputBytes Input data that caused this
-     * @param e Contains the exception details to throw with WrongPasswordException
-     * @throws WrongPasswordException if it is wrong password
+     * Handles {@code BadPaddingException} by determining whether it is plain text or other case.
+     * @param inputBytes Input data that caused this.
+     * @param e Contains the exception details to throw with WrongPasswordException.
+     * @throws WrongPasswordException if it is wrong password.
      */
     private static void handleBadPaddingException(byte[] inputBytes, BadPaddingException e)
                                                                             throws WrongPasswordException {
-        if (!checkPlainText(inputBytes)) {
+        if (!checkXmlPlainText(inputBytes)) {
             logger.severe("ERROR: Wrong PASSWORD length used ");
             throw new WrongPasswordException("Wrong PASSWORD.");
 
@@ -236,27 +268,29 @@ public class SecurityUtil {
 
     /**
      * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
-     *  the whole data
-     * @param data Contains the file data
-     * @return true if it is highly likely to be plain text
+     *  the whole data.
+     * @param data Contains the file data.
+     * @return true if it is highly likely to be plain text.
      */
-    private static boolean checkPlainText(byte[] data) {
+    private static boolean checkXmlPlainText(byte[] data) {
+        requireNonNull(data);
         String string = new String(data);
         return string.contains(XML);
     }
 
     /**
      * Checks whether it is plain text by checking whether it is in the range of characters commonly used for the
-     *  the whole data
-     * @param file Points to file path
-     * @return true if it is highly likely to be plain text
+     *  the whole data.
+     * @param file Points to file path.
+     * @return true if it is highly likely to be plain text.
      */
-    private static boolean checkPlainText(File file) throws IOException {
+    private static boolean checkXmlPlainText(File file) throws IOException {
+        requireNonNull(file);
         FileInputStream inputStream = new FileInputStream(file);
         byte[] inputBytes = new byte[(int) file.length()];
         inputStream.read(inputBytes);
         inputStream.close();
-        return checkPlainText(inputBytes);
+        return checkXmlPlainText(inputBytes);
     }
 }
 ```
@@ -460,6 +494,66 @@ public class SelectCommandParser implements Parser<SelectCommand> {
     }
 }
 ```
+###### \java\seedu\address\MainApp.java
+``` java
+    @Override
+    public void start(Stage primaryStage) {
+        logger.info("Starting AddressBook " + MainApp.VERSION);
+
+        checkPasswordChanged();
+
+        ui.start(primaryStage);
+        autoOpenBirthdayNotification();
+    }
+
+    /**
+     * Checks whether password is changed, if so make UI as {@code PasswordUiManager} instead
+     * using polymorphism.
+     */
+    private void checkPasswordChanged() {
+        if (passwordChanged) {
+            ui = new PasswordUiManager(storage, model, ui);
+        }
+    }
+    //author
+
+    @Override
+    public void stop() {
+        logger.info("============================ [ Stopping Address Book ] =============================");
+        ui.stop();
+        try {
+            storage.saveUserPrefs(userPrefs);
+        } catch (IOException e) {
+            logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
+        }
+        Platform.exit();
+        System.exit(0);
+    }
+
+    @Subscribe
+    public void handleExitAppRequestEvent(ExitAppRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        this.stop();
+    }
+
+    public static void main(String[] args) {
+        launch(args);
+    }
+
+    /**
+     * Opens birthday notification
+     * Called after UI is called
+     */
+    private void autoOpenBirthdayNotification() {
+        LocalDate currentDate = LocalDate.now();
+
+        if (model != null && !passwordChanged) {
+            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
+                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
+        }
+    }
+}
+```
 ###### \java\seedu\address\model\AddressBook.java
 ``` java
     public AddressBook() {
@@ -594,6 +688,20 @@ public class Password {
      */
     Password getPassword();
 ```
+###### \java\seedu\address\storage\AddressBookStorage.java
+``` java
+    /**
+     * @see #getAddressBookFilePath()
+     */
+    Optional<ReadOnlyAddressBook> readAddressBook(Password password) throws DataConversionException,
+                                                                            IOException, WrongPasswordException;
+```
+###### \java\seedu\address\storage\Storage.java
+``` java
+    @Override
+    Optional<ReadOnlyAddressBook> readAddressBook(Password password)
+            throws DataConversionException, IOException, WrongPasswordException;
+```
 ###### \java\seedu\address\storage\XmlAdaptedPassword.java
 ``` java
 /**
@@ -674,9 +782,8 @@ public class XmlAdaptedPassword {
         File file = new File(filePath);
         SecurityUtil.decryptFile(file, password);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
-        if (password.getPassword() != null) {
-            SecurityUtil.encrypt(file, password.getPassword());
-        }
+        SecurityUtil.encryptFile(file, password);
+
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {
@@ -694,6 +801,7 @@ public class XmlAdaptedPassword {
         mapsPlaceholder.toBack();
         birthdayPlaceholder.toBack();
         timetableUnionPlaceholder.toBack();
+        aliasListPlaceholder.toBack();
         Person person = event.getNewSelection().person;
         int oddEvenIndex = event.getOddEvenIndex();
 
@@ -725,7 +833,7 @@ public class PasswordBox extends UiPart<Region> {
         this.storage = storage;
         this.model = model;
 
-        // calls #setStyleToDefault() whenever there is a change to the text of the command box.
+        // calls #setStyleToDefault() whenever there is a change to the text of the Passowrd box.
         passwordTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
     }
 
@@ -756,6 +864,7 @@ public class PasswordBox extends UiPart<Region> {
             raise(new PasswordCorrectEvent());
         } catch (WrongPasswordException e) {
             logger.warning("Wrong password used. Trying again.");
+            raise(new PasswordWrongEvent());
             setStyleToIndicateCommandFailure();
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
@@ -794,12 +903,11 @@ public class PasswordBox extends UiPart<Region> {
  * The manager of the Password UI component.
  */
 public class PasswordUiManager extends ComponentManager implements Ui {
-
+    public static final String WRONG_PASSWORD_ERROR_DIALOG_STAGE_TITLE = "Password Wrong Error";
+    public static final String WRONG_PASSWORD_ERROR_DIALOG_HEADER_MESSAGE = "Wrong Password used";
+    public static final String WRONG_PASSWORD_ERROR_DIALOG_CONTENT_MESSAGE = "Try Again";
     public static final String ALERT_DIALOG_PANE_FIELD_ID = "alertDialogPane";
-
-    public static final String FILE_OPS_ERROR_DIALOG_STAGE_TITLE = "File Op Error";
-    public static final String FILE_OPS_ERROR_DIALOG_HEADER_MESSAGE = "Could not save data";
-    public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
+    private static final double MAX_WINDOW_SIZE = Double.MAX_VALUE;
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
 
@@ -807,7 +915,7 @@ public class PasswordUiManager extends ComponentManager implements Ui {
     private Model model;
     private Ui ui;
 
-    private MainWindow mainWindow;
+    private PasswordWindow pw;
     private Stage primaryStage;
 
     public PasswordUiManager(Storage storage, Model model, Ui ui) {
@@ -822,13 +930,17 @@ public class PasswordUiManager extends ComponentManager implements Ui {
         logger.info("Starting UI...");
         this.primaryStage = primaryStage;
         try {
-            PasswordWindow pw = new PasswordWindow(primaryStage, model, storage);
+            pw = new PasswordWindow(primaryStage, model, storage);
             pw.show();
             pw.fillInnerParts();
         } catch (Throwable e) {
             logger.severe(StringUtil.getDetails(e));
             showFatalErrorDialogAndShutdown("Fatal error during initializing", e);
         }
+    }
+
+    private void showPasswordWrongAlertAndWait(String description, String details) {
+        showAlertDialogAndWait(AlertType.ERROR, WRONG_PASSWORD_ERROR_DIALOG_STAGE_TITLE, description, details);
     }
 
     /**
@@ -843,7 +955,7 @@ public class PasswordUiManager extends ComponentManager implements Ui {
     }
 
     void showAlertDialogAndWait(Alert.AlertType type, String title, String headerText, String contentText) {
-        showAlertDialogAndWait(mainWindow.getPrimaryStage(), type, title, headerText, contentText);
+        showAlertDialogAndWait(primaryStage, type, title, headerText, contentText);
     }
 
     /**
@@ -864,29 +976,25 @@ public class PasswordUiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        mainWindow.hide();
-        mainWindow.releaseResources();
+        pw.hide();
+        pw.releaseResources();
     }
     @Subscribe
     private void handlePasswordCorrectEvent(PasswordCorrectEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        primaryStage.setResizable(true);
+        primaryStage.setMaxHeight(MAX_WINDOW_SIZE);
         ui.start(primaryStage);
         autoOpenBirthdayNotification();
     }
 
-    /**
-     * Opens birthday notification
-     * Called after UI is called
-     */
-    private void autoOpenBirthdayNotification() {
-        LocalDate currentDate = LocalDate.now();
-
-        if (model != null) {
-            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
-                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
-        }
+    @Subscribe
+    private void handlePasswordWrongEvent(PasswordWrongEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showPasswordWrongAlertAndWait(WRONG_PASSWORD_ERROR_DIALOG_HEADER_MESSAGE,
+                WRONG_PASSWORD_ERROR_DIALOG_CONTENT_MESSAGE);
     }
-}
+
 ```
 ###### \java\seedu\address\ui\PasswordWindow.java
 ``` java
@@ -1091,8 +1199,11 @@ public class TimeTablePanel extends UiPart<Region> {
     private static final String TABLECELL_STYLE_CLASS = "table-cell";
     private static final String EMPTY_STYLE_CLASS = "timetable-cell-empty";
     private static final String[] MOD_COLOR_STYLES = { "modteal", "modsandybrown", "modplum", "modyellow",
-                                                         "modyellow"};
+                                                         "modyellow", "modcyan", "modpink", "modlightblue", "modpurple",
+                                                         "modindigo", "modlightgreen", "modorange", "modgoldbrown"};
     private static final String FXML = "TimeTablePanel.fxml";
+    private static final HashMap<Integer, String> TAKEN_COLOR = new HashMap<>();
+    private static final int MODNAME_LENGTH = 6;
 
     private ArrayList<TableColumn<ArrayList<String>, String>> columns;
     @FXML
@@ -1134,6 +1245,7 @@ public class TimeTablePanel extends UiPart<Region> {
 
     public TimeTablePanel(ObservableList<ArrayList<String>> schedules) {
         super(FXML);
+        TAKEN_COLOR.clear();
         timeTable.setItems(schedules);
         timeTable.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         initializeColumns();
@@ -1175,7 +1287,7 @@ public class TimeTablePanel extends UiPart<Region> {
                 columns.get(i).setMinWidth(75);
                 columns.get(i).setMaxWidth(200);
             }
-
+            columns.get(i).setSortable(false);
         }
     }
 
@@ -1225,11 +1337,20 @@ public class TimeTablePanel extends UiPart<Region> {
 
     /**
      * Returns a Color Style for the Module based on its hashcode.
-     * @param modName
+     * @param lessonName
      * @return colorStyle for {@code modName}'s label.
      */
-    private static String getColorStyleFor(String modName) {
-        return MOD_COLOR_STYLES[Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length];
+    private static String getColorStyleFor(String lessonName) {
+        String modName = lessonName.substring(0, MODNAME_LENGTH);
+        int colorIndex = Math.abs(modName.hashCode()) % MOD_COLOR_STYLES.length;
+        int index = 0;
+        while (index < MOD_COLOR_STYLES.length && TAKEN_COLOR.get(colorIndex) != null
+                && !TAKEN_COLOR.get(colorIndex).equals(modName)) {
+            colorIndex = (colorIndex + 1) % MOD_COLOR_STYLES.length;
+            index++;
+        }
+        TAKEN_COLOR.put(colorIndex, modName);
+        return MOD_COLOR_STYLES[colorIndex];
     }
 }
 ```
@@ -1244,6 +1365,71 @@ public class TimeTablePanel extends UiPart<Region> {
     -fx-font-family: "Segoe UI Light";
     -fx-font-size: 13pt;
     -fx-text-fill: white;
+}
+```
+###### \resources\view\DarkTheme.css
+``` css
+.modteal {
+    -fx-text-fill: black;
+    -fx-background-color: #009688;
+}
+
+.modyellow {
+    -fx-text-fill: black;
+    -fx-background-color: #FFEB3B;
+}
+
+.modyellow {
+    -fx-text-fill: black;
+    -fx-background-color: #FFEB3B;
+}
+
+.modplum {
+    -fx-text-fill: black;
+    -fx-background-color: #DDA0DD;
+}
+
+.modsandybrown {
+    -fx-text-fill: black;
+    -fx-background-color: #F4A460;
+}
+
+.modcyan {
+    -fx-text-fill: black;
+    -fx-background-color: #00BCD4;
+}
+
+.modpink {
+    -fx-text-fill: black;
+    -fx-background-color: #FFB6C1;
+}
+
+.modlightblue {
+    -fx-text-fill: black;
+    -fx-background-color: #ADD8E6;
+}
+
+.modpurple{
+    -fx-text-fill: white;
+    -fx-background-color: #9C27B0;
+}
+.modindigo {
+    -fx-text-fill: white;
+    -fx-background-color: #3F51B5;
+}
+.modlightgreen {
+    -fx-text-fill: black;
+    -fx-background-color: #8BC34A;
+}
+
+.modorange {
+    -fx-text-fill: black;
+    -fx-background-color: #fab297;
+}
+
+.modgoldbrown {
+    -fx-text-fill: white;
+    -fx-background-color: #7F6600;
 }
 ```
 ###### \resources\view\PasswordBox.fxml
@@ -1279,6 +1465,75 @@ public class TimeTablePanel extends UiPart<Region> {
     </Scene>
   </scene>
 </fx:root>
+```
+###### \resources\view\PersonDetailsCard.fxml
+``` fxml
+<VBox fx:id="personDetailsCard" prefHeight="329.0" prefWidth="724.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <VBox prefHeight="378.0" prefWidth="372.0">
+         <children>
+            <HBox prefHeight="174.0" prefWidth="173.0">
+               <children>
+                  <VBox alignment="BOTTOM_LEFT" prefHeight="200.0" prefWidth="100.0">
+                     <children>
+                        <HBox alignment="CENTER_RIGHT" prefHeight="154.0" prefWidth="100.0" spacing="5">
+                           <children>
+                              <FlowPane fx:id="tags" prefHeight="143.0" prefWidth="82.0" rowValignment="TOP" />
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+                  <VBox prefHeight="166.0" prefWidth="482.0">
+                     <children>
+                        <VBox alignment="CENTER" prefHeight="60.0" prefWidth="366.0">
+                           <children>
+                              <Label fx:id="name" prefHeight="27.0" prefWidth="458.0" styleClass="display_big_label" text="\$first" />
+                              <HBox prefHeight="100.0" prefWidth="200.0">
+                                 <children>
+                                    <HBox prefHeight="8.0" prefWidth="16.0" />
+                                 </children>
+                              </HBox>
+                           </children>
+                        </VBox>
+                        <HBox prefHeight="100.0" prefWidth="200.0">
+                           <children>
+                              <VBox alignment="CENTER_LEFT" minHeight="105.0" prefHeight="106.0" prefWidth="210.0">
+                                 <padding>
+                                    <Insets bottom="5" left="15" right="5" top="5" />
+                                 </padding>
+                                 <children>
+                                    <Label styleClass="display_small_label" text="Phone" />
+                                    <Label styleClass="display_small_label" text="Address" />
+                                    <Label styleClass="display_small_label" text="Email" />
+                                    <Label styleClass="display_small_label" text="Birthday" />
+                                 </children>
+                              </VBox>
+                              <VBox alignment="CENTER_LEFT" minHeight="105" prefHeight="106.0" prefWidth="484.0">
+                                 <padding>
+                                    <Insets bottom="5" left="15" right="5" top="5" />
+                                 </padding>
+                                 <children>
+                                    <Label fx:id="phone" prefHeight="27.0" prefWidth="347.0" styleClass="display_small_label" text="\$phone" />
+                                    <Label fx:id="address" prefHeight="27.0" prefWidth="370.0" styleClass="display_small_label" text="\$address" wrapText="true" />
+                                    <Label fx:id="email" prefHeight="27.0" prefWidth="362.0" styleClass="display_small_label" text="\$email" wrapText="true" />
+                                    <Label fx:id="birthday" prefHeight="27.0" prefWidth="368.0" styleClass="display_small_label" text="\$birthday" />
+                                 </children>
+                              </VBox>
+                           </children>
+                        </HBox>
+                     </children>
+                  </VBox>
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <StackPane fx:id="timetablePlaceholder" prefHeight="430.0" prefWidth="724.0" VBox.vgrow="ALWAYS" />
+   </children>
+   <stylesheets>
+      <URL value="@DarkTheme.css" />
+      <URL value="@Extensions.css" />
+   </stylesheets>
+</VBox>
 ```
 ###### \resources\view\TimeTablePanel.fxml
 ``` fxml

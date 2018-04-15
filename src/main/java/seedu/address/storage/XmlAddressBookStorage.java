@@ -101,9 +101,8 @@ public class XmlAddressBookStorage implements AddressBookStorage {
         File file = new File(filePath);
         SecurityUtil.decryptFile(file, password);
         XmlSerializableAddressBook xmlAddressBook = XmlFileStorage.loadDataFromSaveFile(file);
-        if (password.getPassword() != null) {
-            SecurityUtil.encrypt(file, password.getPassword());
-        }
+        SecurityUtil.encryptFile(file, password);
+
         try {
             return Optional.of(xmlAddressBook.toModelType());
         } catch (IllegalValueException ive) {

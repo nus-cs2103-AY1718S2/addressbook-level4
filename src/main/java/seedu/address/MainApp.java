@@ -222,17 +222,27 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    //@@author yeggasd
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
+
+        checkPasswordChanged();
+
+        ui.start(primaryStage);
+        autoOpenBirthdayNotification();
+    }
+
+    /**
+     * Checks whether password is changed, if so make UI as {@code PasswordUiManager} instead
+     * using polymorphism.
+     */
+    private void checkPasswordChanged() {
         if (passwordChanged) {
-            PasswordUiManager pw = new PasswordUiManager(storage, model, ui);
-            pw.start(primaryStage);
-        } else {
-            ui.start(primaryStage);
-            autoOpenBirthdayNotification();
+            ui = new PasswordUiManager(storage, model, ui);
         }
     }
+    //@@author
 
     @Override
     public void stop() {
@@ -264,7 +274,7 @@ public class MainApp extends Application {
     private void autoOpenBirthdayNotification() {
         LocalDate currentDate = LocalDate.now();
 
-        if (model != null) {
+        if (model != null && !passwordChanged) {
             EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
                     .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
         }

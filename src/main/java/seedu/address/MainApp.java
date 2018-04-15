@@ -21,17 +21,21 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendarManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.CalendarManagerStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlCalendarManagerStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +44,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 4, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -54,7 +58,7 @@ public class MainApp extends Application {
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing ContactSails ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
@@ -62,7 +66,9 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        CalendarManagerStorage calendarManagerStorage =
+                new XmlCalendarManagerStorage(userPrefs.getCalendarManagerFilePath());
+        storage = new StorageManager(addressBookStorage, calendarManagerStorage, userPrefsStorage);
 
         initLogging(config);
 
@@ -87,22 +93,41 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional <ReadOnlyCalendarManager> calendarManagerOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyCalendarManager initialCalendarData;
+
         try {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+                logger.info("Data file not found. Will be starting with a sample ContactSails.");
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
+            logger.warning("Data file not in the correct format."
+                    + "Will be starting with an empty ContactSails.");
             initialData = new AddressBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file."
+                    + "Will be starting with an empty ContactSails.");
             initialData = new AddressBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            calendarManagerOptional = storage.readCalendarManager();
+            if (!calendarManagerOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample CalendarManager.");
+            }
+            initialCalendarData = calendarManagerOptional.orElseGet(SampleDataUtil::getSampleCalendarManager);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty CalendarManager.");
+            initialCalendarData = new CalendarManager();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty CalendarManager.");
+            initialCalendarData = new CalendarManager();
+        }
+
+        return new ModelManager(initialData, initialCalendarData, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -132,7 +157,7 @@ public class MainApp extends Application {
             initializedConfig = configOptional.orElse(new Config());
         } catch (DataConversionException e) {
             logger.warning("Config file at " + configFilePathUsed + " is not in the correct format. "
-                    + "Using default config properties");
+                    + "Using default config properties.");
             initializedConfig = new Config();
         }
 
@@ -160,10 +185,10 @@ public class MainApp extends Application {
             initializedPrefs = prefsOptional.orElse(new UserPrefs());
         } catch (DataConversionException e) {
             logger.warning("UserPrefs file at " + prefsFilePath + " is not in the correct format. "
-                    + "Using default user prefs");
+                    + "Using default user prefs.");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty ContactSails.");
             initializedPrefs = new UserPrefs();
         }
 
@@ -183,13 +208,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting ContactSails " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping ContactSails ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

@@ -3,11 +3,17 @@ package seedu.address.model.person;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
 import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.Set;
 
-import seedu.address.model.tag.Tag;
-import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.order.Order;
+import seedu.address.model.order.UniqueOrderList;
+
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
+import seedu.address.model.tag.UniqueGroupList;
+import seedu.address.model.tag.UniquePreferenceList;
 
 /**
  * Represents a Person in the address book.
@@ -20,19 +26,41 @@ public class Person {
     private final Email email;
     private final Address address;
 
-    private final UniqueTagList tags;
+    private final UniqueGroupList groupTags;
+    private final UniquePreferenceList prefTags;
+    private final UniqueOrderList orders;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
-        requireAllNonNull(name, phone, email, address, tags);
+    public Person(Name name, Phone phone, Email email, Address address,
+                  Set<Group> groupTags, Set<Preference> prefTags) {
+        requireAllNonNull(name, phone, email, address, groupTags, prefTags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        // protect internal tags from changes in the arg list
-        this.tags = new UniqueTagList(tags);
+        // protect internal groups from changes in the arg list
+        this.groupTags = new UniqueGroupList(groupTags);
+        // protect internal preferences from changes in the arg list
+        this.prefTags = new UniquePreferenceList(prefTags);
+        // protect internal orders from changes in the arg list
+        this.orders = new UniqueOrderList();
+    }
+
+    public Person(Name name, Phone phone, Email email, Address address, Set<Group> groupTags,
+                  Set<Preference> prefTags, List<Order> orders) {
+        requireAllNonNull(name, phone, email, address, groupTags, prefTags, orders);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal groups from changes in the arg list
+        this.groupTags = new UniqueGroupList(groupTags);
+        // protect internal preferences from changes in the arg list
+        this.prefTags = new UniquePreferenceList(prefTags);
+        // protect internal orders from changes in the arg list
+        this.orders = new UniqueOrderList(orders);
     }
 
     public Name getName() {
@@ -52,11 +80,34 @@ public class Person {
     }
 
     /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
+     * Returns an immutable group set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.toSet());
+    public Set<Group> getGroupTags() {
+        return Collections.unmodifiableSet(groupTags.toSet());
+    }
+
+    /**
+     * Returns an immutable preference set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Preference> getPreferenceTags() {
+        return Collections.unmodifiableSet(prefTags.toSet());
+    }
+
+    /**
+     * Returns an immutable order list, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public List<Order> getOrders() {
+        return Collections.unmodifiableList(orders.asObservableList());
+    }
+
+    /**
+     * Removes given order if found in order set.
+     */
+    public void removeOrder(Order orderToRemove) {
+        orders.remove(orderToRemove);
     }
 
     @Override
@@ -79,7 +130,7 @@ public class Person {
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, groupTags, prefTags);
     }
 
     @Override
@@ -92,8 +143,10 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
-        getTags().forEach(builder::append);
+                .append(" Groups: ");
+        getGroupTags().forEach(builder::append);
+        builder.append(" Preferences: ");
+        getPreferenceTags().forEach(builder::append);
         return builder.toString();
     }
 

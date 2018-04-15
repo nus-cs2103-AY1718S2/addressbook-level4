@@ -9,6 +9,7 @@ import guitests.guihandles.MainWindowHandle;
 import javafx.stage.Stage;
 import seedu.address.TestApp;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendarManager;
 
 /**
  * Contains helper methods that system tests require.
@@ -20,10 +21,13 @@ public class SystemTestSetupHelper {
     /**
      * Sets up a new {@code TestApp} and returns it.
      */
-    public TestApp setupApplication(Supplier<ReadOnlyAddressBook> addressBook, String saveFileLocation) {
+    public TestApp setupApplication(Supplier<ReadOnlyAddressBook> addressBook,
+                                    Supplier<ReadOnlyCalendarManager> calendarManager, String saveAbFileLocation,
+                                    String saveCmFileLocation) {
         try {
             FxToolkit.registerStage(Stage::new);
-            FxToolkit.setupApplication(() -> testApp = new TestApp(addressBook, saveFileLocation));
+            FxToolkit.setupApplication(() -> testApp = new TestApp(addressBook, calendarManager,
+                    saveAbFileLocation, saveCmFileLocation));
         } catch (TimeoutException te) {
             throw new AssertionError("Application takes too long to set up.");
         }

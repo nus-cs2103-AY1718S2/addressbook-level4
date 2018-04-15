@@ -22,7 +22,8 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
@@ -30,14 +31,17 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_GROUP = "#friend";
+    private static final String INVALID_PREFERENCE = "#shoes";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_GROUP_1 = "friend";
+    private static final String VALID_GROUP_2 = "neighbour";
+    private static final String VALID_PREFERENCE_1 = "shoes";
+    private static final String VALID_PREFERENCE_2 = "computers";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -195,52 +199,106 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parseTag_null_throwsNullPointerException() throws Exception {
+    public void parseGroup_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTag(null);
+        ParserUtil.parseGroup(null);
     }
 
     @Test
-    public void parseTag_invalidValue_throwsIllegalValueException() throws Exception {
+    public void parseGroup_invalidValue_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTag(INVALID_TAG);
+        ParserUtil.parseGroup(INVALID_GROUP);
     }
 
     @Test
-    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));
+    public void parseGroup_validValueWithoutWhitespace_returnsGroup() throws Exception {
+        Group expectedGroup = new Group(VALID_GROUP_1);
+        assertEquals(expectedGroup, ParserUtil.parseGroup(VALID_GROUP_1));
     }
 
     @Test
-    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
-        String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
+    public void parseGroup_validValueWithWhitespace_returnsTrimmedGroup() throws Exception {
+        String groupWithWhitespace = WHITESPACE + VALID_GROUP_1 + WHITESPACE;
+        Group expectedGroup = new Group(VALID_GROUP_1);
+        assertEquals(expectedGroup, ParserUtil.parseGroup(groupWithWhitespace));
     }
 
     @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
+    public void parseGroups_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
+        ParserUtil.parseGroups(null);
     }
 
     @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
+    public void parseGroups_collectionWithInvalidGroups_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+        ParserUtil.parseGroups(Arrays.asList(VALID_GROUP_1, INVALID_GROUP));
     }
 
     @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    public void parseGroups_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parseGroups(Collections.emptyList()).isEmpty());
     }
 
     @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+    public void parseGroups_collectionWithValidGroups_returnsGroupSet() throws Exception {
+        Set<Group> actualGroupSet = ParserUtil.parseGroups(Arrays.asList(VALID_GROUP_1, VALID_GROUP_2));
+        Set<Group> expectedGroupSet = new HashSet<Group>(Arrays.asList(new Group(VALID_GROUP_1),
+                new Group(VALID_GROUP_2)));
 
-        assertEquals(expectedTagSet, actualTagSet);
+        assertEquals(expectedGroupSet, actualGroupSet);
+    }
+
+    @Test
+    public void parsePreference_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parsePreference(null);
+    }
+
+    @Test
+    public void parsePreference_invalidValue_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePreference(INVALID_PREFERENCE);
+    }
+
+    @Test
+    public void parsePreference_validValueWithoutWhitespace_returnsPreference() throws Exception {
+        Preference expectedPreference = new Preference(VALID_PREFERENCE_1);
+        assertEquals(expectedPreference, ParserUtil.parsePreference(VALID_PREFERENCE_1));
+    }
+
+    @Test
+    public void parsePreference_validValueWithWhitespace_returnsTrimmedPreference() throws Exception {
+        String preferenceWithWhitespace = WHITESPACE + VALID_PREFERENCE_1 + WHITESPACE;
+        Preference expectedPreference = new Preference(VALID_PREFERENCE_1);
+        assertEquals(expectedPreference, ParserUtil.parseGroup(preferenceWithWhitespace));
+    }
+
+    @Test
+    public void parsePreferences_null_throwsNullPointerException() throws Exception {
+        thrown.expect(NullPointerException.class);
+        ParserUtil.parsePreferences(null);
+    }
+
+    @Test
+    public void parsePreferences_collectionWithInvalidPreferences_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parsePreferences(Arrays.asList(VALID_PREFERENCE_1, INVALID_PREFERENCE));
+    }
+
+    @Test
+    public void parsePreferences_emptyCollection_returnsEmptySet() throws Exception {
+        assertTrue(ParserUtil.parsePreferences(Collections.emptyList()).isEmpty());
+    }
+
+    @Test
+    public void parsePreferences_collectionWithValidPreferences_returnsPreferenceSet() throws Exception {
+        Set<Preference> actualPreferenceSet =
+                ParserUtil.parsePreferences(Arrays.asList(VALID_PREFERENCE_1, VALID_PREFERENCE_2));
+        Set<Preference> expectedPreferenceSet =
+                new HashSet<Preference>(Arrays.asList(new Preference(VALID_PREFERENCE_1),
+                new Preference(VALID_PREFERENCE_2)));
+
+        assertEquals(expectedPreferenceSet, actualPreferenceSet);
     }
 }

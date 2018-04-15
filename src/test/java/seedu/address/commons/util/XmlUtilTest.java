@@ -15,10 +15,15 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
+import seedu.address.storage.XmlAdaptedGroup;
 import seedu.address.storage.XmlAdaptedPerson;
-import seedu.address.storage.XmlAdaptedTag;
+import seedu.address.storage.XmlAdaptedPreference;
 import seedu.address.storage.XmlSerializableAddressBook;
+import seedu.address.storage.XmlSerializableCalendarManager;
 import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.testutil.CalendarEntryBuilder;
+import seedu.address.testutil.CalendarManagerBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.TestUtil;
 
@@ -31,7 +36,10 @@ public class XmlUtilTest {
     private static final File MISSING_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingPersonField.xml");
     private static final File INVALID_PERSON_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidPersonField.xml");
     private static final File VALID_PERSON_FILE = new File(TEST_DATA_FOLDER + "validPerson.xml");
-    private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
+    private static final File TEMP_ADDRESSBOOK_FILE =
+            new File(TestUtil.getFilePathInSandboxFolder("tempAddressBook.xml"));
+    private static final File TEMP_CALENDARMANAGER_FILE =
+            new File(TestUtil.getFilePathInSandboxFolder("tempCalendarManager.xml"));
 
     private static final String INVALID_PHONE = "9482asf424";
 
@@ -39,8 +47,10 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
-
+    private static final List<XmlAdaptedGroup> VALID_GROUPS =
+            Collections.singletonList(new XmlAdaptedGroup("friends"));
+    private static final List<XmlAdaptedPreference> VALID_PREFERENCES =
+            Collections.singletonList(new XmlAdaptedPreference("shoes"));
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
@@ -72,7 +82,9 @@ public class XmlUtilTest {
     public void getDataFromFile_validFile_validResult() throws Exception {
         AddressBook dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableAddressBook.class).toModelType();
         assertEquals(9, dataFromFile.getPersonList().size());
-        assertEquals(0, dataFromFile.getTagList().size());
+        assertEquals(0, dataFromFile.getGroupList().size());
+        assertEquals(0, dataFromFile.getPreferenceList().size());
+
     }
 
     @Test
@@ -80,7 +92,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_GROUPS, VALID_PREFERENCES);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +101,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_GROUPS, VALID_PREFERENCES);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +110,7 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_GROUPS, VALID_PREFERENCES);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -121,21 +133,42 @@ public class XmlUtilTest {
     }
 
     @Test
-    public void saveDataToFile_validFile_dataSaved() throws Exception {
-        TEMP_FILE.createNewFile();
+    public void saveDataToFile_validAddressBookFile_dataSaved() throws Exception {
+        TEMP_ADDRESSBOOK_FILE.createNewFile();
         XmlSerializableAddressBook dataToWrite = new XmlSerializableAddressBook(new AddressBook());
-        XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        XmlUtil.saveDataToFile(TEMP_ADDRESSBOOK_FILE, dataToWrite);
+        XmlSerializableAddressBook dataFromFile = XmlUtil.getDataFromFile(TEMP_ADDRESSBOOK_FILE,
+                XmlSerializableAddressBook.class);
         assertEquals(dataToWrite, dataFromFile);
 
         AddressBookBuilder builder = new AddressBookBuilder(new AddressBook());
         dataToWrite = new XmlSerializableAddressBook(
-                builder.withPerson(new PersonBuilder().build()).withTag("Friends").build());
+                builder.withPerson(new PersonBuilder().build()).withGroup("Friends")
+                        .withPreference("shoes").build());
 
-        XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableAddressBook.class);
+        XmlUtil.saveDataToFile(TEMP_ADDRESSBOOK_FILE, dataToWrite);
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_ADDRESSBOOK_FILE, XmlSerializableAddressBook.class);
         assertEquals(dataToWrite, dataFromFile);
     }
+
+    //@@author SuxianAlicia
+    @Test
+    public void saveDateToFile_validCalendarManagerFile_dataSaved() throws Exception {
+        TEMP_CALENDARMANAGER_FILE.createNewFile();
+        XmlSerializableCalendarManager dataToWrite = new XmlSerializableCalendarManager(new CalendarManager());
+        XmlUtil.saveDataToFile(TEMP_CALENDARMANAGER_FILE, dataToWrite);
+        XmlSerializableCalendarManager dataFromFile = XmlUtil.getDataFromFile(
+                TEMP_CALENDARMANAGER_FILE, XmlSerializableCalendarManager.class);
+        assertEquals(dataToWrite, dataFromFile);
+
+        CalendarManagerBuilder builder = new CalendarManagerBuilder(new CalendarManager());
+        dataToWrite = new XmlSerializableCalendarManager(builder.withEntry(new CalendarEntryBuilder().build()).build());
+
+        XmlUtil.saveDataToFile(TEMP_CALENDARMANAGER_FILE, dataToWrite);
+        dataFromFile = XmlUtil.getDataFromFile(TEMP_CALENDARMANAGER_FILE, XmlSerializableCalendarManager.class);
+        assertEquals(dataToWrite, dataFromFile);
+    }
+    //@@author
 
     /**
      * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data to {@code XmlAdaptedPerson}

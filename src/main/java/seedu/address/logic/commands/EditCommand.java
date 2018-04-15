@@ -3,9 +3,10 @@ package seedu.address.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PREFERENCE;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.util.Collections;
@@ -26,7 +27,8 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.Group;
+import seedu.address.model.tag.Preference;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -34,6 +36,15 @@ import seedu.address.model.tag.Tag;
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
+    public static final String COMMAND_ALIAS = "e";
+    public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
+            + "INDEX "
+            + "[" + PREFIX_NAME + "NAME] "
+            + "[" + PREFIX_PHONE + "PHONE] "
+            + "[" + PREFIX_EMAIL + "EMAIL] "
+            + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_GROUP + "GROUP]"
+            + "[" + PREFIX_PREFERENCE + "PREFERENCE]...";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
             + "by the index number used in the last person listing. "
@@ -43,7 +54,8 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+            + "[" + PREFIX_GROUP + "GROUP]"
+            + "[" + PREFIX_PREFERENCE + "PREFERENCE]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
@@ -77,7 +89,7 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target person cannot be missing.");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
@@ -106,9 +118,11 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        Set<Group> updatedGroups = editPersonDescriptor.getGroupTags().orElse(personToEdit.getGroupTags());
+        Set<Preference> updatedPreferences = editPersonDescriptor.getPreferenceTags()
+                .orElse(personToEdit.getPreferenceTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedGroups, updatedPreferences);
     }
 
     @Override
@@ -139,7 +153,8 @@ public class EditCommand extends UndoableCommand {
         private Phone phone;
         private Email email;
         private Address address;
-        private Set<Tag> tags;
+        private Set<Group> groupTags;
+        private Set<Preference> prefTags;
 
         public EditPersonDescriptor() {}
 
@@ -152,14 +167,16 @@ public class EditCommand extends UndoableCommand {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
-            setTags(toCopy.tags);
+            setGroupTags(toCopy.groupTags);
+            setPreferenceTags(toCopy.prefTags);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address,
+                    this.groupTags, this.prefTags);
         }
 
         public void setName(Name name) {
@@ -195,20 +212,37 @@ public class EditCommand extends UndoableCommand {
         }
 
         /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
+         * Sets {@code groups} to this object's {@code groupTags}.
+         * A defensive copy of {@code groupTags} is used internally.
          */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
+        public void setGroupTags(Set<Group> groups) {
+            this.groupTags = (groups != null) ? new HashSet<>(groups) : null;
         }
 
         /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
+         * Sets {@code preferences} to this object's {@code prefTags}.
+         * A defensive copy of {@code prefTags} is used internally.
          */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public void setPreferenceTags(Set<Preference> preferences) {
+            this.prefTags = (preferences != null) ? new HashSet<>(preferences) : null;
+        }
+
+        /**
+         * Returns an unmodifiable group set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code groupTags} is null.
+         */
+        public Optional<Set<Group>> getGroupTags() {
+            return (groupTags != null) ? Optional.of(Collections.unmodifiableSet(groupTags)) : Optional.empty();
+        }
+
+        /**
+         * Returns an unmodifiable preference set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code prefTags} is null.
+         */
+        public Optional<Set<Preference>> getPreferenceTags() {
+            return (prefTags != null) ? Optional.of(Collections.unmodifiableSet(prefTags)) : Optional.empty();
         }
 
         @Override
@@ -230,7 +264,8 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+                    && getGroupTags().equals(e.getGroupTags())
+                    && getPreferenceTags().equals(e.getPreferenceTags());
         }
     }
 }

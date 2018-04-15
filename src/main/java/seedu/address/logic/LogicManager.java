@@ -2,6 +2,8 @@ package seedu.address.logic;
 
 import java.util.logging.Logger;
 
+import com.calendarfx.model.Calendar;
+
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
@@ -11,6 +13,8 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
 /**
@@ -48,6 +52,21 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return model.getFilteredPersonList();
+    }
+
+    @Override
+    public ObservableList<Order> getFilteredOrderList() {
+        return model.getFilteredOrderList();
+    }
+
+    @Override
+    public ObservableList<CalendarEntry> getFilteredCalendarEntryList() {
+        return model.getFilteredCalendarEntryList();
+    }
+
+    @Override
+    public Calendar getCalendar() {
+        return model.getCalendar();
     }
 
     @Override

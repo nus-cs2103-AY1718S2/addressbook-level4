@@ -18,7 +18,7 @@ public class HelpWindow extends UiPart<Stage> {
     private static final String FXML = "HelpWindow.fxml";
 
     @FXML
-    private WebView browser;
+    private WebView helpWindow;
 
     /**
      * Creates a new HelpWindow.
@@ -29,7 +29,7 @@ public class HelpWindow extends UiPart<Stage> {
         super(FXML, root);
 
         String userGuideUrl = getClass().getResource(USERGUIDE_FILE_PATH).toString();
-        browser.getEngine().load(userGuideUrl);
+        helpWindow.getEngine().load(userGuideUrl);
     }
 
     /**

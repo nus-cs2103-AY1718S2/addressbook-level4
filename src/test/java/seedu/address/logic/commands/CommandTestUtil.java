@@ -4,10 +4,20 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_DELIVERY_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ENTRY_TITLE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_GROUP;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ORDER_INFORMATION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PREFERENCE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_QUANTITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -18,10 +28,15 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.Model;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditEntryDescriptorBuilder;
+import seedu.address.testutil.EditOrderDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -37,8 +52,38 @@ public class CommandTestUtil {
     public static final String VALID_EMAIL_BOB = "bob@example.com";
     public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
     public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_GROUP_FRIEND = "friend";
+    public static final String VALID_GROUP_COLLEAGUES = "colleagues";
+    public static final String VALID_PREFERENCE_COMPUTERS = "computers";
+    public static final String VALID_PREFERENCE_SHOES = "shoes";
+
+    public static final String VALID_ORDER_INFORMATION_CHOC = "Chocolates";
+    public static final String VALID_ORDER_STATUS_CHOC = "ongoing";
+    public static final String VALID_PRICE_CHOC = "10.00";
+    public static final String VALID_QUANTITY_CHOC = "15";
+    public static final String VALID_DELIVERY_DATE_CHOC = "12-08-2018";
+    public static final String VALID_ORDER_INFORMATION_BOOKS = "Books";
+    public static final String VALID_ORDER_STATUS_BOOKS = "ongoing";
+    public static final String VALID_PRICE_BOOKS = "15.00";
+    public static final String VALID_QUANTITY_BOOKS = "3";
+    public static final String VALID_DELIVERY_DATE_BOOKS = "04-12-2018";
+    public static final String VALID_ORDER_INFORMATION_COMPUTER = "Computer";
+    public static final String VALID_ORDER_STATUS_COMPUTER = "ongoing";
+    public static final String VALID_PRICE_COMPUTER = "2000.00";
+    public static final String VALID_QUANTITY_COMPUTER = "1";
+    public static final String VALID_DELIVERY_DATE_COMPUTER = "18-07-2018";
+
+    public static final String VALID_ENTRY_TITLE_MEET_SUPPLIER = "Meeting with supplier";
+    public static final String VALID_ENTRY_TITLE_GET_BOOKS = "Get books from supplier";
+    public static final String VALID_START_DATE_ALTERNATE_DATE = "01-06-2018";
+    public static final String VALID_START_DATE_MEET_SUPPLIER = "06-06-2018";
+    public static final String VALID_START_DATE_GET_BOOKS = "01-07-2018";
+    public static final String VALID_END_DATE_MEET_SUPPLIER = "06-06-2018";
+    public static final String VALID_END_DATE_GET_BOOKS = "01-07-2018";
+    public static final String VALID_START_TIME_MEET_SUPPLIER = "10:00";
+    public static final String VALID_START_TIME_GET_BOOKS = "08:00";
+    public static final String VALID_END_TIME_MEET_SUPPLIER = "12:00";
+    public static final String VALID_END_TIME_GET_BOOKS = "12:30";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -48,28 +93,113 @@ public class CommandTestUtil {
     public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
     public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
     public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String GROUP_DESC_FRIEND = " " + PREFIX_GROUP + VALID_GROUP_FRIEND;
+    public static final String GROUP_DESC_COLLEAGUES = " " + PREFIX_GROUP + VALID_GROUP_COLLEAGUES;
+
+    public static final String PREFERENCE_DESC_COMPUTERS = " " + PREFIX_PREFERENCE + VALID_PREFERENCE_COMPUTERS;
+    public static final String PREFERENCE_DESC_SHOES = " " + PREFIX_PREFERENCE + VALID_PREFERENCE_SHOES;
+
+    public static final String ORDER_INFORMATION_DESC_CHOC = " " + PREFIX_ORDER_INFORMATION
+            + VALID_ORDER_INFORMATION_CHOC;
+    public static final String PRICE_DESC_CHOC = " " + PREFIX_PRICE + VALID_PRICE_CHOC;
+    public static final String QUANTITY_DESC_CHOC = " " + PREFIX_QUANTITY + VALID_QUANTITY_CHOC;
+    public static final String DELIVERY_DATE_DESC_CHOC = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_CHOC;
+    public static final String ORDER_INFORMATION_DESC_BOOKS = " " + PREFIX_ORDER_INFORMATION
+            + VALID_ORDER_INFORMATION_BOOKS;
+    public static final String PRICE_DESC_BOOKS = " " + PREFIX_PRICE + VALID_PRICE_BOOKS;
+    public static final String QUANTITY_DESC_BOOKS = " " + PREFIX_QUANTITY + VALID_QUANTITY_BOOKS;
+    public static final String DELIVERY_DATE_DESC_BOOKS = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_BOOKS;
+    public static final String ORDER_INFORMATION_DESC_COMPUTER = " " + PREFIX_ORDER_INFORMATION
+            + VALID_ORDER_INFORMATION_COMPUTER;
+    public static final String PRICE_DESC_COMPUTER = " " + PREFIX_PRICE + VALID_PRICE_COMPUTER;
+    public static final String QUANTITY_DESC_COMPUTER = " " + PREFIX_QUANTITY + VALID_QUANTITY_COMPUTER;
+    public static final String DELIVERY_DATE_DESC_COMPUTER = " " + PREFIX_DELIVERY_DATE + VALID_DELIVERY_DATE_COMPUTER;
+
+    public static final String ENTRY_TITLE_DESC_MEET_SUPPLIER = " " + PREFIX_ENTRY_TITLE
+            + VALID_ENTRY_TITLE_MEET_SUPPLIER;
+    public static final String ENTRY_TITLE_DESC_GET_BOOKS = " " + PREFIX_ENTRY_TITLE + VALID_ENTRY_TITLE_GET_BOOKS;
+    public static final String START_DATE_DESC_ALTERNATE_DATE =
+            " " + PREFIX_START_DATE + VALID_START_DATE_ALTERNATE_DATE;
+    public static final String START_DATE_DESC_MEET_SUPPLIER = " " + PREFIX_START_DATE + VALID_START_DATE_MEET_SUPPLIER;
+    public static final String START_DATE_DESC_GET_BOOKS = " " + PREFIX_START_DATE + VALID_START_DATE_GET_BOOKS;
+    public static final String END_DATE_DESC_MEET_SUPPLIER = " " + PREFIX_END_DATE + VALID_END_DATE_MEET_SUPPLIER;
+    public static final String END_DATE_DESC_GET_BOOKS = " " + PREFIX_END_DATE + VALID_END_DATE_GET_BOOKS;
+    public static final String START_TIME_DESC_MEET_SUPPLIER = " " + PREFIX_START_TIME + VALID_START_TIME_MEET_SUPPLIER;
+    public static final String START_TIME_DESC_GET_BOOKS = " " + PREFIX_START_TIME + VALID_START_TIME_GET_BOOKS;
+    public static final String END_TIME_DESC_MEET_SUPPLIER = " " + PREFIX_END_TIME + VALID_END_TIME_MEET_SUPPLIER;
+    public static final String END_TIME_DESC_GET_BOOKS = " " + PREFIX_END_TIME + VALID_END_TIME_GET_BOOKS;
 
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_GROUP_DESC = " " + PREFIX_GROUP + "hubby*"; // '*' not allowed in groups
+    public static final String INVALID_PREFERENCE_DESC =
+            " " + PREFIX_PREFERENCE + "computers*"; // '*' not allowed in preferences
+
+    public static final String INVALID_ORDER_INFORMATION_DESC = " "
+            + PREFIX_ORDER_INFORMATION + "&Books"; // '&' not allowed in order information
+    public static final String INVALID_PRICE_DESC = " " + PREFIX_PRICE + "jdw11"; // 'jdw' not allowed in prices
+    public static final String INVALID_QUANTITY_DESC = " "
+            + PREFIX_QUANTITY + "-11"; // '-' sign not allowed in quantities
+    public static final String INVALID_DELIVERY_DATE_DESC = " " + PREFIX_DELIVERY_DATE + "20-45-10000"; // illegal date
+
+    public static final String INVALID_ENTRY_TITLE_DESC = " "
+            + PREFIX_ENTRY_TITLE + "M@@ting with the boss, "; // '@' and ',' are not allowed in entry title.
+    public static final String INVALID_START_DATE_DESC = " " + PREFIX_START_DATE + "31-02-2018"; // Illegal date
+    public static final String INVALID_END_DATE_DESC = " " + PREFIX_END_DATE + "23-20-20000"; // Illegal date
+    public static final String INVALID_START_TIME_DESC = " " + PREFIX_START_TIME + "12-30"; //Illegal time format
+    public static final String INVALID_END_TIME_DESC = " " + PREFIX_END_TIME + "25:70"; // Illegal time
+    public static final String INVALID_START_DATE_LATER_THAN_END_DATE_DESC =
+            " " + PREFIX_START_DATE + "06-07-2018"; // Start Date later than 06-06-2018
+    public static final String INVALID_START_TIME_LATER_THAN_END_TIME_DESC =
+            " " + PREFIX_START_TIME + "23:00"; // Start Time later than End time same Start Date and End Date.
+    public static final String INVALID_START_TIME_LESS_THAN_FIFTEEN_MINUTES_FROM_END_TIME_DESC =
+            " " + PREFIX_START_TIME + "11:50";
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
+    public static final String INVALID_THEME = "day791";
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final EditOrderCommand.EditOrderDescriptor DESC_COMPUTER;
+    public static final EditOrderCommand.EditOrderDescriptor DESC_COMICBOOK;
+
+    public static final EditEntryCommand.EditEntryDescriptor DESC_MEET_SUPPLIER;
+    public static final EditEntryCommand.EditEntryDescriptor DESC_GET_BOOKS;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
+                .withGroups(VALID_GROUP_FRIEND).withPreferences(VALID_PREFERENCE_SHOES).build();
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+                .withGroups(VALID_GROUP_COLLEAGUES, VALID_GROUP_FRIEND)
+                .withPreferences(VALID_PREFERENCE_COMPUTERS).build();
+    }
+
+    static {
+        DESC_COMPUTER = new EditOrderDescriptorBuilder().withOrderInformation(VALID_ORDER_INFORMATION_COMPUTER)
+                .withOrderStatus(VALID_ORDER_STATUS_COMPUTER)
+                .withPrice(VALID_PRICE_COMPUTER).withQuantity(VALID_QUANTITY_COMPUTER)
+                .withDeliveryDate(VALID_DELIVERY_DATE_COMPUTER).build();
+        DESC_COMICBOOK = new EditOrderDescriptorBuilder().withOrderInformation("Comic Book")
+                .withOrderStatus("ongoing")
+                .withPrice("17.99").withQuantity("1")
+                .withDeliveryDate("01-01-2018")
+                .build();
+    }
+
+    static {
+        DESC_MEET_SUPPLIER = new EditEntryDescriptorBuilder().withEntryTitle(VALID_ENTRY_TITLE_MEET_SUPPLIER)
+                .withStartDate(VALID_START_DATE_MEET_SUPPLIER).withEndDate(VALID_END_DATE_MEET_SUPPLIER)
+                .withStartTime(VALID_START_TIME_MEET_SUPPLIER).withEndTime(VALID_END_TIME_MEET_SUPPLIER).build();
+        DESC_GET_BOOKS = new EditEntryDescriptorBuilder().withEntryTitle(VALID_ENTRY_TITLE_GET_BOOKS)
+                .withStartDate(VALID_START_DATE_GET_BOOKS).withEndDate(VALID_END_DATE_GET_BOOKS)
+                .withStartTime(VALID_START_TIME_GET_BOOKS).withEndTime(VALID_END_TIME_GET_BOOKS).build();
     }
 
     /**
@@ -92,13 +222,18 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book, calendar manager, filtered person list, filtered order list, filtered calendar entry list
+     *   in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
         AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Person> expectedFilteredPersonList = new ArrayList<>(actualModel.getFilteredPersonList());
+        List<Order> expectedFilteredOrderList = new ArrayList<>(actualModel.getFilteredOrderList());
+        CalendarManager expectedCalendarManager = new CalendarManager(actualModel.getCalendarManager());
+        List<CalendarEntry> expectedFilteredCalendarEntryList =
+                new ArrayList<>(actualModel.getFilteredCalendarEntryList());
 
         try {
             command.execute();
@@ -106,7 +241,10 @@ public class CommandTestUtil {
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
             assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredPersonList, actualModel.getFilteredPersonList());
+            assertEquals(expectedFilteredOrderList, actualModel.getFilteredOrderList());
+            assertEquals(expectedCalendarManager, actualModel.getCalendarManager());
+            assertEquals(expectedFilteredCalendarEntryList, actualModel.getFilteredCalendarEntryList());
         }
     }
 

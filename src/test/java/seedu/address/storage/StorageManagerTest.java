@@ -3,6 +3,7 @@ package seedu.address.storage;
 import static junit.framework.TestCase.assertNotNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.testutil.TypicalCalendarEntries.getTypicalCalendarManagerWithEntries;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
@@ -15,7 +16,9 @@ import org.junit.rules.TemporaryFolder;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.model.CalendarManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCalendarManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
@@ -31,8 +34,10 @@ public class StorageManagerTest {
     @Before
     public void setUp() {
         XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getTempFilePath("ab"));
+        XmlCalendarManagerStorage calendarManagerStorage =
+                new XmlCalendarManagerStorage(getTempFilePath("cm"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getTempFilePath("prefs"));
-        storageManager = new StorageManager(addressBookStorage, userPrefsStorage);
+        storageManager = new StorageManager(addressBookStorage, calendarManagerStorage, userPrefsStorage);
     }
 
     private String getTempFilePath(String fileName) {
@@ -68,6 +73,24 @@ public class StorageManagerTest {
     }
 
     @Test
+    public void calendarManagerReadSave() throws Exception {
+        /*
+         * Note: This is an integration test that verifies the StorageManager is properly wired to the
+         * {@link XmlCalendarManagerStorage} class.
+         * More extensive testing of UserPref saving/reading is done in {@link XmlCalendarManagerStorageTest} class.
+         */
+        CalendarManager original = getTypicalCalendarManagerWithEntries();
+        storageManager.saveCalendarManager(original);
+        ReadOnlyCalendarManager retrieved = storageManager.readCalendarManager().get();
+        assertEquals(original, new CalendarManager(retrieved));
+    }
+
+    @Test
+    public void getCalendarManagerFilePath() {
+        assertNotNull(storageManager.getCalendarManagerFilePath());
+    }
+
+    @Test
     public void getAddressBookFilePath() {
         assertNotNull(storageManager.getAddressBookFilePath());
     }
@@ -76,6 +99,7 @@ public class StorageManagerTest {
     public void handleAddressBookChangedEvent_exceptionThrown_eventRaised() {
         // Create a StorageManager while injecting a stub that  throws an exception when the save method is called
         Storage storage = new StorageManager(new XmlAddressBookStorageExceptionThrowingStub("dummy"),
+                                             new XmlCalendarManagerStorage("dummy"),
                                              new JsonUserPrefsStorage("dummy"));
         storage.handleAddressBookChangedEvent(new AddressBookChangedEvent(new AddressBook()));
         assertTrue(eventsCollectorRule.eventsCollector.getMostRecent() instanceof DataSavingExceptionEvent);

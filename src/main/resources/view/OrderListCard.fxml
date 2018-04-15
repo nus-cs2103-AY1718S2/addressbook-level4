@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!--@@author amad-person-->
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1">
+    <GridPane HBox.hgrow="ALWAYS">
+        <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+        </columnConstraints>
+        <VBox alignment="CENTER_LEFT" minHeight="105" GridPane.columnIndex="0">
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <Label fx:id="id" styleClass="cell_big_label">
+                    <minWidth>
+                        <!-- Ensures that the label text is never truncated -->
+                        <Region fx:constant="USE_PREF_SIZE" />
+                    </minWidth>
+                </Label>
+                <Label fx:id="orderInformation" styleClass="cell_big_label" text="\$orderInformation" />
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="orderStatusIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/order_status_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="orderStatus" styleClass="cell_small_label" text="\$orderStatus">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="priceAndQuantityIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/price_and_quantity_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="priceAndQuantity" styleClass="cell_small_label" text="\$priceAndQuantity">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="totalPriceIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/total_price_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="totalPrice" styleClass="cell_small_label" text="\$totalPrice">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="5">
+                <ImageView fx:id="deliveryDateIcon" pickOnBounds="true" preserveRatio="true">
+                    <image>
+                        <Image url="/images/delivery_date_icon.png" />
+                    </image>
+                </ImageView>
+                <Label fx:id="deliveryDate" styleClass="cell_small_label" text="\$deliveryDate">
+                    <padding>
+                        <Insets top="5" />
+                    </padding>
+                </Label>
+                <padding>
+                    <Insets top="5" />
+                </padding>
+            </HBox>
+            <padding>
+                <Insets bottom="5" left="15" right="5" top="5" />
+            </padding>
+        </VBox>
+        <rowConstraints>
+            <RowConstraints />
+        </rowConstraints>
+    </GridPane>
+    <padding>
+        <Insets bottom="5" left="15" right="5" top="5" />
+    </padding>
+</HBox>

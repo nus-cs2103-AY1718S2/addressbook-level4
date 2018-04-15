@@ -15,10 +15,12 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.theme.Theme;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,13 +36,14 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CenterPanel centerPanel;
     private PersonListPanel personListPanel;
+    private RightPanel rightPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane centerPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -50,6 +53,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane rightPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -69,6 +75,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        setTheme();
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -116,11 +123,16 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        centerPanel = new CenterPanel(logic.getCalendar());
+
+        centerPlaceholder.getChildren().add(centerPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+
+        rightPanel = new RightPanel(logic.getFilteredOrderList(), logic.getFilteredCalendarEntryList());
+        rightPanelPlaceholder.getChildren().add(rightPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -152,6 +164,12 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    //@@author amad-person
+    private void setTheme() {
+        Theme.changeTheme(primaryStage, Theme.DARK_THEME_KEYWORD);
+    }
+    //@@author
+
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -169,6 +187,16 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author amad-person
+    /**
+     * Changes the theme of the application.
+     */
+    @FXML
+    public void handleChangeTheme(ChangeThemeEvent event) {
+        Theme.changeTheme(primaryStage, event.getTheme());
+    }
+    //@@author
+
     void show() {
         primaryStage.show();
     }
@@ -185,13 +213,22 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    public RightPanel getRightPanel() {
+        return this.rightPanel;
     }
+
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author amad-person
+    @Subscribe
+    private void handleChangeThemeEvent(ChangeThemeEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleChangeTheme(event);
+    }
+    //@@author
 }

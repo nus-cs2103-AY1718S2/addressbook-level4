@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!--@@author amad-person-->
+<addressbook>
+    <!-- Person -->
+    <persons>
+        <name>Hans Muster</name>
+        <phone isPrivate="false">9482424</phone>
+        <email isPrivate="false">hans.muster@gmail.com</email>
+        <address isPrivate="false">4th street</address>
+    </persons>
+    <!-- Order with invalid price field -->
+    <orders>
+        <orderInformation>Chocolates</orderInformation>
+        <orderStatus>done</orderStatus>
+        <price>10.00.00</price>
+        <quantity>5</quantity>
+        <deliveryDate>11-01-2019</deliveryDate>
+    </orders>
+</addressbook>

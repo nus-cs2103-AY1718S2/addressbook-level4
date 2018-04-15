@@ -11,6 +11,8 @@ import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -19,6 +21,10 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String COMMAND_ADD_INCOMPLETE = "ad";
+    private static final String COMMAND_ADD_COMPLETE = AddCommand.COMMAND_SYNTAX;
+    private static final String COMMAND_EDIT_INCOMPLETE = "e";
+    private static final String COMMAND_EDIT_COMPLETE = EditCommand.COMMAND_SYNTAX;
 
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
@@ -124,6 +130,23 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.DOWN, "");
         assertInputHistory(KeyCode.UP, thirdCommand);
     }
+
+    //@@author amad-person
+    @Test
+    public void handleKeyPress_tab() {
+        // add command
+        commandBoxHandle.setInput(COMMAND_ADD_INCOMPLETE);
+        assertInputHistory(KeyCode.TAB, COMMAND_ADD_COMPLETE);
+
+        // edit command
+        commandBoxHandle.setInput(COMMAND_EDIT_INCOMPLETE);
+        assertInputHistory(KeyCode.TAB, COMMAND_EDIT_COMPLETE);
+
+        // invalid command
+        commandBoxHandle.setInput(COMMAND_THAT_FAILS);
+        assertInputHistory(KeyCode.TAB, COMMAND_THAT_FAILS);
+    }
+    //@@author
 
     /**
      * Runs a command that fails, then verifies that <br>

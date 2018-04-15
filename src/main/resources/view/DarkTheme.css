@@ -116,6 +116,10 @@
     -fx-border-width: 1;
 }
 
+.list-cell:empty {
+    -fx-background-color: transparent;
+}
+
 .list-cell .label {
     -fx-text-fill: white;
 }
@@ -219,7 +223,7 @@
     -fx-background-color: #1d1d1d;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: #1d1d1d;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
@@ -306,11 +310,6 @@
     -fx-padding: 8 1 8 1;
 }
 
-#cardPane {
-    -fx-background-color: transparent;
-    -fx-border-width: 0;
-}
-
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
@@ -327,7 +326,7 @@
     -fx-text-fill: white;
 }
 
-#filterField, #personListPanel, #personWebpage {
+#filterField, #personListPanel {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
 
@@ -336,16 +335,157 @@
     -fx-background-radius: 0;
 }
 
-#tags {
+#groups {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+#groups .label {
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+#preferences {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#preferences .label {
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+/*@@author AJZ1995*/
+#groups .teal {
+    -fx-text-fill: white;
+    -fx-background-color: #008080;
+}
+
+#groups .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#groups .yellow {
+    -fx-background-color: yellow;
+    -fx-text-fill: black;
+}
+
+#groups .blue {
+    -fx-text-fill: black;
+    -fx-background-color: #2890B9;
+}
+
+#groups .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#groups .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+#groups .green {
+    -fx-text-fill: black;
+    -fx-background-color: #27AE60;
+}
+
+#groups .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#groups .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#groups .indigo {
+    -fx-text-fill: black;
+    -fx-background-color: #8E44AD;
+}
+
+#preferences .teal {
+    -fx-text-fill: white;
+    -fx-background-color: #008080;
+}
+
+#preferences .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#preferences .yellow {
+    -fx-background-color: yellow;
+    -fx-text-fill: black;
+}
+
+#preferences .blue {
+    -fx-text-fill: white;
+    -fx-background-color: #2890B9;
+}
+
+#preferences .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#preferences .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+#preferences .green {
+    -fx-text-fill: black;
+    -fx-background-color: #27AE60;
+}
+
+#preferences .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#preferences .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#preferences .indigo {
+    -fx-text-fill: black;
+    -fx-background-color: #8E44AD;
+}
+
+#cardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
+#cardPane #name, #cardPane #id, #cardPane #orderInformation, #cardPane #entryTitle {
+    -fx-font-size: 15pt;
+}
+
+#personPanel #name {
+    -fx-font-size: 40pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+#cardPane #tags .label {
+    -fx-font-size: 12pt;
+}
+
+#personPanel #tags .label {
+    -fx-font-size: 20pt;
+}
+
+#personPanel #address, #personPanel #email, #personPanel #phone {
++   -fx-font-size: 15pt;
+    -fx-text-fill: #FFFFFF;
+}
+
+#personPanel .split-pane-divider {
+    -fx-background-color: derive(#1d1d1d, 50%);
 }

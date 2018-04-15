@@ -1,9 +1,13 @@
 package seedu.address.logic;
 
+import com.calendarfx.model.Calendar;
+
 import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.entry.CalendarEntry;
+import seedu.address.model.order.Order;
 import seedu.address.model.person.Person;
 
 /**
@@ -21,6 +25,15 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of orders */
+    ObservableList<Order> getFilteredOrderList();
+
+    /** Returns an unmodifiable view of the filtered list of calendar entries */
+    ObservableList<CalendarEntry> getFilteredCalendarEntryList();
+
+    /** Returns Calendar. */
+    Calendar getCalendar();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

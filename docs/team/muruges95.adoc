@@ -1,0 +1,296 @@
+= Muruges - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CelebManager
+
+---
+
+== Overview
+
+CelebManager is a software application that aims to allow celebrity managers to maintain schedule of celebrities under them. CelebManager is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
+
+In this software, the users should be able to:
+
+.   Manage contacts
+.	Manage appointments
+.	Manage calendars
+.	Plan efficient routes
+
+The aim of this project portfolio is to highlight some of my major and minor contributions to the project, be it in the form
+of documentation or writing code.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to add appointments*
+** What it does: Allows users to add new appointments into CelebManager. For each appointment, CelebManager takes in an appointment name field and other optional fields
+such as the list of celebrities attending the appointment.
+** Justification: This feature is in fact the main feature of the application, as we want to be able to manage the schedules of celebrities.
+ The only way to do this would be to store and make corrections to these appointments that the celebrities are attending, which is what this feature allows for.
+** Highlights: Creating this feature was done over the entirety of the project, due to changing how we wanted to implement the storage of the appointments.
+ There were difficulties in the implementation due to the fact that each appointment could only be associated with a single celebrity's calendar at a time. Hence, it was eventually decided that appointments will be stored
+ centrally in a `StorageCalendar` and then cloned for each celebrity attending the appointment.
+** Credits: A third party library called `CalendarFX` which can be found https://github.com/dlemmermann/CalendarFX[here] was used to implement this feature.
+
+* *Major enhancement*: added *the ability to add, edit and delete celebrities*
+** What it does: Allow the celebrity manager to create, edit and delete celebrities. The existence of a celebrity will add a calendar to the UI.
+** Justification: This feature works hand in hand with the previous enhancement mentioned. By creating a celebrity, a calendar is created. Now, when we create an appointment and
+add a celebrity to the appointment, the appointment will display on the UI. This means that we are now able to view the appointments and effectively the schedule of the celebrity we are managing.
+** Highlights: This enhancement was carried out through modifications to the add, edit and delete commands. By recognizing a `celebrity` tag to indicate that the person is a celebrity,
+the add and edit commands now create a calendar for the added or modified celebrity. There were a lot of difficulties as we had to make sure the celebrities
+were synchronized with the calendars even when the commands were undoed or redoed, as add, edit and delete are meant to be undoable.
+** Credits: A third party library called `CalendarFX` which can be found https://github.com/dlemmermann/CalendarFX[here] was used to implement this feature.
+
+* *Minor enhancement*: added an appointment list panel and individual appointment card for viewing the list of appointments stored using the `listAppointment` command.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/muruges95.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/muruges95.md[Test code]]
+
+* *Other contributions*:
+
+** Project management: +
+Managed releases `v1.1`, `v1.2` and `v1.3` on GitHub
+
+** Enhancements to existing features:
+*** Added alias for all commands (Pull request https://github.com/CS2103JAN2018-W14-B4/main/pull/3[#3])
+*** Added Calendar panel UI into GUI (Pull request https://github.com/CS2103JAN2018-W14-B4/main/pull/16[#16])
+
+** Documentation:
+*** Updated features content in User Guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/3[#3] https://github.com/CS2103JAN2018-W14-B4/main/pull/168[#168] https://github.com/CS2103JAN2018-W14-B4/main/pull/122[#122] https://github.com/CS2103JAN2018-W14-B4/main/pull/105[#105]
+https://github.com/CS2103JAN2018-W14-B4/main/pull/101[#101]
+*** Updated features implementation content in developer guide: https://github.com/CS2103JAN2018-W14-B4/main/pull/168[#168] https://github.com/CS2103JAN2018-W14-B4/main/pull/126[#126] https://github.com/CS2103JAN2018-W14-B4/main/pull/101[#101] https://github.com/CS2103JAN2018-W14-B4/main/pull/59[#59]
+https://github.com/CS2103JAN2018-W14-B4/main/pull/51[#51] https://github.com/CS2103JAN2018-W14-B4/main/pull/32[#32] https://github.com/CS2103JAN2018-W14-B4/main/pull/12[#12]
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W14-B4/main/pull/1[#1], https://github.com/CS2103JAN2018-W14-B4/main/pull/2[#2], https://github.com/CS2103JAN2018-W14-B4/main/pull/5[#5]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T15-B4/main/issues/123[1], https://github.com/CS2103JAN2018-T15-B4/main/issues/122[2])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Address Book Features
+
+==== Adding a person: `add` [Since v1.0]
+
+Adds a person to CelebManager. +
+Alias: `a` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A person can have any number of tags, including 0.
+
+****
+* You can add two types of persons to CelebManager: contacts and celebrities.
+* Celebrities refer to the celebrities that you, the manager, are currently managing, while contacts refer to other persons.
+* Contacts refer to contacts other than celebrities.
+* If you want to add a celebrity to CelebManager, you need to tag him/her with `celebrity` tag.
+Refer to examples below for more information.
+* For each celebrity added, CelebManager creates a calendar in `CalendarPanel` for him/her. This calendar displays the appointments
+he/she will be attending.
+* CelebManager assumes that any celebrity added is a celebrity that you are managing. If you want to add an actual celebrity
+who is not managed by you, you need to avoid using `celebrity` tag and find another tag name to indicate this information.
+****
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+Adds a contact named `John Doe` to CelebManager.
+
+* `add n/Betsy Crower t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
+Adds a contact named `Betsy Crower` to CelebManager.
+
+* `add n/John Lennon p/91827364 e/johnlennon@example.com a/John Lennon Rd, Block 321, #03-04 t/celebrity t/singer` +
+Adds a celebrity named `John Lennon` to CelebManager and creates an empty calendar named `John Lennon`.
+
+* `add n/Paul McCartney p/91827364 e/paulmccartney@example.com a/Paul McCartney Rd, Block 789, #05-06 t/celebrity` +
+Adds a celebrity named `Paul McCartney` to CelebManager and creates an empty calendar named `Paul McCartney`.
+
+
+=== Appointment Features
+
+==== Adding an appointment: `addAppointment` [Since v1.2]
+
+Adds an appointment and shows the calendar of the start date of the added appointment. +
+
+[NOTE]
+====
+To change the date displayed by the calendar in `CalendarPanel`,
+refer to <<Changing the base date of calendar: `viewDate` [Since v1.5]>>.
+====
+
+Alias: `aa` +
+Format: `addAppointment n/APPOINTMENT_NAME [l/LOCATION] [sd/START_DATE] [st/START_TIME] [ed/END_DATE] [et/END_TIME]
+[c/CELEBRITY_INDEX]... [p/POINT_OF_person_INDEX]...`
+
+****
+* `START_DATE` and `END_DATE` must be of the format `DD-MM-YYYY`, e.g. `03-07-2018`.
+* `START_DATE` *must not be* after `END_DATE`.
+* If `START_DATE` or `END_DATE` is omitted, it will take on the value of the current date.
+* `START_TIME` and `END_TIME` must be of the format `HH:MM` and 24-hour format is used, e.g. `14:05`.
+* `START_TIME` *must be* at least 15 minutes before `END_TIME` if `START_DATE` is equal to `END_DATE`.
+* If `START_TIME` and `END_TIME` are both omitted, `START_TIME` will take on the current time and `END_TIME` will be
+15 minutes after `START_TIME`.
+* If `START_TIME` is omitted while `END_TIME` is not, `START_TIME` will be 15 minutes before `END_TIME`.
+* If `END_TIME` is omitted while `START_TIME` is not, `END_TIME` will be 15 minutes after `START_TIME`.
+* `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` refer to the index shwon in the last shown person list in `PersonListPanel`.
+* The person at `CELEBRITY_INDEX` *must be* a celebrity.
+* The person at `POINT_OF_person_INDEX` *must not be* a celebrity.
+* `CELEBRITY_INDEX` and `POINT_OF_person_INDEX` *must be a positive integer* `1`, `2`, `3`, ...
+****
+
+Examples:
+
+* `addAppointment n/Oscars 2018 l/Hollywood sd/23-03-2018 st/14:00 ed/23-03-2018 et/20:00 p/1 p/5`
+
+* `addAppointment n/Dentist Appointment l/Dental Clinic st/15:45 c/1 c/3`
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+=== AddAppointment Feature
+==== Current Implementation
+
+The AddAppointment mechanism is facilitated by the `AddAppointmentCommand`, which resides inside `Logic`. It supports the adding of an appointment to an existing calendar.
+The appointment, if added successfully, can be viewed in our `CalendarPanel` UI. This is done by retrieving the list of calendars stored in our `CalendarPanel`
+and then adding the appointment to one or more of these calendars. This command extends `Command` so it *does not support the undo/redo feature*.
+
+To be able to create appointments, add them to calendars and view the calendar with the added appointments, the external CalendarFX package is used. The API for all the CalendarFX classes and methods used can be found http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[here].
+
+* For the calendar, the `CelebCalendar` class is used, which extends the default `Calendar` class from CalendarFX used to describe a calendar.
+
+* For the appointment, the `Appointment` class is used, which is extended from `Entry`, the default class used to represent an entry in a `Calendar` in CalendarFX.
+
+* All `CelebCalendar` instances reside in an instance of `CalendarSource`, the class used to store a group of calendars in CalendarFX.
+
+* This instance of `CalendarSource` is atttached to our `CalendarView` which is the GUI for our calendar.
+
+[NOTE]
+Inheritance from the base classes of the external package is done so that we can add in additional methods as necessary.
+
+Right now, the addAppointment command takes in up to 8 parameters. They are:
+
+* Appointment name [Compulsory field]
+* Location
+* Start Date
+* Start Time
+* End Date
+* End Time
+* Celebrity Indices
+* Point of Contact Indices
+
+The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
+
+[source,java]
+----
+public AddAppointmentCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY,
+                PREFIX_POINT_OF_CONTACT);
+
+        if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
+                || !argMultiMap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
+            Optional<LocalTime> startTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_START_TIME));
+            Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
+            Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
+            Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
+            Optional<MapAddress> locationInput = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION));
+            Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
+            Set<Index> pointOfContactIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_POINT_OF_CONTACT));
+
+            MapAddress location = null;
+            LocalTime startTime = LocalTime.now();
+            LocalDate startDate = LocalDate.now();
+            LocalTime endTime = LocalTime.now();
+            LocalDate endDate = LocalDate.now();
+
+            if (startTimeInput.isPresent()) {
+                startTime = startTimeInput.get();
+                endTime = startTimeInput.get();
+            }
+            if (endTimeInput.isPresent()) {
+                endTime = endTimeInput.get();
+            }
+            if (startDateInput.isPresent()) {
+                startDate = startDateInput.get();
+                endDate = startDateInput.get();
+            }
+            if (endDateInput.isPresent()) {
+                endDate = endDateInput.get();
+            }
+            if (locationInput.isPresent()) {
+                location = locationInput.get();
+            }
+        ...
+    }
+    ...
+}
+----
+
+The format for all the fields are located inside of `Appointment` and are as follows:
+
+[source,java]
+----
+public class Appointment extends Entry {
+
+    public static final String MESSAGE_NAME_CONSTRAINTS =
+            "Appointment names should only contain alphanumeric characters and spaces, and it should not be blank"; // used for name and location
+
+    public static final String MESSAGE_TIME_CONSTRAINTS =
+            "Time should be a 2 digit number between 00 to 23 followed by a :"
+            + " followed by a 2 digit number beetween 00 to 59. Some examples include "
+            + "08:45, 13:45, 00:30";
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date should be a 2 digit number between 01 to 31 followed by a -"
+            + " followed by a 2 digit number between 01 to 12 followed by a -"
+            + " followed by a 4 digit number describing a year. Some months might have less than 31 days."
+            + " Some examples include: 13-12-2018, 02-05-2019, 28-02-2018";
+
+    public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+            .withResolverStyle(ResolverStyle.STRICT); // prevent incorrect dates
+    ...
+}
+----
+
+The following sequence diagram (Figure 1) gives an overview of how the command works and interacts with the other components:
+
+.Sequence diagram of addAppointment command
+image::AddAppointmentSequenceDiagram.png[width=""]
+
+The figure below (Figure 2) shows the state of the application before input of the `AddAppointmentCommand`:
+
+.State of application without any appointments
+image::BeforeAddAppointment.jpg[width="800"]
+
+After input of `addAppointment n/Oscars 2018 st/18:00 sd/06-04-2018 l/Hollywood et/20:00 ed/06-04-2018 c/1`,
+the added appointment will be reflected in the calendar as shown in the figure below (Figure 3):
+
+.State of application with newly added appointment
+image::AfterAddAppointment.jpg[width="800"]
+
+==== Design Considerations
+===== Aspect: Ability to undo `addAppointment` command
+* **Alternative 1 (current choice):** Cannot be undone
+** Pros: Needs not remember previous state of the storage calendar.
+** Pros: If user made small mistake in one or more of the fields, can use `editAppointment` command instead of undo and re-add
+the new appointment with the correct fields.
+** If user instead just want to cancel the appointment, can use `deleteAppointment` command
+** Cons: Cannot remove or edit additions made by mistake without looking at the list of appointments.
+* **Alternative 2:** Can be undone
+** Pros: Can remove additions made by mistake.
+** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
+in UI component while appointments in Model component.

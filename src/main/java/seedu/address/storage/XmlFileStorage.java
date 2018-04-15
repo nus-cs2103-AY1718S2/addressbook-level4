@@ -9,7 +9,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.XmlUtil;
 
 /**
- * Stores addressbook data in an XML file
+ * Stores addressbook and Storage Calendar data in an XML file
  */
 public class XmlFileStorage {
     /**
@@ -27,8 +27,8 @@ public class XmlFileStorage {
     /**
      * Returns address book in the file or an empty address book
      */
-    public static XmlSerializableAddressBook loadDataFromSaveFile(File file) throws DataConversionException,
-                                                                            FileNotFoundException {
+    public static XmlSerializableAddressBook loadDataFromSaveFile(File file)
+            throws DataConversionException, FileNotFoundException {
         try {
             return XmlUtil.getDataFromFile(file, XmlSerializableAddressBook.class);
         } catch (JAXBException e) {
@@ -36,4 +36,27 @@ public class XmlFileStorage {
         }
     }
 
+    /**
+     * Saves the given storage calendar data to the specified file.
+     */
+    public static void saveStorageCalendarToFile(File file, XmlSerializableStorageCalendar storageCalendar)
+            throws FileNotFoundException {
+        try {
+            XmlUtil.saveDataToFile(file, storageCalendar);
+        } catch (JAXBException e) {
+            throw new AssertionError("Unexpected exception " + e.getMessage());
+        }
+    }
+
+    /**
+     * Returns storage calendar stored in the file with all its appointments
+     */
+    public static XmlSerializableStorageCalendar loadStorageCalendarFromSaveFile(File file)
+            throws DataConversionException, FileNotFoundException {
+        try {
+            return XmlUtil.getDataFromFile(file, XmlSerializableStorageCalendar.class);
+        } catch (JAXBException e) {
+            throw new DataConversionException(e);
+        }
+    }
 }

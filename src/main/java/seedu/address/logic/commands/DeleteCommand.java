@@ -12,17 +12,21 @@ import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a person identified using its last displayed index from the address book.
  */
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
+    public static final String MESSAGE_NOT_IN_COMBINED_CALENDAR = "Can only delete when "
+            + "viewing combined calendar\n"
+            + "currently viewing %1$s's calendar";
     public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
 
     private final Index targetIndex;
@@ -48,6 +52,12 @@ public class DeleteCommand extends UndoableCommand {
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
+        if (model.getCurrentCelebCalendarOwner() != null) {
+            throw new CommandException(
+                    String.format(MESSAGE_NOT_IN_COMBINED_CALENDAR,
+                            model.getCurrentCelebCalendarOwner().getName().toString()));
+        }
+
         List<Person> lastShownList = model.getFilteredPersonList();
 
         if (targetIndex.getZeroBased() >= lastShownList.size()) {

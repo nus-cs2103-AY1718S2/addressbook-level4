@@ -5,8 +5,14 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_END_TIME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_LOCATION;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MAP_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_START_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import java.util.ArrayList;
@@ -16,12 +22,14 @@ import java.util.List;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.calendar.EditAppointmentCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.person.NameContainsKeywordsPredicate;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.testutil.EditAppointmentDescriptorBuilder;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 /**
@@ -35,10 +43,12 @@ public class CommandTestUtil {
     public static final String VALID_PHONE_BOB = "22222222";
     public static final String VALID_EMAIL_AMY = "amy@example.com";
     public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
-    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
+    public static final String VALID_ADDRESS_AMY = "Block 555, Ang Mo Kio, #11-222";
+    public static final String VALID_ADDRESS_BOB = "Block 297, Punggol Central, #01-222";
+    public static final String VALID_ADDRESS_MAP_AMY = "National University Of Singapore";
+    public static final String VALID_ADDRESS_MAP_BOB = "Block 297, Punggol Central";
     public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TAG_FRIEND = "friends";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
@@ -55,13 +65,53 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String INVALID_ADDRESS_MAP_DESC1 = " " + PREFIX_MAP_ADDRESS
+            + "$$$$"; // random text not allowed for map addresses
+    public static final String INVALID_ADDRESS_MAP_DESC2 = " "
+            + PREFIX_MAP_ADDRESS; // empty string not allowed for addresses
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+
+    public static final String VALID_APPOINTMENT_NAME_OSCAR = "Oscar Awards";
+    public static final String VALID_APPOINTMENT_NAME_GRAMMY = "Grammy Awards";
+    public static final String VALID_APPOINTMENT_LOCATION_OSCAR = "Clementi Rd";
+    public static final String VALID_APPOINTMENT_LOCATION_GRAMMY = "Commonwealth Ave";
+    public static final String VALID_START_TIME_OSCAR = "12:30";
+    public static final String VALID_START_TIME_GRAMMY = "18:00";
+    public static final String VALID_START_DATE_OSCAR = "12-12-2018";
+    public static final String VALID_START_DATE_GRAMMY = "10-10-2019";
+    public static final String VALID_END_TIME_OSCAR = "13:30";
+    public static final String VALID_END_TIME_GRAMMY = "19:00";
+    public static final String VALID_END_DATE_OSCAR = "12-12-2018";
+    public static final String VALID_END_DATE_GRAMMY = "10-10-2019";
+
+    public static final String APPT_NAME_DESC_OSCAR = " " + PREFIX_NAME + VALID_APPOINTMENT_NAME_OSCAR;
+    public static final String APPT_NAME_DESC_GRAMMY = " " + PREFIX_NAME + VALID_APPOINTMENT_NAME_GRAMMY;
+    public static final String APPT_LOCATION_DESC_OSCAR = " " + PREFIX_LOCATION + VALID_APPOINTMENT_LOCATION_OSCAR;
+    public static final String APPT_LOCATION_DESC_GRAMMY = " " + PREFIX_LOCATION + VALID_APPOINTMENT_LOCATION_GRAMMY;
+    public static final String APPT_START_TIME_DESC_OSCAR = " " + PREFIX_START_TIME + VALID_START_TIME_OSCAR;
+    public static final String APPT_START_TIME_DESC_GRAMMY = " " + PREFIX_START_TIME + VALID_START_TIME_GRAMMY;
+    public static final String APPT_START_DATE_DESC_OSCAR = " " + PREFIX_START_DATE + VALID_START_DATE_OSCAR;
+    public static final String APPT_START_DATE_DESC_GRAMMY = " " + PREFIX_START_DATE + VALID_START_DATE_GRAMMY;
+    public static final String APPT_END_TIME_DESC_OSCAR = " " + PREFIX_END_TIME + VALID_END_TIME_OSCAR;
+    public static final String APPT_END_TIME_DESC_GRAMMY = " " + PREFIX_END_TIME + VALID_END_TIME_GRAMMY;
+    public static final String APPT_END_DATE_DESC_OSCAR = " " + PREFIX_END_DATE + VALID_END_DATE_OSCAR;
+    public static final String APPT_END_DATE_DESC_GRAMMY = " " + PREFIX_END_DATE + VALID_END_DATE_GRAMMY;
+
+    public static final String INVALID_APPT_NAME_DESC = " " + PREFIX_NAME + "Dinner & Dance"; // '&' not allowed in name
+    public static final String INVALID_APPT_LOCATION_DESC = " " + PREFIX_LOCATION + "???"; // cant be just qn marks
+    public static final String INVALID_START_TIME = " " + PREFIX_START_TIME + "23:61"; // Minute cannot be more than 60
+    public static final String INVALID_START_DATE = " " + PREFIX_START_DATE + "31-02-2018"; // There is no Feb 31st
+    public static final String INVALID_END_TIME = " " + PREFIX_END_TIME + "23:61"; // Minute cannot be more than 60
+    public static final String INVALID_END_DATE = " " + PREFIX_END_DATE + "31-02-2018"; // There is no Feb 31st
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
+
+    public static final EditAppointmentCommand.EditAppointmentDescriptor DESC_OSCAR;
+    public static final EditAppointmentCommand.EditAppointmentDescriptor DESC_GRAMMY;
 
     static {
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
@@ -70,6 +120,15 @@ public class CommandTestUtil {
         DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
                 .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
                 .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+
+        DESC_OSCAR = new EditAppointmentDescriptorBuilder().withName(VALID_APPOINTMENT_NAME_OSCAR)
+                .withStartTime(VALID_START_TIME_OSCAR).withEndTime(VALID_END_TIME_OSCAR)
+                .withLocation(VALID_APPOINTMENT_LOCATION_OSCAR).withEndDate(VALID_END_DATE_OSCAR)
+                .withStartDate(VALID_START_DATE_OSCAR).build();
+        DESC_GRAMMY = new EditAppointmentDescriptorBuilder().withName(VALID_APPOINTMENT_NAME_GRAMMY)
+                .withStartTime(VALID_START_TIME_GRAMMY).withEndTime(VALID_END_TIME_GRAMMY)
+                .withLocation(VALID_APPOINTMENT_LOCATION_GRAMMY).withEndDate(VALID_END_DATE_GRAMMY)
+                .withStartDate(VALID_START_DATE_GRAMMY).build();
     }
 
     /**

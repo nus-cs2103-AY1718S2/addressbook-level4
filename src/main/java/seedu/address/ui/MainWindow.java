@@ -1,7 +1,9 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import com.calendarfx.model.CalendarSource;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
@@ -16,9 +18,12 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowAppointmentListEvent;
+import seedu.address.commons.events.ui.ShowCalendarEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.appointment.Appointment;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -34,19 +39,26 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarPanel calendarPanel;
+    private MapPanel mapPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
 
+    // Source of calendars for calendar UI container
+    private CalendarSource celebCalendarSource;
+
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
 
     @FXML
     private MenuItem helpMenuItem;
+
+    @FXML
+    private StackPane mapPanelPlaceholder;
 
     @FXML
     private StackPane personListPanelPlaceholder;
@@ -65,6 +77,7 @@ public class MainWindow extends UiPart<Stage> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.celebCalendarSource = logic.getCelebCalendarSource();
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -100,6 +113,7 @@ public class MainWindow extends UiPart<Stage> {
          * not work when the focus is in them because the key event is consumed by
          * the TextInputControl(s).
          *
+         *
          * For now, we add following event filter to capture such key events and open
          * help window purposely so to support accelerators even when focus is
          * in CommandBox or ResultDisplay.
@@ -116,8 +130,13 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+
+        calendarPanel = new CalendarPanel(celebCalendarSource);
+
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+
+        mapPanel = new MapPanel();
+        mapPanelPlaceholder.getChildren().add(mapPanel.getMapView());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -125,7 +144,8 @@ public class MainWindow extends UiPart<Stage> {
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -169,6 +189,17 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author muruges95
+
+    /**
+     * Creates appointmentListWindow and replaces calendarPanel with it
+     */
+    private void handleAppointmentList(List<Appointment> appointments) {
+        AppointmentListWindow apptListWindow = new AppointmentListWindow(appointments);
+        calendarPlaceholder.getChildren().clear();
+        calendarPlaceholder.getChildren().add(apptListWindow.getRoot());
+    }
+
     void show() {
         primaryStage.show();
     }
@@ -185,13 +216,27 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    /**
+     * Replaces appointmentListWindow with calendarPanel if necessary,
+     * and then handles the changing of calendarview command.
+     * @param event
+     */
+    @Subscribe
+    private void handleShowCalendarEvent(ShowCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        calendarPlaceholder.getChildren().clear();
+        calendarPlaceholder.getChildren().add(calendarPanel.getCalendarView());
+    }
+
+    @Subscribe
+    private void handleShowAppointmentListEvent(ShowAppointmentListEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleAppointmentList(event.getAppointments());
     }
 }

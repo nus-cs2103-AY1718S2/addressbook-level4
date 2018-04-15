@@ -5,6 +5,7 @@ import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicLong;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
@@ -15,6 +16,8 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person {
 
+    private static final AtomicLong NEXT_ID = new AtomicLong(0);
+    private final long id;
     private final Name name;
     private final Phone phone;
     private final Email email;
@@ -33,6 +36,22 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.id = NEXT_ID.getAndIncrement();
+    }
+
+    /**
+     * For use when creating a new person from an old person. id will be copied over.
+     */
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, long id) {
+        requireAllNonNull(name, phone, email, address, tags);
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList(tags);
+        this.id = id;
+        NEXT_ID.set(id + 1);
     }
 
     public Name getName() {
@@ -57,6 +76,33 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    /**
+     * Returns {@code true} if the {@code person} has the specified {@code tag},
+     * else false.
+     */
+    public boolean hasTag(Tag targetTag) {
+        Set<Tag> newTags = tags.toSet();
+        for (Tag tag: newTags) {
+            if (tag.equals(targetTag)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    /** Returns person's id */
+    public long getId() {
+        return id;
+    }
+
+    /**
+     * Returns {@code true} if the person is tagged as a celebrity
+     */
+    public boolean isCelebrity() {
+        Tag celeb = new Tag("celebrity");
+        return this.hasTag(celeb);
     }
 
     @Override

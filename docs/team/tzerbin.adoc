@@ -1,0 +1,172 @@
+= Ng Tzer Bin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CelebManager
+
+---
+
+== Introduction
+
+CelebManager is a software that aims to allow celebrity managers to maintain the schedule of celebrities under them efficiently. CelebManager is optimized for celebrity managers (users) who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
+
+In CelebManager, the celebrity managers should be able to enter commands using CLI to:
+
+.   Manage contacts (including celebrities) in an address book,
+.   Manage appointments for celebrities with calendars, and;
+.   Plan efficient routes for celebrities with interactive map.
+
+This software is developed by a team of 4 for a project in CS2103T Software Engineering in National University of Singapore. This project portfolio aims to demonstrate my project contribution for academic grading, and my programming ability for potential employers or interested parties.
+
+
+== Contributions Summary
+
+*Enhancement*
+
+In this project, I have added the ability for users to save user data in the hard disk for commands involving calendars and appointments.
+
+* What it does
+** It allows the user to save appointments automatically after adding, editing or deleting appointments in the software using an .xml file.
+** It allows the user to retrieve saved appointments automatically from the .xml file automatically when using the software.
+
+* Justification
+** This enhancement allows other software components to communicate with the Storage component so that the other features can be saved and retrieved.
+
+* Highlight
+** This enhancement affects current commands related to appointments, and commands that will be added in the future.
+
+* Credit
+** This enhancement is adapted from the existing code base in the Storage component given to the project team.
+
+*Code Contribution*
+
+Please refer to the [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/tzerbin.md[Functional code]] and [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/tzerbin.md[Test code]] that I have contributed in GitHub.
+
+*Other Contributions*
+
+I am also responsible for other contributions which does not involve project enhancements.
+
+* Project Management
+** I managed the release of v1.5rc on GitHub.
+* Documentation
+** I was responsible for documentations as a whole for project submissions in CS2103T Software Engineering and CS2101 Effective Communication for Computing Professionals. This includes the formating, layout, language use and consistency for both documentation.
+* Community
+** I reported bugs for other teams working in different projects for CS2103T Software Engineering. The issues can be found in:
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/119[Issue 1]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/118[Issue 2]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/117[Issue 3]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/115[Issue 4]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/113[Issue 5]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/112[Issue 6]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/111[Issue 7]
+*** https://github.com/CS2103JAN2018-F11-B2/main/issues/110[Issue 8]
+
+
+== User Guide Contribution
+
+|===
+|_The following are sections of the user guide that I had contributed, which showcase my ability to write documentation targeting end-users._
+|===
+
+===  Editing an appointment `editAppointment` [Since v1.4]
+
+Pre-requisite: you can only edit an appointment when `CalendarPanel` is showing an appointment list.
+Refer to <<Listing appointments: `listAppointment` [Since v1.5]>> for more information. +
+
+Edits the specified appointment and replaces the appointment list with the calendar in
+`CalendarPanel` upon successful execution. +
+Alias: `ea` +
+Format: `editAppointment APPOINTMENT_INDEX [n/APPOINTMENT_NAME] [l/LOCATION] [sd/START_DATE] [st/START_TIME]
+[ed/END_DATE] [et/END_TIME] [c/CELEBRITY_INDEX]... [p/POINT_OF_person_INDEX]...`
+
+****
+* Edits the appointment at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the current appointment list.
+* `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* For more information on constraints of the different fields,
+refer to <<Adding an appointment: `addAppointment` [Since v1.2]>>.
+****
+
+Examples:
+
+* `listAppointment` +
+`editAppointment 2 n/Dentist Appointment l/Orchard Road p/3`
+Edits the 2nd appointment in the appointment list.
+
+* `listAppointment 01-04 01-05` +
+`editAppointment 1 st/16:00 et/20:00 sd/23-03-2018 c/1 c/2`
+Edits the 1st appointment in the result of `listAppointment 01-04 01-05`.
+
+
+== Developer Guide Contribution
+
+|===
+|_The following are sections of the user guide that I had contributed, which showcase my ability to write technical documentation targeting developers and show technical depth in my contributions._
+|===
+
+=== Storage Component
+
+The following diagram shows the class diagram of the `Storage` component.
+It describes how the overall structure of the `Storage` component and its different sub-components.
+
+.Class diagram of the `Storage` component
+image::StorageClassDiagram.png[width="800"]
+
+*API*: link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+
+The `Storage` component:
+
+* saves `UserPref` objects in json format and read it back.
+* saves contacts data in xml format and read it back.
+* saves appointments data in xml format and read it back.
+
+=== Appointment Storage Feature
+==== Current Implementation
+The storing of appointment is facilitated by the `XmlStorageCalendarStorage` class, which resides in the `Storage` component.
+It supports the retrieval and storage for appointments made by the user.
+
+During start-up of application, the storage component will be initialized by the `MainApp`, which retrieves information from the specified file path in `UserPrefs`.
+
+The following code snippet shows how the storage component will be initialized by the `MainApp`.
+[source,java]
+----
+public void init() throws Exception {
+        // initializes application.
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        StorageCalendarStorage storageCalendarStorage =
+                new XmlStorageCalendarStorage(userPrefs.getStorageCalendarFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, storageCalendarStorage);
+
+        // initializes other component in the application.
+    }
+----
+
+The following figure shows the sequence diagram for reading `StorageCalendar`.
+
+.Sequence Diagram for reading `StorageCalendar`
+image::ReadStorageCalendarSequenceDiagram.png[width=""]
+
+In the `XmlStorageCalendarStorage` class, it allows developers to use methods:
+
+* `readStorageCalendar`, to retrieve a `StorageCalendar`
+** This is done by checking if the file exist, and load the list from `XmlSerializableStorageCalendar`.
+* `saveStorageCalendar`, to write information into `filePath` specified in `userPrefs`
+** This is done by creating a new file and rewriting to the list in `XmlSerializableStorageCalendar`.
+
+While the `XmlStorageCalendarStorage` class allows access to data stored on the hard disk, the `XmlSerializableStorageCalendar` class represents the data of the appointment list for the calendar.
+In `XmlSerializableStorageCalendar`, it contains a `List` of XML formats of appointments `XmlAdaptedAppointment`.
+`XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `StorageCalendar` of the `Model` component, which includes:
+
+* `title` of appointment
+* `startTime` of appointment indicating its starting time
+* `startDate` of appointment indicating its starting date
+* `endTime` of appointment indicating its ending time
+* `endDate` of appointment indicating its ending date
+* `location` of appointment that is going to happen
+* `celebrityIds` of celebrities that are attending the appointment
+* `pointOfContactIds` of non-celebrities that are attending the appointment

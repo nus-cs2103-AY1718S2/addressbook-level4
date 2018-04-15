@@ -1,17 +1,13 @@
 package systemtests;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_INITIAL;
 import static seedu.address.ui.StatusBarFooter.SYNC_STATUS_UPDATED;
-import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
+import static seedu.address.ui.StatusBarFooter.TOTAL_PERSONS_STATUS;
 import static seedu.address.ui.testutil.GuiTestAssert.assertListMatching;
 
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
@@ -21,14 +17,13 @@ import org.junit.Before;
 import org.junit.BeforeClass;
 import org.junit.ClassRule;
 
-import guitests.guihandles.BrowserPanelHandle;
+import guitests.guihandles.CalendarPanelHandle;
 import guitests.guihandles.CommandBoxHandle;
 import guitests.guihandles.MainMenuHandle;
 import guitests.guihandles.MainWindowHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
 import guitests.guihandles.StatusBarFooterHandle;
-import seedu.address.MainApp;
 import seedu.address.TestApp;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
@@ -38,9 +33,11 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
+import seedu.address.model.calendar.StorageCalendar;
 import seedu.address.testutil.TypicalPersons;
-import seedu.address.ui.BrowserPanel;
+import seedu.address.testutil.TypicalStorageCalendar;
 import seedu.address.ui.CommandBox;
+import seedu.address.ui.ResultDisplay;
 
 /**
  * A system test class for AddressBook, which provides access to handles of GUI components and helper methods
@@ -54,6 +51,9 @@ public abstract class AddressBookSystemTest {
     private static final List<String> COMMAND_BOX_ERROR_STYLE =
             Arrays.asList("text-input", "text-field", CommandBox.ERROR_STYLE_CLASS);
 
+    private List<String> styleOfResultDisplayDefault;
+    private List<String> styleOfResultDisplayError;
+
     private MainWindowHandle mainWindowHandle;
     private TestApp testApp;
     private SystemTestSetupHelper setupHelper;
@@ -66,10 +66,14 @@ public abstract class AddressBookSystemTest {
     @Before
     public void setUp() {
         setupHelper = new SystemTestSetupHelper();
-        testApp = setupHelper.setupApplication(this::getInitialData, getDataFileLocation());
+        testApp = setupHelper.setupApplication(this::getInitialData, this::getInitialStorageCalendar,
+                getDataFileLocation(), getStorageCalendarFileLocation());
         mainWindowHandle = setupHelper.setupMainWindowHandle();
 
-        waitUntilBrowserLoaded(getBrowserPanel());
+        styleOfResultDisplayDefault = mainWindowHandle.getResultDisplay().getClassStyle();
+        styleOfResultDisplayError = mainWindowHandle.getResultDisplay().getClassStyle();
+        styleOfResultDisplayError.add(ResultDisplay.STYLE_ERROR_CLASS);
+
         assertApplicationStartingStateIsCorrect();
     }
 
@@ -86,11 +90,22 @@ public abstract class AddressBookSystemTest {
         return TypicalPersons.getTypicalAddressBook();
     }
 
+    protected StorageCalendar getInitialStorageCalendar() {
+        return TypicalStorageCalendar.generateEmptyStorageCalendar();
+    }
+
     /**
      * Returns the directory of the data file.
      */
     protected String getDataFileLocation() {
         return TestApp.SAVE_LOCATION_FOR_TESTING;
+    }
+
+    /**
+     * Returns the directory of the storage calendar file.
+     */
+    protected String getStorageCalendarFileLocation() {
+        return TestApp.STORAGE_CALENDAR_LOCATION_FOR_TESTING;
     }
 
     public MainWindowHandle getMainWindowHandle() {
@@ -107,10 +122,6 @@ public abstract class AddressBookSystemTest {
 
     public MainMenuHandle getMainMenu() {
         return mainWindowHandle.getMainMenu();
-    }
-
-    public BrowserPanelHandle getBrowserPanel() {
-        return mainWindowHandle.getBrowserPanel();
     }
 
     public StatusBarFooterHandle getStatusBarFooter() {
@@ -132,8 +143,6 @@ public abstract class AddressBookSystemTest {
         clockRule.setInjectedClockToCurrentTime();
 
         mainWindowHandle.getCommandBox().run(command);
-
-        waitUntilBrowserLoaded(getBrowserPanel());
     }
 
     /**
@@ -174,7 +183,7 @@ public abstract class AddressBookSystemTest {
      * and the person list panel displays the persons in the model correctly.
      */
     protected void assertApplicationDisplaysExpected(String expectedCommandInput, String expectedResultMessage,
-            Model expectedModel) {
+                                                     Model expectedModel) {
         assertEquals(expectedCommandInput, getCommandBox().getInput());
         assertEquals(expectedResultMessage, getResultDisplay().getText());
         assertEquals(expectedModel, getModel());
@@ -183,61 +192,70 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Calls {@code BrowserPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
+     * Calls {@code CalendarPanelHandle}, {@code PersonListPanelHandle} and {@code StatusBarFooterHandle} to remember
      * their current state.
      */
     private void rememberStates() {
         StatusBarFooterHandle statusBarFooterHandle = getStatusBarFooter();
-        getBrowserPanel().rememberUrl();
         statusBarFooterHandle.rememberSaveLocation();
         statusBarFooterHandle.rememberSyncStatus();
+        statusBarFooterHandle.rememberPersonsStatusTotal();
         getPersonListPanel().rememberSelectedPersonCard();
     }
 
     /**
-     * Asserts that the previously selected card is now deselected and the browser's url remains displaying the details
-     * of the previously selected person.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * Asserts that the previously selected card is now deselected.
+     * @see CalendarPanelHandle#isUrlChanged()
      */
     protected void assertSelectedCardDeselected() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isAnyCardSelected());
     }
 
     /**
-     * Asserts that the browser's url is changed to display the details of the person in the person list panel at
-     * {@code expectedSelectedCardIndex}, and only the card at {@code expectedSelectedCardIndex} is selected.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * Asserts that only the card at {@code expectedSelectedCardIndex} is selected.
+     * @see CalendarPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardChanged(Index expectedSelectedCardIndex) {
         String selectedCardName = getPersonListPanel().getHandleToSelectedCard().getName();
-        URL expectedUrl;
-        try {
-            expectedUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + selectedCardName.replaceAll(" ", "%20"));
-        } catch (MalformedURLException mue) {
-            throw new AssertionError("URL expected to be valid.");
-        }
-        assertEquals(expectedUrl, getBrowserPanel().getLoadedUrl());
-
         assertEquals(expectedSelectedCardIndex.getZeroBased(), getPersonListPanel().getSelectedCardIndex());
     }
 
     /**
-     * Asserts that the browser's url and the selected card in the person list panel remain unchanged.
-     * @see BrowserPanelHandle#isUrlChanged()
+     * Asserts that the selected card in the person list panel remain unchanged.
+     * @see CalendarPanelHandle#isUrlChanged()
      * @see PersonListPanelHandle#isSelectedPersonCardChanged()
      */
     protected void assertSelectedCardUnchanged() {
-        assertFalse(getBrowserPanel().isUrlChanged());
         assertFalse(getPersonListPanel().isSelectedPersonCardChanged());
     }
 
     /**
-     * Asserts that the command box's shows the default style.
+     * Asserts that the results displayed and command box shows the error style.
      */
-    protected void assertCommandBoxShowsDefaultStyle() {
+    protected void assertResultDisplayAndCommandBoxShowsErrorStyle() {
+        assertEquals(styleOfResultDisplayError, getResultDisplay().getClassStyle());
+        assertEquals(COMMAND_BOX_ERROR_STYLE, getCommandBox().getStyleClass());
+    }
+
+    /**
+     * Asserts that the results displayed and command box shows the default style.
+     */
+    protected void assertResultDisplayAndCommandBoxShowsDefaultStyle() {
+        assertEquals(styleOfResultDisplayDefault, getResultDisplay().getClassStyle());
         assertEquals(COMMAND_BOX_DEFAULT_STYLE, getCommandBox().getStyleClass());
+    }
+
+    /**
+     * Asserts that the sync status in the status bar was changed to the timing of
+     * {@code ClockRule#getInjectedClock()}, and total persons was changed to match the total
+     * number of persons in the address book, while the save location remains the same.
+     */
+    protected void assertStatusBarChangedExceptSaveLocation() {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        final int totalPersons = testApp.getModel().getAddressBook().getPersonList().size();
+        assertEquals(String.format(TOTAL_PERSONS_STATUS, totalPersons), handle.getTotalPersonsStatus());
+        assertFalse(handle.isSaveLocationChanged());
     }
 
     /**
@@ -248,17 +266,9 @@ public abstract class AddressBookSystemTest {
     }
 
     /**
-     * Asserts that the entire status bar remains the same.
-     */
-    protected void assertStatusBarUnchanged() {
-        StatusBarFooterHandle handle = getStatusBarFooter();
-        assertFalse(handle.isSaveLocationChanged());
-        assertFalse(handle.isSyncStatusChanged());
-    }
-
-    /**
      * Asserts that only the sync status in the status bar was changed to the timing of
-     * {@code ClockRule#getInjectedClock()}, while the save location remains the same.
+     * {@code ClockRule#getInjectedClock()}, while the save location and the total person
+     * list remains the same.
      */
     protected void assertStatusBarUnchangedExceptSyncStatus() {
         StatusBarFooterHandle handle = getStatusBarFooter();
@@ -266,7 +276,19 @@ public abstract class AddressBookSystemTest {
         String expectedSyncStatus = String.format(SYNC_STATUS_UPDATED, timestamp);
         assertEquals(expectedSyncStatus, handle.getSyncStatus());
         assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isTotalPersonsStatusChanged());
     }
+
+    /**
+     * Asserts that the entire status bar remains the same.
+     */
+    protected void assertStatusBarUnchanged() {
+        StatusBarFooterHandle handle = getStatusBarFooter();
+        assertFalse(handle.isSaveLocationChanged());
+        assertFalse(handle.isTotalPersonsStatusChanged());
+        assertFalse(handle.isSyncStatusChanged());
+    }
+
 
     /**
      * Asserts that the starting state of the application is correct.
@@ -276,13 +298,15 @@ public abstract class AddressBookSystemTest {
             assertEquals("", getCommandBox().getInput());
             assertEquals("", getResultDisplay().getText());
             assertListMatching(getPersonListPanel(), getModel().getFilteredPersonList());
-            assertEquals(MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE), getBrowserPanel().getLoadedUrl());
             assertEquals("./" + testApp.getStorageSaveLocation(), getStatusBarFooter().getSaveLocation());
+            assertEquals(String.format(TOTAL_PERSONS_STATUS, getModel().getAddressBook().getPersonList().size()),
+                    getStatusBarFooter().getTotalPersonsStatus());
             assertEquals(SYNC_STATUS_INITIAL, getStatusBarFooter().getSyncStatus());
         } catch (Exception e) {
             throw new AssertionError("Starting state is wrong.", e);
         }
     }
+
 
     /**
      * Returns a defensive copy of the current model.
@@ -290,4 +314,5 @@ public abstract class AddressBookSystemTest {
     protected Model getModel() {
         return testApp.getModel();
     }
+
 }

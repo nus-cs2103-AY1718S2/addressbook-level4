@@ -41,6 +41,10 @@ jacocoTestReport {
 dependencies {
     String testFxVersion = '4.0.7-alpha'
 
+    compile group: 'com.lynden', name:'GMapsFX', version:'2.12.0'
+    compile group: 'com.google.maps', name: 'google-maps-services', version:'0.2.6'
+    compile group: 'org.slf4j', name: 'slf4j-nop', version:'1.7.25'
+    compile group: 'com.calendarfx', name: 'view', version: '8.4.2'
     compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
     compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.11'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
@@ -106,6 +110,9 @@ allTests.dependsOn nonGuiTests
 
 test {
     systemProperty 'testfx.setup.timeout', '60000'
+    minHeapSize = "512m"
+    maxHeapSize = "1024m"
+    jvmArgs '-Xmx1024m'
 
     /*
      * Prints the currently running test's name in the CI's build log,

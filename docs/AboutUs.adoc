@@ -3,53 +3,48 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+Celeb Scheduler was developed by the https://github.com/CS2103JAN2018-W14-B4/[CS2103JAN2018-W14-B4] team.
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== K Muruges
+image::muruges95.png[width="150", align="left"]
+{empty} [https://github.com/muruges95[GitHub]] [https://cs2103jan2018-w14-b4.github.io/main/team/muruges95.html[Project Portfolio]]
 
-Role: Project Advisor
+Role: Team Leader
 
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Responsibilities: Logic Component, Deliverables and Deadlines
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Ng Tzer Bin
+image::tzerbin.png[width="150", align="left"]
+{empty}[https://github.com/tzerbin[GitHub]] [https://cs2103jan2018-w14-b4.github.io/main/team/tzerbin.html[Project Portfolio]]
 
-Role: Developer +
-Responsibilities: Data
+Role: Developer
 
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Storage(Data) Component, Documentation
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Wang Jinyi
+image::WJY-norainu.jpeg[width="150", align="left"]
+{empty}[https://github.com/WJY-norainu[Github]] [https://cs2103jan2018-w14-b4.github.io/main/team/WJY-norainu.html[Project Portfolio]]
 
-Role: Developer +
-Responsibilities: UI
+Role: Developer
+
+Responsibilities: Model Component, Testing, Schdeuling and Tracking
 
 '''
+
+=== Sim Kwan Tiong, Damien
+image::Damienskt.jpeg[width="150", align="left"]
+{empty}[http://github.com/Damienskt[Github]] [https://cs2103jan2018-w14-b4.github.io/main/team/Damienskt.html[Project Portfolio]]
+
+Role: Developer, Integration
+
+Responsibilities: UI Component, Code Quality, Integration
+=======
+
+

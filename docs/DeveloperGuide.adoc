@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= CelebManager - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,250 +10,436 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W14-B4/main/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-W14-B4`      Since: `Jun 2016`      Licence: `MIT`
 
-== Setting up
+== Overview
+
+CelebManager is a software application that aims to allow celebrity managers to maintain schedule of celebrities under them. CelebManager is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a Graphical User Interface (GUI) for visual feedback.
+
+In this software, the users should be able to:
+
+* Manage contacts
+* Manage appointments
+* Manage calendars
+* Plan efficient routes
+
+This developer guide aims to allow you to develop and maintain the software with information on how the software is designed and implemented. Information on how the software should be developed and maintained is also in this documentation.
+
+
+== Setup
+
+This section will discuss the setting up of project for development.
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+There are two prerequisites before you can work on this software. They are (in the order you should obtain them):
+
+. *Java Development Kit* (JDK) +
+The Java programming language is used in this project. To be able to work with this project, you will need to have JDK version `1.8.0_60` installed.
+You can get the JDK from: +
+http://www.oracle.com/technetwork/java/javase/downloads/index.html
 +
 [NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+Some components of this software will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+. *IntelliJ Integrated Development Environment* (IDE) +
+This software is developed as a Gradle project, which requires you to work on the software using a IDE. While it is possible to work with any IDE that supports Gradle Projects, this guide will use IntelliJ as a basis.
+You can get IntelliJ from: +
+https://www.jetbrains.com/idea/
 +
 [NOTE]
-IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+IntelliJ make use of Gradle and JavaFx plugins, and the project will need these plugins. +
+If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Local Project Setup
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+To contribute to this project, you will need to work with a local copy of this project. To do so:
+
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle:
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file, select it and click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
+. Open a console and run the command `gradlew processResources`. (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Setup Verification
 
-. Run the `seedu.address.MainApp` and try a few commands
+To ensure that you have setup the project correctly: +
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Setup Configurations
 
-==== Configuring the coding style
+==== Coding Style Configurations
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards].
+IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours.
+To rectify:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order. Take note of the following:
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Alternatively, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
+==== Documentation Configurations
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W14-B4/main` repository.
+If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-W14-B4/main` repository), you should replace the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Continuous Integration (CI) Configurations
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+There are two CI configurations that you can set up.
 
-After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
+To set up Travis for performing CI for your fork, please refer to <<UsingTravis#, UsingTravis.adoc>>.
+Optionally, to set up AppVeyor for performing CI, please refer to <<UsingAppVeyor#, UsingAppVeyor.adoc>>.
+
+[NOTE]
+Travis is an Unix-based software, while AppVeyor is a Windows-based software.
+Having both Travis CI and AppVeyor CI ensures your App works on both Unix-based platforms and Windows-based platforms.
+
+You should also set up coverage reporting for your team fork. Please refer to <<UsingCoveralls#, UsingCoveralls.adoc>>.
 
 [NOTE]
 Coverage reporting could be useful for a team repository that hosts the final version but it is not that useful for your personal fork.
 
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
-
-[NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
-
-==== Getting started with coding
-
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
 
 == Design
 
-[[Design-Architecture]]
-=== Architecture
+Before starting to work on the project after successful configurations, you are encouraged to:
 
-.Architecture Diagram
+1. Understand the overall design (<<Design-Architecture>>).
+2. Understand the product scope (<<GetStartedProgramming>>).
+
+[[Design-Architecture]]
+=== Software Architecture
+
+The *_Architecture Diagram_* given below explains the high-level design of the project.
+
+.Architecture diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
-
+////
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+////
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+`Main` has only one class called link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* Initializing the components in the correct sequence and connects them up with each other at application launch.
+* Shutting down the components and invokes cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple components.
+Two of these classes are vital at the architecture level. These are:
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` is used by components to communicate with other components using events.
+* `LogsCenter` is used by many classes to write log messages to the application's log file.
 
-The rest of the App consists of four components.
+[NOTE]
+`EventsCenter` is written using the https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
+It is a form of event-driven design.
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+The rest of the App consists of four components, each defining its _API_ in an interface, and exposing its functionality using a `{Component Name}Manager` class.
+The components are:
 
-Each of the four components
+* <<Design-Ui,*`UI`*>>: The user interface of the application.
+* <<Design-Logic,*`Logic`*>>: The command executor of the application.
+* <<Design-Model,*`Model`*>>: The container for in-memory data of the application.
+* <<Design-Storage,*`Storage`*>>: The driver for reading and writing data of the application.
 
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+////
+For example, the `Logic` component (see Figure 2) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
-.Class Diagram of the Logic Component
+.Class diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 [discrete]
-==== Events-Driven nature of the design
+==== Event-driven Design
+////
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+[[Design-Commons]]
+=== Common Classes
+Common class files, such as `EventsCenter`, are used by multiple components are in the `seedu.addressbook.commons` package.
 
-.Component interactions for `delete 1` command (part 1)
+The _sequence diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+Note that the `Model` simply raises a `AddressBookChangedEvent` when the CelebManager data is changed, instead of asking the `Storage` to save the updates to the hard disk.
+
+.Sequence diagram for `delete 1` command (1)
 image::SDforDeletePerson.png[width="800"]
 
-[NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below shows how the `EventsCenter` reacts to that event, which results in the updates being saved to the hard disk.
+The status bar of the UI is also updated to reflect the 'Last Updated' time.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them.
 
-.Component interactions for `delete 1` command (part 2)
+.Sequence diagram for `delete 1` command (2)
 image::SDforDeletePersonEventHandling.png[width="800"]
 
-[NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
-
-The sections below give more details of each component.
+=== Architecture Components
 
 [[Design-Ui]]
-=== UI component
+==== UI Component
 
-.Structure of the UI Component
+The following diagram shows the class diagram of the `UI` component.
+
+.Class diagram of the `UI` component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarPanel` etc.
+All these classes inherit from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework.
+The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
+For example, the layout of the link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is
+specified in link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
 The `UI` component,
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* executes user commands using the `Logic` component.
+* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
-=== Logic component
+==== Logic Component
+
+The following diagrams shows the structure of the `Logic` component, and details on `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
+It describe the overall structure of the `Logic` component and how a single command such as `XYZCommand` and other commands are structured respectively.
 
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Class diagram of the `Logic` component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+.Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
+When the user types in a new command to be parsed:
+
+.  The `Logic` uses the `AddressBookParser` class to parse the user command.
+.  A `Command` object is then executed by the `LogicManager`.
 .  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+.  The result of the command execution is then encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+The following diagram shows the sequence diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Sequence diagram for the `delete 1` command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
-=== Model component
+==== Model Component
 
-.Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+The following diagram shows the class diagram of the `Model` component.
+It describes the overall structure of the `Model` component, along with all its sub-components.
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+.Class diagram of the `Model` component
+image::ModelClassDiagram.jpg[width="800"]
 
-The `Model`,
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/model/Model.java[`Model.java`]
+
+The `Model` component:
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
+* stores a `StorageCalendar` object that contains all appointments.
+* stores a `CalendarSource` object that is used to display the calendar.
+* stores a list of appointments which will be displayed for `listAppointment` command.
 * exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
-=== Storage component
+==== Storage Component
 
-.Structure of the Storage Component
+The following diagram shows the class diagram of the `Storage` component.
+It describes how the overall structure of the `Storage` component and its different sub-components.
+
+.Class diagram of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* saves `UserPref` objects in json format and read it back.
+* saves contacts data in xml format and read it back.
+* saves appointments data in xml format and read it back.
 
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
 
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+This section describes some noteworthy features that are implemented in CelebManager.
 
-// tag::undoredo[]
-=== Undo/Redo feature
+// tag::removeTag[]
+=== RemoveTag Feature
+
+This feature allows the user to remove a specified tag from all the contacts.
+
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The tag removal mechanism is facilitated by both `RemoveTagCommand` class, which resides inside `Logic`, and
+`removeTag` method, which resides in `AddressBook`. This feature removes a specified tag from each person who has it in the
+address book. `RemoveTagCommand` class inherits from the `UndoableCommand` class and hence supports the `undo` and `redo` features.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+When a user enters `removeTag` command, an object of `RemoveTagCommand` class will be created. To understand this class’
+contribution to remove tag feature, please refer to the following code snippet which shows the implementation of
+`executeUndoableCommand` in `RemoveTagCommand`:
 
-image::LogicCommandClassDiagram.png[width="800"]
-
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
-
-Commands that are not undoable are implemented this way:
 [source,java]
 ----
-public class ListCommand extends Command {
+public class RemoveTagCommand extends UndoableCommand {
+    ...
+    public static final String MESSAGE_DELETE_TAG_SUCCESS = "Removed tag %1$s and %2$s person(s) affected.";
+    ...
+
     @Override
-    public CommandResult execute() {
-        // ... list logic ...
+        public CommandResult executeUndoableCommand() throws CommandException {
+            requireNonNull(tagToRemove);
+
+            if (tagToRemove.equals(CELEBRITY_TAG)) {
+                throw new CommandException(MESSAGE_CANNOT_REMOVE_CELEBRITY_TAG);
+            }
+
+            int numberOfAffectedPersons = 0;
+            try {
+                numberOfAffectedPersons = model.removeTag(tagToRemove);
+            } catch (TagNotFoundException tnfe) {
+                throw new CommandException(String.format(MESSAGE_TAG_NOT_FOUND, tagToRemove.toString()));
+            } catch (DuplicatePersonException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing");
+            }
+            return new CommandResult(String.format(
+                    MESSAGE_DELETE_TAG_SUCCESS,
+                    tagToRemove.toString(),
+                    numberOfAffectedPersons));
+        }
+
+    ...
+}
+----
+From the snippet above, `RemoveTagCommand` class filters out `celebrity` tag or a non-existent tag to disallow the removal
+of both. It is also in-charge of printing the successful message upon a successful execution.
+
+Within RemoveTagCommand class,  `removeTag` method is called to actually remove the tag, which calls `removeTag` method of
+`AddressBook`. The snippet code below shows the implementation of `removeTag` in `AddressBook`:
+
+[source,java]
+----
+public class AddressBook {
+    /**
+     * Removes {@code tag} from all persons in this {@code AddressBook}.
+     * @return the number of {@code person}s with this {@code tag} removed.
+     */
+    public int removeTag(Tag tag) throws PersonNotFoundException, DuplicatePersonException, TagNotFoundException {
+        boolean tagExists = false;
+        for (Tag existingTag: tags) {
+            if (existingTag.equals(tag)) {
+                tagExists = true;
+            }
+        }
+        if (!tagExists) {
+            throw new TagNotFoundException();
+        }
+
+        int count = 0;
+        for (Person person: persons) {
+            if (person.hasTag(tag)) {
+                //get the new tag set with the specified tag removed
+                Set<Tag> oldTags = person.getTags();
+                Set<Tag> newTags = new HashSet<>();
+                for (Tag tagToKeep: oldTags) {
+                    if (tagToKeep.equals(tag)) {
+                        continue;
+                    }
+                    newTags.add(tagToKeep);
+                }
+
+                //create a new person with the specified tag removed to replace the person
+                EditCommand.EditPersonDescriptor editPersonDescriptor = new EditCommand.EditPersonDescriptor();
+                editPersonDescriptor.setTags(newTags);
+                Person editedPerson = createEditedPerson(person, editPersonDescriptor);
+                Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+                persons.setPerson(person, syncedEditedPerson);
+                removeUnusedTags();
+
+                count++;
+            }
+        }
+        return count;
     }
+    ...
 }
 ----
 
-With the extra layer, the commands that are undoable are implemented this way:
+Note that `removeTag` makes use of `EditPersonDescriptor` class to create a new `person` without the tag, to replace
+the original `person` with the tag.
+
+Additionally, `removeUnusedTags` is called inside `removeTag` when there is at least one person affected by the removal.
+This is because `removeTag` removes the tag from each person with it and after the operation, no person in the
+address book should have the tag. Hence the unused tag should be removed from `tags` inside the address book.
+
+As an example, the following sequence diagram shows the interaction within classes in `Logic` package when
+the user executes `removeTag friends` successfully:
+
+.Sequence diagram of `removeTag` command
+image::RemoveTagCommand-logic-seq-diagram.jpg[width=""]
+
+==== Design Considerations
+===== Aspect: Command result for removal of `celebrity` tag
+* **Alternative 1 (current choice):** Output an error message saying that the `celebrity` tag cannot be removed
+** Pros: Prevents `removeTag` from affecting the calendar as celebrities will not get affected by this operation.
+** Cons: Results in no available method to mass remove `celebrity` tag.
+* **Alternative 2:** Remove `celebrity` tag and clear all calendars
+** Pros: Provides an easy way to mass remove `celebrity` tag and clears all celebrities from the address book.
+** Cons: As changes made to calendars and appointments are not undoable,
+removing `celebrity` tag by mistake can result in loss of all celebrities' calendar and appointment information.
+// end::removeTag[]
+
+
+// tag::undoredo[]
+=== Undo/Redo Command Feature
+==== Current Implementation
+
+The undo command allows users to reverse the effect of the previous command, and the redo command allows the users to reverse the effects of undoing commands.
+
+The undo/redo mechanism is facilitated by an `UndoRedoStack` in `LogicManager` class. It supports undoing and redoing of commands that modifies the state of the address book, such as `add` and `edit`.
+
+In the implementation, these commands will inherit from `UndoableCommand` class, while the commands that cannot be undone will inherit from the `Command` class instead.
+
+
+The following figure shows the inheritance diagram with regards to the feature:
+
+.Inheritance diagram for undoable commands
+image::LogicCommandClassDiagram.png[width="800"]
+
+From the figure, the `UndoableCommand` class provides an interface between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`.
+
+`UndoableCommand` contains high-level algorithms for additional tasks, such as saving the application state before command execution.
+Its child classes implements the details of how to execute the specific command.
+
+[NOTE]
+Undoable commands require additional tasks to be completed, such as saving the application state, before command execution.
+
+[NOTE]
+The technique of containing the high-level algorithms in the parent class, while implementing lower-level algorithms in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+
+With the additional interface, the commands that are undoable are implemented in this way:
 [source,java]
 ----
 public abstract class UndoableCommand extends Command {
@@ -273,37 +459,62 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
-Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+Commands that are not undoable are implemented this way:
+[source,java]
+----
+public class ListCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The `UndoRedoStack` will be empty at the beginning when the user first launches the application.
 
+
+For example, when the user executes a `delete 5` command, an `UndoableCommand`, to delete the 5th person in the address book, the current state of the address book is saved.
+The `delete 5` command will then be pushed onto the `undoStack`.
+The current state of the application is then saved together with the command.
+The following figure shows the illustration after executing the command.
+
+.Execution of `delete 5` command
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to execute commands that are undoable in the application, more commands are added into the `undoStack`.
+For example, the user may execute an `add n/David ...` command to add a new person.
+The following figure shows the illustration after executing the second command.
 
+.Execution of `add n/David ...` command
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
-If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
+If a command fails its execution, it will not be pushed to the `undoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+If the user decides to undo that action using `undo` command, the `undoStack` will pop the most recent command, and push the command into the `redoStack`.
+The application will restore to the state before the `add n/David ...` command executed.
+The following figure shows the illustration after executing the `undo` command.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
-
+.Execution of `undo` command
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
-If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+If the `undoStack` is empty, then there are no other commands left to be undone.
+An `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following figure shows the sequence diagram on how the `undo` command works.
 
+.Sequence diagram of `undo` command
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The `redo` command pops the most recent undone command from `redoStack`, and push the command to the `undoStack`.
+This will also restore the address book to the state after the command is executed.
 
 [NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+If the `redoStack` is empty, then there are no other commands left to be redone.
+An `Exception` will be thrown when popping the `redoStack`.
 
+////
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
@@ -315,8 +526,10 @@ image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="650"]
+////
 
 ==== Design Considerations
+
 
 ===== Aspect: Implementation of `UndoableCommand`
 
@@ -327,9 +540,9 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: Execution of `undo` and `redo` commands
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Save the entire address book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -348,7 +561,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
-===== Aspect: Data structure to support the undo/redo commands
+===== Aspect: Type of data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
 ** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
@@ -358,13 +571,337 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== AddAppointment Feature
+==== Current Implementation
 
-_{Explain here how the data encryption feature will be implemented}_
+The AddAppointment mechanism is facilitated by the `AddAppointmentCommand`, which resides inside `Logic`. It supports the adding of an appointment to an existing calendar.
+The appointment, if added successfully, can be viewed in our `CalendarPanel` UI. This is done by retrieving the list of calendars stored in our `CalendarPanel`
+and then adding the appointment to one or more of these calendars. This command extends `Command` so it *does not support the undo/redo feature*.
 
-// end::dataencryption[]
+To be able to create appointments, add them to calendars and view the calendar with the added appointments, the external CalendarFX package is used. The API for all the CalendarFX classes and methods used can be found http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[here].
 
+* For the calendar, the `CelebCalendar` class is used, which extends the default `Calendar` class from CalendarFX used to describe a calendar.
+
+* For the appointment, the `Appointment` class is used, which is extended from `Entry`, the default class used to represent an entry in a `Calendar` in CalendarFX.
+
+* All `CelebCalendar` instances reside in an instance of `CalendarSource`, the class used to store a group of calendars in CalendarFX.
+
+* This instance of `CalendarSource` is atttached to our `CalendarView` which is the GUI for our calendar.
+
+[NOTE]
+Inheritance from the base classes of the external package is done so that we can add in additional methods as necessary.
+
+Right now, the addAppointment command takes in up to 8 parameters. They are:
+
+* Appointment name [Compulsory field]
+* Location
+* Start Date
+* Start Time
+* End Date
+* End Time
+* Celebrity Indices
+* Point of Contact Indices
+
+The `AddAppointmentCommandParser` is able to create sensible appointments even if 1 or more of the non-compulsory fields are not included. The snippet code below shows how the parsing is handled:
+
+[source,java]
+----
+public AddAppointmentCommand parse(String args) throws ParseException {
+        ArgumentMultimap argMultiMap = ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_START_TIME,
+                PREFIX_START_DATE,  PREFIX_LOCATION, PREFIX_END_TIME, PREFIX_END_DATE, PREFIX_CELEBRITY,
+                PREFIX_POINT_OF_CONTACT);
+
+        if (!arePrefixesPresent(argMultiMap, PREFIX_NAME)
+                || !argMultiMap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                    AddAppointmentCommand.MESSAGE_USAGE));
+        }
+
+        try {
+            String appointmentName = ParserUtil.parseGeneralName(argMultiMap.getValue(PREFIX_NAME)).get();
+            Optional<LocalTime> startTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_START_TIME));
+            Optional<LocalDate> startDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_START_DATE));
+            Optional<LocalTime> endTimeInput = ParserUtil.parseTime(argMultiMap.getValue(PREFIX_END_TIME));
+            Optional<LocalDate> endDateInput = ParserUtil.parseDate(argMultiMap.getValue(PREFIX_END_DATE));
+            Optional<MapAddress> locationInput = ParserUtil.parseMapAddress(argMultiMap.getValue(PREFIX_LOCATION));
+            Set<Index> celebrityIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_CELEBRITY));
+            Set<Index> pointOfContactIndices = ParserUtil.parseIndices(argMultiMap.getAllValues(PREFIX_POINT_OF_CONTACT));
+
+            MapAddress location = null;
+            LocalTime startTime = LocalTime.now();
+            LocalDate startDate = LocalDate.now();
+            LocalTime endTime = LocalTime.now();
+            LocalDate endDate = LocalDate.now();
+
+            if (startTimeInput.isPresent()) {
+                startTime = startTimeInput.get();
+                endTime = startTimeInput.get();
+            }
+            if (endTimeInput.isPresent()) {
+                endTime = endTimeInput.get();
+            }
+            if (startDateInput.isPresent()) {
+                startDate = startDateInput.get();
+                endDate = startDateInput.get();
+            }
+            if (endDateInput.isPresent()) {
+                endDate = endDateInput.get();
+            }
+            if (locationInput.isPresent()) {
+                location = locationInput.get();
+            }
+        ...
+    }
+    ...
+}
+----
+
+The format for all the fields are located inside of `Appointment` and are as follows:
+
+[source,java]
+----
+public class Appointment extends Entry {
+
+    public static final String MESSAGE_NAME_CONSTRAINTS =
+            "Appointment names should only contain alphanumeric characters and spaces, and it should not be blank"; // used for name and location
+
+    public static final String MESSAGE_TIME_CONSTRAINTS =
+            "Time should be a 2 digit number between 00 to 23 followed by a :"
+            + " followed by a 2 digit number beetween 00 to 59. Some examples include "
+            + "08:45, 13:45, 00:30";
+    public static final String MESSAGE_DATE_CONSTRAINTS =
+            "Date should be a 2 digit number between 01 to 31 followed by a -"
+            + " followed by a 2 digit number between 01 to 12 followed by a -"
+            + " followed by a 4 digit number describing a year. Some months might have less than 31 days."
+            + " Some examples include: 13-12-2018, 02-05-2019, 28-02-2018";
+
+    public static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm");
+
+    public static final DateTimeFormatter DATE_FORMAT = DateTimeFormatter.ofPattern("dd-MM-uuuu")
+            .withResolverStyle(ResolverStyle.STRICT); // prevent incorrect dates
+    ...
+}
+----
+
+The following sequence diagram (Figure 19) gives an overview of how the command works and interacts with the other components:
+
+.Sequence diagram of addAppointment command
+image::AddAppointmentSequenceDiagram.png[width=""]
+
+The figure below (Figure 20) shows the state of the application before input of the `AddAppointmentCommand`:
+
+.State of application without any appointments
+image::BeforeAddAppointment.jpg[width="800"]
+
+After input of `addAppointment n/Oscars 2018 st/18:00 sd/06-04-2018 l/Hollywood et/20:00 ed/06-04-2018 c/1`,
+the added appointment will be reflected in the calendar as shown in the figure below (Figure 21):
+
+.State of application with newly added appointment
+image::AfterAddAppointment.jpg[width="800"]
+
+==== Design Considerations
+===== Aspect: Ability to undo `addAppointment` command
+* **Alternative 1 (current choice):** Cannot be undone
+** Pros: Needs not remember previous state of the storage calendar.
+** Pros: If user made small mistake in one or more of the fields, can use `editAppointment` command instead of undo and re-add
+the new appointment with the correct fields.
+** If user instead just want to cancel the appointment, can use `deleteAppointment` command
+** Cons: Cannot remove or edit additions made by mistake without looking at the list of appointments.
+* **Alternative 2:** Can be undone
+** Pros: Can remove additions made by mistake.
+** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
+in UI component while appointments in Model component.
+
+// tag::deleteAppointment[]
+=== DeleteAppointment Feature
+
+This feature allows the user to delete appointments.
+
+==== Current Implementation
+
+The mechanism to delete an appointment is facilitated by the `DeleteAppointmentCommand` class, which resides inside `Logic`,
+and `deleteAppointment` method in `Model`. The command requires the user to put in an index to refer to the appointment
+to be deleted. This index is taken from the currently displayed appointment list. As such, deletion of an appointment
+can only be done when CelebManager is showing an appointment list.
+
+`DeleteAppointmentCommand` class is responsible for checking whether an appointment list is currently being shown.
+If so, `DeleteAppointmentCommand` class will call `deleteAppointment` method. Refer to the code snippet below to see
+how this method deletes the specified appointment:
+
+[source,java]
+----
+public class DeleteAppointmentCommand extends Command {
+    ...
+    public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
+    public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
+            + "Switching back to calendar view by day\n"
+            + "Currently showing %1$s calendar";
+    ...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // throw exception if the user is not currently viewing an appointment list
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
+        apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
+        List<Appointment> currentAppointmentList = model.getAppointmentList();
+
+        // if the list becomes empty, switch back to combined calendar day view
+        if (currentAppointmentList.size() < 1) {
+            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+
+            Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
+            if (currentCalendarOwner == null) {
+                return new CommandResult(
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                                "combined"));
+            } else {
+                return new CommandResult(
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                                currentCalendarOwner.getName().toString() + "'s"));
+            }
+        }
+
+        // if the list is not empty yet, update appointment list view
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
+    }
+
+    ...
+}
+----
+From the snippet above, it can be seen that `DeleteAppointmentCommand` changes `CalendarPanel` back to combined
+calendar view if there is no more appointment in the appointment list after deletion. Otherwise, the appointment list
+with the specified appointment deleted will be shown.
+
+The snippet code below shows the implementation of `deleteAppointment` in `Model`:
+
+[source,java]
+----
+public class ModelManager extends ComponentManager implements Model {
+    ...
+    @Override
+    public Appointment deleteAppointment(int index) throws IndexOutOfBoundsException {
+        Appointment apptToDelete = getChosenAppointment(index);
+        apptToDelete.removeAppointment();
+        removeAppointmentFromInternalList(index);
+        currentlyDisplayedAppointments.remove(apptToDelete);
+        indicateAppointmentListChanged();
+        return apptToDelete;
+    }
+    ...
+}
+----
+
+The method `removeAppointment` is in `Appointment` class, and removes all child entries of an appointment. For example,
+an appointment may have two celebrities attending. Then this appointment will have two child entries, one each in each
+attending celebrity's calendar. So when this appointment gets deleted, both entries should get removed as well.
+
+.Sequence diagram of deleteAppointment command
+image::DeleteAppointmentCommand-logic-seq-diagram.jpg[width=""]
+
+==== Design Considerations
+===== Aspect: Status of `CalendarPanel` after deletion of the only appointment
+* **Alternative 1 (current choice):** Switch back to combined calendar view
+** Pros: Keeps consistent with `listAppointment` as CelebManager does not show an empty list when there is no
+appointment to list, but instead outputs an error message.
+** Cons: Makes it difficult for users to see if the appointment gets deleted correctly.
+* **Alternative 2:** Stay at the appointment list view and shows an empty list
+** Pros: Shows the effect of deletion immediately.
+** Cons: Becomes inconsistent with `listAppointment` command's inability to show an empty list when there is no
+appointment to list.
+* **Alternative 3:** Switch back to combined calendar view and goes to the day when the deleted appointment should
+happen
+** Pros: Keeps consistent with `listAppointment` while making it easy for users to check if the appointment gets
+deleted visually on calendar.
+** Cons: Takes long time to run.
+
+===== Aspect: Ability to undo `deleteAppointment` command
+* **Alternative 1 (current choice):** Cannot be undone
+** Pros: Needs not remember previous appointments' and calendar's status.
+** Cons: Cannot restore deletions made by mistake.
+* **Alternative 2:** Can be undone
+** Pros: Can restore deletions made by mistake.
+** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
+in UI component while appointments in Model component.
+// end::deleteAppointment[]
+
+// tag::viewAppointment[]
+=== ViewAppointment Feature
+==== Current Implementation
+The ViewAppointment mechanism is facilitated by the `ViewAppointmentCommand`, which resides inside `Logic`. It supports the viewing of a specific appointment
+in the `ResultDisplayPanel`  by displaying the `Appointment` details. The specific `Appointment` is selected using an index based on the list generated by `ListAppointmentCommand`.
+ This command inherits from `Command` so it *does not support the undo/redo feature*.
+
+The input index is *one-based* which means that the smallest possible index is '1' and the largest possible index is the size of list
+generated by `ListAppointmentCommand` (total number of `Appointment`).
+
+As this command relies on the list generated by `ListAppointmentCommand`, the command retrieves the start (earliest) and end (latest) date
+from `ListAppointmentCommand`, which is used to generate the appointment list internally from the `StorageCalendar` in `Model`.
+This is done by `getChosenAppointment()` method.
+
+The snippet code below shows the code that retrieves the selected appointment.
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
+        try {
+            selectedAppointment = model.getChosenAppointment(chosenIndex);
+        } catch (IndexOutOfBoundsException iobe) {
+            throw new CommandException(MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
+        }
+
+        try {
+            ShowLocationCommand showLocation = new ShowLocationCommand(
+                    new MapAddress(selectedAppointment.getLocation()));
+            showLocation.execute();
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        } catch (NullPointerException npe) {
+            return new CommandResult(MESSAGE_SUCCESS + getAppointmentDetailsResult());
+        }
+    }
+----
+
+To show the location in the `MapPanel`, `ShowLocationCommand` is used to update the location marker in `MapPanel` to
+point to the `Appointment` location.
+
+In the case where the `Appointment` do not have any location data, the result will still be displayed without the
+location being shown in the map.
+
+[NOTE]
+Whenever an `Appointment` has no location data, any existing location marker or route will be removed from the map.
+
+The diagram below in figure 32 shows the sequence diagram of `ViewAppointmentCommand`.
+
+.Sequence Diagram of `viewAppointment` Command
+image::ViewAppointmentSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `viewAppointment`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Easy to understand for new developers who will be developing this project as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline.
+
+===== Aspect: Inclusion of showing location on map
+* **Alternative 1 (current choice):** Show location of appointment on map
+** Pros: Reduces the hassle of keying an extra command to show `Appointment` location on map.
+** Cons: Reduces independent usage of `ShowLocationCommand`.
+* **Alternative 2:** Does not show location on map
+** Pros: Reduces unnecessary showing of location.
+** Cons: Requires an extra command input to show location when required.
+
+////
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -384,33 +921,314 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+////
 
-== Documentation
+=== Appointment Storage Feature
+==== Current Implementation
+The storing of appointment is facilitated by the `XmlStorageCalendarStorage` class, which resides in the `Storage` component.
+It supports the retrieval and storage for appointments made by the user.
 
-We use asciidoc for writing documentation.
+During start-up of application, the storage component will be initialized by the `MainApp`, which retrieves information from the specified file path in `UserPrefs`.
+
+The following code snippet shows how the storage component will be initialized by the `MainApp`.
+[source,java]
+----
+public void init() throws Exception {
+        // initializes application.
+
+        UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
+        userPrefs = initPrefs(userPrefsStorage);
+        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
+        StorageCalendarStorage storageCalendarStorage =
+                new XmlStorageCalendarStorage(userPrefs.getStorageCalendarFilePath());
+        storage = new StorageManager(addressBookStorage, userPrefsStorage, storageCalendarStorage);
+
+        // initializes other component in the application.
+    }
+----
+
+The following figure shows the sequence diagram for reading `StorageCalendar`.
+
+.Sequence Diagram for reading `StorageCalendar`
+image::ReadStorageCalendarSequenceDiagram.png[width=""]
+
+In the `XmlStorageCalendarStorage` class, it allows developers to use methods:
+
+* `readStorageCalendar`, to retrieve a `StorageCalendar`
+** This is done by checking if the file exist, and load the list from `XmlSerializableStorageCalendar`.
+* `saveStorageCalendar`, to write information into `filePath` specified in `userPrefs`
+** This is done by creating a new file and rewriting to the list in `XmlSerializableStorageCalendar`.
+
+While the `XmlStorageCalendarStorage` class allows access to data stored on the hard disk, the `XmlSerializableStorageCalendar` class represents the data of the appointment list for the calendar.
+In `XmlSerializableStorageCalendar`, it contains a `List` of XML formats of appointments `XmlAdaptedAppointment`.
+`XmlAdaptedAppointment` will then contain essential information of different `Appointment` in `StorageCalendar` of the `Model` component, which includes:
+
+* `title` of appointment
+* `startTime` of appointment indicating its starting time
+* `startDate` of appointment indicating its starting date
+* `endTime` of appointment indicating its ending time
+* `endDate` of appointment indicating its ending date
+* `location` of appointment that is going to happen
+* `celebrityIds` of celebrities that are attending the appointment
+* `pointOfContactIds` of non-celebrities that are attending the appointment
+
+
+==== Design Considerations
+===== Aspect: Implementing of `StorageCalendarStorage`
+* **Alternative 1 (current choice):** Adapting existing `AddressBookStorage`
+** Pros: Allows similar structure that can be maintained easily in `Storage` component
+** Cons: Prevents major overhaul in future if necessary
+* **Alternative 2:** Redefining `StorageCalendarStorage`
+** Pros: Allows flexibility in implementation
+** Cons: Confuses developer with different requirements for a single component
+
+===== Aspect: Usage of data structures for `Appointment`
+* **Alternative 1 (current choice):** Using a single `List`
+** Pros: Allows simplicity
+** Cons: Slows the application if there are too many appointments
+* **Alternative 2:** Using a single `Set` such as `TreeSet`
+** Pros: Lowers impact in speed when there are many appointments
+** Cons: Complicates implementation when speed is not an issue
+
+// tag::showlocation[]
+=== ShowLocation Feature
+==== Current Implementation
+
+The ShowLocation mechanism is facilitated by the `ShowLocationCommand`, which resides inside `Logic`. It supports the viewing of location
+in the `MapPanel` by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the latitude and longitude of the
+location and identifying it with a location marker. This command inherits from `Command` so it *does not support the undo/redo feature*.
+
+The following figure shows the marker that is used to identify the location in the `MapPanel`:
+
+.Location marker
+image::LocationMarker.png[width="50"]
+
+The following diagram shows the inheritance diagram for `ShowLocationCommand`:
+
+.Inheritance diagram for `Command`
+image::ShowLocationLogicCommandClassDiagram.png[width=""]
+
+As you can see from the diagram, `ShowLocationCommand` inherits from the Command class and is not part of the Undoable Command.
+Similar to the other commands like `FindCommand` *it will not be identified by the undo/redo feature*.
+
+This command does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to
+ the difference in address specification details as the `Address` model is too specific for the command to work.
+An example would be the details of unit number (e.g #11-111) which will result in an invalid command or inaccurate result.
+
+The main difference between both model is shown below in the two code snippets.
+
+The snippet code below shows the `Address` model:
+
+[source,java]
+----
+public class Address {
+    public static final String MESSAGE_ADDRESS_CONSTRAINTS =
+                "Person addresses can take any values, and it should not be blank";
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    /**
+     * Returns true if a given string is a valid person email.
+     */
+    public static boolean isValidAddress(String test) {
+        return test.matches(ADDRESS_VALIDATION_REGEX);
+    }
+    ...
+}
+----
+
+The snippet code below shows the `MapAddress` model:
+
+[source,java]
+----
+public class MapAddress {
+    public static final String MESSAGE_ADDRESS_MAP_CONSTRAINTS =
+            "Address should be in location name, road name, block and road name or postal code format.\n"
+                    + "Note:(Person address may not be valid as it consist of too many details like unit number)"
+    /*
+     * The first character of the address must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
+     */
+    public static final String ADDRESS_VALIDATION_REGEX = "[^\\s].*";
+    ...
+    /**
+     * Returns true if a given string is a valid map address.
+     */
+    public static boolean isValidAddress(String test) {
+        boolean isValid;
+        Geocoding testAddress = new Geocoding();
+        isValid = testAddress.checkIfAddressCanBeFound(test);
+        return test.matches(ADDRESS_MAP_VALIDATION_REGEX) && isValid;
+    }
+    ...
+}
+----
+The difference to note is the `isValidAddress` method, where `Address` only checks for *blank space* whereas `MapAddress`
+checks for *blank space and the validity of location in google server*. Thus, making the command more restrictive to location,
+ road, block name and postal code. Any details more than that, would result in a higher possibility of it being invalid or inaccurate.
+
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+* `GMAPSFX API` is used to create the `MapPanel` class which allows the
+command to re-center and mark the new location which is then shown to the user.
+
+* `Google Maps Web Services API` is used to create the
+`Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
+is then used by the command to find the exact location in the `MapPanel`.
+
+Every new input of this command will remove the previous route or location marker and add the new marker into the map.
+
+The snippet below shows the state of `MapPanel` before input of `ShowLocation` command:
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+After the input of "showLocation ma/Punggol" the `MapPanel` will be updated to the diagram below:
+
+.State of `MapPanel` after `CommandInput`
+image::AfterShowLocationInput.png[width="400"]
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+Whenever an invalid `showLocation` command is done, any existing location marker or route will be removed from the map.
 
-=== Editing Documentation
+The following sequence diagram shows how the command works:
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+.Sequence Diagram of `showLocation` Command
+image::ShowLocationSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `showLocationCommand`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Allows new developers to understand easily as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline
+
+===== Aspect: Use of address model
+* **Alternative 1 (current choice):** Use `MapAddress`
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion
+** Cons: Confusing as both `MapAddress` and `Address` model are quite similar.
+* **Alternative 2:** Use `Address`
+** Pros: Reduces the amount of code/class in the project
+** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
+
+// tag::estimateRoute[]
+=== EstimateRoute Feature
+==== Current Implementation
+
+The EstimateRoute mechanism is facilitated by the `EstimateRouteCommand`, which resides inside `Logic`. It supports the viewing of estimated route
+in the `MapPanel` by updating the state of the `MapPanel`. This is done by re-centering the `MapPanel` to the new route.
+
+
+
+The following figure shows the marker that is used to identify the start and end location in the `MapPanel`:
+
+.Start Location marker
+image::Start_Location_Marker.png[width="100"]
+
+.End Location marker
+image::End_Location_Marker.png[width="100"]
+
+`EstimateRouteCommand` inherits from the Command class and is not part of the Undoable Command.
+Similar to the other commands like `FindCommand` *it will not be identified by the undo/redo feature*.
+
+This command is similar to the `ShowLocation` feature which does not use the `Person` `Address` model to search for a specific location, it uses the `MapAddress` model. This is due to the difference in address specification details as the `Address` model is too specific for the command to work.
+Even if it works the results may not be accurate.
+An example would be the details of unit number (e.g #11-111) which will result in an invalid command or inaccurate results.
+
+This command uses the `GMAPSFX API` and  `Google Maps Web Services API` library which can be found http://rterp.github.io/GMapsFX/apidocs/[here] and https://googlemaps.github.io/google-maps-services-java/v0.2.6/javadoc/[here] respectively.
+
+* `GMAPSFX` is used to create the `MapPanel` which allows the
+command to re-center the map view, create the route, mark the start, end location and route which is then shown to the user.
+
+* `Google Maps Web Services API` is used to create the
+`Geocoding` class, which is used to convert `MapAddress` into latitude and longitude form (`LatLng`). The `LatLng` form
+is then used by the command to find the exact location in the `MapPanel`.
+
+* `Google Maps Web Services API` is also used to create the `DistanceEstimate` class, which allows
+the calculation of estimated time and distance of travel between two location by driving. `DistanceEstimate` class is also used to check if two locations
+can be reached by driving.
+
+The snippet below shows the state of `MapPanel` before input of `estimateRoute` command:
+
+.Default State of `MapPanel`
+image::BeforeInputMap.png[width="400"]
+
+After the input of "estimateRoute sma/Punggol ema/NUS" the `MapPanel` will be updated to the diagram below:
+
+.State of `MapPanel` after `CommandInput`
+image::AfterEstimateRouteInput.png[width="400"]
+
+Any subsequent `estimateRoute` command will remove any existing marker or route before updating the `MapPanel` with the new route.
+
+[NOTE]
+Whenever an invalid `estimateRoute` command is done, any existing location marker or route will be removed from the map.
+
+The following sequence diagram shows how the command works:
+
+.Sequence Diagram of `estimateRoute` Command
+image::EstimateRouteSequenceDiagram.png[width=""]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `estimateCommand`
+* **Alternative 1 (current choice):** Extend `Command`
+** Pros: Allows new developers to understand easily as the command is at the same abstraction level as other commands.
+** Cons: Does not have the undo/redo feature as it is not part of `UndoableCommand`.
+* **Alternative 2:** Extend `UndoableCommand`
+** Pros: Allows for command to have the undo/redo function.
+** Cons: Requires more work that may not fit in with our timeline.
+
+===== Aspect: Use of address model
+* **Alternative 1 (current choice):** Use `MapAddress`
+** Pros: Allows the clear distinction of requirements between `MapAddress` and `Address` to avoid confusion.
+** Cons: Confusing as the two models are similar.
+* **Alternative 2:** Use `Address`
+** Pros: Reduces the amount of code/class in the project.
+** Cons: Confusing as different requirements for a single model. Lacks proper organisation.
+
+===== Aspect: Input using appointment index
+* **Alternative 1 (current choice):** Use `Location` name
+** Pros: Allows the function to be used independently
+** Cons: Requires keying in of location instead of just an index.
+* **Alternative 2:** Use `Appointment` index
+** Pros: Reduces the amount of typing.
+** Cons: Restricts the use of function as without an appointment index you will not be able to use it.
+
+== Documentation
+This section shows you how to document your project effectively.
+
+You can use AsciiDoc, a lightweight markup language, for writing documentation.
+
+[NOTE]
+AsciiDoc(markup language) is chosen over markdown language format because it provides more flexibility with regards to formatting.
+
+
+=== Editing of Documentation
+
+Please refer to <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> for instructions on how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing of Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+Please refer to <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> for instructions on how to deploy GitHub pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting of Documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+You can use https://www.google.com/chrome/browser/desktop/[Google Chrome] to convert documents to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+To convert the project documentation files to PDF format:
 
-.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
+.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Click on the `Print` option in Chrome's menu.
+.  Set the destination to `Save as PDF`, proceed to click `Save` to save a copy of the file in PDF format. For the best result, use the settings indicated in the screenshot below.
+
+*Menu below will appear after step 3*
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -418,415 +1236,236 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
+Testing is very important as it allows us to find application defects that were made during development, and it should be done constantly. It can be expensive if software testing is done only in the later stages of development, as a bug may affect different components of the project.
+
+=== Types of Tests
+
+There are two types of tests that we can run during the development of the project:
+
+.  *GUI Tests* - These are tests involving the GUI. They include:
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _Unit tests_ that test the individual components of the software. These are in `seedu.address.ui` package.
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
+..  _Unit tests_ that target the lowest level methods/classes. +
+e.g. `seedu.address.commons.StringUtilTest`
+..  _Integration tests_ that check the integration of multiple code units (those code units are assumed to be working). +
+e.g. `seedu.address.storage.StorageManagerTest`
+..  _Hybrids of unit and integration tests_ that check multiple code units as well as how they are connected together. +
+e.g. `seedu.address.logic.LogicManagerTest`
+
+
 === Running Tests
 
 There are three ways to run tests.
 
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+*Method 1: Using Gradle (headless)*
 
-*Method 1: Using IntelliJ JUnit test runner*
+* Open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+[NOTE]
+GUI tests can be run in _headless_ mode due to the https://github.com/TestFX/TestFX[TestFX] library. GUI tests do not show up on the screen in headless mode, which allows you to work on other matters while tests are running.
 
-*Method 2: Using Gradle*
-
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+[NOTE]
+Using Gradle (headless) is the most reliable way to run tests. Other testing methods may fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
-*Method 3: Using Gradle (headless)*
+*Method 2: Using Gradle*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+*Method 3: Using IntelliJ JUnit test runner*
 
-=== Types of tests
-
-We have two types of tests:
-
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, right-click on a test package or a test class, and choose `Run 'Tests in '<test package or test class>''`.
 
 
-=== Troubleshooting Testing
+=== Test Troubleshooting
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+////
 == Dev Ops
+
+Dev Ops is a software engineering culture and practice that aims at unifying software development (Dev) and software operations (Ops).
+Dev Ops advocates automation and monitoring at all steps of software construction. This section illustrates how we adopt this practice in developing CelebManager.
+////
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+Please use Gradle for build automation. +
+Refer to <<UsingGradle#, UsingGradle.adoc>> for more details.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+Please use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. +
+Refer to <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+Please use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
+Refer to <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+Please use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of changed asciidoc files will look
+like when a pull request is merged. +
+Please refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-Here are the steps to create a new release.
+=== Application Release
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+To do the following steps to create a new release, you can:
+
+.  Update the version number in link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number, e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Dependencies Management
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+Management of dependencies on third-party libraries is done using Gradle.
+There is no need to include those libraries in the repo or download them manually.
 
 [[GetStartedProgramming]]
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == Product Scope
 
-*Target user profile*:
+The *target user profile*:
 
 * has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* prefers desktop apps over other types
 * can type fast
 * prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* is reasonably comfortable using CLI Apps
+* needs to manage several people's (celebrities') schedule
+* has a need to link contacts to appointments
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+
+=== Feature Contribution
+
+**MAJOR**
+
+*Adding, deleting, editing appointments*: Able to create, delete and edit appointments within the application. (By Muruges)
+
+*Listing appointments* : Able to list appointments within a date range. (By Muruges)
+
+*Showing location on map*: Able to show the location of an appointment using address in maps. (By Damien)
+
+*Showing route on map*: Able to show the rough route used to calculate the distance and time of travel. With the estimated distance and time of travel being shown in result display panel. (By Damien)
+
+*Storing appointments*: Able to parse appointments information from storage, and save new and edited appointment
+information into storage. (By Tzer Bin)
+
+*Reminding of appointments*: Able to draft an email template to remind persons associated with the appointment and fill in the addressees' emails automatically. (By Jinyi)
+
+
+**MINOR**
+
+*Adding attendees and POCs*: Able to add a list of celebrities and a list of Points of Contact to each appointment. (By Muruges)
+
+*Switching between different calendar views*: Able to switch to view appointments on the calendar by day, week, month and year with CLI. (Jinyi)
+
+*Customizing visual themes*: Able to customize visual themes of the application. (By Tzer Bin)
+
+*Removing a tag*: Able to remove a tag from each person with it in the application. (By Jinyi)
+
+*View appointment*: Able to view a specific appointment in result display from list of appointments based on index. Location will
+ also be shown in map. (By Damien)
 
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="90%",cols="15%,<20%,<30%,<40%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
+|Priority |As a ... |I want to ... |so that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person |access contacting information of the person from the App
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person |remove contacts that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |undo a previous command |remove the change made by mistake
+
+|`* * *` |user |redo a previous command |restore the change removed by mistake
+
+|`* * *` |user |have a calendar inside the address book |know the date and day
+
+|`* * *` |user |display appointments on calendar by day, week, and month |check appointments in different time frames
+
+|`* * *` |user |add an appointment to a calendar |schedule different appointments without time clashes
+
+|`* * *` |user |delete an appointment from a calendar |remove appointments that are cancelled
+
+|`* * *` |user |edit an appointment in a calendar |change the information about the appointment when there is a change in plan or arrangement
+
+|`* * *` |user |save appointments |get appointments loaded in the calendar automatically when I re-launch the App
+
+|`* * *` |user |get alerted for upcoming appointments |set my priorities straight
+
+|`* * *` |user |see the location of an appointment in a map |plan for travel
+
+|`* * *` |user |see various landmarks around a specific location in a road map |understand better the roads around the location
+
+|`* * *` |user |see various landmarks around a specific location in a satellite map |see in real time the actual layout of the surrounding
+
+|`* * *` |user |zoom in and out of the map of a location in a map |view the location in different levels of details
+
+|`* * *` |celebrity manager who chauffeurs celebrities |see the best route of travel by driving between two locations in a map |plan for the shortest travel
+
+|`* * *` |celebrity manager who chauffeurs celebrities |know if two locations can be reached by driving |foresee any problems and plan ahead
+
+|`* * *` |celebrity manager who chauffeurs celebrities |know the estimated distance between two locations by driving |cater enough time for travelling to avoid being late
+
+|`* * *` |celebrity manager who chauffeurs celebrities |know the estimated time of travel between two locations by driving |reduce the time of travel to reach an appointment location
+
+|`* * *` |celebrity manager |have multiple calendars to display appointments for different celebrities |manage multiple celebrities' appointments
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |change the size of different windows of the App |customise the window sizes
 
-_{More to be added}_
+|`* *` |user who contacts different parties involved in an appointment |draft the message about appointment details automatically |save time to draft the email
+
+|`* *` |user who frequently contacts certain people |sort the contacts by contacting frequency |find those people I frequently contact easily
+
+|`* *` |user |change the colour scheme of the App |choose my preferred colour scheme
+
+|`* *` |celebrity manager |group celebrities by different talents |find celebrities by talent easily
+
+|`* *` |celebrity manager managing celebrities of the same group|add an appointment to the calendars of these celebrities at the same time |save time
+
+|`*` |user with many international contacts |group contacts by country code |see my contacts from different countries
+
+|`*` |user of previous versions of the App |transfer my contacts to the new version |save the trouble of adding the contacts again
+
+|`*` |user with poor eyesight |the address book to read out the contacts to me |use it more efficiently
+
+|`*` |user |output the contacts to a separate list |have a backup copy of the contacts
+
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `CelebManager` and the *Actor* is the `user`, unless specified otherwise)
 
-[discrete]
 === Use case: Delete person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list persons.
+2.  CelebManager shows a list of persons.
+3.  User requests to delete a specific person in the list.
+4.  CelebManager deletes the person.
+
 +
 Use case ends.
 
@@ -840,11 +1479,365 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CelebManager shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+* 3b. The person at the given index is a celebrity.
++
+[none]
+** 3b1. CelebManager deletes the celebrity's calendar.
++
+Use case continues to step 4.
+
+=== Use case: Undo
+
+*MSS*
+
+1.  User requests to undo.
+2.  CelebManager undoes the latest executed command that mutates the data.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no executed command that mutates the data.
++
+[none]
+** 2a1. CelebManager shows an error message.
++
+Use case ends.
+
+=== Use case: Redo
+
+*MSS*
+
+1.  User requests to redo.
+2.  CelebManager redoes the latest executed undo command.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no executed undo command.
++
+[none]
+** 2a1. CelebManager shows an error message.
++
+Use case ends.
+
+=== Use case: Remove tag
+
+*MSS*
+
+1. User requests to remove a tag.
+2. CelebManager removes the tag from any person having it.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The tag does not exist.
++
+[none]
+** 1a1. CelebManager shows an error message.
++
+Use case ends.
+
+* 1b. The tag is celebrity.
++
+[none]
+** 1b1. CelebManager shows an error message.
++
+Use case ends.
+
+=== Use case: Add appointment
+
+*MSS*
+
+1.  User requests to add an appointment.
+2.  CelebManager adds the appointment to the currently displayed calendar.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment to add has incorrect details or format.
++
+[none]
+** 1a1. CelebManager shows an error message.
++
+Use case ends.
+
+* 2a. Appointment to add clashes with existing appointment.
++
+[none]
+** 2a1. CelebManager shows an error message.
++
+Use case ends.
+
+=== Use case: View appointment
+
+*MSS*
+
+1.  User requests to view appointment.
+2.  CelebManager shows the appointment's details.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Appointment to view does not exist.
++
+[none]
+** 1a1. CelebManager shows an error message.
++
+Use case ends.
+
+=== Use case: List appointments
+
+*MSS*
+
+1.  User requests to list appointments from a start date to an end date.
+2.  CelebManager shows a list of appointments within the date range (inclusive).
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The dates are invalid or in wrong format.
++
+[none]
+** 1a1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 1b. The entered start date is after end date.
++
+[none]
+** 1b1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 2a. There is no appointment to show in the date range.
++
+[none]
+** 2a1. CelebManager outputs a message that says no appointment in the specified date range.
++
+Use case ends.
+
+=== Use case: Delete appointment
+
+*MSS*
+
+1.  User requests to list appointments from a start date to an end date.
+2.  CelebManager shows a list of appointments within the date range (inclusive).
+3.  User requests to delete a specific appointment in the list.
+4.  CelebManager deletes the appointment.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The dates are invalid or in wrong format.
++
+[none]
+** 1a1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 1b. The entered start date is after end date.
++
+[none]
+** 1b1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 2a. There is no appointment to show in the date range.
++
+[none]
+** 2a1. CelebManager outputs a message that says no appointment in the specified date range.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. CelebManager shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Edit appointment
+
+*MSS*
+
+1.  User requests to list appointments from a start date to an end date.
+2.  CelebManager shows a list of appointments within the date range (inclusive).
+3.  User requests to edit a specified appointment.
+4.  CelebManager changes appointment details and displays new appointment details to user.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The dates are invalid or in wrong format.
++
+[none]
+** 1a1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 2a. There is no appointment to show in the date range.
++
+[none]
+** 2a1. CelebManager outputs a message that says no appointment in the specified date range.
++
+Use case ends.
+
+[none]
+* 3a.  The given index is invalid.
++
+[none]
+** 3a1. CelebManager shows an error message.
++
+Use case resumes at step 2.
+
+[none]
+* 3b.  Information entered for edit is invalid.
++
+[none]
+** 3b1. CelebManager shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Show location in map
+
+*MSS*
+
+1.  User inputs location name or address.
+2.  CelebManager converts information into LatLong form.
+3.  Celeb Manager uses the LatLong info to update create a new location marker.
+4.  CelebManager updates the map with the location marker and re-centre its panel view.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User provides invalid input.
++
+[none]
+** 1a1. CelebManager requests User to provide valid input.
++
+[none]
+** 1a2. User enters new input.
++
+Steps 1a1-1a2 are repeated until input is valid.
++
+Use case resumes from step 2.
+
+[none]
+* 4a. When there is an existing marker in the map.
++
+[none]
+** 4a1. CelebManager removes it.
++
+Use case ends.
+
+=== Use case: Show estimated route by driving in map
+
+*MSS*
+
+1.  User inputs start and end location name or address.
+2.  CelebManager converts information into LatLong form.
+3.  Celeb Manager uses the LatLong info to generate the route.
+4.  CelebManager updates the map with the route.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User provides invalid input.
++
+[none]
+** 1a1. CelebManager requests User to provide valid input.
++
+[none]
+** 1a2. User enters new input.
++
+Steps 1a1-1a2 are repeated until input is valid.
++
+Use case resumes from step 2.
+
+[none]
+* 3a. When both location cannot be reached by driving
++
+[none]
+** 3a1. CelebManager shows error message.
++
+Use case ends.
+
+[none]
+* 4a. When there is an existing route in the map
++
+[none]
+** 4a1. CelebManager removes it.
++
+Use case ends.
+
+=== Use case: Show estimated distance and time of travel by driving
+
+*MSS*
+
+1.  User inputs start and end location name or address.
+2.  CelebManager converts information into LatLong form.
+3.  Celeb Manager uses the LatLong info to generate the distance and time required to travel.
+4.  CelebManager shows the information.
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User provides invalid input.
++
+[none]
+** 1a1. CelebManager requests User to provide valid input.
++
+[none]
+** 1a2. User enters new input.
++
+Steps 1a1-1a2 are repeated until input is valid.
++
+Use case resumes from step 2.
+
+[none]
+* 3a. When both location cannot be reached by driving
++
+[none]
+** 3a1. CelebManager shows error message.
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1845,11 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be usable by people with no knowledge about command line input.
+.  Should respond to any user command within 10 seconds.
+.  Should be backward compatible with data produced by earlier versions of the CelebManager.
+.  Should come with automated unit tests and open source code.
+.  Should favor DOS style commands over Unix-style commands.
 
 [appendix]
 == Glossary
@@ -864,65 +1860,288 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[appendix]
-== Product Survey
+[[celebcalendar]] StorageCalendar::
+A calendar that contains all appointments a celebrity managed by the user has
 
-*Product Name*
+[[calendar-view]] Calendar view::
+The way in which appointments are displayed in calendar +
+[TIP]
+CelebManager currently supports displaying by day, week and month.
 
-Author: ...
+[[appointment]] Appointment::
+A meeting between contacts at a specific time, date and location +
+An appointment has a specific name
 
-Pros:
+[[attendees]] Attendees::
+A list of contacts who are attending an appointment
 
-* ...
-* ...
+[[points-of-contacts]] Points of Contacts::
+A list of contacts involved in an appointment but not attending it
 
-Cons:
+[[blacklist]] Blacklist::
+A list of contacts which should be marked for being untrustworthy or unacceptable
 
-* ...
-* ...
+[[UI]] User Interface::
+The Design and looks of the software
 
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+Given below are instructions to test the App manually.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch
+This section includes instructions to test the launch and re-launch of the App. +
+For each subsequent launch, window size and location should be the same as the settings before closing the App for previous launch.
 
 . Initial launch
 
-.. Download the jar file and copy into an empty folder
+.. Download the jar file
+.. Copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   _Expected: CelebManager shows the GUI with a set of sample contacts._
+[NOTE]
+    The window size may not be optimum.
+.. Resize the window to an optimum size
+.. Move the window to a different location
+.. Close the window
 
-. Saving window preferences
+. Subsequent launch
+.. Re-launch the App by double-clicking the jar file +
+   _Expected: The most recent window size and location are retained._
 
-.. Resize the window to an optimum size. Move the window to a different location. Close the window.
-.. Re-launch the app by double-clicking the jar file. +
-   Expected: The most recent window size and location is retained.
+=== Adding a person/celebrity
+This section includes instructions to test the `add` command of the application.
+[NOTE]
+Prerequisites: No other person in the addressbook with the details of the two persons below.
 
-_{ more test cases ... }_
+.. Type `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney` in command box and press enter. +
+    _Expected: A contact by the name John Doe and with the above personal particulars will be added. +
+    Details of the added contact shown in the status message. Timestamp in the status bar is updated._
+.. Type `add n/Jane Doe p/98765431 e/janed@example.com a/311, Clementi Ave 1, #02-25 t/celebrity` in command box and press enter. +
+    _Expected: A celebrity by the name Jane Doe is added with the above personal particulars. A new calendar with the initial `J` +
+    will be created in the calendar panel. Details of the added celebrity shown in the status message. Timestamp in the status bar is updated._
+.. Type in `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney` in command box and press enter. +
+    _Expected: No person is added. Error details is shown in the status message. Status bar remains the same._
 
-=== Deleting a person
+=== Deleting a person/celebrity
+This section includes instructions to test the `delete` command of the CelebManager.
+[NOTE]
+Prerequisites: List all persons using the `list` command. Multiple persons in the list. At least one celebrity in the list.
 
-. Deleting a person while all persons are listed
+.. Type `delete n` in command box (n refers to the one-based index of the celebrity in the person list panel) and press enter. +
+    _Expected: Chosen celebrity is deleted from the list. Calendar corresponding to the deleted celebrity is removed from the calendar panel.
+    Details of the deleted celebrity is shown in the status message. Timestamp in the status bar is updated._
+.. Type `delete 1` in command box and press enter. +
+   _Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated._
+.. Type `delete 0` in command box and press enter. +
+   _Expected: No person is deleted. Error details shown in the status message. Status bar remains the same._
+.. Type other incorrect delete command such as `delete`, `delete x` (where `x` is larger than the list size) in command box and press enter. +
+   _Expected: Similar to previous._
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+=== Removing a tag
+This section includes instructions to test the `removeTag` command of the CelebManager.
+[NOTE]
+Prerequisites: At least one person in the full contact list (not necessarily the last shown list) has `friends` tag.
 
-_{ more test cases ... }_
+.. Type `removeTag friends` in command box and press enter. +
+   _Expected: `friends` tag is removed from any person who has it. Number of persons affected shown in the status message._
+.. Type `removeTag !@#` in command box and press enter. +
+   _Expected: No tag is removed. Error details shown in the status message._
+.. Type `removeTag celebrity` in command box and press enter. +
+   _Expected: `celebrity` tag is not removed. Error details shown in the status message._
+.. Type other incorrect `removeTag` commands such as `removeTag`, `removeTag x`
+(where `x` is a tag that nobody has in the full contact list or an invalid tag name) in command box and press enter. +
+   _Expected: No tag is removed. Error details shown in the status message._
 
-=== Saving data
+=== Adding an appointment
+This section includes instructions to test the `addAppointment` command of the CelebManager.
+[NOTE]
+Prerequisites: List all persons using the `list` command. At least one celebrity and one normal person in the person list panel. No appointments currently present.
 
-. Dealing with missing/corrupted data files
+.. Type `addAppointment n/Oscar` and press enter. Then type `la` and press enter. +
+    _Expected: An appointment with the name Oscar is added. The start date/time corresponds to the current time. The end date/time is 15 minutes from now._
+.. Type `addAppointment n/Grammy sd/10-04-2018 st/15:00` and press enter. Then type `la` and press enter. +
+    _Expected: An appointment with the name Grammy is added. The start date/time correspond to the input values. End date/time is 15 minutes from that._
+.. Type `addAppointment n/Dentist appointment sd/11-04-2018 st/16:00 ed/12-04-2018 et/09:00 c/n p/k` (where n corresponds to the index of a celebrity
+    and k corresponds to the index of a normal person) and press enter. Then type `la` and press enter. +
+    _Expected: An appointment with the above details and the selected celebrity and point of contact will appear in the appointment list._
+.. Type the above command again and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message._
+.. Type `addAppointment n/Lunch meeting c/x` (where x refers to an invalid celebrity index) and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message._
+.. Type `addAppointment n/Dinner l/???` and press enter. +
+    _Expected: No appointment is added. Error details shown in the status message._
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+=== Listing appointments
+This section includes instructions to test the `listAppointment` command of the application.
+[NOTE]
+Prerequisites: At least one appointment stored in CelebManager.
 
-_{ more test cases ... }_
+.. Type `listAppointment` in command box and press enter. +
+   _Expected: All appointments are listed._
+.. Type `listAppointment 01-04 01-05` in command box and press enter. +
+   _Expected: Appointments with scheduled timings which overlap with the period of 1st April to 1st May of the current year are listed.
+   If there is no such appointment, error details shown in the status message._
+.. Type `listAppointment 0` in command box and press enter. +
+   _Expected: No appointments listed. Error details shown in the status message._
+.. Type `listAppointment a` in command box and press enter. +
+   _Expected: No appointments listed. Error details shown in the status message._
+.. Type `listAppointment 03-05 02-01` in command box and press enter. +
+   _Expected: No appointments listed. Error details shown in the status message._
+.. Type other incorrect `listAppointment` commands such as `listAppointment`, `listAppointment x`
+(where `x` is not a date range of format `DD-MM-YYYY DD-MM-YYYY`, `DD-MM-YYYY DD-MM`, `DD-MM DD-MM-YYYY`, or `DD-MM DD-MM`)
+in command box and press enter. +
+   _Expected: No appointments listed. Error details shown in the status message._
+
+=== Edititng an appointment
+This section includes instructions to test the `editAppointment` command of the CelebManager.
+[NOTE]
+Prerequisites: List all appointments using the `listAppointment` command. At least one appointment stored in the list.
+
+. while listing appointments:
+.. Type `editAppointment 0` in command box and press enter. +
+   _Expected: No appointment is edited. Error details shown in the status message. Appointment list remains the same._
+.. Type `editAppointment 1 n/New Appointment` in command box and press enter. +
+   _Expected: First appointment is renamed as `New Appointment` as long as it did not already have that name previously, and will go back to the calendar page.
+   If there is an error because the name is the same, no appointment is edited, error details shown in the status message and appointment list remains the same._
+.. Type other incorrect `editAppointment` commands such as `editAppointment`, `editAppointment x` (where `x` is larger than the appointment list size) in command box and press enter. +
+   _Expected: No appointment is edited. Error details shown in the status message. Appointment list remains the same._
+
+. While not listing appointments
+.. Type correct deleteAppointment commands such as `editAppointment 1` in command box and press enter. +
+   _Expected: No appointment is edited. Error details shown in the status message._
+
+=== Deleting an appointment
+This section includes instructions to test the `deleteAppointment` command of the application.
+[NOTE]
+Prerequisites: List appointments using the `listAppointment` command. At least one appointment in the list.
+
+. While listing appointments:
+.. Type `deleteAppointment 0` in command box and press enter. +
+   _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
+.. Type `deleteAppointment 1` in command box and press enter. +
+   _Expected: First appointment is deleted from the list. If the deleted appointment is the only appointment in the list, CelebManager will switch back to the calendar of the current day._
+.. Type other incorrect `deleteAppointment` commands such as `deleteAppointment`, `deleteAppointment x` (where `x` is larger than the appointment list size) in command box and press enter. +
+   _Expected: No appointment is deleted. Error details shown in the status message. Appointment list remains the same._
+
+. While not listing appointments
+.. Type correct deleteAppointment commands such as `deleteAppointment 1` in command box and press enter. +
+   _Expected: No appointment is deleted. Error details shown in the status message._
+
+=== Viewing an appointment
+This section includes instructions to test the `viewAppointment` command of the application.
+[NOTE]
+Prerequisites: List all appointments using the `listAppointment` command. Multiple appointments in the list.
+
+.. Type `viewAppointment 1` in command box and press enter. +
+   _Expected: First appointment is selected from the list. Details of the selected appointment shown in the result display. Location shown in map. Success message shown in result display._
+.. Type `viewAppointment 0` in command box and press enter. +
+   _Expected: No appointment is selected. Error details shown in the result display. Status bar remains the same. Map removes any existing location marker or route._
+.. Type other incorrect  command such as `viewAppointment`, `viewAppointment x` (where x is larger than the list size or appointment chosen does not have location data) in command box and press enter. +
+   _Expected: Similar to previous._
+
+=== Showing location on map
+This section includes instructions to test the `showLocation` command of the application.
+
+.. Type `showLocation ma/NUS` in command box and press enter. +
+   _Expected: Location shown in map. Map view will be centered to location._
+.. Type `showLocation ma/!!!!!!` in command box and press enter. +
+   _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing location marker or route._
+.. Type other incorrect  command such as `showLocation`, `showLocation Punggol` in command box and press enter. +
+   _Expected: Similar to previous._
+
+=== Estimating route between two location on map
+This section includes instructions to test the `estimateRoute` command of the application.
+
+.. Type `estimateRoute sma/NUS ema/Punggol` in command box and press enter. +
+   _Expected: Best route by driving will be added to map. Map view will be centered to location. Details of distance and time of travel shown in result display.
+    Success message shown in result display._
+.. Type `estimateRoute sma/!!!!!! ema/Punggol` in command box and press enter. +
+   _Expected: Location not found in google server. Error details shown in the result display. Status bar remains the same._
+.. Type `estimateRoute sma/NUS ema/!!!!!!` in command box and press enter. +
+   _Expected: Error details shown in the result display. Status bar remains the same. Map removes any existing marker or route._
+.. Type other incorrect  command such as `estimateRoute`, `estimateRoute Punggol NUS`, `estimateRoute sma/Punggol NUS`, `estimateRoute NUS ema/Punggol` in command box and press enter. +
+   _Expected: Similar to previous._
+
+=== Viewing a celebrity's calendar
+This section includes instructions to test the `viewCalendar` command of the application.
+[NOTE]
+Prerequisites: At least one celebrity in the last shown list and the celebrity's calendar is not currently displayed.
+
+.. Type `viewCalendar c` (where `c` is the index of the celebrity) in command box and press enter. +
+   _Expected: `CalendarPanel` now displays the celebrity's calendar. If the celebrity is the only celebrity in the full contact list, there won't be any change in terms of the outlook of calendar._
+.. Type `viewCalendar c` (where `c` is the index of the same celebrity in the previous command) again after previous execution in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type `viewCalendar p` (where `p` is the index of a non-celebrity person) in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type `viewCalendar 0` in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type other incorrect `viewCalendar` commands such as `viewCalendar`, `viewCalendar x` (where `x` is larger than the last shown contact list size or not a valid index number or the index of the celebrity whose calendar is currently displayed) in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+
+=== Viewing the combined calendar
+This section includes instructions to test the `viewCombinedCalendar` command of the application.
+[NOTE]
+Prerequisites: Combined calendar is not currently displayed.
+
+.. Type `viewCombinedCalendar` in command box and press enter. +
+   _Expected: `CalendarPanel` now displays the combined calendar. If there is only one celebrity in the full contact list, there won't be any change in terms of the outlook of calendar._
+.. Type `viewCombinedCalendar` again after previous execution in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+
+=== Changing to a different calendar view
+This section includes instructions to test the `viewCalendarBy` command of the application.
+[NOTE]
+Prerequisites: Calendar is currently in `day` view.
+
+.. Type `viewCalendarBy week` in command box and press enter. +
+   _Expected: Calendar shows the week which the original day is in._
+.. Type `viewCalendarBy month` in command box and press enter. +
+   _Expected: Calendar shows the month which the original day is in._
+.. Type `viewCalendarBy day` in command box and press enter. +
+   _Expected: Calendar shows the day which is the original day._
+.. Type `viewCalendarBy day` again after executing the previous command in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type `viewCalendarBy MOnTh` in command box and press enter. +
+   _Expected: Calendar shows the week which the original day is in._
+.. Type `viewCalendarBy 1` in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type other incorrect `viewCalendarBy` commands such as `viewCalendarBy`, `viewCalendarBy x` (where x is not `day`, `week`, `month` or mixed uppercase and lowercase of one of them) in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+
+=== Viewing a particular day's calendar
+This section includes instructions to test the `viewDate` command of the application.
+[NOTE]
+Prerequisites: Calendar is currently in `day` view and displays the current day's calendar. Current day is not 1st April of 2018.
+
+.. Type `viewDate 01-04-2018` in command box and press enter. +
+   _Expected: `CalendarPanel` displays the calendar for 1st April of 2018._
+.. Type `viewDate d` (where `d` is a date that is different from the current day's date, in DD-MM format) in command box and press enter. +
+   _Expected: `CalendarPanel` displays the calendar for date `d` of current year._
+.. Type `viewDate` in command box and press enter. +
+   _Expected: `CalendarPanel` displays the calendar for the current day._
+.. Type `viewDate` again after executing the previous command in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type `viewDate 01-04` again after executing the previous command in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type `viewDate 0` in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type `viewDate !` in command box and press enter. +
+   _Expected: No change in calendar. Error details shown in the status message._
+.. Type other incorrect `viewDate` commands such as `viewDate`, `viewDate x` (where `x` is not a date in `DD-MM-YYYY` or `DD-MM` format) in command box and press enter +
+   _Expected: No change in calendar. Error details shown in the status message._
+
+=== Transferring of storage calendar .xml file
+This section includes instructions to test the transferring of file of the application
+[NOTE]
+Preprequisites: The file is a valid .xml file for storage calendar, and is named `storagecalendar.xml`.
+
+.. Close the application.
+.. Open the `data/` directory in the folder containing the .jar file.
+   _Expected: `storagecalendar.xml` consisting the to-be-replaced data is in the folder._
+.. Replace the old `storagecalendar.xml` with the the new `storagecalendar.xml` file.
+.. Restart the application.
+   _Expected: The new appointments data from `storagecalendar.xml` is reflected in the calendar panel._

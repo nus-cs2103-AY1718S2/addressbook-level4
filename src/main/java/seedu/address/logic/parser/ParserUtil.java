@@ -2,14 +2,20 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.time.LocalDate;
+import java.time.LocalTime;
+import java.time.format.DateTimeParseException;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.map.MapAddress;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -29,6 +35,7 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -114,7 +121,30 @@ public class ParserUtil {
         requireNonNull(address);
         return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
     }
-
+    //@@author Damienskt
+    /**
+     * Parses a {@code String address} into an {@code Address}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code address} is invalid.
+     */
+    public static MapAddress parseMapAddress(String address) throws IllegalValueException {
+        requireNonNull(address);
+        String trimmedAddress = address.trim();
+        if (!MapAddress.isValidAddress(trimmedAddress)) {
+            throw new IllegalValueException(MapAddress.MESSAGE_ADDRESS_MAP_CONSTRAINTS);
+        }
+        return new MapAddress(trimmedAddress);
+    }
+    /**
+     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MapAddress> parseMapAddress(Optional<String> address) throws IllegalValueException {
+        requireNonNull(address);
+        return address.isPresent() ? Optional.of(parseMapAddress(address.get())) : Optional.empty();
+    }
+    //@@author
     /**
      * Parses a {@code String email} into an {@code Email}.
      * Leading and trailing whitespaces will be trimmed.
@@ -164,5 +194,103 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String time} into a {@code LocalTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code time} is invalid.
+     */
+    public static LocalTime parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        try {
+            LocalTime lt = LocalTime.parse(time, Appointment.TIME_FORMAT);
+            return lt;
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_TIME_CONSTRAINTS);
+        }
+    }
+
+    //@@author muruges95
+
+    /**
+     * Parses a {@code Optional<LocalTime> time} into an {@code Optional<LocalTime>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalTime> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code LocalDate}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static LocalDate parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        try {
+            LocalDate ld = LocalDate.parse(date, Appointment.DATE_FORMAT);
+            return ld;
+        } catch (DateTimeParseException e) {
+            throw new IllegalValueException(Appointment.MESSAGE_DATE_CONSTRAINTS);
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<LocalDate> date} into an {@code Optional<LocalDate>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<LocalDate> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Validates if a {@code String name} into a valid name.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static String parseGeneralName(String name) throws IllegalValueException {
+        requireNonNull(name);
+        String trimmedName = name.trim();
+        if (!Appointment.isValidName(trimmedName)) {
+            throw new IllegalValueException(Appointment.MESSAGE_NAME_CONSTRAINTS);
+        }
+        return trimmedName;
+    }
+
+    /**
+     * Parses a {@code Optional<String> name} into an {@code Optional<String>} if {@code name} is present and valid.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<String> parseGeneralName(Optional<String> name) throws IllegalValueException {
+        requireNonNull(name);
+        return name.isPresent() ? Optional.of(parseGeneralName(name.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code Collection<String> indices} into a {@code Set<Index>}.
+     */
+    public static Set<Index> parseIndices(Collection<String> indices) throws IllegalValueException {
+        requireNonNull(indices);
+        final Set<Index> indexSet = new HashSet<>();
+        for (String index : indices) {
+            indexSet.add(parseIndex(index));
+        }
+        return indexSet;
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    public static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
     }
 }

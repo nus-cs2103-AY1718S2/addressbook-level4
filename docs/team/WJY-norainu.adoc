@@ -1,0 +1,311 @@
+= Wang Jinyi - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CelebManager
+
+---
+
+== Overview
+
+CelebManager is a software application that allows celebrity managers to maintain schedules of celebrities under them.
+It is optimized for users who prefer to work with a Command Line Interface (CLI) while still having a
+Graphical User Interface (GUI) for visual feedback.
+
+In this software, the users will be able to:
+
+.   Manage contacts
+.	Manage appointments
+.	Manage calendars
+.	Plan efficient routes
+
+This project portfolio summarises my contribution towards the development of CelebManager.
+
+== Summary of contributions
+
+* *Major enhancement*: added *support for interacting with the calendar using CLI*
+** What it does: This enhancement includes commands: `viewCalendar`, `viewCombinedCalendar`, `viewCalendarBy`, and
+`viewDate`. With these commands, users can view different celebrities' calendars, a joint calendar of all celebrities,
+a day's or week's or month's appointments, and change base date of the calendar.
+** Justification: This feature improves the product significantly because it allows users to interact with the
+calendar inside CeleManager and makes the calendar a powerful visualisation tool to view timings of appointments.
+** Highlights: The implementation requires comprehension of CalendarFX's API and experimenting with the API to
+understand which methods to be used to update the calendar UI. Also, additional variables were created
+to keep track of the current calendar's status to preserve the original ways of interaction between different
+components.
+** Credits: http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]
+
+* *Major enhancement*: added *the ability to delete an appointment*
+** What it does: This enhancement refers to the command, `deleteAppointment`. It allows users to delete an existing
+appointment.
+** Justification: This feature improves the product significantly because users can delete a specified appointment to
+get rid of appointments that are cancelled or no longer needed.
+** Highlights: This enhancement requires an understanding of how appointments are stored and can be removed from the
+calendar visually.
+** Credits: http://dlsc.com/wp-content/html/calendarfx/apidocs/index.html[CalendarFX]
+
+* *Minor enhancement*: added *the ability to list appointments within a given date range*
+
+* *Minor enhancement*: added *the ability to remove a tag from all contacts*
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/functional/WJY-norainu.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B4/main/blob/master/collated/test/WJY-norainu.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Added support for deleting celebrity using the existing command `delete`. This enhancement ensures the removal
+of the deleted celebrity from the appointments he/she is attending, as well as the deletion of his/her calendar.
+(Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/119[#119])
+*** Created TypicalCelebrities, modified getTypicalPersons to facilitate testing of new features
+(Pull request: https://github.com/CS2103JAN2018-W14-B4/main/pull/121[#121])
+** Documentation:
+*** Contributed to the content of User Guide and Developer Guide: +
+https://github.com/CS2103JAN2018-W14-B4/main/pull/95[#95],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/99[#99],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/140[#140],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/175[#175],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/179[#179],
+https://github.com/CS2103JAN2018-W14-B4/main/pull/188[#188]
+*** Collated codes for `v1.4` and `v1.5` release
+** Community:
+*** Reported bugs and suggestions for other teams in the class
+(examples:  https://github.com/CS2103JAN2018-T09-B3/main/issues/195[#195])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide.
+They showcase my ability to write documentation targeting end-users._
+|===
+
+==== Displaying a celebrity's calendar: `viewCalendar` [Since v1.3]
+
+Changes to view the calendar of the specified celebrity. +
+Alias: `vc` +
+Format: `viewCalendar INDEX`
+
+****
+* Changes to view the calendar of the celebrity at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the last shown list of persons.
+* `INDEX` *must be a positive integer* `1`, `2`, `3`, ...
+* The person at `INDEX` *must be* a celebrity.
+****
+
+Examples:
+
+* `viewCalendar 1` +
+Changes to view the calendar of the 1st person in the last shown person list, if he/she is a celebrity.
+
+==== Displaying a specific date's calendar: `viewDate` [Since v1.5]
+
+Changes the base date of calendar and displays the calendar by day for the specified `date`.
+The base date is different from the current date. It is a date which `viewCalendarBy` is based on. Refer to the tip
+below examples for more information. +
+Alias: `vd` +
+Format: `viewDate [DATE]`
+
+****
+* Changes base date to the specified `date`.
+* When no date is given, it takes on the value of current date.
+* `DATE` *must be in the format of* `DD-MM-YYYY` or `DD-MM`. For the latter, year will be set to current year.
+* `DATE` *must be* a valid date, eg, `01-13-2018` and `30-02` are not valid dates.
+* This command can take slightly longer to load than other view-related commands.
+****
+
+Examples:
+
+* `viewDate 03-05-2018` +
+Changes the base date of calendar to `03-05-2018` and displays the calendar by day for `03-05-2018` as shown below.
+
+.State of `CalendarPanel` after executing `viewDate 03-05-2018`
+image::ViewDate03-05-2018.jpg[width="500"]
+
+* `viewDate` +
+Changes the base date of calendar to current date and displays the calendar by day for current date. +
+
+[TIP]
+====
+Change in base date allows you to view calendar for different weeks and months.
+For example, after `viewDate 03-05-2018`, you can type `viewCalendarBy week` - which will show you the
+calendar for the first week of May of 2018, or `viewCalendarBy month` - which will show you the calendar
+for May of 2018.
+====
+
+====  Deleting an appointment `deleteAppointment` [Since v1.4]
+
+Pre-requisite: you can only edit an appointment when `CalendarPanel` is showing an appointment list.
+Refer to User Guide - Listing appointments: `listAppointment` [Since v1.5] for more information. +
+
+Deletes the specified appointment. +
+Alias: `da` +
+Format: `deleteAppointment INDEX`
+
+****
+* Deletes the appointment at the specified `INDEX`.
+* `INDEX` refers to the index number shown in the current appointment list.
+* `INDEX` index *must be a positive integer* `1`, `2`, `3`, ...
+* If there is no more appointment in the list after deletion, `CalendarPanel` will switch back from the appointment list
+to the calendar.
+****
+
+Examples:
+
+* `listAppointment` +
+`deleteAppointment 2` +
+Deletes the 2nd appointment in the appointment list.
+
+* `listAppointment 01-04 01-05` +
+`deleteAppointment 1` +
+Deletes the 1st appointment in the result of `listAppointment 01-04 01-05`.
+
+==== Removing a tag : `removeTag` [Since v1.2]
+
+Removes the specified tag from every person in CelebManager and shows the number of person(s) affected by this
+operation. +
+Alias: `rt` +
+Format: `removeTag TAG`
+
+****
+* Removes the tag from every person in the full contact list (not necessarily the last shown list) in CelebManager.
+* `TAG` removed *must not be* `celebrity`.
+****
+
+Examples:
+
+* `removeTag friends` +
+Removes the tag, `friends` from every person and shows the number of person(s) affected. +
+Suppose `PersonListPanel` looks like the one on the left below before execution. +
+After execution, `PersonListPanel` should get updated to the one on the right below.
+
+[.text-center]
+.State of `PersonListPanel` before (left) and after (right) executing `removeTag friends`
+image::removeTag.png[width="800"]
+
+* `removeTag owesMoney` +
+Removes the tag, `owesMoney` from every person and shows the number of person(s) affected.
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide.
+They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+=== DeleteAppointment Feature
+
+This feature allows the user to delete appointments.
+
+==== Current Implementation
+
+The mechanism to delete an appointment is facilitated by the `DeleteAppointmentCommand` class, which resides inside `Logic`,
+and `deleteAppointment` method in `Model`. The command requires the user to put in an index to refer to the appointment
+to be deleted. This index is taken from the currently displayed appointment list. As such, deletion of an appointment
+can only be done when CelebManager is showing an appointment list.
+
+`DeleteAppointmentCommand` class is responsible for checking whether an appointment list is currently being shown.
+If so, `DeleteAppointmentCommand` class will call `deleteAppointment` method. Refer to the code snippet below to see
+how this method deletes the specified appointment:
+
+[source,java]
+----
+public class DeleteAppointmentCommand extends Command {
+    ...
+    public static final String MESSAGE_SUCCESS = "Deleted Appointment: %1$s";
+    public static final String MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY = "\nAppointment list becomes empty, "
+            + "Switching back to calendar view by day\n"
+            + "Currently showing %1$s calendar";
+    ...
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        // throw exception if the user is not currently viewing an appointment list
+        if (!model.getIsListingAppointments()) {
+            throw new CommandException(Messages.MESSAGE_MUST_SHOW_LIST_OF_APPOINTMENTS);
+        }
+        apptToDelete = model.deleteAppointment(targetIndex.getZeroBased());
+        List<Appointment> currentAppointmentList = model.getAppointmentList();
+
+        // if the list becomes empty, switch back to combined calendar day view
+        if (currentAppointmentList.size() < 1) {
+            EventsCenter.getInstance().post(new ChangeCalendarViewPageRequestEvent(DAY_VIEW_PAGE));
+            EventsCenter.getInstance().post(new ShowCalendarEvent());
+
+            Celebrity currentCalendarOwner = model.getCurrentCelebCalendarOwner();
+            if (currentCalendarOwner == null) {
+                return new CommandResult(
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                                "combined"));
+            } else {
+                return new CommandResult(
+                        String.format(MESSAGE_SUCCESS, apptToDelete.getTitle())
+                                + String.format(MESSAGE_APPOINTMENT_LIST_BECOMES_EMPTY,
+                                currentCalendarOwner.getName().toString() + "'s"));
+            }
+        }
+
+        // if the list is not empty yet, update appointment list view
+        EventsCenter.getInstance().post(new ShowAppointmentListEvent(currentAppointmentList));
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, apptToDelete.getTitle()));
+    }
+
+    ...
+}
+----
+From the snippet above, it can be seen that `DeleteAppointmentCommand` changes `CalendarPanel` back to combined
+calendar view if there is no more appointment in the appointment list after deletion. Otherwise, the appointment list
+with the specified appointment deleted will be shown.
+
+The snippet code below shows the implementation of `deleteAppointment` in `Model`:
+
+[source,java]
+----
+public class ModelManager extends ComponentManager implements Model {
+    ...
+    @Override
+    public Appointment deleteAppointment(int index) throws IndexOutOfBoundsException {
+        Appointment apptToDelete = getChosenAppointment(index);
+        apptToDelete.removeAppointment();
+        removeAppointmentFromInternalList(index);
+        currentlyDisplayedAppointments.remove(apptToDelete);
+        indicateAppointmentListChanged();
+        return apptToDelete;
+    }
+    ...
+}
+----
+
+The method `removeAppointment` is in `Appointment` class, and removes all child entries of an appointment. For example,
+an appointment may have two celebrities attending. Then this appointment will have two child entries, one each in each
+attending celebrity's calendar. So when this appointment gets deleted, both entries should get removed as well.
+
+.Sequence diagram of deleteAppointment command
+image::DeleteAppointmentCommand-logic-seq-diagram.jpg[width=""]
+
+==== Design Considerations
+===== Aspect: Status of `CalendarPanel` after deletion of the only appointment
+* **Alternative 1 (current choice):** Switch back to combined calendar view
+** Pros: Keeps consistent with `listAppointment` as CelebManager does not show an empty list when there is no
+appointment to list, but instead outputs an error message.
+** Cons: Makes it difficult for users to see if the appointment gets deleted correctly.
+* **Alternative 2:** Stay at the appointment list view and shows an empty list
+** Pros: Shows the effect of deletion immediately.
+** Cons: Becomes inconsistent with `listAppointment` command's inability to show an empty list when there is no
+appointment to list.
+* **Alternative 3:** Switch back to combined calendar view and goes to the day when the deleted appointment should
+happen
+** Pros: Keeps consistent with `listAppointment` while making it easy for users to check if the appointment gets
+deleted visually on calendar.
+** Cons: Takes long time to run.
+
+===== Aspect: Ability to undo `deleteAppointment` command
+* **Alternative 1 (current choice):** Cannot be undone
+** Pros: Needs not remember previous appointments' and calendar's status.
+** Cons: Cannot restore deletions made by mistake.
+* **Alternative 2:** Can be undone
+** Pros: Can restore deletions made by mistake.
+** Cons: Requires drastic change in the way calendars are currently saved and loaded, as calendars currently only stay
+in UI component while appointments in Model component.

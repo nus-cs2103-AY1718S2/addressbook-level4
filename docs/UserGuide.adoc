@@ -138,7 +138,7 @@ Username: alice +
 Password: password123 +
 Logs the user in as alice, who is a doctor as shown in Figure 5 below.
 
-.IMDB main window (Logged in as Alice)
+.IMDB main window (logged in as alice)
 [caption="Figure 5: "]
 image::login_window_doctor.PNG[width="990"]
 
@@ -148,7 +148,7 @@ Password: password456 +
 Logs the user in as bob, who is a medical staff as shown in Figure 6 below.
 // end::login[]
 
-.IMDB main window (Logged in as Bob)
+.IMDB main window (logged in as bob)
 [caption="Figure 6: "]
 image::login_window_staff.PNG[width="990"]
 
@@ -477,7 +477,7 @@ Examples:
 
 * `list` +
 `record 1 in/1` +
-Displays the first medical record for the first person in the result of the list command as shown Figure 7 below.
+Displays the first medical record for the first person in the result of the list command as shown in Figure 7 below.
 
 .Record window
 [caption="Figure 7: "]
@@ -636,7 +636,7 @@ Examples:
 * `viewappt` +
 `addappt 1 19/6/2018 1000` +
 `viewappt` +
-Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 10.
+Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 10 below.
 
 .Calendar panel in IMDB after an appointment is added
 [caption="Figure 10: "]
@@ -662,9 +662,9 @@ This command is for both doctor and medical staff.
 Examples:
 
 * `viewappt 1` +
-Lists the medical appointments made by the first patient in the list as shown in Figure 11.
+Lists the medical appointments made by the first patient in the list as shown in Figure 11 below.
 
-.Patient Appointment panel in IMDB
+.Patient appointment panel in IMDB
 [caption="Figure 11: "]
 image::viewappt_patient_window.PNG[width="990"]
 
@@ -710,7 +710,7 @@ Examples:
 
 * `viewappt 1` +
 `delappt 1 19/6/2018 1200` +
-Deletes the medical appointment on 19/6/2018 12pm made by the first patient in the list as shown in Figure 13.
+Deletes the medical appointment on 19/6/2018 12pm made by the first patient in the list as shown in Figure 13 below.
 
 .Calendar panel in IMDB after deleting the appointment
 [caption="Figure 13: "]

@@ -72,7 +72,7 @@ Examples:
 //tag::lock[]
 === Lock : `lock`
 
-You can logout after doing modification on contacts and appointment on the APP. The initial password is 123456. +
+You can lock the contact and appointment panel after doing modification on contacts and appointment on the APP to prevent further modification. The initial password is 123456. +
 Format: `lock`
 alias: `lk`
 //end::lock[]

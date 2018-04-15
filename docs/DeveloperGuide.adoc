@@ -1803,6 +1803,10 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |student |view completed tasks |be assured I have completed a task
 
+|`* * *` |student with design background |view tasks only|as I prefer have less clutter in the GUI
+
+|`* * *` |student with design background |view events only|as I prefer have less clutter in the GUI
+
 |`* * *` |student |automatically save data after each update |have my most updated schedule to view in the future without having to save every time I make a change
 
 |`* * *` |student |load my most updated data when I open the application |view my most updated schedule

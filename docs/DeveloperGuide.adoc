@@ -244,6 +244,7 @@ You may want to find out about the approach for existing features described here
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+
 .Logic Command Class Diagram
 image::LogicCommandClassDiagram.png[width="800"]
 

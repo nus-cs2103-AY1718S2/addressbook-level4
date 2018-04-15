@@ -153,7 +153,7 @@ public class AliasCommand extends UndoableCommand {
     }
 
     /**
-     * Checks if the command specified is valid command and the alias specified is not a command word.
+     * Checks if the command specified is an existent command and the alias specified is not a command word.
      */
     private void checkForValidCommandAndAlias() throws CommandException {
         if (!commands.contains(toAdd.getCommand())) {
@@ -193,9 +193,9 @@ public class MapCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Launching Google Maps ...";
     public static final String MESSAGE_NO_INTERNET = "Please check that you have internet connection";
-    private static final String SPLIT_TOKEN = "/";
-    private static final int TWO_LOCATIONS_WORD_LENGTH = 2;
-    private static final int FIRST_LOCATION_INDEX = 0;
+    public static final String SPLIT_TOKEN = "/";
+    public static final int TWO_LOCATIONS_WORD_LENGTH = 2;
+    public static final int FIRST_LOCATION_INDEX = 0;
 
     private String locations;
     private boolean isOneLocation;
@@ -211,37 +211,13 @@ public class MapCommand extends Command {
     @Override
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
-        String[] locationsArray = locations.split(SPLIT_TOKEN);
-        checkForAndRetrieveNusBuildings(locationsArray);
-        identifyNumberOfSpecifiedLocations(locationsArray);
+        locations = ParserUtil.parseLocations(this.locations);
+        isOneLocation = !locations.contains(SPLIT_TOKEN);
         try {
             EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
             return new CommandResult(String.format(MESSAGE_SUCCESS));
         } catch (IOException e) {
             throw new CommandException(MESSAGE_NO_INTERNET);
-        }
-    }
-
-    /**
-     * Identifies if one or more locations are specified in the user input
-     */
-    private void identifyNumberOfSpecifiedLocations(String[] locationsArray) {
-        if (locationsArray.length >= TWO_LOCATIONS_WORD_LENGTH) {
-            locations = String.join(SPLIT_TOKEN, locationsArray);
-            isOneLocation = false;
-        } else {
-            locations = locationsArray[FIRST_LOCATION_INDEX];
-            isOneLocation = true;
-        }
-    }
-
-    /**
-     * Creates a MapCommand to pass locations to Google Maps
-     */
-    private void checkForAndRetrieveNusBuildings(String[] locationsArray) {
-        for (int i = 0; i < locationsArray.length; i++) {
-            locationsArray[i] = locationsArray[i].trim();
-            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
         }
     }
 
@@ -457,6 +433,41 @@ public class MapCommandParser implements Parser<MapCommand> {
 
         }
         return new Alias(command, alias);
+    }
+
+    /**
+     * Parses a {@code String locations} into {@code String formattedLocations}
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static String parseLocations(String locations) {
+        requireNonNull(locations);
+        String[] locationsArray = locations.split(MapCommand.SPLIT_TOKEN);
+        checkForAndRetrieveNusBuildings(locationsArray);
+        return identifyNumberOfSpecifiedLocations(locationsArray);
+    }
+
+    /**
+     * Identifies if one or more locations are specified in the user input
+     */
+    private static String identifyNumberOfSpecifiedLocations(String[] locationsArray) {
+        String parsedLocations = "";
+        if (locationsArray.length >= MapCommand.TWO_LOCATIONS_WORD_LENGTH) {
+            parsedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsArray);
+        } else {
+            parsedLocations = locationsArray[MapCommand.FIRST_LOCATION_INDEX];
+        }
+        return parsedLocations;
+    }
+
+
+    /**
+     * Creates a MapCommand to pass locations to Google Maps
+     */
+    private static void checkForAndRetrieveNusBuildings(String[] locationsArray) {
+        for (int i = 0; i < locationsArray.length; i++) {
+            locationsArray[i] = locationsArray[i].trim();
+            locationsArray[i] = retrieveNusBuildingIfExist(locationsArray[i]);
+        }
     }
 
     /**
@@ -848,13 +859,6 @@ public class UniqueAliasList {
     }
 
     /**
-     * Replaces the aliases in this aliasCommandMap with the HashMap in the argument.
-     */
-    public void replaceHashmap(HashMap<String, String> aliases) {
-        aliasCommandMap = aliases;
-    }
-
-    /**
      * Clears aliasCommandMap, for clear command.
      */
     public void resetHashmap() {
@@ -918,13 +922,24 @@ public class UniqueAliasList {
      * Groups alias mappings by command.
      */
     private void convertAliasHashmapToArrayList(ArrayList<ArrayList<String>> aliases) {
-        for (String command : AliasCommand.getCommands()) {
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
             aliases.add(new ArrayList<>());
         }
-        for (String key: aliasCommandMap.keySet()) {
+
+        String[] sortedKeys = sortAliasKeysByAlphabeticalOrder();
+        for (String key: sortedKeys) {
             String command = aliasCommandMap.get(key);
             aliases.get(AliasCommand.getCommands().indexOf(command)).add(key);
         }
+    }
+
+    /**
+     * Sorts aliases by alphabetical order.
+     */
+    private String[] sortAliasKeysByAlphabeticalOrder() {
+        String[] sortedKeys = aliasCommandMap.keySet().toArray(new String[0]);
+        Arrays.sort(sortedKeys);
+        return sortedKeys;
     }
 
     /**
@@ -1398,7 +1413,9 @@ public class GoogleMapsDisplay extends UiPart<Region> {
     @Subscribe
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        hideAllPanel();
+        Platform.runLater(() -> {
+            hideAllPanel();
+        });
     }
 ```
 ###### \java\seedu\address\ui\VenueTable.java

@@ -1,64 +1,39 @@
+//@@author jaronchan
 package guitests.guihandles;
 
-import java.net.URL;
-
-import guitests.GuiRobot;
-import javafx.concurrent.Worker;
 import javafx.scene.Node;
-import javafx.scene.web.WebEngine;
-import javafx.scene.web.WebView;
+import javafx.scene.layout.VBox;
 
 /**
  * A handler for the {@code BrowserPanel} of the UI.
  */
 public class DailySchedulerPanelHandle extends NodeHandle<Node> {
 
-    public static final String BROWSER_ID = "#browser";
+    public static final String DAILY_SCHEDULER_PLACEHOLDER = "#dailySchedulerPlaceholder";
+    private static final String EVENTS_LIST_STACK_FIELD_ID = "#eventsListStack";
+    private static final String BUTTON_STACK_FIELD_ID = "#buttonStack";
 
-    private boolean isWebViewLoaded = true;
+    private final VBox eventsListStack;
+    private final VBox buttonStack;
 
-    private URL lastRememberedUrl;
+    private int numOfEventsShown;
+    private int numOfButtons;
 
-    public DailySchedulerPanelHandle(Node browserPanelNode) {
-        super(browserPanelNode);
+    public DailySchedulerPanelHandle(Node dailySchedulerPanelNode) {
+        super(dailySchedulerPanelNode);
 
-        WebView webView = getChildNode(BROWSER_ID);
-        WebEngine engine = webView.getEngine();
-        new GuiRobot().interact(() -> engine.getLoadWorker().stateProperty().addListener((obs, oldState, newState) -> {
-            if (newState == Worker.State.RUNNING) {
-                isWebViewLoaded = false;
-            } else if (newState == Worker.State.SUCCEEDED) {
-                isWebViewLoaded = true;
-            }
-        }));
+        this.eventsListStack = getChildNode(EVENTS_LIST_STACK_FIELD_ID);
+        this.buttonStack = getChildNode(BUTTON_STACK_FIELD_ID);
+
+        this.numOfEventsShown = this.eventsListStack.getChildren().size();
+        this.numOfButtons = this.buttonStack.getChildren().size();
     }
 
-    /**
-     * Returns the {@code URL} of the currently loaded page.
-     */
-    public URL getLoadedUrl() {
-        return WebViewUtil.getLoadedUrl(getChildNode(BROWSER_ID));
+    public int getNumOfEventsShown() {
+        return numOfEventsShown;
     }
 
-    /**
-     * Remembers the {@code URL} of the currently loaded page.
-     */
-    public void rememberUrl() {
-        lastRememberedUrl = getLoadedUrl();
-    }
-
-    /**
-     * Returns true if the current {@code URL} is different from the value remembered by the most recent
-     * {@code rememberUrl()} call.
-     */
-    public boolean isUrlChanged() {
-        return !lastRememberedUrl.equals(getLoadedUrl());
-    }
-
-    /**
-     * Returns true if the browser is done loading a page, or if this browser has yet to load any page.
-     */
-    public boolean isLoaded() {
-        return isWebViewLoaded;
+    public int getNumOfButtons() {
+        return numOfButtons;
     }
 }

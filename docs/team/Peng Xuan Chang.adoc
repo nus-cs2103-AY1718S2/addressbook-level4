@@ -58,7 +58,6 @@ include::../UserGuide.adoc[tag=GUI]
 
 include::../UserGuide.adoc[tag=listcommand]
 
-include::../UserGuide.adoc[tag=undoredo]
 
 == Contributions to the Developer Guide
 

@@ -1,3 +1,4 @@
+//@@author A0143487X
 package seedu.address.logic.commands;
 
 import java.io.BufferedWriter;
@@ -6,23 +7,22 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 import javafx.collections.ObservableList;
-
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
 /**
  * Exports listed person from the address book into file with specified filename.
  */
-public class ExportToCsvCommand extends Command {
-    public static final String COMMAND_WORD = "exportCSV";
-    public static final String COMMAND_ALIAS = "exCSV";
+public class ExportListedPersonsCommand extends Command {
+    public static final String COMMAND_WORD = "exportListedPersons";
+    public static final String COMMAND_ALIAS = "exLP";
 
     //EDIT START
     public static final String COMMAND_SYNTAX = COMMAND_WORD + " "
             + "FILENAME";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports all listed persons to "
-            + "/data/exported/.. folder as a CSV file"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports all listed persons as a CSV file"
+            + " with file name FILENAME as specified\n"
             + "Parameters: FILENAME\n"
             + "Example: " + COMMAND_WORD + " FILENAME";
 
@@ -32,11 +32,9 @@ public class ExportToCsvCommand extends Command {
     //EDIT END
 
     private final String pathName;
-    private final int fExistedNameChanged;
 
-    public ExportToCsvCommand(String inputPath, int fExistedNameChanged) {
+    public ExportListedPersonsCommand(String inputPath) {
         this.pathName = inputPath;
-        this.fExistedNameChanged = fExistedNameChanged;
     }
 
     @Override
@@ -70,14 +68,7 @@ public class ExportToCsvCommand extends Command {
         } catch (IOException e) {
             e.printStackTrace();
         }
-        //
 
-        String msgFileNameChanged = "";
-        // do action
-        if (fExistedNameChanged == 1) {
-            msgFileNameChanged = "\n\"(1)\" appended to filename as file with input file name previously existed";
-        }
-
-        return new CommandResult(MESSAGE_SUCCESS + " " + pathName + msgFileNameChanged);
+        return new CommandResult(MESSAGE_SUCCESS + " " + pathName);
     }
 }

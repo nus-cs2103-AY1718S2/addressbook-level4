@@ -8,40 +8,28 @@
 
 == Overview
 
-== TO EDIT CONTENT
-AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+ContactSails is a desktop application targeted for use for social media marketers based off AddressBook - Level 4 architecture.
+It includes new features to allow the target group to perform their jobs more efficiently.
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles.
+The user interacts with it using a CLI, and it has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
 
-* *Major enhancement*: added *the ability to undo/redo previous commands*
-** What it does: allows the user to undo all previous commands one at a time. Preceding undo commands can be reversed by using the redo command.
-** Justification: This feature improves the product significantly because a user can make mistakes in commands and the app should provide a convenient way to rectify them.
-** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
-** Credits: _{mention here if you reused any code/ideas from elsewhere or if a third-party library is heavily used in the feature so that a reader can make a more accurate judgement of how much effort went into the feature}_
+* *Major enhancement*: added *features in improving compatibility with other applications such as data handling software by exporting relevant data in compatible file format*
+** What it does: allows the user to export relevant data to a local file to aid workflow of the target group.
+** Justification: This feature allows the user to export contact and order data to relevant file formats which can allow an integration of ContactSails into the users preferred workflow applications aiding their productivity and reduce resistance in accepting ContactSails usage in their workflow since the exported file is in a format which many productivity and data handling applications can view and edit.
+** Highlights: This enhancement affects existing commands and commands to be added in future. Future possibilities include import features, UI for these features and possibly even having some functionality so users will have the option of data management within ContactSails instead and will not need to use the other applications. The implementation too was challenging for this release and thus was not implemented at this stage.
 
-* *Minor enhancement*: added a history command that allows the user to navigate to previous commands using up/down keys.
-
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/A0143487X.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/A0143487X.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
-** Enhancements to existing features:
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** Contributed to releases on GitHub
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-** Tools:
-*** Integrated a third party library (Natty) to the project (https://github.com[#42])
-*** Integrated a new Github plugin (CircleCI) to the team repo
+*** Reported bugs and suggestions for other teams in the class
 
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -50,23 +38,4 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=undoredo]
-
-include::../UserGuide.adoc[tag=dataencryption]
-
-== Contributions to the Developer Guide
-
-|===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
-|===
-
-include::../DeveloperGuide.adoc[tag=undoredo]
-
-include::../DeveloperGuide.adoc[tag=dataencryption]
-
-
-== PROJECT: PowerPointLabs
-
----
-
-_{Optionally, you may include other projects in your portfolio.}_
+include::../UserGuide.adoc[tag=exportdata]

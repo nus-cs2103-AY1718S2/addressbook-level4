@@ -780,6 +780,62 @@ Format: `entryclear` +
 Command Alias: `ec`
 
 // end::calendarandentries[]
+
+// START EXPORT
+// tag::exportdata[]
+=== Exporting Data
+
+This section describes commands you can use to export data from ContactSails
+
+==== Exporting listed persons : `exportListedPersons`
+
+Description: Exports the current contact details of the current person listing. +
+
+****
+Format: `exportListedPersons FILENAME` +
+****
+
+Command Alias: `exLP` +
+
+****
+* FILENAME refers to the name of file the user wants to save the exported data to.
+* FILENAME should only contain characters from digits 0-9 and alphabets a-z or A-Z
+* FILENAME should consist of at least 1 character and at most 30 characters.
+****
+
+Example:
+
+Type `exportListedPersons somePersonFile` OR
+`exLP somePersonFile` into the Command Box. +
+
+This creates a somePersonFile.csv file with the contact details of listed persons.
+
+==== Exporting listed orders : `exportListedOrders`
+
+Description: Exports the current details of the current order listing. +
+
+****
+Format: `exportListedOrders FILENAME` +
+****
+
+Command Alias: `exLO` +
+
+****
+* FILENAME refers to the name of file the user wants to save the exported data to.
+* FILENAME should only contain characters from digits 0-9 and alphabets a-z or A-Z
+* FILENAME should consist of at least 1 character and at most 30 characters.
+****
+
+Example:
+
+Type `exportListedOrders someOrderFile` OR
+`exLO someOrderFile` into the Command Box. +
+
+This creates a someOrderFile.csv file with the details of listed orders.
+
+// end::exportdata[]
+// END EXPORT
+
 === Miscellaneous Commands
 
 This section describes other commands you can use in ContactSails.
@@ -983,6 +1039,14 @@ The following sections summarize the commands you can use in ContactSails.
 |Delete an existing calendar entry. |`entrydelete ENTRY_INDEX` |`ed` |`entrydelete 1`
 |List all calendar entries. |`entrylist` |`el` |`entrylist`
 |Clear all calendar entries. |`entryclear`  |`ec` |`entryclear`
+|===
+
+=== Managing Export
+[width="99%",cols="25%,25%,25%,25%",options="header",]
+|===
+|Function |Command |Alias |Example
+|Export contact details of listed persons. |`exportListedPersons FILENAME` |`exLP` |`exportListedPersons somePersonFile`
+|Export details of listed orders. |`exportListedOrders FILENAME` |`exLO` |`exportListedOrders somePersonFile`
 |===
 
 === Miscellaneous Commands

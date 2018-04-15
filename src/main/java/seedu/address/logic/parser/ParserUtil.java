@@ -3,6 +3,7 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATE_FORMAT;
 
+import java.io.File;
 import java.time.LocalDate;
 import java.time.format.DateTimeParseException;
 import java.util.Collection;
@@ -11,6 +12,8 @@ import java.util.Optional;
 import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.FileExistsException;
+import seedu.address.commons.exceptions.IllegalFilenameException;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.DateUtil;
 import seedu.address.commons.util.StringUtil;
@@ -50,6 +53,7 @@ public class ParserUtil {
             + "and adhere to the following constraints:\\n\"\n"
             + "1. The nameOfFile should only contain characters from digits 0-9 and alphabets a-z or A-Z\"\n"
             + "2. The nameOfFile should be 30 characters or less.\"\n";
+    public static final String MESSAGE_FILE_ALREADY_EXISTS = "\"File already exists, choose another filename.\"\n";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -500,9 +504,10 @@ public class ParserUtil {
      * Parses a {@code String filename} into an {@code filename}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code filename} is invalid.
+     * @throws IllegalFilenameException if the given {@code filename} is invalid.
+     * @throws FileExistsException if the given {@code filename} already exists.
      */
-    public static String parseFilename(String filename) throws IllegalValueException {
+    public static String parseFilename(String filename) throws IllegalFilenameException, FileExistsException  {
         //requireNonNull(filename);
         filename = filename.trim();
         String filenameVerified = "";
@@ -517,8 +522,12 @@ public class ParserUtil {
             }
         }
 
+        File outputFile = new File(filenameVerified + ".csv");
+
         if (filenameLength < 1 || filenameLength > 30 || !(filename.equals(filenameVerified))) {
-            throw new IllegalValueException(MESSAGE_FILENAME_CONSTRAINTS);
+            throw new IllegalFilenameException(MESSAGE_FILENAME_CONSTRAINTS);
+        } else if (outputFile.exists()) {
+            throw new FileExistsException(MESSAGE_FILE_ALREADY_EXISTS);
         }
 
         return filename;

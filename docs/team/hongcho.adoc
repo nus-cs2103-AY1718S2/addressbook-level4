@@ -1,0 +1,70 @@
+= Lim Hong Cho - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: TuitionCor
+
+---
+
+== Overview
+
+TuitionCor is for those who *prefer to use a desktop app for managing client information*. More importantly, TuitionCor is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TuitionCor can get your client management tasks done faster than traditional GUI apps.
+
+== Summary of contributions
+
+* *Major enhancement*: added *close, restore and switch command*
+** What it does:
+*** Close command enables user to be able to close a client which is either a student and tutor. The closed client will be stored and displayed in a closed client list.
+*** Restore command enables user to restore a previously closed client from the closed client list. The restored client will now be stored and displayed in active client list.
+*** Switch command allows user to toggle between active client list and closed client list.
+** Justification: This feature improves the product significantly because after a client is successfully assigned by the user, the client can be closed instead of deleting. This allows the user to maintain an organised and updated active client list containing unassigned clients only. Furthermore, information of past assigned clients can also be retrieved conveniently from the closed clients list if required. Clients can also be restored in an event that they become active again.
+** Highlights: This enhancement paves the foundation for further enhancement to TuitionCor.
+
+* *Minor enhancement*: added a sort commands to allow sorting by name, subject, grade and location*
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F11-B2/main/blob/master/collated/functional/olimhc.md[Functional code]] [https://github.com/CS2103JAN2018-F11-B2/main/blob/master/collated/test/olimhc.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Enhanced find command to be able to match different grade formats and multiple grade fields. (Pull requests https://github.com/CS2103JAN2018-F11-B2/main/pull/121[#121])
+*** Reworked the Ui to allow display of tutor and student list. (Pull requests https://github.com/CS2103JAN2018-F11-B2/main/pull/18[#18])
+*** Added an extra status bar to allow users to know whether they are viewing active client list or closed client list. (Pull requests https://github.com/CS2103JAN2018-F11-B2/main/pull/91[#91])
+** Community:
+*** Provided useful bug reports and suggestions for other teams. (Issues https://github.com/CS2103JAN2018-W13-B4/main/issues/218[#218], https://github.com/CS2103JAN2018-W13-B4/main/issues/230[#230], https://github.com/CS2103JAN2018-W13-B4/main/issues/224[#224])
+** Tools:
+*** Integrated a new Github plugin (TravisCi) to the team repo.
+*** Enabled auto publishing of documentation.
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=close]
+
+include::../UserGuide.adoc[tag=restore]
+
+include::../UserGuide.adoc[tag=switch]
+
+include::../UserGuide.adoc[tag=gmail]
+
+include::../UserGuide.adoc[tag=email]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=closedClientList]
+
+include::../DeveloperGuide.adoc[tag=close]
+
+include::../DeveloperGuide.adoc[tag=restore]
+
+include::../DeveloperGuide.adoc[tag=switch]
+

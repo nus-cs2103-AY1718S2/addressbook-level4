@@ -12,10 +12,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String SAVE_DISPLAY_STATUS_ID = "#displayStatus";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
+    private final StatusBar displayStatusNode;
 
+    private String lastRememberedDisplayStatus;
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
 
@@ -24,6 +27,7 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
+        this.displayStatusNode = getChildNode(SAVE_DISPLAY_STATUS_ID);
     }
 
     /**
@@ -38,6 +42,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public String getSaveLocation() {
         return saveLocationNode.getText();
+    }
+
+    /**
+     * Returns the text of the 'display status' portion of the status bar.
+     */
+    public String getDisplayStatus() {
+        return displayStatusNode.getText();
     }
 
     /**
@@ -69,4 +80,22 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
     public boolean isSaveLocationChanged() {
         return !lastRememberedSaveLocation.equals(getSaveLocation());
     }
+
+    /**
+     * Remembers the content of the 'display status' portion of the status bar.
+     */
+    public void rememberDisplayStatus() {
+        lastRememberedDisplayStatus = getDisplayStatus();
+    }
+
+    /**
+     * Returns true if 'display status' is different from the value remembered by the most
+     * recent {@code rememberDisplayStatus()} call.
+     */
+    public boolean isDisplayStatusChanged() {
+        return !lastRememberedDisplayStatus.equals(getDisplayStatus());
+    }
+
 }
+
+

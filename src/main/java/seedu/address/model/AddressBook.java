@@ -11,20 +11,23 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.UniquePersonList;
+import seedu.address.model.person.Category;
+import seedu.address.model.person.Client;
+import seedu.address.model.person.UniqueClientList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
-
+//@@author shookshire
 /**
  * Wraps all data at the address-book level
  * Duplicates are not allowed (by .equals comparison)
  */
 public class AddressBook implements ReadOnlyAddressBook {
-
-    private final UniquePersonList persons;
+    private final UniqueClientList students;
+    private final UniqueClientList tutors;
+    private final UniqueClientList closedStudents;
+    private final UniqueClientList closedTutors;
     private final UniqueTagList tags;
 
     /*
@@ -35,10 +38,14 @@ public class AddressBook implements ReadOnlyAddressBook {
      *   among constructors.
      */
     {
-        persons = new UniquePersonList();
+        students = new UniqueClientList();
+        tutors = new UniqueClientList();
+        closedTutors = new UniqueClientList();
+        closedStudents = new UniqueClientList();
         tags = new UniqueTagList();
     }
 
+    //@@author
     public AddressBook() {}
 
     /**
@@ -50,11 +57,24 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     //// list overwrite operations
-
-    public void setPersons(List<Person> persons) throws DuplicatePersonException {
-        this.persons.setPersons(persons);
+    //@@author shookshire
+    public void setStudents(List<Client> students) throws DuplicatePersonException {
+        this.students.setClients(students);
     }
 
+    public void setTutors(List<Client> tutors) throws DuplicatePersonException {
+        this.tutors.setClients(tutors);
+    }
+
+    public void setClosedStudents(List<Client> closedStudents) throws DuplicatePersonException {
+        this.closedStudents.setClients(closedStudents);
+    }
+
+    public void setClosedTutors(List<Client> closedTutors) throws DuplicatePersonException {
+        this.closedTutors.setClients(closedTutors);
+    }
+
+    //@@author
     public void setTags(Set<Tag> tags) {
         this.tags.setTags(tags);
     }
@@ -65,63 +85,173 @@ public class AddressBook implements ReadOnlyAddressBook {
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
-        List<Person> syncedPersonList = newData.getPersonList().stream()
+        List<Client> syncedStudentList = newData.getStudentList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        List<Client> syncedTutorList = newData.getTutorList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        List<Client> syncedClosedStudentList = newData.getClosedStudentList().stream()
+                .map(this::syncWithMasterTagList)
+                .collect(Collectors.toList());
+        List<Client> syncedClosedTutorList = newData.getClosedTutorList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
 
         try {
-            setPersons(syncedPersonList);
+            setStudents(syncedStudentList);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("AddressBooks should not have duplicate persons");
+            throw new AssertionError("AddressBooks should not have duplicate students");
+        }
+        try {
+            setTutors(syncedTutorList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate tutors");
+        }
+        try {
+            setClosedStudents(syncedClosedStudentList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate students");
+        }
+        try {
+            setClosedTutors(syncedClosedTutorList);
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("AddressBooks should not have duplicate tutors");
         }
     }
 
     //// person-level operations
-
+    //@@author shookshire
     /**
-     * Adds a person to the address book.
-     * Also checks the new person's tags and updates {@link #tags} with any new tags found,
-     * and updates the Tag objects in the person to point to those in {@link #tags}.
+     * Adds a tutor to TuitionCor.
+     * Also checks the new tutor's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the tutor to point to those in {@link #tags}.
      *
      * @throws DuplicatePersonException if an equivalent person already exists.
      */
-    public void addPerson(Person p) throws DuplicatePersonException {
-        Person person = syncWithMasterTagList(p);
+    public void addTutor(Client t) throws DuplicatePersonException {
+        Client tutor = syncWithMasterTagList(t);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        persons.add(person);
+        tutors.add(tutor, closedTutors);
     }
 
     /**
-     * Replaces the given person {@code target} in the list with {@code editedPerson}.
-     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedPerson}.
+     * Adds a student to TuitionCor.
+     * Also checks the new student's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the student to point to those in {@link #tags}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addStudent(Client t) throws DuplicatePersonException {
+        Client student = syncWithMasterTagList(t);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        students.add(student, closedStudents);
+    }
+
+    /**
+     * Adds a student to closed student's list.
+     * Also checks the closed student's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the closed student to point to those in {@link #tags}.
+     *
+     * @throws AssertionError if an equivalent person already exists.
+     */
+    public void addClosedStudent(Client t) throws AssertionError {
+        Client closedStudent = syncWithMasterTagList(t);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        closedStudents.add(closedStudent);
+    }
+
+    /**
+     * Adds a tutor to closed tutor's list.
+     * Also checks the closed tutor's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the closed tutor to point to those in {@link #tags}.
+     *
+     * @throws AssertionError if an equivalent person already exists.
+     */
+    public void addClosedTutor(Client t) throws AssertionError {
+        Client closedTutor = syncWithMasterTagList(t);
+        // TODO: the tags master list will be updated even though the below line fails.
+        // This can cause the tags master list to have additional tags that are not tagged to any person
+        // in the person list.
+        closedTutors.add(closedTutor);
+    }
+
+    /**
+     * For test cases use and when adding sample data
+     * Adds a closed client to TuitionCor.
+     * Also checks the new student's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the tutor to point to those in {@link #tags}.
+     *
+     */
+    public void addClosedClient(Client t) {
+        if (t.getCategory().isStudent()) {
+            Client closedStudent = syncWithMasterTagList(t);
+            closedStudents.add(closedStudent);
+        } else {
+            Client closedTutor = syncWithMasterTagList(t);
+            closedTutors.add(closedTutor);
+        }
+    }
+
+    /**
+     * For test cases use and when adding sample data
+     * Adds a client to TuitionCor
+     * Also checks the new student's tags and updates {@link #tags} with any new tags found,
+     * and updates the Tag objects in the tutor to point to those in {@link #tags}.
+     *
+     * @throws DuplicatePersonException if an equivalent person already exists.
+     */
+    public void addClient(Client t) throws DuplicatePersonException {
+        if (t.getCategory().isStudent()) {
+            Client student = syncWithMasterTagList(t);
+            students.add(student);
+        } else {
+            Client tutor = syncWithMasterTagList(t);
+            tutors.add(tutor);
+        }
+    }
+
+    /**
+     * Replaces the given client {@code target} in the list with {@code editedClient}.
+     * {@code AddressBook}'s tag list will be updated with the tags of {@code editedClient}.
+     * Either closedStudents or closedTutors will be pass in for duplication check when editing the client in active
+     * list.
+     * @throws DuplicatePersonException if updating the client's details causes the client to be equivalent to
+     *      another existing client in the list.
      * @throws PersonNotFoundException if {@code target} could not be found in the list.
      *
-     * @see #syncWithMasterTagList(Person)
+     * @see #syncWithMasterTagList(Client)
      */
-    public void updatePerson(Person target, Person editedPerson)
+    public void updatePerson(Client target, Client editedClient, Category category)
             throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedPerson);
+        requireNonNull(editedClient);
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        Client syncedEditedPerson = syncWithMasterTagList(editedClient);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        if (category.isStudent()) {
+            students.setClient(target, syncedEditedPerson, closedStudents);
+        } else {
+            tutors.setClient(target, syncedEditedPerson, closedTutors);
+        }
     }
 
+    //@@author
     /**
-     *  Updates the master tag list to include tags in {@code person} that are not in the list.
-     *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
+     *  Updates the master tag list to include tags in {@code client} that are not in the list.
+     *  @return a copy of this {@code client} such that every tag in this person points to a Tag object in the master
      *  list.
      */
-    private Person syncWithMasterTagList(Person person) {
-        final UniqueTagList personTags = new UniqueTagList(person.getTags());
-        tags.mergeFrom(personTags);
+    private Client syncWithMasterTagList(Client client) {
+        final UniqueTagList clientTags = new UniqueTagList(client.getTags());
+        tags.mergeFrom(clientTags);
 
         // Create map with values = tag object references in the master list
         // used for checking person tag references
@@ -130,23 +260,54 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
-        personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        clientTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
+        return new Client(
+                client.getName(), client.getPhone(), client.getEmail(), client.getAddress(), correctTagReferences,
+                client.getLocation(), client.getGrade(), client.getSubject(), client.getCategory());
     }
 
+    //@@author shookshire
     /**
-     * Removes {@code key} from this {@code AddressBook}.
+     * Removes {@code key} from the active client list in this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
      */
-    public boolean removePerson(Person key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
+    public boolean removeClient(Client key, Category category) throws PersonNotFoundException {
+        Boolean isSuccess;
+
+        if (category.isStudent()) {
+            isSuccess = students.remove(key);
+        } else {
+            isSuccess = tutors.remove(key);
+        }
+
+        if (isSuccess) {
             return true;
         } else {
             throw new PersonNotFoundException();
         }
     }
 
+    /**
+     * Removes {@code key} from the closed client list in this {@code AddressBook}.
+     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
+     */
+    public boolean removeClosedClient(Client key, Category category) throws PersonNotFoundException {
+        Boolean isSuccess;
+
+        if (category.isStudent()) {
+            isSuccess = closedStudents.remove(key);
+        } else {
+            isSuccess = closedTutors.remove(key);
+        }
+
+        if (isSuccess) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -157,13 +318,32 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return students.asObservableList().size() + " students, "
+                + tutors.asObservableList().size() + " tutors, "
+                + tags.asObservableList().size() +  " tags";
         // TODO: refine later
     }
 
+    //@@author shookshire
     @Override
-    public ObservableList<Person> getPersonList() {
-        return persons.asObservableList();
+    public ObservableList<Client> getStudentList() {
+        return students.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Client> getTutorList() {
+        return tutors.asObservableList();
+    }
+
+    //@@author
+    @Override
+    public ObservableList<Client> getClosedStudentList() {
+        return closedStudents.asObservableList();
+    }
+
+    @Override
+    public ObservableList<Client> getClosedTutorList() {
+        return closedTutors.asObservableList();
     }
 
     @Override
@@ -175,13 +355,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
+                && this.students.equals(((AddressBook) other).students)
+                && this.tutors.equals(((AddressBook) other).tutors)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(students, tutors, tags);
     }
 }

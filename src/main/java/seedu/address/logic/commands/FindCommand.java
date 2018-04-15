@@ -1,31 +1,44 @@
 package seedu.address.logic.commands;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.SearchContainsKeywordsPredicate;
+import seedu.address.ui.util.ListPanelController;
 
 /**
- * Finds and lists all persons in address book whose name contains any of the argument keywords.
- * Keyword matching is case sensitive.
+ * Finds and lists all persons in address book that contains any of the argument keywords.
+ * Keyword matching is case insensitive.
  */
 public class FindCommand extends Command {
 
     public static final String COMMAND_WORD = "find";
+    public static final String COMMAND_ALIAS = "f";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons whose names contain any of "
-            + "the specified keywords (case-sensitive) and displays them as a list with index numbers.\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Finds all persons that contain any of "
+            + "the specified keywords (case-insensitive) and displays them as a list with index numbers.\n"
             + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
             + "Example: " + COMMAND_WORD + " alice bob charlie";
 
-    private final NameContainsKeywordsPredicate predicate;
+    private final SearchContainsKeywordsPredicate predicate;
 
-    public FindCommand(NameContainsKeywordsPredicate predicate) {
+    public FindCommand(SearchContainsKeywordsPredicate predicate) {
         this.predicate = predicate;
     }
 
+    //@@author Zhu-Jiahui
     @Override
     public CommandResult execute() {
-        model.updateFilteredPersonList(predicate);
-        return new CommandResult(getMessageForPersonListShownSummary(model.getFilteredPersonList().size()));
+        if (ListPanelController.isCurrentDisplayActiveList()) {
+            model.updateFilteredStudentList(predicate);
+            model.updateFilteredTutorList(predicate);
+            return new CommandResult(getMessageForClientListShownSummary(
+                    model.getFilteredStudentList().size(), model.getFilteredTutorList().size()));
+        } else {
+            model.updateFilteredClosedStudentList(predicate);
+            model.updateFilteredClosedTutorList(predicate);
+            return new CommandResult(getMessageForClientListShownSummary(
+                    model.getFilteredClosedStudentList().size(), model.getFilteredClosedTutorList().size()));
+        }
     }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

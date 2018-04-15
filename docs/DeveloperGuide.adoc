@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= TuitionCor - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,11 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F11-B2/main
+:forked from Team SE-EDU
+:Team SE-EDU: https://github.com/se-edu/addressbook-level4
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F11-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Setting up
 
@@ -68,7 +70,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F11-B2/main` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-F11-B2/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -160,7 +162,7 @@ image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `StudentListPanel`, `TutorListPanel`, `StatusBarFooter` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -185,13 +187,15 @@ link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 .  `Logic` uses the `AddressBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a client) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1 c/s")` API call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions Inside the Logic Component for the `delete 1 c/s` Command
 image::DeletePersonSdForLogic.png[width="800"]
+
+// tag::modelComponent[]
 
 [[Design-Model]]
 === Model component
@@ -205,8 +209,10 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Client>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
+
+// end::modelComponent[]
 
 [[Design-Storage]]
 === Storage component
@@ -229,6 +235,92 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+
+// tag::modelImplementation[]
+
+=== Model
+==== Current Implementation
+
+The AddressBook currently stores Clients in separate UniqueClientList (students, tutors, closedStudents, closedTutors) depending on category the Client belongs to.
+
+Due to students and tutors being stored as 2 separate UniqueClientList, commands that work on only 1 of the 2 list (eg. addclient, edit, delete etc.) would require the model to either expose 2 functions for the Command to call or to take in a Category argument which the model would then handle as shown below.
+
+image::StudentTutorList.png[width="800"]
+
+Commands that work only on either students or tutors would have to declare which Category they wish to work on in the command input. For example for the delete command would have to input `delete 1 c/s` to represent that they wish to delete from students.
+
+Hence, commands that work only on either students or tutors have to either be split into 2 functions or take in an additional argument stating which UniqueClientList to work on as shown below.
+
+.Example of splitting call into 2 functions
+image::SeparateFunctionForStudentTutor.png[width="800"]
+
+----
+public class updatePerson(Client target, Client editedClient, Category category) {
+    if (category.isStudent) {
+        // ... work on students ...
+    } else if (category.isTutor) {
+        // ... work on tutors ...
+    }
+}
+----
+Example of function that takes in additional argument to determine whether to work on students or tutors
+
+==== Design Considerations of Model
+
+===== Aspect: Keeping students and tutors in 1 or 2 list
+* **Alternative 1 (current choice):** Keep students and tutors separated in 2 UniqueClientList
+** Pros: Does not have to do an additional search through the list to differentiate students and tutors
+** Cons: Calls that work on only one of the 2 list would have to be separated.
+* **Alternative 2:** Keep all clients in the same UniqueClientList and differentiate them using the clients' Category value
+** Pros: Easy to implement.
+** Cons: Have to run an additional search through the list to differentiate students and tutors which could be slow when database is large.
+
+===== Aspect: Whether to have different commands for students and tutors
+* **Alternative 1 (current choice):** Make the Category prefix compulsory for any command that work on only 1 list
+** Pros: Minimises number of commands and use already existing prefix instead.
+** Cons: Needs to parse an additional prefix
+* **Alternative 2:** Have separate commands (eg. deleteStudent and deleteTutor instead of just delete)
+** Pros: Easy to implement.
+** Cons: Large number of duplicated commands.
+
+=== Client and the fields of Client
+==== Current Implementation
+
+The Client Class extends Person that consists of 5 fields (name, phone, email, address, tags) while Client has additional 4 fields (location, grade, subject, category).
+
+All of the fields uses a specific class that takes a single String as it's value as shown below.
+
+.Example of Subject field with it's value
+image::ClientFieldExample.png[width="800"]
+
+Hence, for fields that should actually take in multiple values (eg. Subject taking in "math physics chemistry") are currently stored as a single String while operations that work on the individual keywords have to manually split them into separate keywords through String operations.
+
+----
+private static Client createEditedPerson(Client personToEdit, Subject toRemove) {
+        assert personToEdit != null;
+
+        String editSubjects = personToEdit.getSubject().value;
+        ArrayList<String> editSubjectArray = new ArrayList<>(Arrays.asList(editSubjects.split(" ")));
+        editSubjectArray.remove(toRemove.value);
+
+        StringBuilder sb = new StringBuilder();
+        .....
+----
+
+As you can see from this section taken from Remove Command, after getting the String of the value of Subject, it has to use String operations to split it based on whitespace and reconstruct the string again later.
+
+On the other hand, a client can have multiple Tags as the Tag are stored through an UniqueTagList.
+
+==== Design Considerations
+===== Aspect: To store multiple values in a single String or as separate objects in a list
+* **(Alternative 1 (current choice)):** Store all the values as a single String and have commands that work on individual keywords split them.
+** Pros: Most commands simply require to read the value directly as a String and does not require to work on individual keyword. Does not require multiple types of unique list to be created for each of the field.
+** Cons: Lacks in flexibility in being able to individual values.
+* **(Alternative 2)** Create a list similar to UniqueTagList for each field that requires the storage of multiple values
+** Pros: Allows for greater flexibility and the ability to sync the various existing values in the AddressBook.
+** Cons: Require many lists to be stored. Whenever more fields are added in future enhancements, it could potentially require the excessive creation of a new type unique list each time.
+
+// end::modelImplementation[]
 
 // tag::undoredo[]
 === Undo/Redo feature
@@ -358,12 +450,504 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::match[]
+=== Match Function
+==== Current Implementation
+The match function behaves like a multi-layer find function. It helps to match clients that share one or more similar attributes.
 
-_{Explain here how the data encryption feature will be implemented}_
+For example, John is a Tutor client that is staying in the `west` of Singapore, and is looking for students that requires help in `s4`(secondary4) `math`.
 
-// end::dataencryption[]
+first, locate John by either using `find John` or finding him in the tutor list. Observe John's Index number.
+
+image::MatchSequence1.png[width="800']
+
+from the sample image above, we can see that John's index number is 6 in tutors list.
+
+image::MatchSequence2.png[width="800']
+Keying in the command in the format `match` `INDEX` `Category`. eg: `match 6 c/t`
+
+image::MatchSequence3.png[width="800']
+Match function returns a list with all the potential students for John with the highest match (all attributes matched) on top of the list.
+
+All the matched attributes are highlighted in orange.
+
+==== Step by Step breakdown
+
+match function behaves like at double-layered find function. When a user enters `match 1 c/t`, the system will first need to extract the first tutor from the tutor's list.
+
+To do this, first we need to identify the client is a tutor or a student.
+
+The detailed code is shown below:
+[source,java]
+----
+if (category.isStudent()) {
+            lastShownList = model.getFilteredStudentList();
+        } else {
+            lastShownList = model.getFilteredTutorList();
+        }
+        clientToMatch = lastShownList.get(targetIndex.getZeroBased());
+
+----
+
+[NOTE]
+If the user input format is invalid, an exception will be thrown
+
+
+When the client is located, his data (location, grade and subject) are then sent to `MatchContainsKeywordsPredicate.java`
+
+The detailed code is shown below:
+
+[source,java]
+----
+    @Override
+    public boolean test(Client other) {
+        boolean isMatch = false;
+
+        if(other.getLocation().equals(client.getLocation())) {
+            isMatch = true;
+        }
+        if(other.getGrade().equals(client.getGrade())) {
+            isMatch = true;
+        }
+        if(other.getSubject().equals(client.getSubject())) {
+            isMatch = true;
+        }
+        return isMatch;
+    }
+
+----
+[NOTE]
+If there is no match client found, an empty list will be shown.
+
+image::MatchZeroClient.png[width="800']
+
+If the input client is a tutor, the tutor list will only be showing the particular of the input client.
+
+image::MatchSequence3.png[width="800']
+
+this is done in MatchContainsPersonsPredicate.java
+The detailed code is shown below:
+
+[source,java]
+----
+public boolean test(Client other) {
+        return other.toString().equals(client.toString());
+    }
+----
+A sequence diagram is shown below to show the current design when user input "match 1 c/s"
+
+image::MatchSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: UserInput
+
+* **Alternative 1 (current choice):** User key in client index displayed with with client's category. e.g `match 1 c/t`.
+** Pros: There will be no mismatch since user specify the exact client to match with.
+** Cons: More user input and extra step is taken. User have to locate the client's index first before using match function.
+* **Alternative 2:** user key in the client's name. e.g `match John`.
+** Pros: More convenient for user to operate, lesser steps.
+** Cons: If there are 2 John stored in the application, there is a chance for the application to match a wrong client.
+
+==== Future Implementations
+===== Optimise match function to accommodate multiple `Grade` and `Subject` fields per client.
+
+image::MatchFunctionFutureImplementation.png[width="800"]
+
+* As illustrated above, match function currently highlights all the grades/subjects of a client as long as one of the grade/subject is matched.
+* Future Implementation could be done to only highlight the respective matched grade/subject.
+// end::match[]
+
+// tag::sorting[]
+=== Sort feature
+==== Current Implementation
+
+The sort command is facilitated by a `SortCommandParser` which implements `Parser<SortCommand>`. The sort function supports sorting of different fields, namely location, grade, subject and name, which updates the list according to the sorting method.
+
+Different types of sorting methods extends abstract class `SortCommand` which extends `Command` that resides in Logic as shown in the model below.
+
+image::SortCommandClassDiagram.PNG[width="800"]
+
+The different type of sort command are implemented this way:
+[source,java]
+----
+public class SortByNameCommand extends SortCommand {
+     @Override
+     public CommandResult execute() {
+         // ... list logic ...
+     }
+}
+
+public class SortByLocationCommand extends SortCommand {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+
+public class SortByGradeCommand extends SortCommand {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+
+public class SortBySubjectCommand extends SortCommand {
+    @Override
+    public CommandResult execute() {
+        // ... list logic ...
+    }
+}
+----
+
+When the user wants to sort the specific list according to his/her needs, `SortCommandParser` will parse the user input and decide which type of SortCommand to invoke.
+The implementation is as follows:
+
+[source,java]
+----
+public SortCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        ArgumentMultimap argumentMultimap = ArgumentTokenizer.tokenize(args, PREFIX_CATEGORY);
+
+        if (!arePrefixesPresent(argumentMultimap, PREFIX_CATEGORY)
+                || argumentMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+
+        String sortType;
+        Category category;
+
+        try {
+            sortType = argumentMultimap.getPreamble();
+            category = ParserUtil.parseCategory(argumentMultimap.getValue(PREFIX_CATEGORY)).get();
+            return getSortCommandType(category, sortType);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SortCommand.MESSAGE_USAGE));
+        }
+    }
+----
+
+[NOTE]
+If the user input format is invalid, an ParseException will be thrown and an error message will be displayed to user.
+
+A sequence diagram is shown below to show the current design when user input "sort l c/t".
+
+image::SortSequenceDiagram.PNG[width="800']
+
+===== Design Considerations
+
+====== Aspect: Implementation of the different sort commands
+
+* **Alternative 1 (current choice):** Make SortCommand an abstract method and allow the different sort commands to inherit from it.
+** Pros: Able to reuse constants from SortCommand
+** Cons: SortCommand might be redundant
+* **Alternative 2:** Implement multiple sort commands which extends command directly
+** Pros: Might be easier to implement
+** Cons: Messy
+
+====== Aspect: Parsing of user input for sort command
+
+* **Alternative 1 (current choice):** SortCommandParser parse one single string user input. Eg. 'sort l c/t' which sort tutor list by location.
+** Pros: Able to utilise the current Logic and Model Component for command inputs
+** Cons: Less intuitive to user.
+* **Alternative 2:** Allow multiple user input of before parsing to a command. Eg. User input sort and system will prompts for user to input which list to sort.
+** Pros: This is much more intuitive for user and allows further enhancements which require multiple command inputs.
+** Cons: This will require to overhaul of Logic and Model Component.
+
+
+// end::sorting[]
+
+// tag::closedClientList[]
+=== Closed client list
+==== Current Implementation
+
+The closed client list is where closed clients students or tutors information are stored and displayed.
+
+The implementation of the storage is similar to how clients are stored in the TuitionCor. Two `UniqueClientList` namely `closedStudents` and `closedTutors` were created to store the information of closed students and tutors.
+
+The addition of clients into their respective `UniqueClientList` are implemented this way:
+[source,java]
+----
+    public void addClosedStudent(Client t) throws AssertionError {
+        closedStudents.add(closedStudent);
+    }
+
+   public void addClosedTutor(Client t) throws AssertionError {
+        closedTutors.add(closedTutor);
+    }
+
+   public void add(Client toAdd) throws AssertionError {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new AssertionError("It's impossible to have a duplicate person here");
+        }
+        internalList.add(toAdd);
+   }
+----
+
+[NOTE]
+ An `AssertionError` is also thrown as there should not exist any duplicated person in the active list.
+
+Implementation of the removal of clients from the list are as follows:
+[source,java]
+----
+    public boolean removeClosedClient(Client key, Category category) throws PersonNotFoundException {
+        Boolean isSuccess;
+
+        if (category.isStudent()) {
+            isSuccess = closedStudents.remove(key);
+        } else {
+            isSuccess = closedTutors.remove(key);
+        }
+
+        if (isSuccess) {
+            return true;
+        } else {
+            throw new PersonNotFoundException();
+        }
+    }
+----
+
+With the addition of closed client list, certain commands will be unique to only closed or active client list
+
+Commands available in closed client's list: +
+`clear` `exit` `find` `help` `history` `list` `redo` `undo` `restore` `switch`
+
+Commands available in active client's list: +
+`addclient` `clear` `close` `delete` `edit` `exit` `find` `help` `history` `list` `match` `redo` `undo` `remove` `sort` `switch`
+
+
+A check is implemented this way in all commands features that available only when viewing active client list:
+
+[source,java]
+----
+    if (!ListPanelController.isCurrentDisplayActiveList()) {
+        throw new CommandNotAvailableInClosedViewException();
+    }
+----
+This allows `CommandNotAvailableInClosedViewException` to be thrown when the
+user is attempts to use a command unique to active list view while viewing closed list view.
+
+==== Design Considerations
+
+===== Aspect: Integration of commands which were unique to active client list to closed client list.
+* **Alternative 1 (current choice):** Limit the number of commands available to closed clients list.
+** Pros: This is easier to implement as there would be less changes to existing commands as certain commands are not relevant while viewing closed client list.
+** Cons: Design of unique commands would still have to be changed if they were to be made available to both list.
+* **Alternative 2:** Allow the display to automatically switch to either closed or active list list where the command is available upon user input.
+** Pros: This is more intuitive to users.
+** Cons: This is much harder to implement as this would include require changes to be made to the command structure.
+// end::closedClientList[]
+
+// tag::close[]
+=== Close feature
+==== Current Implementation
+
+The close command allows users to remove a particular client from the active client's list and stores it in the closed client's list.
+
+* CloseCommand extends `UndoableCommand` and this is an undoable command. It overwrites `executeUndoableCommand` in abstract class `UndoableCommand`.
+
+** It will first remove the the selected client from the active client list. If this particular client is not found, a `PersonNotFoundException` will be thrown.
+** After which, the particular removed client will be added to the closed client list. An `AssertionError` will be thrown if a duplicated client is detected as it should not be possible to have a duplicated client in the active client list in TuitionCor.
+
+The implementation is as follows:
+[source,java]
+----
+    @Override
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(clientToClose);
+        try {
+            model.deleteClient(clientToClose, category);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target client cannot be missing");
+        }
+
+        try {
+            if (category.isStudent()) {
+                model.addClosedStudent(clientToClose);
+            } else {
+                model.addClosedTutor(clientToClose);
+            }
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The client should not be duplicated");
+        }
+
+        if (category.isStudent()) {
+            return new CommandResult(String.format(MESSAGE_CLOSE_STUDENT_SUCCESS, clientToClose));
+        } else {
+            return new CommandResult(String.format(MESSAGE_CLOSE_TUTOR_SUCCESS, clientToClose));
+        }
+    }
+----
+
+A sequence diagram is shown below to show the current design when a user input "close 1 c/s"
+
+image::CloseSequenceDiagram.PNG[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of the close command
+* **Alternative 1 (current choice):** Current implementation calls model component twice to execute deleteClient and addClosedStudent or addClosedTutor.
+** Pros: This ensures that deleteClient is able to execute successfully before addClosedStudent is executed.
+** Cons: This reduces code efficiency.
+* **Alternative 2:** Implement a closeClient method in model to execute deleteClient and addClosedStudent or addClosedTutor.
+** Pros: Model can be called once.
+** Cons: New developers might no understand as this reduces code readability.
+
+// end::close[]
+
+
+// tag::restore[]
+=== Restore feature
+
+==== Current Implementation
+The restore command allows users to remove a particular client from the closed client's list and restore it back to the active client's list.
+
+* `RestoreCommand` extends `UndoableCommand` and this is an undoable command. It overwrites `executeUndoableCommand` in abstract class `UndoableCommand`.
+
+** It will first remove the the selected client from the closed client list. If this particular client is not found, a `PersonNotFoundException` will be thrown.
+** After which, the particular removed client will be added to the active client list. An AssertionError will be thrown if a duplicated client is detected as it should not be possible to have a duplicated client in the closed client list in TuitionCor.
+
+* This design is very similar to close command's design.
+
+The implementation is as follows:
+[source,java]
+----
+@Override
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(clientToRestore);
+        try {
+            model.deleteClosedClient(clientToRestore, category);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target client cannot be missing");
+        }
+
+        try {
+            if (category.isStudent()) {
+                model.addStudent(clientToRestore);
+            } else {
+                model.addTutor(clientToRestore);
+            }
+        } catch (DuplicatePersonException e) {
+            throw new AssertionError("The client should not be duplicated");
+        }
+
+        if (category.isStudent()) {
+            return new CommandResult(String.format(MESSAGE_RESTORE_STUDENT_SUCCESS, clientToRestore));
+        } else {
+            return new CommandResult(String.format(MESSAGE_CLOSE_TUTOR_SUCCESS, clientToRestore));
+        }
+    }
+----
+
+A sequence diagram is shown below to show the current design when a user input "restore 1 c/s"
+
+image::RestoreSequenceDiagram.PNG[width="800"]
+
+// end::restore[]
+
+// tag::switch[]
+=== Switch feature
+==== Current Implementation
+
+Switch commands allows user to toggle between the active and closed client's list and it extends `Command`.
+
+* Implementation of Switch command that overrides `execute()` method in `Command` is as follows:
+
+[source,java]
+----
+@Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ClientListSwitchEvent());
+        listPanelController.switchDisplay();
+        if (listPanelController.getCurrentListDisplayed() == ListPanelController.DisplayType.closedList) {
+            return new CommandResult(MESSAGE_SUCCESS + MESSAGE_CLOSED_DISPLAY_LIST);
+        } else {
+            return new CommandResult(MESSAGE_SUCCESS + MESSAGE_ACTIVE_DISPLAY_LIST);
+        }
+    }
+----
+
+* A `ListPanelController` is used to keep track of the currently displayed list and switch the list when called.
+
+[source, java]
+----
+    public void switchDisplay() {
+        switch (currentlyDisplayed) {
+        case activeList:
+            currentlyDisplayed = DisplayType.closedList;
+            break;
+
+        case closedList:
+            currentlyDisplayed = DisplayType.activeList;
+            break;
+
+        default:
+            throw new AssertionError("This should not be possible.");
+        }
+    }
+----
+
+* Switch command uses `ClientListSwitchEvent` to raise an event whenever the user wants to toggle the list displayed.
+
+[source,java]
+----
+   public class ClientListSwitchEvent extends BaseEvent {
+
+       @Override
+       public String toString() {
+           return this.getClass().getSimpleName();
+       }
+   }
+[source,java]
+----
+
+* When a event is raise it's handled by `handleClientListSwitchEvent` which resides in both `StudentListPanel` and `TutorListPanel`.
+
+[source,java]
+----
+    @Subscribe
+    private void handleClientListSwitchEvent(ClientListSwitchEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        switchListDisplay();
+    }
+----
+
+* This will allow `StudentListPanel` and `TutorListPanel` to be updated accordingly based on the current list that is on display.
+
+[source,java]
+----
+    private void switchListDisplay() {
+        ListPanelController listPanelController = ListPanelController.getInstance();
+        switch (listPanelController.getCurrentListDisplayed()) {
+        case activeList:
+            setConnectionsForClosedStudents();
+            break;
+
+        case closedList:
+            setConnectionsForStudents();
+            break;
+
+        default:
+            throw new AssertionError("This should not be possible.");
+        }
+    }
+----
+
+* A sequence diagram is shown below when switch command is entered by user.
+
+image::SwitchSequenceDiagram.PNG[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of switch command
+* **Alternative 1 (current choice):** Raise new event to indicate switch event.
+** Pros: Reduce direct coupling between components StudentListPanel and TutorListPanel with SwitchCommand
+** Cons: Code might be harder to understand.
+* **Alternative 2:** Call a method in StudentListPanel and TutorListPanel to indicate a switch request.
+** Pros: Code is easier to understand.
+** Cons: Direct coupling occurs and changing a part might affect another component.
+// end::switch[]
 
 === Logging
 
@@ -780,15 +1364,21 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile*: +
+ Tuition coordinators who handle significant number of contacts and are comfortable with CLI applications.
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* Value proposition*:
+** TuitionCor is targeted at tuition coordinators who have to manage a large amount of contacts.
+** The daily job-scope of a tuition coordinator involves the need to manage large amount of contacts and match the students to tutors according to their credentials, needs and location.
+** Therefore, TuitionCor aims to facilitate this process and make the job of a tuition coordinator easier.
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+* In addition, users are able to
+** Add clients
+** Match students to tutors or vice versa
+** Sort clients based on a particular aspect
+** Find clients based on keywords
+** Close assigned clients
+** Restore closed clients
 
 [appendix]
 == User Stories
@@ -800,33 +1390,96 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new person (tutor or student) |expand user's addressbook for future tuition coordination
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a person |remove entries that the user no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |sort contacts based on the clients' location (North, South, East, West, Central |better match students and tutors that are staying near each other.
+
+|`* * *` |user |edit the information stored |keep the information up to date
+
+|`* * *` |user |tag tutors and students with multiple fields |do multi-layer searching to better match tutors and students
+
+|`* * *` |user |categorise contacts between students and tutors |reduce the number of tagging required and make searching more convenient
+
+|`* * *` |user |group clients based on the subject they wish to study/teach (Math, Eng, Phy, Chem...) |find and match client easily by the subjects registered
+
+|`* * *` |user |record the gender preference the students/tutors have (male/female) |find and match client easily by the gender preference registered
+
+|`* * *` |user |see and compare the price that students/tutors are willing to pay/accept|match them based on pricing
+
+|`* * *` |user |search by tags added to client |generate a list of clients that have the same tags
+
+|`* * *` |user |differentiate "location" "subject" and "grade" by colours |identify "location", "subject" and "grade" attributes easily
+
+|`* * *` |user |sort the clients name |better organise my clients
+
+|`* * *` |new user |sort contacts based on clients subjects |better organise my clients
+
+|`* * *` |new user |sort contacts based on clients grade |better organise my clients
+
+|`* * *` |user |sort the clients based on a particular field |better organise my clients
+
+|`* * *` |user |match a given client and app will show a list of clients sorted from the most suitable to the least suitable |give my clients more choices
+
+|`* * *` |user |match clients that only fit certain requirements |clients will have more choice to choose from
+
+|`* * *` |user |easily remove the subjects of the students when they find tutors |edit the subjects of students whenever they find a suitable tutor easily
+
+|`* * *` |user |advance the grades of all the students in the application |change the grades of all the students without manually editing them one by one
+
+|`* * *` |user |have an organised application | easily view, update and search the active clients and closed clients
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* *` |user |search multiple tags |narrow down the search to clients that fit all the different tags searched.
+
+|`* *` |user |easily delete all students/tutors |save time manually deleting
+
+|`* *` |user |get a list of all tutors that corresponds to a students requirements |give students more choices on which tutor they want
+
+|`* *` |user |get a list of all students that corresponds to a tutor's requirements |give tutors more choices on which students they want
+
+|`* *` |user |automatically update the year of all students |need not manually change all the information during new year
+
+|`* *` |user |update which time slot the tutor is already working |plan their timetable without any clash in timing
+
+|`* *` |user |have a ranking on how good the tutor is |understand which tutor the user should recommend more
+
+|`* *` |user |highlight urgent tuition requests |set reminder to place more attention on these assignments
+
+|`* *` |user |blacklist certain tutors or students |make sure the user will not accept their assignments
+
+|`* *` |user |have the option to customise the font size and colour |make changes to the appearance to suit the user's preference
+
+|`* *` |user |have the option to customise the user's background |make the application more appealing to the user
+
+|`* *` |user |email the contacts in the application |save the trouble from opening another web-browser or email application
+
+|`* *` |user |keep track of whether the tutors have paid their agent fee |keep track and remind those who have not paid.
+
+|`*` |user |directly navigate between contacts |save the trouble from returning to the main page every time
+
+|`*` |user |keep a record of how much the students improve |keep track of how good the tutor is
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `TuitionCor` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
+1.  User requests to list clients
+2.  TuitionCor shows a list of clients
 3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+4.  TuitionCor deletes the person
 +
 Use case ends.
 
@@ -840,20 +1493,240 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. TuitionCor shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+// tag::mssdestin[]
+[discrete]
+=== Use case: Remove specific keyword from client's subject
+
+*MSS*
+
+1.  User requests to list clients
+2.  TuitionCor shows a list of clients
+3.  User requests to remove a keyword from specific client
+4.  TuitionCor removes the keyword from the subject field of the specified client
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. TuitionCor shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The given keyword does not exist.
++
+[none]
+** 4a1. TuitionCor shows an error message.
++
+Use case resumes at step 2.
+
+* 4b. The given keyword the last subject in the specific client.
++
+[none]
+** 4b1. TuitionCor shows an error message that suggest for the user to close the client instead.
++
+Use case resumes at step 2.
+// end::mssdestin[]
+
+[discrete]
+=== Use case: Sort student's or tutor's list by locality
+
+*MSS*
+
+1.  User types “sort l c/t” or “sort l c/s” in to the command line.
+2.  TuitionCor will return either a list of students or tutors with respect to the command entered sorted based on their locality in alphabetical order.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. System detects an invalid input.
++
+[none]
+** 1a1. TuitionCor will display invalid command and display sort message usage.
+** 1a2. User enter required information.
+** 1a3. Steps 1a1 and 1a2 are repeated until valid input is entered.
++
+Use case resumes at step 2.
+
+[none]
+* 1b. System detects no further input.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort student's or tutor's list by grade
+
+*MSS*
+
+1.  User types “sort g c/t” or “sort g c/s” in to the command line.
+2.  TuitionCor will return either a list of students or tutors with respect to the command entered sorted based on their grade in ascending order of seniority.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. System detects an invalid input.
++
+[none]
+** 1a1. TuitionCor will display invalid command and display sort message usage.
+** 1a2. User enter required information.
+** 1a3. Steps 1a1 and 1a2 are repeated until valid input is entered.
++
+Use case resumes at step 2.
+
+[none]
+* 1b. System detects no further input.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort student's or tutor's list by name
+
+*MSS*
+
+1.  User types “sort n c/t” or “sort n c/s” in to the command line.
+2.  TuitionCor will return either a list of students or tutors with respect to the command entered sorted based on their name in alphabetical order.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. System detects an invalid input.
++
+[none]
+** 1a1. TuitionCor will display invalid command and display sort message usage.
+** 1a2. User enter required information.
+** 1a3. Steps 1a1 and 1a2 are repeated until valid input is entered.
++
+Use case resumes at step 2.
+
+[none]
+* 1b. System detects no further input.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort student's or tutor's list by subject
+
+*MSS*
+
+1.  User types “sort s c/t” or “sort s c/s” in to the command line.
+2.  TuitionCor will return either a list of students or tutors with respect to the command entered sorted based on their subject in alphabetical order.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. System detects an invalid input.
++
+[none]
+** 1a1. TuitionCor will display invalid command and display sort message usage.
+** 1a2. User enter required information.
+** 1a3. Steps 1a1 and 1a2 are repeated until valid input is entered.
++
+Use case resumes at step 2.
+
+[none]
+* 1b. System detects no further input.
++
+Use case ends.
+
+[discrete]
+
+
+// tag::matchmss[]
+=== Use case: Matching a student
+
+*MSS*
+
+1.  User enters "match 1 c/s".
+2.  TuitionCor displays information of the selected student in the student's list and all the relevant tutors which matches the student's needs in tutor's list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. System detects an invalid input.
++
+[none]
+** 1a1. TuitionCor will display invalid command and display sort message usage.
+** 1a2. User enter required information.
+** 1a3. Steps 1a1 and 1a2 are repeated until valid input is entered.
++
+Use case resumes at step 2.
+
+[none]
+* 1a. System is unable to match any tutor to this student.
++
+[none]
+** 1a1. An empty tutor's list will be displayed to the user
++
+Use case ends.
+
+[discrete]
+
+=== Use case: Matching a tutor
+
+*MSS*
+
+1.  User enters "match 1 c/t".
+2.  TuitionCor displays information of the selected tutor in the tutor's list and all the relevant students which matches the tutor's credentials in student's list.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. System detects an invalid input.
++
+[none]
+** 1a1. TuitionCor will display invalid command and display sort message usage.
+** 1a2. User enter required information.
+** 1a3. Steps 1a1 and 1a2 are repeated until valid input is entered.
++
+Use case resumes at step 2.
+
+[none]
+* 1a. System is unable to match any student to this tutor.
++
+[none]
+** 1a1. An empty tutor's list will be displayed to the user
++
+Use case ends.
+
+[discrete]
 
 [appendix]
+// end::matchmss[]
+
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 5000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Application should be able execute any command within 3 seconds.
+.  Application should have a self-explanatory installation process.
+.  Application should be less than 5mb in size.
+.  Application is expected to allow printing.
+.  Application should have an auto-save function upon exiting the application.
 
-_{More to be added}_
 
 [appendix]
 == Glossary
@@ -863,23 +1736,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -903,26 +1759,178 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Deleting a client
 
-=== Deleting a person
+. Deleting a client while all clients are listed
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all clients using the `list` command. Multiple clients in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No client is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+// tag::removeTest[]
 
-=== Saving data
+=== Remove Subject keyword from a client
 
-. Dealing with missing/corrupted data files
+. Removing a keyword from the Subject field of a specified client
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+.. Prerequisites1: At least 1 student and 1 tutor has to be in TuitionCor.
+.. Prerequisites2: Displayed list has to be active list.
+.. Test case: `remove 1 c/s s/math` +
+   Assumption1: First student in TuitionCor has "math" in the Subject field. For example the Subject field is "physics chemistry math english". Otherwise, replace "math" in the command with a word in the Subject field of the client.
+   Assumption2: First student in TuitionCor has more than 1 keyword in Subject field. (Each keyword is a single word separated by whitespace)
+   Expected: "math" would be removed from Subject field of the first student. Given the above example, the remaining Subjects should be "physics chemistry english". Success message would be given. Timestamp in status bar is updated.
+.. Test case: `remove 1 c/s s/math` +
+   Assumption: First student in TuitionCor does not have "math" in the Subject field.
+   Expected: Error message "The inputted message does not exist"
+.. Test case: `remove 1 c/s s/math` +
+   Assumption: First student in TuitionCor has only "math" in Subject field.
+   Expected: Error message warning user that removing the last keyword in Subject field is not allowed and suggests user to close client instead.
+.. Test case: `remove 1 c/t s/math` +
+   Assumption1: First tutor in TuitionCor has "math" in the Subject field. For example the Subject field is "physics chemistry math english". Otherwise, replace "math" in the command with a word in the Subject field of the client.
+   Assumption2: First tutor in TuitionCor has more than 1 keyword in Subject field. (Each keyword is a single word separated by whitespace)
+   Expected: "math" would be removed from Subject field of the first tutor. Given the above example, the remaining Subjects should be "physics chemistry english". Success message would be given. Timestamp in status bar is updated.
+.. Test case: `remove 0 c/s s/math` +
+   Expected: No keyword is removed from Subject field. Error details shown in status message. Status bar remains the same.
+.. Other invalid remove commands to try: `remove c/s s/math` (missing INDEX), `remove x c/s s/math` (where x is a number larger than the list size) +
+   `remove 1 s/math` (missing CATEGORY), `remove 1 c/g s/math` (invalid CATEGORY, CATEGORY should only be "s" or "t") +
+   `remove 1 c/s` (missing SUBJECT), `remove 1 c/s s/chemistry physics` (invalid SUBJECT, SUBJECT should only be a single word with no special characters and no whitespace).
+   Expected: Similar to previous.
 
-_{ more test cases ... }_
+// end::removeTest[]
+
+=== Sorting a list
+
+. Sorting a list while all clients are listed
+
+.. Prerequisites: List all clients using the `list` command. Multiple clients in either student list or tutor list. Displayed list must be active client list.
+.. Test case: `sort n c/t` +
+   Expected: Tutor's list is being sorted according alphabetical order based on the client's name.
+.. Test case: `sort l c/t` +
+   Expected: Tutor's list is being sorted according to their location in alphabetical order based on the location displayed or the *first* location displayed if there exist multiple locations.
+.. Test case: `sort s c/t` +
+   Expected: Tutor's list is being sorted according to their subject in alphabetical order based on the subject displayed or the *first* location displayed if there exist multiple locations.
+.. Test case: `sort g c/t` +
+   Expected: Tutor's list is being sorted according to grade in ascending seniority `[Kindergarten->Primary->Secondary->Junior College->University]`. It will be sorted based on the *first* grade if there exist multiple grades.
+
+.. Test case: `sort n c/s` +
+   Expected: Student's list is being sorted according alphabetical order based on the client's name.
+.. Test case: `sort l c/s` +
+   Expected: Student's list is being sorted according to their location in alphabetical order based on the location displayed or the *first* location displayed if there exist multiple locations.
+.. Test case: `sort s c/s` +
+   Expected: Student's list is being sorted according to their subject in alphabetical order based on the subject displayed or the *first* location displayed if there exist multiple locations.
+.. Test case: `sort g c/s` +
+   Expected: Student's list is being sorted according to grade in ascending seniority `[Kindergarten->Primary->Secondary->Junior College->University]`. It will be sorted based on the *first* grade if there exist multiple grades.
+
+=== Switching the displayed client list
+
+. Default displayed list when launching TuitionCor
+.. Launch the application +
+   Expected: Active client list is being displayed. `<Currently displaying active clients>` should be shown in the status bar.
+
+. Switching the display
+.. Prerequisites: Currently in active client list.
+... Test case: `switch` +
+   Expected: Closed client list is being displayed. `<Currently displaying closed clients>` should be shown in the status bar.
+
+.. Prerequisites: Currently in closed client list.
+... Test case: `switch` +
+   Expected: Active client list is being displayed. `<Currently displaying active clients>` should be shown in the status bar.
+
+=== Closing a client
+
+. Closing a client while all clients are listed.
+.. Prerequisites: List all clients using the `list` command. Clients displayed in either student list or tutor list. Minimally there must exist at least 1 student and 1 tutor in their respective list. Displayed list must be *active client list*.
+.. Test case: `close 1 c/s` +
+   Assumptions: Assuming that the first student on the student list takes on the name `Alex Yeoh`. +
+   Expected: Student Alex Yeoh is being closed and is no longer seen on the student list in active client list. Switching the display using `switch`, Alex Yeoh will be seen displayed on the student list in closed client list.
+
+.. Test case: `close 1 c/t` +
+   Assumptions: Assuming that the first tutor on the tutor list takes on the name `George`. +
+   Expected: Tutor George is being closed and is no longer seen on the tutor list in active client list. Switching the display using `switch`, George will be seen displayed on the tutor list in closed client list.
+
+. Closing a client while in closed client list.
+.. Prerequisites: List all clients using the `list` command. Clients displayed in either student list or tutor list. Minimally there must exist at least 1 student and 1 tutor in their respective list. Displayed list must be *closed client list*.
+.. Test case: `close 1 c/s` +
+   Expected: No students are being closed. Error details shown in the status message.
+
+=== Restoring a client
+
+. Restoring a client while all clients are listed.
+.. Prerequisites: List all clients using the `list` command. Clients displayed in either student list or tutor list. Minimally there must exist at least 1 student and 1 tutor in their respective list. Displayed list must be *closed client list*.
+.. Test case: `restore 1 c/s` +
+   Assumptions: Assuming that the first student on the student list takes on the name `Tom`. +
+   Expected: Student Tom is being restored and is no longer seen on the student list in closed client list. Switching the display using `switch`, Tom will be seen displayed on the student list in active client list.
+
+.. Test case: `restore 1 c/t` +
+   Assumptions: Assuming that the first tutor on the tutor list takes on the name `Cindy`. +
+   Expected: Tutor Cindy is being restored and is no longer seen on the tutor list in closed client list. Switching the display using `switch`, Cindy will be seen displayed on the tutor list in active client list.
+
+. Restoring a client while in active client list.
+.. Prerequisites: List all clients using the `list` command. Clients displayed in either student list or tutor list. Minimally there must exist at least 1 student and 1 tutor in their respective list. Displayed list must be *active client list*.
+.. Test case: `restore 1 c/s` +
+   Expected: No students are being restored. Error details shown in the status message.
+
+=== Matching a client
+. Matching a client while all clients are listed.
+.. Prerequisites: List all clients using the `list` command. Clients displayed in either student list or tutor list. Minimally there must exist at least 1 student and 1 tutor in their respective list. Displayed list must be *active client list*.
+.. Test case: `match 1 c/s` +
+   Assumptions: Assuming that the first student on the student list with name `Alex Yeoh`, location `North`, grade `p2` and subject `math`. +
+   Expected: Student list will now only display Alex Yeoh. In the tutor list tutor James and Jennifer is being displayed. +
+   James is matched as his client card contains `Math` as his first subject and `North` as his first location. +
+   Jennifer is matched as her client card contains grade of `p2` and subject `math` is her only subject. +
+   The matched tutors fields are also being highlighted in orange.
+
+.. Test case: `match 4 c/t` +
+   Assumptions: Assuming that the forth tutor on the tutor list with name `Nancy`, location `Central`, grade `u1 u2` and subject `physics`. +
+   Expected: Tutor list will now only display Nancy. In the student list, student Bernice Yu, Roy Balakrishnan, Charlotte Oliveiro and David Li is being displayed. +
+   Berenice Yu is matched as her client card contains location `Central` and `Physics`. +
+   Roy Balakrishnan is matched as his client card contains location `Central` and `Physics`. +
+   Charlotte Oliveiro is matched as as her client card contains `Physics` as her first subject. +
+   David Li is matched as his client card contains location `Central`. +
+   The matched students fields are also being highlighted in orange. +
+   The matched students are also being displayed in descending order based on the number of matched fields, with the student with the most matched fields displayed first.
+
+[appendix]
+== Feature Contribution
+
+Given below are the minor and major feature contributions for each of our team member.
+
+=== Ngeow Shan Yong Destin
+
+. Major Contribution
+
+.. Morphed AddressBook - Level 4 into TuitionCor by adding support for clients in model, logic, storage +
+   Client class and commands that are specific to TuitionCor such as subject, which is not available in person.
+
+. Minor Contribution
+
+.. Splitting storage of UniquePersonList into 2 List, 1 for Student and 1 for Tutor +
+   In TuitionCor all Client added would be either a student or a tutor, hence this would allow for easier organization of added entries. Also, this would remove the need to have to search through the entire list to see who are student or tutor at every command.
+
+=== Zhu Jiahui
+
+. Major Contribution
+
+.. Match Function +
+   This function matches a Student to any Tutor in TuitionCor that meets the requirements of the Student (or vice versa).This acts as the main purpose of TuitionCor, which is to help coordinate Students and Tutors.
+
+. Minor Contribution
+
+.. Enhancement of Find function to be able to find all fields and not only the person name +
+   This allows the user be able to search for anything related to the person he wishes to find in TuitionCor. For example, he can now search the address or phone number and be able to find the person.
+
+=== Lim Hong Cho
+
+. Major Contribution
+
+.. Close, restore and switch function +
+   This would allow user to close a client to the closed list or restore a client to the active list. Switch allows client to toggle between closed list and active list.
+
+. Minor Contribution
+
+.. Sort +
+   This would allow the user to view the sorted list of Students and Tutors separately allowing for easier viewing of a specific category.

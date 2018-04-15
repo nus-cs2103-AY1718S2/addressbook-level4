@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.ClientListSwitchEvent;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -21,6 +22,8 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String SYNC_STATUS_ACTIVE_LIST = "<Currently displaying active clients>";
+    public static final String SYNC_STATUS_CLOSED_LIST = "<Currently displaying closed clients>";
 
     /**
      * Used to generate time stamps.
@@ -40,12 +43,15 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar displayStatus;
 
 
     public StatusBarFooter(String saveLocation) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setDisplayStatus(SYNC_STATUS_ACTIVE_LIST);
         registerAsAnEventHandler(this);
     }
 
@@ -71,6 +77,10 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setDisplayStatus(String status) {
+        Platform.runLater(() -> this.displayStatus.setText(status));
+    }
+
     @Subscribe
     public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
         long now = clock.millis();
@@ -78,4 +88,16 @@ public class StatusBarFooter extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
+
+    //@@author olimhc
+    @Subscribe
+    private void handleClientListSwitchEvent(ClientListSwitchEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (this.displayStatus.getText().equals(SYNC_STATUS_ACTIVE_LIST)) {
+            setDisplayStatus(SYNC_STATUS_CLOSED_LIST);
+        } else {
+            setDisplayStatus(SYNC_STATUS_ACTIVE_LIST);
+        }
+    }
+    //@@author
 }

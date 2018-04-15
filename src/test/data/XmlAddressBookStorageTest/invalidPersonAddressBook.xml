@@ -1,10 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <!-- Person with invalid name field -->
-    <persons>
-        <name>Ha!ns Mu@ster</name>
+    <students>
+        <name>Han!s Mus!ter</name>
         <phone isPrivate="false">9482424</phone>
-        <email isPrivate="false">hans@example.com</email>
-        <address isPrivate="false">4th street</address>
-    </persons>
+        <email isPrivate="false">hansexample.com</email>
+        <address isPrivate="false">4th st@#reet</address>
+        <location isPrivate="false">nor!@th</location>
+        <grade isPrivate="false">pri1</grade>
+        <subject isPrivate="false">ma!%#th</subject>
+        <category isPrivate="false">saa</category>
+    </students>
 </addressbook>

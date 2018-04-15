@@ -1,0 +1,53 @@
+= Zhu-Jiahui - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: TuitionCor
+
+---
+
+== Overview
+
+TuitionCor is for those who *prefer to use a desktop app for managing client information*. More importantly, TuitionCor is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TuitionCor can get your client management tasks done faster than traditional GUI apps.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Match command*
+** What it does: Matches a Student to any Tutor in TuitionCor that meets the requirements of the Student (or vice versa).
+** Justification: This acts as the main purpose of TuitionCor, which is to help coordinate Students and Tutors that matches in `location`, `subject` and `grade` attributes.
+** Highlights: This implementation required the understanding and modification of logic, model, and ui component. It also required in-depth understanding of logic component as it is an integration of multiple command in order to search and sort the clients.
+
+* *Minor enhancement*: enhanced find command that search all the keywords stored in TuiTionCor.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F11-B2/main/blob/master/collated/functional/Zhu-Jiahui.md[Functional code]] [https://github.com/CS2103JAN2018-F11-B2/main/blob/master/collated/test/Zhu-Jiahui.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Updated some of the color scheme for tags (https://github.com/CS2103JAN2018-F11-B2/main/pull/92/files)
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-F11-B2/main/pull/92/files
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W15-B3/main/issues/132, https://github.com/CS2103JAN2018-W15-B3/main/issues/130, https://github.com/CS2103JAN2018-W15-B3/main/issues/136, https://github.com/CS2103JAN2018-W15-B3/main/issues/139, https://github.com/CS2103JAN2018-W15-B3/main/issues/123)
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+include::../UserGuide.adoc[tag=match]
+include::../UserGuide.adoc[tag=find]
+include::../UserGuide.adoc[tag=automatch]
+include::../UserGuide.adoc[tag=matchmultiple]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=match]
+include::../DeveloperGuide.adoc[tag=matchmss]

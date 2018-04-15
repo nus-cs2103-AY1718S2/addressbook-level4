@@ -34,13 +34,13 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private TutorListPanel tutorListPanel;
+    private StudentListPanel studentListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane tutorListPanelPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,7 +49,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane studentListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -116,11 +116,11 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        studentListPanel = new StudentListPanel(logic.getFilteredStudentList(), logic.getFilteredClosedStudentList());
+        studentListPanelPlaceholder.getChildren().add(studentListPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        tutorListPanel = new TutorListPanel(logic.getFilteredTutorList(), logic.getFilteredClosedTutorList());
+        tutorListPanelPlaceholder.getChildren().add(tutorListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -181,12 +181,15 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public StudentListPanel getStudentListPanel() {
+        return this.studentListPanel;
+    }
+
+    public TutorListPanel getTutorListPanel () {
+        return this.tutorListPanel;
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

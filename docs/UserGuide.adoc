@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TuitionCor - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,12 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
-
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+:repoURL: https://github.com/CS2103JAN2018-F11-B2/main
+By: `Team F11-B2`      Since: `Jun 2016`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+TuitionCor is for those who *prefer to use a desktop app for managing client information*. More importantly, TuitionCor is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, TuitionCor can get your client management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,30 +26,103 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `TuitionCor.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your client information.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
 +
+.  By default, upon launching TuitionCor you will be shown the active client list. If you are a new user, the active client and closed list will be filled with sample students and tutors.
+** Active client list contains two separate list. Clients shown here are those who looking for students or tutors here.
+*** The list on the left represents the student's list where you can view information regarding students who are looking for tutors.
+*** The list on the right represents the tutor's list where you can view information regarding tutors who are looking for students.
+** Closed client list contains two separate list. Clients shown here are those who are no longer looking for students or tutors.
+*** The list on the left represents the student's list where you can view information regarding closed students who are no longer looking for tutors.
+*** The list on the right represents the tutor's list where you can view information regarding closed tutors who are no longer looking for students.
+** You can easily toggle between the closed and active client's list by command word `switch`.
+
+[NOTE]
+Commands available in active client's list: +
+`addclient` `clear` `close` `delete` `edit` `exit` `find` `help` `history` `list` `match` `redo` `undo` `remove` `sort` `switch`
+
+[NOTE]
+Commands available in closed client's list: +
+`clear` `exit` `find` `help` `history` `list` `redo` `undo` `restore` `switch`
+
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
+.  Some example commands you can try:
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`addclient`**`c/s n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/Urgent l/north g/s4 s/math` : adds a contact of a student named `John Doe` to TuitionCor.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
+
+.  Some pointers: +
+Duplicates of similar students in the student's list is not allowed, vice versa for tutor's list. However, duplicate contacts between student's and tutor's list is allowed as it's possible for a tutor to also be a student. +
++
+A duplication of student or tutor happens when they do not have at least one difference in the following fields: {Name, Address, Phone Number, Email}.
 
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]
 == Features
+*Breakdown of features*
+
+*  In v1.2:
+** Supports addition of client, either tutor or students.
+
+*  In v1.3:
+** All commands are working and integrated with client.
+** Clients information are saved.
+** New match feature which allowing matching of student to tutors or tutor to students.
+** Sort feature which allows tutor's and student's list to be sorted by name, subject, location and grade.
+
+*  In v1.4:
+** Match function now includes a ranking system.
+***  The ranking system works according to the number of matched attributes.
+*** The matched attributes will be highlighted in orange.
+** Close and restore command which allows user to close or restore a particular student or tutor .
+*** This allows user to close a tutor of student upon successful matching which will be stored in a closed tutor's or student's list for future reference.
+*** This also allows user to restore a client from the closed list to active list if the client were to become active again.
+** Switch command.
+*** Allows user to toggle between active list and closed list.
+** Enhance grade, subject and location to support multiple field.
+** Remove function to remove the specified subject.
+*** This allows the user to remove the specified subject from the client instead of having to type out all the remaining subjects in edit. This is under the consideration that the desired subject of the student would often change as he find's a tutor.
+
+*  In v1.5:
+** Issues received in v1.4 were carefully reviewed and relevant changes were made. We thank users for your generous feedback.
+*** Bugs found were fixed.
+*** Find function now works normally with same grades of different format. Eg: (P2 and Primary2).
+*** Find function now supports multiple grade fields.
+
+*  Coming in v2.0:
+** Auto match function.
+*** Whenever a new client either student or tutor is added, a list of tutor or student who fits the criteria of the tutor or student will be displayed to the user.
+** Integration with Gmail.
+*** Users are able to link a valid Gmail account to TuitionCor.
+*** This allows TuitionCor to be able to send email notification to clients.
+** Email notification
+*** This allows users to to send a client through email relevant contact information regarding their assigned Tutors or Students upon a successful matching.
+** Automatic Close function
+*** An optional feature that will automatically Close a student (storing his/her contact into backup) when the last subject has been removed.
+** Automatic change of grade for students
+*** Either by allowing TuitionCor to sync with the computer's clock or through manually calling the command, all student's grade will be changed eg. from p1 to p2.
+** Timetable availability
+*** Include a timetable into TuitionCor similar to a personal reminder app. However, this timetable would instead be used to show the availability of the student/tutor to allow for better matching.
+** Addition grade fields to be added.
+*** Polytechnic and ITE.
+** Matching Specific grade or subject attributes.
+*** Current match command only matches the first grade or subject attribute when a client has more than 1 grade or subject attribute.
+*** Search all the grade and subject attribute and highlight the specific matched attribute only.
 
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+
+* There are alias for some of the commands, which helps users to save some time. e.g. for addclient command, you can use ac n/... or a n/...
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `addclient n/NAME`, `NAME` is a parameter which can be used as `addclient n/John Doe`.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -60,31 +132,174 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 Format: `help`
 
-=== Adding a person: `add`
+// tag::addclient[]
+=== Adding a client: `addclient` `[Since v1.2]`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a client to TuitionCor +
+Format: `addclient c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... l/LOCATION g/GRADE s/SUBJECT`
 
+Alias Format: `ac c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... l/LOCATION g/GRADE s/SUBJECT`
 [TIP]
-A person can have any number of tags (including 0)
+A client can have any number of tags (including 0)
+
+[NOTE]
+The type of location and grade accepted can be found below.
+
+****
+* It's required to indicate the category the particular client belongs to.
+* Accepted case-insensitive location available for user input are `[North,South,East,West,Central]`. Any other type of location will be invalid.
+* Accepted case-insensitive grade available for user input are as follows:
+** Format of grade are in this particular format 'LEVEL YEAR' or alias format 'ALIASLEVEL YEAR' without any spacing in-between. Example: 'Primary1' or 'P1'.
+** LEVEL available are `[Kindergarten, Primary, Secondary, Tertiary, University]`. Alias LEVEL are `[K,P,S,J,U]` respectively.
+** INDEX available varies differently for each Level.
+*** For Kindergarten INDEX available are `[1,2,3]`.
+*** For Primary INDEX available are `[1,2,3,4,5,6]`.
+*** For Secondary INDEX available are `[1,2,3,4,5]`.
+*** For Tertiary INDEX available are `[1,2]`.
+*** For University INDEX available are `[1,2,3,4]`.
+* Subject are split based on black space. Hence a single subject has to be typed without any space.
+** Example: "chinese studies" would be treated as two separate subject "chinese" and "studies" by other commands. Hence it should be typed without a blank space such as "chineseStudies".
+****
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `addclient c/t n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/urgent l/north g/p1 s/math`
+* `ac c/s n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/urgent l/south g/primary1 s/math`
+
+// end::addclient[]
 
 === Listing all persons : `list`
 
 Shows a list of all persons in the address book. +
 Format: `list`
 
-=== Editing a person : `edit`
+Alias Format: `l`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+// tag::sorting[]
+=== Sorting a client: 'sort' `[Since v1.3]`
+
+Sorting tutor's list based on name +
+Format: `sort n c/t` +
+Alias Format: `so n c/t`
+
+Sorting tutor's list based on location +
+Format: `sort l c/t` +
+Alias Format: `so l c/t`
+
+Sorting tutor's list based on grade +
+Format: `sort g c/t` +
+Alias Format: `so g c/t`
+
+Sorting tutor's list based on subject +
+Format: `sort s c/t` +
+Alias Format: `so s c/t`
+
+Sorting student's list based on name +
+Format: `sort n c/s` +
+Alias Format: `so n c/s`
+
+Sorting student's list based on location +
+Format: `sort l c/s` +
+Alias Format: `so l c/s`
+
+Sorting student's list based on grade +
+Format: `sort g c/s` +
+Alias Format: `so g c/s`
+
+Sorting student's list based on subject +
+Format: `sort s c/s` +
+Alias Format: `so s c/s`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+Sorts the client based on the selected category, either `t` for tutors or `s` for students based on a chosen sort type `n` for name, `g` for grade, `s` for subject and `l` for location.
+
+Sorting by name, grade, location and subjects are based on alphabetical order. +
+
+In an event there are mutiple attributes for grade, location or subject, they will be sorted accordingly to the *first* grade, subject and location for the respective field.
+
+Sorting by grade are based on ascending order of seniority `[Kindergarten->Primary->Secondary->Junior College->University]`
+****
+Examples:
+
+* `sort l c/t` +
+Tutor's list displayed will be sorted base on location.
+* `sort s c/t` +
+Tutor's list displayed will be sorted base on subject.
+* `sort n c/t` +
+Tutor's list displayed will be sorted base on name.
+* `sort g c/t` +
+Tutor's list displayed will be sorted base on grade.
+
+* `sort l c/s` +
+Student's list displayed will be sorted base on location.
+* `sort s c/s` +
+Student's list displayed will be sorted base on subject.
+* `sort n c/s` +
+Student's list displayed will be sorted base on name.
+* `sort g c/s` +
+Student's list displayed will be sorted base on grade.
+// end::sorting[]
+
+// tag::switch[]
+=== Switching between active and closed client's list : `switch` `[Since v1.4]`
+
+Switch the display between active and closed client's list. +
+Format: `switch` +
+Alias Format: `sw`
+// end::switch[]
+
+// tag::close[]
+=== Closing a client : `close` `[Since v1.4]`
+
+Close an existing and active student in active student's list. +
+Format: `close INDEX c/s` +
+Alias Format: `cs INDEX c/s`
+
+Close an existing and active tutor in active student's list. +
+Format: `close INDEX c/t` +
+Alias Format: `cs INDEX c/t`
+
+[NOTE]
+This command is only available when viewing the active client's list. Use command word `switch` to toggle from closed list to active list.
+
+****
+* Close the client based on selected category either c/s for students or c/t for tutors at the specified `INDEX`. The index refers to the index number shown in the last tutors or students listing. The index *must be a positive integer* 1, 2, 3, ...
+* Closed student or tutor will be removed from the active list. They can now be found in the closed list which is accessible by command word `switch`.
+****
+// end::close[]
+
+// tag::restore[]
+=== Restoring a client : `restore` `[Since v1.4]`
+
+Restore an existing and closed student in the closed student's list. +
+Format: `restore INDEX c/s` +
+Alias Format: `res INDEX c/s`
+
+Restore an existing and closed tutor in the closed tutor's list. +
+Format: `restore INDEX c/t` +
+Alias Format: `res INDEX c/t`
+
+[NOTE]
+This command is only available when viewing the closed client's list. Use command word `switch` to toggle from active list to closed list.
+
+****
+* Restore the client based on selected category either c/s for students or c/t for tutors at the specified `INDEX`. The index refers to the index number shown in the last tutors or students listing. The index *must be a positive integer* 1, 2, 3, ...
+* Restored student or tutor will be removed from the closed list. They can now be found in the active list which is accessible by command word `switch`.
+****
+// end::restore[]
+
+=== Editing a client : `edit` `[Since v1.3]`
+
+Edits an existing student in the address book. +
+Format: `edit INDEX c/s [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Alias Format: `e INDEX c/s  [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+Edits an existing tutor in the address book. +
+Format: `edit INDEX c/t [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Alias Format: `e INDEX c/t  [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+
+****
+* Edits the client based on selected category either c/s for students or c/t for tutors at the specified `INDEX`. The index refers to the index number shown in the last tutors or students listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
@@ -93,38 +308,119 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit 1 c/s  p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st student to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 c/s n/Betsy Crower t/` +
+Edits the name of the 2nd student to be `Betsy Crower` and clears all existing tags.
+* `edit 1 c/t  p/93213456 e/doe@example.com` +
+Edits the phone number and email address of the 1st tutor to be `93213456` and `doe@example.com` respectively.
+* `e 2 c/t n/Beatty Crower t/` +
+Edits the name of the 2nd tutor to be `Beatty Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::remove[]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+=== Remove a subject of a client : `remove` `[Since v1.4]`
+
+Removes the specific subject from an existing student in the address book. +
+Format: `remove INDEX c/s s/SUBJECT`
+Alias Format: `re INDEX c/s s/SUBJECT`
+
+Edits an existing tutor in the address book. +
+Format: `edit INDEX c/t s/SUBJECT`
+Alias Format: `re INDEX c/t s/SUBJECT`
 
 ****
+* Removes the specified subject from the client based on selected category either c/s for students or c/t for tutors at the specified `INDEX`. The index refers to the index number shown in the last tutors or students listing. The index *must be a positive integer* 1, 2, 3, ...
+* The provided subject has to be a single word without spacing or special characters.
+* If the subject exist (it matches one of the subjects in the specified client's Subject field) it would be removed.
+* A client cannot have an empty subject field. Clients with only one subject left should be deleted or closed instead
+* The specified subject has to be exact with the subjects of the specified client. Partial words like typing "math" in attempt to remove "mathematics" would not work.
+****
+
+Examples:
+
+* `remove 1 c/s s/math` +
+Removes the "math" subject from the 1st student.
+* `re 2 c/t s/physics` +
+Removes the "physics" subject from the 2nd tutor.
+
+// end::remove[]
+
+// tag::find[]
+=== Locating clients: `find` `[Since v1.3]`
+
+Finds clients that contain any of the given keywords. +
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+Alias Format: `f KEYWORD [MORE_KEYWORDS]`
+****
 * The search is case insensitive. e.g `hans` will match `Hans`
+* *For grades only*, alias grades will match original grades. e.g `p2` will match `primary2`.
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Not only the name is searched, but all the fields of a client is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Clients matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `find p2` +
+Returns any client having grades `p2` or `primary2`
+* `f Betsy Tim John` +
+Returns any client having names `Betsy`, `Tim`, or `John`
+* `f 96528541` +
+Returns any client having phone number `96528541`
+* `f blk` +
+Returns any client having keyword `blk`
+// end::find[]
 
-=== Deleting a person : `delete`
+// tag::match[]
+=== Matching potential clients: `match` `[Since v1.3]`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Matches potential tutors to selected student based on `INDEX` +
+Format: `match INDEX c/s`
+Alias Format: `m INDEX c/s`
+
+Matches potential students to selected tutor based on `INDEX` +
+Format: `match INDEX c/t`
+Alias Format: `m INDEX c/t`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Matches the client based on selected category either c/s for students or c/t for tutors at the specified `INDEX`. The index refers to the index number shown in the last tutors or students listing. The index *must be a positive integer* 1, 2, 3, ...
+* The match is case insensitive. e.g `hans` will match `Hans`
+* Clients will be matched based on subject, grade or location.
+* Full words of a `grade` will be matched against Alias of a `grade` e.g. `Primary2` will be matched to `p2`
+* Only clients that have any matches based on subject, grade or location will be displayed.
+* If the client have multiple grade or subject attributes, only the first grade or subject attribute is used to match any potential clients.
+* Matched clients will be listed from the most number of matched attributes to the least number of matched attributes.
+* Matched attributes will be highlighted in orange.
+****
+
+Examples:
+
+* `match 1 c/t` +
+At index 1 of tutor's list, John is a tutor finding students that are staying in west and is looking for s4 chemistry. This command will return a list of students that are staying in the west or s4 or Chemistry.
+
+* `match 1 c/s` +
+At index 1 of student's list, Jim is a student who requires tutors that are staying in west and teaching s4 chemistry. This command will return a list of tutors that are staying in the west or teaching s4 or teaching Chemistry.
+
+// end::match[]
+
+=== Deleting a client : `delete` `[Since v1.3]`
+
+Deletes the specified tutor from TuitionCor. +
+Format: `delete INDEX c/t`
+Alias Format: `d INDEX c/t`
+
+Deletes the specified student from TuitionCor. +
+Format: `delete INDEX c/s`
+Alias Format: `d INDEX c/s`
+
+****
+* Deletes the client at the specified `INDEX`.
+* `c/t` and `c/s` refers to tutor's category respectively.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -132,37 +428,21 @@ Format: `delete INDEX`
 Examples:
 
 * `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
+`delete 2 c/s` +
+Deletes the 2nd student in the student's list from TuitionCor.
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
+`delete 2 c/t` +
+Deletes the 2nd tutor in the tutor's list from TuitionCor.
 * `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`d 1 c/t` +
+Deletes the 1st person in the tutor's list based the results of the `find` command.
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
 
+Alias Format: `h`
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
@@ -171,12 +451,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores TuitionCor to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
+Alias Format: `u`
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the TuitionCor's content (`addclient`, `delete`, `edit` , `close` , `restore` and `clear`).
 ====
 
 Examples:
@@ -187,7 +468,7 @@ Examples:
 
 * `select 1` +
 `list` +
-`undo` +
+`u` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
@@ -200,6 +481,8 @@ The `undo` command fails as there are no undoable commands executed previously.
 Reverses the most recent `undo` command. +
 Format: `redo`
 
+Alias Format: `r`
+
 Examples:
 
 * `delete 1` +
@@ -207,7 +490,7 @@ Examples:
 `redo` (reapplies the `delete 1` command) +
 
 * `delete 1` +
-`redo` +
+`r` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
@@ -218,47 +501,159 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` `[Since v1.0]`
 
-Clears all entries from the address book. +
+Clears all entries from TuitionCor. +
 Format: `clear`
 
-=== Exiting the program : `exit`
+Alias Format: `c`
+
+=== Exiting the program : `exit` `[Since v1.0]`
 
 Exits the program. +
 Format: `exit`
 
+Alias Format: `x`
+
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+TuitionCor data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+// tag::gradeAdvancement[]
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+=== advancement of Grade function `[coming in v2.0]`
+
+Advances all student's grades when this function is called (eg. change from p1 o p2).
+This is done under the consideration that all students would advance in grade at the end of the school year and having to edit every single entry would be very tedious when the data base is large.
+
+Format: `advanceGrade INDEX...` +
+A success message of the format _Successfully advanced students Grades_ will be displayed and all students whose grade is not already at the highest limit would be advanced.
+The students at the specified INDEXes would not have their Grade advanced.
+
+Example:
+
+* `advanceGrade` +
+All students Grades are advanced
+
+* `advanceGrade 2 10` +
+All students except from index 2 and 10 would have their Grades advanced.
+
+// end::gradeAdvancement[]
+
+// tag::gmail[]
+=== Integration with Gmail `[coming in v2.0]`
+
+Link a valid Gmail account to TuitionCor. +
+
+[NOTE]
+TuitionCor will only be linked to *one* valid Gmail account at any point of time
+
+Format: `set e/EMAIL pw/PASSWORD` +
+A success message of the format _Successfully linked EMAIL to TuitionCor_ will be displayed for successful linking.
+
+A failure message of the format _Failed to link EMAIL to TuitionCor_ will be displayed for unsuccessful linking. Please check that you have inputted the correct email and password.
+
+Example:
+
+* `set e/BestCoordinatorInSg@gmail.com pw/Iamthebest` +
+Links Gmail account `BestCoordinatorInSg@gmail.com` to TuitionCor upon a successful login.
+// end::gmail[]
+
+// tag::email[]
+=== Email notification function `[coming in v2.0]`
+[IMPORTANT]
+Please ensure that you have successfully linked a Gmail account to TuitionCor before you are able to use this function
+
+Parameters:
+
+Format: `notify INDEX c/CATEGORY INDEX c/CATEGORY`
+
+[TIP]
+The first `INDEX c/CATEGORY` refers to the client you would like to notify and send an email with the relevant contact details. +
+The second `INDEX c/CATEGORY` refers to the client whose information you would like to send to the former client.
+
+[NOTE]
+Both CATEGORY cannot be referring to the same category.
+
+[NOTE]
+The email notification sent to will be based on the email in the client's information.
+
+Examples:
+
+* `notify 1 c/s 1 c/t` +
+An email will be send to the first student on the students list using your linked Gmail account. The email will contain relevant information regarding the first tutor on the tutors list.
+
+* `notify 2 c/t 1 c/s` +
+An email will be send to the second tutor on the tutors list using your linked Gmail account. The email will contain relevant information regarding the first student on the students list. +
+
+// end::email[]
+
+// tag::automatch[]
+
+=== Auto match feature `[coming in v2.0]`
+****
+* When the user enters a new client. the system will auto generates a list of potential clients for this newly added client.
+* This is to enhance the efficiency of our user and shorten the time needed for the user to match potential clients.
+* The reason for this enhancement is to facilitate the user when a potential client makes a call to seek for assignments. With this enhancement, the system is able to generate a list of potential clients right after the client is added into the system. The user is then able to reply the client on the available assignments right away before the client even hangs up the phone.
+* One possible way of implementing it is to call for matching command with the client info after the addclient command has successfully executed.
+****
+// end::automatch[]
+
+// tag::matchmultiple[]
+=== Match multiple grade and subject attributes `[coming in v2.0]`
+****
+* Currently, match command assumes all client has only one grade subject and location attribute. If a client has multiple grade attributes, match command only matches potential clients with his/her first grade attribute.
+* Enhancement could be made to match all the Grade attributes respectively and list the matching result from the highest match to the lowest match.
+* Only matched attributes should be highlighted.
+* One possible way of implementing it is to change Grade, Subject and Location to List<String> and compare them one by one with other clients.
+****
+// end::matchmultiple[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TuitionCor folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
+* *AddClient* `addclient c/CATEGORY n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]... l/LOCATION g/GRADE s/SUBJECT` +
+e.g. `addclient c/t n/Tutor1 p/98765432 a/Blk 10 Singapore, #01-239 e/testing@example.com t/family l/north g/p3 s/physics` +
+Alias: `ac`
+* *Clear* : `clear` +
+Alias: `c`
 * *Delete* : `delete INDEX` +
-e.g. `delete 3`
+e.g. `delete 3` +
+Alias: `d`
 * *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
+e.g. `edit 2 n/James Lee e/jameslee@example.com` +
+Alias: `e`
+* *Remove* : `remove INDEX c/CATEGORY s/SUBJECT` +
+e.g. `remove 1 c/s s/math`
+Alias: `re`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+e.g. `find James Jake` +
+Alias: `f`
+* *Match* : `match INDEX CATEGORY` +
+e.g. `match 1 c/s` +
+Alias: `m`
+* *Sort* : `sort TYPE CATEGORY` +
+eg. `sort n c/s` +
+Alias: `so`
+* *Close* : `close INDEX CATEGORY` +
+eg. `close 1 c/s` +
+Alias: `cs`
+* *Restore* : `restore INDEX CATEGORY` +
+eg. `restore 1 c/s` +
+Alias: `res`
+* *Switch* : `switch` +
+Alias: `sw`
+* *List* : `list` +
+Alias: `l`
 * *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *History* : `history` +
+Alias: `h`
+* *Undo* : `undo` +
+Alias: `u`
+* *Redo* : `redo` +
+Alias: `r`

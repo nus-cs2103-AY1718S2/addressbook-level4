@@ -33,7 +33,7 @@ This project is based on the https://github.com/se-edu/addressbook-level4[Addres
 
 ** Justification: For ease of navigation planning to the student's house, the tutor would have the required information simply by just `Select` ing the student.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/chweeee.md[Functional code]] [https://github.com[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/chweeee.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/chweeee.md[Test code]]
 
 * *Other contributions*:
 

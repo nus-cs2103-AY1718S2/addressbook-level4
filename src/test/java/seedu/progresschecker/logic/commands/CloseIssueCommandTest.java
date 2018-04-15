@@ -1,4 +1,4 @@
-/*package seedu.progresschecker.logic.commands;
+package seedu.progresschecker.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static seedu.progresschecker.testutil.TypicalIndexes.INDEX_ISSUE;
@@ -36,7 +36,7 @@ public class CloseIssueCommandTest {
     @Test
     public void execute_closeIssue_success() throws Exception {
 
-        CommandResult commandResult = prepareCommand(INDEX_ISSUE, model).execute();*/
+        CommandResult commandResult = prepareCommand(INDEX_ISSUE, model).execute();
 
         /**
          * The model cannot be tested because if the model is tested,
@@ -45,7 +45,7 @@ public class CloseIssueCommandTest {
          * Thus, the success message is comapred with the feedback to the user
          * success message is only posted after an issue is created on git
          */
-        /*assertEquals (String.format(CloseIssueCommand.MESSAGE_SUCCESS,
+        assertEquals (String.format(CloseIssueCommand.MESSAGE_SUCCESS,
                 INDEX_ISSUE.getOneBased()), commandResult.feedbackToUser);
     }
 
@@ -58,14 +58,14 @@ public class CloseIssueCommandTest {
 
         prepareCommand(INDEX_ISSUE, model).execute();
 
-    }*/
+    }
 
     /**
      * Generates a new {@code CreateIssueCommadn} which upon execution, adds {@code issue} into the {@code model}.
      */
-    /*private CloseIssueCommand prepareCommand(Index index, Model model) {
+    private CloseIssueCommand prepareCommand(Index index, Model model) {
         CloseIssueCommand command = new CloseIssueCommand(index);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
-}*/
+}

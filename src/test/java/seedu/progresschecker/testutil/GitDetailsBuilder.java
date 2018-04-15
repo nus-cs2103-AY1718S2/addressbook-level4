@@ -11,7 +11,7 @@ import seedu.progresschecker.model.credentials.Username;
  */
 public class GitDetailsBuilder {
 
-    public static final String DEFAULT_REPO = "adityaa1998/samplerepo-pr-practice";
+    public static final String DEFAULT_REPO = "AdityaA1998/CS2103TESTING";
     public static final String DEFAULT_USERNAME = "anminkang";
     public static final String DEFAULT_PASSCDE = "aditya2018";
 

@@ -39,7 +39,7 @@ import seedu.progresschecker.model.issues.Title;
  */
 public class EditIssueCommand extends Command {
     public static final String COMMAND_WORD = "editissue";
-    public static final String COMMAND_ALIAS = "edI";
+    public static final String COMMAND_ALIAS = "edi";
     public static final String COMMAND_FORMAT = COMMAND_WORD + " " + "INDEX "
             + "[" + PREFIX_TITLE + "TITLE] "
             + "[" + PREFIX_ASSIGNEES + "ASSIGNEES] "

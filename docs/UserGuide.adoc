@@ -323,29 +323,33 @@ An exercise's `SECTION_NUMBER` is directly adopted from https://nus-cs2103-ay171
 ==== Issue Tracker
 
 //tag::issues[]
-===== Github logging in: `gitlogin` OR `gl`
+===== Logging in to Github: `gitlogin` OR `gl`
 
 You can login with your Github account and prepare to work with the issues in your team repo. +
 *Format:* `gitlogin gu/USERNAME pc/PASSWORD r/REPO` +
 OR +
 `gl gu/USERNAME pc/PASSWORD r/REPOSITORY`
 
-[TIP]
-Your git details are not saved in our app for sercurity reasons. Hence, you will need to login every time you start the software. +
+[NOTE]
+Your git details are not saved in our app for security reasons. Hence, you will need to login every time you start the software. +
 You need to login and mention the repo where you need to create/edit issues.
 
 *Examples:*
 
-* `gitlogin gu/johndoe pc/dummy123 r/CS2103T/main`
+* `gitlogin gu/johndoe pc/dummy123 r/CS2103T/main` +
++
+Given below is the execution outcome of the above command:
+
+ You have successfully authenticated github!
 
 ===== Creating an issue on Github: `+issue` OR `ci`
 
-You can create a new issue in the team repo. Other than write the description and title, you can also set assignees, milestone and labels to it. +
+You can create an issue in your team repository on github using this command.
 *Format:* `+issue ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
 OR +
 `ci ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...`
 
-[TIP]
+[NOTE]
 An issue has only 'title' field as compulsory. Rest are all optional. +
 An issue can have more than one assignees and labels.
 
@@ -354,44 +358,104 @@ An issue can have more than one assignees and labels.
 * `+issue ti/complete issue a/johndoe ms/v1.1 b/CS2103T is a software engineering module l/type.task l/CS2103T`
 * `+issue ti/TestIssue`
 * `ci ti/Issue with only body b/test body l/type.test`
++
+Given below is the execution outcome of the above command
+
+ Issue successfully created on Github
+
+===== Editing an issue on Github: `+issue` OR `ci`
+
+You can edit an existing issue in the team repository using this command. +
+*Format:* `editissue INDEX [ti/TITLE] [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...` +
+OR +
+`edi ti/TITLE [a/ASSIGNEES]... [ms/MILESTONE] [b/BODY] [l/LABELS]...`
+
+[TIP]
+If you don't remember the issue number, you can take a look at the issues by using `listissues` command. +
+An issue can have more than one assignees and labels.
+
+*Examples:*
+
+* `editissue 1 ti/Changed title`
+* `editissue ti/changed title b/changed body`
+* `edi l/type.task`
++
+Given below is the execution outcome of the above command
+
+ Issue successfully edited on Github
 
 ===== Closing an issue on Github: `-issue` OR `cli`
 
-You can close the certain issue on github when you have resolved it. +
+You can close the specified issue on github after you have resolved it using this command. +
 *Format:* `-issue INDEX` OR `cli INDEX`
 
 [TIP]
+If you don't remember the issue number, you can take a look at the issues by using `listissues` command. +
+
+[NOTE]
 `INDEX` refers to the #INDEX of an issue on github
 
 *Examples:*
 
-* `-issue 1`
-* `cli 3`
+* `-issue 17`
+* `cli 17`
++
+Given below is the execution outcome of the above command
+
+ Issue #17 closed successfully
 
 ===== Reopening an issue on Github: `reopenissue` OR `ri`
 
-You can reopen the certain issue on github when you want to work on it. +
+You can reopen a certain issue on github using this command. +
 *Format:* `reopenissue INDEX` OR `ri INDEX`
 
 [TIP]
+If you don't remember the issue number, you can take a look at the issues by using `listissues` command. +
+
+[NOTE]
 `INDEX` refers to the #INDEX of an issue on github
 
 *Examples:*
 
-* `reopenissue 1`
-* `reopenissue 3`
+* `reopenissue 17`
+* `reopenissue 17`
++
+Given below is the execution outcome of the above command
+
+ Issue #17 reopened successfully
+
+===== Listing github issues: `listissue` OR `lis`
+
+You can list the github issues using this command. +
+*Format:* `listissue STATE` OR `lis STATE`
+
+[NOTE]
+`STATE` refers to the state of the issue, i.e OPEN or CLOSED
+
+*Examples:*
+
+* `listissue OPEN`
+* `lis CLOSED`
++
+Given below is the execution outcome of the above command
+
+ All the OPEN issues are being viewed
 
 ===== Logging out of Github: `gitlogout` OR `glo`
 
 You can logout of github after logging in. +
 
-[TIP]
+[NOTE]
 You will get an error message if you try to logout before logging in.
 
 *Examples:*
 
 * `gitlogout`
 * `glo`
++
+Given below is the execution outcome of the above command
+
+ You have successfully logged out of github
 
 //end::issues[]
 
@@ -746,6 +810,11 @@ cli 1
 OR `ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...`
 |edit 2 n/James Lee e/jameslee@example.com
 
+|*Editissue*
+|`editissue INDEX [t/TITLE] [b/BODY] [ms/MILESTONE] [a/ASSIGNEE] ... [l/label]...` +
+OR `edi INDEX [t/TITLE] [b/BODY] [ms/MILESTONE] [a/ASSIGNEE] ... [l/label]...`
+|editissue 2 ti/new title l/bug
+
 |*Exit*
 |`exit` OR `e`
 |
@@ -765,6 +834,10 @@ OR `ed INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MAJOR] [y/YEAR] [t/TAG]...`
 |*List*
 |`list` Or `l`
 |
+
+|*List issue*
+|`listissue STATE` Or `lis STATE`
+|listissue OPEN
 
 |*Log in to Github*
 |`gitlogin OR gl`

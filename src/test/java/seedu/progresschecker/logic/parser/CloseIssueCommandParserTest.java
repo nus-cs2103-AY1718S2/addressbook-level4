@@ -15,7 +15,7 @@ public class CloseIssueCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsCloseIssueCommand() {
-        assertParseSuccess(parser, "125", new CloseIssueCommand(INDEX_ISSUE));
+        assertParseSuccess(parser, "1", new CloseIssueCommand(INDEX_ISSUE));
     }
 
     @Test

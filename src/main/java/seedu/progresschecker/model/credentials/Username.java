@@ -15,7 +15,7 @@ public class Username {
      * The github username can only contain alphanumeric characters,
      * with no continuous special characters.
      */
-    public static final String USERNAME_VALIDATION_REGEX = "^[a-z0-9_-]{3,15}$";
+    public static final String USERNAME_VALIDATION_REGEX = "^[-a-zA-Z0-9+&@#/%?=~_|!:,.;*]*[-a-zA-Z0-9+&@#/%=~_|*]";
 
     public final String username;
 

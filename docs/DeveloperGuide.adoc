@@ -553,11 +553,6 @@ If the local path is invalid or the image cannot be found, the upload will not b
 The `find` command shows the searched contact currently. However, the user does not need to type the complete name press enter, the whole search is dynamic. As soon as the user types the command `find` dynamic search state is toggled. After typing `find` command, whichever character is entered by the user, the results which contain
  the typed keywords appear.
 
-The following diagram shows the UML diagram for `find` command :
-
-.UML Diagram of `find` Command
-image::FindCommandUMLDiagram.png[width="120"]
-
 To implement the dynamic search, we used the following method - as soon as the user enters any character in the command box, the text is retrieved from
 the command box and checked if it is the `find` command. If it is the `find` command, dynamic search is started. After the `find` command is detected in the
 command box, every key that is pressed is parsed and sent to the `find` command parser. After that the basic functionality of find is used and the results are displayed.
@@ -565,12 +560,8 @@ command box, every key that is pressed is parsed and sent to the `find` command 
 The code snippet for the implementation is:
 [source,java]
 ----
-private void handleKeyPress(KeyEvent keyEvent) {
-        switch (keyEvent.getCode()) {
-        // .. other keypress logic ..
-        default:
-            try {
-                if (// .. checking if the text is `find` command) {
+if ((commandTextField.getText().trim().equalsIgnoreCase(CORRECT_COMMAND_WORD)
+                        || isCorrectCommandWord)) {
                     isCorrectCommandWord = !commandTextField.getText().trim().isEmpty();
                     CommandResult commandResult;
                     if (keyEvent.getCode() != KeyCode.BACK_SPACE && keyEvent.getCode() != KeyCode.DELETE) {
@@ -583,10 +574,6 @@ private void handleKeyPress(KeyEvent keyEvent) {
                     logger.info("Result: " + commandResult.feedbackToUser);
                     raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
                 }
-            } catch (CommandException | ParseException e) {
-               // .. command failure logic ..
-            }
-        }
     }
 ----
 [NOTE]
@@ -1001,6 +988,174 @@ retrieve teammate task list data from the shared folder in Google Drive).
 {sp} +
 // end::tasks[]
 
+// tag::github[]
+
+=== Github Login
+==== Current Implemetation
+
+The `GitDetails` represents an object that is used to authenticate github. It contains `Username`, `Passcode`, and `Repository` object which represent the github account's username, password and repository respectively.
+[NOTE]
+All fields are compulsory for github authentication.
+.UML diagram for github details
+image::gitdetails.png[width="800"]
+
+
+`GitDetails` object is not stored locally as it can violate user's data and privacy.
+To manage the github account following command classes can be used:
+****
+* GitLoginCommand
+* GitLogoutCommand
+****
+
+`GitLoginCommand` needs to be used for tracking any issue activity on the ProgressChecker application. After the `GitDetails` object is created, its member's are used to create a `Github` object from the Github API library which is used to authenticate github.
+
+Implementation of github login and issue tracking is done with the help of GitHub API for Java (org.kohsuke.github).
+==== Logging into github
+
+User can log into github after using the `GitLoginCommand`. After executing the command, a `GitDetails` object is created
+
+Given below is a sequence diagram for authenticating github.
+
+.UML Diagram for Github details
+image::gitlogin1.png[width="800"]
+
+
+The following code snippet shows how GitLoginCommand#execute() will update the model by creating `Github` object which will be used to authenticate github.
+
+----
+public class GitLoginCommand extends Command {
+@Override
+    public CommandResult execute() throws CommandException {
+
+        try {
+            model.loginGithub(toAuthenticate);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (IOException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(ce.getMessage());
+        }
+    }
+}
+----
+
+==== Design considerations
+
+===== Aspect: Using password for authentication
+
+|===
+|Alternative | Pros | Cons
+|**Used github password for authentication** +
+(current choice)
+|User easily remebers his password, thus logging in is easy.
+|Password cannot be stored offline to protect users data and privacy.
+
+|**Using OAuth token for authentication**
+|OAuth token can be stored offline which can provide one-time login functionality, as we can restrict the token's usage for only ProgressChecker application.
+|Manually generating a token by the user is a tedious task and github tokens expire regularly which can be a pain for the user.
+|===
+=== Github Issue Tracker
+==== Current Implementation
+The `Issue` object represents an issue that is to be created on github. It contains `Title`, `Assignees`, `Milestone`, `Body`, and `Labels` which are the different attributes of an issue on github.
+[NOTE]
+Only the `Title` field is compulsory for `Issue` as this the only limitation set by github.
+
+.UML diagram for github Issue
+image::issueobject.png[width="800"]
+
+
+`Issue` objects are not stored in memory after an issue is created on github. The issues are not stored in a local file to protect users confidential data and privacy.
+
+Issue tracking is done by several command classes, namely:
+****
+* CreateIssueCommand
+* CloseIssueCommand
+* EditIssueCommand
+* ReopenIssueCommand
+* ListIssueCommand
+****
+
+All the above commands will only work after you have logged into github. Use 'gitLogin' command to login.
+
+==== Creating an issue
+An issue is created on github using the CreateIssueCommand. After executing the command, an `Issue` object is created which is then converted to a `GHIssue` object present in the Github Library. GHIssue is then posted online using the Github API library.
+
+Given below is the sequence diagram for creating an issue on github.
+
+.High level sequence diagram for creating a new issue on github
+image::finalcreateIssue.png[width="800"]
+
+
+The following code snippet shows how `CreateIssueCommand#execute()` will update the model of the application by creating an issue `toCreate` on github and later updating the `GitIssueList`.
+Note: This an issue will not be created if you haven't logged into github.
+
+----
+public class CloseIssueCommandTest {
+...
+@Override
+    public CommandResult execute() throws CommandException {
+
+        try {
+            model.createIssueOnGitHub(toCreate);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } catch (IOException | CommandException e) {
+            throw new CommandException(MESSAGE_FAILURE);
+        }
+    }
+    ...
+}
+----
+
+The issue created will be shown on the `Issues` tab in the application.
+
+==== Closing an issue
+
+An issue can be closed on github using the CloseIssueCommand. After executing the command, a `GHIssue` object of the specified index is retrieved from the Github database. The state of the GHIssue is checked and it is marked as closed if it is open.
+
+Given below is the sequence diagram for closing an issue.
+
+.High Level Sequence Diagram for closing an issue on github
+image::closeissue.png[width="800"]
+
+The following code snippet shows how `CloseIssueCommand#execute()` will update the model of application by closing an issue updating the `GitIssueList`.
+Note: The entered index number should be a valid issue index, and the user should be logged into github before using the command.
+
+----
+public class CloseIssueCommand extends Command {
+@Override
+    public CommandResult execute() throws CommandException {
+        try {
+            model.closeIssueOnGithub(targetIndex);
+        } catch (IOException ie) {
+            throw new CommandException(MESSAGE_FAILURE);
+        } catch (CommandException ce) {
+            throw new CommandException(MESSAGE_AUTHENTICATION_FAILURE);
+        }
+
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex.getOneBased()));
+    }
+}
+----
+The issue created will be removed from the `Issues` tab in the application, as by default only open issues are displayed.
+
+==== Design considerations
+
+===== Aspect: Storing issues on a local file
+
+|===
+|Alternative | Pros | Cons
+|**Not storing the issues offline** +
+(current choice)
+|Users data and privacy is protected, as issues on github might contain very confidential data regarding the product's information.
+|The user cannot view the exisitng issues offline and he can not use the software to work offline and then push everything online once the internet connection is available.
+
+|**Implementing data encryption so that the issues can be stored offline**
+|User will be able work offline on issues and post changes when internet connection is availabe.
+|In order to do offline authentication and decrypt the issue data, the application will have to store the user credentials offline which might violate Github's API policy.
+|===
+
+// end::github[]
+
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
@@ -1055,31 +1210,6 @@ image::chrome_save_as_pdf.png[width="300"]
 == Testing
 
 ProgressChecker uses JUnit tests to check for its correctness. This section covers the type of tests and how to run them.
-
-=== Running Tests
-
-There are three ways to run tests.
-
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
-
-*Method 1: Using IntelliJ JUnit test runner*
-
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
-
-*Method 2: Using Gradle*
-
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
-
-[NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
-
-*Method 3: Using Gradle (headless)*
-
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
-
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
 === Types of tests
 
@@ -1466,9 +1596,8 @@ image:TabView.png[width="600"]
 
 === Aditya Agarwal
 
-. (Major) Add a progress checker which will keep a track of number of tasks remaining and accordingly update the progress bar
+. (Major) Create a github issue tracker which will be used to track issues on github using the ProgressChecker application.
 . (Minor) Implement dynamic search
-. (Minor) Add an auto-complete for commands with tab press
 
 [appendix]
 == User Stories
@@ -1999,8 +2128,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a teammate
 
 . Deleting a teammate while all teammates are listed
@@ -2013,7 +2140,88 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Log into Github
+
+. Logging in to github when not not logged in
+
+.. Prerequisites: User shouldn't have logged into github
+.. Test case: `gitlogin gu/USERNAME pc/PASSCODE r/REPOSITORY` +
+   Expected: You have successfully logged into github!
+.. Test case: `gitlogin gu/WRONG_USERNAME pc/PASSCODE r/REPOSITORY` +
+   Expected: Enter correct username and password. +
+.. Other incorrect gitlogin commands to try: `gitlogin`, +
+   Expected: Invalid command format.
+
+=== Create an issue on github
+
+. Create issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `+issue ti/Test b/test body ms/v1.1 a/johndoe l/bug` +
+  Expected: You have successfully created an issue on github!
+.. Test case: `+issue ti/Test b/test body ms/INVALID_MILESTONE a/johndoe l/bug` +
+  Expected: Enter correct milestone. +
+.. Other incorrect +issue commands to try: `+issue`, +
+  Expected: Invalid command format.
+
+=== Edit an issue on github
+
+. Edit issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `editissue 123 ti/Test b/test body ms/v1.1 a/johndoe l/bug` +
+  Expected: You have successfully editted an issue on github!
+.. Test case: `editissue 99999 ti/Test b/test body ms/v1.1 a/johndoe l/bug` +
+  Expected: Issue not edited. Enter correct index number. +
+.. Other incorrect editissue commands to try: `editissue`, +
+  Expected: Invalid command format.
+
+=== Close an issue on github
+
+. Close an issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `-issue 37` +
+  Expected: Issue #37 has successfully been closed!
+.. Test case: `-issue 9999` +
+  Expected: Issue not closed. Enter correct index number. +
+.. Other incorrect close issue commands to try: `-issue 3 text`, +
+  Expected: Invalid command format.
+
+=== Reopen an issue on github
+
+. Reopen an issue on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `reopenissue 37` +
+  Expected: Issue #37 has successfully been reopened!
+.. Test case: `reopenissue 9999` +
+  Expected: Issue not reopened. Enter correct index number. +
+.. Other incorrect reopen issue commands to try: `reopen 3 text`, +
+  Expected: Invalid command format.
+
+=== List issues on github
+
+. List issues on github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `listissues OPEN` +
+  Expected: All open issues are listed!
+.. Test case: `listissues ssxss` +
+  Expected: Enter correct state value. +
+.. Other incorrect list issues commands to try: `listissues`, +
+  Expected: Invalid command format.
+
+=== Logout of Github
+
+. Log out of github after logging in
+
+.. Prerequisites: User should have logged into github with correct repository
+.. Test case: `gitlogout` +
+  Expected: You have successfully logged out of github!
+.. Prerequisites: User should not have logged into github
+.. Test case: `gitlogout` +
+  Expected: Please log into github first to logout. +
 
 === Saving data
 

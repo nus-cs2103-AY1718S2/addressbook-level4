@@ -16,7 +16,7 @@ public class ReopenIssueCommandParserTest {
 
     @Test
     public void parse_validArgs_returnsReopenIssueCommand() {
-        assertParseSuccess(parser, "125", new ReopenIssueCommand(INDEX_ISSUE));
+        assertParseSuccess(parser, "1", new ReopenIssueCommand(INDEX_ISSUE));
     }
 
     @Test

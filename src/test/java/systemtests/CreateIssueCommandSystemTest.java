@@ -35,7 +35,7 @@ import seedu.progresschecker.testutil.IssueUtil;
 
 //@@author adityaa1998
 public class CreateIssueCommandSystemTest extends ProgressCheckerSystemTest {
-    private final String gitlogin = "gl r/adityaa1998/samplerepo-pr-practice gu/anminkang pc/aditya2018";
+    private final String gitlogin = "gl r/AdityaA1998/CS2103TESTING gu/anminkang pc/aditya2018";
     private final String gitlogout = "gitlogout";
 
     @Before

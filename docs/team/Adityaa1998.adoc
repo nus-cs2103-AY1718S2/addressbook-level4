@@ -60,3 +60,5 @@ include::../UserGuide.adoc[tag=issues]
 
 include::../DeveloperGuide.adoc[tag=search]
 
+include::../DeveloperGuide.adoc[tag=github]
+

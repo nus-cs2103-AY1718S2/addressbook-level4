@@ -191,6 +191,24 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public boolean hasConcurrentAppointment(LocalDateTime oldDateTime, LocalDateTime newDateTime) {
+        for (Appointment a : addressBook.getAppointmentList()) {
+            LocalDateTime dateTime = a.getDateTime();
+            if (newDateTime.isAfter(dateTime)
+                    && newDateTime.isBefore(dateTime.plusMinutes(30))
+                    && !dateTime.equals(oldDateTime)) {
+                return true;
+            }
+            if (newDateTime.isBefore(dateTime)
+                    && newDateTime.plusMinutes(30).isAfter(dateTime)
+                    && !dateTime.equals(oldDateTime)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    @Override
     public void updatePetPatient(PetPatient target, PetPatient editedPetPatient)
             throws DuplicatePetPatientException, PetPatientNotFoundException {
         requireAllNonNull(target, editedPetPatient);

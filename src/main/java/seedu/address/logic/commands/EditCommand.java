@@ -288,18 +288,8 @@ public class EditCommand extends UndoableCommand {
         LocalDateTime oldDateTime = appointmentToEdit.getDateTime();
         LocalDateTime newDateTime = editedAppointment.getDateTime();
 
-        for (Appointment a : model.getFilteredAppointmentList()) {
-            LocalDateTime dateTime = a.getDateTime();
-            if (newDateTime.isAfter(dateTime)
-                    && newDateTime.isBefore(dateTime.plusMinutes(30))
-                    && !dateTime.equals(oldDateTime)) {
-                throw new ConcurrentAppointmentException();
-            }
-            if (newDateTime.isBefore(dateTime)
-                    && newDateTime.plusMinutes(30).isAfter(dateTime)
-                    && !dateTime.equals(oldDateTime)) {
-                throw new ConcurrentAppointmentException();
-            }
+        if (model.hasConcurrentAppointment(oldDateTime, newDateTime)) {
+            throw new ConcurrentAppointmentException();
         }
     }
 

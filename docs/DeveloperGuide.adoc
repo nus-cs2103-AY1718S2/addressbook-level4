@@ -1282,13 +1282,6 @@ Listed below are the different logging levels:
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
-// tag::dataencryption[]
-=== [Proposed] Data encryption
-
-_{Explain here how the data encryption feature will be implemented}_
-
-// end::dataencryption[]
-
 == Documentation
 
 This section provides necessary information for developers to edit and publish related documentations, such as User Guide and Developer Guide, for Fastis.

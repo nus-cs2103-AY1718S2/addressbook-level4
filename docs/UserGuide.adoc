@@ -219,7 +219,9 @@ Only indexes of the current filtered list are valid
 Examples:
 
 * `union Odd 1 2 3` +
-Displays the combined odd timetable for friends at Index 1, 2 and 3.
+Displays the combined odd timetable for friends at Index 1, 2 and 3. +
+
+image::timetableUnion.PNG
 
 * `union Even 1 2` +
 Displays the combined even timetable for friends at Index 1 and 2.

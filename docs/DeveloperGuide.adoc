@@ -1299,7 +1299,25 @@ If the window size is smaller than the default height and width, the window size
 
 . Natania add your recurring task testing here
 
-. Agus add your subtask testing here
+. Adding a subtask
+.. Prerequisites: Application is logged in, and at least a task is added with no subtask.
+.. Test case: adds 1 n/Prepare Project Report +
+Expected: Subtask added successfully. A success message will be shown in the results display box, and subtask with name `Prepare Project Report` appears on the first subtask.
+
+. Editing a subtask
+.. Prerequisites: Application is logged in, and a task is added with a subtask.
+.. Test case: edits 1 1 n/Prepare Project Report +
+Expected: Subtask edited successfully. A success message will be shown in the results display box, and subtask with name `Prepare Project Report` appears on the first subtask.
+
+. Deleting a subtask
+.. Prerequisites: Application is logged in, and a task is added with a subtask.
+.. Test case: delete-subtask 1 1 n/Prepare Project Report +
+Expected: Subtask deleted successfully. A success message will be shown in the results display box, and the task will have no subtask.
+
+. Toggling a subtask
+.. Prerequisites: Application is logged in, and a task is added with a subtask.
+.. Test case: toggle-subtask 1 1 +
+Expected: Subtask toggled successfully. A success message will be shown in the results display box, and the subtask status will be changed.
 
 === Calendar
 

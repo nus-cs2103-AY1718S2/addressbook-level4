@@ -192,12 +192,13 @@ Examples:
 
 * `birthdays` +
 Displays a list of all birthdays +
-image::birthdaysList.PNG[width="790"]
+
+image::birthdaysList.png[width="790"]
 
 * `birthdays today` +
 Displays a window with the birthdays today +
 
-image::birthdaysToday.PNG[width="790"]
+image::birthdaysToday.png[width="790"]
 
 // end::birthdays[]
 

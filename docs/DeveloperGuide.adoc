@@ -1505,6 +1505,12 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Scheduling an interview
 
+Scheduling an interview for a student
+
+.. Command: `interview 1 next Friday at 3pm` +
+   Expected: The interview date of the 1st person will be scheduled on next Friday at 3pm.
+.. Command: `interview 2 Mar 14 2pm` +
+   Expected: The interview of the 2nd person will be scheduled on 14 March at 2pm.
 
 === Rating a student
 

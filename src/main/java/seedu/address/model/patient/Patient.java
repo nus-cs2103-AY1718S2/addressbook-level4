@@ -7,7 +7,6 @@ import java.util.Objects;
 import java.util.Set;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.UniqueAppointmentList;
@@ -126,8 +125,9 @@ public class Patient {
         return appointments.getUpcomingAppointmentObservableList();
     }
 
-    public boolean deletePatientAppointment(Index index) {
-        return appointments.remove(index);
+    public void deletePatientAppointment(Appointment targetAppointment) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        appointments.remove(targetAppointment);
     }
 
     public void addAppointment(Appointment appointment) throws UniqueAppointmentList.DuplicatedAppointmentException {

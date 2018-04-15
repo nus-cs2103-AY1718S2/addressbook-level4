@@ -14,8 +14,9 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AppointmentChangedEvent;
 import seedu.address.commons.events.model.ImdbChangedEvent;
-import seedu.address.commons.events.ui.ShowCalendarViewRequestEvent;
+import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -32,8 +33,6 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final Imdb imdb;
     private final FilteredList<Patient> filteredPatients;
-    private final FilteredList<AppointmentEntry> appointmentEntries;
-
     /**
      * Initializes a ModelManager with the given Imdb and userPrefs.
      */
@@ -45,7 +44,6 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.imdb = new Imdb(addressBook);
         filteredPatients = new FilteredList<>(this.imdb.getPersonList());
-        appointmentEntries = new FilteredList<>(this.imdb.getAppointmentEntryList());
     }
 
     public ModelManager() {
@@ -71,10 +69,6 @@ public class ModelManager extends ComponentManager implements Model {
     //@@author Kyholmes
     private void indicateAppointmentChanged(Patient patient) {
         raise(new AppointmentChangedEvent(patient, imdb));
-    }
-
-    private void indicateCalendarChanged() {
-        raise(new ShowCalendarViewRequestEvent(imdb.getAppointmentEntryList()));
     }
 
     //@@author
@@ -138,6 +132,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
+    public Patient getPatientFromListByIndex(Index targetIndex) {
+        return filteredPatients.get(targetIndex.getZeroBased());
+    }
+
+    @Override
     public int getPatientSourceIndexInList(int targetIndex) {
         return filteredPatients.getSourceIndex(targetIndex) + 1;
     }
@@ -193,11 +192,12 @@ public class ModelManager extends ComponentManager implements Model {
     //=========== Appointment List Accessors =============================================================
 
     @Override
-    public synchronized boolean deletePatientAppointment(Patient patient, Index index) {
-        requireAllNonNull(patient, index);
-        boolean isDeleteSuccess = patient.deletePatientAppointment(index);
+    public synchronized void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws
+            UniqueAppointmentList.AppoinmentNotFoundException {
+        requireAllNonNull(patient, targetAppointmentDateTime);
+        Appointment targetAppointment = new Appointment(targetAppointmentDateTime.toString());
+        imdb.deletePatientAppointment(patient, targetAppointment);
         indicateAppointmentChanged(patient);
-        return isDeleteSuccess;
     }
 
     @Override
@@ -206,11 +206,11 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     @Override
-    public synchronized void addPatientAppointment(Patient patient, String dateTimeString) throws
+    public synchronized void addPatientAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException {
-        requireNonNull(patient, dateTimeString);
-        imdb.addAppointment(patient, dateTimeString);
+        requireAllNonNull(patient, dateTime);
+        imdb.addAppointment(patient, dateTime);
         indicateAppointmentChanged(patient);
     }
     //@@author

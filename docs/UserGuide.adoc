@@ -11,7 +11,7 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 :caution-caption: :warning:
-:important-caption: :arrow_backward:
+:important-caption: :leftwards_arrow_with_hook:
 :warning-caption: :exclamation:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W15-B2/main
@@ -154,7 +154,8 @@ Format: `undo` or `u` or `z`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the IMDB's content (`add`, `addc`, `clear`, `delete`, `delc`, and `edit`).
+Undoable commands: those commands that modify the IMDB's content (`add`, `addc`, `addq`, `clear`, `delc`, `delete`,
+`edit`, `record`, `redo`, `remark`, `removeq` and `remover`).
 ====
 
 Examples:

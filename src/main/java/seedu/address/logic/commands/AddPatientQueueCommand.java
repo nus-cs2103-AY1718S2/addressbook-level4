@@ -28,7 +28,6 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String MESSAGE_SUCCESS = "%1$s is added into visiting queue";
     public static final String MESSAGE_DUPLICATE_PERSON = "This patient already added into visiting queue.";
-    public static final String MESSAGE_PERSON_NOT_FOUND = "This patient cannot be found in the database.";
     private final Index targetIndex;
     private Index actualSourceIndex;
 

@@ -26,9 +26,8 @@ public class Appointment {
 
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Appointment // instanceof handles nulls
-                && this.appointmentDateTime.equals(((Appointment) other).appointmentDateTime)); // state check
+        return other == this || (other instanceof Appointment
+                && this.appointmentDateTime.equals(((Appointment) other).appointmentDateTime));
     }
 
     @Override

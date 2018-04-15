@@ -12,9 +12,13 @@ import com.calendarfx.model.Entry;
 public class AppointmentEntry {
     private static final int TIME_INTERVAL = 1800;
     private Entry<String> appointmentEntry;
+    private final Appointment appointmennt;
+    private final String patientName;
 
     public AppointmentEntry(Appointment appointment, String patientName) {
         requireAllNonNull(appointment, patientName);
+        this.appointmennt = appointment;
+        this.patientName = patientName;
         appointmentEntry = new Entry(patientName);
         appointmentEntry.setTitle(patientName);
         appointmentEntry.changeStartDate(appointment.getAppointmentDateTime().getLocalDate());
@@ -27,11 +31,14 @@ public class AppointmentEntry {
         return appointmentEntry;
     }
 
+    public Appointment getAppointment() {
+        return this.appointmennt;
+    }
+
     @Override
     public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AppointmentEntry // instanceof handles nulls
-                && this.appointmentEntry.equals(((AppointmentEntry) other).appointmentEntry)); // state check
+        return other == this || (other instanceof AppointmentEntry && this.appointmentEntry
+                .equals(((AppointmentEntry) other).appointmentEntry));
     }
 
     @Override

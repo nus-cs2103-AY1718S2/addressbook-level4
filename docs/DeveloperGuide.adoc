@@ -102,27 +102,29 @@ image::Architecture.png[width="600"]
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-Given below is a quick overview of each component. +
+The App consists of the following components:
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for the following:
-
-* At app launch: It initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: It shuts down the components and invokes the cleanup method where necessary.
-
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
-
-* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
-
-The rest of the App consists of the following components:
-
+* `Main`: Consists of only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`].
+* <<Design-Commons,*`Commons`*>>: Represents a collection of classes used by multiple other components.
 * <<Design-Ui,*`UI`*>>: Acts as the UI of the App.
 * <<Design-Logic,*`Logic`*>>: Acts as the command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components:
+Given below is an overview of each component.
+
+`Main` is responsible for the following:
+
+* At app launch: It initializes the components in the correct sequence, and connects them up with each other.
+* At shut down: It shuts down the components and invokes the cleanup method where necessary.
+
+<<Design-Commons,*`Commons`*>> has two major classes that play important roles at the architecture level.
+
+* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
+* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+
+The rest of the 4 components does the following:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -390,6 +392,25 @@ by the user. It then creates a new patient with the same attributes as the patie
 match the user input. The `RemarkCommand` then calls for the utility method `updatePerson` under `Model`, to replace the patient to be
 edited with the edited patient.
 
+The `Patient` is updated in the following manner:
+[source,java]
+----
+public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(patientToEdit);
+        requireNonNull(editedPatient);
+
+        try {
+            model.updatePerson(patientToEdit, editedPatient);
+        } catch (DuplicatePatientException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PatientNotFoundException pnfe) {
+            throw new AssertionError("The target patient cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(generateSuccessMessage(editedPatient));
+    }
+----
+
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
 
 .The current queue
@@ -638,6 +659,59 @@ The edit records mechanism functions like that of the `EditCommand`. It searches
 by the user. It then creates a new patient with the same attributes as the patient to be edited, changing the records attribute to
 match the user input. The `RecordCommand` then calls for the utility method `updatePerson` under `Model`, to replace the patient to be
 edited with the edited patient.
+
+The inputs from the user are handled in the following manner:
+[source,java]
+----
+private void closeWindow(String date, String symptom, String illness, String treatment) {
+        if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
+            messageText.setText("Please fill in all fields.");
+        } else {
+            if (RecordManager.authenticate(date, symptom, illness, treatment)) {
+                messageText.setText("Success! Please close this window.");
+                closeButtonAction();
+            } else {
+                if (!DateOfBirth.isValidDob(date)) {
+                    messageText.setText("Date should only contain digits and"
+                            + "slashes, in the following format DD/MM/YYYY");
+                } else {
+                    messageText.setText("Text field should only contain"
+                            + "visible characters and spaces, and it should not be blank");
+                }
+            }
+        }
+    }
+----
+
+The `editedPatient` is created in the following manner:
+[source,java]
+----
+protected void preprocessUndoableCommand() throws CommandException {
+        List<Patient> lastShownList = model.getFilteredPersonList();
+
+        if (patientIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        patientToEdit = lastShownList.get(patientIndex.getZeroBased());
+
+        //creating medical record window here and obtaining user input
+        if (!isTest) { //only execute if it is not a test
+            RecordWindow recordWindow = new RecordWindow();
+            Stage stage = new Stage();
+            recordWindow.start(stage, patientToEdit.getRecord(recordIndex.getZeroBased()));
+        }
+
+        Record editedRecord = RecordManager.getRecord();
+
+        if (editedRecord == null) {
+            editedPatient = patientToEdit;
+        } else {
+            editedPatient = createEditedPatient(patientToEdit, recordIndex.getZeroBased(), editedRecord);
+        }
+    }
+----
+
 
 Suppose that the user has just launched the application. The current patient queue is shown in the figure below.
 

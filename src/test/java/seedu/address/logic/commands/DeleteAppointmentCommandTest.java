@@ -4,14 +4,15 @@ package seedu.address.logic.commands;
 import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
-
-import java.util.Collections;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.CommandHistory;
@@ -23,7 +24,7 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
+import seedu.address.model.appointment.DateTime;
 
 public class DeleteAppointmentCommandTest {
 
@@ -34,51 +35,92 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void equals() throws IllegalValueException {
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("first"));
-
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("second"));
         Index firstIndex = ParserUtil.parseIndex("1");
+        Index secondIndex = ParserUtil.parseIndex("2");
 
-        DeleteAppointmentCommand deleteAppointmentFirstCommand =
-                new DeleteAppointmentCommand(firstPredicate, firstIndex);
+        DateTime firstDateTime = ParserUtil.parseDateTime("1/1/2018 1100");
+        DateTime secondDateTime = ParserUtil.parseDateTime("2/1/2018 1100");
 
-        DeleteAppointmentCommand deleteAppointmentSecondCommand =
-                new DeleteAppointmentCommand(secondPredicate, firstIndex);
+        DeleteAppointmentCommand deleteAppointmentFirstIndexFirstDateTimeCommand =
+                new DeleteAppointmentCommand(firstIndex, firstDateTime);
+
+        DeleteAppointmentCommand deleteAppointmentFirstIndexSecondDateTimeCommand =
+                new DeleteAppointmentCommand(firstIndex, secondDateTime);
+
+        DeleteAppointmentCommand deleteAppointmentSecondIndexFirstDateTimeCommand =
+                new DeleteAppointmentCommand(secondIndex, firstDateTime);
+
+        DeleteAppointmentCommand deleteAppointmentSecondIndexSecondDateTimeCommand =
+                new DeleteAppointmentCommand(secondIndex, secondDateTime);
 
         //same object -> return true
-        assertTrue(deleteAppointmentFirstCommand.equals(deleteAppointmentFirstCommand));
+        assertTrue(deleteAppointmentFirstIndexFirstDateTimeCommand
+                .equals(deleteAppointmentFirstIndexFirstDateTimeCommand));
 
         //same values -> returns true
-        DeleteAppointmentCommand deleteAppointmentFirstCommandCopy =
-                new DeleteAppointmentCommand(firstPredicate, firstIndex);
-        assertTrue(deleteAppointmentFirstCommand.equals(deleteAppointmentFirstCommandCopy));
+        DeleteAppointmentCommand deleteAppointmentFirstIndexFirstDateTimeCommandCopy =
+                new DeleteAppointmentCommand(firstIndex, firstDateTime);
+        assertTrue(deleteAppointmentFirstIndexFirstDateTimeCommand
+                .equals(deleteAppointmentFirstIndexFirstDateTimeCommandCopy));
 
         //different types -> returns false
-        assertFalse(deleteAppointmentFirstCommand.equals(1));
+        assertFalse(deleteAppointmentFirstIndexFirstDateTimeCommand.equals(1));
 
         //null -> returns false
-        assertFalse(deleteAppointmentFirstCommand.equals(null));
+        assertFalse(deleteAppointmentFirstIndexFirstDateTimeCommand.equals(null));
 
         //different pattern -> returns false
-        assertFalse(deleteAppointmentFirstCommand.equals(deleteAppointmentSecondCommand));
+        assertFalse(deleteAppointmentFirstIndexFirstDateTimeCommand
+                .equals(deleteAppointmentFirstIndexSecondDateTimeCommand));
+        assertFalse(deleteAppointmentFirstIndexFirstDateTimeCommand
+                .equals(deleteAppointmentSecondIndexFirstDateTimeCommand));
+        assertFalse(deleteAppointmentFirstIndexFirstDateTimeCommand
+                .equals(deleteAppointmentSecondIndexSecondDateTimeCommand));
     }
 
     @Test
-    public void execute_zeroKeywords_noPersonFound() throws Exception {
-        DeleteAppointmentCommand command = prepareCommand("  2");
-        thrown.expect(CommandException.class);
-        thrown.expectMessage(DeleteAppointmentCommand.MESSAGE_PERSON_NOT_FOUND);
+    public void execute_appointmentExistUnfilteredList_deleteSuccessful() throws Exception {
+        model.addPatientAppointment(model.getPatientFromListByIndex(INDEX_FIRST_PERSON),
+                ParserUtil.parseDateTime("15/5/2018 1600"));
+        DeleteAppointmentCommand command = prepareCommand("1 15/5/2018 1600");
+        CommandResult commandResult = command.execute();
+        assertEquals(DeleteAppointmentCommand.MESSAGE_DELETE_SUCCESS, commandResult.feedbackToUser);
+    }
 
+    @Test
+    public void execute_appointmentExistFilteredList_deleteSuccessful() throws Exception {
+        model.addPatientAppointment(model.getPatientFromListByIndex(INDEX_FIRST_PERSON),
+                ParserUtil.parseDateTime("15/5/2018 1600"));
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        DeleteAppointmentCommand command = prepareCommand("1 15/5/2018 1600");
+        CommandResult commandResult = command.execute();
+        assertEquals(DeleteAppointmentCommand.MESSAGE_DELETE_SUCCESS, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void execute_appointmentNotExist_throwsCommandException() throws Exception {
+        DeleteAppointmentCommand command = prepareCommand("2 15/5/2018 1600");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(DeleteAppointmentCommand.MESSAGE_APPOINTMENT_CANNOT_BE_FOUND);
         command.execute();
     }
 
     @Test
-    public void execute_patientExist_deleteSuccessful() throws Exception {
-        DeleteAppointmentCommand command = prepareCommand("fiona 1");
-        CommandResult commandResult = command.execute();
-        assertEquals(DeleteAppointmentCommand.MESSAGE_DELETE_SUCCESS, commandResult.feedbackToUser);
+    public void execute_indexInvalidUnfilteredList_throwsCommandException() throws Exception {
+        String indexString = model.getFilteredPersonList().size() + 1 + "";
+        DeleteAppointmentCommand command = prepareCommand(indexString + " 15/5/2018 1600");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        command.execute();
+    }
+
+    @Test
+    public void execute_indexInvalidFilteredList_throwsCommandException() throws Exception {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        DeleteAppointmentCommand command = prepareCommand("2 15/5/2018 1600");
+        thrown.expect(CommandException.class);
+        thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        command.execute();
     }
 
     private DeleteAppointmentCommand prepareCommand(String userInput) throws ParseException {

@@ -5,6 +5,7 @@ import java.util.function.Predicate;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.appointment.UniqueAppointmentEntryList;
 import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
@@ -83,14 +84,18 @@ public interface Model {
     /** Check if the patient is in the queue */
     boolean checkIfPatientInQueue(Patient targetPatient);
 
+    /** Get Patient from the patient list by index */
+    Patient getPatientFromListByIndex(Index targetIndex);
+
     /** Delete a patient's appointment*/
-    boolean deletePatientAppointment(Patient patient, Index index);
+    void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws
+            UniqueAppointmentList.AppoinmentNotFoundException;
 
     /** Get appointment entries*/
     ObservableList<AppointmentEntry> getAppointmentEntryList();
 
-    /** Delete a patient's appointment*/
-    void addPatientAppointment(Patient patient, String dateTimeString) throws
+    /** Add a patient's appointment*/
+    void addPatientAppointment(Patient patient, DateTime dateTime) throws
             UniqueAppointmentList.DuplicatedAppointmentException,
             UniqueAppointmentEntryList.DuplicatedAppointmentEntryException;
 }

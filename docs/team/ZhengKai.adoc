@@ -43,7 +43,6 @@ The implementation was challenging as it requires changes to how the application
 
 == Contributions to the User Guide
 
-
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
@@ -65,5 +64,9 @@ include::../DeveloperGuide.adoc[tag=sort]
 include::../DeveloperGuide.adoc[tag=group]
 
 include::../DeveloperGuide.adoc[tag=encryption]
+
+include::../DeveloperGuide.adoc[tag=password]
+
+== Proposed - Password Recovery
 
 include::../DeveloperGuide.adoc[tag=password]

@@ -2050,7 +2050,8 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Successfully added.
 
 . To add an appointment
-..
+.. add -a d/2018-10-22 r/nil t/checkup -o nr/S012345B -p n/Ane
+   Expected: succesfully added
 
 === Finding contacts or pet patients
 . Finding contacts

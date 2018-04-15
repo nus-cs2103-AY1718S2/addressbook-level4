@@ -36,7 +36,7 @@ recruiters to switch between different pre-defined theme.
 ** Justification: Tech recruiters might have additional information for their contacts and relying on tags alone is not enough.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/tiny767.md[Functional code]]
-[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/tiny767.md[Test code]] _{give links to collated code files}_
+[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/tiny767.md[Test code]] 
 
 * *Other contributions*:
 
@@ -49,8 +49,6 @@ recruiters to switch between different pre-defined theme.
 https://github.com/CS2103JAN2018-W13-B1/main/issues/147, https://github.com/CS2103JAN2018-W13-B1/main/issues/156, https://github.com/CS2103JAN2018-W13-B1/main/issues/160)
 ** Tools:
 *** Integrated a third party library (RestFB) to the project
-
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 
@@ -71,6 +69,6 @@ include::../UserGuide.adoc[tag=remark]
 
 include::../DeveloperGuide.adoc[tag=facebook]
 include::../DeveloperGuide.adoc[tag=theme]
-include::../DeveloperGuide.adoc[tag=t]
+include::../DeveloperGuide.adoc[tagcolor]
 
 ---

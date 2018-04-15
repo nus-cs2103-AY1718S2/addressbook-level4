@@ -81,3 +81,5 @@ And more (Deleting lessons, syncing with Google)...
 Start of extract from [Developer Guide]
 include::../DeveloperGuide.adoc[tag=schedule]
 End of extract from [Developer Guide]
+
+

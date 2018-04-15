@@ -1,0 +1,138 @@
+package seedu.investigapptor.storage;
+
+import static java.util.Objects.requireNonNull;
+
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.Optional;
+import java.util.logging.Logger;
+
+import seedu.investigapptor.commons.core.LogsCenter;
+import seedu.investigapptor.commons.exceptions.DataConversionException;
+import seedu.investigapptor.commons.exceptions.IllegalValueException;
+import seedu.investigapptor.commons.exceptions.WrongPasswordException;
+import seedu.investigapptor.commons.util.FileUtil;
+import seedu.investigapptor.model.Password;
+import seedu.investigapptor.model.ReadOnlyInvestigapptor;
+
+/**
+ * A class to access Investigapptor data stored as an xml file on the hard disk.
+ */
+public class XmlInvestigapptorStorage implements InvestigapptorStorage {
+
+    private static final Logger logger = LogsCenter.getLogger(XmlInvestigapptorStorage.class);
+
+    private String filePath;
+
+    public XmlInvestigapptorStorage(String filePath) {
+        this.filePath = filePath;
+    }
+
+    public String getInvestigapptorFilePath() {
+        return filePath;
+    }
+
+    @Override
+    public Optional<ReadOnlyInvestigapptor> readInvestigapptor() throws DataConversionException, IOException {
+        return readInvestigapptor(filePath);
+    }
+
+    /**
+     * Similar to {@link InvestigapptorStorage#readInvestigapptor()}
+     *
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public Optional<ReadOnlyInvestigapptor> readInvestigapptor(String filePath) throws DataConversionException,
+            FileNotFoundException {
+        requireNonNull(filePath);
+
+        File investigapptorFile = new File(filePath);
+
+        if (!investigapptorFile.exists()) {
+            logger.info("Investigapptor file " + investigapptorFile + " not found");
+            return Optional.empty();
+        }
+
+        XmlSerializableInvestigapptor xmlInvestigapptor = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        try {
+            return Optional.of(xmlInvestigapptor.toModelType());
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + investigapptorFile + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
+
+    //@@author quentinkhoo
+    /**
+     * Similar to {@link InvestigapptorStorage#readInvestigapptor()}
+     *
+     * @param filePath location of the data. Cannot be null
+     * @throws DataConversionException if the file is not in the correct format.
+     */
+    public void checkInvestigapptorPassword(String filePath, Password password)
+            throws DataConversionException, IOException, WrongPasswordException {
+        requireNonNull(filePath);
+        requireNonNull(password);
+
+        File investigapptorFile = new File(filePath);
+
+        if (!investigapptorFile.exists()) {
+            logger.info("Investigapptor file " + investigapptorFile + " not found");
+        }
+        XmlSerializableInvestigapptor xmlInvestigapptor = XmlFileStorage.loadDataFromSaveFile(new File(filePath));
+        try {
+            String currentPassword = xmlInvestigapptor.toModelType().getPassword().getPassword();
+            String inputPassword = Password.generatePasswordHash(password.getPassword());
+            if (!isCorrectPassword(currentPassword, inputPassword)) {
+                throw new WrongPasswordException("Invalid password entered! Please try again.");
+            }
+        } catch (IllegalValueException ive) {
+            logger.info("Illegal values found in " + investigapptorFile + ": " + ive.getMessage());
+            throw new DataConversionException(ive);
+        }
+    }
+
+    /**
+     * Checks if an inputPassword is the currentPassword
+     * @param currentPassword
+     * @param inputPassword
+     */
+    private boolean isCorrectPassword(String currentPassword, String inputPassword) {
+        return currentPassword.equals(inputPassword);
+    }
+    //@@author
+
+    @Override
+    public void saveInvestigapptor(ReadOnlyInvestigapptor investigapptor) throws IOException {
+        saveInvestigapptor(investigapptor, filePath);
+    }
+
+    /**
+     * Similar to {@link InvestigapptorStorage#saveInvestigapptor(ReadOnlyInvestigapptor)}
+     *
+     * @param filePath location of the data. Cannot be null
+     */
+    public void saveInvestigapptor(ReadOnlyInvestigapptor investigapptor, String filePath) throws IOException {
+        requireNonNull(investigapptor);
+        requireNonNull(filePath);
+
+        File file = new File(filePath);
+        FileUtil.createIfMissing(file);
+        XmlFileStorage.saveDataToFile(file, new XmlSerializableInvestigapptor(investigapptor));
+    }
+
+    //@@author Marcus-cxc
+    @Override
+    public void backupInvestigapptor(ReadOnlyInvestigapptor investigapptor, String fileName) throws IOException {
+        saveInvestigapptor(investigapptor, filePath + ".backup");
+    }
+    //@@author
+    @Override
+    public void readInvestigapptorWithPassword(Password password)
+            throws DataConversionException, IOException, WrongPasswordException {
+        checkInvestigapptorPassword(filePath, password);
+    }
+
+}

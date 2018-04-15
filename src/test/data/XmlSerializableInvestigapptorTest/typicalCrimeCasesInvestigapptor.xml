@@ -1,0 +1,187 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Investigapptor save file which contains the same CrimeCase values as in
+{@code TypicalCrimeCases#getTypicalInvestigapptor()}-->
+<investigapptor>
+    <cases>
+        <name>Project Alfa</name>
+        <description>Murder on the orient express</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>10/11/2015</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Murder</tagged>
+    </cases>
+    <cases>
+        <name>Project Bravo Johnny</name>
+        <description>Crooked house</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>12/03/2016</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>open</status>
+        <tagged>Kidnap</tagged>
+        <tagged>Homicide</tagged>
+    </cases>
+    <cases>
+        <name>Project Charlie</name>
+        <description>ABC murders</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>18/01/2012</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Homicide</tagged>
+    </cases>
+    <cases>
+        <name>Project Delta Johnny</name>
+        <description>Peril at End House</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>27/11/1999</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>open</status>
+        <tagged>Homicide</tagged>
+    </cases>
+    <cases>
+        <name>Project Echo</name>
+        <description>A study in scarlet</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>23/11/1965</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>open</status>
+        <tagged>Homicide</tagged>
+    </cases>
+    <cases>
+        <name>Project Foxtrot</name>
+        <description>The sign of the four</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>09/07/2017</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Homicide</tagged>
+    </cases>
+    <cases>
+        <name>Project Golf</name>
+        <description>The hound of the baskervilles</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>02/08/2017</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>open</status>
+        <tagged>Homicide</tagged>
+    </cases>
+    <cases>
+        <name>Project One</name>
+        <description>Scary case</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>10/12/2016</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Murder</tagged>
+        <tagged>Homicide</tagged>
+        <tagged>Missing</tagged>
+    </cases>
+    <cases>
+        <name>Project Two</name>
+        <description>Not so scary case</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>14/12/2016</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Robbery</tagged>
+        <tagged>Prank</tagged>
+        <tagged>Kidnap</tagged>
+    </cases>
+    <cases>
+        <name>Project Three</name>
+        <description>Supernatural Case</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>18/12/2016</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Murder</tagged>
+        <tagged>Supernatural</tagged>
+    </cases>
+    <cases>
+        <name>Project Four</name>
+        <description>Small case</description>
+        <investigator>
+            <name>Detective Holmes</name>
+            <phone>85355255</phone>
+            <email>alice@example.com</email>
+            <address>123, Jurong West Ave 6, #08-111</address>
+            <rank>3</rank>
+            <tagged>friends</tagged>
+        </investigator>
+        <startDate>11/12/2016</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>close</status>
+        <tagged>Theft</tagged>
+    </cases>
+</investigapptor>

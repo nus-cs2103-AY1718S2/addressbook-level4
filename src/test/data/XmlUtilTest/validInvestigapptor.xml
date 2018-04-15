@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<investigapptor>
+    <cases>
+        <name>Project Three</name>
+        <description>THREE!!</description>
+        <investigator>
+            <name>Heinz Kurz</name>
+            <phone>95352563</phone>
+            <email>jheinz@example.com</email>
+            <address>wall street</address>
+            <rank>2</rank>
+            <caseList>-1072334025</caseList>
+            <caseList>-1401203424</caseList>
+        </investigator>
+        <startDate>16/08/2010</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>open</status>
+        <tagged>Three</tagged>
+    </cases>
+    <cases>
+        <name>Other Three</name>
+        <description>THREE!!</description>
+        <investigator>
+            <name>Heinz Kurz</name>
+            <phone>95352563</phone>
+            <email>jheinz@example.com</email>
+            <address>wall street</address>
+            <rank>2</rank>
+            <caseList>-1072334025</caseList>
+            <caseList>-1401203424</caseList>
+        </investigator>
+        <startDate>16/08/2010</startDate>
+        <endDate>12/12/3000</endDate>
+        <status>open</status>
+        <tagged>Three</tagged>
+    </cases>
+    <tags>Three</tags>
+    <investigators>
+        <name>Hans Muster</name>
+        <phone>9482424</phone>
+        <email>jhans@example.com</email>
+        <address>4th street</address>
+        <rank>3</rank>
+    </investigators>
+    <investigators>
+        <name>Heinz Kurz</name>
+        <phone>95352563</phone>
+        <email>jheinz@example.com</email>
+        <address>wall street</address>
+        <rank>2</rank>
+        <caseList>-1072334025</caseList>
+        <caseList>-1401203424</caseList>
+    </investigators>
+    <investigators>
+        <name>Anna Best</name>
+        <phone>8382256</phone>
+        <email>anna@example.com</email>
+        <address>4th street</address>
+        <rank>3</rank>
+    </investigators>
+    <investigators>
+        <name>Martin Mueller</name>
+        <phone>9132356</phone>
+        <email>Martin@example.com</email>
+        <address>wall street</address>
+        <rank>5</rank>
+    </investigators>
+</investigapptor>

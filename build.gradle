@@ -16,7 +16,7 @@ plugins {
 }
 
 // Specifies the entry point of the application
-mainClassName = 'seedu.address.MainApp'
+mainClassName = 'seedu.investigapptor.MainApp'
 
 sourceCompatibility = JavaVersion.VERSION_1_8
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -41,6 +41,7 @@ jacocoTestReport {
 dependencies {
     String testFxVersion = '4.0.7-alpha'
 
+	compile fileTree(dir: 'libs', include: '*.jar')
     compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
     compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.11'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
@@ -57,7 +58,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "investigapptor.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }
@@ -132,16 +133,16 @@ test {
         }
 
         if (runNonGuiTests) {
-            test.include 'seedu/address/**'
+            test.include 'seedu/investigapptor/**'
         }
 
         if (runGuiTests) {
             test.include 'systemtests/**'
-            test.include 'seedu/address/ui/**'
+            test.include 'seedu/investigapptor/ui/**'
         }
 
         if (!runGuiTests) {
-            test.exclude 'seedu/address/ui/**'
+            test.exclude 'seedu/investigapptor/ui/**'
         }
     }
 }
@@ -200,6 +201,17 @@ task copyDummySearchPage(type: Copy) {
     from 'docs/DummySearchPage.html'
     into "${buildDir}/docs/html5"
 }
+
+task copyInvestigatorDetailsPage(type: Copy) {
+    from 'docs/InvestigatorDetailsPage.html'
+    into "${buildDir}/docs/html5"
+}
+
+task copyCaseDetailsPage(type: Copy) {
+    from 'docs/CaseDetailsPage.html'
+    into "${buildDir}/doc/html5"
+}
+
 
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs

@@ -1299,9 +1299,9 @@ These instructions only provide a starting point for testers to work on; testers
 .. Test case: `import VALID_FILE_PATH` +
    Expected: All students, tags, and aliases from the imported file are added to StardyTogether.
 .. Test case: `import INVALID_FILE_PATH` +
-   Expected: error message will be shown
+   Expected: Invalid filepath error message will be shown
 .. Other incorrect import commands to try: `import`, `import filepath wrongPassword` (where wrongPassword is wrong), `import INVALID_FILE_FORMAT` (where file is in invalid format) +
-   Expected: Similar to previous.
+   Expected: Invalid command error message will be shown
 
 === Exporting a file
 
@@ -1309,26 +1309,35 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Prerequisites: a valid filepath
 .. Test case: `list` then `export VALID_FILE_PATH` +
-   Expected: All students, tags, and alias from StardyTogether are exported to filepath.
-.. Test case: `find alex` then `export INVALID_FILE_PATH` +
-   Expected: All students with `Alex` in his/her name, tags, and aliases from StardyTogether are exported to filepath.
-.. Test case: `find nonExistentName` then `export INVALID_FILE_PATH` +
-   Expected: All tags, and aliases from StardyTogether are exported to filepath. No students are exported.
+   Expected: All persons, tags, and alias from StardyTogether are exported to filepath.
+.. Test case: `find alex` then `export VALID_FILE_PATH` +
+   Expected: All persons with `Alex` in his/her name, tags, and aliases from StardyTogether are exported to filepath.
+.. Test case: `find nonExistentName` then `upload VALID_FILE_PATH` +
+   Expected: All tags, and aliases from StardyTogether are exported to filepath. No persons are exported.
 .. Test case: `export INVALID_FILE_PATH` +
    Expected: error message will be shown
-.. Other incorrect export commands to try: `export`, `export filepath  wrongPassword  ` (notice the spaces) +
-   Expected: Similar to previous.
+.. Other incorrect export commands to try: `export`, `export filepath password  ` (notice the spaces) +
+   Expected: Invalid command error message will be shown
 
 === Uploading a file
 
 . Uploading a file to Google Drive
 
 .. Prerequisites: user granted StardyTogether access to Google Drive
-.. Test case: `import VALID_FILE_PATH` +
-   Expected: All students, tags, and alias from the imported file are added to StardyTogether.
-.. Test case: `import INVALID_FILE_PATH` +
-   Expected: error message will be shown
-.. Other incorrect delete commands to try: `import`, `import filepath wrongPassword` (where wrongPassword is wrong), `import INVALID_FILE_FORMAT` (where file is in invalid format) +
-   Expected: Similar to previous.
+.. Test case: `list` then `upload VALID_FILE_NAME` +
+   Expected: All persons, tags, and alias from StardyTogether are uploaded to Google Drive.
+.. Test case: `find alex` then `upload VALID_FILE_NAME` +
+   Expected: All persons with `Alex` in his/her name, tags, and aliases from StardyTogether are uploaded to Google Drive.
+.. Test case: `find nonExistentName` then `upload VALID_FILE_NAME` +
+   Expected: All tags, and aliases from StardyTogether are uploaded to Google Drive. No persons are uploaded.
+
+.. Prerequisites: user does not grant StardyTogether access to Google Drive
+.. Test case: `upload VALID_FILE_NAME` +
+   Expected: No authorization error message will be shown
+.. Prerequisites: user does not respond to authorization request
+.. Test case: `upload VALID_FILE_NAME` +
+   Expected: Authorization request timed out error message will be shown
+.. Other incorrect upload commands to try: `upload`, `upload filename   password  ` (notice the spaces) +
+   Expected: Invalid command error message will be shown
 
 

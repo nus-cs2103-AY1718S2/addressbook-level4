@@ -132,6 +132,7 @@ public class StringUtil {
         return s.substring(index);
     }
 
+    //@@author takuyakanbr
     /**
      * Returns a random 8 character string to be used as a prefix to a filename.
      */

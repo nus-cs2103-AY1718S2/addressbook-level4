@@ -11,6 +11,7 @@ import java.util.Arrays;
 
 import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.util.FileUtil;
@@ -29,6 +30,8 @@ public class CipherEngineTest {
     private static final String PASSWORD_2 = "thisismypassword";
     private static final String PASSWORD_3 = "1RS#(`D #Q HT%";
 
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();
 
@@ -73,6 +76,25 @@ public class CipherEngineTest {
         assertTrue(CipherEngine.isValidPasswordHash(hashed));
         assertTrue(CipherEngine.checkPassword(PASSWORD_3, hashed));
     }
+
+    //@@author
+    @Test
+    public void checkPassword_invalidHash_throwsIllegalArgumentException() throws Exception {
+        thrown.expect(IllegalArgumentException.class);
+        CipherEngine.checkPassword("12345", "PBKDF2WithHmacSHA256$22000$256$hash");
+    }
+
+    @Test
+    public void isValidPasswordHash_invalidHash_false() {
+        assertFalse(CipherEngine.isValidPasswordHash("PBKDF2WithHmacSHA256$22000$256$hash"));
+        assertFalse(CipherEngine.isValidPasswordHash("PBKDF2WithHmacSHA256$xxxx$xxxx$hash$salt"));
+    }
+
+    @Test
+    public void isValidPasswordHash_validHash_true() {
+        assertTrue(CipherEngine.isValidPasswordHash("PBKDF2WithHmacSHA256$22000$256$hash$salt"));
+    }
+    //@@author qiu-siqi
 
     private boolean isSameInContent(File one, File two) throws IOException {
         return Arrays.equals(Files.readAllBytes(one.toPath()), (Files.readAllBytes(two.toPath())));

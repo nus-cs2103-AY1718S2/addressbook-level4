@@ -11,9 +11,10 @@ To view my full portfolio, please visit https://danielteo.me/work[danielteo.me, 
 
 == Overview
 
-Bibliotek is a free book cataloguing application. It is targeted at heavy readers who require a hassle-free way of managing and keeping track of their read and unread books.
+Bibliotek is a free book cataloguing application that is simple, fast, and easy to use.
+It is targeted at heavy readers who require a hassle-free way of managing and keeping track of their read and unread books.
 
-The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+Bibliotek has a GUI created with JavaFX, and is written in Java, with approximately 15 kLoC.
 
 == Summary of contributions
 

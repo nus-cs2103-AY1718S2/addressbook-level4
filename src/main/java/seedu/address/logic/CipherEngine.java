@@ -41,16 +41,16 @@ public class CipherEngine {
     private static final SecureRandom RANDOM = new SecureRandom();
 
     /**
-     *  Encrypts file at {@code fileName} using {@code key}.
+     *  Encrypts file at {@code fileName} using {@code password}.
      */
-    public static void encryptFile(String fileName, String key) {
+    public static void encryptFile(String fileName, String password) {
         String tempFileName = StringUtil.generateRandomPrefix() + "_temp.enc";
         FileInputStream fis = null;
         FileOutputStream fos = null;
         try {
             fis = new FileInputStream(fileName);
             fos = new FileOutputStream(tempFileName);
-            encryptStream(key, fis, fos);
+            encryptStream(password, fis, fos);
         } catch (Exception e) {
             logger.warning("Could not encrypt file " + fileName);
             logger.warning(StringUtil.getDetails(e));
@@ -62,16 +62,16 @@ public class CipherEngine {
     }
 
     /**
-     *  Decrypts file at {@code fileName} using {@code key}.
+     *  Decrypts file at {@code fileName} using {@code password}.
      */
-    public static void decryptFile(String fileName, String key) {
+    public static void decryptFile(String fileName, String password) {
         String tempFileName = StringUtil.generateRandomPrefix() + "_temp.enc";
         FileInputStream fis = null;
         FileOutputStream fos = null;
         try {
             fis = new FileInputStream(fileName);
             fos = new FileOutputStream(tempFileName);
-            decryptStream(key, fis, fos);
+            decryptStream(password, fis, fos);
         } catch (Exception e) {
             logger.warning("Could not decrypt file " + fileName);
             logger.warning(StringUtil.getDetails(e));
@@ -98,7 +98,6 @@ public class CipherEngine {
     }
 
     //@@author
-
     /**
      * Returns a salted and hashed password to be used for storage.
      */

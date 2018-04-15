@@ -80,6 +80,8 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_appointmentExistUnfilteredList_deleteSuccessful() throws Exception {
+        model.addPatientAppointment(model.getPatientFromListByIndex(INDEX_FIRST_PERSON),
+                ParserUtil.parseDateTime("15/5/2018 1600"));
         DeleteAppointmentCommand command = prepareCommand("1 15/5/2018 1600");
         CommandResult commandResult = command.execute();
         assertEquals(DeleteAppointmentCommand.MESSAGE_DELETE_SUCCESS, commandResult.feedbackToUser);
@@ -87,6 +89,8 @@ public class DeleteAppointmentCommandTest {
 
     @Test
     public void execute_appointmentExistFilteredList_deleteSuccessful() throws Exception {
+        model.addPatientAppointment(model.getPatientFromListByIndex(INDEX_FIRST_PERSON),
+                ParserUtil.parseDateTime("15/5/2018 1600"));
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         DeleteAppointmentCommand command = prepareCommand("1 15/5/2018 1600");
         CommandResult commandResult = command.execute();

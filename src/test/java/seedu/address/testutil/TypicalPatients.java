@@ -53,9 +53,7 @@ public class TypicalPatients {
                     .withTags("friends")
                     .withNric("S1234567A")
                     .withBloodType("A+")
-                    .withDob("11/11/1991")
-                    .withAppointments("15/5/2018 1600", "17/6/2018 1300")
-                    .build();
+                    .withDob("11/11/1991").build();
         } catch (ParseException pe) {
             try {
                 throw pe;
@@ -72,8 +70,7 @@ public class TypicalPatients {
                     .withTags("owesMoney", "friends")
                     .withNric("S7654321B")
                     .withBloodType("B-")
-                    .withDob("10/10/1990")
-                    .withAppointments("18/5/2018 1200").build();
+                    .withDob("10/10/1990").build();
         } catch (ParseException pe) {
             try {
                 throw pe;
@@ -88,8 +85,7 @@ public class TypicalPatients {
                     .withEmail("heinz@example.com").withAddress("wall street")
                     .withNric("S5671234C")
                     .withBloodType("A+")
-                    .withDob("09/09/1989")
-                    .withAppointments("21/5/2018 1500", "6/6/2018 1030", "18/7/2018 1100").build();
+                    .withDob("09/09/1989").build();
         } catch (ParseException pe) {
             try {
                 throw pe;
@@ -134,9 +130,7 @@ public class TypicalPatients {
                     .withEmail("lydia@example.com").withAddress("little tokyo")
                     .withNric("S1234512F")
                     .withBloodType("O+")
-                    .withDob("06/06/1986")
-                    .withAppointments("28/3/2018 1230")
-                    .build();
+                    .withDob("06/06/1986").build();
         } catch (ParseException pe) {
             try {
                 throw pe;
@@ -151,8 +145,7 @@ public class TypicalPatients {
                     .withEmail("anna@example.com").withAddress("4th street")
                     .withRemark("Comes for checkup every Tuesday").withNric("S1234567A")
                     .withBloodType("B+")
-                    .withDob("11/11/1991")
-                    .withAppointments("2/3/2018 1330").build();
+                    .withDob("11/11/1991").build();
         } catch (ParseException pe) {
             try {
                 throw pe;

@@ -56,6 +56,8 @@ import seedu.address.model.tag.Tag;
  */
 public class SearchTagCommandParser implements Parser<SearchTagCommand> {
 
+    public static final String MESSAGE_INVALID_COMMAND_NO_TAGS = "Please insert tags in the tag field: t/";
+
     /**
      * Parses the given {@code String} of arguments in the context of the ColorCommand
      * and returns an RemoveTagCommand object for execution.
@@ -69,7 +71,7 @@ public class SearchTagCommandParser implements Parser<SearchTagCommand> {
         try {
             tagsToFind = parseTags(argMultimap.getAllValues(PREFIX_TAG));
             if (tagsToFind.isEmpty()) {
-                throw new ParseException("Please insert tags in the tag field: t/");
+                throw new ParseException(MESSAGE_INVALID_COMMAND_NO_TAGS);
             }
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
@@ -107,6 +109,15 @@ public class SearchTagCommandParser implements Parser<SearchTagCommand> {
             return new SearchTagCommandParser().parse(arguments);
         case SearchTagCommand.COMMAND_SHORTCUT:
             return new SearchTagCommandParser().parse(arguments);
+```
+###### /java/seedu/address/logic/parser/CurrencyCommandParser.java
+``` java
+            Currency fromFormattedCurrency = Currency.get(fromCurrency);
+            Currency toFormattedCurrency = Currency.get(toCurrency);
+
+            if (fromFormattedCurrency == null || toFormattedCurrency == null) {
+                throw new ParseException(CurrencyCommand.MESSAGE_CURRENCY_NOT_SUPPORTED);
+            }
 ```
 ###### /java/seedu/address/logic/commands/MinCommand.java
 ``` java
@@ -325,4 +336,21 @@ public class MapCommand extends Command {
 
 
 }
+```
+###### /java/seedu/address/model/money/Money.java
+``` java
+    /**
+     * Limits the input for money to 16 digits. This is when we start the lose precision for balance command.
+     * @param test
+     * @return
+     */
+    public static boolean isNumberLowEnough(String test) {
+        char[] testArray = test.toCharArray();
+        int size = testArray.length;
+        if (size > 16) {
+            return false;
+        }
+        return true;
+    }
+
 ```

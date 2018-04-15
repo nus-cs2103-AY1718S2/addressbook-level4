@@ -24,6 +24,7 @@ package seedu.address.logic.parser;
 
 import static org.testng.Assert.assertEquals;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 
 import java.util.HashSet;

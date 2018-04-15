@@ -39,13 +39,14 @@ public class CurrencyCommandParser implements Parser<CurrencyCommand> {
             }
             fromCurrency = currencyKeywords[1].toUpperCase();
             toCurrency = currencyKeywords[2].toUpperCase();
+
+            //@@author Articho28
             Currency fromFormattedCurrency = Currency.get(fromCurrency);
             Currency toFormattedCurrency = Currency.get(toCurrency);
 
             if (fromFormattedCurrency == null || toFormattedCurrency == null) {
                 throw new ParseException(CurrencyCommand.MESSAGE_CURRENCY_NOT_SUPPORTED);
             }
-
             return new CurrencyCommand(currencyIndex, fromCurrency, toCurrency);
         } catch (IllegalValueException ive) {
             throw new ParseException(

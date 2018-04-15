@@ -64,8 +64,6 @@ PrioriTask used https://github.com/nus-cs2103-AY1718S2/addressbook-level4[Addres
 
 include::../UserGuide.adoc[tag=user]
 
-include::../UserGuide.adoc[tag=priority]
-
 == Contributions to the Developer Guide
 
 |===

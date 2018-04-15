@@ -500,6 +500,12 @@ Examples:
 * `deleteGroupMember 2 g/CS2101 Oral Presentation` +
 Adds the 2nd person shown in the person list from group `CS2101 Oral Presentation`.
 
+Refer to Figure 10 for results of this command. +
++
+image:deleteGroupMemberExample.png[width ="500"] +
+*Figure 10:* Example of deleteMembersFromGroup +
+
+
 === Listing Group Members : `listGroupMembers`
 
 Lists all the members in the group that already exists in Fastis. +
@@ -515,10 +521,10 @@ Examples:
 
 * `listGroupMembers CS2101 Oral Presentation`  +
 Lists all members of group CS2101 Oral Presentation. +
-Refer to Figure 10 for results of this command.
+Refer to Figure 11 for results of this command.
 +
 image:listGroupMembersExample.png[width = "500"] +
-*Figure 10:* Example of ListGroupMembers. +
+*Figure 11:* Example of ListGroupMembers. +
 
 === Deleting a Group : `deleteGroup`
 Deletes a group from Fastis. +
@@ -536,6 +542,11 @@ Examples:
 
 * `deleteGroup CS2101 Oral Presentation`  +
 Deletes group `CS2101 Oral Presentation` from Fastis. +
+
+Refer to Figure 12 for results of this command. +
++
+image:deleteGroupExample.png[width ="500"] +
+*Figure 12:* Example of deleteGroup +
 //end::addGroup[]
 
 === Scheduling a suitable meetup time : `scheduleGroup`
@@ -555,10 +566,10 @@ Examples:
 
 * `scheduleGroup CS2101 Oral Presentation`  +
 Displays all free time slots for group CS2101 Oral Presentation. +
-Refer to Figure 11 for results of this command.
+Refer to Figure 13 for results of this command.
 +
 image:scheduleGroupExample.png[width = "800"] +
-*Figure 11:* Example of scheduleGroup. +
+*Figure 13:* Example of scheduleGroup. +
 
 === Switching between Calendar and Timetable : `switch`
 
@@ -625,15 +636,15 @@ Format: `modify INDEX`
 [[TimetableLinks]]
 [big]#*Timetable Links*#
 
-Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 12. +
+Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 14. +
 
 image:nusModsShare.PNG[width ="500"] +
-*Figure 12:* Share/Sync button on NUSMods website. +
+*Figure 14:* Share/Sync button on NUSMods website. +
 
-The link in the box indicated in Figure 13 below is the TimetableLink for Fastis. Copy it into your commands. +
+The link in the box indicated in Figure 15 below is the TimetableLink for Fastis. Copy it into your commands. +
 
 image:nusModsLinkResult.PNG[width ="500"] +
-*Figure 13:* The TimetableLink to copy to Fastis commands.
+*Figure 15:* The TimetableLink to copy to Fastis commands.
 
 //end::TimetableLinks[]
 

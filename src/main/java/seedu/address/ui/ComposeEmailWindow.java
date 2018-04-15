@@ -114,8 +114,9 @@ public class ComposeEmailWindow {
             results.setText("Email Sent Successfully");
             results.setTextFill(Color.web("#4cc486"));
         } catch (MessagingException e) {
-            results.setText(e.getCause().toString());
+            results.setText("Could not send email due to error.");
             results.setTextFill(Color.web("Red"));
+            e.getStackTrace();
         }
         puWindow.getScene().setRoot(confirm);
         puWindow.show();

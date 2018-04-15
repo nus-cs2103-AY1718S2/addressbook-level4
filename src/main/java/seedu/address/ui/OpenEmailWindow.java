@@ -128,7 +128,7 @@ public class OpenEmailWindow {
         try {
             ComposeEmailWindow cew = new ComposeEmailWindow("", "", "", "");
         } catch (IOException e) {
-            System.out.println("IOException");
+            e.printStackTrace();
         }
     }
 

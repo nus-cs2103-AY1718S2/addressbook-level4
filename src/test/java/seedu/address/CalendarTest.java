@@ -4,6 +4,9 @@ package seedu.address;
 
 import static org.junit.Assert.assertEquals;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.temporal.TemporalAccessor;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -61,8 +64,18 @@ public class CalendarTest extends Calendar {
     }
 
     @Test
-    public static void addEventTest(String eventName, String eventLocation, DateTime startDateTime,
-                                    DateTime endDateTime) {
+    public void addEventTest() {
+        String eventName = "eventName";
+        String eventLocation = "eventLoc";
+
+        TemporalAccessor taStart = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").parse("2018-05-05 12:00:00");
+        String strStartDateTime = LocalDateTime.from(taStart).toString() + ":00+08:00";
+
+        TemporalAccessor taEnd = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").parse("2018-05-05 13:00:00");
+        String strEndDateTime = LocalDateTime.from(taEnd).toString() + ":00+08:00";
+
+        DateTime startDateTime = new DateTime(strStartDateTime);
+        DateTime endDateTime = new DateTime(strEndDateTime);
 
         Event event = new Event()
                 .setSummary(eventName)
@@ -85,10 +98,10 @@ public class CalendarTest extends Calendar {
         assertEquals(event.getLocation(), eventLocation);
 
         //Start matches
-        assertEquals(event.getStart(), startDateTime);
+        assertEquals(event.getStart().toString(), "{dateTime=" + startDateTime + ", timeZone=}");
 
         //End matches
-        assertEquals(event.getEnd(), endDateTime);
+        assertEquals(event.getEnd().toString(), "{dateTime=" + endDateTime + ", timeZone=}");
     }
 
 }

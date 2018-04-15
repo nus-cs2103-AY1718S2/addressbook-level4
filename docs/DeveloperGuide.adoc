@@ -1067,6 +1067,7 @@ It supports modifying the `color` field within `Tag` objects.
 The flow of operation is shown the <<fig42, Figure 42>> below.
 
 [[fig42]]
+.Sequence Diagram for `ChangeTagColor`.`
 image::ChangeTagColorSequenceDiagram.png[width="800"]
 
 `ChangeTagColorCommand` inherit from `UndoableCommand`, therefore it can be undone and redone using `UndoRedoStack`.

@@ -680,10 +680,10 @@ Adds the cca details(cca basketball with the position member) to the 2nd student
 Adds the cca details(cca Choir with the position member) to the 1st student in the results of the `find` command.
 
 .Before adding CCA to Betsy.
-image::BeforeAddingCca.png[width="400"]
+image::BeforeAddingCca.png[width="800"]
 
 .The success message when command is successfully entered.
-image::AddCcaSuccessMessage.png[width="400"]
+image::AddCcaSuccessMessage.png[width="800"]
 
 .After the command is successfully entered.
 image::AfterAddingCca.png[width="800"]

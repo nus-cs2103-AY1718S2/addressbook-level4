@@ -134,16 +134,24 @@ public class CalendarWindow extends UiPart<Stage> {
         logger.fine("Showing calendar window.");
         getRoot().show();
     }
+
+    /**
+     * Hides the calendar window.
+     * @throws IllegalStateException
+    */
+    public void close() {
+        logger.fine("Hiding calendar window.");
+        getRoot().close();
+    }
 }
 
 ```
 ###### /java/seedu/address/ui/CalendarPanel.java
 ``` java
     /**
-     * Loads a default HTML file with a background that matches the general theme.
+     * Loads the Google Calendar WebView within the appropriate scene.
      */
     private void loadDefaultPage() throws IOException {
-
         WebEngine engine = browser.getEngine();
         URI uri = URI.create(CALENDAR_URL);
         Map<String, List<String>> headers = new LinkedHashMap<>();
@@ -154,12 +162,18 @@ public class CalendarWindow extends UiPart<Stage> {
     }
 
     /**
-     * Frees resources allocated to the browser.
+     * Resets the Google Calendar WebView scene.
      */
-    public void freeResources() {
-        browser = null;
+    public void reloadDefaultPage() throws IOException {
+        WebEngine engine = browser.getEngine();
+        URI uri = URI.create(LOGOUT_URL);
+        Map<String, List<String>> headers = new LinkedHashMap<>();
+        headers.put("Set-Cookie", Arrays.asList("name=value"));
+        java.net.CookieHandler.getDefault().put(uri, headers);
+        engine.setUserAgent(engine.getUserAgent().replace("Macintosh; ", ""));
+        Platform.runLater(() -> browser.getEngine().load(LOGOUT_URL));
     }
-}
+
 ```
 ###### /java/seedu/address/ui/ErrorsWindow.java
 ``` java
@@ -273,6 +287,15 @@ public class ErrorsWindow extends UiPart<Stage> {
         logger.fine("Showing error log within the application.");
         getRoot().show();
     }
+
+    /**
+     * Hides the calendar window.
+     * @throws IllegalStateException
+     */
+    public void close() {
+        logger.fine("Hiding error log.");
+        getRoot().close();
+    }
 }
 
 ```
@@ -283,13 +306,41 @@ public class ErrorsWindow extends UiPart<Stage> {
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
+        calendarPanel.reloadDefaultPage();
+        cleanOpenedWindows();
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
+    /**
+     * Closes all opened WebViews left open during a logged in session.
+     */
+    private void cleanOpenedWindows() {
+        if (calendarWindowsOpened != null) {
+            for (CalendarWindow cw : calendarWindowsOpened) {
+                cw.close();
+            }
+        }
+        if (errorsWindowsOpened != null) {
+            for (ErrorsWindow ew : errorsWindowsOpened) {
+                ew.close();
+            }
+        }
+
+        calendarWindowsOpened = new ArrayList<>();
+        errorsWindowsOpened = new ArrayList<>();
+    }
+
+```
+###### /java/seedu/address/ui/MainWindow.java
+``` java
     /**
      * Opens the error window.
      */
     @FXML
     public void handleViewErrors() {
-        ErrorsWindow errorsWindow = new ErrorsWindow(logic);
-        errorsWindow.show();
+        ErrorsWindow errorsWindowInstance = new ErrorsWindow(logic);
+        errorsWindowsOpened.add(errorsWindowInstance);
+        errorsWindowInstance.show();
     }
 
     /**
@@ -297,8 +348,9 @@ public class ErrorsWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleViewCalendar() throws IOException {
-        CalendarWindow calendarWindow = new CalendarWindow(logic);
-        calendarWindow.show();
+        CalendarWindow calendarWindowInstance = new CalendarWindow(logic);
+        calendarWindowsOpened.add(calendarWindowInstance);
+        calendarWindowInstance.show();
     }
 ```
 ###### /java/seedu/address/ui/MainWindow.java
@@ -415,6 +467,11 @@ public class CalendarDeleteCommandParser implements Parser<CalendarDeleteCommand
         try {
             int index = ParserUtil.parseCalendarDeleteIndex(args);
 
+            if (index < 0 || index > OAuthManager.getMostRecentEventList().size() - 1) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, CalendarDeleteCommand.MESSAGE_USAGE));
+            }
+
             Event eventToDelete = OAuthManager.getEventByIndexFromLastList(index);
 
             return new CalendarDeleteCommand(eventToDelete);
@@ -511,7 +568,7 @@ public class NavigateCommandParser implements Parser<NavigateCommand> {
 
             List<Event> eventPair = OAuthManager.getEventByIndexPairFromDailyList(index);
 
-            return new NavigateCommand(eventPair);
+            return new NavigateCommand(eventPair, index);
 
 ```
 ###### /java/seedu/address/logic/parser/CliSyntax.java
@@ -696,6 +753,8 @@ public class ShowScheduleCommandParser implements Parser<ShowScheduleCommand> {
 
 package seedu.address.logic;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.File;
 import java.io.IOException;
 import java.io.InputStream;
@@ -791,6 +850,8 @@ public class OAuthManager {
      * @param user
      */
     private static void updateCredentialDirectory(User user) {
+        requireNonNull(user);
+
         // Set custom key directory for each user
         try {
             DATA_STORE_DIR = new java.io.File(CREDENTIAL_PATH + user.getUsername());
@@ -808,6 +869,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void deleteOauthCert(User user) throws IOException {
+        requireNonNull(user);
+
         Path dirPath = Paths.get(DATA_STORE_DIR.getAbsolutePath());
         Files.walk(dirPath)
                 .map(Path::toFile)
@@ -822,6 +885,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static Credential authorize(User user) throws IOException {
+        requireNonNull(user);
+
         // Load client secrets.
         InputStream in =
             OAuthManager.class.getResourceAsStream("/client_secret.json");
@@ -850,6 +915,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static com.google.api.services.calendar.Calendar getCalendarService(User user) throws IOException {
+        requireNonNull(user);
+
         Credential credential = authorize(user);
         return new com.google.api.services.calendar.Calendar.Builder(
                 httpTransport, JSON_FACTORY, credential)
@@ -862,6 +929,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getUpcomingEvents(User user) throws IOException {
+        requireNonNull(user);
+
         List<Event> upcomingEvents = getNextXEvents(user, 250);
         int numberOfEventsRetrieved = upcomingEvents.size();
 
@@ -881,6 +950,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getUpcomingEventsAsStringList(User user) throws IOException {
+        requireNonNull(user);
+
         List<Event> upcomingEvents = getUpcomingEvents(user);
         int numberOfEventsRetrieved = upcomingEvents.size();
         List<String> eventListAsString = new ArrayList<>();
@@ -906,6 +977,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getDailyEvents(User user, LocalDate localDate) throws IOException {
+        requireNonNull(user);
+        requireNonNull(localDate);
+
         DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         String inputDate = localDate.format(formatter);
         List<Event> dailyEvents = getEventsByDay(user, inputDate);
@@ -919,6 +993,7 @@ public class OAuthManager {
 
         dailyEventsListDate = localDate;
         dailyEventsList = dailyEvents;
+        mostRecentEventList = dailyEvents;
 
         return dailyEvents;
     }
@@ -928,6 +1003,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<String> getDailyEventsAsStringList(User user, LocalDate localDate) throws IOException {
+        requireNonNull(user);
+        requireNonNull(localDate);
+
         List<Event> dailyEvents = getDailyEvents(user, localDate);
         int numberOfEventsRetrieved = dailyEvents.size();
         List<String> eventListAsString = new ArrayList<>();
@@ -945,6 +1023,7 @@ public class OAuthManager {
 
         dailyEventsListDate = localDate;
         dailyEventsList = dailyEvents;
+        mostRecentEventList = dailyEvents;
 
         return eventListAsString;
     }
@@ -953,6 +1032,8 @@ public class OAuthManager {
      * Formats an event object as a human-readable string.
      */
     public static String formatEventDetailsAsString(Event event) {
+        requireNonNull(event);
+
         String title = event.getSummary();
         DateTime startAsDateTime = event.getStart().getDateTime();
         DateTime endAsDateTime = event.getEnd().getDateTime();
@@ -985,6 +1066,8 @@ public class OAuthManager {
      * Formats date-time string as a human-readable string.
      */
     public static String getDateTimeAsHumanReadable(DateTime inputDateTime) {
+        requireNonNull(inputDateTime);
+
         DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm:ss.SSSXXX");
         System.out.println(inputDateTime.toString());
         LocalDateTime dateTime = LocalDateTime.parse(inputDateTime.toString(), inputFormatter);
@@ -998,6 +1081,9 @@ public class OAuthManager {
      * @throws IOException
      */
     private static List<Event> getNextXEvents(User user, int x) throws IOException {
+        requireNonNull(user);
+        requireNonNull(x);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -1022,6 +1108,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static List<Event> getEventsByDay(User user, String date) throws IOException {
+        requireNonNull(user);
+        requireNonNull(date);
+
         com.google.api.services.calendar.Calendar service =
                 getCalendarService(user);
 
@@ -1055,6 +1144,8 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void addEventTest(User user) throws IOException {
+        requireNonNull(user);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -1112,6 +1203,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static String addEvent(User user, Event event) throws IOException {
+        requireNonNull(user);
+        requireNonNull(event);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -1150,11 +1244,15 @@ public class OAuthManager {
      * @return Event
      */
     public static Event getEventByIndexFromLastList(int index) {
-        return mostRecentEventList.get(index - 1);
+        Event eventToReturn = null;
+
+        if (index >= 0 && index < mostRecentEventList.size()) {
+            eventToReturn = mostRecentEventList.get(index - 1);
+        }
+
+        return eventToReturn;
     }
-```
-###### /java/seedu/address/logic/OAuthManager.java
-``` java
+
 
     /**
      * Gets the most recent daily event list shown to the user.
@@ -1172,6 +1270,38 @@ public class OAuthManager {
         return dailyEventsListDate;
     }
 
+    /**
+     * Resets the cached calendar information specific to a user session.
+     */
+    public static void clearCachedCalendarData() {
+        mostRecentEventList = null;
+        dailyEventsList = null;
+        dailyEventsListDate = null;
+    }
+
+    /**
+     * Sets the cached calendar information to valid non-null values for testing purposes.
+     */
+    public static void setNonNullEventsCacheForTest(Event event1, Event event2, LocalDate localDate) {
+        requireNonNull(event1);
+        requireNonNull(event2);
+        requireNonNull(localDate);
+
+        mostRecentEventList = new ArrayList<>();
+        mostRecentEventList.add(event1);
+        mostRecentEventList.add(event2);
+
+        dailyEventsList = new ArrayList<>();
+        dailyEventsList.add(event1);
+        dailyEventsList.add(event2);
+
+        dailyEventsListDate = localDate;
+
+    }
+
+```
+###### /java/seedu/address/logic/OAuthManager.java
+``` java
 
     /**
      * A wrapper of the Google Calendar Event: delete API endpoint to remove a calendar event
@@ -1179,6 +1309,9 @@ public class OAuthManager {
      * @throws IOException
      */
     public static void deleteEvent(User user, Event event) throws IOException {
+        requireNonNull(user);
+        requireNonNull(event);
+
         // Build a new authorized API client service.
         // Note: Do not confuse this class with the
         //   com.google.api.services.calendar.model.Calendar class.
@@ -1197,8 +1330,9 @@ public class OAuthManager {
 ```
 ###### /java/seedu/address/logic/commands/NavigateCommand.java
 ``` java
-    public NavigateCommand(List<Event> eventPair) {
+    public NavigateCommand(List<Event> eventPair, int targetIndex) {
         this.eventPair = eventPair;
+        this.targetIndex = targetIndex;
     }
 
 ```
@@ -1241,11 +1375,26 @@ public class OAuthTestCommand extends Command {
 }
 
 ```
+###### /java/seedu/address/logic/commands/LoginCommand.java
+``` java
+        requireNonNull(username);
+        requireNonNull(password);
+```
+###### /java/seedu/address/logic/commands/LoginCommand.java
+``` java
+        requireNonNull(username);
+        requireNonNull(password);
+```
+###### /java/seedu/address/logic/commands/LoginCommand.java
+``` java
+                OAuthManager.clearCachedCalendarData();
+```
 ###### /java/seedu/address/logic/commands/ShowScheduleCommand.java
 ``` java
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SCHEDULE_DATE;
 
 import java.io.IOException;
@@ -1286,6 +1435,8 @@ public class ShowScheduleCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {
@@ -1341,11 +1492,14 @@ public class ErrorLogCommand extends Command {
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.util.List;
 
 import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.User;
+
 
 /**
 * Lists up to the next 250 calendar events from their Google Calendar to the user.
@@ -1360,6 +1514,8 @@ public class CalendarListCommand extends Command {
 
     @Override
     public CommandResult execute() {
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {
@@ -1385,6 +1541,7 @@ public class CalendarListCommand extends Command {
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_END_DATE_TIME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_EVENT_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CAL_LOCATION;
@@ -1422,11 +1579,15 @@ public class CalendarAddCommand extends Command {
 
 
     public CalendarAddCommand(Event event) {
+        requireNonNull(event);
         this.event = event;
     };
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(event);
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
 
         try {
@@ -1438,6 +1599,10 @@ public class CalendarAddCommand extends Command {
         }
     }
 }
+```
+###### /java/seedu/address/logic/commands/LogoutCommand.java
+``` java
+        OAuthManager.clearCachedCalendarData();
 ```
 ###### /java/seedu/address/logic/commands/CalendarCommand.java
 ``` java
@@ -1471,6 +1636,8 @@ public class CalendarCommand extends Command {
 
 package seedu.address.logic.commands;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 
 import com.google.api.services.calendar.model.Event;
@@ -1487,12 +1654,14 @@ public class CalendarDeleteCommand extends Command {
     public static final String COMMAND_WORD = "calendar-delete";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the event identified by the index number used in the last event listing.\n"
+            + "This list can be created by either using the `calendar-list` or `show-schedule` command.\n"
             + "This command CANNOT be undone once executed.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Successfully deleted event:\n%s, ";
-    public static final String MESSAGE_ERROR = "Unable to delete selected event. Please try again later.";
+    public static final String MESSAGE_ERROR = "Unable to find/delete selected event. "
+            + "Please ensure that the selected event exists.";
     private final Event event;
 
     public CalendarDeleteCommand(Event event) {
@@ -1501,7 +1670,13 @@ public class CalendarDeleteCommand extends Command {
 
     @Override
     public CommandResult execute() throws CommandException {
+        requireNonNull(model);
+
         User user = model.getLoggedInUser();
+
+        if (event == null) {
+            return new CommandResult(MESSAGE_ERROR);
+        }
 
         try {
             String eventAsString = OAuthManager.formatEventDetailsAsString(event);

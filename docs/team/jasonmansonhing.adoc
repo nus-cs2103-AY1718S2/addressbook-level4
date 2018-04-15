@@ -10,7 +10,7 @@
 
 == Overview
 
-The Sesion Logger and Planner (SLAP) application for Social Workers is a desktop client used to help
+The Session Logger and Planner (SLAP) application for Social Workers is a desktop client used to help
 social workers manager their day. By creating an easy to use command-line interface with graphical
 elements, social workers can quickly manage their contacts (e.g. beneficiaries) as well as their
 schedule (i.e. their calendar) from one central location efficiently via the command line.

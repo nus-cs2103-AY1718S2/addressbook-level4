@@ -1,43 +1,75 @@
 # jaronchan
 ###### /resources/view/MainWindow.fxml
 ``` fxml
-          <TabPane fx:id="featuresTabPane" tabClosingPolicy="UNAVAILABLE" xmlns:fx="http://javafx.com/fxml/1"
-                   xmlns="http://javafx.com/javafx/9.0.4">
-            <tabs>
-              <Tab id="details" fx:id="detailsTab" text="Details">
-                <content>
-                  <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
-                    <padding>
-                      <Insets right="10" left="10"/>
-                    </padding>
-                  </StackPane>
-                </content>
-              </Tab>
-              <Tab id="calendar" fx:id="calendarTab" text="Calendar">
-                <content>
-                  <StackPane fx:id="calendarPlaceholder" prefWidth="340">
-                    <padding>
-                      <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
-                  </StackPane>
-                </content>
-              </Tab>
-              <Tab id="scheduler" fx:id="dailySchedulerTab" text="Daily Scheduler">
-                <content>
-                  <StackPane fx:id="dailySchedulerPlaceholder" prefWidth="340">
-                    <padding>
-                      <Insets top="10" right="10" bottom="10" left="10"/>
-                    </padding>
-                  </StackPane>
-                </content>
-              </Tab>
-            </tabs>
-          </TabPane>
+        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+          <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+            <padding>
+              <Insets right="10" bottom="10" left="10"/>
+            </padding>
+            <StackPane fx:id="logo" minHeight="125" maxHeight="125" minWidth="340" prefWidth="340" VBox.vgrow="NEVER">
+              <ImageView fitHeight="100" fitWidth="200" pickOnBounds="true" preserveRatio="true"
+                         StackPane.alignment="BOTTOM_CENTER">
+                <Image url="@/images/slap-brand.jpg"/>
+              </ImageView>
+            </StackPane>
+            <StackPane fx:id="beneficiariesPane" minHeight="50" maxHeight="50">
+              <Label id="beneficiariesLabel" text="Beneficiaries:" StackPane.alignment="CENTER_LEFT" translateX="10"/>
+            </StackPane>
+            <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
+          <VBox fx:id="mainVBox" minWidth="560" prefWidth="560">
+            <StackPane VBox.vgrow="NEVER" fx:id="commandBoxPlaceholder">
+              <padding>
+                <Insets top="5" right="15" bottom="5" left="15"/>
+              </padding>
+            </StackPane>
+
+            <StackPane VBox.vgrow="NEVER" fx:id="resultDisplayPlaceholder"
+                       minHeight="120" prefHeight="120" maxHeight="120">
+              <padding>
+                <Insets top="5" right="15" bottom="15" left="15"/>
+              </padding>
+            </StackPane>
+
+            <TabPane fx:id="featuresTabPane" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="ALWAYS">
+              <tabs>
+                <Tab id="details" fx:id="detailsTab" text="Details">
+                  <content>
+                    <StackPane fx:id="personDetailsPlaceholder" prefWidth="340">
+                      <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                      </padding>
+                    </StackPane>
+                  </content>
+                </Tab>
+                <Tab id="calendar" fx:id="calendarTab" text="Calendar">
+                  <content>
+                    <StackPane fx:id="calendarPlaceholder" prefWidth="340">
+                      <padding>
+                        <Insets top="20" right="20" bottom="20" left="20"/>
+                      </padding>
+                    </StackPane>
+                  </content>
+                </Tab>
+                <Tab id="scheduler" fx:id="dailySchedulerTab" text="Daily Scheduler">
+                  <content>
+                    <StackPane fx:id="dailySchedulerPlaceholder" prefWidth="340">
+                      <padding>
+                        <Insets top="10" right="10" bottom="10" left="10"/>
+                      </padding>
+                    </StackPane>
+                  </content>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </VBox>
+        </SplitPane>
 ```
 ###### /resources/view/DailySchedulerPanel.fxml
 ``` fxml
 
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.Group?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
@@ -56,19 +88,19 @@
           <children>
             <VBox prefHeight="-1.0" prefWidth="-1.0">
               <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
+                <Insets bottom="10" left="5" right="10" />
               </padding>
               <children>
-                <Label text="Scheduled Session for DATE">
-                  <padding>
-                    <Insets bottom="5" left="5" />
-                  </padding>
+                <Label text="Scheduled Sessions:">
+                  <VBox.margin>
+                    <Insets bottom="10.0" />
+                  </VBox.margin>
                 </Label>
-                  <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
-                    <content>
-                      <VBox fx:id="eventsListStack" prefHeight="-1.0" prefWidth="-1.0" />
-                    </content>
-                  </ScrollPane>
+                <ScrollPane prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+                  <content>
+                    <VBox fx:id="eventsListStack" prefHeight="-1.0" prefWidth="-1.0" />
+                  </content>
+                </ScrollPane>
               </children>
             </VBox>
           </children>
@@ -85,10 +117,22 @@
                     <Insets bottom="10.0" left="10.0" top="10.0" />
                   </HBox.margin>
                 </StackPane>
-                <VBox fx:id="buttonStack" minWidth="50.0" spacing="10.0">
+                <VBox fx:id="buttonStack" minWidth="25.0" spacing="10.0">
                   <HBox.margin>
-                    <Insets left="10.0" right="5.0" top="10.0" />
-                  </HBox.margin></VBox>
+                    <Insets left="10.0" right="10.0" top="10.0" />
+                  </HBox.margin>
+                </VBox>
+                <StackPane HBox.hgrow="ALWAYS">
+                  <children>
+                    <Group StackPane.alignment="CENTER">
+                      <children>
+                        <Label layoutX="17.0" rotate="90.0"
+                               text="Available Navigation Options (only if >= 2 events)"
+                               textOverrun="ELLIPSIS" />
+                      </children>
+                    </Group>
+                  </children>
+                </StackPane>
               </children>
             </HBox>
           </children>
@@ -105,7 +149,6 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.StackPane?>
-<?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <StackPane xmlns="http://javafx.com/javafx/9.0.4" xmlns:fx="http://javafx.com/fxml/1">
@@ -116,16 +159,12 @@
         <Insets bottom="20.0" left="20.0" right="20.0" top="20.0" />
       </StackPane.margin>
       <children>
-        <VBox alignment="CENTER">
-          <children>
-            <Label id="invalidAddresseeName" fx:id="invalidAddressPersonName" alignment="CENTER" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@Extensions.css" text="NAME" textAlignment="CENTER" />
-            <Label id="invalidAddressMsg" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" stylesheets="@Extensions.css" text="address cannot be found on Google Maps" wrapText="true">
-              <font>
-                <Font size="8.0" />
-              </font>
-            </Label>
-          </children>
-        </VBox>
+        <Label id="invalidAddressMsg" prefHeight="-1.0" prefWidth="-1.0" translateX="25" translateY="40"
+               stylesheets="@Extensions.css" text="Address cannot be found on Google Maps" wrapText="true">
+          <font>
+            <Font size="13.0" />
+          </font>
+        </Label>
       </children>
     </Pane>
   </children>
@@ -154,23 +193,23 @@
           <children>
             <SplitPane dividerPositions="0.5" orientation="VERTICAL" prefHeight="200.0" prefWidth="160.0">
               <items>
-                <VBox prefHeight="200.0" prefWidth="100.0" styleClass="v-box">
+                <VBox prefHeight="-1.0" prefWidth="-1.0" styleClass="v-box">
                   <children>
-                    <GridPane gridLinesVisible="false" styleClass="grid-pane">
+                    <GridPane gridLinesVisible="false" styleClass="grid-pane" VBox.vgrow="ALWAYS">
                       <columnConstraints>
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" maxWidth="125.0" minWidth="125.0" prefWidth="125.0" />
                         <ColumnConstraints halignment="CENTER" hgrow="SOMETIMES" minWidth="250.0" />
                       </columnConstraints>
                       <rowConstraints>
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
-                        <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="16.66" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="16.66" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="16.66" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="16.66" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="16.66" vgrow="SOMETIMES" />
+                        <RowConstraints percentHeight="16.66" vgrow="SOMETIMES" />
                       </rowConstraints>
                       <padding>
-                        <Insets bottom="10.0" left="10.0" right="5.0" top="10.0" />
+                        <Insets bottom="10.0" left="5.0" right="5.0" top="10.0" />
                       </padding>
                       <children>
                         <Pane prefHeight="-1.0" prefWidth="-1.0" styleClass="pane-odd" />
@@ -202,10 +241,13 @@
                   </children>
                 </VBox>
                 <StackPane prefHeight="-1.0" prefWidth="-1.0">
+                  <padding>
+                    <Insets bottom="10" />
+                  </padding>
                   <children>
                     <StackPane fx:id="mapPanelPlaceholder" prefWidth="-1.0">
                       <padding>
-                        <Insets left="10" right="10" />
+                        <Insets left="5" right="10" />
                       </padding>
                     </StackPane>
                   </children>
@@ -223,15 +265,18 @@
           </padding>
           <children>
             <VBox prefHeight="-1.0" prefWidth="-1.0">
+              <padding>
+                <Insets bottom="10" left="5" right="10" />
+              </padding>
               <children>
-                <Label text="Session Reports">
+                <Label text="Session Reports:">
                   <padding>
-                    <Insets bottom="5.0" left="5.0" top="5.0" />
+                    <Insets bottom="10.0" left="5.0" />
                   </padding>
                 </Label>
-                <ScrollPane prefHeight="-1.0" prefWidth="-1.0">
+                <ScrollPane fitToHeight="true" prefWidth="400" minWidth="400" prefHeight="-1.0" VBox.vgrow="ALWAYS">
                   <content>
-                    <TextArea fx:id="sessionLogPanel" editable="false" prefHeight="600" maxWidth="400" wrapText="true" />
+                    <TextArea fx:id="sessionLogPanel" editable="false" maxWidth="398" wrapText="true" VBox.vgrow="ALWAYS" />
                   </content>
                 </ScrollPane>
               </children>
@@ -250,6 +295,172 @@
   <WebView fx:id="browser"/>
 </StackPane>
 
+```
+###### /resources/view/Extensions.css
+``` css
+.error {
+    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
+
+.tag-selector {
+    -fx-border-width: 1;
+    -fx-border-color: white;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.tooltip-text {
+    -fx-text-fill: white;
+}
+
+.tab-pane {
+    -fx-tab-min-height: 3em; /* 36 */
+    -fx-tab-max-height: 3em; /* 36 */
+    -fx-tab-min-width: 12em;
+    -fx-tab-max-width: 12em;
+}
+
+.tab-pane:right {
+    -fx-tab-min-height: 3em; /* 36 */
+    -fx-tab-max-height: 3em; /* 36 */
+    -fx-tab-min-width: 3em;
+    -fx-tab-max-width: 3em;
+ }
+
+.tab-pane .tab-header-area {
+    -fx-padding: 0 0 0 18;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab > .tab-container > .tab-label {
+    -fx-alignment: CENTER;
+    -fx-text-fill: white;
+    -fx-font-size: 1.16666667em;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab {
+    -fx-background-radius: 8 8 0 0;
+    -fx-background-color: #515658;
+}
+
+.tab-pane > .tab-header-area > .headers-region > .tab:selected {
+    -fx-background-color: #424d5f;
+    -fx-border-width: 1;
+    -fx-border-radius: 8 8 0 0;
+    -fx-border-color: #3e7b91;
+}
+
+.tab-pane > .tab-header-area > .tab-header-background {
+    -fx-background-color: transparent;
+}
+
+#invalidAddressOverlay {
+    -fx-background-color: #515658;
+    -fx-border-color: derive(#1d1d1d, 30%);
+    -fx-border-width: 1px;
+}
+
+#invalidAddresseeName {
+    -fx-text-fill: white;
+}
+
+#invalidAddressMsg {
+    -fx-text-fill: white;
+}
+
+.list-view {
+    -fx-padding: 0;
+    -fx-background-color: #515658;
+}
+
+.v-box .grid-pane {
+    -fx-background-insets: 2 2 2 2;
+    -fx-background-color: none;
+    -fx-border-color: none;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.grid-pane > .pane-even {
+    -fx-background-color: #515658;
+    -fx-border-color: #949494;
+    -fx-border-width: 1;
+}
+
+.grid-pane > .pane-odd {
+    -fx-background-color: #424d5f;
+    -fx-border-color: #949494;
+    -fx-border-width: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: transparent;
+}
+
+.table-view .column-header, .table-view .filler {
+    -fx-size: 35;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: transparent;
+    -fx-border-color:
+            transparent
+            transparent
+            derive(-fx-base, 80%)
+            transparent;
+    -fx-border-insets: 0 10 1 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-alignment: center-left;
+    -fx-opacity: 1;
+}
+
+#commandTextField {
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: #595959;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+    -fx-font-size: 13pt;
+    -fx-text-fill: white;
+}
+
+#resultDisplay {
+    -fx-border-radius: 8px;
+    -fx-border-width: 2 2 1 2;
+    -fx-border-color: #595959 #383838 #9b9b9b #383838;
+    -fx-background-color: #3E3E3E;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-border-insets: 0;
+}
+
+#resultDisplay .content {
+    -fx-background-color: #3E3E3E;
+    -fx-background-radius: 0px;
+}
+
+.status-bar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: derive(#1d1d1d, 30%);
+}
+
+#loginBar .label {
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+}
+
+#eventsListStack .label {
+    -fx-text-fill: black;
+}
 ```
 ###### /resources/view/ScheduledEventCard.fxml
 ``` fxml
@@ -321,12 +532,6 @@ public class ScheduledEventCard extends UiPart<Region> {
         String start = OAuthManager.getDateTimeAsHumanReadable(startAsDateTime);
         String end = OAuthManager.getDateTimeAsHumanReadable(endAsDateTime);
 
-        if (start == null) {
-            start = "Unable to retrieve start time";
-        }
-        if (end == null) {
-            end = "Unable to retrieve end time";
-        }
         if (location == null) {
             location = "No Location Specified";
         }
@@ -342,6 +547,10 @@ public class ScheduledEventCard extends UiPart<Region> {
         System.out.printf(eventAsString);
 
         return eventAsString;
+    }
+
+    public String getFormattedScheduledEvent() {
+        return formattedScheduledEvent;
     }
 }
 ```
@@ -361,6 +570,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RefreshDetailsPanelEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 import seedu.address.commons.events.ui.ShowUpdatedSessionLogEvent;
@@ -492,6 +702,12 @@ public class PersonDetailsPanel extends UiPart<Region> {
     }
 
     @Subscribe
+    private void handleRefreshDetailsPanelEvent(RefreshDetailsPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showSelectedPersonDetails(null);
+    }
+
+    @Subscribe
     private void handleShowUpdatedSessionLogEvent(ShowUpdatedSessionLogEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadSessionLogs(event.getTargetPerson().getSessionLogs().toString());
@@ -529,6 +745,7 @@ public class PersonDetailsPanel extends UiPart<Region> {
 public class CalendarPanel extends UiPart<Region> {
 
     public static final String CALENDAR_URL = "https://calendar.google.com/calendar/r";
+    public static final String LOGOUT_URL = "https://accounts.google.com/Logout?&continue=" + CALENDAR_URL;
 
     private static final String FXML = "CalendarPanel.fxml";
 
@@ -547,6 +764,17 @@ public class CalendarPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+```
+###### /java/seedu/address/ui/CalendarPanel.java
+``` java
+
+    /**
+     * Frees resources allocated to the browser.
+     */
+    public void freeResources() {
+        browser = null;
+    }
+}
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
@@ -571,14 +799,17 @@ public class CalendarPanel extends UiPart<Region> {
     @FXML
     private Tab dailySchedulerTab;
 
+    @FXML
+    private StackPane beneficiariesPane;
+
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
     /**
-     * Disables the selection of tabs and persons cards by mouse click.
+     * Enables the selection and switching of tabs by mouse click.
      */
 
-    private void disableSelection() {
+    private void enableSelection() {
         featuresTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {
@@ -620,6 +851,7 @@ public class CalendarPanel extends UiPart<Region> {
 ``` java
 package seedu.address.ui;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Logger;
 
@@ -627,6 +859,7 @@ import com.google.api.services.calendar.model.Event;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.ToggleButton;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
@@ -638,6 +871,7 @@ import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ResetDirectionsEvent;
 import seedu.address.commons.events.ui.UpdateNumberOfButtonsEvent;
+import seedu.address.logic.commands.ShowScheduleCommand;
 
 /**
  * The UI component that handles the display of daily schedules and directions between locations.
@@ -664,6 +898,7 @@ public class DailySchedulerPanel extends UiPart<Region> {
 
     public DailySchedulerPanel() {
         super(FXML);
+        showPlannedEvents(new ArrayList<>());
         registerAsAnEventHandler(this);
     }
 
@@ -680,6 +915,15 @@ public class DailySchedulerPanel extends UiPart<Region> {
                 ScheduledEventCard card = new ScheduledEventCard(dailyEventsList.get(i), i + 1);
                 eventsListStack.getChildren().add(card.getRoot());
             }
+        } else {
+            Label emptyListLabel = new Label("No events listed.\n"
+                    + "You must first load events for a particular date\n"
+                    + "with existing events.\n"
+                    + "To load scheduled events,\n"
+                    + "execute show-schedule command.\n\n"
+                    + ShowScheduleCommand.MESSAGE_USAGE + "\n");
+            emptyListLabel.setWrapText(true);
+            eventsListStack.getChildren().add(emptyListLabel);
         }
     }
 
@@ -694,8 +938,8 @@ public class DailySchedulerPanel extends UiPart<Region> {
      * Buttons depending on how many trips to be made.
      */
     public void addButtons(int numOfInstances) {
-        for (int i = 0; i < numOfInstances; i++) {
-            buttonStack.getChildren().add(new ToggleButton(" "));
+        for (int i = 1; i <= numOfInstances; i++) {
+            buttonStack.getChildren().add(new ToggleButton(Integer.toString(i)));
         }
     }
     /**
@@ -909,6 +1153,22 @@ public class MapPanel extends UiPart<Region>
         map = null;
     }
 
+}
+```
+###### /java/seedu/address/commons/events/ui/RefreshDetailsPanelEvent.java
+``` java
+package seedu.address.commons.events.ui;
+
+import seedu.address.commons.events.BaseEvent;
+/**
+ * Refreshes the Details Panel.
+ */
+public class RefreshDetailsPanelEvent extends BaseEvent {
+
+    @Override
+    public String toString() {
+        return this.getClass().getSimpleName();
+    }
 }
 ```
 ###### /java/seedu/address/commons/events/ui/LoadMapPanelEvent.java
@@ -1240,6 +1500,8 @@ public class SwitchCommandParser implements Parser<SwitchCommand> {
      */
     public static List<Event> getEventByIndexPairFromDailyList(int index)
             throws InvalidCalendarEventCountException, IllegalValueException {
+        requireNonNull(index);
+
         List<Event> eventPair = new ArrayList<>();
         if (index < 1 || index > dailyEventsList.size() - 1) {
             throw new IllegalValueException(NavigateCommand.MESSAGE_INVALID_RANGE);
@@ -1252,6 +1514,7 @@ public class SwitchCommandParser implements Parser<SwitchCommand> {
 
         return eventPair;
     }
+
 ```
 ###### /java/seedu/address/logic/map/MyDirectionsServiceCallback.java
 ``` java
@@ -1420,12 +1683,13 @@ public class NavigateCommand extends Command {
             + "Parameters: INDEX\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "Displaying directions between...";
+    public static final String MESSAGE_SUCCESS = "Displaying directions between Event Num: %1$s and Event Num: %2$s";
     public static final String MESSAGE_INVALID_RANGE = "The INDEX provided is invalid.\n"
             + "INDEX must more than ZERO and less than the number of planned events for the day.";
     public static final String MESSAGE_NO_EVENT = "There is either zero or one event planned for the day.\n"
             + "No directions will be listed.";
     private final List<Event> eventPair;
+    private final int targetIndex;
 
 ```
 ###### /java/seedu/address/logic/commands/NavigateCommand.java
@@ -1439,13 +1703,12 @@ public class NavigateCommand extends Command {
                 this.eventPair.get(1).getLocation()
             )
         );
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, targetIndex + 1));
     }
 }
 ```
 ###### /java/seedu/address/logic/commands/ShowScheduleCommand.java
 ``` java
-
             List<Event> dailyEventsList = OAuthManager.getDailyEvents(user, localDate);
             EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(dailyEventsList));
             EventsCenter.getInstance().post(new ResetDirectionsEvent());
@@ -1494,6 +1757,18 @@ public class SwitchCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof SwitchCommand // instanceof handles nulls
                 && this.featureTarget.equals(((SwitchCommand) other).featureTarget)); // state check
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/LogoutCommand.java
+``` java
+        EventsCenter.getInstance().post(new DailyScheduleShownChangedEvent(new ArrayList<>()));
+        EventsCenter.getInstance().post(new ResetDirectionsEvent());
+        EventsCenter.getInstance().post(new UpdateNumberOfButtonsEvent(0));
+        EventsCenter.getInstance().post(new RefreshDetailsPanelEvent());
+        //@@ author kaisertanqr
+        return new CommandResult(MESSAGE_LOGOUT_SUCCESS);
     }
 
 }

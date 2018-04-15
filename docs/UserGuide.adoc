@@ -58,7 +58,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Each command has an alias as the shortcut for advanced users to execute commands faster. +
    (e.g. for the "add" command, you can either type "add" or "a")
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [h/HALAL]` can be used as `n/John Doe h/Halal` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
@@ -101,15 +101,14 @@ Adds an order to the order book, which keeps track all the orders received+
 Alias: `a` +
 Format: `add n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
 
-****
-* Order book is the left dispalyed panel.
-****
+[TIP]
+Order book is the left displayed panel.
 
 [TIP]
 A person can have any number of tags (including 0)
 
 [TIP]
-First letter for every word of FOOD_ORDER must be capitalised
+First letter for every word of FOOD_ORDER must be capitalised e.g. "Chicken Rice", "Coffee"
 
 [TIP]
 Current Menu:
@@ -117,10 +116,10 @@ Chicken Rice, Curry Chicken, Chicken Chop, Ban Mian, Ice Milo, Coffee
 
 Examples:
 
-* `add n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
-* `add n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/friends f/Chicken chop h/HALAL`
-* `a n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken rice h/HALAL v/VEGETARIAN`
-* `a n/Betsy Crowe t/friend a/Newgate Prison p/1234567 t/friends f/Chicken chop h/HALAL`
+* `add n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken Rice h/Halal v/Vegetarian`
+* `add n/Betsy Crowe a/Newgate Prison p/1234567 t/friends f/Chicken Chop h/Halal`
+* `a n/John Doe p/98765432  a/John street, block 123, #01-01 f/Chicken Rice h/Halal v/Vegetarian`
+* `a n/Betsy Crowe a/Newgate Prison p/1234567 t/friends f/Chicken Chop h/Halal`
 // end::add[]
 
 === Listing all orders (order book): `list`
@@ -129,9 +128,6 @@ Shows a list of all orders in the order book. +
 Alias: `l` +
 Format: `list`
 
-****
-* Order book is the left dispalyed panel.
-****
 
 === Editing an order (order book): `edit`
 
@@ -140,11 +136,8 @@ Alias: `e` +
 Format: `edit INDEX [n/NAME] [p/PHONE] [a/ADDRESS] [f/FOOD_ORDER] [h/HALAL] [v/VEGETARIAN] [t/TAG]...`
 
 [TIP]
-First letter for every word of FOOD_ORDER must be capitalised
+First letter for every word of FOOD_ORDER must be capitalised e.g. "Chicken Rice", "Coffee"
 
-****
-* Order book is the left dispalyed panel.
-****
 
 ****
 * Edits the order at the specified `INDEX`. The index refers to the index number shown in the last order listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -172,10 +165,6 @@ Alias: `d` +
 Format: `delete INDEX`
 
 ****
-* Order book is the left dispalyed panel.
-****
-
-****
 * Deletes the order in the order book at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
@@ -198,14 +187,14 @@ Deletes the 1st order in the results of the `find` command.
 
 === Locating orders by name (order book): `find`
 
-Finds orders with their customer names containing any of the given keywords. +
+Finds orders with their customers' names containing any of the given keywords. +
 Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the customer's name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Names matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -793,7 +782,7 @@ Messages will be shown to remind restaurants to give the customer discount on th
 // tag::menu[]
 === Modify Menu `Coming in v2.0`
 
-The user will be allowed to modify e.g. add or delete or edit(change prices) by using the CLI instead of replacing the order menu file with a new menu file.
+The user will be allowed to modify menu e.g. addDish or deleteDish or editDish(change prices, names) by using the CLI instead of replacing the order menu file with a new menu file.
 
 // end::menu[]
 
@@ -805,7 +794,7 @@ The user will be allowed to modify e.g. add or delete or edit(change prices) by 
 == Command Summary (full)(alphabetical)
 
 * *Add* `add n/NAME p/PHONE_NUMBER a/ADDRESS f/FOOD_ORDER [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 a/123, Clementi Rd, 1234665 f/Chicken rice t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 a/123, Clementi Rd, 1234665 f/Chicken Rice t/friends`
 * *Clear* : `clear`
 * *CompleteOne* : `completeOne INDEX` +
 e.g. `completeOne 2`

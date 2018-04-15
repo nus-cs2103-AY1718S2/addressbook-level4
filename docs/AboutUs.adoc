@@ -35,11 +35,11 @@ Responsibilities: Storage, Commons
 
 === Zhang Zequn
 image::zaczequn.png[width="150", align="left"]
-{empty}[https://github.com/ZacZequn[github]][https://github.com/CS2103JAN2018-F11-B4/main/blob/master/docs/team/wuhao.adoc[portfolio]]
+{empty}[https://github.com/ZacZequn[github]][https://github.com/CS2103JAN2018-F11-B4/main/blob/master/docs/team/zhangzequn.adoc[portfolio]]
 
 Roles: +
 - Documentation +
-- Integration +
+- Implementation and Integration +
 - Intellij expert +
 Responsibilities: Logic, Storage
 

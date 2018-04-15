@@ -37,7 +37,7 @@ public class EditPictureCommandTest {
     @Test
     public void execute_validFilePath_success() throws Exception {
         Student editedPictureStudent = new StudentBuilder(ALICE)
-                .withProfilePictureUrl("data\\profilePictures\\c5daab.png").build();
+                .withProfilePictureUrl("data/profilePictures/c5daab.png").build();
         //The above is to account for the the saving of profile picture in local data using the unique key of
         //the student.
 

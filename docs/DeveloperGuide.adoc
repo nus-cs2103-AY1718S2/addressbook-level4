@@ -873,7 +873,7 @@ The login system is currently implemented such that there is only one user per a
 ==== Logging in
 
 When the user starts the application, the user will see the display screen. The user will need to login in order to switch to the main display to view the data.
-Most of the commands will be locked so as to prevent modification of the data in contactHeRo before a user logs in. The list of commands available for
+Most of the commands will be locked so as to prevent modification of the data in contactHeRo before a user logs in. The commands that are available for use are `LoginCommand`, `HelpCommand`, `ClearHistoryCommand` and `ExitCommand`.
 
 The user will need to enter the `login` command to log in before he can get to the main window. The image below shows
 the sequence diagram for the `login` command in the logic component.
@@ -895,7 +895,7 @@ Currently, a default username and password is given for first time users of cont
 .LoginScreen.png
 image::LoginPrompt.png[width="800", align="center"]
 
-Users can change the username and password by using the `UpdateUsernameCommand` and `UpdatePasswordCommand` respectively.
+Users can change the username and password by using the `updateusername` command and `updatepassword` command respectively.
 
 [TIP]
 Constraints are set to both username and password to prevent illegal values from being used, such as an empty string. The code snippets for the regex of both username and password are shown below.
@@ -910,7 +910,7 @@ public static final String PASSWORD_VALIDATION_REGEX = "(?=.*[A-Za-z])(?=.*\\d)[
 
 In our implementation, the `Account` class in the `model` component stores the in-memory data for the username and password. The `AccountsManager` class handles the methods which interacts with the data in `Account`, such as login and update password.
 
-For storing of the user account data in hard disk, it is handled by the `XmlAccountData` class in the `storage` component. The data will be stored as an XML file in a JAXB-friendly version `XmlAdaptedAccount`. This data file is a seperate file from the file which stores the main data of contacHeRo.
+For storing of the user account data in hard disk, it is handled by the `XmlAccountData` class in the `storage` component. The data will be stored as an XML file in a JAXB-friendly version `XmlAdaptedAccount`. This data file is a separate file from the file which stores the main data of contactHeRo.
 
 ==== Design Considerations
 
@@ -920,17 +920,17 @@ For storing of the user account data in hard disk, it is handled by the `XmlAcco
 **Pros**: +
 **Cons**: Data in contactHeRo becomes lost if user forgets the customized username or password. +
 
-**Alternative 2:** Stores user account data in a seperate file.+
+**Alternative 2:** Stores user account data in a separate file.+
 **Pros**:  User can still retrieve their data if they forget their customize username or password by simply removing the file storing account data and restart with a +
 **Cons**: Data becomes insecure as now everyone can access the data through the default username and password. +
 
 **Aspect:** How login UI is implemented +
 
 **Alternative 1 (current choice):** Use the same window for the display screen and main screen. +
-**Pros**: Faster to implement as layout is similar to main screen. +
-**Cons**:
+**Pros**: Faster to implement as layout is similar to main screen. Also reduces code duplication. +
+**Cons**: Can only do small changes to layout for display screen. +
 
-**Alternative 2:** Create a seperate login window. +
+**Alternative 2:** Create a separate login window. +
 **Pros**: Login UI can be customized to make it more user friendly for users visually. +
 **Cons**: User do not have to deal with the opening and closing of windows which may slow the app. +
 

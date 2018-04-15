@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
 import java.io.IOException;
@@ -27,19 +28,20 @@ import seedu.address.model.tag.Tag;
 //@@author chuakunhong
 
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the cca details of an existing person in the address book.
  */
-public class DeleteCcaCommand extends UndoableCommand {
+public class CcaCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "deletecca";
+    public static final String COMMAND_WORD = "cca";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Delete cca records from the student that you want. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds the CCA and the position "
+            + "to the student that you want. "
             + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_CCA + "CCA...\n"
+            + PREFIX_CCA + "CCA " + PREFIX_CCA_POSITION + "POSITION\n"
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_CCA + "Basketball" + "\n";
+            + PREFIX_CCA + "Basketball " + PREFIX_CCA_POSITION + "Member\n";
 
-    public static final String MESSAGE_CCA_PERSON_SUCCESS = "CCA Deleted: %1$s\nPerson: %2$s";
+    public static final String MESSAGE_REMARK_PERSON_SUCCESS = "CCA added: %1$s\nPerson: %2$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
 
@@ -53,12 +55,12 @@ public class DeleteCcaCommand extends UndoableCommand {
      * @param index of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
-    public DeleteCcaCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
+    public CcaCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
         requireNonNull(index);
         requireNonNull(editPersonDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = editPersonDescriptor;
+        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
     @Override
@@ -73,8 +75,8 @@ public class DeleteCcaCommand extends UndoableCommand {
             throw new AssertionError("The target person cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_CCA_PERSON_SUCCESS, editPersonDescriptor.getCca()
-                        .get(), personToEdit.getName()));
+        return new CommandResult(String.format(MESSAGE_REMARK_PERSON_SUCCESS, editPersonDescriptor.getCca().get(),
+                personToEdit.getName()));
     }
 
     @Override
@@ -93,21 +95,22 @@ public class DeleteCcaCommand extends UndoableCommand {
      * Creates and returns a {@code Person} with the details of {@code personToEdit}
      * edited with {@code editPersonDescriptor}.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor)
-                    throws CommandException {
+    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Nric updatedNric = editPersonDescriptor.getNric().orElse(personToEdit.getNric());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
         Set<Subject> updatedSubjects = editPersonDescriptor.getSubjects().orElse(personToEdit.getSubjects());
-        Remark updatedRemark = editPersonDescriptor.getRemark().orElse((personToEdit.getRemark()));
+        Remark updatedRemark = editPersonDescriptor.getRemark().orElse(personToEdit.getRemark());
+        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
         InjuriesHistory updatedInjuriesHistory = editPersonDescriptor.getInjuriesHistory()
                 .orElse(personToEdit.getInjuriesHistory());
-        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin().orElse(personToEdit.getNextOfKin());
-        Cca updatedCca = editPersonDescriptor.getCca().orElse(personToEdit.getCca());
+        NextOfKin updatedNextOfKin = editPersonDescriptor.getNextOfKin()
+                .orElse(personToEdit.getNextOfKin());
+
         return new Person(updatedName, updatedNric, updatedTags, updatedSubjects, updatedRemark, updatedCca,
-                    updatedInjuriesHistory, updatedNextOfKin);
+                updatedInjuriesHistory, updatedNextOfKin);
     }
 
     @Override
@@ -118,15 +121,16 @@ public class DeleteCcaCommand extends UndoableCommand {
         }
 
         // instanceof handles nulls
-        if (!(other instanceof DeleteCcaCommand)) {
+        if (!(other instanceof CcaCommand)) {
             return false;
         }
 
         // state check
-        DeleteCcaCommand e = (DeleteCcaCommand) other;
+        CcaCommand e = (CcaCommand) other;
         return index.equals(e.index)
                 && editPersonDescriptor.equals(e.editPersonDescriptor)
                 && Objects.equals(personToEdit, e.personToEdit);
     }
+
     //@@author
 }

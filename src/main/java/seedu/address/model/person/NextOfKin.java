@@ -1,8 +1,6 @@
 package seedu.address.model.person;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
-import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
 import static seedu.address.model.person.Name.NAME_VALIDATION_REGEX;
 
 import java.util.Arrays;
@@ -64,7 +62,6 @@ public class NextOfKin {
 
     public NextOfKin(String name, String phone, String email, String remark) {
         requireNonNull(name);
-        checkArgument(isValidName(name), MESSAGE_NAME_CONSTRAINTS);
         this.fullName = name;
 
         requireNonNull(email);

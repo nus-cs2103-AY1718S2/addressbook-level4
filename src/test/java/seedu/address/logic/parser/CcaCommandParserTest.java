@@ -15,17 +15,17 @@ import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.AddCcaCommand;
+import seedu.address.logic.commands.CcaCommand;
 import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 
 //@@author TeyXinHui
-public class AddCcaCommandParserTest {
+public class CcaCommandParserTest {
 
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCcaCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, CcaCommand.MESSAGE_USAGE);
 
-    private AddCcaCommandParser parser = new AddCcaCommandParser();
+    private CcaCommandParser parser = new CcaCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
@@ -82,7 +82,7 @@ public class AddCcaCommandParserTest {
 
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder()
                 .withCca(VALID_CCA, VALID_CCA_POSITION).build();
-        AddCcaCommand expectedCommand = new AddCcaCommand(targetIndex, descriptor);
+        CcaCommand expectedCommand = new CcaCommand(targetIndex, descriptor);
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }

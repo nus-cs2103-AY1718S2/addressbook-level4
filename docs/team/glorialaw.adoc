@@ -9,6 +9,7 @@
 == Overview
 
 Sell IT is for salesmen who prefer to use a desktop app for managing their clients. More importantly, Sell IT is optimized for those who prefer to work with a Command Line Interface (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, Sell IT can get your contact management tasks done faster than traditional GUI apps. It is written in Java, and has about 10kLoC.
+
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to send emails to clients and view inbox through Sell IT*

@@ -101,6 +101,7 @@ image::ui_walkthrough.png[width="990"]
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Some commands have aliases that can be used to replace the command word. e.g. `add n/John Doe` can be written as `a n/John Doe` instead. For more details, please check the format of each command or refer to <<Command Aliases>>.
 * Items in square brackets are optional e.g `n/NAME [c/CONDITION]` can be used as `n/John Doe c/peanuts` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[c/CONDITION]...` can be used as `{nbsp}` (i.e. 0 times), `c/peanuts`, `c/G6PD c/aspirin` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
@@ -110,15 +111,16 @@ image::ui_walkthrough.png[width="990"]
 
 The commands listed in this section are related to the general usage of IMDB.
 
-==== Viewing help : `help` or `h`
+==== Viewing help : `help`
 
 Opens the user guide in a separate window. +
 Format: `help` or `h`
 
 // tag::login[]
-==== Logging into the system: `login` or `lg` [since v1.2]
+==== Logging into the system: `login` [since v1.2]
 
 Opens a window for the user to log into the IMDB with a matching username and password. +
+There are two placeholder accounts currently in the IMDB. There is alice, who is a doctor, and bob, who is a medical staff member. Some commands are restricted based on which role the user is logged into. +
 Format: `login` or `lg`
 
 Examples:
@@ -134,7 +136,7 @@ Password: password456 +
 Logs the user in as bob, who is a medical staff.
 // end::login[]
 
-==== Listing entered commands : `history` or `hi`
+==== Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history` or `hi`
@@ -145,10 +147,10 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-==== Undoing previous command : `undo` or `u` or `z`
+==== Undoing previous command : `undo`
 
 Restores the IMDB to the state before the previous _undoable_ command was executed. +
-Format: `undo` or `u`
+Format: `undo` or `u` or `z`
 
 [NOTE]
 ====
@@ -175,10 +177,10 @@ Reverses the `clear` command. +
 `undo` +
 Reverses the `delete 1` command. +
 
-==== Redoing the previously undone command : `redo` or `r` or `y`
+==== Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo` or `r`
+Format: `redo` or `r` or `y`
 
 [IMPORTANT]
 This command is undoable.
@@ -207,7 +209,7 @@ Reapplies the `delete 1` command. +
 Reapplies the `clear` command. +
 // end::undoredo[]
 
-==== Clearing all entries : `clear` or `c`
+==== Clearing all entries : `clear`
 
 Clears all entries from the IMDB. +
 Format: `clear` or `c`
@@ -229,7 +231,7 @@ Logs the user out of the IMDB. +
 Format: `logout`
 // end::logout[]
 
-==== Exiting the program : `exit` or `x`
+==== Exiting the program : `exit`
 
 Exits the program. This also logs the user out of the IMDB. +
 Format: `exit` or `x`
@@ -258,13 +260,13 @@ There will be an administrator role which can add a new username and password to
 
 The commands listed in this section enables the management of patients’ records and details.
 
-==== Listing all patients : `list` or `ls`
+==== Listing all patients : `list`
 
 Shows a list of all patients in the IMDB. +
 Format: `list` or `ls`
 
 // tag::add[]
-==== Adding a patient: `add` or `a`
+==== Adding a patient: `add`
 
 Adds a patient to the IMDB +
 Format: `add n/NAME ic/NRIC p/PHONE_NUMBER e/EMAIL a/ADDRESS dob/DOB b/BLOOD TYPE [c/CONDITION]...` or
@@ -284,10 +286,10 @@ Adds a new patient named John Doe.
 Adds a new patient named Betsy.
 // end::add[]
 
-==== Deleting a patient : `delete` or `d` or `rm`
+==== Deleting a patient : `delete`
 
 Deletes the specified patient from the IMDB. +
-Format: `delete INDEX` or `d`
+Format: `delete INDEX` or `d INDEX` or `rm INDEX`
 
 [IMPORTANT]
 This command is undoable.
@@ -310,7 +312,7 @@ Deletes the 2nd patient in the IMDB.
 Deletes the 1st patient in the results of the `find` command.
 
 // tag::edit[]
-==== Editing a patient : `edit` or `e`
+==== Editing a patient : `edit`
 
 Edits an existing patient in the IMDB. +
 Format: `edit INDEX [n/NAME] [ic/NRIC] [p/PHONE] [e/EMAIL] [a/ADDRESS] [dob/DOB] [b/BLOOD TYPE][c/CONDITION]...` or
@@ -337,7 +339,7 @@ Edits the name of the 2nd patient to be `Betsy Crower` and clears all existing c
 // end::edit[]
 
 // tag::remark[]
-==== Editing remarks for a patient : `remark` or `rk` [since v1.2]
+==== Editing remarks for a patient : `remark` [since v1.2]
 
 Edits the remarks for a patient specified by the index number used in the last patient listing. +
 Format: `remark INDEX r/[REMARK]` or `rk INDEX r/[REMARK]`
@@ -396,7 +398,7 @@ Removes `aspirin` and `asthma` from the list of conditions that the patient at i
 Removes `asthma` from the list of conditions that the patient at index `2` has.
 // end::delc[]
 
-==== Locating patients by name: `find` or `f`
+==== Locating patients by name: `find`
 
 Finds patients whose names contain any of the given keywords. +
 Format: `find KEYWORD [MORE_KEYWORDS]` or `f KEYWORD [MORE_KEYWORDS]`
@@ -417,7 +419,7 @@ Returns `john` and `John Doe`
 Returns any patient having names `Betsy`, `Tim`, or `John`
 
 // tag::select[]
-==== Selecting a patient : `select` or `s`
+==== Selecting a patient : `select`
 
 Selects the patient identified by the index number used in the last patient listing and loads up that patient's details. +
 Format: `select INDEX` or `s INDEX`
@@ -489,7 +491,7 @@ Deletes the first medical record for the first person in the result of the list 
 // end::record[]
 
 // tag::print[]
-==== Printing a patient's formatted medical records : `print` or `p` [since v1.4]
+==== Printing a patient's formatted medical records : `print` [since v1.4]
 
 Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application. +
 Format: `print INDEX` or `p INDEX`
@@ -668,6 +670,89 @@ There is no need to save manually.
 
 *Q*: How do I transfer my data to another computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous IMDB folder.
+
+// tag::alias[]
+== Command Aliases
+
+Below is a table with the aliases of some commands.
+[cols=2*,options="header"]
+|===
+|Command
+|Alias
+
+|`help`
+|`h`
+
+|`login`
+|`lg`
+
+|`history`
+|`hi`
+
+|`undo`
+|`u`/`z`
+
+|`redo`
+|`r`/`y`
+
+|`clear`
+|`c`
+
+|`exit`
+|`x`
+
+|`list`
+|`ls`
+
+|`add`
+|`a`
+
+|`delete`
+|`d`/`m`
+
+|`edit`
+|`e`
+
+|`remark`
+|`rm`
+
+|`addc`
+|`ac`
+
+|`delc`
+|`dc`
+
+|`find`
+|`f`
+
+|`select`
+|`s`
+
+|`record`
+|`rec`
+
+|`remover`
+|`rr`
+
+|`print`
+|`p`
+
+|`addq`
+|`aq`
+
+|`removeq`
+|`rq`
+
+|`addappt`
+|`aa`
+
+|`viewappt`
+|`va`
+
+|`delappt`
+|`da`
+|===
+// end::alias[]
 
 == Command Summary
 

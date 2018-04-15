@@ -1440,7 +1440,51 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Deleting image files while the application is still running.
 
+=== Adding a Task
 
+. Adding a task while all tasks are listed.
+
+** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
+.. Test case: `addTask title/meeting desc/there is team meeting for CS2103 by/20-04-2018 priority/3`
+   Expected: a task is added with title, description, deadline and priority stated in the command. Details of the added task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: 'addTask title/meeting`
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect addTask commands to try: `addTask title/meeting priority/1`, `addTask by/20-04-2018 priority/3`
+   Expected: similar to previous.
+
+. Adding a task while current month tasks are listed.
+
+** Prerequisites: List all current month tasks using the `listCurrentTask` command. Multiple tasks in the list.
+.. Test case: `addTask title/meeting desc/there is team meeting for CS2103 by/20-04-2018 priority/3`
+   Expected: a task is added with title, description, deadline and priority stated in the command. All tasks again are shown in the list. Details of the added task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: 'addTask title/meeting`
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect addTask commands to try: `addTask title/meeting priority/1`, `addTask by/20-04-2018 priority/3`
+   Expected: similar to previous.
+
+=== Deleting a Task
+
+. Deleting a task while all tasks are listed.
+
+** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
+.. Test case: `deleteTask 1` +
+   Expected: First task is deleted from the list. Details of the deleted task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `deleteTask 0` +
+   Expected: No task is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect deleteTask commands to try: `deleteTask`, `deleteTask x` (where x is larger than the list size)
+   Expected: similar to previous.
+
+=== Editing a Task
+
+. Editing a task while all tasks are listed.
+
+** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
+.. Test case: `editTask 1 title/meeting priority/3`
+   Expected: First task is edited with title meeting and priority 3. It is shown last in the list. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: 'editTask 1`
+   Expected: No task is edited. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect addTask commands to try: `editTask title/meeting priority/1`, `editTask x by/20-04-2018 priority/3` (where x is larger than the list size)
+   Expected: similar to previous.
 
 === Saving data
 

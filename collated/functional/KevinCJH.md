@@ -66,7 +66,7 @@ public class EmailCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Send an email to the person identified by the index number used in the last person listing.\n"
             + "Parameters: INDEX (must be a non-zero positive integer) "
-            + "[" + PREFIX_EMAIL_SUBJECT + "EMAIL SUBJECT]\n"
+            + "[" + PREFIX_EMAIL_SUBJECT + "EMAIL SUBJECT] \n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_EMAIL_SUBJECT + "Interview for Full-time Software Engineering";
 
@@ -371,7 +371,6 @@ public class EmailCommandParser implements Parser<EmailCommand> {
 
         Index index;
 
-        //Index index = ParserUtil.parseIndex(args);
         try {
             index = ParserUtil.parseIndex(argMultimap.getPreamble());
         } catch (IllegalValueException ive) {
@@ -559,21 +558,9 @@ public class PersonSkillContainsKeywordsPredicate implements Predicate<Person> {
         this.keywords = keywords;
     }
 
-    @Override
-    public boolean test(Person person) {
-        Iterator tagsIterator = person.getSkills().iterator();
-        StringBuilder sb = new StringBuilder();
-        sb.append(tagsIterator.next());
-        while (tagsIterator.hasNext()) {
-            sb.append(" " + tagsIterator.next());
-        }
-        String tagLists = sb.toString()
-                .replace("[", "")
-                .replace("]", "");
-        return keywords.stream()
-                .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(tagLists, keyword));
-    }
-
+```
+###### \java\seedu\address\model\skill\PersonSkillContainsKeywordsPredicate.java
+``` java
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -582,6 +569,24 @@ public class PersonSkillContainsKeywordsPredicate implements Predicate<Person> {
     }
 
 }
+```
+###### \java\seedu\address\model\skill\SkillUtil.java
+``` java
+        Iterator tagsIterator = skills.iterator();
+        StringBuilder sb = new StringBuilder();
+        if (tagsIterator.hasNext()) {
+            sb.append(tagsIterator.next());
+        }
+        while (tagsIterator.hasNext()) {
+            sb.append(" " + tagsIterator.next());
+        }
+        return (sb.toString()
+                .replace("[", "")
+                .replace("]", ""));
+    }
+
+}
+
 ```
 ###### \java\seedu\address\ui\DetailsPanel.java
 ``` java
@@ -854,12 +859,16 @@ public class GoogleLoginPanel extends UiPart<Region> {
 ```
 ###### \resources\view\EmailPanel.fxml
 ``` fxml
-<AnchorPane prefHeight="478.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
-   <children>
-       <TextField fx:id="toTxtField" layoutY="10.0" prefHeight="25.0" promptText="To:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-       <TextField fx:id="subjectTxtField" layoutY="55.0" prefHeight="29.0" promptText="Subject:" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-       <HTMLEditor fx:id="bodyTxtField" layoutY="98.0" prefHeight="257.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-       <Button fx:id="sendBtn" layoutY="356.0" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="36.0" text="Send" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
-   </children>
-</AnchorPane>
+
+<GridPane prefHeight="478.0" prefWidth="686.0" xmlns="http://javafx.com/javafx/8.0.121" xmlns:fx="http://javafx.com/fxml/1" vgap="1">
+    <columnConstraints>
+        <ColumnConstraints hgrow="SOMETIMES" minWidth="100.0" percentWidth="100.0" />
+    </columnConstraints>
+    <children>
+        <TextField fx:id="toTxtField" prefHeight="25.0" promptText="To:" GridPane.columnIndex="0" GridPane.rowIndex="0" disable="true" />
+        <TextField fx:id="subjectTxtField" prefHeight="29.0" promptText="Subject:" GridPane.columnIndex="0" GridPane.rowIndex="1" />
+        <HTMLEditor fx:id="bodyTxtField" prefHeight="257.0" GridPane.columnIndex="0" GridPane.rowIndex="2" />
+        <Button fx:id="sendBtn" text="Send" mnemonicParsing="false" onAction="#handleButtonAction" prefHeight="36.0" prefWidth="686.0" GridPane.columnIndex="0" GridPane.rowIndex="3" />
+    </children>
+</GridPane>
 ```

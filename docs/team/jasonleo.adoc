@@ -35,7 +35,7 @@ Fastis is a desktop application that aims to help students who are studying at N
 ** Community:
 *** Help team members find bugs for their implementation
 *** Reported bugs and suggestions for other teams
-*** Organised team meetings.
+*** Organised team meetings
 
 == Contributions to the User Guide
 

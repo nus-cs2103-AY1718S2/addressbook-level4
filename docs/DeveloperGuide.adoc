@@ -512,7 +512,7 @@ image::location_ss.png[width="600"]
 |=======================================================================
 // end::location[]
 
-// tag::programmingLanguage[]
+
 === Programming Language Feature
 
 The `programmingLanguage` field is part of the student model and helps to keep track of what programming language he/she is being taught with.
@@ -550,7 +550,7 @@ For example, adding a student would have the command string parsed for arguments
         }
 	}
 ----
-
+// tag::programmingLanguage[]
 A new student would then be added. On the other hand, editing a student's programming language will be done by creating an edited student in such a way:
 
 [source, java]
@@ -596,7 +596,7 @@ The editedStudent will have the new programming language attribute and will henc
 |=======================================================================
 // end::programmingLanguage[]
 
-// tag::profilePage[]
+
 === Profile Page feature
 The profile page feature allows the user to view the full information of contacts(students) kept in their data. This page has each student's main info, miscellaneous info, and their profle picture.
 
@@ -622,7 +622,7 @@ This feature revolves mainly around 3 commands:
 . `moreInfo` : Shows the actual profile page on the web browser.
 . `editMisc` : Edits the miscellaneous information of a student.
 . `editPicture` : Edits the profile picture of a student with a valid picture file(refer to note above). The user will have to provide the filepath to this file.
-
+// tag::profilePage1[]
 [large]*`moreInfo` Command*
 
 For the command `moreInfo`, the model manager calls upon the data storage (addressbook) to raise an event for the Browser Panel to display the profile page of a student.
@@ -661,7 +661,7 @@ Lastly, indicating the browser panel to display a student will raise a `StudentI
 The diagram below shows how the event is handled in the `BrowserPanel` :
 
 image::moreInfoCommandSD.png[width:400]
-
+//end::profilePage1[]
 [large]*`editMisc` Command*
 
 For the command `editMisc`, this is similar to the edit function, except it takes on different optional parameters. These are [ALLERGIES], [NEXTOFKINNAME], [NEXTOFKINPHONE], [REMARKS].
@@ -688,7 +688,7 @@ The code snippet below shows how the `studentToEdit` is created when the `editMi
 
 After that, the student will be updated with the new details for his/her miscellaneous information.
 
-
+//tag::profilePage2[]
 [large]*`editPicture` Command*
 
 For the command `editPicture`, the student's index will have to be provided by the user again. The next parameter for this is the required file path of the picture file.
@@ -718,7 +718,7 @@ The following sequence diagram illustrates the process of calling the `editPictu
 
 .Sequence diagram showing the important details of the process of the `editPicture` command
 image::editPictureCommandSD.png[width:600]
-
+//end::profilePage2[]
 As seen from the above diagram, the `createFinalEditedStudent()` method ensures that the correct profile picture path is saved onto the student's XML data in order to be read by the HTML file which displays the student profile page.
 The method `createEditedStudent` creates the student wi
 
@@ -746,7 +746,7 @@ The method `createEditedStudent` creates the student wi
 - : If the picture is deleted or corrupted, the profile picture would not be able to display.
 
 |=======================================================================
-// end::profilePage[]
+
 
 // tag::schedule[]
 === Schedule feature

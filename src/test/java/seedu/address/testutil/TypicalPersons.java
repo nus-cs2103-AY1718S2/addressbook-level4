@@ -1,6 +1,7 @@
 package seedu.address.testutil;
 
 import static seedu.address.logic.commands.CommandTestUtil.REMARK_DESC_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_INJURIES_HISTORY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NRIC_AMY;
@@ -28,9 +29,10 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
  */
 public class TypicalPersons {
 
+
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline").withNric("S8535525Z")
             .withTags("friends").withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1", "Chem A1", "Phy A1")
-            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory("")
+            .withRemark(VALID_REMARK).withCca("", "").withInjuriesHistory(VALID_INJURIES_HISTORY)
             .withNameOfKin("Betty", "98763451", "betty@gmail.com", "Mother").build();
     public static final Person BENSON = new PersonBuilder().withName("Benson Meier").withNric("S9123456X")
             .withTags("owesMoney", "friends").withSubjects("English A1", "EMath A1", "Hist A1", "HTamil A1",

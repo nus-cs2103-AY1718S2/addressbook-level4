@@ -3,6 +3,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NRIC;
@@ -45,6 +46,7 @@ public class CommandTestUtil {
     public static final String VALID_SUBJECT_BIOLOGY = "Bio A1";
     public static final String VALID_SUBJECT_HISTORY = "Hist A1";
     public static final String VALID_REMARK = "Hardworking";
+    public static final String VALID_INJURIES_HISTORY = "Right Ligament Tear";
     public static final String INVALID_REMARK = " ";
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
@@ -65,6 +67,8 @@ public class CommandTestUtil {
             + PREFIX_SUBJECT + VALID_SUBJECT_HISTORY;
     public static final String REMARK_DESC_AMY = " " + PREFIX_REMARK + VALID_REMARK;
     public static final String REMARK_DESC_BOB = " " + PREFIX_REMARK + VALID_REMARK;
+    public static final String INJURIES_HISTORY_DESC = " " + PREFIX_INJURIES_HISTORY + VALID_INJURIES_HISTORY;
+    public static final String INVALID_INJURIES_HISTORY_DESC = " " + PREFIX_INJURIES_HISTORY + INVALID_REMARK;
     public static final String INVALID_REMARK_DESC = " " + PREFIX_REMARK + INVALID_REMARK;
     public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
     public static final String INVALID_NRIC_DESC = " " + PREFIX_NRIC + "911a"; // 'a' not allowed in phones

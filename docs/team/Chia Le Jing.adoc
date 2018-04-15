@@ -8,7 +8,7 @@
 
 == Overview
 
-Medeina is a desktop application primarily designed for veterinarians and their assistants (henceforth referred to as user/s) to better manage their contacts, pet patient and appointments details. The main bulk of interactions that the user will have with Medeina is through the Command Line Interface (CLI). However, it also has a Graphical User Interface (GUI) created with JavaFX so that users can visualise the data easily. Medeina is written in Java, and has about 20 kLoC.
+Medeina is a desktop application, designed for veterinarians and their assistants to better manage their contacts, pet patient and appointments details. Users interact with Medeina mainly through the Command Line Interface (CLI). A Graphical User Interface (GUI) created with JavaFX is also provided so that users can visualise the data easily. Medeina is written in Java, and has about 20 kLoC.
 
 == Summary of contributions
 
@@ -28,22 +28,17 @@ Medeina is a desktop application primarily designed for veterinarians and their 
 *** Sourced for new application icon and updated Medeina accordingly: https://github.com/CS2103JAN2018-F14-B2/main/pull/86[#86]
 ** Documentation:
 *** Ensured that important and warning icons are reflected properly in the User Guide: https://github.com/CS2103JAN2018-F14-B2/main/pull/162[#162]
-*** Added Command Summary section to make User Guide more user friendly: https://github.com/CS2103JAN2018-F14-B2/main/pull/152[#152]
+*** Authored the Command Summary section to make User Guide more user friendly: https://github.com/CS2103JAN2018-F14-B2/main/pull/152[#152]
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (Examples:  https://github.com/CS2103JAN2018-T09-B3/main/issues/192[1], https://github.com/CS2103JAN2018-T09-B3/main/issues/193[2], https://github.com/CS2103JAN2018-T09-B3/main/issues/180[3],
-https://github.com/CS2103JAN2018-T09-B3/main/issues/185[4],
-https://github.com/CS2103JAN2018-T09-B3/main/issues/190[5])
+*** Reported bugs and suggestions for other teams in the class (Examples:  https://github.com/CS2103JAN2018-T09-B3/main/issues/193[1], https://github.com/CS2103JAN2018-T09-B3/main/issues/180[2])
 
 == Contributions to the User Guide
-
 
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
 include::../UserGuide.adoc[tag=editcommandUG]
-
-include::../UserGuide.adoc[tag=commandsummaryUG]
 
 == Contributions to the Developer Guide
 

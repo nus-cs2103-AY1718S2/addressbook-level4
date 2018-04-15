@@ -10,10 +10,16 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.account.MatricNumber;
+import seedu.address.model.account.Name;
+import seedu.address.model.account.Password;
+import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.Username;
+import seedu.address.model.account.exceptions.AccountNotFoundException;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Avail;
+import seedu.address.model.book.Isbn;
+import seedu.address.model.book.Title;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -33,6 +39,7 @@ public class ParserUtil {
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -42,18 +49,20 @@ public class ParserUtil {
         }
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
+    //============================== Account Level Parse Commands ===========================
 
+    //@@author chantiongley
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code name} is invalid.
+     * @throws AccountNotFoundException if the given {@code name} is invalid.
      */
-    public static Name parseName(String name) throws IllegalValueException {
+    public static Name parseAccountName(String name) throws AccountNotFoundException {
         requireNonNull(name);
         String trimmedName = name.trim();
         if (!Name.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+            throw new AccountNotFoundException(Name.MESSAGE_NAME_CONSTRAINTS);
         }
         return new Name(trimmedName);
     }
@@ -62,81 +71,196 @@ public class ParserUtil {
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
+    public static Optional<Name> parseAccountName(Optional<String> name) throws AccountNotFoundException {
         requireNonNull(name);
-        return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
+        return name.isPresent() ? Optional.of(parseAccountName(name.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
+     * Parses a {@code String matricNumber} into a {@code MatricNumber}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws AccountNotFoundException if the given {@code matricNumber} is invalid.
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static MatricNumber parseAccountMatricNumber(String matricNumber) throws AccountNotFoundException {
+        requireNonNull(matricNumber);
+        String trimmedMatricNumber = matricNumber.trim();
+        if (!MatricNumber.isValidMatricNumber(trimmedMatricNumber)) {
+            throw new AccountNotFoundException(MatricNumber.MESSAGE_MATRIC_NUMBER_CONSTRAINTS);
         }
-        return new Phone(trimmedPhone);
+        return new MatricNumber(trimmedMatricNumber);
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
+     * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
+    public static Optional<MatricNumber> parseAccountMatricNumber(Optional<String> matricNumber)
+        throws AccountNotFoundException {
+        requireNonNull(matricNumber);
+        return matricNumber.isPresent() ? Optional.of(parseAccountMatricNumber(matricNumber.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String address} into an {@code Address}.
+     * Parses a {@code String username} into a {@code Username}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws AccountNotFoundException if the given {@code username} is invalid.
+     */
+    public static Username parseAccountUsername(String username) throws AccountNotFoundException {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        if (!Username.isValidUsername(trimmedUsername)) {
+            throw new AccountNotFoundException (Username.MESSAGE_USERNAME_CONSTRAINTS);
+        }
+        return new Username(trimmedUsername);
+    }
+
+    /**
+     * Parses a {@code Optional<String> username} into an {@code Optional<Username>} if {@code username} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Username> parseAccountUsername(Optional<String> username) throws AccountNotFoundException {
+        requireNonNull(username);
+        return username.isPresent() ? Optional.of(parseAccountUsername(username.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String password} into a {@code Password}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws AccountNotFoundException if the given {@code password} is invalid.
+     */
+    public static Password parseAccountPassword(String password) throws AccountNotFoundException {
+        requireNonNull(password);
+        String trimmedPassword = password.trim();
+        if (!Password.isValidPassword(trimmedPassword)) {
+            throw new AccountNotFoundException(Password.MESSAGE_PASSWORD_CONSTRAINTS);
+        }
+        return new Password(trimmedPassword);
+    }
+
+    /**
+     * Parses a {@code Optional<String> password} into an {@code Optional<Password>} if {@code password} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Password> parseAccountPassword(Optional<String> password) throws AccountNotFoundException {
+        requireNonNull(password);
+        return password.isPresent() ? Optional.of(parseAccountPassword(password.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String privilegeLevel} into a {@code PrivilegeLevel}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws AccountNotFoundException if the given {@code privilegeLevel} is invalid.
+     */
+    public static PrivilegeLevel parseAccountPrivilegeLevel(String privilegeLevel) throws AccountNotFoundException {
+        requireNonNull(privilegeLevel);
+        int input = Integer.parseInt(privilegeLevel);
+
+        if (!PrivilegeLevel.isValidPrivilegeLevel(input)) {
+            throw new AccountNotFoundException(PrivilegeLevel.MESSAGE_PRIVILEGE_LEVEL_CONSTRAINTS);
+        }
+        return new PrivilegeLevel(input);
+    }
+
+    //============================== Book Level Parse Commands ==============================
+
+    /**
+     * Parses a {@code String title} into a {@code Title}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code title} is invalid.
+     */
+    public static Title parseTitle(String title) throws IllegalValueException {
+        requireNonNull(title);
+        String trimmedTitle = title.trim();
+        if (!Title.isValidTitle(trimmedTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new Title(trimmedTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> title} into an {@code Optional<Title>} if {@code title} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(parseTitle(title.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String isbn} into a {@code Isbn}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code isbn} is invalid.
+     */
+    public static Isbn parseIsbn(String isbn) throws IllegalValueException {
+        requireNonNull(isbn);
+        String trimmedIsbn = isbn.trim();
+        if (!Isbn.isValidIsbn(trimmedIsbn)) {
+            throw new IllegalValueException(Isbn.MESSAGE_ISBN_CONSTRAINTS);
+        }
+        return new Isbn(trimmedIsbn);
+    }
+
+    /**
+     * Parses a {@code Optional<String> isbn} into an {@code Optional<Isbn>} if {@code isbn} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Isbn> parseIsbn(Optional<String> isbn) throws IllegalValueException {
+        requireNonNull(isbn);
+        return isbn.isPresent() ? Optional.of(parseIsbn(isbn.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String address} into an {@code Author}.
      * Leading and trailing whitespaces will be trimmed.
      *
      * @throws IllegalValueException if the given {@code address} is invalid.
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
+    public static Author parseAuthor(String address) throws IllegalValueException {
         requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+        String trimmedAuthor = address.trim();
+        if (!Author.isValidAuthor(trimmedAuthor)) {
+            throw new IllegalValueException(Author.MESSAGE_AUTHOR_CONSTRAINTS);
         }
-        return new Address(trimmedAddress);
+        return new Author(trimmedAuthor);
     }
 
     /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
+     * Parses a {@code Optional<String> author} into an {@code Optional<Author>} if {@code author} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
+    public static Optional<Author> parseAuthor(Optional<String> author) throws IllegalValueException {
+        requireNonNull(author);
+        return author.isPresent() ? Optional.of(parseAuthor(author.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String email} into an {@code Email}.
+     * Parses a {@code String avail} into an {@code Avail}.
      * Leading and trailing whitespaces will be trimmed.
      *
-     * @throws IllegalValueException if the given {@code email} is invalid.
+     * @throws IllegalValueException if the given {@code avail} is invalid.
      */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
+    public static Avail parseAvail(String avail) throws IllegalValueException {
+        requireNonNull(avail);
+        String trimmedAvail = avail.trim();
+        if (!Avail.isValidAvail(trimmedAvail)) {
+            throw new IllegalValueException(Avail.MESSAGE_AVAIL_CONSTRAINTS);
         }
-        return new Email(trimmedEmail);
+        return new Avail(trimmedAvail);
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * Parses a {@code Optional<String> avail} into an {@code Optional<Avail>} if {@code avail} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+    public static Optional<Avail> parseAvail(Optional<String> avail) throws IllegalValueException {
+        requireNonNull(avail);
+        return avail.isPresent() ? Optional.of(parseAvail(avail.get())) : Optional.empty();
     }
 
     /**

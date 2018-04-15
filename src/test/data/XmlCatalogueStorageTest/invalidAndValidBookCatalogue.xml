@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<catalogue>
+    <!-- @@author khiayi -->
+    <!-- Valid Book -->
+    <books>
+        <title>Animal Farm</title>
+        <author isPrivate="false">George Orwell</author>
+        <isbn isPrivate="false">9780736692427</isbn>
+        <avail isPrivate="false">Available</avail>
+    </books>
+    <!-- Book with invalid isbn field -->
+    <books>
+        <title>Animal Farm</title>
+        <author isPrivate="false">George Orwell</author>
+        <isbn isPrivate="false">978073669242a</isbn>
+        <avail isPrivate="false">Available</avail>
+    </books>
+</catalogue>

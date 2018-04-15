@@ -3,11 +3,11 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AUTHOR;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AVAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISBN;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TITLE;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -17,59 +17,61 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Catalogue;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.account.UniqueAccountList;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.TitleContainsKeywordsPredicate;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.testutil.EditBookDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
 
-    public static final String VALID_NAME_AMY = "Amy Bee";
-    public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "11111111";
-    public static final String VALID_PHONE_BOB = "22222222";
-    public static final String VALID_EMAIL_AMY = "amy@example.com";
-    public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
-    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_TITLE_XVI = "XVI";
+    public static final String VALID_TITLE_YOU = "You";
+    public static final String VALID_ISBN_XVI = "9780142417713";
+    public static final String VALID_ISBN_YOU = "9781476785592";
+    public static final String VALID_AVAIL_XVI = "Available";
+    public static final String VALID_AVAIL_YOU = "Borrowed";
+    public static final String VALID_AUTHOR_XVI = "Julia Karr";
+    public static final String VALID_AUTHOR_YOU = "Caroline Kepnes";
+    public static final String VALID_TAG_DYSTOPIA = "dystopia";
+    public static final String VALID_TAG_FICTION = "fiction";
 
-    public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
-    public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
-    public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
-    public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
-    public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
-    public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
-    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
+    public static final String TITLE_DESC_XVI = " " + PREFIX_TITLE + VALID_TITLE_XVI;
+    public static final String TITLE_DESC_YOU = " " + PREFIX_TITLE + VALID_TITLE_YOU;
+    public static final String ISBN_DESC_XVI = " " + PREFIX_ISBN + VALID_ISBN_XVI;
+    public static final String ISBN_DESC_YOU = " " + PREFIX_ISBN + VALID_ISBN_YOU;
+    public static final String AVAIL_DESC_XVI = " " + PREFIX_AVAIL + VALID_AVAIL_XVI;
+    public static final String AVAIL_DESC_YOU = " " + PREFIX_AVAIL + VALID_AVAIL_YOU;
+    public static final String AUTHOR_DESC_XVI = " " + PREFIX_AUTHOR + VALID_AUTHOR_XVI;
+    public static final String AUTHOR_DESC_YOU = " " + PREFIX_AUTHOR + VALID_AUTHOR_YOU;
+    public static final String TAG_DESC_DYSTOPIA = " " + PREFIX_TAG + VALID_TAG_DYSTOPIA;
+    public static final String TAG_DESC_FICTION = " " + PREFIX_TAG + VALID_TAG_FICTION;
+
+    public static final String INVALID_TITLE_DESC = " " + PREFIX_TITLE + "James&"; // '&' not allowed in titles
+    public static final String INVALID_AUTHOR_DESC = " " + PREFIX_AUTHOR + "^"; // ^ not allowed for author
+    public static final String INVALID_ISBN_DESC = " " + PREFIX_ISBN + "978031606792a"; // 'a' not allowed in isbns
+    public static final String INVALID_AVAIL_DESC = " " + PREFIX_AVAIL + "not sure"; // must be as stated
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final EditCommand.EditBookDescriptor DESC_XVI;
+    public static final EditCommand.EditBookDescriptor DESC_YOU;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_XVI = new EditBookDescriptorBuilder().withName(VALID_TITLE_XVI).withAuthor(VALID_AUTHOR_XVI)
+            .withIsbn(VALID_ISBN_XVI).withAvail(VALID_AVAIL_XVI)
+            .withTags(VALID_TAG_DYSTOPIA).build();
+        DESC_YOU = new EditBookDescriptorBuilder().withName(VALID_TITLE_YOU).withAuthor(VALID_AUTHOR_YOU)
+            .withIsbn(VALID_ISBN_YOU).withAvail(VALID_AVAIL_YOU)
+            .withTags(VALID_TAG_FICTION).build();
     }
 
     /**
@@ -78,7 +80,7 @@ public class CommandTestUtil {
      * - the {@code actualModel} matches {@code expectedModel}
      */
     public static void assertCommandSuccess(Command command, Model actualModel, String expectedMessage,
-            Model expectedModel) {
+                                            Model expectedModel) {
         try {
             CommandResult result = command.execute();
             assertEquals(expectedMessage, result.feedbackToUser);
@@ -89,50 +91,67 @@ public class CommandTestUtil {
     }
 
     /**
+     * @param command
+     * @param actualList
+     * @param expectedMessage
+     * @param expectedList
+     */
+    public static void assertCommandSuccess(Command command, UniqueAccountList actualList, String expectedMessage,
+                                            UniqueAccountList expectedList) {
+        try {
+            CommandResult result = command.execute();
+            assertEquals(expectedMessage, result.feedbackToUser);
+            assertEquals(expectedList, actualList);
+        } catch (CommandException ce) {
+            throw new AssertionError("Execution of command should not fail.", ce);
+        }
+    }
+
+    /**
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the catalogue and the filtered book list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        Catalogue expectedCatalogue = new Catalogue(actualModel.getCatalogue());
+        List<Book> expectedFilteredList = new ArrayList<>(actualModel.getFilteredBookList());
 
         try {
             command.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedCatalogue, actualModel.getCatalogue());
+            assertEquals(expectedFilteredList, actualModel.getFilteredBookList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
-     * {@code model}'s address book.
+     * Updates {@code model}'s filtered list to show only the book at the given {@code targetIndex} in the
+     * {@code model}'s catalogue.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+    public static void showBookAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredBookList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        Book book = model.getFilteredBookList().get(targetIndex.getZeroBased());
+        final String[] splitName = book.getTitle().fullTitle.split("\\s+");
+        model.updateFilteredBookList(new TitleContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredBookList().size());
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first book in {@code model}'s filtered list from {@code model}'s catalogue.
      */
-    public static void deleteFirstPerson(Model model) {
-        Person firstPerson = model.getFilteredPersonList().get(0);
+    public static void deleteFirstBook(Model model) {
+        Book firstBook = model.getFilteredBookList().get(0);
         try {
-            model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+            model.deleteBook(firstBook);
+        } catch (BookNotFoundException pnfe) {
+            throw new AssertionError("Book in filtered list must exist in model.", pnfe);
         }
     }
 

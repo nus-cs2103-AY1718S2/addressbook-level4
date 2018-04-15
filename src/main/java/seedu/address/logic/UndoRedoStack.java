@@ -13,6 +13,8 @@ import seedu.address.logic.commands.UndoableCommand;
  */
 public class UndoRedoStack {
     private Stack<UndoableCommand> undoStack;
+
+
     private Stack<UndoableCommand> redoStack;
 
     public UndoRedoStack() {
@@ -84,6 +86,6 @@ public class UndoRedoStack {
 
         // state check
         return undoStack.equals(stack.undoStack)
-                && redoStack.equals(stack.redoStack);
+            && redoStack.equals(stack.redoStack);
     }
 }

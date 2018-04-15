@@ -11,9 +11,11 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -26,6 +28,8 @@ public class CommandBox extends UiPart<Region> {
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
+
+    private boolean isFindNextField = false;
 
     @FXML
     private TextField commandTextField;
@@ -55,6 +59,12 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+            //@@author victortardieu
+        case TAB:
+            keyEvent.consume();
+            replaceText(LogicManager.autoComplete(commandTextField.getText()));
+            break;
+            //@@author
         default:
             // let JavaFx handle the keypress
         }
@@ -147,5 +157,6 @@ public class CommandBox extends UiPart<Region> {
 
         styleClass.add(ERROR_STYLE_CLASS);
     }
+
 
 }

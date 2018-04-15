@@ -15,7 +15,7 @@ import javafx.stage.Stage;
 public class GuiRobot extends FxRobot {
 
     private static final int PAUSE_FOR_HUMAN_DELAY_MILLISECONDS = 250;
-    private static final int DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS = 5000;
+    private static final int DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS = 20000;
 
     private static final String PROPERTY_TESTFX_HEADLESS = "testfx.headless";
 
@@ -43,7 +43,7 @@ public class GuiRobot extends FxRobot {
      * Waits for {@code event} to be true by {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS} milliseconds.
      *
      * @throws EventTimeoutException if the time taken exceeds {@code DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS}
-     * milliseconds.
+     *                               milliseconds.
      */
     public void waitForEvent(BooleanSupplier event) {
         waitForEvent(event, DEFAULT_WAIT_FOR_EVENT_TIMEOUT_MILLISECONDS);
@@ -76,8 +76,8 @@ public class GuiRobot extends FxRobot {
      */
     public boolean isWindowShown(String stageTitle) {
         return listTargetWindows().stream()
-                .filter(window -> window instanceof Stage && ((Stage) window).getTitle().equals(stageTitle))
-                .count() >= 1;
+            .filter(window -> window instanceof Stage && ((Stage) window).getTitle().equals(stageTitle))
+            .count() >= 1;
     }
 
     /**
@@ -89,10 +89,10 @@ public class GuiRobot extends FxRobot {
      */
     public Stage getStage(String stageTitle) {
         Optional<Stage> targetStage = listTargetWindows().stream()
-                .filter(Stage.class::isInstance)    // checks that the window is of type Stage
-                .map(Stage.class::cast)
-                .filter(stage -> stage.getTitle().equals(stageTitle))
-                .findFirst();
+            .filter(Stage.class::isInstance)    // checks that the window is of type Stage
+            .map(Stage.class::cast)
+            .filter(stage -> stage.getTitle().equals(stageTitle))
+            .findFirst();
 
         return targetStage.orElseThrow(StageNotFoundException::new);
     }

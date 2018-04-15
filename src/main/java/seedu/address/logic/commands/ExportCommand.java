@@ -15,7 +15,7 @@ public class ExportCommand extends Command {
 
     public static final String COMMAND_WORD = "export";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of address book "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Exports the current view of StardyTogether "
             + "to specified filepath. "
             + "Parameters: FILEPATH PASSWORD\n"
             + "Example: " + COMMAND_WORD + " "

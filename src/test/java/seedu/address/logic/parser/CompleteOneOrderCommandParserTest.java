@@ -1,3 +1,4 @@
+//@@author ZhangYijiong
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
@@ -19,13 +20,15 @@ public class CompleteOneOrderCommandParserTest {
     }
 
     @Test
-    public void parse_invalidArgs_Second_throwsParseException() {
-        assertParseFailure(parser, "#", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOneOrderCommand.MESSAGE_USAGE));
+    public void parse_invalidArgs_second_throwsParseException() {
+        assertParseFailure(parser, "#",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOneOrderCommand.MESSAGE_USAGE));
     }
 
     @Test
     public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "a", String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOneOrderCommand.MESSAGE_USAGE));
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOneOrderCommand.MESSAGE_USAGE));
     }
 }
 

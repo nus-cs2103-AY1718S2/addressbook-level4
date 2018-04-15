@@ -432,7 +432,7 @@ Examples:
 Address book starts with the following as shown in Figure 22 below.
 
 .Application before Delete +
-image::UiFromDelete.png[width="800']
+image::UIFromDelete.png[width="800']
 
 Command(s) entered: `list`, `delete` `2` +
 
@@ -466,7 +466,7 @@ Examples:
 Your TA starts with the following as shown in Figure 25 below.
 
 .Application before Select +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command(s) entered: `list`, `select` `1` +
 
@@ -490,7 +490,7 @@ To see how the task scheduling feature works on the `Todo List` and `Calendar`, 
 Figure 28 below shows where the `Todo List` and `Calendar` are located
 
 .Todo List and Calendar
-image::TodoListandCalendar.PNG[width = "800"]
+image::TodoListandCalendar.png[width = "800"]
 
 // tag::switchTab[]
 === Switching between tabs: `switchTab`
@@ -503,7 +503,7 @@ Format: `switchTab`
 Figure 29 below shows the result of entering command `switchTab` switching from Person List to Todo List and the display of command result.
 
 .Tabs Switched +
-image::switchTabs.PNG[width="800"]
+image::switchTabs.png[width="800"]
 // end::switchTab[]
 
 === Adding a task: `addTask`
@@ -639,7 +639,7 @@ Only the tasks due within current month will be listed in the *Todo List*.
 Figure 38 below illustrates the change in tasks displayed after listCurrentTask is entered.
 
 .Behavior of Executing listCurrentTask
-image::listTasks.PNG[width = '800']
+image::listTasks.png[width = '800']
 
 === Sorting tasks: `sortTask`
 
@@ -681,7 +681,7 @@ Examples:
 Address book starts with the following as shown in Figure 39 below.
 
 .Application Before any Commands +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command(s) entered: `delete` `1`, `list`, `undo` +
 

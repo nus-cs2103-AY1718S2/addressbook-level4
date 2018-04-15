@@ -49,7 +49,8 @@ public class AddressBookBuilder {
     }
 
     /**
-     * Parses {@code insuranceName} into a {@code Insurance} and adds it to the {@code AddressBook} that we are building.
+     * Parses {@code insuranceName} into a {@code Insurance} and adds it to the {@code AddressBook} that we
+     * are building.
      */
     public AddressBookBuilder withInsurance(String insuranceName) {
         try {

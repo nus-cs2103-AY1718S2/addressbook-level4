@@ -48,18 +48,18 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_NRIC + "NRIC "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "To add a new pet patient: "
-            + COMMAND_WORD + " " + OPTION_PETPATIENT + " " + PREFIX_NAME + "NAME "
+            + COMMAND_WORD + " " + OPTION_PETPATIENT + " " + PREFIX_NAME + "PET_NAME "
             + PREFIX_SPECIES + "SPECIES "
             + PREFIX_BREED + "BREED "
             + PREFIX_COLOUR + "COLOUR "
             + PREFIX_BLOODTYPE + "BLOOD_TYPE "
-            + "[" + PREFIX_TAG + "TAG]... " + OPTION_OWNER + " " + PREFIX_NRIC + "OWNER_NRIC\n"
+            + "[" + PREFIX_TAG + "TAG]... " + OPTION_OWNER + " " + PREFIX_NRIC + "NRIC\n"
             + "To add a new appointment: "
             + COMMAND_WORD + " " + OPTION_APPOINTMENT + " " + PREFIX_DATE + "DATE "
             + PREFIX_REMARK + "REMARK "
-            + PREFIX_TAG + "TYPE OF APPOINTMENT... " + OPTION_OWNER + " " + PREFIX_NRIC + "OWNER_NRIC "
+            + PREFIX_TAG + "TYPE OF APPOINTMENT... " + OPTION_OWNER + " " + PREFIX_NRIC + "NRIC "
             + OPTION_PETPATIENT + " " + PREFIX_NAME + " PET_NAME\n"
-            + "To add all new: " + COMMAND_WORD + " " + OPTION_OWNER + " " + PREFIX_NAME + "OWNER_NAME "
+            + "To add all new: " + COMMAND_WORD + " " + OPTION_OWNER + " " + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
             + PREFIX_EMAIL + "EMAIL "
             + PREFIX_ADDRESS + "ADDRESS "
@@ -102,7 +102,7 @@ public class AddCommand extends UndoableCommand {
 
     public static final String MESSAGE_ERROR_PETPATIENT = "option " + OPTION_PETPATIENT + "\n"
             + "Parameters: "
-            + PREFIX_NAME + "NAME "
+            + PREFIX_NAME + "PET_NAME "
             + PREFIX_SPECIES + "SPECIES "
             + PREFIX_BREED + "BREED "
             + PREFIX_COLOUR + "COLOUR "
@@ -126,7 +126,7 @@ public class AddCommand extends UndoableCommand {
             + "New pet patient added: %2$s\n"
             + "New appointment made: %3$s";
     public static final String MESSAGE_DUPLICATE_PERSON = "This contact already exists in Medeina.";
-    public static final String MESSAGE_DUPLICATE_NRIC = "This is already a contact with this NRIC.";
+    public static final String MESSAGE_DUPLICATE_NRIC = "There is already a contact with this NRIC.";
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This particular appointment already exists in Medeina.";
     public static final String MESSAGE_DUPLICATE_DATETIME = "This date time is already taken by another appointment.";
     public static final String MESSAGE_DUPLICATE_PET_PATIENT = "This pet patient already exists in Medeina";

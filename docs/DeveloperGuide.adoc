@@ -93,27 +93,29 @@ image::Architecture.png[width="600"]
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-Given below is a quick overview of each component. +
+The App consists of the following components:
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for the following:
-
-* At app launch: It initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: It shuts down the components and invokes the cleanup method where necessary.
-
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
-
-* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
-This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
-
-The rest of the App consists of the following components:
-
+* `Main`: Consists of only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`].
+* <<Design-Commons,*`Commons`*>>: Represents a collection of classes used by multiple other components.
 * <<Design-Ui,*`UI`*>>: Acts as the UI of the App.
 * <<Design-Logic,*`Logic`*>>: Acts as the command executor.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components:
+Given below is an overview of each component.
+
+`Main` is responsible for the following:
+
+* At app launch: It initializes the components in the correct sequence, and connects them up with each other.
+* At shut down: It shuts down the components and invokes the cleanup method where necessary.
+
+<<Design-Commons,*`Commons`*>> has two major classes that play important roles at the architecture level.
+
+* `EventsCenter` : Used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
+* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+
+Each of the last four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.

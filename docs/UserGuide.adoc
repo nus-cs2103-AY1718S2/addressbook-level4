@@ -444,9 +444,11 @@ to ensure proper functionality.
 
 // tag::convert[]
 
-=== Converts your balance in a desired currency: `convert` or `cv` [Since v1.4]`
+=== Converts your balance in a desired currency: `convert` or `cv` [Since v1.4]
 
-Converts an entries certain balance in a currency of your choice.
+Converts an entries certain balance in a currency of your choice. Not a real time conversion but a good approximation
+
+Code adapted and list of supported currencies are avalaible at: https://github.com/Ritaja/java-exchange-rates/blob/master/README.md
 Format: `convert` INDEX FROM_CURRENCY TO_CURRENCY` or `cv` INDEX FROM_CURRENCY TO_CURRENCY
 
 Example: `convert 2 USD JPY`

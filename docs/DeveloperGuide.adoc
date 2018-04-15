@@ -14,6 +14,12 @@ endif::[]
 
 By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 
+== Introduction
+Integrated Medical DataBase (IMDB) is a desktop records management application targeted at private clinics that may have multiple branches.
+It aims to replace how private clinics handle the management of patient records, making the process much more easier and efficient.
+It provides features that are essential for a clinic to manage patient records effectively and securely such as user authentication, managing patient records, managing pateint appointments, maintaining of a visting queue, and the printing of medical records.
+This guide provides the necessary information for developers who are interested in contributing to the application - from the steps required to set-up, to detailed descriptions of the current features that the application features.
+
 == Setting Up
 This section details how you can go about setting up IMDB.
 
@@ -58,6 +64,8 @@ To verify if you have set up IMDB correctly, please do the following:
 
 === Configurations to do before writing code
 
+To ensure that the modifications you make are in line with the codebase, you should make sure that you follow the coding style and standards adopted for this application.
+
 ==== Configuring the coding style
 
 This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
@@ -79,6 +87,7 @@ You are now ready to start coding. You may wish to refer to the links below for 
 2. Take a look at <<GetStartedProgramming>>
 
 == Design
+This section provides an explanation of how IMDB is designed.
 
 [[Design-Architecture]]
 === Architecture
@@ -427,42 +436,45 @@ each implementation and the pros and cons of each implementation:
 ** Cons: Will require a method in Patient to update and verify validity of remark. Violates Single Responsibility Principle and Separation of Concerns as `Patient` now needs to do two different things.
 // end::remark[]
 
-// tag::morefields[]
-=== Implement NRIC, DOB and blood type detail fields
-==== Current Implementation
-
-The additional fields added are managed by the `AddCommand` and the `EditCommand`.
-They are included as fields to be filled in when adding a new `Patient` or when editing an existing `Patient`.
-
-Both `AddCommand` and `EditCommand` have been modified to accept new inputs corresponding with the new fields implemented.
-
-Suppose that the user has just launched the application. The current list is shown in Figure 22 below.
-
-.The current queue
-image::Figure3-3-1-1.png[width="800"]
-
-The user now decides to edit the blood type of the first person in the list (he got a blood transfusion).
-
-`EditCommand` will search for the first person in the list and store it as the person to be edited.
-`EditCommand` will then create a new patient with the same attributes as the patient to be edited, except the `BloodType` attribute
-which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 23 below.
-
-.The patient before and after editing
-image::Figure3-3-1-2.png[width="800"]
-
-`EditCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
-the new list will be as shown in Figure 24 below.
-
-.The queue with updated details
-image::Figure3-3-1-3.png[width="800"]
-// end::morefields[]
-
 // tag::addconditions[]
-=== Add conditions to the list of conditions of a patient
+=== Edit conditions feature
 ==== Current Implementation
 
-The addition of conditions mechanism is managed by the `AddConditionCommand`.
-It allows the user to simply add on more conditions to the list of conditions a patient has, rather than have to retype all of the patient's conditions.
+The management of conditions mechanism is managed by `AddConditionCommand` and `DeleteConditionCommand`.
+They are modified from `EditCommand` to only edit conditions. The following is the code snippet for how they work.
+
+[source,java]
+----
+Add Condition:
+    private static Patient createEditedPerson(...) {
+        ...
+
+        if (patientToEdit.getTags() != null) {
+            updatedTags = new HashSet<>();
+            updatedTags.addAll(patientToEdit.getTags());
+            updatedTags.addAll(editPersonDescriptor.getModifiableTags());
+        }
+
+        return new Patient(...);
+    }
+
+Delete Condition:
+    private static Patient createEditedPerson(...) {
+        ...
+
+        if (patientToEdit.getTags() != null) {
+            updatedTags = new HashSet<>();
+            updatedTags.addAll(patientToEdit.getTags());
+            updatedTags.removeAll(editPersonDescriptor.getModifiableTags());
+        }
+
+        return new Patient(...);
+    }
+
+
+----
+
+It allows the user to simply add on to, or delete from, the list of conditions a patient has rather than have to retype all of the patient's conditions.
 
 Suppose that the user has just launched the application. The current list is shown in Figure 25 below.
 
@@ -489,7 +501,7 @@ image::Figure3-4-1-3.png[width="800"]
 The following is an exploration of possible alternative implementations, the various aspects of
 each implementation and the pros and cons of each implementation:
 
-===== Aspect: Implementation of `AddConditionCommand`
+===== Aspect: Implementation of `AddConditionCommand` and `DeleteConditionCommand`
 
 * **Alternative 1 (current choice):** Create a duplicate `Patient` and utilise `updatePerson` to replace the `Patient`
 ** Pros: Will be easy to implement due to existing utility methods.
@@ -500,15 +512,15 @@ each implementation and the pros and cons of each implementation:
 // end::addconditions[]
 
 // tag::addqremoveq[]
-=== Patient visiting queue (waiting list for registration)
+=== Patient visiting queue feature
 ==== Current Implementation
 
 The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
-It supports adding and removing a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
+It supports the adding and removing of a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
 
-The add patient into visiting queue mechanism functions like that of the `AddCommand` but uses only the index of the patient. It stores the actual index of the patient in the patient list.
+The addition mechanism functions like that of the `AddCommand` but uses only the index of the patient. It stores the actual index of the patient in the patient list.
 The user can find patients with certain keywords in their name using `FindCommand` then add them into queue according to the list index displayed.
-The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `Model`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update VisitingQueuePanel.
+The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `Model`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update `VisitingQueuePanel`.
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 3.4.1.1 below.
 
@@ -523,8 +535,8 @@ The updated queue is shown in the figure below.
 .The updated queue
 image::patientInQueue.png[width="800"]
 
-The remove patient from visiting queue mechanism functions like that of the `DeleteCommand`. If no parameters are provided, it removes the first patient of the queue.
-If the user wants to remove specific patient in the queue, the user can provide the patient index as parameter in the command.
+The removal mechanism functions like that of the `DeleteCommand`. If no parameters are provided, it removes the first patient of the queue.
+If the user wants to remove a specific patient in the queue, the user can provide the patient index as parameter in the command.
 The `RemovePatientQueueCommand` then calls for the utility method `removePatientFromQueue` under `Model`, to update the visiting queue and trigger an `IMDBChangedEvent` to `UI` to update the `VisitingQueuePanel`.
 
 Suppose that the queue contains patients as shown in the figure below.
@@ -548,43 +560,43 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
 
-* **Alternative 1 (current choice):** Using LinkedList as a queue to store the patient index only
+* **Alternative 1 (current choice):** Use LinkedList as a queue to store the patient index only
 ** Pros: Will be easy to implement due to existing utility methods.
-** Cons: May have utility limitation and have to take care how other commands affect the patient index in the list for example DeleteCommand
+** Cons: May have utility limitation and have to take care how other commands affect the patient index in the list for example DeleteCommand.
 * **Alternative 2:** Create a data structure class like linked list to store a patient in a queue
-** Pros: Can customise functionalities of the data structure.
+** Pros: Will be able to customise functionality of the data structure.
 ** Cons: Will require time and more knowledge to do.
 
 ===== Aspect: Implementation of `AddPatientQueueCommand`
 
-* **Alternative 1 (current choice):** Patient will only added at the back of the list
-** Pros: Easy to implement.
+* **Alternative 1 (current choice):** Only add the patient to the back of the list
+** Pros: Will be easy to implement.
 ** Cons: Does not allow user to add a patient in the position they want in the queue.
-* **Alternative 2:** Patient can be added in any position in the queue
+* **Alternative 2:** Add the patient to any position in the queue
 ** Pros: Will improve the functionality of AddPatientQueue command.
 ** Cons: Will require another implementation to add patient in the specified position in the queue.
 
 ===== Aspect: Implementation of `RemovePatientQueueCommand`
 
-* **Alternative 1 (current choice):** Patient can be removed from the queue regardless which position he or she is in the queue.
-** Pros: Easy to implement.
+* **Alternative 1 (current choice):** Remove the patient from the queue regardless of position
+** Pros: Will be easy to implement.
 ** Cons: Will be error prone since list index is flexible with the operation that user typed in.
-* **Alternative 2:** Patient can be removed from the queue by their NRIC
+* **Alternative 2:** Remove the patient from the queue using their NRIC
 ** Pros: Will remove any errors caused by removing a patient from the queue by their index.
 ** Cons: Will require extra checking and verification.
 // end::addqremoveq
 
 // tag::addqremoveappt[]
-=== Patient appointment
+=== Patient appointment feature
 ==== Current Implementation
 
 The patient appointment mechanism is facilitated by `Appointment`, `AppointmentEntry`, `DateTime`, `UniqueAppointmentEntryList`, `UniqueAppointmentList`, `AddAppointmentCommand`, `DeleteAppointmentCommand`, `ViewAppoinmentCommand`, `AddAppointmenetCommandParser`, `DeleteAppoinmentCommandParser` and `ViewAppointmentCommandParser`.
-It supports adding, deleting and viewing patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
+It supports the adding, deleting and viewing of patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
 
 The add new patient appointment mechanism functions like that of the `AddCommand` with patient index, date, and time as parameters.
-It creates a new appointment object with date time and stored in patient's list of appointments record.
-The user can find patients with certain keywords in patients' name using `FindCommand` then add a new appointment according to the list index displayed.
-The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model`, to add a new patient appointment and trigger an `IMDBChangedEvent` to the `UI` to update PatientAppointmentPanel or CalendarPanel.
+It creates a new appointment object with date and time and is stored in the patient's list of appointments.
+The user can find patients using the `FindCommand` and then add a new appointment according to the list index displayed.
+The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model` to add a new patient appointment and trigger an `IMDBChangedEvent` to the `UI` to update PatientAppointmentPanel or CalendarPanel.
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure below.
 
@@ -601,11 +613,11 @@ each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddAppointmentCommand and DeleteAppointmentCommand and viewAppointmentCommand
 
-* **Alternative 1 (current choice):** Using separate customised data structure to store appointment for particular patient and appointments for all patient to be displayed on the calendar panel
+* **Alternative 1 (current choice):** Use separate customised data structure to store appointments for patients and display appointments for all patient on the calendar panel
 ** Pros: Will be easy to implement due to existing utility methods.
-** Cons: May have redundant methods in both data structure
+** Cons: May have redundant methods in both data structure.
 * **Alternative 2:** Create a appointment superclass or interface and extends from it
-** Pros: Can customise functionalities of the data structure and get rid of redundant methods.
+** Pros: Will be able to customise functionality of the data structure and get rid of redundant methods.
 ** Cons: May not find similar behaviour between this two classes.
 
 ===== Aspect: Implementation of AddAppointmentCommand
@@ -692,7 +704,7 @@ Separation of Concerns as `Patient` now needs to do two different things.
 // end::record[]
 
 // tag::login[]
-=== Login system
+=== Login system feature
 ==== Current Implementation
 The action of logging into IMDB is facilitated by `LoginCommand` and the static class `LoginManager`, which also contains a static attribute of class `LoginState`.
 
@@ -759,7 +771,54 @@ each implementation and the pros and cons of each implementation:
 ** Cons: Will result in a visually unappealing document. Also, txt files do not support pictures, which might be needed in the future (e.g. for X-ray photos).
 // end::print[]
 
+// tag::displaydetails[]
+=== Display patient details feature
+==== Current Implementation
+
+The displaying of patient details mechanism is managed by `SelectCommand`.
+`SelectCommand` now shows the details of a patient rather than just a dummy page.
+This is achieved by modifying the `loadPersonPage` method within `BrowserPanel` like so:
+
+[source,java]
+----
+
+    public void loadPersonPage(Patient patient) {
+        this.patient = patient;
+        name.setText(patient.getName().fullName);
+        nric.setText("NRIC: " + patient.getNric().value);
+        phone.setText("Phone: " + patient.getPhone().value);
+        address.setText("Address: " + patient.getAddress().value);
+        dob.setText("Date of Birth: " + patient.getDob().value);
+        bloodType.setText("Blood Type: " + patient.getBloodType().value);
+        email.setText("Email: " + patient.getEmail().value);
+        remark.setText("Remarks: " + patient.getRemark().value);
+        recordList.setText("Records: " + patient.getRecordList().toString());
+
+        initTagLabels(patient);
+    }
+
+----
+
+The patient list also no longer displays all the details of patients for security reasons as well as to reduce clutter.
+
+==== Design Considerations
+
+The following is an exploration of possible alternative implementations, the various aspects of
+each implementation and the pros and cons of each implementation:
+
+===== Aspect: Implementation of `SelectCommand`
+
+* **Alternative 1 (current choice):** Modify the loadPersonPage method in the browserPanel class to fetch and display patient details
+** Pros: Will be secure as details are kept within the app.
+** Cons: Will have to rewrite how MainWindow and BrowserPanel works.
+* **Alternative 2:** Create a method to convert patient details to a html file, then simply load that html file using the existing functionality.
+** Pros: Will be easy to implement as we simply need a method to convert patient details to a html file.
+** Cons: Might be security issues as the html file is easily accessible from outside the app.
+// end::displaydetails[]
+
 === Logging
+
+This section details how we go about logging the application.
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
@@ -781,10 +840,10 @@ Certain properties of the application can be controlled (e.g App name, logging l
 
 == Documentation
 
-We use asciidoc for writing documentation.
+This section details the documentation process.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+For formatting, we chose asciidoc over Markdown because although asciidoc is a bit more complex than Markdown, it provides more flexibility in formatting.
 
 === Editing documentation
 
@@ -811,31 +870,34 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+This section describes the types of tests you can do, how you can test, and how you can troubleshoot should tests fail.
 
 === Running tests
 
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 1st one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
-*Method 1: Using IntelliJ JUnit test runner*
+*Method 1: Using Gradle (headless)*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-*Method 2: Using Gradle*
+To run tests in headless mode, you can do the following:
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
 
-*Method 3: Using Gradle (headless)*
+*Method 2: Using Gradle (non-headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+*Method 3: Using IntelliJ JUnit test runner*
+
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
 
 === Types of tests
 
@@ -860,6 +922,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+This section details the development process.
 
 === Build automation
 
@@ -887,11 +950,294 @@ Here are the steps to create a new release.
 
 === Managing dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, IMDB depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
+
+[[GetStartedProgramming]]
+[appendix]
+== Suggested Programming Tasks to Get Started
+
+Suggested path for new programmers:
+
+1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
+
+2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
+
+[[GetStartedProgramming-EachComponent]]
+=== Improving each component
+
+Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
+
+[discrete]
+==== `Logic` component
+
+*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
+
+[TIP]
+Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
+
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
++
+****
+* Hints
+** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
+** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
+* Solution
+** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
+** Add new tests for each of the aliases that you have added.
+** Update the user guide to document the new aliases.
+** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
+****
+
+[discrete]
+==== `Model` component
+
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+
+[TIP]
+Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
+
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
++
+****
+* Hints
+** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
+** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+* Solution
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
+** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
+** Add new tests for each of the new public methods that you have added.
+** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
+*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
+*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
+****
+
+[discrete]
+==== `Ui` component
+
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+
+[TIP]
+Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
+
+. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
++
+**Before**
++
+image::getting-started-ui-tag-before.png[width="300"]
++
+**After**
++
+image::getting-started-ui-tag-after.png[width="300"]
++
+****
+* Hints
+** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
+** Use the .css attribute `-fx-background-color` to add a color.
+** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
+* Solution
+** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
+** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
+*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
+****
+
+. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
++
+**Before**
++
+image::getting-started-ui-result-before.png[width="200"]
++
+**After**
++
+image::getting-started-ui-result-after.png[width="200"]
++
+****
+* Hints
+** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
+** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
+* Solution
+** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
+** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
+** You can write two different kinds of tests to ensure that the functionality works:
+*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
+*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
+** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
+*** Do read the commits one at a time if you feel overwhelmed.
+****
+
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
++
+**Before**
++
+image::getting-started-ui-status-before.png[width="500"]
++
+**After**
++
+image::getting-started-ui-status-after.png[width="500"]
++
+****
+* Hints
+** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+* Solution
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
+** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
+****
+
+[discrete]
+==== `Storage` component
+
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+
+[TIP]
+Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
+
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
++
+****
+* Hint
+** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
+** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
+* Solution
+** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
+****
+
+[[GetStartedProgramming-RemarkCommand]]
+=== Creating a new command: `remark`
+
+By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
+
+*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
+
+==== Description
+Edits the remark for a person specified in the `INDEX`. +
+Format: `remark INDEX r/[REMARK]`
+
+Examples:
+
+* `remark 1 r/Likes to drink coffee.` +
+Edits the remark for the first person to `Likes to drink coffee.`
+* `remark 1 r/` +
+Removes the remark for the first person.
+
+==== Step-by-step Instructions
+
+===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
+
+**Main:**
+
+. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
+
+**Tests:**
+
+. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
+. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
+
+===== [Step 2] Logic: Teach the app to accept 'remark' arguments
+Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
+
+**Main:**
+
+. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
+. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
+. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
+
+**Tests:**
+
+. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
+. Add `RemarkCommandParserTest` that tests different boundary values
+for `RemarkCommandParser`.
+. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
+
+===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+
+**Main:**
+
+. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
+. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
+
+**Tests:**
+
+. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
+
+===== [Step 4] Model: Add `Remark` class
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+
+**Main:**
+
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
+
+**Tests:**
+
+. Add test for `Remark`, to test the `Remark#equals()` method.
+
+===== [Step 5] Model: Modify `Person` to support a `Remark` field
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+
+**Main:**
+
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+
+===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
+We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
+
+**Main:**
+
+. Add a new Xml field for `Remark`.
+
+**Tests:**
+
+. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+
+===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
+Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+
+**Tests:**
+
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
+
+===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
+Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
+
+**Main:**
+
+. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
+
+**Tests:**
+
+. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
+
+===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
+We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
+
+**Main:**
+
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+
+**Tests:**
+
+. Update `RemarkCommandTest` to test that the `execute()` logic works.
+
+==== Full Solution
+
+See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+
+[appendix]
+
 == Product Scope
 
 *Target user profile*:
@@ -931,8 +1277,8 @@ b. Require developers to download those libraries manually (this creates extra w
 *** Manage patient details and health profile
 **** Medical staff can update patient details and information easily.
 ** Minor Feature:
-*** Filter that switches between showing personal details only, medical information only.
-**** Medical staff and doctors can reduce clutter on the screen and only see what is needed.
+*** Show details of patient in select panel only
+**** Medical staff and doctors can reduce clutter on the screen and only see the details of the patient in question.
 
 
 [appendix]
@@ -1212,6 +1558,71 @@ Use case ends
 .  Should be operable by a non-technical user without much difficulty
 .  Should be able to work in offline mode in case of emergencies
 
+[appendix]
+== Instructions for Manual Testing
+
+Given below are instructions to test the app manually.
+
+[NOTE]
+These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
+
+=== Launch and Shutdown
+
+. Initial launch
+
+.. Download the jar file and copy into an empty folder
+.. Double-click the jar file +
+   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+
+. Saving window preferences
+
+.. Resize the window to an optimum size. Move the window to a different location. Close the window.
+.. Re-launch the app by double-clicking the jar file. +
+   Expected: The most recent window size and location is retained.
+
+=== Login
+
+. Logging into IMDB as a doctor
+.. Type `login`
+.. A login window will be opened. In that window, type "alice" for the username field and "password123" for the password field. +
+Expected: IMDB shows successful login message, and all commands for doctor can be executed.
+. Logging into IMDB as a medical staff
+.. Type `login`
+.. A login window will be opened. In that window, type "bob" for the username field and "password456" for the password field. +
+Expected: IMDB shows successful login message, and all commands for doctor can be executed.
+
+=== Print
+
+. Printing a patient's medical records while all patients are listed.
+.. Prerequisites: List all patients using the `list` command, multiple patients in the list, first patient has some records.
+.. Test case: `print 1` +
+Expected: Medical records of first patient in the list is printed into a PDF, which is opened by a PDF-reading program.
+.. Test case: `print 0` +
+Expected: Nothing is printed. Error details shown in the status message.
+
+=== Add Conditions
+
+. Add conditions to a patient's list of medical conditions.
+.. Type `addc 1 c/aspirin c/asthma` +
+Expected: Aspirin and asthma are added to the list of conditions the first patient has, if it was not already in it.
+.. Type `addc 99999 c/peanuts` +
+Expected: Invalid index error is shown.
+
+=== Remove Conditions
+
+. Remove conditions from a patient's list of medical conditions.
+.. Type `delc 1 c/aspirin c/asthma` +
+Expected: Aspirin and asthma are removed from the list of conditions the first patient has, if it was in it.
+.. Type `delc 99999 c/peanuts` +
+Expected: Invalid index error is shown.
+
+=== Select
+
+. Selects a patient from the current patient list and displays his or her details.
+.. Type `select 1` +
+Expected: The first patient in the list is selected and his or her details displayed in the right panel.
+.. Type `select 9999` +
+Expected: Invalid index error is shown.
 
 [appendix]
 == Glossary

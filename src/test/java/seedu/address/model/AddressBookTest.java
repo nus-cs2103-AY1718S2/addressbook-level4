@@ -16,6 +16,8 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
 
@@ -50,7 +52,8 @@ public class AddressBookTest {
         // Repeat ALICE twice
         List<Person> newPersons = Arrays.asList(ALICE, ALICE);
         List<Tag> newTags = new ArrayList<>(ALICE.getTags());
-        AddressBookStub newData = new AddressBookStub(newPersons, newTags);
+        List<Insurance> newInsurances = new ArrayList<>(ALICE.getInsurance());
+        AddressBookStub newData = new AddressBookStub(newPersons, newTags, newInsurances);
 
         thrown.expect(AssertionError.class);
         addressBook.resetData(newData);
@@ -68,16 +71,33 @@ public class AddressBookTest {
         addressBook.getTagList().remove(0);
     }
 
+    //@@author Sebry9
+    @Test
+    public void getGroupList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getGroupList().remove(0);
+    }
+
+    //@@author Sebry9
+    @Test
+    public void getInsuranceList_modifyList_throwsUnsupportedOperationException() {
+        thrown.expect(UnsupportedOperationException.class);
+        addressBook.getInsuranceList().remove(0);
+    }
+
     /**
-     * A stub ReadOnlyAddressBook whose persons and tags lists can violate interface constraints.
+     * A stub ReadOnlyAddressBook whose persons, tags lists and insurances list can violate interface constraints.
      */
     private static class AddressBookStub implements ReadOnlyAddressBook {
         private final ObservableList<Person> persons = FXCollections.observableArrayList();
         private final ObservableList<Tag> tags = FXCollections.observableArrayList();
-
-        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags) {
+        private final ObservableList<Group> groups = FXCollections.observableArrayList();
+        private final ObservableList<Insurance> insurances = FXCollections.observableArrayList();
+        AddressBookStub(Collection<Person> persons, Collection<? extends Tag> tags,
+                        Collection<? extends Insurance> insurances) {
             this.persons.setAll(persons);
             this.tags.setAll(tags);
+            this.insurances.setAll(insurances);
         }
 
         @Override
@@ -88,6 +108,16 @@ public class AddressBookTest {
         @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ObservableList<Group> getGroupList() {
+            return groups;
+        }
+
+        @Override
+        public ObservableList<Insurance> getInsuranceList() {
+            return insurances;
         }
     }
 

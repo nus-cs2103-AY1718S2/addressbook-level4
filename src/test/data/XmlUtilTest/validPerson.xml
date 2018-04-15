@@ -4,5 +4,9 @@
     <phone>9482424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <birthday>09-12-1994</birthday>
+    <appointment>09-12-1994</appointment>
+    <group>PRIORITY</group>
+    <insurances>Health</insurances>
     <tagged>friends</tagged>
 </person>

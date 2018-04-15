@@ -1,5 +1,6 @@
 package seedu.address;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Map;
 import java.util.Optional;
@@ -17,6 +18,8 @@ import seedu.address.commons.core.Version;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.ConfigUtil;
+import seedu.address.commons.util.EncryptionUtil;
+import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
@@ -25,6 +28,8 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.calendar.GoogleCalendar;
+import seedu.address.model.calendar.GoogleCalendarInit;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
@@ -40,7 +45,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -84,6 +89,7 @@ public class MainApp extends Application {
      * Returns a {@code ModelManager} with the data from {@code storage}'s address book and {@code userPrefs}. <br>
      * The data from the sample address book will be used instead if {@code storage}'s address book is not found,
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
+     * Data remains encrypted if a password is set.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
@@ -92,16 +98,35 @@ public class MainApp extends Application {
             addressBookOptional = storage.readAddressBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
+                initGoogleCalendar();
             }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initGoogleCalendar();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initGoogleCalendar();
+        }
+        GoogleCalendar googleCalendar = new GoogleCalendar();
+        try {
+            googleCalendar.getCalendarId();
+        } catch (IOException e) {
+            logger.warning("Problem while reading Id from the file. Will be creating new google calendar");
+            initGoogleCalendar();
         }
 
+        File file = new File(userPrefs.getPasswordFilePath());
+        try {
+            if (FileUtil.isPassExists(file)) {
+                File book = new File(userPrefs.getAddressBookFilePath());
+                EncryptionUtil.encrypt(book);
+            }
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the password file");
+        }
         return new ModelManager(initialData, userPrefs);
     }
 
@@ -181,6 +206,25 @@ public class MainApp extends Application {
         EventsCenter.getInstance().registerHandler(this);
     }
 
+    //@@author cambioforma
+    /**
+     * Initialises Google Calendar Settings for {@code BrowserPanel}
+     */
+    private void initGoogleCalendar() {
+        GoogleCalendar calendar = new GoogleCalendar();
+        try {
+            calendar.getCalendarId();
+            calendar.resetCalendar();
+            logger.info("Reinitialised a new Google Calendar");
+        } catch (IOException e) {
+            try {
+                GoogleCalendarInit.init();
+            } catch (IOException ex) {
+                logger.severe("Failed to initialise Google Calendar");
+            }
+        }
+    }
+
     @Override
     public void start(Stage primaryStage) {
         logger.info("Starting AddressBook " + MainApp.VERSION);
@@ -197,6 +241,13 @@ public class MainApp extends Application {
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
         Platform.exit();
+        try {
+            UserPrefs userPrefs = new UserPrefs();
+            File file = new File(userPrefs.getAddressBookFilePath());
+            EncryptionUtil.encrypt(file);
+        } catch (IOException ioe) {
+            logger.warning("File not found" + ioe.getMessage());
+        }
         System.exit(0);
     }
 

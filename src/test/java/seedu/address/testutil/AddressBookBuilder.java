@@ -2,6 +2,7 @@ package seedu.address.testutil;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
@@ -43,6 +44,19 @@ public class AddressBookBuilder {
             addressBook.addTag(new Tag(tagName));
         } catch (IllegalValueException ive) {
             throw new IllegalArgumentException("tagName is expected to be valid.");
+        }
+        return this;
+    }
+
+    /**
+     * Parses {@code insuranceName} into a {@code Insurance} and adds it to the {@code AddressBook} that we
+     * are building.
+     */
+    public AddressBookBuilder withInsurance(String insuranceName) {
+        try {
+            addressBook.addInsurance(new Insurance(insuranceName));
+        } catch (IllegalValueException ive) {
+            throw new IllegalArgumentException("insuranceName is expected to be valid.");
         }
         return this;
     }

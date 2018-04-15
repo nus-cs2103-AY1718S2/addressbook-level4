@@ -1,5 +1,6 @@
 package seedu.address.ui;
 
+import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -18,6 +19,8 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -180,6 +183,20 @@ public class MainWindow extends UiPart<Stage> {
     private void handleExit() {
         raise(new ExitAppRequestEvent());
     }
+
+    //@@author daviddalmaso
+    /**
+     * Clears the reInsurance data
+     */
+    @FXML
+    private void handleClear() {
+        try {
+            logic.execute("clear");
+        } catch (CommandException | ParseException e) {
+            logger.log(Level.WARNING, "Unable to clear the reInsurance data");
+        }
+    }
+    //@@author
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;

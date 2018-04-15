@@ -49,6 +49,11 @@ public class DateTimeSchedulerTest {
         }
 
         @Override
+        public void clearActivities(String activityTypeToClear) {
+
+        }
+
+        @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
 
         }

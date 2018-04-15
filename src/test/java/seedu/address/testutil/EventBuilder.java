@@ -76,6 +76,17 @@ public class EventBuilder implements ActivityBuilder {
         return this;
     }
 
+    //@@author Kyomian
+    /**
+     * Overloaded method.
+     * Sets the {@code Remark} of the {@code Activity} to null.
+     */
+    public EventBuilder withRemark() {
+        this.remark = null;
+        return this;
+    }
+
+    //@@author YuanQLLer
     /**
      * Sets the {@code DateTime} of the {@code Activity} that we are building.
      */
@@ -95,12 +106,21 @@ public class EventBuilder implements ActivityBuilder {
     /**
      * Sets the {@code Location} of the {@code Activity} that we are building.
      */
-    public EventBuilder withLocation (String location) {
+    public EventBuilder withLocation(String location) {
         this.location = new Location(location);
         return this;
     }
 
     //@@author Kyomian
+    /**
+     * Overloaded method.
+     * Sets the {@code Location} of the {@code Activity} to null.
+     */
+    public EventBuilder withLocation() {
+        this.location = null;
+        return this;
+    }
+
     public Event build() {
         return new Event(name, startDateTime, endDateTime, location, remark, tags);
     }

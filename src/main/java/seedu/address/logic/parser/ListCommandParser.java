@@ -7,7 +7,6 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 //@@author jasmoon
-
 /**
  * Parses input arguments and create a new ListCommand object.
  */

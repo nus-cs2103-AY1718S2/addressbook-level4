@@ -50,7 +50,7 @@ having to leave the application. This provides convenience to the user. In addit
 ** Community:
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W09-B4/main/issues/164, https://github.com/CS2103JAN2018-W09-B4/main/issues/159)
 ** Tools:
-*** Integrated a third party library (https://fixer.io/[Fixer]) to the project (https://fixer.io/[#42])
+*** Integrated a third party library (https://fixer.io/[Fixer]) to the project
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/jill858.md[Functional code]] [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/jill858.md[Test code]]
 

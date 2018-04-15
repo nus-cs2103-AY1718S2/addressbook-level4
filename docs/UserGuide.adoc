@@ -63,7 +63,23 @@ Format: `help`, Alias: `h`
 [TIP]
 The help page can be accessed by moving the mouse over `Help` section of the navigation bar then clicking `Help`. The help page can also be accessed by pressing `F1` on the keyboard.
 
-// tag::add[]
+// tag::alias[]
+=== Alias of commands [Since V1.2]
+** Most of the common commands that are often used is tagged with an "Alias: " note. +
+
+** If the features do not display any alias, it can be assumed to have none.
+
+[TIP]
+Alias feature can be easily used by replacing current command word with the alias
+
+Examples: +
+
+* `a n/Jeremy p/82286918 e/sebry9@gmail.com a/427, Yishun Ave 11 b/09-07-1995`
+
+* `e 1 i/General[200]`
+
+// end::alias[]
+
 === Adding a person: `add`
 
 Adds a person to reInsurance +
@@ -75,8 +91,9 @@ Dates are in the format dd-mm-yyyy
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 d/05-05-2018 g/PRIORITY t/friends i/Health`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal i/General `
+* `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 d/05-05-2018 g/PRIORITY t/friends i/Health[30]`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/29-10-1992 g/friends t/criminal i/General`
+// end::add[]
 
 // tag::insurance[]
 ==== Adding an insurance: Prefix: "i/"
@@ -109,7 +126,7 @@ Format: `list` Alias: `l`
 // tag::count[]
 === View number of persons : `count`
 
-Returns the number of clients stored in the reInsurance application
+Returns the number of clients stored in the reInsurance application. +
 Format: `count`
 
 // end::count[]
@@ -138,6 +155,7 @@ Edits the name of the 2nd person to be `Betsy Crower` and clears all existing ta
 
 [TIP]
 Clearing the application can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
+// end::edit[]
 
 === Locating persons by name: `find`
 
@@ -179,6 +197,7 @@ Examples:
 Returns any person having tag `Friends`
 * `find Friends Colleagues Neighbours` +
 Returns any person having tags `Friends`, `Colleagues`, or `Neighbours`
+// end::findtag[]
 
 === Deleting a person : `delete`
 
@@ -296,7 +315,7 @@ Format: `clear` Alias: `c`
 [TIP]
 Clearing all entries from reInsurance can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
-// tag::export[]
+// tag::exportData[]
 === Export data : `export`
 
 Exports the data from the specified export type: `calendar` or `portfolio` (case insensitive). +
@@ -304,6 +323,15 @@ Format: `export EXPORT_TYPE`
 
 Exports the portfolio to a specified export location. +
 Format `export portfolio FILENAME`.
+
+[NOTE]
+====
+* Coming in v2.0, there will be more options on the types of data to export.
+* As of v1.5, the application handles the command for the portfolio and calendar.
+* Default destination file is at `portfolio.csv` for the `export portfolio` command.
+* The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
+* Coming in v2.0, the user will be able to specify what the created calendar is called.
+====
 
 Examples:
 
@@ -319,16 +347,7 @@ image::calendar_access.png[width="600"]
 Exports the data in the portfolio to a `portfolio.csv` file.
 * `export portfolio my_data` +
 Exports the data in the portfolio to a `my_data.csv` file.
-
-[NOTE]
-====
-* Coming in v2.0, there will be more options on the types of data to export.
-* As of v1.5, the application handles the command for the portfolio and calendar.
-* Default destination file is at `portfolio.csv` for the `export portfolio` command.
-* The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
-* Coming in v2.0, the user will be able to specify what the created calendar is called.
-====
-// end:export[]
+// end::exportData[]
 
 // tag::group[]
 === Group entries : `group`
@@ -392,10 +411,19 @@ Replace files in library with Java Cryptography Extension (JCE) Unlimited Streng
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous reInsurance folder.
 
+// tag::sebryFAQ[]
+*Q*: How do I delete an insurance tagged to a Client? +
+*A*: Use the edit command, e.g `edit 1 i/` It is possible to edit current insurance plan with the same function too.
+
+*Q*: Are there any restriction for the type of Insurance plan? +
+*A*: No, as the current market have countless type of insurance plan, and a the same time our product aim to be rigid against future addition of insurance plan, insurance type is thus not restricted as long as it is alpha numeric.
+// end::sebryFAQ[]
+
+
 == Command Summary
 
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/09-09-1995 t/friend t/colleague`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 b/09-09-1995 t/friend t/colleague i/Health[30]`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -403,6 +431,8 @@ e.g. `delete 3`
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Findtag* : `findtag TAG` +
+e.g. `findtag friends`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
@@ -410,7 +440,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Export* : `export`
+* *Count* : `count`
+* *Export* : `export` +
+e.g. `export portfolio`
 * *Sort* : `sort`
 * *Group* : `group` +
 e.g. `group priority`

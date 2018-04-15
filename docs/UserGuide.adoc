@@ -41,7 +41,8 @@ Do take note of the following colours and their representation, as they will be 
 image::colours.png[width="200"]
 
 {empty} +
-If you have already set up Medeina, head on to <<CLI>>. If you are already familiarize with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
+If you have already set up Medeina, head on to <<CLI>>. +
+If you are already familiar with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
 
 {empty} +
 
@@ -98,19 +99,20 @@ a| * Options are used in `add`, `edit`, `find`, `delete` and `listappt` commands
 
 .^a|Index
 | `1`, `2`, any number
-a| * Index is used in `edit` and `delete` commands.
-* Index is used to refer to a particular contact, pet patient or appointment you would like to  `edit` or `delete`.
+a| * Index is used to refer to a particular contact, pet patient or appointment that you would like to `edit` or `delete`.
 * Please refer to figure 1 to find out where indexes are found.
 
 .^a|Prefixes
 | `n/`, `p/`, `nr/`, `e/`, `s/`, `t/`
-a| * Prefix marks the start of a parameter.
-* Indicate the type of parameter expected by Medeina e.g. `nr/` will expect NRIC as parameter, and `e/` will expect an email address as parameter.
+a| * Prefixes mark the start of parameters.
+* They indicate the type of parameter expected by Medeina e.g. `nr/` will expect NRIC as parameter, and `e/` will expect an email address as parameter.
 
 .^a|Parameters
-| In `nr/NRIC`, `NRIC` represents the parameter
-a| * Values supplied by you
-* Parameters are represented by words in upper case.
+| `Persian`, `ginger`, `asthma` +
+ +
+In `nr/NRIC`, `NRIC` represents the parameter
+a| * Parameters are values supplied by the user.
+* They are represented by words in upper case.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 
 .^a|Tag

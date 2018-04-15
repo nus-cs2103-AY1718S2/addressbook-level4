@@ -340,7 +340,7 @@ Example: `add-log 2 log\Today the patient reported he was feeling unwell ... ...
 ==== Delete a existing session report: `delete-log` [Coming in v2.0]
 Deletes a particular report/log from a person.
 
-==== Edit a new session report: `delete-log` [Coming in v2.0]
+==== Edit a new session report: `edit-log` [Coming in v2.0]
 Edits particular report/log entries from a person.
 
 // end::sessionlog[]

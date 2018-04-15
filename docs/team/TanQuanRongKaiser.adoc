@@ -81,5 +81,6 @@ include::../DeveloperGuide.adoc[tag=authentication]
 
 include::../DeveloperGuide.adoc[tag=dataencryption]
 
-include::../DeveloperGuide.adoc[tag=kaiserUseCases[]]
+include::../DeveloperGuide.adoc[tag=kaiserUseCases]
 
+include::../DeveloperGuide.adoc[tag=kaiserManualTests]

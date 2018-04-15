@@ -30,6 +30,9 @@ public class ChangeUserPasswordCommand extends Command {
     private final Password newPassword;
 
     public ChangeUserPasswordCommand(Username username, Password password, Password newPassword) {
+        requireNonNull(username);
+        requireNonNull(password);
+        requireNonNull(newPassword);
         this.username = username;
         this.password = password;
         this.newPassword = newPassword;

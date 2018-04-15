@@ -29,6 +29,8 @@ public class DeleteUserCommand extends Command {
     private final Password password;
 
     public DeleteUserCommand(Username username, Password password) {
+        requireNonNull(username);
+        requireNonNull(password);
         this.username = username;
         this.password = password;
     }

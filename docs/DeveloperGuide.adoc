@@ -735,11 +735,11 @@ A HtmlWriter gathers data on the particular Person using the getter methods avai
 Both `Customer` and `Runner` will have the fields: name, phone, email, address.
 Fields exclusively for the `Customer` are: amount borrowed, amount owed, due date, and runner assigned.
 
-image::BrowserPanelCustomer.PNG[width="800"]
+image::BrowserPanelCustomer.png[width="600"]
 
 Fields exclusively for the `Runner` are: a list of customers assigned to the specified runner.
 
-image::BrowserPanelRunner.PNG[width="800"]
+image::BrowserPanelRunner.png[width="600"]
 
 The BrowserPanel then displays this HTML file.
 The background and font colors are matched to the HuatAh! application.

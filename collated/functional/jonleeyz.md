@@ -71,10 +71,7 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " " + PREFIX_TYPE + "  " + PREFIX_NAME + "  "
-                + PREFIX_PHONE + "  " + PREFIX_EMAIL + "  " + PREFIX_ADDRESS + "  "
-                + PREFIX_OWESTARTDATE + "  " + PREFIX_OWEDUEDATE + "  "
-                + PREFIX_MONEYOWED + "  " + PREFIX_INTEREST + "  " + PREFIX_TAG + " ";
+        return COMMAND_TEMPLATE;
     }
 
     @Override
@@ -103,7 +100,7 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " ";
+        return COMMAND_TEMPLATE;
     }
 
     @Override
@@ -125,12 +122,12 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " ";
+        return COMMAND_TEMPLATE;
     }
 
     @Override
     public int getCaretIndex() {
-        return getTemplate().length();
+        return (COMMAND_WORD + " ").length();
     }
 
     @Override
@@ -147,7 +144,7 @@ public class PopulatePrefixesRequestEvent extends BaseEvent {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " -";
+        return COMMAND_TEMPLATE;
     }
 
     @Override
@@ -245,7 +242,7 @@ public interface PopulatableCommand {
 
     @Override
     public String getTemplate() {
-        return COMMAND_WORD + " ";
+        return COMMAND_TEMPLATE;
     }
 
     @Override
@@ -311,6 +308,79 @@ public interface PopulatableCommand {
 ```
 ###### \java\seedu\address\ui\CommandBox.java
 ``` java
+    /**
+     * Removes the current {@code field} or {@code prefix}.
+     */
+    private void clearCurrentFieldOrPrefix() {
+        int currentCaretPosition = commandTextField.getCaretPosition();
+        int lastPrefixPosition = getPreviousPrefixPosition(currentCaretPosition);
+
+        // clearing the current field or prefix
+        String stringLiteralUpToPrefix = commandTextField.getText().substring(0, lastPrefixPosition);
+        String stringLiteralAfterCaret = commandTextField.getText().substring(currentCaretPosition);
+        String newCommandBoxText = stringLiteralUpToPrefix + stringLiteralAfterCaret;
+        commandTextField.setText(newCommandBoxText);
+        commandTextField.positionCaret(lastPrefixPosition);
+    }
+
+    /**
+     * Positions the caret after the last {@code prefix}.
+     */
+    private void moveToPreviousPrefix() {
+        int currentCaretPosition = commandTextField.getCaretPosition();
+        int newCaretPosition = getPreviousPrefixPosition(currentCaretPosition);
+        commandTextField.positionCaret(newCaretPosition);
+    }
+
+    /**
+     * Positions the caret after the next {@code prefix}.
+     */
+    private void moveToNextPrefix() {
+        int currentCaretPosition = commandTextField.getCaretPosition();
+        int newCaretPosition = getNextPrefixPosition(currentCaretPosition);
+        commandTextField.positionCaret(newCaretPosition);
+    }
+
+    private int getPreviousPrefixPosition(int currentCaretPosition) {
+        // find last prefix position
+        int previousPrefixPosition = commandTextField.getText().lastIndexOf(":", currentCaretPosition);
+
+        // if last prefix is too close to caret, find the second last prefix position
+        if (currentCaretPosition - previousPrefixPosition < 3) {
+            previousPrefixPosition = commandTextField.getText().lastIndexOf(":", previousPrefixPosition - 1);
+        }
+
+        // set new caret position to be in front of chosen prefix. If prefix not found, then set at index 0.
+        int newCaretPosition = previousPrefixPosition != -1 ? previousPrefixPosition + 1 : 0;
+
+        // check for space in front of last prefix. If present, move forward one more index.
+        if (commandTextField.getText().substring(newCaretPosition, newCaretPosition + 1).equals(" ")) {
+            newCaretPosition += 1;
+        }
+
+        return newCaretPosition;
+    }
+
+    private int getNextPrefixPosition(int currentCaretPosition) {
+        // find next prefix position
+        int nextPrefixPosition = commandTextField.getText().indexOf(":", currentCaretPosition);
+        int newCaretPosition;
+
+        // set new caret position to be in front of chosen prefix. If prefix not found, then set at last index.
+        if (nextPrefixPosition != -1) {
+            newCaretPosition = nextPrefixPosition + 1;
+
+            // check for space in front of last prefix. If present, move forward one more index.
+            if (commandTextField.getText().substring(newCaretPosition, newCaretPosition + 1).equals(" ")) {
+                newCaretPosition += 1;
+            }
+        } else {
+            newCaretPosition = commandTextField.getText().length();
+        }
+
+        return newCaretPosition;
+    }
+
     /**
      * Handles the event where a valid keyboard shortcut is pressed
      * to populate the CommandBox with command prefixes,

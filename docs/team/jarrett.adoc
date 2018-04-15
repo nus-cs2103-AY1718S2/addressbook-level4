@@ -4,11 +4,10 @@
 
 == PROJECT: CLIndar
 
----
-
 == Overview
 
-CLIndar is a desktop application that helps university computing students to manage their tasks and events. The user interacts with it using a CLI. It has a GUI created with JavaFX, and is written in Java.
+CLIndar is a desktop application that helps university computing students manage their tasks and events. The user interacts with it via a Command-Line Interface. Most of the application is written in Java, and its
+GUI is written using JavaFX.
 
 == Summary of contributions
 
@@ -27,30 +26,37 @@ with the rest of the system.
 ** What it does: Parses the datetimes of tasks and events provided by the user and stores them as LocalDateTime objects. Formats the datetimes for display in the UI.
 ** Justification: The datetimes are stored as LocalDateTime objects, so that they can be used more easily by other features in CLIndar, such as overdue, which requires comparing between datetimes.
 
-* *Code contributed*: [https://github.com[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/functional/Kyomian.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/test/Kyomian.md[Test code]]
 
 * *Other contributions*:
 
 ** Project management:
 *** Set up the team repo and added Travis GI, AppVeyor and Coveralls to manage incoming Pull Requests.
 *** Set up a new Project in team repo to manage and classify user stories according to their importance.
-*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub.
-
-** Enhancements to existing features:
-*** To be continued.
+*** Managed releases `v1.3` - `v1.4` (2 releases) on GitHub.
 
 ** Documentation:
 *** Wrote the AboutUs: https://github.com/CS2103JAN2018-W13-B3/main/pull/62/files[Pull Request #62]
 *** Wrote the basic outline of User Guide: https://github.com/CS2103JAN2018-W13-B3/main/pull/52[Pull Request #52]
 
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-
+*** Reported bugs and suggestions for other teams in the class: https://github.com/CS2103JAN2018-T15-B2/main/issues/89[Pull Request #89], https://github.com/CS2103JAN2018-T15-B2/main/issues/96[Pull Request #96], https://github.com/CS2103JAN2018-T15-B2/main/issues/99[Pull Request #99]
 
 == Contributions to the User Guide
 
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=introduction]
+include::../UserGuide.adoc[tag=getstarted]
+include::../UserGuide.adoc[tag=taskevent]
+
 == Contributions to the Developer Guide
 
----
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=overdue]
 

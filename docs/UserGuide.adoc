@@ -15,6 +15,7 @@ endif::[]
 
 By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+// tag::introduction[]
 == Introduction
 
 CLIndar is a desktop application that helps university computing students manage their tasks and events, such as:
@@ -27,7 +28,9 @@ CLIndar is **Command-Line Interface (CLI)** based  and uses **Linux-style comman
 CLIndar is faster and provides more convenience for computing students.
 
 The current version of CLIndar is 1.5 and is available on Windows and Linux.
+// end::introduction[]
 
+// tag::getstarted[]
 == Get Started
 
 To start using CLIndar, follow the instructions below:
@@ -58,7 +61,7 @@ Some example commands you can try:
 * *`exit`* : exits the app.
 
 Refer to <<Features>> for details of commands in CLIndar.
-
+// end::getstarted[]
 [[Features]]
 == Features
 
@@ -90,6 +93,7 @@ Shows the help menu for all of the commands or only the `COMMAND_WORD` requested
 * `man task`
 * `help man`
 // end::helpcommand[]
+// tag::taskevent[]
 === Adding a task: `task` `[As of  v1.2]`
 
 Adds a task to Desk Board.
@@ -119,7 +123,7 @@ or dd/mm/yy hh:mm
 
 * `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
 * `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
-
+// end::taskevent[]
 
 // tag::edit[]
 === Edit a task: `edit task` `[As of v1.5]`

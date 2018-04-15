@@ -1341,6 +1341,20 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
+=== Adding a person
+
+. Adding a person with the new parameters Birthday and Timetable
+
+.. Prerequisites: Valid NUSMods link
+.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY` +
+.. Expected: Successfully added
+.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/ojGeu` +
+.. Expected: Not added. As timetable is not considered unique
+.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/`
+.. Expected: Successfully added with a empty timetable
+.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/32011995 tt/`
+.. Expected: Not added. Invalid birthday day.
+
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1361,6 +1375,40 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: Application opens with an address book with dummy data.
 .. Test case: Corrupt `addressbook.xml` by editing it +
    Expected: Application opens with an address book with empty data.
+
+=== Birthdays function
+
+. Using the `birthdays` and `birthdays today` function
+
+.. Prerequisites: Multiple persons in ST
+.. Test case: `birthdays` +
+.. Expected: Birthday list appears at the main window, containing the birthdays of your persons ordered by day and month
+.. Prerequisites: Sufficiently large amount of persons in ST to exceed the window size of ST
+.. Test case: `birthdays` +
+.. Expected: Birthday list is scrollable, showing the full birthday list
+.. Prerequisites: Empty ST
+.. Test case: `birthdays` +
+.. Expected: Empty white list
+.. Prerequisites: One person with a birthday today
+.. Test case: `birthdays today` +
+.. Expected: Only that person appears in the notification window
+.. Prerequisites: Zero persons with birthdays today
+.. Test case: `birthdays today` +
+.. Expected: The notification window shows "No one is celebrating their birthdays today"
+
+=== TimetableUnion function
+
+. Using the `timetableUnion` function when all persons are listed.
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list. Indexes are valid
+.. Test case: `union Odd 1 2` +
+.. Expected: The union of the odd timetables of Person at Index 1 and 2 appears at the main window
+.. Test case: `union Odd 1 2 4` +
+.. Expected: The union of the odd timetables of Person at Index 1, 2 and 4 appears at the main window
+.. Test case: `union Odd 0 2 4` +
+.. Expected: Invalid index. Error details will be shown in the result display
+.. Test case: `union Odd 1 2     4` +
+.. Expected: Too many whitespaces between indexes. Error details will be shown in the result display
 
 === Importing a file
 
@@ -1413,6 +1461,7 @@ These instructions only provide a starting point for testers to work on; testers
 .. Other incorrect upload commands to try: `upload`, `upload filename   password  ` (notice the spaces) +
    Expected: Invalid command error message will be shown
 
+=======
 === Finding vacant rooms
 
 . Finding vacant rooms

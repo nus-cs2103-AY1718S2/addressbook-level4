@@ -1,5 +1,5 @@
 # Caijun7-reused
-###### \java\seedu\address\model\AddressBookTest.java
+###### /java/seedu/address/model/AddressBookTest.java
 ``` java
     @Test
     public void updatePerson_detailsChanged_personsAndTagsListUpdated() throws Exception {
@@ -28,7 +28,7 @@
         assertEquals(expectedAddressBook, addressBookWithAmyAndBob);
     }
 ```
-###### \java\seedu\address\model\ModelManagerTest.java
+###### /java/seedu/address/model/ModelManagerTest.java
 ``` java
     @Test
     public void removeTag_tagNotInUsed_addressBookUnchanged() throws Exception {

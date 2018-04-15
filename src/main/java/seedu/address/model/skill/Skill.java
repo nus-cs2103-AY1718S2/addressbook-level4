@@ -9,7 +9,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Skill {
 
-    public static final String MESSAGE_SKILL_CONSTRAINTS = "Skill name can take any values, and it not contain spaces";
+    public static final String MESSAGE_SKILL_CONSTRAINTS = "Skill name can take any values, but it not contain spaces";
     public static final String SKILL_VALIDATION_REGEX = "^[^\\s]+$";
 
     public final String skillName;

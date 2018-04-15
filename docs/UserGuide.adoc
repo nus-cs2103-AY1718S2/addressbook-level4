@@ -874,16 +874,13 @@ For example, type in: `Hist A1` *not* `History A1`
 
 * The following subjects can be assigned to students but cannot be contributed to the results: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
 
-*Q*: What is CCA and CCA score? +
-*A*:
-CCA stands for Co-Curricular Activities. It functions as a non-academic activity where students can have a more enriching experience in school. Find out more by clicking https://www.moe.gov.sg/education/programmes/co-curricular-activities[here]. +
+*Q*: What is CCA? +
+*A*: CCA stands for Co-Curricular Activities. It functions as a non-academic activity where students can have a more enriching experience in school. Find out more by clicking https://www.moe.gov.sg/education/programmes/co-curricular-activities[here]. +
 
-CCA score is used as an indicator of the students' contribution in the non-academic aspect, and can be used to improve the students' streaming score.
-For more information about CCA score, click https://www.moe.gov.sg/docs/default-source/document/education/programmes/co-curricular-activities/leaps-2.pdf[here] to find out more.
-
-*Q*: What is LEAPS? +
-*A*: It stands for Leadership, Enrichment, Achievement, Participation, and Service. It is a grading system for the schools to determine the CCA score for each student. +
-For more information about LEAPS, please click https://www.moe.gov.sg/docs/default-source/document/education/programmes/co-curricular-activities/leaps-2.pdf[here]
+*Q*: What is NRIC? +
+*A*: It stands for National Registration Identity Card, and it is an identification document for the residents in Singapore.
+The `NRIC` that we are referring to in the _EduBuddy_ refers to the unique identification number that comes with each `NRIC`.
+Please visit https://www.ica.gov.sg/[this website] for more details.
 
 *Q*: What comprises the post-secondary education? +
 *A*: There are many different platforms of post-secondary education. We are currently focusing on Polytechnics and Junior Colleges.

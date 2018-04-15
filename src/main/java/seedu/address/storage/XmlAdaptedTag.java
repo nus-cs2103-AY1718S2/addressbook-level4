@@ -1,6 +1,6 @@
 package seedu.address.storage;
 
-import javax.xml.bind.annotation.XmlValue;
+import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.tag.Tag;
@@ -10,8 +10,12 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedTag {
 
-    @XmlValue
-    private String tagName;
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Tag's %s field is missing!";
+
+    @XmlElement (required = true)
+    private String name;
+    @XmlElement
+    private String color;
 
     /**
      * Constructs an XmlAdaptedTag.
@@ -20,10 +24,19 @@ public class XmlAdaptedTag {
     public XmlAdaptedTag() {}
 
     /**
-     * Constructs a {@code XmlAdaptedTag} with the given {@code tagName}.
+     * Constructs a {@code XmlAdaptedTag} with the given {@code name} and color undefined.
      */
-    public XmlAdaptedTag(String tagName) {
-        this.tagName = tagName;
+    public XmlAdaptedTag(String name) {
+        this.name = name;
+        this.color = "undefined";
+    }
+
+    /**
+     * Constructs a {@code XmlAdaptedTag} with the given {@code name} and {@code color}.
+     */
+    public XmlAdaptedTag(String name, String color) {
+        this.name = name;
+        this.color = color;
     }
 
     /**
@@ -32,7 +45,8 @@ public class XmlAdaptedTag {
      * @param source future changes to this will not affect the created
      */
     public XmlAdaptedTag(Tag source) {
-        tagName = source.tagName;
+        name = source.name;
+        color = source.color;
     }
 
     /**
@@ -41,10 +55,19 @@ public class XmlAdaptedTag {
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
     public Tag toModelType() throws IllegalValueException {
-        if (!Tag.isValidTagName(tagName)) {
+        if (this.name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Name"));
+        }
+        if (!Tag.isValidTagName(name)) {
             throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
         }
-        return new Tag(tagName);
+        if (this.color == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, "Color"));
+        }
+        if (!Tag.isValidTagColor(color)) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_COLOR_CONSTRAINTS);
+        }
+        return new Tag(name, color);
     }
 
     @Override
@@ -57,6 +80,6 @@ public class XmlAdaptedTag {
             return false;
         }
 
-        return tagName.equals(((XmlAdaptedTag) other).tagName);
+        return name.equals(((XmlAdaptedTag) other).name) && color.equals(((XmlAdaptedTag) other).color);
     }
 }

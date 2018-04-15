@@ -1,0 +1,539 @@
+= Jason Leo - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: added *group* feature
+** What it does: It allows users to create a group class, which allows users to add members to the group, delete members from the group abd list them out and delete the group.
+** Justification: This feature allows the user to keep track of members of a certain group project , which allows him to find the person of contact quickly and more easily. It also helps users to better manage members of his group project.
+** Highlights: This enhancement adds many new commands to make the application more convenient for the users to organise their groups. It required an in-depth analysis of model and logic component. The implementation too was challenging as it required adding new commands and required understanding of the model to implement the group features.
+
+* *Minor enhancement*: Added command to list members of the same tags. Also added colours to the tags.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/jas5469.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/jas5469.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4`, `v1.5rc` and `v1.5` on GitHub
+** Enhancements to existing features:
+*** Added Colours to tags.
+** Documentation:
+*** Update new screenshots of new commands for the User Guide
+*** Update new screenshots of new commands for the Developer Guide
+*** Included manual testing cases.
+*** Update formatting of the Developer Guide
+** Community:
+*** Help team members find bugs for their implementation
+*** Reported bugs and suggestions for other teams
+*** Organised team meetings
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+
+// tag::listTag[]
+=== Listing Tag Members: `listTagMembers`
+
+Lists out all persons with the given tags. +
+Alias: `lTM` +
+Format: `listTagMembers TAG [MORE_TAGS]...`
+
+****
+* The search is case insensitive. Upper case and lower case letters are considered the same. +
+*_E.g._* `FriEndS` will match `friends`.
+* The order of the keywords does not matter. +
+*_E.g._* `friends CS2103` will match `CS2103 friends`.
+* Only the tag is searched.
+* Only full words will be matched. +
+*_E.g._* `friend` will not match `friends` and vice versa.
+* Persons with at least one of the specified tags will be returned (i.e. `OR` search).
+****
+
+Examples:
+
+* `listTagMembers CS3230 CS1010` +
+Returns any person having group tags `CS3230`, `CS1010`. +
+Refer to Figure 7 for results of this command. +
+image:ListTagMembersCommandExample.png[width="500"] +
+*Figure 7:* Example of ListTagMembers +
+
+// end::listTag[]
+
+// tag::addGroup[]
+=== Adding a Group: `addGroup`
+
+Adds a group to Fastis +
+[blue yellow-background]#*Undoable*# +
+Alias: `aG` +
+Format: `addGroup NAME`
+
+****
+* There is no limit to the length of a group's name
+* However, the name must contain only alphanumeric characters and spaces, and it must not be blank
+****
+
+Examples:
+
+* `addGroup CS2101 Oral Presentation` +
+Adds a group named `CS2101 Oral Presentation` to Fastis. +
+Refer to Figure 8 for results of this command. +
++
+image:addGroupExample.png[width ="500"] +
+*Figure 8:* Example of adding a group
+
+=== Adding Member To Group: `addGroupMember`
+
+Adds an existing person in Fastis to a group. +
+[blue yellow-background]#*Undoable*# +
+Alias: `aGM` +
+Format: `addGroupMember INDEX g/GROUP`
+
+****
+* Adds the person at the specified `INDEX` in person list to `GROUP`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+* The person specified at `INDEX` must not already be in the `GROUP` specified.
+****
+
+Examples:
+
+* `addGroupMember 4 g/CS2101 Oral Presentation` +
+Adds the 4th person in the list into group `CS2101 Oral Presentation`. +
+Refer to Figure 9 for results of this command. +
++
+image:addGroupMembersToGroupExample.png[width ="500"] +
+*Figure 9:* Example of addMembersToGroup +
+
+=== Deleting a Member from a Group: `deleteGroupMember`
+
+Removes a member from a group. +
+[blue yellow-background]#*Undoable*# +
+Alias: `dGM` +
+Format: `deleteGroupMember INDEX g/GROUP`
+
+****
+* Removes the person at the specified `INDEX` in the most recent person list from `GROUP`, *_not_* the `INDEX`-th person in a group.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+* The person specified at `INDEX` must be within the `GROUP` specified.
+****
+
+Examples:
+
+* `deleteGroupMember 2 g/CS2101 Oral Presentation` +
+Adds the 2nd person shown in the person list from group `CS2101 Oral Presentation`.
+
+Refer to Figure 10 for results of this command. +
++
+image:deleteGroupMemberExample.png[width ="500"] +
+*Figure 10:* Example of deleteMembersFromGroup +
+
+
+=== Listing Group Members : `listGroupMembers`
+
+Lists all the members in the group that already exists in Fastis. +
+Alias: `lGM` +
+Format: `listGroupMembers GROUP`
+
+****
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+****
+
+Examples:
+
+* `listGroupMembers CS2101 Oral Presentation`  +
+Lists all members of group CS2101 Oral Presentation. +
+Refer to Figure 11 for results of this command.
++
+image:listGroupMembersExample.png[width = "500"] +
+*Figure 11:* Example of ListGroupMembers. +
+
+=== Deleting a Group : `deleteGroup`
+Deletes a group from Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `dG` +
+Format: `deleteGroup GROUP`
+
+****
+* Deletes the information of `GROUP` from Fastis, but keep the information about its members.
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+****
+
+Examples:
+
+* `deleteGroup CS2101 Oral Presentation`  +
+Deletes group `CS2101 Oral Presentation` from Fastis. +
+
+Refer to Figure 12 for results of this command. +
++
+image:deleteGroupExample.png[width ="500"] +
+*Figure 12:* Example of deleteGroup +
+//end::addGroup[]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+// tag::listTagMembers[]
+=== List Tag Members feature
+
+Fastis lists all persons in Fastis that have tags similar to input.
+
+==== Current implementation
+
+Fastis uses `ListTagMembersCommand`, which resides under `Logic` to facilitate the listing of members under the same
+tag. <<fig25, Figure 25>> shows the sequence diagram of the `listTagMembers` command
+[[fig25]]
+.Sequence diagram of `listTagMembers` command.
+image::listTagMemberSequenceDiagram.png[width="800"]
+
+When user types in command line `listTagMembers` or `lTM` , Fastis will use the keyword provided to search for the
+tag and list out all members with the same  tag.
+
+==== Design Considerations
+* **Alternative 1 (current choice):** Add a new command `listTagMembersCommand()` to list out the members with same tag.
+** Pros: This implementation makes it is easy to change the methods called by command.
+** Cons: This implementation requires users and developers to remember more commands.
+* **Alternative 2:** Change existing find command to include finding person with same tags.
+** Pros: This implementation can reduce number of commands required to be remembered.
+** Cons: This implementation can affect the functionality of existing commands.
+
+// end::listTagMembers[]
+
+// tag::addGroup[]
+[[Group]]
+=== Add Group feature
+
+Fastis has a group feature that can:
+
+* add a group with information that was stated by user input.
+* delete a group with information that was stated  by user input.
+* add a person into the group with information that was stated by user input.
+* delete a person from the group with information that was stated by user input.
+* list all the members in the group with information that was stated by user input.
+
+
+==== Current implementation
+
+The group mechanism is facilitated by `UniqueGroupList`, which resides inside `Model` component. Address book stores all groups in `UniqueGroupList`.
+The groups in the group list are facilitated by `Group` class. Each `Group` object have a `Information` object, representing the information of the group.
+`Group`,`Information` and `UniqueGroupList` class reside inside `Model` component. <<fig26, Figure 26>>  is the class diagram showing the relationship between `Group`, `Information` and `UniqueGroupList`:
+
+[[fig26]]
+.Group Class Diagram.
+image::GroupClassDiagram.png[width ="800"]
+
+<<fig27, Figure 27>>  is a object diagram of Group Class.
+
+[[fig27]]
+.Object Diagram of `Group`.
+image::GroupObjectDiagram.png[width="600"]
+
+Suppose that the user has just launched the application . The `UniqueGroupList` in the address book will include few groups that are declared in SampleDataUtil.
+
+A Group consists of the following:
+
+* Information: Represents the information of the group.
+* PersonList: Represents the list of persons in a group.
+
+The add group feature adds a group with information named by user in input into Fastis.
+
+
+The add group mechanism is facilitated by `AddGroupCommand`, which resides inside `Logic` component. It supports adding `Group` object to the address book. `AddGroupCommand` inherits from `UndoableCommand`.
+
+Hence, `AddGroupCommand` can be undone using `UndoRedoStack`.
+With the extra layer, the `AddGroupCommand` that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddGroupCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... AddGroup logic ...
+    }
+}
+----
+
+<<fig28, Figure 28>> shows the interaction of `AddGroup` Command class.
+
+[[fig28]]
+.Class Diagram of add group Command.
+image::AddGroupCommandClassDiagram.png[width:"600"]
+
+The user executes a new `AddGroupCommand` with `Information`, to add a new group to the address book.
+The new group is added to the `UniqueGroupList` and the current state of the address book is saved.
+
+The `AddGroupCommand` is facilitated by `AddGroupCommandParser` to parse `AddGroupCommand`.
+<<fig29, Figure 29>>  shows the flow of parsing of `AddGroupCommand` object.
+
+[[fig29]]
+.Sequence Diagram for AddGroupParser.
+image::AddGroupParserSequenceDiagram.png[width="800"]
+
+<<fig30, Figure 30>> diagram shows how the add group operation works:
+
+[[fig30]]
+.AddGroup Sequence Diagram.
+image::AddGroupSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+====== Aspect: Implementation of `AddGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddGroupCommand()`
+** Pros: This implementation makes it easy for developers to modify method to suit what they want
+** Cons: This implementation requires users and developers to remember more commands.
+* **Alternative 2:** Add a new abstract method `executeAddGroupCommand()`
+** Pros: This implementation preserves `addGroup` functionality as it is now part of the default behaviour. Classes that deal with `AddGroupCommand` do not have to know that `executeAddGroupCommand()` exist.
+** Cons: This implementation makes it hard for new developers to understand the template pattern.
+
+=== Add Member To Group feature
+
+Fastis adds a person from the existing contact list to an existing group.
+
+==== Current implementation
+
+The add member to group mechanism is facilitated by `AddMemberToGroupCommand`, which resides inside `Logic` component.
+It supports adding a member to `Group` objects to the address book. `AddMemberToGroupCommand` inherits from `UndoableCommand`.
+
+Hence, AddMemberToGroupCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddGroupCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class AddMemberToGroupCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... AddMemberToGroup logic ...
+    }
+}
+----
+
+The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
+Address book stores all members added to the group using XmlAdaptedPersons as person object storage as shown in  the following sequence diagram where  the storage saves to file in XmlAdaptedGroups.
+Fastis will then handle `addressBookChangedEvent` and update command result.
+
+<<fig31, Figure 31>> shows the interaction of `AddMemberToGroup` Command class.
+
+[[fig31]]
+.Class Diagram of AddMemberToGroup Command.
+image::aGMCommandClassDiagram.png[width:"600"]
+
+The `AddMemberToGroupCommand` is facilitated by `AddMemberToGroupCommandParser` to parse `AddMemberToGroupCommand`.
+<<fig32, Figure 32>> shows the flow of parsing of `AddMemberToGroupCommand` object.
+
+[[fig32]]
+.Sequence diagram for AddMemberToGroupCommandParser.
+image::aGMParserSequenceDiagram.png[width="800"]
+
+<<fig33, Figure 33>> diagram shows how the addMembersToGroup operates.
+
+[[fig33]]
+.AddMemberToGroup sequence diagram.
+image::aGMSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+====== Aspect: Implementation of `AddMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `AddMemberToGroupCommand()`.
+** Pros: This implementation makes it easy for developers to modify method to suit what they want.
+** Cons: This implementation requires users and developers to remember more commands.
+* **Alternative 2 :** Add a new interface `EditGroupMemberCommand()` to handle adding members to group.
+** Pros: This implementation does not require a new command to be created.
+** Cons: This implementation is less flexible.
+
+=== Delete Member From Group feature
+
+Fastis deletes a person from the existing contact list to an existing group.
+
+==== Current implementation
+
+The delete member from groups mechanism is facilitated by `DeleteMemberFromGroupCommand`, which resides inside `Logic` component.
+It supports deleting a member to Group objects to the address book. `DeleteMemberFromGroupCommand` from `UndoableCommand`.
+
+Hence, DeleteMemberFromGroupCommand can be undone using `UndoRedoStack`.
+With the extra layer, the AddGroupCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteMemberFromGroupCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... DeleteMemberFromGroup logic ...
+    }
+}
+----
+
+The list of members in the group list are facilitated by `Group` class. Each `Group` object have a `UniquePersonList` object, representing the list of persons in the group.
+Address book stores all members added to the group using XmlAdaptedPersons as person object storage.
+The `DeleteMemberFromGroupCommand` will retrieve the input, which is the index of the person of the last updated person list, and deletes that person from the list if the person exists in the `UniquePersonList` in the specified group.
+Fastis will then handle `addressBookChangedEvent` and update command result.
+
+<<fig34, Figure 34>>  shows the interaction of `DeleteMemberFromGroup` Command class.
+[[fig34]]
+.Class Diagram of `DeleteMemberFromGroup` Command.
+image::dGMCommandClassDiagram.png[width:"600"]
+
+The `DeleteMemberFromGroupCommand` is facilitated by `DeleteMemberFromGroupCommandParser` to parse `DeleteMemberFromGroupCommand`.
+<<fig35, Figure 35>>  shows the flow of parsing of `DeleteMemberFromGroupCommand` object.
+
+[[fig35]]
+.Sequence diagram for DeleteMemberFromGroupCommandParser.
+image::dGMParserSequenceDiagram.png[width="800"]
+
+<<fig36, Figure 36>> diagram shows how the deleteMembersFromGroup operates.
+[[fig36]]
+.Sequence diagram for DeleteMemberFromGroupCommand.
+image::dGMSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+====== Aspect: Implementation of `DeleteMemberToGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `DeleteMemberFromGroupCommand()`
+** Pros: This implementation is easy for developers to modify method to suit what they want.
+** Cons: This implementation requires users and developers to remember more commands.
+* **Alternative 2 :** Add a new interface `EditGroupMemberCommand()`.
+** Pros: This implementation does not require a new command to be created.
+** Cons: This implementation is less flexible.
+
+=== List Group Members Feature
+
+Fastis lists all persons under the group keyed by user.
+
+==== Current implementation
+
+Fastis uses `ListGroupMembersCommand` ,which resides under `Logic` to facilitate the listing of members under the same
+group.
+
+When user types in command line `listGroupMembers` or `lGM` , Fastis will use the keyword provided to search for the
+group and list out all members under the specified group in the `PersonListPanel`.
+
+The `ListGroupMembersCommand` is facilitated by `ListGroupMembersCommandParser` to parse `ListGroupMembersCommand`.
+<<fig37, Figure 37>> shows the flow of parsing of `ListGroupMembersCommand` object.
+
+[[fig37]]
+.Sequence diagram for ListGroupMemberCommandParser.
+image::ParserlGMSequenceDiagram.png[width="800"]
+
+<<fig38, Figure 38>> diagram shows how `ListGroupMembersCommand` operates.
+
+[[fig38]]
+.Sequence diagram for ListGroupMembers.
+image::lGMSequenceDiagram.png[width="800"]
+
+
+==== Design Considerations
+
+====== Aspect: Implementation of `ListGroupMembersCommand`
+* **Alternative 1 (current choice):** Use a command to list out the members with same group.
+** Pros: This implementation makes the methods called by command easily modifiable.
+** Cons: This implementation requires users and developers to remember more commands.
+* **Alternative 2:** Add a new abstract method `ListGroupMembersCommand()`
+** Pros: This implementation makes it easy to edit `ListGroupMembersCommand()` easily to suit our needs
+** Cons: This implementation makes it hard for new developers to understand the template pattern.
+
+=== Delete Group feature
+
+Fastis deletes a group named by the user from input.
+
+==== Current implementation
+
+The delete groups mechanism is facilitated by `DeleteGroupCommand`, which resides inside `Logic` component. It supports deleting Group objects to the address book. DeleteGroupCommand inherits from `UndoableCommand`.
+
+Hence, DeleteGroupCommand can be undone using `UndoRedoStack`.
+With the extra layer, the DeleteGroupCommand that is undoable is implemented this way:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class DeleteGroupCommand extends UndoableCommand {
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... DeleteGroup logic ...
+    }
+}
+----
+
+The user executes a new `DeleteGroupCommand` with `Information`, to delete a existing group with the same information to the address book.
+The group is deleted from the `UniqueGroupList` and the current state of the address book is saved.
+Fastis will then handle `addressBookChangedEvent` and update command result.
+
+<<fig39, Figure 39>> shows the interaction of `DeleteGroup` Command class.
+[[fig39]]
+.Class Diagram of `DeleteGroup` Command.
+image::dGCommandClassDiagram.png[width:"600"]
+
+The `DeleteGroupCommand` is facilitated by `DeleteGroupCommandParser` to parse `DeleteGroupCommand`.
+<<fig40, Figure 40>> shows the flow of parsing of `DeleteGroupCommand` object.
+[[fig40]]
+.Sequence diagram for DeleteGroupCommandParser.
+image::dGParserSequenceDiagram.png[width="800"]
+
+<<fig41, Figure 41>> shows how the deleteGroup operation works:
+[[fig41]]
+.Sequence diagram for DeleteGroupCommand.
+image::dGSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `DeleteGroupCommand`
+* **Alternative 1 (current choice):** Add a new command method `deleteGroupCommand()`
+** Pros: This implementation makes it easy for developers to modify method to suit what they want
+** Cons: This implementation requires users and developers to remember more commands.
+* **Alternative 2:** Add a new abstract method `executeDeleteGroupCommand()`
+** Pros: This implementation preserves `deleteGroup` functionality as it is now part of the default behaviour. Classes that deal with `DeleteGroupCommand` do not have to know that `executeDeleteGroupCommand()` exist.
+** Cons: This implemetation makes it hard for new developers to understand the template pattern.
+
+// end::addGroup[]

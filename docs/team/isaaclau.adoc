@@ -1,0 +1,174 @@
+= Isaac Lau - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: NUSmods integration
+** What it does: allows the user to add a link from a NUSmods page (e.g. http://modsn.us/MYwiD) to a person. The app uses the link to display the person's timetable.
+** Justification: This feature allows the user to see their group members' timetable easily, enabling them to better schedule plans and events.
+** Highlights: This enhancement has the potential to be expanded upon greatly. Because the feature is removed from the existing architecture, it required deep understanding of the application architecture to figure out where and how the enhancement could be added in.
+** Credits: https://github.com/nusmodifications/nusmods/tree/master/api/data[NUSmods API] was used to retrieve module information.
+
+* *Minor enhancement*: improved functionality of `find` command to work with partial words and approximate words.
+** Credits: https://github.com/xdrop/fuzzywuzzy[fuzzywuzzy] library was used to enable better string comparison functionality.
+
+* *Code contributed*:
+
+** https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/Isaaaca.md[Functional code]
+
+** https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/Isaaaca.md[Test code]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` on GitHub
+** Documentation:
+*** Updated class diagrams in Developer Guide
+*** Added substantial segments to Developer Guide
+** Community:
+*** Help team members fix bugs https://github.com/CS2103JAN2018-W15-B3/main/issues/167[#167]
+*** Reported bugs and suggestions https://github.com/CS2103JAN2018-W15-B3/main/issues/96[#96]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+//tag::TimetableLinks[]
+== Appendix
+[[TimetableLinks]]
+[big]#*Timetable Links*#
+
+Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 12. +
+
+image:nusModsShare.PNG[width ="500"] +
+*Figure 12:* Share/Sync button on NUSMods website. +
+
+The link in the box indicated in Figure 13 below is the TimetableLink for Fastis. Copy it into your commands. +
+
+image:nusModsLinkResult.PNG[width ="500"] +
+*Figure 13:* The TimetableLink to copy to Fastis commands.
+
+//end::TimetableLinks[]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+[[Design-Database]]
+=== Database component
+
+The Database component is in charge of connections to the web.
+
+The `Database` component:
+
+* downloads module information from the `NUSmods API`.
+* retrieves modules given a NUSmods timetable link.
+
+[NOTE]
+NUSmods timetable links are the sharable short URL from a NUSmods page.
+E.g. http://modsn.us/MYwiD
+
+The sturucture of the Database component is shown in <<fig11, Figure 1>>
+[[fig11]]
+.Structure of the Database Component.
+image::DatabaseClassDiagram.png[width="800"]
+
+//tag::ModuleDatabase[]
+=== Module database feature
+
+The database feature enables Fastis to store and quickly find lesson schedules.
+
+==== Current implementation
+
+Fastis uses the available `NUSmods API` to retrieve module information from the API server.
+
+The sequence diagram (<<fig20, Figure 2>>) for the instantiation of DatabaseManager is shown below.
+
+.Sequence diagram for the instantianion of DatabaseManager.
+image::DatabaseComponentSequenceDiagram.png[width="800"]
+
+On startup, the network component makes a connection to the API server and checks the `lastmodified` field of the `JSON` file on the server. If the `lastmodified` date is more recent that the `JSON` file held in storage, the network component will download and overwrite the existing file on disk.
+
+The `Storage` component then converts the JSON file into a hashMap of modules to be held in the `Database` component.
+
+==== Design Considerations
+
+===== Aspect: Storage of Module information
+
+* **Alternative 1 (current choice):** Store a complete dataset of all modules
+** Pros: This implementation allows Fastis to access information even when used offline.
+** Cons: This implementation requires more memory space.
+* **Alternative 2:** Store nothing, retrieve only module information of single module each time.
+** Pros: This implementation does not require any storage space.
+** Cons: This implementation requires Fastis to constantly download information from the web, making the app reliant on good internet connection.
+
+// end::ModuleDatabase[]
+
+
+//tag::showingTimetable[]
+[[showingTimetable]]
+=== Showing the timetable
+
+This feature allows users to see a person's timetable by selecting him/her.
+
+==== Current implementation
+When a person is selected, either by the `select` command or by mouse click via the GUI, a `PersonPanelSelectionChangedEvent` is raised. The flow of operation thereafter is shown <<fig23, Figure 3>> below.
+
+.Sequence digaram for PersonPanelSelectionChangedEvent.
+image::nusModsSequenceDiagram.png[width="800"]
+
+Upon receiving the event, the `UI` component takes the `Person` within the `PersonPanelSelectionChangedEvent` and calls the `parseEvents()` method of `DataBaseManager`, passing the `TimetableLink` of the `Person` as an argument.
+
+The result of the `parseEvents()` is an `ArrayList` of `WeeklyEvents`. This result is used to form a `TimeTableChangedEvent`, which ultimately tells the `UI` component to display the result.
+
+The implementation of `parseEvents()` is as follows:
+
+[source,java]
+----
+public static ArrayList<WeeklyEvent> parseEvents(TimeTableLink link) {
+        ArrayList<WeeklyEvent> eventList = new ArrayList<>();
+
+        if (!isCurrentSem(link)) {
+           // ... display and log warning messages ...
+        }
+
+        String query = getQuery(link);
+
+       // ... parse query into WeeklyEvents ...
+
+        return eventList;
+    }
+----
+
+The `parseEvents()` method firsts checks if the `TimetableLink` points to a schedule that is in the same semester as Fatis' database. It then calls the `getQuery` helper method, which a `URLconnection` to the shortened URL in `TimetableLink` and returns the `query` part of the full-length URL.
+
+The method then takes the `query` and parses them into modules and lessons, which are used to form `WeeklyEvents`.
+
+==== Design Considerations
+
+===== Aspect: Storage of a person's schedule
+
+* **Alternative 1 (current choice):** Store only the link to a NUSmods page for each person
+** Pros: This implementation requires very little space. The schedule of a person can easily be changed by editing the `TimetableLink`.
+** Cons: This implementation requires Fastis to make a connection to the web each time a person is selected.
+* **Alternative 2:** Store the schedule of each person in the `AddressBook`
+** Pros: This implementation will require much more space, and there will be a dilemma between whether to store it as `WeeklyEvent`, or `Module` and `schedule`
+** Cons: This implementation requires Fastis to make a connection to the web only when a person is added or edited.
+
+//end::showingTimetable[]
+
+---

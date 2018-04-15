@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <!-- Invalid tag -->
-    <tags>frie!nds</tags>
+    <tags>
+        <name>fri!ends</name>
+        <color>undefined</color>
+    </tags>
 </addressbook>

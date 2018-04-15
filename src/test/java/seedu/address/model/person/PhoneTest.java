@@ -1,6 +1,8 @@
 package seedu.address.model.person;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
@@ -37,5 +39,17 @@ public class PhoneTest {
         assertTrue(Phone.isValidPhone("911")); // exactly 3 numbers
         assertTrue(Phone.isValidPhone("93121534"));
         assertTrue(Phone.isValidPhone("124293842033123")); // long phone numbers
+    }
+
+    //@@author LeonidAgarth
+    @Test
+    public void hashCode_variousTest() {
+        Phone phone1 = new Phone("93121534");
+        Phone phone2 = new Phone("93121534");
+        Phone phone3 = new Phone("124293874203154");
+
+        assertEquals(phone1.hashCode(), phone1.hashCode());
+        assertEquals(phone1.hashCode(), phone2.hashCode());
+        assertNotEquals(phone2.hashCode(), phone3.hashCode());
     }
 }

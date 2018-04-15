@@ -4,7 +4,10 @@ import javafx.collections.ObservableList;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.event.Event;
+import seedu.address.model.group.Group;
 import seedu.address.model.person.Person;
+import seedu.address.model.todo.ToDo;
 
 /**
  * API of the Logic component
@@ -21,6 +24,18 @@ public interface Logic {
 
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
+
+    /** Returns an unmodifiable view of the filtered list of to-dos */
+    ObservableList<ToDo> getFilteredToDoList();
+
+    /** Returns an unmodifiable view of the filtered list of groups */
+    ObservableList<Group> getFilteredGroupList();
+
+    /** Returns the complete ratio of the filtered list of to-dos */
+    double getToDoListCompleteRatio();
+
+    /** Returns an unmodifiable view of the filtered list of events */
+    ObservableList<Event> getFilteredEventList();
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();

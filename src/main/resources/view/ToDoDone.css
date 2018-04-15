@@ -1,0 +1,20 @@
+/* @@author nhatquang3112 */
+.list-cell:filled:even {
+    -fx-background-color: #4DA194;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: #4DA194;
+    -fx-background-radius: 25px;
+    -fx-border-radius: 20px;
+    -fx-border-width: 2px;
+    -fx-border-color: derive(#1d1d1d, 20%);
+}
+
+.list-cell .label {
+    -fx-text-fill: #DEF0EE;
+}

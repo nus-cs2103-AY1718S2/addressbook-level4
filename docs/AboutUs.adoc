@@ -3,53 +3,47 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
-We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+Fastis - Meetup Manager was developed by the https://github.com/CS2103JAN2018-W15-B3[W15-B3] team, improved upon
+ https://github.com/nus-cs2103-AY1718S2/addressbook-level4[AddressBook-Level4] by the https://se-edu.github.io/docs/Team.html[se-edu]
+ team. +
+
+We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore],
+formed during the course of CS2103T: Software Engineering module.
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Tran Nhat Quang
+image::TranNhatQuang.jpg[width="150", align="left"]
+{empty}[https://github.com/nhatquang3112[github]] [<<trannhatquang#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Team Lead, Developer +
+Responsibility: Model, in charge of implementing To-do list
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Pham Vu Hung
+image::PhamVuHung.jpg[width="150", align="left"]
+{empty}[https://github.com/LeonidAgarth[github]] [<<phamvuhung#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Data
+Responsibilities: Logic, Storage, in charge of implementing Calendar and Timetable
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Jason Leo
+image::JasonLeo.jpg[width="150", align="left"]
+{empty}[https://github.com/jas5469[github]] [<<jasonleo#, portfolio>>]
 
 Role: Developer +
-Responsibilities: Dev Ops + Threading
+Responsibilities: Logic, Model , in charge of implementation of grouping
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Isaac Lau
+image::IsaacLau.jpg[width="150", align="left"]
+{empty}[https://github.com/Isaaaca[github]] [<<isaaclau#, portfolio>>]
 
 Role: Developer +
-Responsibilities: UI
+Responsibilities: Integrating NUSMods
 
 '''

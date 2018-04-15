@@ -1,6 +1,7 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
+import static seedu.address.commons.core.Messages.MESSAGE_DID_YOU_MEAN;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
@@ -89,7 +90,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
                 String.format(MESSAGE_INVALID_COMMAND_FORMAT, SelectCommand.MESSAGE_USAGE));
 
         /* Case: mixed case command word -> rejected */
-        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND);
+        assertCommandFailure("SeLeCt 1", MESSAGE_UNKNOWN_COMMAND + MESSAGE_DID_YOU_MEAN + SelectCommand.COMMAND_WORD);
 
         /* Case: select from empty address book -> rejected */
         deleteAllPersons();
@@ -99,9 +100,9 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
 
     /**
      * Executes {@code command} and asserts that the,<br>
-     * 1. Command box displays an empty string.<br>
-     * 2. Command box has the default style class.<br>
-     * 3. Result display box displays the success message of executing select command with the
+     * 1. Command node displays an empty string.<br>
+     * 2. Command node has the default style class.<br>
+     * 3. Result display node displays the success message of executing select command with the
      * {@code expectedSelectedCardIndex} of the selected person.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
@@ -126,15 +127,15 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         }
 
-        assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
 
     /**
      * Executes {@code command} and asserts that the,<br>
-     * 1. Command box displays {@code command}.<br>
-     * 2. Command box has the error style class.<br>
-     * 3. Result display box displays {@code expectedResultMessage}.<br>
+     * 1. Command node displays {@code command}.<br>
+     * 2. Command node has the error style class.<br>
+     * 3. Result display node displays {@code expectedResultMessage}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
      * 5. Browser url, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
@@ -147,7 +148,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
+        assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 }

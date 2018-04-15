@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Fastis-Meetup Manager - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,18 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W15-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+image:FASTIS.png[ align="center"] +
+Fastis is a stand-alone desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time. +
+
+Fastis has a graphical user interface (GUI), but most of the user interactions happen using a command line interface (CLI). Users with above average typing speed for regular English text should be able to accomplish most of the tasks faster using commands than using the mouse.
+
+This User Guide is meant to provide the necessary information for users, whether new or experienced, who would like to gain more insights about how to use Fastis effectively. The guide consists of the overview of the application and descriptions of its current features.
 
 == Quick Start
 
@@ -27,22 +32,25 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `Fastis.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Fastis.
+.  Double-click the file to start the app. The GUI should appear in a few seconds. The GUI and its components are displayed in Figure 1 below.
 +
-image::Ui.png[width="790"]
+image:Ui.png[width="800"] +
+*Figure 1:* GUI upon start and its components.
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+.  Type any command in the command box and press kbd:[Enter] to execute it. +
+*_E.g._* typing *`help`* and pressing kbd:[Enter] will open the help window.
+****
+Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : lists all contacts.
+* *`add`*`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Fastis.
+* *`delete`*`3` : deletes the 3rd contact shown in the current person list panel.
+* *`exit`* : exits the app.
+****
 
-.  Refer to <<Features>> for details of each command.
+Refer to <<Features>> below for details of each command.
 
 [[Features]]
 == Features
@@ -50,38 +58,63 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Most commands have an alias, which is just the acronym of the command. You can use either the command's name or its alias to execute any command. +
+*_E.g._* Alias of `add` command is `a`. To add a person named John Doe to Fastis, you can type either `add n/John Doe` or `a n/John Doe`.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user. +
+*_E.g._* in the command `add n/NAME p/PHONE`, `NAME` and `PHONE` are parameters which you can supply to add a person to Fastis.
+* Items in square brackets are optional. +
+*_E.g_* for `n/NAME [t/TAG]`, you can type `n/John Doe t/friend` or `n/John Doe` as `t/TAG` is optional, but you must not omit `n/NAME`.
+* Items with `…`​ after them can be used multiple times including zero times. +
+*_E.g._* `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Parameters can be in any order. +
+*_E.g._* if the command specifies `n/NAME p/PHONE e/EMAIL`, `p/PHONE e/EMAIL n/NAME` is also acceptable.
 ====
 
 === Viewing help : `help`
 
-Format: `help`
+Displays the help window. +
+Format: `help` +
 
+****
+* This command is equivalent to pressing the F1 key, or click on Help -> Help on the Menu bar.
+****
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to Fastis +
+[blue yellow-background]#*Undoable*# +
+Alias: `a` +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [t/TAG]...`
 
-[TIP]
-A person can have any number of tags (including 0)
+****
+* A person can have any number of tags (including 0).
+* Timetable link refers to the <<TimetableLinks,NUSMods link>> of the person.
+****
+
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 l/http://modsn.us/MYwiD d/Likes tennis` +
+Adds a person named John Doe with the attributes listed. +
+Refer to Figure 2 for results of this command.
++
+image:personAdded.png[width="800"] +
+*Figure 2:* Example of `add` command.
++
+* `a n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 l/http://modsn.us/56Dn9 d/Likes chocolate t/criminal` +
+Adds a friend named Betsy Crowe with the attributes listed.
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in Fastis. +
+Alias: `l` +
 Format: `list`
 
 === Editing a person : `edit`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Edits an existing person in Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `e` +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [d/DETAIL] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -94,33 +127,40 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
+Edits the phone number and email address of the 1st person shown in the list to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
 === Locating persons by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+Finds persons whose name contains any of the given keywords. +
+Alias: `f` +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
+* The search is case insensitive. Upper case and lower case letters are considered the same. +
+*_E.g._* `hans` will match `Hans`.
+* The order of the keywords does not matter. +
+*_E.g._* `Hans Bo` will match `Bo Hans`.
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Only full words will be matched. +
+*_E.g._* `Han` will not match `Hans`.
+* Persons matching at least one keyword will be returned (i.e. `OR` search). +
+*_E.g._* `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
 ****
 
 Examples:
 
 * `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns `john` and `John Doe`.
+* `find betsy john Tim` +
+Returns any person named `Betsy`, `Tim`, or `John`.
 
 === Deleting a person : `delete`
 
-Deletes the specified person from the address book. +
+Deletes the specified person from Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `d` +
 Format: `delete INDEX`
 
 ****
@@ -133,34 +173,41 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in Fastis.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Selecting a person to show timetable : `select`
 
 Selects the person identified by the index number used in the last person listing. +
+Alias: `s` +
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person and loads the NUSMods timetable of the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
+* This command is equivalent to clicking on the person in the list.
 ****
 
 Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in Fastis. +
+Refer to Figure 3 for results of this command.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
++
+image:SelectCommandExample.png[width="800"] +
+*Figure 3:* Example of showing the timetable when selecting the 2nd person
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
+Alias: `h` +
 Format: `history`
 
 [NOTE]
@@ -168,16 +215,37 @@ Format: `history`
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
+=== Changing a  tag's color: `changeTagColor`
+
+Changes a specific group color to one of the supported colors. +
+[blue yellow-background]#*Undoable*# +
+Alias: `color` +
+Format `changeTagColor TAG COLOR`
+
+****
+* The `TAG` specified must belong to one of the people in Fastis
+* Supported `COLORS` are: aqua, black, blue, brown, gold, green, grey, lime, magenta, navy, orange, pink, purple, red, teal, yellow, white.
+****
+
+Examples:
+
+* `changeTagColor friends pink` +
+Changes the color of the tag `friends` to pink.
+* `color family yellow` +
+Changes the color of the tag `family` to yellow.
+
+// group::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores Fastis to the state before the previous _undoable_ command was executed. +
+Alias: `u` +
 Format: `undo`
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+****
+* Undoable commands: those commands that modify Fastis's content.
+* All undoable commands are: `add`, `addEvent`, `addGroup`, `addGroupMember`, `addToDo`, `changeTagColor`, `check`, `clear`,
+`delete`, `deleteGroup`, `deleteGroupMember`, `deleteToDo`, `edit`, `uncheck`.
+****
 
 Examples:
 
@@ -190,14 +258,15 @@ Examples:
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+* `check 1` +
+`changeTagColor friends pink` +
+`undo` (reverses the `changeTagColor` command) +
+`undo` (reverses the `check 1` command) +
 
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
+Alias: `r` +
 Format: `redo`
 
 Examples:
@@ -206,21 +275,318 @@ Examples:
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
 
-* `delete 1` +
+* `uncheck 1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* `check 1` +
+`changeTagColor friends pink` +
+`undo` (reverses the `changeTagColor` command) +
+`undo` (reverses the `check 1` command) +
+`redo` (reapplies the `check 1` command) +
+`redo` (reapplies the `changeTagColor` command) +
 // end::undoredo[]
+
+=== Adding an event: `addEvent`
+
+Adds an event to Fastis and displays it on the calendar. +
+[blue yellow-background]#*Undoable*# +
+Alias: `aE` +
+Format: `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME`
+
+****
+* DATE must be in the format of DD/MM/YYYY
+* TIME must be in the 24-hour time format of HHmm
+****
+
+Examples:
+
+* `addEvent n/CS2103 Meetup v/School of Computing d/07/04/2018 st/1000 et/1300` +
+Adds an event called CS2103 Meetup to the calendar. +
+Refer to Figure 4 for results of this command.
++
+image:AddEventCommandExample.png[width="800"] +
+*Figure 4:* Example of an event added on the calendar
+
+// group::toDoList[]
+=== Adding a to-do: `addToDo`
+
+Adds a to-do to Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `aTD` +
+Format: `addToDo CONTENT`
+
+Examples: +
+Refer to Figure 5 for results of the following 2 commands. +
+
+* `addToDo Do homework before next Wednesday`
+* `aTD Swim like a fish`
++
+image:AddToDoCommandExample.png[width="250"] +
+*Figure 5:* Example of adding to-dos
+
+=== Marking a to-do as done: `check`
+
+Marks a to-do in Fastis as done. +
+[blue yellow-background]#*Undoable*# +
+Format: `check INDEX`
+
+****
+* Marks the to-do at the specified `INDEX` as done.
+* The to-do progress will update accordingly
+* The index refers to the index number shown in to-do list panel.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `check 1` +
+Marks the first to-do in the list as done. +
+Refer to Figure 6 for results of this command.
+
+=== Marking a to-do as undone: `uncheck`
+
+Marks a to-do in Fastis as undone. +
+[blue yellow-background]#*Undoable*# +
+Format: `uncheck INDEX`
+
+****
+* Marks the to-do at the specified `INDEX` as undone.
+* The to-do progress will update accordingly
+* The index refers to the index number shown in to-do list panel.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `uncheck 2` +
+Marks the second to-do in the list as done. +
+Refer to Figure 6 for results of this command.
++
+image:CheckToDoExample.png[width="250"] +
+*Figure 6:* Example of checking/unchecking to-dos
+
+=== Editing a to-do's content : `editToDo`
+
+Edits an existing to-do's content in Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `eTD` +
+Format: `editToDo INDEX c/CONTENT`
+
+****
+* Edits the to-do's content at the specified `INDEX`.
+* Existing content will be updated to the input value.
+* The index refers to the index number shown in the last to-do listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `editToDo 1 c/Swim like a fish` +
+Edits the content of the 1st to-do to be `Swim like a fish`.
+
+=== Deleting a to-do : `deleteToDo`
+
+Deletes the specified to-do from Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `dTD` +
+Format: `deleteToDo INDEX`
+
+****
+* Deletes the to-do at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `deleteToDo 2` +
+Deletes the 2nd to-do in Fastis.
+// end::toDoList[]
+
+// tag::listTag[]
+=== Listing Tag Members: `listTagMembers`
+
+Lists out all persons with the given tags. +
+Alias: `lTM` +
+Format: `listTagMembers TAG [MORE_TAGS]...`
+
+****
+* The search is case insensitive. Upper case and lower case letters are considered the same. +
+*_E.g._* `FriEndS` will match `friends`.
+* The order of the keywords does not matter. +
+*_E.g._* `friends CS2103` will match `CS2103 friends`.
+* Only the tag is searched.
+* Only full words will be matched. +
+*_E.g._* `friend` will not match `friends` and vice versa.
+* Persons with at least one of the specified tags will be returned (i.e. `OR` search).
+****
+
+Examples:
+
+* `listTagMembers CS3230 CS1010` +
+Returns any person having group tags `CS3230`, `CS1010`. +
+Refer to Figure 7 for results of this command. +
+image:ListTagMembersCommandExample.png[width="500"] +
+*Figure 7:* Example of ListTagMembers +
+
+// end::listTag[]
+
+// tag::addGroup[]
+=== Adding a Group: `addGroup`
+
+Adds a group to Fastis +
+[blue yellow-background]#*Undoable*# +
+Alias: `aG` +
+Format: `addGroup NAME`
+
+****
+* There is no limit to the length of a group's name
+* However, the name must contain only alphanumeric characters and spaces, and it must not be blank
+****
+
+Examples:
+
+* `addGroup CS2101 Oral Presentation` +
+Adds a group named `CS2101 Oral Presentation` to Fastis. +
+Refer to Figure 8 for results of this command. +
++
+image:addGroupExample.png[width ="500"] +
+*Figure 8:* Example of adding a group
+
+=== Adding Member To Group: `addGroupMember`
+
+Adds an existing person in Fastis to a group. +
+[blue yellow-background]#*Undoable*# +
+Alias: `aGM` +
+Format: `addGroupMember INDEX g/GROUP`
+
+****
+* Adds the person at the specified `INDEX` in person list to `GROUP`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+* The person specified at `INDEX` must not already be in the `GROUP` specified.
+****
+
+Examples:
+
+* `addGroupMember 4 g/CS2101 Oral Presentation` +
+Adds the 4th person in the list into group `CS2101 Oral Presentation`. +
+Refer to Figure 9 for results of this command. +
++
+image:addGroupMembersToGroupExample.png[width ="500"] +
+*Figure 9:* Example of addMembersToGroup +
+
+=== Deleting a Member from a Group: `deleteGroupMember`
+
+Removes a member from a group. +
+[blue yellow-background]#*Undoable*# +
+Alias: `dGM` +
+Format: `deleteGroupMember INDEX g/GROUP`
+
+****
+* Removes the person at the specified `INDEX` in the most recent person list from `GROUP`, *_not_* the `INDEX`-th person in a group.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+* The person specified at `INDEX` must be within the `GROUP` specified.
+****
+
+Examples:
+
+* `deleteGroupMember 2 g/CS2101 Oral Presentation` +
+Adds the 2nd person shown in the person list from group `CS2101 Oral Presentation`.
+
+Refer to Figure 10 for results of this command. +
++
+image:deleteGroupMemberExample.png[width ="500"] +
+*Figure 10:* Example of deleteMembersFromGroup +
+
+
+=== Listing Group Members : `listGroupMembers`
+
+Lists all the members in the group that already exists in Fastis. +
+Alias: `lGM` +
+Format: `listGroupMembers GROUP`
+
+****
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+****
+
+Examples:
+
+* `listGroupMembers CS2101 Oral Presentation`  +
+Lists all members of group CS2101 Oral Presentation. +
+Refer to Figure 11 for results of this command.
++
+image:listGroupMembersExample.png[width = "500"] +
+*Figure 11:* Example of ListGroupMembers. +
+
+=== Deleting a Group : `deleteGroup`
+Deletes a group from Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `dG` +
+Format: `deleteGroup GROUP`
+
+****
+* Deletes the information of `GROUP` from Fastis, but keep the information about its members.
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+****
+
+Examples:
+
+* `deleteGroup CS2101 Oral Presentation`  +
+Deletes group `CS2101 Oral Presentation` from Fastis. +
+
+Refer to Figure 12 for results of this command. +
++
+image:deleteGroupExample.png[width ="500"] +
+*Figure 12:* Example of deleteGroup +
+//end::addGroup[]
+
+=== Scheduling a suitable meetup time : `scheduleGroup`
+
+Finds all common free time slots for all group members to meet. +
+Alias: `sG` +
+Format: `scheduleGroup GROUP`
+
+****
+* Computes all time slots when all members in a `GROUP` are free based on each member's timetable.
+* Results are displayed as free "modules" on the GUI timetable.
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+****
+
+Examples:
+
+* `scheduleGroup CS2101 Oral Presentation`  +
+Displays all free time slots for group CS2101 Oral Presentation. +
+Refer to Figure 13 for results of this command.
++
+image:scheduleGroupExample.png[width = "800"] +
+*Figure 13:* Example of scheduleGroup. +
+
+=== Switching between Calendar and Timetable : `switch`
+
+Switches between Calendar view and Timetable view. +
+Alias: `sw` +
+Format: `switch`
+
+****
+* Switches to Timetable view if Fastis is currently in Calendar view, and vice versa.
+* Upon switching to timetable, the default timetable is blank.
+****
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
+Clears all entries from Fastis. +
+[blue yellow-background]#*Undoable*# +
+Alias: `c` +
 Format: `clear`
 
 === Exiting the program : `exit`
@@ -230,35 +596,115 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Fastis' data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
+=== Displaying all events : `display` `[coming in v2.0]`
+
+Shows all events in list in Fastis in chronological order. +
+Alias: `d` +
+Format: `display`
+
+=== Editing a person's group : `modify` `[coming in v2.0]`
+
+Modifies the group that the person belongs to. +
+Alias: `m` +
+Format: `modify INDEX`
+
+****
+* INDEX refers to the index of the person you are trying to update his group.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+// group::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+* Personal log in page that requires saved password. +
+* Sign up with `username` and `password`. +
+* Creation of password should use at least 1 lower case ,1 upper case and 1 number. +
+* Sign in with saved username and password to be able to use the secured application. +
+* Data files created by Fastis will be encrypted using the `password` you have provided. +
 // end::dataencryption[]
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: All Fastis data is stored in `addressbook.xml` file in the data folder. Overwrite that file in your other computer with the file that contains the data from your previous computer.
+
+//tag::TimetableLinks[]
+== Appendix
+[[TimetableLinks]]
+[big]#*Timetable Links*#
+
+Timetable links can be retrieved from the https://nusmods.com/[NUSMods Website]. To retrieve it simply go the website and click the *Share/Sync* button, circled in Figure 14. +
+
+image:nusModsShare.PNG[width ="500"] +
+*Figure 14:* Share/Sync button on NUSMods website. +
+
+The link in the box indicated in Figure 15 below is the TimetableLink for Fastis. Copy it into your commands. +
+
+image:nusModsLinkResult.PNG[width ="500"] +
+*Figure 15:* The TimetableLink to copy to Fastis commands.
+
+//end::TimetableLinks[]
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="80%",cols="2,10,2,10,2",options="header"]
+|=========================================================
+|Command |Usage |Alias |Format |Undoable?
+
+|`add` |Adds a person to Fastis |`a` |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [t/TAG]...` |X
+
+|`addEvent` |Adds an event to Fastis and display it on the calendar |`aE` |`addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME` |X
+
+|`addGroup` |Adds a group to Fastis |`aG` |`addGroup NAME` |X
+
+|`addGroupMembers` |Adds an existing person in Fastis to a group |`aGM` |`addGroupMember INDEX g/GROUP` |X
+
+|`addToDo` |Adds a to-do to Fastis |`aTD` |`addToDo CONTENT` |X
+
+|`changeTagColor` |Changes a specific group color to one of the supported colors |`color` |`changeTagColor TAG COLOR` |X
+
+|`check` |Marks a to-do in Fastis as done |{nbsp} |`check INDEX` |X
+
+|`clear` |Clears all entries from Fastis |`c` |`clear` |X
+
+|`delete` |Deletes the specified person from Fastis |`d` |`delete INDEX` |X
+
+|`deleteGroup` |Deletes a group from Fastis |`dG` |`deleteGroup GROUP` |X
+
+|`deleteGroupMember` |Removes a member from a group |`dGM` |`deleteGroupMember INDEX g/GROUP` |X
+
+|`deleteToDo` |Deletes the specified to-do from Fastis |`dTD` |`deleteToDo INDEX` |X
+
+|`edit` |Edits an existing person in Fastis |`e` |`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [d/DETAIL] [t/TAG]...` |X
+
+|`editToDo` |Edits an existing to-do's content in Fastis |`eTD` |`editToDo INDEX c/CONTENT` |X
+
+|`exit` |Exits the program |{nbsp} |`exit` |{nbsp}
+
+|`find` |Finds persons whose name contains any of the given keywords |`f` |`find KEYWORD [MORE_KEYWORDS]` |{nbsp}
+
+|`help` |Displays the help window |{nbsp} |`help` |{nbsp}
+
+|`history` |Lists all the commands that you have entered in reverse chronological order |`h` |`history` |{nbsp}
+
+|`list` |Shows a list of all persons in Fastis |`l` |`list` |{nbsp}
+
+|`listGroupMembers` |Lists all the members in the group that already exists in Fastis |`lGM` |`listGroupMembers GROUP` |{nbsp}
+
+|`listTagMembers` |Lists out all persons with the given tags |`lTM` |`listTagMembers TAG [MORE_TAGS]...` |{nbsp}
+
+|`redo` |Reverses the most recent `undo` command |`r` |`redo` |{nbsp}
+
+|`scheduleGroup` |Finds all common free time slots for all group members to meet |`sG` |`scheduleGroup GROUP` |{nbsp}
+
+|`select` |Selects the person identified by the index number used in the last person listing |`s` |`select INDEX` |{nbsp}
+
+|`switch` |Switches between Calendar view and Timetable view |`sw` |`switch` |{nbsp}
+
+|`uncheck` |Marks a to-do in Fastis as undone |{nbsp} |`uncheck INDEX` |X
+
+|`undo` |Restores Fastis to the state before the previous _undoable_ command was executed |`u` |`undo` |{nbsp}
+|=========================================================

@@ -1,15 +1,25 @@
 package seedu.address.ui;
 
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_COLOR;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_HEIGHT;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_LABEL_COLOR;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_LABEL_NAME;
+import static seedu.address.ui.ProgressIndicatorProperties.PROGRESS_INDICATOR_WIDTH;
+
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
@@ -19,6 +29,7 @@ import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.WeeklyEvent;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -35,12 +46,21 @@ public class MainWindow extends UiPart<Stage> {
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
+    private Calendar calendar;
+    private Timetable timetable;
     private PersonListPanel personListPanel;
+    private ToDoListPanel toDoListPanel;
+    private GroupListPanel groupListPanel;
+    private ProgressIndicator progressIndicator;
+    private Label progressIndicatorLabel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
+
+    @FXML
+    private FlowPane progressIndicatorPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -50,6 +70,12 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane toDoListPanelPlaceholder;
+
+    @FXML
+    private StackPane groupListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -84,6 +110,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -116,22 +143,69 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        calendar = new Calendar(logic.getFilteredEventList());
+        timetable = new Timetable();
+        calendarPlaceholder.getChildren().add(calendar.getCalendarView());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        groupListPanel = new GroupListPanel(logic.getFilteredGroupList());
+        groupListPanelPlaceholder.getChildren().add(groupListPanel.getRoot());
+
+        //@@author nhatquang3112
+        toDoListPanel = new ToDoListPanel(logic.getFilteredToDoList());
+        toDoListPanelPlaceholder.getChildren().add(toDoListPanel.getRoot());
+
+        progressIndicatorLabel = new Label(PROGRESS_INDICATOR_LABEL_NAME);
+        progressIndicatorLabel.setStyle(PROGRESS_INDICATOR_LABEL_COLOR);
+        progressIndicatorPlaceholder.getChildren().add(progressIndicatorLabel);
+
+        progressIndicator = new ProgressIndicator();
+        progressIndicator.setStyle(PROGRESS_INDICATOR_COLOR);
+        progressIndicator.setPrefSize(PROGRESS_INDICATOR_WIDTH, PROGRESS_INDICATOR_HEIGHT);
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+        progressIndicatorPlaceholder.getChildren().add(progressIndicator);
+        //@@author
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
-
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        //@@author jas5469
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath(),
+                logic.getFilteredPersonList().size());
+        //@@author
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
     }
 
+    //@@author nhatquang3112
+    void updateProgressIndicator() {
+        progressIndicator.setProgress(logic.getToDoListCompleteRatio());
+    }
+    //@@author
+
+    //@@author LeonidAgarth
+    /**
+     * Clears the old calendar and display an updated one
+     */
+    void redisplayCalendar() {
+        calendarPlaceholder.getChildren().clear();
+        calendar = new Calendar(logic.getFilteredEventList());
+        calendarPlaceholder.getChildren().add(calendar.getCalendarView());
+    }
+
+    /**
+     * Clears the old timetable and display an updated one
+     */
+    void redisplayTimetable(ObservableList<WeeklyEvent> modules) {
+        calendarPlaceholder.getChildren().clear();
+        timetable = new Timetable(modules);
+        calendarPlaceholder.getChildren().add(timetable.getTimetableView());
+    }
+
+    //@@author
     void hide() {
         primaryStage.hide();
     }
@@ -186,7 +260,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        // browserPanel.freeResources();
     }
 
     @Subscribe

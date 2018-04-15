@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <addressbook>
     <persons>
-        <name>Adam Bird</name>
+        <name>Adam Birdy</name>
         <phone>12344321</phone>
         <email>adam@gmail.com</email>
         <address>25 Bencoolen St</address>
@@ -37,7 +37,7 @@
         <date>2018-05-02</date>
     </persons>
     <persons>
-        <name>Felix Gao</name>
+        <name>Felix Goody</name>
         <phone>87654321</phone>
         <email>felix@gmail.com</email>
         <address>8 Orange grove Road</address>
@@ -152,7 +152,7 @@
     </persons>
     <persons>
         <name>Email Test</name>
-        <phone>33335555</phone>
+        <phone>33235545</phone>
         <email>pigeonscs2103@gmail.com</email>
         <address>10 Bayfront Road</address>
         <date>2018-06-04</date>

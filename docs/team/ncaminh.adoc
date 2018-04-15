@@ -121,7 +121,7 @@ We use `Runtime.java` in `java.lang` package to `execute` the scripts via the co
 all the contents of the script.
 
 === Virtual assistant
-. Reads out a person name and show route from the Headquarter to the person address:
+. Reads out a person name and shows route from the Headquarter to the person address:
 
 .. Prerequisites: The last shown list is not empty. The first person in the last shown list has a valid, existing address.
 .. Test case: `click on the first person card` or use command `select 1` +

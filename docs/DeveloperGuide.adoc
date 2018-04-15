@@ -536,50 +536,121 @@ each implementation and the pros and cons of each implementation:
 // end::addconditions[]
 
 // tag::addqremoveq[]
-=== Patient visiting queue feature
+=== Patient visiting queue features
 ==== Current Implementation
 
 The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
 It supports the adding and removing of a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
 
-The addition mechanism functions like that of the `AddCommand` but uses only the index of the patient. It stores the actual index of the patient in the patient list.
+The addition mechanism functions like that of the `AddCommand` but uses only the current list index of the patient. It stores the actual index of the patient in the unfiltered patient list in the visiting queue.
 The user can find patients with certain keywords in their name using `FindCommand` then add them into queue according to the list index displayed.
-The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `Model`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update `VisitingQueuePanel`.
+The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `ModelManager`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update `VisitingQueuePanel`.
+
+Code snippet below shows how add patient into visiting queue work.
+
+[source,java]
+----
+
+Preprocess before adding patient to queue:
+
+    try {
+        actualSourceIndex = ParserUtil.parseIndex(actualIndexInString);
+    } catch (IllegalValueException e) {
+        throw new AssertionError("The target patient cannot be missing");
+    }
+
+Add operation:
+
+    try {
+        toQueue = model.addPatientToQueue(actualSourceIndex);
+    } catch (DuplicatePatientException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    }
+
+----
+
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 25 below.
 
 .The empty queue
 image::emptyVisitQueue.png[width="800"]
 
+
 The user now decides to add a patient into the queue.
 
-`AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method `addPatientToQueue` under `Model`, to add the patient index into the visiting queue.
+
+`AddPatientQueueCommand` will check if the index given is valid and is in the bound of the current list displayed. If the given index is valid and in the bound, `AddPatientQueueCommand` will then call the for the utility method `addPatientToQueue` under `ModelManager`, to add the patient index into the visiting queue.
 The updated queue is shown in Figure 26 below.
+
 
 .The updated queue
 image::patientInQueue.png[width="800"]
 
+
+
 The removal mechanism functions like that of the `DeleteCommand`. If no parameters are provided, it removes the first patient of the queue.
-If the user wants to remove a specific patient in the queue, the user can provide the patient index as parameter in the command.
+If the user wants to remove a specific patient in the queue, the user can provide the patient index displayed in the queue.
 The `RemovePatientQueueCommand` then calls for the utility method `removePatientFromQueue` under `Model`, to update the visiting queue and trigger an `IMDBChangedEvent` to `UI` to update the `VisitingQueuePanel`.
 
+Code snippet below shows how `RemovePatientQueueCommand` handle two different format of `removeq` command.
+
+[source,java]
+----
+
+Preprocess before removing patient tfrom visiting queue:
+
+    if (indexArguementIsExist) {
+        //Unfilter patient list
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+
+        if (targetIndex.getZeroBased() >= model.getFilteredPersonList().size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+Remove operation:
+
+    try {
+        Patient patientToRemove;
+        if (indexArguementIsExist) {
+            patientToRemove = model.removePatientFromQueueByIndex(targetIndex);
+        } else {
+            patientToRemove = model.removePatientFromQueue();
+        }
+        return new CommandResult(String.format(MESSAGE_REMOVE_SUCCESS, patientToRemove.getName().toString()));
+    } catch (PatientNotFoundException e) {
+
+        if (model.getVisitingQueue().size() > 0) {
+            throw new CommandException(MESSAGE_PERSON_NOT_FOUND_QUEUE);
+        }
+
+        throw new CommandException(MESSAGE_QUEUE_EMPTY);
+    }
+
+----
+
+
 Suppose that the queue contains patients as shown in Figure 27 below.
+
 
 .The queue containing some patients
 image::patientsInQueue.png[width="800"]
 
 
+
 The user now decides to remove the first patient from the queue.
 
-`RemovePatientQueueCommand` will then call the for the utility method `removePatientFromQueue` under `Model`, to remove the patient from the visiting queue.
+
+`RemovePatientQueueCommand` will then call the for the utility method `removePatientFromQueue` under `ModelManager`, to remove the patient from the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update `VisitingQueuePanel`.
 The updated queue is shown in Figure 28 below.
 
 .The queue after a patient is removed
 image::patientInQueueRemoveState.png[width="800"]
 
+
 ==== Design Considerations
 
-The following is an exploration of possible alternative implementations, the various aspects of
+The following is an exploration of possible alternative implementations for patient visiting queue features, the various aspects of
 each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
@@ -587,9 +658,9 @@ each implementation and the pros and cons of each implementation:
 * **Alternative 1 (current choice):** Use LinkedList as a queue to store the patient index only
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have utility limitation and have to take care how other commands affect the patient index in the list for example DeleteCommand.
-* **Alternative 2:** Create a data structure class like linked list to store a patient in a queue
-** Pros: Will be able to customise functionality of the data structure.
-** Cons: Will require time and more knowledge to do.
+* **Alternative 2:** Use ObservableList as queue to store patient object
+** Pros: Can get rid of possible bug caused by the flexibility of the list index.
+** Cons: May give redundancy for this feature because no modification will be done on the patient object.
 
 ===== Aspect: Implementation of `AddPatientQueueCommand`
 
@@ -611,33 +682,104 @@ each implementation and the pros and cons of each implementation:
 // end::addqremoveq
 
 // tag::addqremoveappt[]
-=== Patient appointment feature
+=== Patient appointment features
 ==== Current Implementation
 
 The patient appointment mechanism is facilitated by `Appointment`, `AppointmentEntry`, `DateTime`, `UniqueAppointmentEntryList`, `UniqueAppointmentList`, `AddAppointmentCommand`, `DeleteAppointmentCommand`, `ViewAppoinmentCommand`, `AddAppointmenetCommandParser`, `DeleteAppoinmentCommandParser` and `ViewAppointmentCommandParser`.
 It supports the adding, deleting and viewing of patient appointments. `AddAppointmentCommand`, `DeleteAppointmentCommand` and `ViewAppoinmentCommand` inherit from `Command`.
 
-The add new patient appointment mechanism functions like that of the `AddCommand` with patient index, date, and time as parameters.
-It creates a new appointment object with date and time and is stored in the patient's list of appointments.
-The user can find patients using the `FindCommand` and then add a new appointment according to the list index displayed.
+The add new patient appointment mechanism functions like that of the `AddCommand` with current list index of the patient, date, and time as inputs. `AddAppointmenetCommandParser` will verify the user input format and pass to `AddAppointmentCommand` to handle adding of appointment operation. It also make sure that the date provided is after the current date (date of today) and is not book by other patients. If verification is correct, a new appointment object with date and time will be created and is stored in the patient's list of appointments.
+The user can find patients using the `FindCommand` and then add a new appointment according to the current list index displayed.
 The `AddPatientQueueCommand` then calls for the utility method addPatientAppointment under `Model` to add a new patient appointment and trigger an `IMDBChangedEvent` to the `UI` to update PatientAppointmentPanel or CalendarPanel.
 
-Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure below.
+Code snippet below shows how `AddAppointmenetCommandParser` verify user inputs.
+
+[source,java]
+----
+
+String trimmedArgs = args.trim();
+
+if (trimmedArgs.isEmpty()) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            AddAppointmentCommand.MESSAGE_USAGE));
+}
+
+String[] argsArray = trimmedArgs.split("\\s");
+
+if (argsArray.length < NO_OF_ARGUMENTS) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            AddAppointmentCommand.MESSAGE_USAGE));
+}
+
+try {
+    Index targetPatientIndex = ParserUtil.parseIndex(argsArray[PATIENT_INDEX_INDEX]);
+    DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[DATE_INDEX] + " "
+            + argsArray[TIME_INDEX]);
+    if (DateTime.isBefore(argsArray[DATE_INDEX] + " " + argsArray[TIME_INDEX])) {
+        throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddAppointmentCommand.MESSAGE_USAGE));
+    }
+    return new AddAppointmentCommand(targetPatientIndex, appointmentDateTime);
+} catch (IllegalValueException e) {
+    throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+            AddAppointmentCommand.MESSAGE_USAGE));
+}
+
+----
+
+Suppose that the user has just launched the application and logged in as a medical staff. Bernice's appointment list is shown Figure 29 below.
+
+.Bernice's appointment list contain some appointments
+image::appointment_list.png[width="800"]
+
+The user now decides to add a new appointment on 20/7/2018 3pm for Bernice.
+
+`AddAppointmenetCommandParser` will verify if the input given is in correct format and the date given is valid. If the input is valid, `AddAppointmenetCommand` will then call for the utility method `addPatientAppointment` under `ModelManager`, to add the new appointment into the appointment list of Bernice. The update appointment list is shown in Figure 30 below.
 
 
-The delete appointment mechanism functions like that of the `DeleteCommand` with patient index and appointment index in list of appointment for the particular patient.  The `RemovePatientQueueCommand` then calls for the utility method deletePatientAppointment under `Model`, to update the remove the patient appointment and trigger an `IMDBChangedEvent` to `UI` to update PatientAppointmentPanel or CalendarPanel.
+.Bernice's appointment list updated
+image::appointment_list_add.png[width="800"]
 
 
-The view appointment mechanism functions like that of the `findCommand` and `listCommand` depends on whether patient index is provided.  If patient index is provided, the `viewAppointmentCommand` then calls for the utility method getPatientFromList by patient index under `Model`, to get the patient and trigger an `IMDBChangedEvent` to `UI` to update PatientAppointmentPanel to display list of past and future appoinments made by this patient. If patient index is not provided, the `viewAppointmentCommand` then calls for the utility method getAppointmentEntryList under `Model`, to get ta list of appointments made by all patients and trigger an `IMDBChangedEvent` to `UI` to update CalendarPanel.
+The delete appointment mechanism functions like that of the `DeleteCommand` with current list index of the patient, date, and time as inputs. `DeleteAppointmenetCommandParser` will verify the user input format and pass to `DeleteAppointmenetCommand` to handle deleting of appointment operation. The verification steps are similar to `DeleteAppointmenetCommandParser` If verification is correct, the `DeleteAppointmenetCommand` then calls for the utility method deletePatientAppointment under `ModelManager`, remove the appointment if the appointment is exist in the patient's appointment list and trigger an `IMDBChangedEvent` to `UI` to update PatientAppointmentPanel or CalendarPanel.
+
+Suppose that the user has just launched the application and logged in as a medical staff. Bernice’s appointment list is shown Figure 31 below.
+
+.Bernice's appointment list updated
+image::appointment_list_add.png[width="800"]
+
+Now the user receives Bernice's request to cancel an appointment on 22/6/2018 11am.
+
+`DeleteAppointmenetCommandParser` will verify if the input given is in correct format. If the input is valid, `DeleteAppointmenetCommand` will then call for the utility method `deletePatientAppointment` under `ModelManager`, to delete the appointment from the appointment list of Bernice. The updated appointment list is shown in Figure 31 below.
+
+.Bernice's appointment list updated
+image::appointment_list_del.png[width="800"]
+
+The view appointment mechanism functions like that of the `findCommand` and `listCommand` depends on whether the current list index of the patient is provided.  If patient index is provided, the `viewAppointmentCommand` then calls for the utility method getPatientFromListByIndex by patient index under `ModelManager`, to get the patient and trigger an `IMDBChangedEvent` to `UI` to update PatientAppointmentPanel to display list of past and upcoming appoinments made by this patient. If the current list index of the patient is not provided, the `viewAppointmentCommand` then calls for the utility method getAppointmentEntryList under `ModelManager`, to get the list of appointments made by all patients and trigger an `IMDBChangedEvent` to `UI` to update CalendarPanel.
+
+Code snippet below shows how `ViewAppoinmentCommand` handle two different format of `viewappt` commands.
+
+[source,java]
+----
+
+if (indexArgumentIsExist) {
+    targetPatient = model.getPatientFromListByIndex(targetIndex);
+    EventsCenter.getInstance().post(new ShowPatientAppointmentRequestEvent(targetPatient));
+    return new CommandResult(String.format(MESSAGE_SUCCESS_PATIENT, targetPatient.getName().fullName));
+} else {
+    EventsCenter.getInstance().post(new ShowCalendarViewRequestEvent(model.getAppointmentEntryList()));
+}
+
+----
 
 ==== Design Considerations
 
-The following is an exploration of possible alternative implementations, the various aspects of
+The following is an exploration of possible alternative implementations for patient appointment features, the various aspects of
 each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddAppointmentCommand and DeleteAppointmentCommand and viewAppointmentCommand
 
-* **Alternative 1 (current choice):** Use separate customised data structure to store appointments for patients and display appointments for all patient on the calendar panel
+* **Alternative 1 (current choice):** Usetwo separate customised data structure to store appointments for each patient and appointments for all patient (master list) to be displayed on the calendar panel
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have redundant methods in both data structure.
 * **Alternative 2:** Create a appointment superclass or interface and extends from it
@@ -645,10 +787,20 @@ each implementation and the pros and cons of each implementation:
 ** Cons: May not find similar behaviour between this two classes.
 
 ===== Aspect: Implementation of AddAppointmentCommand
-
-
+* **Alternative 1 (current choice):** Add new appointment using current list index of patient.
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: Will be error prone since list index is flexible with the operation that user typed in..
+* **Alternative 2:** Add new appointment using patient's NRIC.
+** Pros: Will add the new appointment for the correct patient.
+** Cons: Will require extra checking for patient's NRIC uniqueness upon adding into IMDB.
 
 ===== Aspect: Implementation of DeleteAppointmentCommand
+* **Alternative 1 (current choice):** Remove an appointment using date and time as input.
+** Pros: Will be easy to implement due to existing utility methods.
+** Cons: May delete the incorrect appointment if users do not check the input they type before entering the command.
+* **Alternative 2:** Remove appointment by appointment list index.
+** Pros: Can prevent user from deleting the wrong appointment.
+** Cons: Will require implementation to maintain the appointment index.
 
 
 // end::addqremoveappt
@@ -1724,6 +1876,53 @@ Expected: Invalid record index error is shown.
 Expected: The first patient in the list is selected and his or her remarks are changed to `Weekly visits`.
 .. Type `remark 1 r/` +
 Expected: The first patient in the list is selected and his or her remarks are removed.
+
+=== Add Patient into Visiting Queue
+. Add a patient from the current patient list into visiting queue.
+.. Type `addq 1` +
+Expected: The first patient in the list will be added into the visiting queue shown in visiting queue panel at the bottom.
+.. Type `addq 99999` +
+Expected: Invalid index error is shown.
+
+=== Remove Patient from Visiting Queue
+. Remove the first patient from the visiting queue.
+.. Type `removeq` +
+Expected: The first patient in the visiting queue will be removed from the queue.
+.. Type `removeq` when the visiting queue is empty +
+Expected: Error message will be shown that the queue is empty.
+
+=== Remove Patient from Visiting Queue by Index
+. Remove a specific patient from the visiting queue.
+.. Type `removeq 3` +
+Expected: The patient with index 3 in the visiting queue will be removed from the queue.
+.. Type `removeq 5` when the patient with index 3 does not exist in the visiting queue +
+Expected: Error message will be shown that the patient does not exist in the visiting queue.
+
+=== View Patient Appointments in Calendar View
+. View list of patient appointments in calendar view.
+.. Type `viewappt` +
+Expected: All patient appointments will be displayed in the calendar view.
+
+=== View Patient Appointments by Index
+. View list of patient appointments made by a specific patient from the current patient list.
+.. Type `viewappt 3` +
+Expected: List of appointments made by the the third patient in the list will be displayed at the right panel.
+.. Type `viewappt 99999`
+Expected: Invalid index error is shown.
+
+=== Add Patient Appointment
+. Add an appointment for a specific patient from the current patient list.
+.. Type `addappt 1 19/8/2018 1500` +
+Expected: New appointment will be added and the list of appointments of the patient will be updated. Changes will be reflected on the right panel.
+.. Type `addappt 1 19/8/2018`
+Expected: Error messages will shown that the command format is incorrect.
+
+=== Delete Patient Appointment
+. Delete an appointment made by a specific patient from the current patient list.
+.. Type `delappt 1 19/8/2018 1500` +
+Expected: The appointment will be deleted and the list of appointments of the patient will be updated. Changes will be reflected on the right panel.
+.. Type `delappt 1 19/8/2018`
+Expected: Error messages will shown that the command format is incorrect.
 
 [appendix]
 == Glossary

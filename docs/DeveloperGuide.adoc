@@ -247,7 +247,7 @@ The following diagram shows the class diagram of the `Model` component.
 It describes the overall structure of the `Model` component, along with all its sub-components.
 
 .Class diagram of the `Model` component
-image::ModelClassDiagram.png[width="800"]
+image::ModelClassDiagram.jpg[width="800"]
 
 *API*: link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 

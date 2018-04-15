@@ -9,15 +9,23 @@ import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_DELETE;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EDIT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ENCRYPT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EXIT;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_EXPORT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_FIND;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HELP;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HISTORY;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_LIST;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_MAP1;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_SELECT;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UNALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UNDO;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UNION;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_UPLOAD;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_VACANT;
+
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_SYNTAX_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_SYNTAX_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ADD;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_CLEAR;
@@ -26,14 +34,21 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_DELETE;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EDIT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_ENCRYPT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EXIT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_EXPORT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_FIND;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HELP;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_HISTORY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_IMPORT;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_LIST;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_MAP1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_REDO;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_SELECT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNALIAS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNDO;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UNION;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_UPLOAD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_ALIAS_VACANT;
+
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 
@@ -45,16 +60,23 @@ import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ImportCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.MapCommand;
 import seedu.address.logic.commands.PasswordCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemovePasswordCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.TimetableUnionCommand;
+import seedu.address.logic.commands.UnaliasCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UploadCommand;
+import seedu.address.logic.commands.VacantCommand;
+
 import seedu.address.model.alias.Alias;
 import seedu.address.testutil.AliasBuilder;
 
@@ -176,24 +198,78 @@ public class AliasCommandParserTest {
 
     @Test
     public void parse_encryptAlias_success() {
-        Alias expectedUndoAlias = new AliasBuilder().withCommand(PasswordCommand.COMMAND_WORD)
+        Alias expectedEncryptAlias = new AliasBuilder().withCommand(PasswordCommand.COMMAND_WORD)
                 .withAlias(VALID_ALIAS_ENCRYPT).build();
 
-        assertParseSuccess(parser, ALIAS_DESC_ENCRYPT, new AliasCommand(expectedUndoAlias));
+        assertParseSuccess(parser, ALIAS_DESC_ENCRYPT, new AliasCommand(expectedEncryptAlias));
     }
 
     @Test
     public void parse_decryptAlias_success() {
-        Alias expectedUndoAlias = new AliasBuilder().withCommand(RemovePasswordCommand.COMMAND_WORD)
+        Alias expectedDecryptAlias = new AliasBuilder().withCommand(RemovePasswordCommand.COMMAND_WORD)
                 .withAlias(VALID_ALIAS_DECRYPT).build();
 
-        assertParseSuccess(parser, ALIAS_DESC_DECRYPT, new AliasCommand(expectedUndoAlias));
+        assertParseSuccess(parser, ALIAS_DESC_DECRYPT, new AliasCommand(expectedDecryptAlias));
     }
 
     @Test
-    public void parse_invalidValue_failure() {
+    public void parse_mapAlias_success() {
+        Alias expectedMapAlias = new AliasBuilder().withCommand(MapCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_MAP1).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_MAP1, new AliasCommand(expectedMapAlias));
+    }
+
+    @Test
+    public void parse_unionAlias_success() {
+        Alias expectedUnionAlias = new AliasBuilder().withCommand(TimetableUnionCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_UNION).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_UNION, new AliasCommand(expectedUnionAlias));
+    }
+
+    @Test
+    public void parse_unaliasAlias_success() {
+        Alias expectedUnaliasAlias = new AliasBuilder().withCommand(UnaliasCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_UNALIAS).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_UNALIAS, new AliasCommand(expectedUnaliasAlias));
+    }
+
+    @Test
+    public void parse_uploadAlias_success() {
+        Alias expectedUploadAlias = new AliasBuilder().withCommand(UploadCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_UPLOAD).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_UPLOAD, new AliasCommand(expectedUploadAlias));
+    }
+
+    @Test
+    public void parse_exportAlias_success() {
+        Alias expectedExportAlias = new AliasBuilder().withCommand(ExportCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_EXPORT).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_EXPORT, new AliasCommand(expectedExportAlias));
+    }
+
+    @Test
+    public void parse_vacantAlias_success() {
+        Alias expectedVacantAlias = new AliasBuilder().withCommand(VacantCommand.COMMAND_WORD)
+                .withAlias(VALID_ALIAS_VACANT).build();
+
+        assertParseSuccess(parser, ALIAS_DESC_VACANT, new AliasCommand(expectedVacantAlias));
+    }
+
+    @Test
+    public void parse_invalidAliasSyntax_failure() {
         //alias with symbols failure
-        assertParseFailure(parser, INVALID_ALIAS_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
+        assertParseFailure(parser, INVALID_ALIAS_SYNTAX_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
+    }
+
+    @Test
+    public void parse_invalidCommandSyntax_failure() {
+        //command with symbols failure
+        assertParseFailure(parser, INVALID_COMMAND_SYNTAX_DESC, Alias.MESSAGE_ALIAS_CONSTRAINTS);
     }
 
     @Test

@@ -29,7 +29,8 @@ public class AliasListTest extends GuiUnitTest {
 
     @Test
     public void checkTable() {
-        // Populate expectedAliases
+
+        /* Case: add two aliases in the first row and one alias in the second row */
         String[][] expected = new String[][] {{"add1", "alias1"}, {"add2"}};
 
         // Init alias list and post event
@@ -38,14 +39,30 @@ public class AliasListTest extends GuiUnitTest {
         AliasListEvent aliasListEventStub = new AliasListEvent(obsExpected);
 
         aliasList.init(obsExpected);
+        aliasList.setStyle();
         postNow(aliasListEventStub);
         guiRobot.pauseForHuman();
 
         // Assert content of the table
         GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
 
-        // Populate expectedAliases
+        /* Case: add one alias in the first row */
         expected = new String[][] {{"add1"}};
+        expectedList = GuiTestAssert.populateExpectedAliases(expected);
+
+        // Init alias list and post event
+        obsExpected = FXCollections.observableArrayList(expectedList);
+        aliasListEventStub = new AliasListEvent(obsExpected);
+
+        aliasList.init(obsExpected);
+        postNow(aliasListEventStub);
+        guiRobot.pauseForHuman();
+
+        // Assert content of the table
+        GuiTestAssert.assertTableContent(aliasListHandle.getTables(), expected);
+
+        /* Case: add three aliases in the first row */
+        expected = new String[][] {{"add1", "alias1", "birthday1"}};
         expectedList = GuiTestAssert.populateExpectedAliases(expected);
 
         // Init alias list and post event

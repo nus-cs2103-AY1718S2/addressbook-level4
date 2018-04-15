@@ -682,10 +682,14 @@ Format: `viewappt` or `va`
 Examples:
 
 * `viewappt` +
-Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month as shown in Figure 12 below.
 
 * `va` +
-Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month.
+Lists the medical appointments in the current month. User can also navigate to other months to view medical appointments for that particular month as shown in Figure 12 below.
+
+.Calendar panel in IMDB
+[caption="Figure 12: "]
+image::viewappt_window.PNG[width="990"]
 
 ==== Deleting a medical appointment by patient name and appointment index number: `delappt` [since v1.3]
 

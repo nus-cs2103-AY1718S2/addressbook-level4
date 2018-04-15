@@ -536,15 +536,38 @@ each implementation and the pros and cons of each implementation:
 // end::addconditions[]
 
 // tag::addqremoveq[]
-=== Patient visiting queue feature
+=== Patient visiting queue features
 ==== Current Implementation
 
 The patient visiting queue mechanism is facilitated by `UniquePatientVisitingQueue`, `AddPatientQueueCommand` and `RemovePatientQueueCommand`.
 It supports the adding and removing of a patient from the visiting queue. `AddPatientQueueCommand` and `RemovePatientQueueCommand` inherit from `Command`.
 
-The addition mechanism functions like that of the `AddCommand` but uses only the index of the patient. It stores the actual index of the patient in the patient list.
+The addition mechanism functions like that of the `AddCommand` but uses only the current list index of the patient. It stores the actual index of the patient in the unfiltered patient list in the visiting queue.
 The user can find patients with certain keywords in their name using `FindCommand` then add them into queue according to the list index displayed.
 The `AddPatientQueueCommand` then calls for the utility method `addPatientToQueue` under `Model`, to update the visiting queue and triggers an `IMDBChangedEvent` to the `UI` to update `VisitingQueuePanel`.
+
+Code snippet below shows how add patient into visiting queue work.
+
+[source,java]
+----
+
+Preprocess before adding patient to queue:
+
+    try {
+        actualSourceIndex = ParserUtil.parseIndex(actualIndexInString);
+    } catch (IllegalValueException e) {
+        throw new AssertionError("The target patient cannot be missing");
+    }
+
+Add operation:
+
+    try {
+        toQueue = model.addPatientToQueue(actualSourceIndex);
+    } catch (DuplicatePatientException e) {
+        throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+    }
+
+----
 
 Suppose that the user has just launched the application and logged in as a medical staff. The empty queue is shown in Figure 25 below.
 
@@ -560,8 +583,45 @@ The updated queue is shown in Figure 26 below.
 image::patientInQueue.png[width="800"]
 
 The removal mechanism functions like that of the `DeleteCommand`. If no parameters are provided, it removes the first patient of the queue.
-If the user wants to remove a specific patient in the queue, the user can provide the patient index as parameter in the command.
+If the user wants to remove a specific patient in the queue, the user can provide the patient index displayed in the queue.
 The `RemovePatientQueueCommand` then calls for the utility method `removePatientFromQueue` under `Model`, to update the visiting queue and trigger an `IMDBChangedEvent` to `UI` to update the `VisitingQueuePanel`.
+
+Code snippet below shows how `RemovePatientQueueCommand` handle two different format of `removeq` command.
+
+[source,java]
+----
+
+Preprocess before removing patient tfrom visiting queue:
+
+    if (indexArguementIsExist) {
+        //Unfilter patient list
+        model.updateFilteredPersonList(Model.PREDICATE_SHOW_ALL_PERSONS);
+
+        if (targetIndex.getZeroBased() >= model.getFilteredPersonList().size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+    }
+
+Remove operation:
+
+    try {
+        Patient patientToRemove;
+        if (indexArguementIsExist) {
+            patientToRemove = model.removePatientFromQueueByIndex(targetIndex);
+        } else {
+            patientToRemove = model.removePatientFromQueue();
+        }
+        return new CommandResult(String.format(MESSAGE_REMOVE_SUCCESS, patientToRemove.getName().toString()));
+    } catch (PatientNotFoundException e) {
+
+        if (model.getVisitingQueue().size() > 0) {
+            throw new CommandException(MESSAGE_PERSON_NOT_FOUND_QUEUE);
+        }
+
+        throw new CommandException(MESSAGE_QUEUE_EMPTY);
+    }
+
+----
 
 Suppose that the queue contains patients as shown in Figure 27 below.
 
@@ -579,7 +639,7 @@ image::patientInQueueRemoveState.png[width="800"]
 
 ==== Design Considerations
 
-The following is an exploration of possible alternative implementations, the various aspects of
+The following is an exploration of possible alternative implementations for patient visiting queue features, the various aspects of
 each implementation and the pros and cons of each implementation:
 
 ===== Aspect: Data structure to support the AddPatientQueue and RemovePatientQueue command
@@ -587,9 +647,9 @@ each implementation and the pros and cons of each implementation:
 * **Alternative 1 (current choice):** Use LinkedList as a queue to store the patient index only
 ** Pros: Will be easy to implement due to existing utility methods.
 ** Cons: May have utility limitation and have to take care how other commands affect the patient index in the list for example DeleteCommand.
-* **Alternative 2:** Create a data structure class like linked list to store a patient in a queue
-** Pros: Will be able to customise functionality of the data structure.
-** Cons: Will require time and more knowledge to do.
+* **Alternative 2:** Use ObservableList as queue to store patient object
+** Pros: Can get rid of possible bug caused by the flexibility of the list index.
+** Cons: May give redundancy for this feature because no modification will be done on the patient object.
 
 ===== Aspect: Implementation of `AddPatientQueueCommand`
 

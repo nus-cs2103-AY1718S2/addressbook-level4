@@ -374,6 +374,12 @@ public class AddCommandTest {
         }
 
         @Override
+        public boolean hasConcurrentAppointment(LocalDateTime oldDateTime, LocalDateTime newDateTime) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
         public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }

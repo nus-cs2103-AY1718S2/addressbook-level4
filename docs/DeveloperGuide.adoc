@@ -137,7 +137,7 @@ image::Architecture.png[width="600"]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 ////
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
+`Main` has only one class called link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
 * Initializing the components in the correct sequence and connects them up with each other at application launch.
 * Shutting down the components and invokes cleanup method where necessary.
@@ -198,7 +198,7 @@ The following diagram shows the class diagram of the `UI` component.
 .Class diagram of the `UI` component
 image::UiClassDiagram.png[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu.address/ui/Ui.java[`Ui.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `CalendarPanel` etc.
 All these classes inherit from the abstract `UiPart` class.
@@ -226,7 +226,7 @@ image::LogicClassDiagram.png[width="800"]
 .Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu.address/logic/Logic.java[`Logic.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
 When the user types in a new command to be parsed:
 
@@ -249,7 +249,7 @@ It describes the overall structure of the `Model` component, along with all its 
 .Class diagram of the `Model` component
 image::ModelClassDiagram.jpg[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu.address/model/Model.java[`Model.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
 The `Model` component:
 
@@ -270,7 +270,7 @@ It describes how the overall structure of the `Storage` component and its differ
 .Class diagram of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
 
-*API*: link:{repoURL}/src/main/java/seedu.address/storage/Storage.java[`Storage.java`]
+*API*: link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
 The `Storage` component:
 
@@ -1318,7 +1318,7 @@ Please refer to <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 To do the following steps to create a new release, you can:
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number, e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
@@ -1482,6 +1482,13 @@ Use case ends.
 +
 Use case resumes at step 2.
 
+* 3b. The person at the given index is a celebrity.
++
+[none]
+** 3b1. CelebManager deletes the celebrity's calendar.
++
+Use case continues to step 4.
+
 === Use case: Undo
 
 *MSS*
@@ -1539,6 +1546,13 @@ Use case ends.
 +
 [none]
 ** 1a1. CelebManager shows an error message.
++
+Use case ends.
+
+* 1b. The tag is celebrity.
++
+[none]
+** 1b1. CelebManager shows an error message.
 +
 Use case ends.
 
@@ -1610,6 +1624,14 @@ Use case ends.
 Use case ends.
 
 [none]
+* 1b. The entered start date is after end date.
++
+[none]
+** 1b1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
 * 2a. There is no appointment to show in the date range.
 +
 [none]
@@ -1635,6 +1657,14 @@ Use case ends.
 +
 [none]
 ** 1a1. CelebManager outputs an error message.
++
+Use case ends.
+
+[none]
+* 1b. The entered start date is after end date.
++
+[none]
+** 1b1. CelebManager outputs an error message.
 +
 Use case ends.
 

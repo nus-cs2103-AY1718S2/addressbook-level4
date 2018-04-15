@@ -43,10 +43,10 @@ public class GServiceManager {
     /** OAuth 2.0 scopes. */
     public static final List<String> SCOPES = Arrays.asList(SCOPES_ARRAY);
 
-    private static final Logger logger = LogsCenter.getLogger(GServiceManager.class);
 
     public static final String APPLICATION_NAME = "codeducator/v1.5";
 
+    private static final Logger logger = LogsCenter.getLogger(GServiceManager.class);
     /** Credential information from Google Credentials. Change if any credentials online change**/
     private static final String CLIENT_ID = "126472549776-8cd9bk56sfubm9rkacjivecikppte982.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "nyBpzm1OjnKNZOd0-kT1uo7W";

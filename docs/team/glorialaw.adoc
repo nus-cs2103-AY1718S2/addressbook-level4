@@ -1,4 +1,4 @@
-= Gloria Law - Project Portfolio
+= Gloria Ho Yan Law - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 

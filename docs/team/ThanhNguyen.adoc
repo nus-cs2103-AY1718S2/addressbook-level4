@@ -13,7 +13,7 @@ ifdef::env-github,env-browser[:outfilesuffix: .adoc]
 Welcome to my portfolio page for CS2103T Academic Year 2018 Semester 2 project - *ReciRecipé*.
 
 [.print-only]
-Please visit the https://recirecipe.netlify.com/team/ThanhNguyen.html[online page] to view my project portfolio with full formatting.
+Please visit the https://recirecipe.netlify.com/team/ThanhNguyen.html[online page] to view my project portfolio in full formatting.
 
 ---
 

@@ -397,7 +397,7 @@ As an example, the following sequence diagram shows the interaction within class
 the user executes `removeTag friends` successfully:
 
 .Sequence diagram of `removeTag` command
-image::RemoveTagSequenceDiagram.png[width=""]
+image::RemoveTagCommand-logic-seq-diagram.jpg[width=""]
 
 ==== Design Considerations
 ===== Aspect: Command result for removal of `celebrity` tag

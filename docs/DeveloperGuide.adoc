@@ -587,7 +587,9 @@ image::SearchPersonEvent.png[width="800"]
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+We are currently looking into the `javax.cipher` and `javax.security` packages for encryption of sensitive data.
+The `Apache Commons Crypto` library has also been considered. Potentially, data encryption would be used for storing
+personal profile information, such as social feeds and friend lists of contacts.
 
 // end::dataencryption[]
 

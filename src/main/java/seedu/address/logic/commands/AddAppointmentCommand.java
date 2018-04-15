@@ -12,7 +12,6 @@ import java.io.IOException;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
-import seedu.address.ui.BrowserPanel;
 import seedu.address.ui.CalendarDisplay;
 
 //@@author kengsengg
@@ -48,9 +47,7 @@ public class AddAppointmentCommand extends Command {
     public static final String MESSAGE_DUPLICATE_APPOINTMENT = "This appointment already exists in EduBuddy or "
             + "there is an overlap in appointments";
 
-    private final Appointment toAdd;
-
-    private BrowserPanel browserPanel = new BrowserPanel();
+    private Appointment toAdd;
     private CalendarDisplay calendarDisplay = new CalendarDisplay();
 
     /**
@@ -67,7 +64,7 @@ public class AddAppointmentCommand extends Command {
         try {
             model.addAppointment(toAdd);
             getDetails();
-            showEventOnCalendar();
+            addEventOnCalendar();
             return new CommandResult(String.format(MESSAGE_SUCCESS, getDetails()));
         } catch (DuplicateAppointmentException e) {
             throw new CommandException(MESSAGE_DUPLICATE_APPOINTMENT);
@@ -79,8 +76,12 @@ public class AddAppointmentCommand extends Command {
                 + " with " + toAdd.getName();
     }
 
-    private void showEventOnCalendar() throws IOException {
-        calendarDisplay.createEvent(toAdd);
+    /**
+     * Generates an unique ID for each event and adds the event on calendar
+     */
+    private void addEventOnCalendar() throws IOException {
+        String id = toAdd.getDate() + toAdd.getStartTime() +  toAdd.getEndTime();
+        calendarDisplay.createEvent(toAdd, id);
     }
 
     @Override

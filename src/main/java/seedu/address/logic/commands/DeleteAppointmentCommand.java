@@ -2,6 +2,7 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.util.List;
 
 import seedu.address.commons.core.Messages;
@@ -9,6 +10,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.ui.CalendarDisplay;
 
 //@@author kengsengg
 /**
@@ -29,6 +31,7 @@ public class DeleteAppointmentCommand extends Command {
     private final Index targetIndex;
 
     private Appointment toDelete;
+    private CalendarDisplay calendarDisplay = new CalendarDisplay();
 
     /**
      * Creates a DeleteAppointmentCommand to delete the specified {@code Appointment}
@@ -38,16 +41,20 @@ public class DeleteAppointmentCommand extends Command {
     }
 
     @Override
-    public CommandResult execute() throws CommandException {
+    public CommandResult execute() throws CommandException, IOException {
         List<Appointment> lastShownList = model.getFilteredAppointmentList();
+
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_APPOINTMENT_DISPLAYED_INDEX);
         }
+
         toDelete = lastShownList.get(targetIndex.getZeroBased());
         requireNonNull(toDelete);
+
         try {
             model.deleteAppointment(toDelete);
             getDetails();
+            deleteEventOnCalendar();
             return new CommandResult(String.format(MESSAGE_SUCCESS, getDetails()));
         } catch (AppointmentNotFoundException e) {
             throw new AssertionError("The target appointment cannot be missing");
@@ -57,6 +64,11 @@ public class DeleteAppointmentCommand extends Command {
     private String getDetails() {
         return toDelete.getInfo() + ": " + toDelete.getStartTime() + " to " + toDelete.getEndTime() + " on "
                 + toDelete.getDate();
+    }
+
+    private void deleteEventOnCalendar() throws IOException {
+        String id = toDelete.getDate() + toDelete.getStartTime() +  toDelete.getEndTime();
+        calendarDisplay.removeEvent(id);
     }
 
     @Override

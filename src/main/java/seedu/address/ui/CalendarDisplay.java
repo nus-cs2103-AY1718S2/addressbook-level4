@@ -93,10 +93,12 @@ public class CalendarDisplay {
      * Creates an event on the Google Calendar
      * @throws IOException
      */
-    public void createEvent(Appointment toAdd) throws IOException {
+    public void createEvent(Appointment toAdd, String id) throws IOException {
         Calendar service = getCalendarService();
 
         Event event = new Event().setSummary(toAdd.getName());
+
+        event.setId(String.valueOf(id));
 
         DateTime startDateTime = new DateTime(formattedStartDateTime(toAdd));
         EventDateTime start = new EventDateTime().setDateTime(startDateTime);
@@ -106,8 +108,17 @@ public class CalendarDisplay {
         EventDateTime end = new EventDateTime().setDateTime(endDateTime);
         event.setEnd(end);
 
-        String calendarId = "primary";
-        service.events().insert(calendarId, event).execute();
+        service.events().insert("primary", event).execute();
+    }
+
+    /**
+     * Removes an event on the Google Calendar
+     * @throws IOException
+     */
+    public void removeEvent(String id) throws IOException {
+        Calendar service = getCalendarService();
+
+        service.events().delete("primary", id).execute();
     }
 
     /**

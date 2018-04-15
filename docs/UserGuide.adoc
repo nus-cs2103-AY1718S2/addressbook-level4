@@ -100,8 +100,10 @@ _Figure 5_ shows the 5 major components of the GUI of E.T. :
 * *Employee's Profile Panel*: where the details of the selected employee is shown.
 * *Notification cards*: where E.T. reminds you about events.
 
+
 .Graphical User Interface (GUI).
-image::UiLabelled.jpg[width="790"]
+image::UiLabelled.png[width="800"]
+
 
 === Reading the result display box
 

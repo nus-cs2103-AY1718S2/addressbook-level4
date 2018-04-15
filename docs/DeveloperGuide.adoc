@@ -662,7 +662,14 @@ These are important fields for a loan shark manager to get a quick grasp of a cu
 
 ==== Enhancement
 Depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
-Upon selection of the PersonCard, or select command from the CommandBox, a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+Upon selection of the PersonCard, or select command from the CommandBox,
+
+----
+    @Override
+    
+----
+
+a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
 Both `Customer` and `Runner` will have the fields: name, phone, email, address.
 Fields exclusively for the `Customer` are: amount borrowed, amount owed, due date, and runner assigned.
 

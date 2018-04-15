@@ -69,8 +69,10 @@ public class ResumeGuiTest extends AddressBookSystemTest {
         guiRobot.push(KeyCode.ESCAPE);
         validateShowPanel(InfoPanel.PANEL_NAME);
 
-        // Fix Codacy analysis issue
-        assertTrue(true);
+        // What is Codacy doing, only know how to complaint but didn't analyze properly
+        // that I do have assert inside the validateShowPanel function, smh
+        assertTrue(!resumePane.isVisible());
+        // This line is written just for the sake of Codacy
     }
 
     /**

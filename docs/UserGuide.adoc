@@ -410,7 +410,9 @@ e.g.`select 2`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
-* *Export* : `export`
+* *Count* : `count`
+* *Export* : `export` +
+e.g. `export portfolio`
 * *Sort* : `sort`
 * *Group* : `group` +
 e.g. `group priority`

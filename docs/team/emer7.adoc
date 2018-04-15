@@ -15,6 +15,11 @@ Employees Tracker (E.T.) comes to the rescue!
 
 Employees Tracker is a Human Resource Manager application that helps managers to manage their subordinates. It has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
 
+Shown below in _Figure 1_ is Employees Tracker user interface.
+
+.Employees Tracker (E.T.)
+image::../images/Ui.png[width="600"]
+
 == Summary of contributions
 
 * *Major enhancement*: added *the ability to review employees.*
@@ -35,7 +40,7 @@ Employees Tracker is a Human Resource Manager application that helps managers to
 ** Enhancements to existing features:
 *** Updated the GUI detail panel.
 ** Contribution to code quality:
-*** Periodically refactor code to reduce coupling https://github.com/CS2103JAN2018-T09-B1/main/issues/111[1], maintain consistency https://github.com/CS2103JAN2018-W15-B1/main/pull/223[2], and introduce more meaningful naming https://github.com/CS2103JAN2018-W15-B1/main/pull/149[3].
+*** Periodically refactor code to reduce coupling https://github.com/CS2103JAN2018-W15-B1/main/issues/111[1], maintain consistency https://github.com/CS2103JAN2018-W15-B1/main/pull/223[2], and introduce more meaningful naming https://github.com/CS2103JAN2018-W15-B1/main/pull/149[3].
 ** Documentation:
 *** Maintain consistency in terminology used in documentation https://github.com/CS2103JAN2018-W15-B1/main/pull/168[1].
 ** Community:

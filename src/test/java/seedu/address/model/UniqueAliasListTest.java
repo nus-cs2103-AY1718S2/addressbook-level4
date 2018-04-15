@@ -48,10 +48,18 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void addAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void addAlias_validAlias_success() throws DuplicateAliasException {
         Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
+    }
+
+    @Test
+    public void addAlias_validAlias_throwsDuplicateAliasException() throws DuplicateAliasException {
+        Alias validAlias = ADD;
+        uniqueAliasList.add(validAlias);
+        thrown.expect(DuplicateAliasException.class);
+        uniqueAliasList.add(validAlias);
     }
 
     @Test
@@ -72,7 +80,7 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void getAliasCommand_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void getAliasCommand_validAlias_success() throws DuplicateAliasException {
         Alias validAlias = ADD;
         uniqueAliasList.add(validAlias);
 
@@ -82,20 +90,20 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void importAlias_validAlias_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void importAlias_validAlias_success() {
         Alias validAlias = ADD;
         uniqueAliasList.importAlias(validAlias);
         assertEquals(Arrays.asList(validAlias), uniqueAliasList.getAliasObservableList());
     }
 
     @Test
-    public void extractAliasMapping_noAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void extractAliasMapping_noAliasAdded_success() {
         ArrayList<String> expectedList = new ArrayList<String>();
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
     }
 
     @Test
-    public void extractAliasMapping_validAliasAdded_success() throws DuplicateAliasException, AliasNotFoundException {
+    public void extractAliasMapping_validAliasAdded_success() throws DuplicateAliasException {
         uniqueAliasList.add(ADD);
 
         ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD}});
@@ -113,24 +121,30 @@ public class UniqueAliasListTest {
     }
 
     @Test
-    public void extractAliasMapping_sameCommandAliases_success() throws DuplicateAliasException,
-            AliasNotFoundException {
+    public void extractAliasMapping_sameCommandAliases_success() throws DuplicateAliasException {
         uniqueAliasList.add(MAP_1);
         uniqueAliasList.add(MAP_2);
 
-        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_2}, {MAP_1}});
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{MAP_1}, {MAP_2}});
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
     }
 
     @Test
-    public void extractAliasMapping_mixedCommandAliases_success() throws DuplicateAliasException,
-            AliasNotFoundException {
+    public void extractAliasMapping_mixedCommandAliases_success() throws DuplicateAliasException {
         uniqueAliasList.add(ADD);
         uniqueAliasList.add(MAP_1);
         uniqueAliasList.add(MAP_2);
 
-        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_2}, {MAP_1}});
+        ArrayList<ArrayList<String>> expectedList = generateExpectedList(new Alias[][]{{ADD, MAP_1}, {MAP_2}});
         assertEquals(expectedList, uniqueAliasList.extractAliasMapping());
+    }
+
+    @Test
+    public void resetHashMap_success() throws DuplicateAliasException {
+        uniqueAliasList.add(ADD);
+        assertEquals(Arrays.asList(ADD), uniqueAliasList.getAliasObservableList());
+        uniqueAliasList.resetHashmap();
+        assertEquals(new ArrayList<Alias>(), uniqueAliasList.getAliasObservableList());
     }
 
     /**

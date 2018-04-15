@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import javafx.scene.control.TableColumn;
 
 import seedu.address.logic.commands.AliasCommand;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.person.Person;
 import seedu.address.ui.PersonCard;
 
@@ -132,6 +133,21 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the content in {@code aliasListTable} matches all the string in {@code expected}
+     */
+    public static void assertTableContent(ObservableList<TableColumn> aliasListTable, Alias[][] expected) {
+        ArrayList<ArrayList<String>> expectedList = populateExpectedAliases(expected);
+        for (int i = 0; i < expectedList.size(); i++) {
+            for (int j = 0; j < expectedList.get(i).size(); j++) {
+                TableColumn column = aliasListTable.get(j);
+
+                // Current Row value at column
+                assertEquals(expectedList.get(i).get(j), column.getCellObservableValue(i).getValue());
+            }
+        }
+    }
+
+    /**
      * Helper method to populate expectedTable with unused empty Alias
      */
     public static ArrayList<ArrayList<String>> populateExpectedAliases(String[][] expected) {
@@ -150,6 +166,45 @@ public class GuiTestAssert {
             expectedList.add(innerList);
         }
         return expectedList;
+    }
+
+    /**
+     * Helper method to populate expectedTable with unused empty Alias
+     */
+    public static ArrayList<ArrayList<String>> populateExpectedAliases(Alias[][] expected) {
+        String emptyAlias = "";
+        ArrayList<ArrayList<String>> expectedList = new ArrayList<>();
+        for (Alias[] inner : expected) {
+            ArrayList<String> innerList = setExpectedAliases(emptyAlias, inner);
+            expectedList.add(innerList);
+        }
+        return expectedList;
+    }
+
+    /**
+     * Helper method to set inner expected aliases
+     */
+    private static ArrayList<String> setExpectedAliases(String emptyAlias, Alias[] inner) {
+        ArrayList<String> innerList = createNewInnerList(emptyAlias);
+
+        // reset expected alias for command
+        for (Alias alias : inner) {
+            int index = AliasCommand.getCommands().indexOf(alias.getCommand());
+            innerList.set(index, alias.getAlias());
+        }
+        return innerList;
+    }
+
+    /**
+     * Helper method to generate new inner list
+     */
+    private static ArrayList<String> createNewInnerList(String emptyAlias) {
+        // Generate empty alias ("") for inner list
+        ArrayList<String> innerList = new ArrayList<>();
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
+            innerList.add(emptyAlias);
+        }
+        return innerList;
     }
     //@@author
 }

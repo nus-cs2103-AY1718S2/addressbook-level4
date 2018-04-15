@@ -472,7 +472,7 @@ image::menu_fig_3.png[width="800"]
 ** Pros: Save memory space
 ** Cons: While adding back those pre-existing dishes, more work need to be done.
 
-// tag::ProcessingQueue[]
+
 === ProcessingQueue feature
 
 Processing queue gives restaurants owner a way to manage their kitchen and further differentiates different state of an
@@ -537,7 +537,7 @@ take in lots of input, not efficient.
 are zero)
 ** Pros: Makes process command much simpler
 ** Cons: Unused code such as Price class, Distance class and Count class.
-
+// tag::ProcessingQueue[]
 === TaskList
 
 TaskList is a ordered list of Task objects. It is used to store the task objects and perform operations on them.

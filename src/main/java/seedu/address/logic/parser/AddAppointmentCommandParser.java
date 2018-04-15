@@ -4,16 +4,12 @@ package seedu.address.logic.parser;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import java.util.Arrays;
-
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.AddAppointmentCommand;
-import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.DateTime;
-import seedu.address.model.patient.NameContainsKeywordsPredicate;
 
 /**
  * Parses input arguments and creates a new AddAppointmentCommand object

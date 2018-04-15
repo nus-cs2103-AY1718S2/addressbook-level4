@@ -2,7 +2,6 @@ package systemtests;
 
 import static seedu.address.logic.commands.CommandTestUtil.*;
 import static seedu.address.testutil.TypicalAliases.ADD;
-import static seedu.address.testutil.TypicalAliases.HISTORY;
 
 import org.junit.Test;
 
@@ -12,6 +11,9 @@ import seedu.address.model.alias.Alias;
 import seedu.address.model.alias.exceptions.AliasNotFoundException;
 import seedu.address.model.alias.exceptions.DuplicateAliasException;
 import seedu.address.testutil.AliasUtil;
+import seedu.address.testutil.TypicalAliases;
+
+import java.util.List;
 
 //@@author jingyinno
 public class UnaliasCommandSystemTest extends AddressBookSystemTest {
@@ -24,22 +26,25 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: remove an alias from a non-empty address book, command with leading spaces and trailing spaces -> removed */
         String toDelete_add = VALID_ALIAS_ADD;
-        generateAliases(new Alias[] {ADD, HISTORY}, model);
+        Alias toDelete_add_Alias = ADD;
+        generateAliases(model);
         String command = "   " + UnaliasCommand.COMMAND_WORD + "  " + VALID_ALIAS_ADD;
-        Alias[][] expectedAliases = new Alias[][] {{HISTORY}};
+        Alias[] expectedAliasArray = getExcludedAliases(new Alias[] {ADD});
+        Alias[][] expectedAliases = new Alias[][] {expectedAliasArray};
         assertCommandSuccess(command, toDelete_add, expectedAliases);
 
         /* Case: undo removing ADD from the list -> ADD added */
         command = UndoCommand.COMMAND_WORD;
         String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        expectedAliases = new Alias[][] {{ADD, HISTORY}};
+        List<Alias> aliases = TypicalAliases.getTypicalAliases();
+        expectedAliases = new Alias[][] {aliases.toArray(new Alias[aliases.size()])};
         assertCommandSuccess(command, model, expectedResultMessage);
 
         /* Case: redo removing ADD from the list -> ADD removed again */
         command = RedoCommand.COMMAND_WORD;
         model.removeAlias(VALID_ALIAS_ADD);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        expectedAliases = new Alias[][] {{HISTORY}};
+        expectedAliases = new Alias[][] {expectedAliasArray};
         assertCommandSuccess(command, model, expectedResultMessage, expectedAliases);
 
         /* --------------------------------- Perform invalid alias operations ------------------------------------- */
@@ -111,7 +116,8 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
         assertTableDisplaysExpected("", ListCommand.MESSAGE_SUCCESS, expectedTable);
     }
 
-    private void generateAliases(Alias[] aliases, Model model) {
+    private void generateAliases(Model model) {
+        List<Alias> aliases = TypicalAliases.getTypicalAliases();
         for (Alias alias : aliases) {
             try {
                 model.addAlias(alias);
@@ -120,6 +126,14 @@ public class UnaliasCommandSystemTest extends AddressBookSystemTest {
             }
             executeCommand(AliasUtil.getAliasCommand(alias));
         }
+    }
+
+    private Alias[] getExcludedAliases(Alias[] aliases) {
+        List<Alias> expectedAliases = TypicalAliases.getTypicalAliases();
+        for (Alias alias : aliases) {
+            expectedAliases.remove(alias);
+        }
+        return expectedAliases.toArray(new Alias[expectedAliases.size()]);
     }
 
     /**

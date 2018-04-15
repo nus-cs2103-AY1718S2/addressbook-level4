@@ -558,9 +558,6 @@ public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValue
 
 The following sequence diagram shows how the import operation works:
 
-.Import Command Sequence Diagram for Logic Component
-image::LogicComponentImportSequenceDiagram.png[width="800"]
-
 .Import Command Sequence Diagram for Model and Storage Component
 image::ModelStorageComponentImportSequenceDiagram.png[width="800"]
 

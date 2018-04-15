@@ -88,9 +88,7 @@ public class CalendarPanel extends UiPart<Region> {
                 LocalDateTime startDateTime = event.getStartDateTime().getLocalDateTime();
                 LocalDateTime endDateTime = event.getEndDateTime().getLocalDateTime();
                 Entry entry = new Entry(event.getName().fullName, new Interval(startDateTime, endDateTime));
-                if (event.getLocation().value.length() != 0) {
-                    entry.setLocation(event.getLocation().value);
-                }
+                entry.setLocation(event.getLocation().value);
                 eventCalendar.addEntry(entry);
             }
         }

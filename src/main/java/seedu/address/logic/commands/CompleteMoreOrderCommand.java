@@ -71,7 +71,6 @@ public class CompleteMoreOrderCommand extends CompleteOneOrderCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof CompleteMoreOrderCommand // instanceof handles nulls
-                && this.targetIndex.equals(((CompleteMoreOrderCommand) other).targetIndex)
                 && this.numberOfTimes.equals(((CompleteMoreOrderCommand) other).numberOfTimes)); // state check
     }
 }

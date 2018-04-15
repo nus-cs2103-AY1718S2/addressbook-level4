@@ -129,6 +129,6 @@ public class ProcessOrderCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ProcessOrderCommand // instanceof handles nulls
-                && toAdd.equals(((ProcessOrderCommand) other).toAdd));
+                && targetIndex.equals(((ProcessOrderCommand) other).targetIndex));
     }
 }

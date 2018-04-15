@@ -21,6 +21,7 @@ import seedu.address.ui.InfoPanel;
 import seedu.address.ui.PdfPanel;
 import seedu.address.ui.testutil.EventsCollectorRule;
 
+//@@author Ang-YC
 public class ResumeGuiTest extends AddressBookSystemTest {
 
     @Rule

@@ -16,6 +16,7 @@ import javafx.event.EventHandler;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+//@@author Ang-YC
 public class UiUtilTest {
 
     private static final int MIN_DURATION = 1;

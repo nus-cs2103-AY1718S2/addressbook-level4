@@ -125,6 +125,11 @@ public class TaskCommandTest {
         }
 
         @Override
+        public void clearActivities(String activityTypeToClear) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public void updateActivity(Activity target, Activity editedActivity)
                 throws DuplicateActivityException {
             fail("This method should not be called.");

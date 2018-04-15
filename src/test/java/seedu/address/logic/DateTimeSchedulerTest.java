@@ -49,6 +49,11 @@ public class DateTimeSchedulerTest {
         }
 
         @Override
+        public void clearActivities(String activityTypeToClear) {
+
+        }
+
+        @Override
         public void addActivity(Activity activity) throws DuplicateActivityException {
 
         }
@@ -63,7 +68,6 @@ public class DateTimeSchedulerTest {
                 throws DuplicateActivityException, ActivityNotFoundException {
 
         }
-
         @Override
         public ObservableList<Activity> getFilteredActivityList() {
             return null;

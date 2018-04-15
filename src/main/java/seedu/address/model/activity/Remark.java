@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Remark {
 
     public static final String MESSAGE_REMARK_CONSTRAINTS =
-            "Activity remark can take any values, and it should not be blank.";
+            "Remark can take on any values, but it should not be blank.";
 
     public static final String REMARK_VALIDATION_REGEX = ".+";
 

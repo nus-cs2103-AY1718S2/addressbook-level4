@@ -9,6 +9,7 @@ import java.util.regex.Pattern;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.CompleteCommand;
+import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EventCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.ExportCommand;
@@ -61,20 +62,20 @@ public class DeskBoardParser {
         case EventCommand.COMMAND_WORD:
             return new EventCommandParser().parse(arguments);
 
-        //case EditCommand.COMMAND_WORD:
-            //return new EditCommandParser().parse(arguments);
-
-        //case SelectCommand.COMMAND_WORD:
-            //return new SelectCommandParser().parse(arguments);
+        case EditCommand.COMMAND_WORD:
+            return new EditCommandParser().parse(arguments);
 
         case RemoveCommand.COMMAND_WORD:
             return new RemoveCommandParser().parse(arguments);
 
+        case RemoveCommand.COMMAND_ALIAS:
+            return new RemoveCommandParser().parse(arguments);
+
         case ClearCommand.COMMAND_WORD:
-            return new ClearCommand();
+            return new ClearCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_ALIAS:
-            return new ClearCommand();
+            return new ClearCommandParser().parse(arguments);
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
@@ -103,7 +104,13 @@ public class DeskBoardParser {
         case UndoCommand.COMMAND_WORD:
             return new UndoCommand();
 
+        case UndoCommand.COMMAND_ALIAS:
+            return new UndoCommand();
+
         case RedoCommand.COMMAND_WORD:
+            return new RedoCommand();
+
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
         //@@author karenfrilya97

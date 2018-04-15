@@ -17,12 +17,14 @@ import seedu.address.model.activity.exceptions.ActivityNotFoundException;
  */
 public class RemoveCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "rm";
+    public static final String COMMAND_WORD = "remove";
+    public static final String COMMAND_ALIAS = "rm";
+
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Removes task/event identified by the index number in the last displayed task/event listing.\n"
             + "Parameters: task/event INDEX (INDEX must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " task 1" + " OR "
-            + COMMAND_WORD + " event 1";
+            + COMMAND_ALIAS + " event 1";
 
     public static final String MESSAGE_REMOVE_TASK_SUCCESS = "Removed task: %1$s";
     public static final String MESSAGE_REMOVE_EVENT_SUCCESS = "Removed event: %1$s";

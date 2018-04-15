@@ -1,12 +1,12 @@
 package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.ASSIGNMENT3_DEMO1_FILE_PATH;
-import static seedu.address.logic.commands.CommandTestUtil.FILE_PATH_DESC_DUPLICATE;
-import static seedu.address.logic.commands.CommandTestUtil.FILE_PATH_DESC_IMPORT;
-import static seedu.address.logic.commands.CommandTestUtil.INVALID_FILE_PATH_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_NON_EMPTY;
 import static seedu.address.logic.commands.CommandTestUtil.PREAMBLE_WHITESPACE;
+import static seedu.address.logic.logictestutil.ImportExportTestConstants.ASSIGNMENT3_DEMO1_FILE_PATH;
+import static seedu.address.logic.logictestutil.ImportExportTestConstants.FILE_PATH_DESC_DUPLICATE;
+import static seedu.address.logic.logictestutil.ImportExportTestConstants.FILE_PATH_DESC_IMPORT;
+import static seedu.address.logic.logictestutil.ImportExportTestConstants.INVALID_FILE_PATH_DESC;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
 import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
 

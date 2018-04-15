@@ -53,14 +53,14 @@ public class PatientAppointmentPanel extends UiPart<Region> {
         upcomingAppointmentCardListView.setCellFactory(listView-> new AppointmentListViewCell());
     }
 
-    @Subscribe
-    public void handleAddressBookChangedEvent(AppointmentChangedEvent ace) throws ParseException {
-        try {
-            setConnections(ace.data.getPastAppointmentList(), ace.data.getUpcomingAppointmentList());
-        } catch (Exception e) {
-            throw new ParseException("List is not in observable list");
-        }
-    }
+//    @Subscribe
+//    public void handleAddressBookChangedEvent(AppointmentChangedEvent ace) throws ParseException {
+//        try {
+//            setConnections(ace.data.getPastAppointmentList(), ace.data.getUpcomingAppointmentList());
+//        } catch (Exception e) {
+//            throw new ParseException("List is not in observable list");
+//        }
+//    }
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code AppointmentCard}.

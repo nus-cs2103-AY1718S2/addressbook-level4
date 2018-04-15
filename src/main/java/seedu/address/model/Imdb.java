@@ -13,7 +13,6 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
-import seedu.address.commons.core.index.Index;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.appointment.Appointment;
 import seedu.address.model.appointment.AppointmentEntry;
@@ -326,9 +325,9 @@ public class Imdb implements ReadOnlyImdb {
      * Remove a patient's appointment
      * @return true if the appointment is deleted successfully
      */
-    public boolean deletePatientAppointment(Patient patient, Index index) throws ParseException {
-        requireAllNonNull(patient, index);
-        return patient.deletePatientAppointment(index);
+    public boolean deletePatientAppointment(Patient patient, Appointment targetAppointment) throws ParseException {
+        requireAllNonNull(patient, targetAppointment);
+        return patient.deletePatientAppointment(targetAppointment);
     }
 
     //@@author

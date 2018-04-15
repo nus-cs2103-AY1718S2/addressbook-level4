@@ -7,6 +7,7 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.patient.Patient;
 
 /**
@@ -20,8 +21,8 @@ public class DeleteAppointmentCommand extends Command {
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Deletes a patient's appointment."
             + "Parameters: "
             + "INDEX (must be a positive integer) "
-            + "APPOINTMENT INDEX (must be a positive integer)\n "
-            + "Example: " + COMMAND_WORD + "1 1";
+            + "DATE TIME (24-hour clock) \n "
+            + "Example: " + COMMAND_WORD + "1 2/4/2018 1300";
 
     public static final String MESSAGE_DELETE_SUCCESS = "The appointment is canceled";
 
@@ -29,13 +30,15 @@ public class DeleteAppointmentCommand extends Command {
 
     public static final String MESSAGE_DELETE_PAST_APPOINTMENT = "Past appointments cannot be deleted.";
 
+    public static final String MESSAGE_APPOINTMENT_CANNOT_BE_FOUND = "Appointment cannot be found.";
+
     private final Index targetPatientIndex;
 
-    private final Index targetAppointmentIndex;
+    private final DateTime targetAppointmentDateTime;
 
-    public DeleteAppointmentCommand(Index targetPatientIndex, Index targetAppointmentIndex) {
+    public DeleteAppointmentCommand(Index targetPatientIndex, DateTime targetAppointmentDateTime) {
         this.targetPatientIndex = targetPatientIndex;
-        this.targetAppointmentIndex = targetAppointmentIndex;
+        this.targetAppointmentDateTime = targetAppointmentDateTime;
     }
 
     @Override
@@ -45,13 +48,9 @@ public class DeleteAppointmentCommand extends Command {
 
         Patient patientFound = model.getPatientFromListByIndex(targetPatientIndex);
 
-        if (targetAppointmentIndex.getZeroBased() >= patientFound.getAppointments().size()) {
-            throw new CommandException(MESSAGE_APPOINTMENT_INDEX_INVALID);
-        }
-
         try {
-            if (!model.deletePatientAppointment(patientFound, targetAppointmentIndex)) {
-                throw new CommandException(MESSAGE_DELETE_PAST_APPOINTMENT);
+            if (!model.deletePatientAppointment(patientFound, targetAppointmentDateTime)) {
+                throw new CommandException(MESSAGE_APPOINTMENT_CANNOT_BE_FOUND);
             }
         } catch (ParseException e) {
             throw new AssertionError("The appointment object should have correct format");
@@ -76,6 +75,6 @@ public class DeleteAppointmentCommand extends Command {
         return other == this
                 || (other instanceof DeleteAppointmentCommand)
                 && this.targetPatientIndex.equals(((DeleteAppointmentCommand) other).targetPatientIndex)
-                && this.targetAppointmentIndex.equals(((DeleteAppointmentCommand) other).targetAppointmentIndex);
+                && this.targetAppointmentDateTime.equals(((DeleteAppointmentCommand) other).targetAppointmentDateTime);
     }
 }

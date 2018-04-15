@@ -76,6 +76,14 @@ public class DateTime {
         return (compareDate.isAfter(LocalDate.now()) || compareDate.isEqual(LocalDate.now()));
     }
 
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof DateTime
+                && this.dateString.equals(((DateTime) other).dateString)
+                && this.timeString.equals(((DateTime) other).timeString));
+    }
+
     public LocalDate getLocalDate() {
         return LocalDate.parse(dateString, dateFormatter);
     }

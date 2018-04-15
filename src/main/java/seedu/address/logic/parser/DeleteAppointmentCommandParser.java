@@ -8,6 +8,7 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteAppointmentCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.appointment.DateTime;
 
 /**
  * Parses input arguments and creates a new DeleteAppointmentCommand object
@@ -31,8 +32,8 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
 
         try {
             Index targetPatientIndex = ParserUtil.parseIndex(argsArray[0]);
-            Index targetAppointmentIndex = ParserUtil.parseIndex(argsArray[1]);
-            return new DeleteAppointmentCommand(targetPatientIndex, targetAppointmentIndex);
+            DateTime appointmentDateTime = ParserUtil.parseDateTime(argsArray[1] + " " + argsArray[2]);
+            return new DeleteAppointmentCommand(targetPatientIndex, appointmentDateTime);
         } catch (IllegalValueException ive) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     DeleteAppointmentCommand.MESSAGE_USAGE));

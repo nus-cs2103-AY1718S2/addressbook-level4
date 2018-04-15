@@ -15,14 +15,15 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
-import seedu.address.model.student.NameContainsKeywordsPredicate;
-import seedu.address.model.student.Student;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.student.NameContainsKeywordsPredicate;
+import seedu.address.model.student.Student;
+
 
 //@@author chweeee
 /**
@@ -65,9 +66,9 @@ public class FindAndSelectCommandTest {
     }
 
     @Test
-    public void execute_Select_zeroKeywords_noStudentFound() {
+    public void execute_zeroKeywords_noStudentFound() {
         String expectedMessage = "Student to be selected cannot be found.";
-        FindAndSelectCommand command = prepareFASCommand(" ");
+        FindAndSelectCommand command = prepareFasCommand(" ");
         try {
             assertCommandSuccess(command, expectedMessage, Collections.emptyList());
         } catch (CommandException e) {
@@ -76,9 +77,9 @@ public class FindAndSelectCommandTest {
     }
 
     @Test
-    public void execute_studentFound(){
+    public void execute_studentFound() {
         String expectedMessage = "Selected Student: 1";
-        FindAndSelectCommand command = prepareFASCommand("ELLE");
+        FindAndSelectCommand command = prepareFasCommand("ELLE");
         try {
             assertCommandSuccess(command, expectedMessage, Arrays.asList(ELLE));
         } catch (CommandException e) {
@@ -90,7 +91,7 @@ public class FindAndSelectCommandTest {
     /**
      * Parses {@code userInput} into a {@code FindAndSelectCommand}.
      */
-    private FindAndSelectCommand prepareFASCommand(String userInput) {
+    private FindAndSelectCommand prepareFasCommand(String userInput) {
         FindAndSelectCommand command =
                 new FindAndSelectCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -103,7 +104,8 @@ public class FindAndSelectCommandTest {
      *     - the {@code FilteredList<Student>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindAndSelectCommand command, String expectedMessage, List<Student> expectedList) throws CommandException {
+    private void assertCommandSuccess(FindAndSelectCommand command, String expectedMessage,
+                                      List<Student> expectedList) throws CommandException {
         AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
         CommandResult commandResult = command.execute();
 

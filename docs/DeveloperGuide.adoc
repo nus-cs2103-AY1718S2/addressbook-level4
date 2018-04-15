@@ -509,7 +509,7 @@ The imported StardyTogether must be a XML file that follows `XmlAdaptedPerson`, 
 The following sequence diagram shows how the import operation works:
 
 .Import Command Sequence Diagram for Logic Component
-image::ImportCommandSequenceDiagram.png[width="800"]
+image::LogicComponentImportSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 

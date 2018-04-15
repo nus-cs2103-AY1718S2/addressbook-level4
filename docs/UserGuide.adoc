@@ -207,6 +207,9 @@ image::birthdaysToday.png[width="790"]
 To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in StardyTogether.(Minimum: 2) +
 Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
 
+[TIP]
+ODD/EVEN is case-insensitive
+
 [NOTE]
 Only indexes of the current filtered list are valid
 
@@ -501,7 +504,7 @@ image::NUSMods_Screenshot_Second.PNG[width="790"]
 [width="790",cols="<15%,75%",options="header",]
 |=======================================================================
 |Problem |How to solve
-|The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting in your internet browser, and your internet connection.
+|The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting it in your internet browser, and your internet connection.
 |I am having trouble accessing the Google Drive functions!|
 ****
 .   Go to your user directory (Example: C:/users/USER)

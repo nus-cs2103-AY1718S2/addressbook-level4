@@ -125,7 +125,7 @@ Format: `list` Alias: `l`
 // tag::count[]
 === View number of persons : `count`
 
-Returns the number of clients stored in the reInsurance application
+Returns the number of clients stored in the reInsurance application. +
 Format: `count`
 
 // end::count[]
@@ -312,7 +312,7 @@ Format: `clear` Alias: `c`
 [TIP]
 Clearing all entries from reInsurance can also be done by moving the mouse over `File` section of the navigation bar then clicking `Clear`.
 
-// tag::export[]
+// tag::exportData[]
 === Export data : `export`
 
 Exports the data from the specified export type: `calendar` or `portfolio` (case insensitive). +
@@ -320,6 +320,15 @@ Format: `export EXPORT_TYPE`
 
 Exports the portfolio to a specified export location. +
 Format `export portfolio FILENAME`.
+
+[NOTE]
+====
+* Coming in v2.0, there will be more options on the types of data to export.
+* As of v1.5, the application handles the command for the portfolio and calendar.
+* Default destination file is at `portfolio.csv` for the `export portfolio` command.
+* The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
+* Coming in v2.0, the user will be able to specify what the created calendar is called.
+====
 
 Examples:
 
@@ -335,16 +344,7 @@ image::calendar_access.png[width="600"]
 Exports the data in the portfolio to a `portfolio.csv` file.
 * `export portfolio my_data` +
 Exports the data in the portfolio to a `my_data.csv` file.
-
-[NOTE]
-====
-* Coming in v2.0, there will be more options on the types of data to export.
-* As of v1.5, the application handles the command for the portfolio and calendar.
-* Default destination file is at `portfolio.csv` for the `export portfolio` command.
-* The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
-* Coming in v2.0, the user will be able to specify what the created calendar is called.
-====
-// end:export[]
+// end::exportData[]
 
 // tag::group[]
 === Group entries : `group`

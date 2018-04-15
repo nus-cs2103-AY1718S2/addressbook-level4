@@ -61,6 +61,10 @@ public class CompleteOneOrderCommand extends Command {
         return new CommandResult(String.format(MESSAGE_DELETE_TASK_SUCCESS, taskToDelete));
     }
 
+    /**
+     * Deletes the selected task from taskList
+     * @param taskToDelete task to be deleted
+     */
     protected void deleteSelectedTask(Task taskToDelete) {
         try {
             model.deleteTask(taskToDelete);

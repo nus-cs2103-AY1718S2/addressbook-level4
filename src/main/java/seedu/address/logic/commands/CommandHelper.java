@@ -13,6 +13,9 @@ import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 import seedu.address.model.task.Task;
 
+/**
+ *  Provides helper methods for various command class
+ */
 public class CommandHelper {
 
     /**

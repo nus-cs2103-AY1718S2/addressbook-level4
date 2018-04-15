@@ -174,13 +174,13 @@ public class Person implements Comparable<Person> {
             valueOwn += 1;
         }
         if (tagsOwn.contains(cooked)) {
-            valueOwn += 1;
+            valueOwn -= 2;
         }
         if (tagsOwn.contains(delivering)) {
             valueOwn -= 4;
         }
         if (tagsOwn.contains(delivered)) {
-            valueOwn -= 5;
+            valueOwn += 5;
         }
         return valueOwn;
     }

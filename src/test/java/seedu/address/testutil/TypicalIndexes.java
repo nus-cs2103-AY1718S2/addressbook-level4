@@ -14,4 +14,5 @@ public class TypicalIndexes {
     public static final Index INDEX_SIXTH = Index.fromOneBased(6);
     public static final Index INDEX_SEVENTH = Index.fromOneBased(7);
     public static final Index INDEX_EIGHTH = Index.fromOneBased(8);
+
 }

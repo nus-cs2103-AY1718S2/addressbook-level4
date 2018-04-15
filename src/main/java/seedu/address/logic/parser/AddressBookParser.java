@@ -157,7 +157,7 @@ public class AddressBookParser {
         case MoreInfoCommand.COMMAND_WORD:
             return new MoreInfoCommandParser().parse(arguments);
 
-        //@@author smauelloh
+        //@@author samuelloh
         case EditMiscCommand.COMMAND_WORD:
             return new EditMiscCommandParser().parse(arguments);
         //@@author yapni

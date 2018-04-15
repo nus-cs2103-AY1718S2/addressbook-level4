@@ -728,7 +728,7 @@ public class FavouriteCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent.getName()));
     }
 
     @Override
@@ -801,6 +801,8 @@ public class MilestoneBuilder {
      * Initializes the MilestoneBuilder with the data of {@code milestoneToCopy}.
      */
     public MilestoneBuilder(Milestone milestoneToCopy) {
+        requireNonNull(milestoneToCopy);
+
         dueDate = milestoneToCopy.getDueDate();
         taskList = milestoneToCopy.getTaskList();
         progress = milestoneToCopy.getProgress();
@@ -813,6 +815,8 @@ public class MilestoneBuilder {
      * @throws DuplicateTaskException if the new task is a duplicate of an existing task in the milestone.
      */
     public MilestoneBuilder withNewTask(Task newTask) throws DuplicateTaskException {
+        requireNonNull(newTask);
+
         taskList.add(newTask);
         progress = new ProgressBuilder(progress).withOneNewIncompletedTaskToTotal().build();
 
@@ -825,6 +829,8 @@ public class MilestoneBuilder {
      * @throws TaskNotFoundException if the task is not found in the milestone.
      */
     public MilestoneBuilder withoutTask(Task task) throws TaskNotFoundException {
+        requireNonNull(task);
+
         taskList.remove(task);
         if (task.isCompleted()) {
             progress = new ProgressBuilder(progress).withOneLessCompletedTaskFromTotal().build();
@@ -839,8 +845,9 @@ public class MilestoneBuilder {
      * Marks the specified {@code Task} in the {@code taskList} of the {@code Milestone} we are building as completed.
      */
     public MilestoneBuilder withTaskCompleted(Index taskIndex) throws DuplicateTaskException, TaskNotFoundException {
-        Task targetTask = taskList.get(taskIndex);
+        requireNonNull(taskIndex);
 
+        Task targetTask = taskList.get(taskIndex);
         if (!targetTask.isCompleted()) {
             Task completedTargetTask = new TaskBuilder(targetTask).asCompleted().build();
             taskList.setTask(targetTask, completedTargetTask);
@@ -874,6 +881,8 @@ public class ProgressBuilder {
      * Initializes the ProgressBuilder with the data of {@code progressToCopy}.
      */
     public ProgressBuilder(Progress progressToCopy) {
+        requireNonNull(progressToCopy);
+
         totalTasks = progressToCopy.getTotalTasks();
         numCompletedTasks = progressToCopy.getNumCompletedTasks();
         progressInPercent = progressToCopy.getProgressInPercent();
@@ -894,7 +903,9 @@ public class ProgressBuilder {
      * Subtracts 1 from the {@code totalTask} of the {@code Progress} we are building.
      */
     public ProgressBuilder withOneLessIncompletedTaskFromTotal() {
-        this.totalTasks -= 1;
+        if (this.totalTasks > 0) {
+            this.totalTasks -= 1;
+        }
         setProgressPercentAndValue();
 
         return this;
@@ -904,8 +915,12 @@ public class ProgressBuilder {
      * Subtracts 1 from the {@code totalTask} and {@code numCompletedTask } of the {@code Progress} we are building.
      */
     public ProgressBuilder withOneLessCompletedTaskFromTotal() {
-        this.totalTasks -= 1;
-        this.numCompletedTasks -= 1;
+        if (this.totalTasks > 0) {
+            this.totalTasks -= 1;
+        }
+        if (this.numCompletedTasks > 0) {
+            this.numCompletedTasks -= 1;
+        }
         setProgressPercentAndValue();
 
         return this;
@@ -932,6 +947,8 @@ public class ProgressBuilder {
      * Sets the {@code progressInPercent} and {@code value} of the Progress we are building with the current attributes.
      */
     private void setProgressPercentAndValue() {
+        assert this.numCompletedTasks <= this.totalTasks;
+
         this.progressInPercent = (int) (((double) numCompletedTasks / totalTasks) * 100);
         this.value = this.numCompletedTasks + "/" + this.totalTasks;
     }
@@ -947,7 +964,7 @@ public class ShowDashboardCommand extends Command {
     public static final String COMMAND_WORD = "showDB";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Shows the student's dashboard.\n"
-            + "Parameters: " + "INDEX (must be a positive integer)\n"
+            + "Parameters: " + "STUDENT_INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SELECT_STUDENT_DASHBOARD_SUCCESS = "Selected Dashboard of Student: %1$s";
@@ -1060,6 +1077,8 @@ public class TaskBuilder {
      * Initializes the TaskBuilder with the data of {@code taskToCopy}.
      */
     public TaskBuilder(Task taskToCopy) {
+        requireNonNull(taskToCopy);
+
         name = taskToCopy.getName();
         description = taskToCopy.getDescription();
         isCompleted = taskToCopy.isCompleted();
@@ -1118,7 +1137,7 @@ public class UnfavouriteCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_STUDENT);
         }
 
-        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedStudent.getName()));
     }
 
     @Override
@@ -1279,6 +1298,29 @@ public class AddMilestoneCommandParser implements Parser<AddMilestoneCommand> {
         }
     }
 }
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case AddMilestoneCommand.COMMAND_WORD:
+            return new AddMilestoneCommandParser().parse(arguments);
+
+        case AddTaskCommand.COMMAND_WORD:
+            return new AddTaskCommandParser().parse(arguments);
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case DeleteMilestoneCommand.COMMAND_WORD:
+            return new DeleteMilestoneCommandParser().parse(arguments);
+
+        case DeleteTaskCommand.COMMAND_WORD:
+            return new DeleteTaskCommandParser().parse(arguments);
+```
+###### \java\seedu\address\logic\parser\AddressBookParser.java
+``` java
+        case ShowDashboardCommand.COMMAND_WORD:
+            return new ShowDashboardCommandParser().parse(arguments);
+        case CheckTaskCommand.COMMAND_WORD:
+            return new CheckTaskCommandParser().parse(arguments);
 ```
 ###### \java\seedu\address\logic\parser\AddTaskCommandParser.java
 ``` java
@@ -1556,13 +1598,10 @@ public class Dashboard {
  */
 public class Date {
 
-    public static final String MESSAGE_DATE_CONSTRAINTS = "Date should be of the format dd/mm/yyyy hh:mm"
-            + "where dd must be between 01 and 31"
-            + ", mm between 01 and 12"
-            + ", yyyy between 0000 and 9999"
-            + ", hh between 00 to 23"
-            + " and mm between 00 to 59."
-            + " There must be a single space between the date and the time.";
+    public static final String MESSAGE_DATE_CONSTRAINTS = "Date should be of the format DD/MM/YYYY hh:mm.\n"
+            + "The date should also be a valid day in the calendar.\n"
+            + "The time must be in 24-hour notation.\n "
+            + "There must be a single space between the date and the time.";
 
     // Regex for the date format
     private static final String DAY_PART_REGEX = "([0-9]{2})";
@@ -1570,8 +1609,10 @@ public class Date {
     private static final String YEAR_PART_REGEX = "([0-9]{4})";
     private static final String HOUR_PART_REGEX = "([0-9]{2})";
     private static final String MINUTE_PART_REGEX = "([0-9]{2})";
-    public static final String DATE_VALIDATION_REGEX = DAY_PART_REGEX + "/" + MONTH_PART_REGEX + "/" + YEAR_PART_REGEX
-            + "\\s" + HOUR_PART_REGEX + ":" + MINUTE_PART_REGEX;
+    private static final String DATE_SEPARATOR = "/";
+    private static final String TIME_SEPARATOR = ":";
+    public static final String DATE_VALIDATION_REGEX = DAY_PART_REGEX + DATE_SEPARATOR + MONTH_PART_REGEX
+            + DATE_SEPARATOR + YEAR_PART_REGEX + "\\s" + HOUR_PART_REGEX + TIME_SEPARATOR + MINUTE_PART_REGEX;
 
     private static final Pattern dateFormatPattern = Pattern.compile(DATE_VALIDATION_REGEX);
 
@@ -1589,14 +1630,6 @@ public class Date {
         checkArgument(isValidDate(date), MESSAGE_DATE_CONSTRAINTS);
 
         String trimmedDate = date.trim();
-        Matcher matcher = dateFormatPattern.matcher(trimmedDate);
-        matcher.matches();
-        int day = Integer.parseInt(matcher.group(GROUP_DAY));
-        int month = Integer.parseInt(matcher.group(GROUP_MONTH));
-        int year = Integer.parseInt(matcher.group(GROUP_YEAR));
-        int hour = Integer.parseInt(matcher.group(GROUP_HOUR));
-        int min = Integer.parseInt(matcher.group(GROUP_MINUTE));
-
         value = trimmedDate;
     }
 
@@ -1607,6 +1640,7 @@ public class Date {
     public static boolean isValidDate(String input) {
         requireNonNull(input);
 
+        /* Check if input matches the required regex pattern */
         Matcher matcher = dateFormatPattern.matcher(input.trim());
         if (!matcher.matches()) {
             return false;
@@ -1618,8 +1652,17 @@ public class Date {
         int hour = Integer.parseInt(matcher.group(GROUP_HOUR));
         int min = Integer.parseInt(matcher.group(GROUP_MINUTE));
 
-        return (day >= 1 && day <= 31) && (month >= 1 && month <= 12) && (year >= 1 && year <= 9999)
-                && (hour >= 0 && hour <= 23) && (min >= 0 && min <= 59);
+        /* Check if the given date is a valid day in the calendar */
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd" + DATE_SEPARATOR + "MM" + DATE_SEPARATOR + "yyyy");
+        dateFormat.setLenient(false);
+        try {
+            dateFormat.parse(day + DATE_SEPARATOR + month + DATE_SEPARATOR + year);
+        } catch (ParseException e) {
+            return false;
+        }
+
+        /* Check if the given time is valid in the 24 hour format */
+        return (hour >= 0 && hour <= 23) && (min >= 0 && min <= 59);
     }
 
     public String getValue() {
@@ -1731,8 +1774,6 @@ public class Milestone {
         return this == obj
                 || (obj instanceof Milestone
                 && this.dueDate.equals(((Milestone) obj).getDueDate())
-                && this.taskList.equals(((Milestone) obj).getTaskList())
-                && this.progress.equals(((Milestone) obj).getProgress())
                 && this.description.equals(((Milestone) obj).getDescription()));
     }
 
@@ -1925,8 +1966,7 @@ public class Task {
         return this == obj // short circuit if same object
                 || (obj instanceof Task // instanceof checks null
                 && this.name.equals(((Task) obj).getName())
-                && this.description.equals(((Task) obj).getDescription())
-                && this.isCompleted == ((Task) obj).isCompleted());
+                && this.description.equals(((Task) obj).getDescription()));
     }
 
     @Override
@@ -2520,23 +2560,29 @@ public class InfoPanel extends UiPart<Region> {
 
     private BrowserPanel browserPanel;
     private DashboardPanel dashboardPanel;
-
+    private Logic logic;
     @FXML
     private StackPane browserPanelPlaceholder;
 
     @FXML
     private StackPane dashboardPanelPlaceholder;
 
+    @FXML
+    private StackPane calendarPlaceholder;
+
     public InfoPanel() {
         super(FXML);
-
+        this.logic = logic;
         browserPanel = new BrowserPanel();
         browserPanelPlaceholder.getChildren().add(browserPanel.getRoot());
 
         dashboardPanel = new DashboardPanel();
         dashboardPanelPlaceholder.getChildren().add(dashboardPanel.getRoot());
 
-        browserPanelPlaceholder.toFront();
+        CalendarPanel calendarPanel = new CalendarPanel(new Schedule(), new AddressBook());
+        calendarPlaceholder.getChildren().add(calendarPanel.getRoot());
+
+        showBrowserPanel();
 
         registerAsAnEventHandler(this);
     }
@@ -2550,6 +2596,7 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void showBrowserPanel() {
         dashboardPanelPlaceholder.setVisible(false);
+        calendarPlaceholder.setVisible(false);
         browserPanelPlaceholder.setVisible(true);
         browserPanelPlaceholder.toFront();
     }
@@ -2559,8 +2606,25 @@ public class InfoPanel extends UiPart<Region> {
      */
     private void showDashboardPanel() {
         browserPanelPlaceholder.setVisible(false);
+        calendarPlaceholder.setVisible(false);
         dashboardPanelPlaceholder.setVisible(true);
         dashboardPanelPlaceholder.toFront();
+    }
+
+    /**
+     * Show the Calendar panel
+     */
+    private void showCalendarPanel() {
+        browserPanelPlaceholder.setVisible(false);
+        dashboardPanelPlaceholder.setVisible(false);
+        calendarPlaceholder.setVisible(true);
+        calendarPlaceholder.toFront();
+    }
+
+    @Subscribe
+    public void handleShowStudentProfileEvent(ShowStudentProfileEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showBrowserPanel();
     }
 
     @Subscribe
@@ -2576,6 +2640,13 @@ public class InfoPanel extends UiPart<Region> {
         showDashboardPanel();
         raise(new ShowStudentNameInDashboardEvent(event.getTargetStudent().getName()));
         raise(new ShowMilestonesEvent(event.getTargetStudent().getDashboard().getMilestoneList()));
+    }
+
+    @Subscribe
+    public void handleShowScheduleEvent(ShowScheduleEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showCalendarPanel();
+        raise(new ScheduleChangedEvent(event.getSchedule(), event.getAddressBook()));
     }
 }
 ```
@@ -2608,9 +2679,6 @@ public class MilestoneCard extends UiPart<Region> {
     @FXML
     private Label progressPercent;
 
-    @FXML
-    private ProgressBar progress;
-
     public MilestoneCard(Milestone milestone, int displayedIndex) {
         super(FXML);
         this.milestone = milestone;
@@ -2618,7 +2686,6 @@ public class MilestoneCard extends UiPart<Region> {
         index.setText(Integer.toString(displayedIndex));
         description.setText(milestone.getDescription());
         dueDate.setText(milestone.getDueDate().toString());
-        progress.setProgress(milestone.getProgress().getProgressInPercent() / 100.0);
         progressPercent.setText(milestone.getProgress().getProgressInPercent() + "%");
         loadTaskList(milestone.getTaskList().asObservableList());
     }
@@ -2682,10 +2749,14 @@ public class TaskCard extends UiPart<Region> {
         super(FXML);
         this.task = task;
 
-        index.setText("Task " + displayedIndex);
+        index.setText(displayedIndex + ")");
         name.setText(task.getName());
         description.setText(task.getDescription());
-        isCompleted.setText(String.valueOf(task.isCompleted()));
+        if (task.isCompleted()) {
+            isCompleted.setText("Yes");
+        } else {
+            isCompleted.setText("No");
+        }
     }
 }
 ```
@@ -2701,28 +2772,28 @@ public class TaskCard extends UiPart<Region> {
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<Pane prefHeight="800.0" prefWidth="900.0" style="-fx-background-color: gray;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<Pane prefHeight="800.0" prefWidth="900.0" styleClass="dashboard-pane" stylesheets="@DarkTheme.css" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
       <AnchorPane layoutX="8.0" layoutY="5.0" prefWidth="800.0">
          <children>
-            <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Dashboard">
-               <font>
-                  <Font name="Segoe UI Black" size="20.0" />
-               </font>
-            </Text>
-            <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Milestones">
+            <Text layoutX="14.0" layoutY="93.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dashboard-title" text="Milestones">
                <font>
                   <Font name="Rockwell" size="20.0" />
                </font>
             </Text>
-            <Label fx:id="studentName" layoutX="14.0" layoutY="27.0" style="-fx-font-size: 18; -fx-font-family: Bookman Old Style; -fx-text-fill: black;" text="studentName">
+            <Text layoutX="14.0" layoutY="22.0" strokeType="OUTSIDE" strokeWidth="0.0" styleClass="dashboard-title" text="Dashboard">
+               <font>
+                  <Font name="Segoe UI Black" size="20.0" />
+               </font>
+            </Text>
+            <Label fx:id="studentName" layoutX="14.0" layoutY="27.0" text="studentName">
                <font>
                   <Font name="Bookman Old Style Bold" size="20.0" />
                </font>
             </Label>
             <VBox layoutX="14.0" layoutY="97.0" prefHeight="200.0" prefWidth="769.0">
                <children>
-                  <ListView fx:id="milestoneListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="900.0" style="-fx-border-color: black; -fx-background-color: white; -fx-background-insets: 0;">
+                  <ListView fx:id="milestoneListView" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="406.0" prefWidth="900.0" style="-fx-border-color: black; -fx-background-color: white; -fx-background-insets: 0;" styleClass="milestone-panel">
                      <VBox.margin>
                         <Insets top="10.0" />
                      </VBox.margin>
@@ -2741,6 +2812,7 @@ public class TaskCard extends UiPart<Region> {
 <StackPane fx:id="infoPanel" prefHeight="700.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
       <StackPane fx:id="browserPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" />
       <StackPane fx:id="dashboardPanelPlaceholder" prefHeight="150.0" prefWidth="200.0" style="-fx-background-color: white;" />
+      <StackPane fx:id="calendarPlaceholder" prefHeight="150.0" prefWidth="200.0" />
 </StackPane>
 ```
 ###### \resources\view\MilestoneCard.fxml
@@ -2749,19 +2821,17 @@ public class TaskCard extends UiPart<Region> {
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ListView?>
-<?import javafx.scene.control.ProgressBar?>
 <?import javafx.scene.effect.Blend?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="900.0" style="-fx-border-color: black; -fx-background-color: #e0dedc;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="cardPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="260.0" prefWidth="900.0" style="-fx-background-color: black;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <HBox prefHeight="21.0" prefWidth="600.0">
+      <HBox prefHeight="21.0" prefWidth="600.0" style="-fx-background-color: black;">
          <children>
-            <Text fill="#00000091" strokeType="OUTSIDE" strokeWidth="0.0" text="MILESTONE">
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="MILESTONE">
                <font>
                   <Font name="System Bold" size="14.0" />
                </font>
@@ -2769,19 +2839,19 @@ public class TaskCard extends UiPart<Region> {
                   <Insets left="5.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="index" style="-fx-text-fill: #4a4d4f; -fx-font-weight: bold;" text="idx" textFill="#585858">
+            <Label fx:id="index" style="-fx-font-size: 14; -fx-font-family: Segoe UI Light;" styleClass="milestone-title" text="index">
                <font>
-                  <Font name="System Bold" size="13.0" />
+                  <Font name="Segoe UI Light" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="5.0" top="4.0" />
+                  <Insets left="5.0" top="10.0" />
                </HBox.margin>
             </Label>
          </children>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Description:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -2789,12 +2859,12 @@ public class TaskCard extends UiPart<Region> {
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="description" style="-fx-font-family: Segoe UI; -fx-text-fill: #030303; -fx-font-size: 14;" text="desc">
+            <Label fx:id="description" style="-fx-text-fill: white;" styleClass="milestone-title" text="desc">
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="10.0" />
                </HBox.margin>
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Light" size="15.0" />
                </font>
             </Label>
          </children>
@@ -2802,9 +2872,9 @@ public class TaskCard extends UiPart<Region> {
             <Blend />
          </effect>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Due Date:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Due Date:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -2812,12 +2882,12 @@ public class TaskCard extends UiPart<Region> {
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <Label fx:id="dueDate" style="-fx-font-family: Segoe UI; -fx-font-size: 14; -fx-text-fill: #030303;" text="date">
+            <Label fx:id="dueDate" style="-fx-text-fill: white;" text="date">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Light" size="15.0" />
                </font>
                <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
+                  <Insets left="10.0" top="10.0" />
                </HBox.margin>
             </Label>
          </children>
@@ -2825,9 +2895,9 @@ public class TaskCard extends UiPart<Region> {
             <Blend />
          </effect>
       </HBox>
-      <HBox prefHeight="150.0" prefWidth="600.0">
+      <HBox prefHeight="150.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Tasks:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Tasks:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -2839,15 +2909,24 @@ public class TaskCard extends UiPart<Region> {
                <HBox.margin>
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
+               <opaqueInsets>
+                  <Insets top="3.0" />
+               </opaqueInsets>
+               <padding>
+                  <Insets top="5.0" />
+               </padding>
             </ListView>
          </children>
          <effect>
             <Blend />
          </effect>
+         <padding>
+            <Insets top="7.0" />
+         </padding>
       </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <HBox prefHeight="20.0" prefWidth="600.0" styleClass="milestone-panel">
          <children>
-            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" text="Progress:">
+            <Text fill="#000000bf" strokeType="OUTSIDE" strokeWidth="0.0" style="-fx-fill: white;" styleClass="milestone-title" text="Progress:">
                <font>
                   <Font name="System Bold" size="15.0" />
                </font>
@@ -2855,29 +2934,22 @@ public class TaskCard extends UiPart<Region> {
                   <Insets left="10.0" top="5.0" />
                </HBox.margin>
             </Text>
-            <StackPane prefHeight="150.0" prefWidth="200.0">
-               <children>
-                  <ProgressBar fx:id="progress" prefWidth="200.0" progress="0.0" />
-                  <Label fx:id="progressPercent" style="-fx-text-fill: black;" text="percent">
-                     <font>
-                        <Font size="10.0" />
-                     </font>
-                  </Label>
-               </children>
+            <Label fx:id="progressPercent" style="-fx-text-fill: white;" text="progress">
+               <font>
+                  <Font name="Segoe UI Light" size="15.0" />
+               </font>
                <HBox.margin>
-                  <Insets left="5.0" top="8.0" />
+                  <Insets left="10.0" top="10.0" />
                </HBox.margin>
-            </StackPane>
+            </Label>
          </children>
          <effect>
             <Blend />
          </effect>
-      </HBox>
-      <StackPane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="20.0" prefWidth="35.0">
          <VBox.margin>
-            <Insets top="5.0" />
+            <Insets bottom="10.0" />
          </VBox.margin>
-      </StackPane>
+      </HBox>
    </children>
 </VBox>
 ```
@@ -2886,78 +2958,96 @@ public class TaskCard extends UiPart<Region> {
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 <?import javafx.scene.text.Text?>
 
-<VBox fx:id="cardPane" prefWidth="650.0" style="-fx-background-color: #827f7d; -fx-border-color: black;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+<VBox fx:id="cardPane" prefHeight="61.0" prefWidth="650.0" style="-fx-border-color: white;" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <Label fx:id="index" style="-fx-font-size: 15; -fx-text-fill: black; -fx-underline: true; -fx-font-weight: bold;" text="index">
-         <VBox.margin>
-            <Insets left="10.0" top="5.0" />
-         </VBox.margin>
-      </Label>
-      <HBox prefHeight="20.0" prefWidth="600.0">
+      <GridPane prefHeight="69.0" prefWidth="648.0" style="-fx-border-color: white;">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="157.11114501953125" minWidth="0.0" prefWidth="32.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="408.11109754774304" minWidth="10.0" prefWidth="52.44444868299695" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="374.6666556464301" minWidth="10.0" prefWidth="179.99995930989584" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="259.0" minWidth="10.0" prefWidth="90.22223578559027" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="335.1111009385851" minWidth="10.0" prefWidth="182.66665310329864" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="283.3332689073351" minWidth="10.0" prefWidth="81.22219509548609" />
+            <ColumnConstraints hgrow="SOMETIMES" maxWidth="280.000006781684" minWidth="10.0" prefWidth="34.11109076605908" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+        </rowConstraints>
          <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Name:">
+            <Label fx:id="index" text="index">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
                <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
-               </HBox.margin>
-            </Text>
-            <Label fx:id="name" style="-fx-font-family: Segoe UI; -fx-font-size: 14;" text="name">
-               <HBox.margin>
-                  <Insets left="10.0" top="7.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Black Italic" size="14.0" />
                </font>
             </Label>
-         </children>
-      </HBox>
-      <HBox prefHeight="20.0" prefWidth="600.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Description:">
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Name:" GridPane.columnIndex="1">
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Black" size="14.0" />
                </font>
-               <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
-               </HBox.margin>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
             </Text>
-            <Label fx:id="description" style="-fx-font-family: Segoe UI; -fx-font-size: 14;" text="desc">
-               <HBox.margin>
-                  <Insets left="10.0" top="7.0" />
-               </HBox.margin>
+            <Label fx:id="name" text="name" wrapText="true" GridPane.columnIndex="2">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
                <font>
-                  <Font name="System Bold" size="15.0" />
+                  <Font name="Segoe UI Black Italic" size="13.0" />
                </font>
+               <GridPane.margin>
+                  <Insets top="2.0" />
+               </GridPane.margin>
+            </Label>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Description:" GridPane.columnIndex="3">
+               <font>
+                  <Font name="Segoe UI Black" size="14.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Label fx:id="description" text="desc" wrapText="true" GridPane.columnIndex="4">
+               <padding>
+                  <Insets left="10.0" />
+               </padding>
+               <font>
+                  <Font name="Segoe UI Black Italic" size="13.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="2.0" />
+               </GridPane.margin>
+            </Label>
+            <Text fill="WHITE" strokeType="OUTSIDE" strokeWidth="0.0" text="Completed:" GridPane.columnIndex="5">
+               <font>
+                  <Font name="Segoe UI Black" size="14.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets left="5.0" />
+               </GridPane.margin>
+            </Text>
+            <Label fx:id="isCompleted" text="check" wrapText="true" GridPane.columnIndex="6">
+               <padding>
+                  <Insets left="10.0" right="2.0" />
+               </padding>
+               <font>
+                  <Font name="Segoe UI Black Italic" size="13.0" />
+               </font>
+               <GridPane.margin>
+                  <Insets top="2.0" />
+               </GridPane.margin>
             </Label>
          </children>
-      </HBox>
-      <HBox prefHeight="20.0" prefWidth="650.0">
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Completed:">
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-               <HBox.margin>
-                  <Insets left="10.0" top="5.0" />
-               </HBox.margin>
-            </Text>
-            <Label fx:id="isCompleted" style="-fx-font-family: Segoe UI; -fx-font-size: 14;" text="isCompleted">
-               <HBox.margin>
-                  <Insets left="10.0" top="7.0" />
-               </HBox.margin>
-               <font>
-                  <Font name="System Bold" size="15.0" />
-               </font>
-            </Label>
-         </children>
-      </HBox>
+      </GridPane>
    </children>
 </VBox>
 ```

@@ -1,7 +1,7 @@
 package seedu.address.model.lesson;
 
+//@@author demitycho
 /**
- * @@author demitycho
  * Represents the Hour value in the Time.
  */
 public class Min implements Comparable<Min> {

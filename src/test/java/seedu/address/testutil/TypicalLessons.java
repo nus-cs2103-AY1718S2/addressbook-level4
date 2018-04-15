@@ -15,6 +15,7 @@ import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
  */
 public class TypicalLessons {
 
+    //Variable names in terms of <Student>_<Day>_<StartTime>_<EndTime>
     public static final Lesson ALICE_MON_10_12 = new LessonBuilder().withKey("c5daab").withDay("mon")
             .withStartTime("10:00").withEndTime("12:00").build();
     public static final Lesson ALICE_WED_14_16 = new LessonBuilder().withKey("c5daab").withDay("wed")
@@ -23,6 +24,8 @@ public class TypicalLessons {
             .withStartTime("15:00").withEndTime("17:00").build();
     public static final Lesson CARL_THU_11_13 = new LessonBuilder().withKey("8e90ba").withDay("thu")
             .withStartTime("11:00").withEndTime("13:00").build();
+    public static final Lesson FIONA_SAT_15_17 = new LessonBuilder().withKey("9d2b20").withDay("sat")
+            .withStartTime("15:00").withEndTime("17:00").build();
     public static final Lesson RANDOM_THU_11_13 = new LessonBuilder().withKey("c0ffee").withDay("thu")
             .withStartTime("11:00").withEndTime("13:00").build();
 

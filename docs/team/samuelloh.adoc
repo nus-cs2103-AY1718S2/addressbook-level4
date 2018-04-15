@@ -66,6 +66,7 @@ include::../UserGuide.adoc[tag=profilePage1]
 include::../UserGuide.adoc[tag=profilePage2]
 
 End of extract from [User Guide]
+
 == Contributions to the Developer Guide
 
 |===

@@ -647,7 +647,7 @@ efficient. Hence, the adjacency list is a natural choice.
 
 //end::cardtag[]
 
-//tag:spacedrepetition[]
+//tag::spacedrepetition[]
 === Scheduling, Answering and Showdue
 The core component of how spaced repetition works is that it keep tracks of how
 good the user is with a certain card. Our scheduling algorithm is an implementation
@@ -735,7 +735,7 @@ However some users find this flexibility to be a bug, now we strictly enforce th
 
 [NOTE]
 Although only `showdue` is talked about. This is actually a generic date parser. `schedule` command uses the same thing.
-//end:spacedrepetition[]
+//end::spacedrepetition[]
 
 // tag::polymorphiccards[]
 === Polymorphic flashcards

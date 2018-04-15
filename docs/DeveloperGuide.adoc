@@ -378,7 +378,7 @@ then execute this command.
 
 This sequence flow is the same as the other commands, an example of the remove appointment logic interactions is shown below
 
-image::RemoveAppointmentSequenceDiagram.png[width="800"]
+image::RemoveAppointmentSequenceDiagram.png[width="700"]
 
 The `ModelManager` then carry out the actual operations to calendar, `ModelManager` call `AddressBook' and raise a `AddressBookChangedEvent`, finally `AddressBook` calls its `InsuranceCalendar` object to
 add/remove/edit an appointment.

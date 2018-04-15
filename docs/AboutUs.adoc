@@ -17,7 +17,7 @@ image::TranNhatQuang.jpg[width="150", align="left"]
 {empty}[https://github.com/nhatquang3112[github]] [<<trannhatquang#, portfolio>>]
 
 Role: Team Lead, Developer +
-Responsibility: Model
+Responsibility: Model, in charge of implementing To-do list
 
 '''
 

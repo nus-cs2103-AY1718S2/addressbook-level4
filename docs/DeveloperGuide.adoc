@@ -567,21 +567,18 @@ This allows the user to easily look back for a particular book, and to add it in
 ==== Current implementation
 
 Recently selected books are stored in a `UniqueBookCircularList` which resides in `ModelManager`.
-Whenever a new book is selected, `ModelManager` handles the `BookListSelectionChangedEvent`
-and adds the book into the list.
+`Model` exposes a method `addRecentBook(Book)` to add new book selections. Whenever a new book is selected, `LogicManager` handles the `BookListSelectionChangedEvent` and adds the book into the list.
 
 When `recent` is entered, it will be parsed into a `RecentCommand`, which when executed, sets the `ActiveListType` to `RECENT_BOOKS`.
 It then posts `ActiveListChangedEvent` to the `EventCenter` to signal this change. The interaction between components is shown in the diagram below.
 
 image::SequenceDiagramRecentCommandLogic.png[width="550"]
 
-NOTE: The commands that users can perform on different `ActiveListType` differ, for example users cannot delete books if the `ActiveListType` is `RECENT_BOOKS`.
+NOTE: `ActiveListType` is needed because the commands that users can perform on different lists differ. For example, users cannot delete books if the `ActiveListType` is `RECENT_BOOKS`.
 
-`ActiveListChangedEvent` is handled by `MainWindow`.
+`ActiveListChangedEvent` is handled by `MainWindow`, which updates the list displayed in `BookListPanel`.
 
-image::SequenceDiagramRecentCommandEvent.png[width="550"]
-
-`MainWindow` sets the list shown in `BookListPanel` to the list of recently selected books.
+image::SequenceDiagramRecentCommandEvent.png[width="450"]
 
 `UniqueBookCircularList` has size 50 by default. For illustration purposes, assume we have a
 `UniqueBookCircularList` of size 2 that is empty at the start. `ActiveListType` is `BOOK_SHELF`.
@@ -605,8 +602,7 @@ from the list and added again so that it is in the first index of the list (most
 image::RecentCommandListThree.png[width="450"]
 
 Note that the `UniqueBookCircularList` is currently full. When user performs `select 3`, since
-`Three` is not in the list, the book at the last index is removed to make space for `Three`.
-This is because the book at the last index (`Two` in this case) is the least recent selection.
+`Three` is not in the list, the book at the last index (the least recent selection) is removed to make space for `Three` (`Two` in this case).
 
 image::RecentCommandListFour.png[width="450"]
 
@@ -615,19 +611,7 @@ NOTE: `UniqueBookCircularList::equals` is order sensitive since the order determ
 When Bibliotek is exited, the data in the `UniqueBookCircularList` is stored in the format
 of `BookShelf`. This data is read and converted to `UniqueBookCircularList` upon opening Bibliotek.
 
-NOTE: Since `UniqueBookCircularList` only supports `addToFront(Book)`, take note to add books in reverse
-order when converting from other data structures such as `BookShelf`.
-
 ==== Design considerations
-
-===== Aspect: Whether to store recently selected books
-
-* **Alternative 1 (current choice):** Stores the recently selected books upon closing Bibliotek.
-** Pros: Users can look up books selected in the last session.
-** Cons: Extra file dependency and data clutter if unused.
-* **Alternative 2:** Don't store recently selected books.
-** Pros: Eliminate the need to modify `Storage` component.
-** Cons: Recently selected books list is limited to selections in the current session.
 
 ===== Aspect: Type of selected books that are shown
 
@@ -643,15 +627,15 @@ by only showing these books.
 ===== Aspect: Data structure to hold the recently selected books data
 
 * **Alternative 1 (current choice):** Make a new type of book list `UniqueBookCircularList`.
-** Pros: Can make the size limit and add mechanism as a property of the new list.
+** Pros: Can make the size limit and add mechanism a property of the new list.
 ** Cons: Have to deal with multiple data structures to hold data for different purposes.
 * **Alternative 2:** Use `BookShelf`.
 ** Pros: Re-use of existing data structure.
-** Cons: BookShelf supports functionalities that are not needed to store recently selected books.
+** Cons: `BookShelf` supports functionalities that are not needed to store recently selected books.
 // end::recent[]
 
 // tag::library[]
-=== Find a book in NLB library: `library` command
+=== Check for availability of book in NLB library: `library` command
 
 The `library` command allows the user to easily check for the availability of books in NLB libraries.
 This eliminates the need to manually enter search information into the NLB catalogue. The user can use this information to decide when or whether to read a book.
@@ -661,7 +645,7 @@ This eliminates the need to manually enter search information into the NLB catal
 When a `library` command is entered, a `LibraryCommand` will be created if the parsing of the command was successful, which will
 make a call to `searchLibraryForBook(Book)` on the `Network` API. This will result in an asynchronous HTTP request being made to
 https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/MSGTRN/EXPNOS/NLBHOME?HOMEPRMS=NLBGENPARAMS[NLB Catalogue].
-Once the HTTP request completes, the operations in the `.thenApply(...)` s, as seen in the code block below, will execute.
+Once the HTTP request completes, the operations in the `.thenApply(...)`, shown in the code block below, will execute.
 
 [source,java]
 ----
@@ -677,10 +661,11 @@ Once the HTTP request completes, the operations in the `.thenApply(...)` s, as s
 
 This is summarized by the following activity diagram:
 
-image::LibraryCommandActivityDiagram.png[width="650"]
+image::LibraryCommandActivityDiagram.png[width="600"]
 
 The `CompletableFuture` completes exceptionally if the content type or status code is wrong.
-Else, a URL of the page showing availability of the target book, if any, is obtained. This depends on the type of the response page, which can be categorized into the following:
+Else, a URL of the page showing availability of the target book, if any, is obtained.
+This depends on the response HTML, which can be categorized into the following:
 
 * Full display (the page we want): The URL which the HTTP GET request was made to is returned.
 * Non-empty list of results: The URL of the top result is returned.
@@ -688,7 +673,7 @@ Else, a URL of the page showing availability of the target book, if any, is obta
 
 Once the necessary result is obtained, the following method in `LibraryCommand` is executed:
 
-[java,source]
+[source,java]
 ----
     private void onSuccessfulRequest(String result, Book book) {
         EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
@@ -697,7 +682,7 @@ Once the necessary result is obtained, the following method in `LibraryCommand` 
     }
 ----
 
-`ShowLibraryResultRequestEvent` is handled by `MainWindow` and `BookInLibraryPanel` to load the URL using a `WebView` and show it.
+`ShowLibraryResultRequestEvent` is handled by `MainWindow` and `BookInLibraryPanel` to load the URL using a `WebView` and display the webpage.
 The loaded page is post-processed using a script to show only the relevant section.
 
 ==== Design considerations
@@ -713,10 +698,10 @@ The loaded page is post-processed using a script to show only the relevant secti
 
 ===== Aspect: Using advanced search versus basic search
 
-* **Alternative 1 (current choice):** Use basic search, using a HTTP GET request.
+* **Alternative 1 (current choice):** Perform basic search, using a HTTP GET request.
 ** Pros: Faster response time.
 ** Cons: Searched keyword seem to only be matched to title or authors.
-* **Alternative 2:** Use advanced search, using a HTTP POST request.
+* **Alternative 2:** Perform advanced search, using a HTTP POST request.
 ** Pros: Can limit the search results using more parameters such as year or ISBN.
 ** Cons: Slower response time.
 

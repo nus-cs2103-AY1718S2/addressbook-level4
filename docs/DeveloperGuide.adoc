@@ -161,7 +161,7 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiComponentUpdated.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -412,7 +412,7 @@ We are using the Google Maps Browser and passing the location(s) specified by th
 We have implemented two functionalities for the Google Maps: Address locator and locations navigator.
 
 * For one location specified, the "https://www.google.com/maps/search/" URL prefix is used.
-* For more than one locations specified, the "https://www.google.com/maps/dir/" url prefix is used.
+* For more than one locations specified, the "https://www.google.com/maps/dir/" URL prefix is used.
 
 When a location specified by the user is an NUS building e.g. S1, our application compares the input with the list of NUS buildings to check from, and recognizes it as an NUS building.
 The location is replaced with its respective postal code and passed to form the Google Maps URL.
@@ -421,7 +421,7 @@ The location is replaced with its respective postal code and passed to form the 
 
 ===== Aspect: Google Maps implementation
 * **Alternative 1 (current choice):** Use Google Maps in browser
-** Pros: Requires a re-setup of project to link with the Google API.
+** Pros: Does not require a re-setup of project to link with the Google API.
 ** Cons: Browser mode (Google Lite Maps) does not support some advanced Google Maps features.
 (But these additional features are not used in this project and thus having the browser implementation fulfils the intended functionality)
 * **Alternative 2:** Use Google Maps API
@@ -726,6 +726,7 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 ** Pros: User is able to see which rooms are vacant at current time immediately
 ** Cons: User is not able to see the room schedule for the whole day
 
+===== Aspect: Design of converting JSON to objects
 * **Alternative 1 (current choice):** Create a Building, Room, Week and Weekday class
 ** Pros: Follows the Single Responsibility Principle where each class should have responsibility over a single part of the functionality provided by the software
 ** Cons: More difficult to implement as the design of the flow of work between classes has to be thought out
@@ -1120,7 +1121,6 @@ Use case ends.
 
 *Extensions*
 
-[none]
 * 3a. Incorrect number of arguments specified.
 +
 [none]

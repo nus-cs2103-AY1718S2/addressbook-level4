@@ -30,9 +30,13 @@ public class FetchUtil {
     private static AsyncHttpClient myAsyncHttpClient = asyncHttpClient();
 
     /**
-     * Asynchronously fetches data from the specified url and returns it as a JsonObject
+     * Returns a Future object, future from the specific url asynchronously.
+     * The HTTP request Response can be retrieved using future.get().
+     * All operations queued before future.get() are performed async and the application
+     * will be thread-blocked at future.get() to wait for the return Response.
      * @param url cannot be null
-     * @return data received as a JsonObject
+     * @return a Future object that can retrieve a Response which contains HTTP request data
+     * in its responseBody
      */
     public static Future<Response> asyncFetch(String url) {
         //Send HTTP request asynchronously

@@ -651,27 +651,33 @@ image::SDforExercisesEventHandling.png[width="800"]
 // end::answer[]
 {sp} +
 
-// tag::adddefaulttasklist[]
-=== [Ongoing] add default task command (Google Tasks API relevant commands)
-==== Current+Planned Implementation
+// tag::tasks[]
+=== Tasks
+==== Current Implementation
 
-The default LOs and todos for all weeks would be stored as a local file upon which it would be loaded by the `StorageManager` on start up.
+The default LOs for all weeks would be stored in a local file, which will be loaded as input to create a task list on the
+user's Google Account with Google Tasks API.
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `newtasklist`.
+There are several commands related to tasks, including `newtasklist` to add and upload the default task list, `viewtasklist FILTER_KEYWORD`
+to view the default task list with filtering, `completetask INDEX`/`resettask INDEX` to mark a task as completed/not completed,
+and `goto INDEX` to open the URL of a task. As an example, the _High Level Sequence Diagram_ and _Sequence Diagram_ below shows how the components interact
+for the scenario where the user issues the command `viewtasklist 5`.
 
-.Component Interactions for `newtasklist` Command
-image::SDforAddDefaultTaskList.png[width="800"]
+.Component Interactions for `viewtasklist 5` Command (High Level)
+image::HighLevelSDforViewTaskListCommand.png[width="800"]
 
 {sp} +
 
-[NOTE]
-This command has no parameter regarding user input. The arguments passed are pre-initialized constant variables stored in the AddDefaultTasksCommand Class itself.
+.Component Interactions for `viewtasklist 5` Command
+image::SDforViewTaskListCommand.png[width="800"]
 
 {sp} +
 
-We apply Google Tasks API to help us save user tasks data online (there will be cases where data of teammates are needed, thus only local data is not enough).
+We apply Google Tasks API to help us save user tasks data online. This offers back up data which allow our users to recover
+their tasks and status of each task even after uninstalling the application. The task list will be ready to display once the user
+reinstall and open the application.
 To use Google Tasks API, we fist need to register this project on google developer console and retrieve a client credential file (client_id.json) to authorize our project.
-Then, add corresponding dependencies to build.gradle, the JAR files will be downloaded automatically upon project rebuild.
+Then, add corresponding dependencies to build.gradle, the library files will be downloaded automatically upon project rebuild.
 
 Here is the code snippet to add dependencies:
 [source,java]
@@ -684,20 +690,21 @@ compile (
 ----
 [NOTE]
 Simply downloading JAR files without editing gradle is not suggested. JARs are not in git thus our co-developers will rely on the dependencies to retrieve the libraries.
+Also, set gradleVersion to 4.6 if it is an older version, otherwise runtime compilation of Google API library will affect Junit tests.
 
 We write a program to authorize our project (by loading the aforementioned client credential file), trigger user loggin and build service.
-Note that when users are using ProgressChecker, only the first google task command requires them to log in with their google accounts,
-later other commands that use google tasks api will not trigger user login again. Also, very important, we import the APIs at the beginning of the program.
+Note that when users are using ProgressChecker, only the first tasks command requires them to log in and authorize ProgressChecker to access
+their Google Tasks data with their google accounts.
 
-Google Tasks API helps us save time building massive data structures (ie. Tasks, TaskLists, Lists of TaskLists, with many methods and exceptions).
-However, we do have a few classes in the modeling part that further add customized methods which are useful for current commands and even future commands.
+Google Tasks API helps us save time building massive data structures (ie. Tasks, TaskLists, Lists of TaskLists, as well as many methods and exceptions).
+However, we do have a few classes (eg. TaskUtil, TaskListUtil) in the modeling part that further add customized methods which are useful for current commands and even future commands.
 In this way, we avoid repetition of code snippet and having big chunks of import statements in numerous commands.
 
-Here is a code snippet that can find a task list by its title (while the native method only finds task by its id which is not memorable):
+Here is a code snippet that can find a task list by its title (while the native method only finds task by its id which is not memorable or even known by our users):
 [source,java]
 ----
 /**
- * Finds the task list with title {@code String} from the current list of task lists
+ * Finds the task list with title {@code String listTitle} from the user's task lists
  *
  * @param listTitle title of the task list we look for
  * @return the task list instance
@@ -727,20 +734,117 @@ public static TaskList searchTaskList(String listTitle) throws CommandException 
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `AddDefaultTasksCommand`
+===== Aspect: Implementation of tasks commands
 
-* Add a new command that extends `Command`. We do not extend `UndoableCommand` because updating google tasks online cannot be handled by the undo command.
+* All these commands extend `Command` but not extend `UndoableCommand`. `AddDefaultTasksCommand`, `CompleteTaskCommand` and `ResetTaskCommand` make
+ external changes that update task list in users' Google account, which is out of the scope of undo command. `ViewTaskListCommand` and
+ `GoToTaskUrlCommand` do not make changes to the data, thus no applicable to undo command.
 
-===== Aspect: Format of add default task list command
+===== Aspect: How `AddDefaultTasksCommand` is executed
 
-* There is only one command word, without any other argument. Therefore, less parser files are needed to manage altogether. This is very simple and easy to type.
+* This command will load the tasks from local storage and add a task list filled with these tasks to the user's Google account.
+|===
+|Alternative | Pros | Cons
+|**Find the user's Google task list with ID "@default" (this is the default task list in Google Task and not removable). Create a new
+task list and transfer the tasks from @default to the new one. Then change the title of @default to "CS2103 LOs", and add the tasks
+loaded from local storage** +
+(current choice)
+|The other tasks commands will only need to refer to the ID "@default" to find the task list, which is faster and more accurate than searching with title (
+as list ID is unique while list title can duplicate and the native API method only supports finding list with ID).
+|It requires more steps, thus slower (but fortunately this command should only be executed ONCE in the lifetime of this application).
 
-===== Aspect: How the task is added
+|**Create a new list with title "CS2103 LOs", then load and push all tasks from local storage**
+|Will be a bit faster.
+|The other task commands will be slower since they will be finding the list with title. The commands may also encounter error if
+there are task list with the same name in the user's Google account.
 
-* Authorization with client credential file and user login
-* Create a new task list with default given name and push to user's google account
-* Load the local file that contains all the default LOs and todos, parse it, create tasks one by one and add the the previously created task
-// end::adddefaulttasklist[]
+|===
+
+{sp} +
+
+===== Aspect: How `ViewTaskListCommand` is executed
+
+* This command will load the tasks from task list @default from the user's Google account and apply user-specified filter before displaying
+|===
+|Alternative | Pros | Cons
+|**Find the user's @default task list and load the whole list. Then apply user-specified filter to select applicable
+tasks to form a new list. The new list will be ready to be displayed** +
+(current choice)
+|Easy to implement, well modularized.
+|More repetitions of list traversal.
+
+|**Find the user's @default task list and load the whole list. Then apply user-specified filter to select applicable
+   tasks while processing the methods to display it**
+|Easy to implement.
+|Might lead to complicated methods to display list (eg. multi-level abstraction).
+
+|===
+
+{sp} +
+
+===== Aspect: How `CompleteTaskCommand` and `ResetTaskCommand` is executed
+
+* This command will set the task with user-input index number as completed/ not completed.
+|===
+|Alternative | Pros | Cons
+|**Find the user's @default task list and retrieve the task with user-input index number. Check if it needs update, and update it
+if necessary.** +
+(current choice)
+|Easy to implement.
+|
+
+|===
+
+{sp} +
+
+===== Aspect: How `GoToTaskUrl` is executed
+
+* This command will open the URL of the task with the user-input index number.
+|===
+|Alternative | Pros | Cons
+|**Find the user's @default task list and retrieved the task based on the input index. Get the URL in the task object and open it in
+the browser panel** +
+(current choice)
+|Easy to implement.
+|
+
+|**No need for implementation, the user can click the hyperlink while viewing the task list**
+|No need for implementation.
+|Not command line based.
+
+|===
+
+{sp} +
+
+===== Aspect: What UI structure to show the task list
+
+|===
+|Alternative | Pros | Cons
+|**Use a browser panel.** +
+(current choice)
+|Can show task list and external websites linked to tasks in the same panel.
+|Exercise list, issue list and person list are all shown in a list panel. The handling of browser panel and list panel is different,
+which leads to inconsistency.
+
+|**Use a list panel to display tasks, and a browser panel to display external webpages**
+|Guarantees consistency between task list, exercise list, issue list and person list.
+|Takes more space.
+
+|===
+
+{sp} +
+
+===== Aspect: What can we improve / what command can we add in v2.0
+
+* Send reminder email to the user when a deadline is near
+* Back/Forward the browser panel
+* View teammates' task list and progress (Google Tasks does not support it. Thus, a possible implementation is to sync data
+with the help of Google Drive API. After every transaction with Google Tasks, we retrieve the task list and save in Google Drive.
+Students in the same team will use a shared folder on Google Drive, thus can access each other's task list data. ProgressChecker will
+retrieve teammate task list data from the shared folder in Google Drive).
+
+{sp} +
+// end::tasks[]
 
 === Logging
 
@@ -1176,8 +1280,6 @@ This section covers what ProgressChecker is meant to be and what it can do for t
 
 * never miss LOs hidden in the nested collapsible list
 * keep track of your own progress on a week by week basis
-* keep track of your teammates' completion of TO-DO list(at most 20 tasks per day) and learning progress (providing proof for peer evaluation)
-* view the teammates' weekly plan in phase B (to know the upcoming updates even before they send any pull requests to github repo)
 * manage issues from github straight from the software along with other tracking
 * save your answers(no more than 100 words) for the exercises (as proof of completion and for future revision)
 * easily search for information based on key words (which is hard to achieve in the module website with nested collapsible lists)
@@ -1192,8 +1294,9 @@ This section covers what ProgressChecker is meant to be and what it can do for t
 
 **Kang Anmin:**
 
+. (Minor) Progress Bar: to give a graphic view of tasks completeness
 . (Minor) Change/Add more fields of information for teammates in the contact list, in order to fit the specific context of this software. It also lays a foundation for other operations.
-. (Major) LO management: Add LOs to google tasks (the users google account, load tasks and sign completion.
+. (Major) Task management: Add LOs to google tasks (the users google account, load tasks and sign completion.
 
 **Lai Liwen:**
 
@@ -1326,7 +1429,131 @@ Use case ends.
 +
 Use case ends.
 
-* 3c. The list already exists.
+[discrete]
+=== Use case: View Task List
+
+*MSS*
+
+1.  User requests to view the task list with a filter argument
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker makes request to the user's google account to load the task list.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The argument is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+[discrete]
+=== Use case: Complete a task
+
+*MSS*
+
+1.  User requests to mark a task as completed
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker marks the task as completed
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The index is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The index is valid but out of bound.
++
+Use case ends.
+
+[discrete]
+=== Use case: Reset a task
+
+*MSS*
+
+1.  User requests to reset a task as not completed
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker resets the task as not completed
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The index is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The index is valid but out of bound.
++
+Use case ends.
+
+[discrete]
+=== Use case: Open URL of a task
+
+*MSS*
+
+1.  User requests to open URL of a task
+2.  If this is the first google-task-relevant command used by the user in this session, user is requested to log in his/her google account
+3.  ProgressChecker opens the URL and show in browser panel
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The index is invalid.
++
+Use case ends.
+
+* 2a. No Internet Access.
++
+Use case ends.
+
+* 2b. Invalid client credential file.
++
+Use case ends.
+
+* 2c. Invalid user log in information.
++
+Use case ends.
+
+* 3a. The index is valid but out of bound.
 +
 Use case ends.
 
@@ -1550,11 +1777,11 @@ Gradle is an open-source build automation system.
 [[GUI]] GUI::
 Graphical User Interface.
 
-[[Learning-Outcomes]] Learning Outcomes::
+[[Learning-Outcomes (LO)]] Learning Outcomes::
 Exercises that need to be done through github for module CS2103/T.
 
 [[mainstream-os]] Mainstream OS::
-Windows, Linux, Unix, OS-X.
+Windows, Linux, Unix, MAC-OS(OS-X).
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others.

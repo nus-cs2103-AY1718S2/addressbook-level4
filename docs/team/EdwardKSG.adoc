@@ -12,21 +12,23 @@ ProgressChecker is *a desktop application that enables CS2103/T students to trac
 
 == Summary of contributions
 
-* *Major enhancement*: added *a task list which contains tasks assigned by the lecturers of this module*
-** *What it does:* allows students to view tasks by week, mark each task as completed/pending, view web page of each task through URL and check progress (in fraction and percentage).
+* *Major enhancement*: added *a task list which contains tasks assigned by the lecturers of CS2103/T*
+** *What it does:* allows students to view tasks by week and other filters, mark each task as completed/pending, view web page of each task through URL and check progress (in fraction and percentage).
 ** *Justification:* this feature solves a significant issue that students faced: they are confused when viewing the collapsible nested list on module website and possibly miss some tasks residing in an inner layer. Also, there are a significant number of tasks each week, which is hard to finish in one go. Thus, they may forget what they have covered when they resume after leaving it for a while. They also cannot tell how far are they away from completing all tasks.
 ** *Highlights:* This enhancement touches on all 4 components in the code base, which requires a good understanding of the existing architecture of the project prototype. Furthermore, it is implemented with Google Task API and cloud services which requires a lot of exploration. Using external libraries also tests the skills of integrating external resources with current code base.
-** *Credits:* Some of the implementation was inspired by the existing code base that has implemented a numerous commands to manage a list of contacts in an address book. The utilization of Google Task API borrows my experience with Google Calendar API when doing an Android application in another project organized by NUS School of Computing called Orbital.
+** *Credits:* Some of the implementation was inspired by the existing code base that has implemented numerous commands to manage a list of contacts in an address book. The utilization of Google Tasks API borrows my experience with Google Calendar API when doing an Android application in another project organized by NUS School of Computing called Orbital.
 
-* *Minor enhancement*: added multiple fields of person and update all relevant commands. These fields are used in my teammates' enhancement. added a  progress bar to give a graphic and more intuitive view of the level of completeness of tasks in the task list.
+* *Minor enhancement*: added multiple fields of person and updated all relevant commands. These fields are used in my teammates' enhancement. added a  progress bar to give a graphic and more intuitive view of the level of completeness of tasks in the task list.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/functional/EdwardKSG.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/test/EdwardKSG.md[Test code]]
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/functional/EdwardKSG.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/test/EdwardKSG.md[Test code]] [https://github.com/CS2103JAN2018-T09-B3/main/blob/master/collated/unused/EdwardKSG-unused.md[Unused code]]
+** Non-collatable: add field and tests: https://github.com/CS2103JAN2018-T09-B3/main/pull/121[#121], add field and tests: https://github.com/CS2103JAN2018-T09-B3/main/pull/20[#20], refactor:  https://github.com/CS2103JAN2018-T09-B3/main/pull/57[#57]
 
-* *Other contributions*: did refactor of both code and documentations to fit our new project and hide legacy of the prototype project to make it an independent project.
+* *Other contributions*: did refactor of code, packages and documentations to fit our new project and hide legacy of the prototype project to make it an independent project.
 
 ** Project management:
+*** Created team repository
 *** Managed issues and pull requests with a wide variety of labels and different milestones.
-*** Checked completeness of milestone, closed milestone and made release.
+*** Checked completeness of milestone, closed milestone and made releases (v1.4, v1.5rc).
 ** Enhancements to existing features:
 *** Added a new browser panel to allow showing two different pages side by side https://github.com/CS2103JAN2018-T09-B3/main/pull/181[#181]
 *** Changed error message of *delete* command to give a clearer suggestion of what the users are doing wrong https://github.com/CS2103JAN2018-T09-B3/main/pull/213[#213]
@@ -37,7 +39,7 @@ ProgressChecker is *a desktop application that enables CS2103/T students to trac
 *** Pull requests reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T09-B3/main/pull/212[#212] https://github.com/CS2103JAN2018-T09-B3/main/pull/209[#209] https://github.com/CS2103JAN2018-T09-B3/main/pull/26[#26] https://github.com/CS2103JAN2018-T09-B3/main/pull/8[#8]
 *** Reported bugs and suggestions for other teams in the class https://github.com/CS2103JAN2018-F14-B4/main/issues/149[#149] https://github.com/CS2103JAN2018-F14-B4/main/issues/146[#146]
 ** Tools:
-*** Integrated a https://developers.google.com/google-apps/tasks/[Google Tasks Java API](com.google.api.services.tasks) to the project https://github.com/CS2103JAN2018-T09-B3/main[ProgressChecker].
+*** Integrated a https://developers.google.com/google-apps/tasks/[Google Tasks Java API] to the project https://github.com/CS2103JAN2018-T09-B3/main[ProgressChecker].
 
 == Contributions to the User Guide
 
@@ -54,4 +56,4 @@ include::../UserGuide.adoc[tag=tasks]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=adddefaulttasklist]
+include::../DeveloperGuide.adoc[tag=tasks]

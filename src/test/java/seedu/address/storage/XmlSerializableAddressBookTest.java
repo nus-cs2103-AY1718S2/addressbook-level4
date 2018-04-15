@@ -43,7 +43,7 @@ public class XmlSerializableAddressBookTest {
                 XmlSerializableAddressBook.class);
         AddressBook addressBookFromFile = dataFromFile.toModelType();
         AddressBook typicalAliasesAddressBook = TypicalAliases.getTypicalAddressBook();
-        //assertEquals(addressBookFromFile, typicalAliasesAddressBook);
+        assertEquals(addressBookFromFile, typicalAliasesAddressBook);
     }
     //@@author
 
@@ -89,7 +89,7 @@ public class XmlSerializableAddressBookTest {
         AddressBook addressBookFromFile = new AddressBook();
         dataFromFile.addToAddressBook(addressBookFromFile);
         AddressBook typicalAliasesAddressBook = TypicalAliases.getTypicalAddressBook();
-        //assertEquals(addressBookFromFile, typicalAliasesAddressBook);
+        assertEquals(addressBookFromFile, typicalAliasesAddressBook);
     }
 
     @Test

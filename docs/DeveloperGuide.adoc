@@ -1016,8 +1016,8 @@ Use case ends.
 1.  User requests to list books
 2.  Catalogue shows a list of books
 3.  User requests to edit a specific book in the list with [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS]
-2.  Catalogue edit book
-3.  Catalogue list books
+4.  Catalogue edit book
+5.  Catalogue list books
 +
 Use case ends.
 

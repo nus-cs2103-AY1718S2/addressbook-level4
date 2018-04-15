@@ -560,7 +560,7 @@ Following is a snippet which illustrates the function of `UniqueActivityList`:
 //end::sorting[]
 
 // tag::find[]
-===== Find a task or event
+===== Finding a task or an event
 `FindEvent` locates `Task` and `Event` objects which contain any keywords in their name.
 {empty} +
 The list shown in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the << `Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
@@ -804,7 +804,7 @@ Below is a snippet of how `BrowserPanel` displays the details of the `Task` sele
 There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe
 the implementation for each command.
 
-==== Listing of Tasks and Events
+===== Listing of `Task` and `Event`
 
 A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
 the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
@@ -860,22 +860,7 @@ If `ListCommand` is successful:
 {empty} +
 {empty} +
 
-==== Overdue
-
-Overdue tasks can be viewed through the use of the `OverdueCommand`. Note that the `OverdueCommand` only
-lists down overdue tasks; overdue events are marked as completed automatically.
-
-`OverdueCommand` makes use of the `LocalDateTime` class in Java to check if an ongoing task becomes overdue
-or not.
-
-There will be a class in the `Model` component, which has access to the `UniqueActivityList` class in that
-component. The class will go through the `UniqueActivityList` and obtain the `dueDateTime` of `Task`, and the `end
-DateTime` of `Event`. It will then perform a check of the `DateTime` with `LocalDateTime.now()`. If a `Task` is overdue, it will be marked so in the GUI.
-If the current date and time is past an `Event` `s `endDateTime`, the `Event` will be marked as completed.
-{empty} +
-{empty} +
-
-==== Design considerations
+==== Design Considerations
 
 This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
@@ -902,18 +887,6 @@ definitely the preferred approach here.
 {empty} +
 
 [discrete]
-===== Aspect: Implementation of `OverdueCommand`
-
-* **Alternative 1**: Put the checking method in the `UniqueActivityList` class.
-** Pros: There will be one fewer classes and it will be easier for the developer to understand the code.
-** Cons: This violates Single Responsibility Principle (SRP). The `UniqueAcitivtyList` class should not perform the checking.
-
-* **Alternative 2**: Use Google Maps API to obtain current time.
-** Pros: `LocalDateTime.now()` is reliant on system clock. Thus, if the system clock is in error, tasks that are overdue will not be marked correctly.
-** Cons: Reliant on Google Maps API, and might be difficult for the developer to understand.
-{empty} +
-{empty} +
-
 
 // tag::storage[]
 === Desk Board Storage Management
@@ -1218,7 +1191,64 @@ This section describes various design considerations related to the implementati
 ** Cons: This requires dealing with commands that have already been undone: We must remember to skip these commands. This violates SRP and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-{empty} +
+=== Auto overdue
+The auto overdue feature will automatically tag tasks as "overdue" once their due date times have passed and tag events as "finished" once their end date times have passed.
+The current implementation and design considerations for this feature are explained in this section.
+
+==== Current Implementation
+The auto overdue feature is implemented using the `ScheduledExecutorService` class, provided by the `java.util.concurrent` package. This class creates another thread in the system and that thread is scheduled to run a checker every 30 seconds.
+
+It is implemented in `DateTimeScheduler` as shown:
+[source, java]
+----
+public class DateTimeScheduler {
+
+    private static final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+    public static void initialise(Model model) {
+        /... some code .../
+        executor.scheduleWithFixedDelay(checker, 0, 30, TimeUnit.SECONDS);
+    }
+}
+----
+
+The `checker` in the method `scheduleWithFixedDelay()` is implemented using the `Runnable` interface. The `checker`
+checks if a task has passed its due date time and if an event has passed its end date time. If so, the checker will tag an "Overdue" tag to the task and a "Finished" tag to the event.
+
+The `checker` is implemented as shown:
+
+[source, java]
+----
+    public void run() {
+        /... some code .../
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        Platform.runLater(() -> {
+            try {
+                markingAsOverdue(taskList, currentDateTime);
+                markingAsFinished(eventList, currentDateTime);
+            } catch () {
+                /... some code .../
+            }
+        });
+    }
+----
+
+The `checker` traverses the list of tasks and compares the due date time of each task to the `currentDateTime`, which is obtained from system time. Likewise,
+it traverses the list of events and compares the end date time of each event to the `currentDateTime`.
+Note that `Platform.runLater()` must wrap around the codes as https://stackoverflow.com/questions/21083945/how-to-avoid-not-on-fx-application-thread-currentthread-javafx-application-th[you cannot update the GUI from a thread other than the JavaFx Application thread.]
+
+==== Design Considerations
+This section describes various design considerations related to the auto overdue feature.
+
+* Alternative 1 (current choice): Using `ScheduledExecutorService` to check for overdue tasks and finished events every 30 seconds.
+** Pros: As 30 seconds are short, tasks and events can be checked whether they are overdue or finished respectively in **real time**.
+** Cons: As there is a thread created in the system, CLIndar would be more memory-intensive.
+
+* Alternative 2: Using `ScheduledExecutorService` to check for overdue tasks and finished events every 1 hour.
+** Pros: CLIndar would be less memory-intensive as the checker is conducted at a longer interval.
+** Cons: Overdue tasks and finished events will not be identified promptly.
+
 
 === Logging
 
@@ -1692,9 +1722,17 @@ faster than a typical mouse/GUI-driven app
 The following section describes the major and minor enhancements that each of our members contributes to the development of our product.
 
 ==== Jarrett
-*Major enhancement:* Creating 'overdue' command. This command shows a list of overdue tasks.
+*Major enhancement:* Managing tasks and events in Desk Board, which includes:
 
-*Minor enhancement:* Creating 'task' and 'event' commands which add Task and Event objects respectively.
+* **adding** of tasks and events into Desk Board;
+
+* **removing** tasks and events from Desk Board;
+
+* **clearing** tasks and events from Desk Board; and
+
+* **keeping track** of overdue tasks and finished events with the auto overdue feature and `overdue` command.
+
+*Minor enhancement:* Implementing Java 8 `LocalDateTime` API. This API is used to parse the date times of tasks and events provided by the user and formats the date times for display in the UI.
 {empty} +
 {empty} +
 

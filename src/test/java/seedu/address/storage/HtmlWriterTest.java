@@ -1,10 +1,13 @@
 package seedu.address.storage;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertNull;
+import static org.junit.Assert.assertNotNull;
+
 import org.junit.Before;
 import org.junit.Test;
+
 import seedu.address.model.person.customer.Customer;
-import seedu.address.model.person.customer.MoneyBorrowed;
 import seedu.address.model.person.runner.Runner;
 import seedu.address.testutil.PersonBuilder;
 

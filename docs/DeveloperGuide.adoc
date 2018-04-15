@@ -708,12 +708,13 @@ The following methods of implementations were considered.
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Write the data to a .html file and use the current implementation of `loadPersonPage`.
-** Pros: Simple, easy to understand, and does not interfere with the implementation of `LocateCommand`.
+** Pros: Does not interfere with the implementation of `LocateCommand`, default page which shows keyboard shortcuts (also in .html)
 ** Cons: May not be the most native.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: More secure as details are kept within the app.
 ** Cons: Will require a new implementation of the whole BrowserPanel,
-will not be compatible with the above implementation `LocateCommand`.
+will not be compatible with the above implementation `LocateCommand`
+and the default page which shows keyboard shortcuts.
 
 // end::BrowserPanel[]
 //@@author

@@ -1123,6 +1123,31 @@ public static boolean isColorDark(String color) {
 ** Cons: The implementation is slightly more complicated.
 // end::randomised-tag-colors[]
 
+[[tagSearch]]
+=== Searching by tags
+[discrete]
+// tag::tag-search[]
+==== Current implementation
+The user input is parsed and separated into a `_String_` array of keywords in `_TagCommandParser_`. This array is then passed to `_TagContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their tags using a stream, setting the predicate to true when there is any match (i.e. the recipe does not have to contain ALL the tags specified like how the ingredient search was implemented).
+The matching is case-sensitive and the implementation can be seen below:
+[source,java]
+----
+@Override
+public boolean test(Recipe recipe) {
+    return keywords.stream()
+                .anyMatch(keyword -> recipe.getTags().stream()
+                    .anyMatch(tag -> tag.tagName.equals(keyword)));
+}
+----
+This entire list of predicates is then passed into `_TagCommand_` which uses the `updateFilteredRecipeList()` method of `Model` to change the list of recipes displayed to those that matched the tags.
+The sequence diagram of this entire process can be seen in <<fig-TagCommandSD>> below:
+
+[[fig-TagCommandSD]]
+.Interactions inside the `Logic` component for the *`tag favourites`* command.
+image::TagCommandSD.PNG[width="900"]
+{nbsp}
+// end::tag-search[]
+
 === Searching on the Internet
 // tag::internet-search[]
 ==== Current implementation
@@ -1225,31 +1250,6 @@ public boolean test(Recipe recipe) {
 This entire list of predicates is then passed into `_IngredientCommand_` which uses the `updateFilteredRecipeList()` method of `Model` to change the list of recipes displayed to those that matched the ingredients.
 Since the sequence is very similar to searching by tags, the sequence diagram of this entire process can be seen in the <<fig-TagCommandSD>> under <<tagSearch>> below.
 // end::ingredient-search[]
-
-[[tagSearch]]
-=== Searching by tags
-[discrete]
-// tag::tag-search[]
-==== Current implementation
-The user input is parsed and separated into a `_String_` array of keywords in `_TagCommandParser_`. This array is then passed to `_TagContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their tags using a stream, setting the predicate to true when there is any match (i.e. the recipe does not have to contain ALL the tags specified like how the ingredient search was implemented).
-The matching is case-sensitive and the implementation can be seen below:
-[source,java]
-----
-@Override
-public boolean test(Recipe recipe) {
-    return keywords.stream()
-                .anyMatch(keyword -> recipe.getTags().stream()
-                    .anyMatch(tag -> tag.tagName.equals(keyword)));
-}
-----
-This entire list of predicates is then passed into `_TagCommand_` which uses the `updateFilteredRecipeList()` method of `Model` to change the list of recipes displayed to those that matched the tags.
-The sequence diagram of this entire process can be seen in <<fig-TagCommandSD>> below:
-
-[[fig-TagCommandSD]]
-.Interactions inside the `Logic` component for the *`tag favourites`* command.
-image::TagCommandSD.PNG[width="900"]
-{nbsp}
-// end::tag-search[]
 
 === Undo/Redo feature
 ==== Current implementation

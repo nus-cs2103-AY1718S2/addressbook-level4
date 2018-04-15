@@ -26,22 +26,12 @@ reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-l
 
 ** Project management:
 *** Managed release `v1.3` on GitHub
-*** Updated all test cases for `v1.3` on GitHub
+*** Updated all test cases for `v1.3` on GitHub https://github.com/CS2103JAN2018-T11-B3/main/pull/73[#73] https://github.com/CS2103JAN2018-T11-B3/main/pull/74[#74]
 *** Created Jar file for `v1.3` to `v1.5` (3 releases) on GitHub
-** Enhancements to existing features (To be edited):
-*** Updated the GUI color scheme (Pull requests https://github.com[#33], https://github.com[#34])
-*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
-** Documentation (To be edited):
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
-** Community (To be edited):
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-T09-B1/main/issues/146[1], https://github.com/CS2103JAN2018-T09-B1/main/issues/166[2], https://github.com/CS2103JAN2018-T09-B1/main/issues/178[3])
 ** Tools:
 *** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/152[#152]
-
-_{you can add/remove categories in the list above}_
 
 == Contributions to the User Guide
 

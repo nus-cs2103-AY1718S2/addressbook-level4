@@ -1,6 +1,8 @@
-= John Doe - Project Portfolio
+= IzHoBX - Project Portfolio
 :imagesDir: ../images
 :stylesDir: ../stylesheets
+
+This project portfolio showcases my contributions to all the projects that I was involved in.
 
 == PROJECT: ET - Employees Tracker
 
@@ -9,20 +11,21 @@
 == Overview
 
 The Employees Tracker (ET) is a human resource management software. It aims to provide a one-stop solution for managers to manage their subordinates.
-Two of its major selling points are employees profile management as well as task tracking.
-Since most managers can type fast, ET is designed to have a Command Line Interface (CLI) as to allow its users to carry out operations efficiently without having to switch between the keyboard and mouse.
-Nonetheless, ET has a Graphical User Interface (GUI) to allow more direct visual feedbacks.
+Its two major selling points are employees profile management and task tracking.
 
-ET is developed using JAVA 8, and JavaFX and has about 10 kLoC.
+Since most managers can type fast, ET is designed to have a Command Line Interface (CLI) as to allow its users to carry out operations efficiently without having to switch between a keyboard and a mouse.
+Nonetheless, ET has a Graphical User Interface (GUI) to provide more direct visual feedback.
+
+ET is developed using JAVA 8 and JavaFX, and has about 10 kLoC.
 
 == Summary of contributions
 
 * *Major enhancement*: *Notification System*
 ** What it does: It shows notification cards to users to remind them about the expiry of the tasks that they have assigned to their subordinates.
-** Justification: Life as a manager is busy. It is very difficult for them to keep track of all the tasks being carried out in his team. This feature alleviates their pain by removing the need for them to remember the details of each task.
+** Justification: Managers usually have to managed quite a number of subordinates and it is very difficult for them to keep track of all the tasks being carried out in his team. This feature alleviates their pain by removing the need for them to remember the details of each task.
 ** Highlights: This features requires a seamless integration with all other components of the app, from UI to Logic and even storage, in order to work properly.
-That said, when designing the interface between the Notification System and each other components, one has to know what is the best design choice, considering the constraints of the component.
-Nonetheless, in order to present notifications in an elegant way that doesn't confuses the users, a considerable amount of insights into UX and UI designs is required.
+That said, when designing the interface between the Notification System and each other components, one has to be aware of the constraints of the component and choose the best design accordingly.
+Nonetheless, in order to present notifications in an elegant way that doesn't confuse users, a considerable amount of insights into UX and UI designs is required.
 
 * *Minor enhancement*: added rating feature to allow users to record the performance of each employee.
 
@@ -34,13 +37,11 @@ Nonetheless, in order to present notifications in an elegant way that doesn't co
 *** Oversees milestone v1.5rc and v1.5 on GitHub
 ** Enhancements to existing features:
 *** Develops the command-suggestion system that gives hints on command usages dynamically according to text that users type (Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/132/[#132])
-** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
 ** Community:
 *** Issues reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W15-B1/main/issues/26[#26]
 *** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W13-B2/main/issues/128[1], https://github.com/CS2103JAN2018-W13-B2/main/issues/137[2], https://github.com/CS2103JAN2018-W13-B2/main/issues/134[3], https://github.com/CS2103JAN2018-W13-B2/main/issues/130[4])
 ** Tools:
-*** Integrated a third party library (emoji=java) to the project (https://github.com/CS2103JAN2018-W15-B1/main/pull/53/commits/b8fd616f4b40d442d5dee77c1ad77bf86ca1f96e[#53])
+*** Integrated a third party library (emoji-java) to the project (https://github.com/CS2103JAN2018-W15-B1/main/pull/53/commits/b8fd616f4b40d442d5dee77c1ad77bf86ca1f96e[#53])
 
 == Contributions to the User Guide
 
@@ -50,8 +51,6 @@ Nonetheless, in order to present notifications in an elegant way that doesn't co
 |===
 
 include::../UserGuide.adoc[tag="quickStart"]
-include::../UserGuide.adoc[tag="rate"]
-include::../UserGuide.adoc[tag="ns"]
 
 == Contributions to the Developer Guide
 
@@ -61,3 +60,4 @@ include::../UserGuide.adoc[tag="ns"]
 
 include::../DeveloperGuide.adoc[tag=rate]
 include::../DeveloperGuide.adoc[tag=ns]
+include::../DeveloperGuide.adoc[tag=ns2]

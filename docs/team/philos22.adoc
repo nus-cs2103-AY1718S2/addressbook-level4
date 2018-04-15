@@ -1,0 +1,64 @@
+= Chung-Yen (Philos) Tsai - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: PrisonBook
+
+---
+
+== Overview
+
+PrisonBook is a desktop address book application used for Prison Guards/Inmates management. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Calendar Scheduling Feature
+** What it does: Allows user to interact with Google Calendar through PrisonBook CLI
+** Justification: Prisons need to follow a strict schedule and guards need to know where inmates are at all times.
+** Credits: Google API Guide
+
+* *Minor enhancement*: Enhanced the find command to be able to search by Tags in addition to Name-search
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B2/main/blob/master/collated/functional/philos22.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B2/main/blob/master/collated/test/philos22.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** PR management and tagging up till v1.3
+*** Verified and closed issues for v1.3 Milestone
+** Enhancements to existing features:
+*** Find by tags command (Pull request https://github.com/CS2103JAN2018-T11-B2/main/pull/25[#25])
+*** View upcoming events from PrisonBook Google Calendar (Pull request https://github.com/CS2103JAN2018-T11-B2/main/pull/55[#55])
+** Documentation:
+*** Converted initial documentation into PrisonBook format.
+*** Fix overall typos or missed headers.
+*** Constant updates on User Guide and Developer Guide as new features are rolled out.
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=find]
+
+include::../UserGuide.adoc[tag=calendar]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=FeatureContributionPhilos]
+
+include::../DeveloperGuide.adoc[tag=findbytag]
+
+include::../DeveloperGuide.adoc[tag=scheduling]
+
+include::../DeveloperGuide.adoc[tag=philostest]
+
+

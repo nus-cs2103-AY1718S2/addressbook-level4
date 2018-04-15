@@ -4,9 +4,11 @@ import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
+import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -22,6 +24,14 @@ public class UndoableCommandTest {
 
     private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
+    //@@author sarahgoh97
+    @Before
+    public void setUp() {
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+    }
+    //@@author
+
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
@@ -33,6 +43,7 @@ public class UndoableCommandTest {
         // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
         expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        expectedModel.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertEquals(expectedModel, model);
     }
 

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= PrisonBook - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T11-B2/main/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T11-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -140,7 +140,7 @@ The _Sequence Diagram_ below shows how the components interact for the scenario 
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when PrisonBook data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
 The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
@@ -204,8 +204,10 @@ image::ModelClassDiagram.png[width="800"]
 The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores PrisonBook data.
+* stores the cells in the prison.
+* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes.
+* exposes an unmodifiable `ObservableList<Cell>` that can be 'observed' in a map e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -219,7 +221,8 @@ image::StorageClassDiagram.png[width="800"]
 The `Storage` component,
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the PrisonBook data in xml format and read it back.
+* can save the user database in xml format and read it back.
 
 [[Design-Commons]]
 === Common classes
@@ -304,7 +307,7 @@ The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, an
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `edit`. As before, `edit` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
@@ -329,7 +332,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves the entire prison book.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -339,24 +342,319 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `edit`, `delete`).
+** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
+** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Cons: User have no way of skipping such commands if he or she just want to reset the state of the PrisonBook and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
+** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
+
+//tag::loginsecurity[]
+=== Login and Security Feature
+==== Current Implementation
+
+The Login and Security feature in the PrisonBook is implemented using Users and Sessions.
+
+===== Sessions
+Sessions are implemented with a `Session` class which resides inside `Model Manager`. It supports the logging in and logging out of a user as well as support restricted access for specific commands. For example read access (list command) vs write access (add command and edit command).
+
+image::ModelClassDiagramwSessionwCells.png[width="800"]
+
+As can be seen from the diagram, a Session is initialised upon the creation of the ModelManager. The session stores information such as the logged-in user's username, as well as the security level of the user.
+
+The accessibility of each command by the user is implemented on the logic level. Each command has a static `minimumSecurityLevel`. The usage of a command goes through the sequence diagram as follows (the example command being used here is the Delete command).
+
+image::SecurityLevelSequenceDiagram.png[width="800"]
+
+The `LogicManager` checks the `minSecurityLevel` of the command against the `securityLevel` of the current `Session` in the Model. If `the securityLevel` greater than or equal to the `minSecurityLevel`, the LogicManager will then call the `execute()` method on the Command.
+
+===== Design Considerations
+
+====== Aspect: Implementation for checking of security level for command access
+* **Alternative 1 (current choice):** Implemented by the `LogicManager`
+** Pros: Decreases coupling between `Command` and `Session`. This allows for flexibility in future implementation changes.
+** Cons: Sequence during execution needs to go back and forth with the `LogicManager`
+* **Alternative 2:** Implement at the `Command` level
+** Pros: Easy to understand, the sequence during execution keeps moving on to the next step instead of going back and forth with the LogicManager.
+** Cons: Commands are also responsible for checking if they should be run. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
+
+
+===== Users
+Users are implemented with a `User` class, as well as a `UniqueUserMap` class which also reside in the `Model Manager`. +
+The `UniqueUserMap` is implemented using a Hashmap which maps `usernames` as Keys and `User` as Values. Additionally, there is an internal list implemented via an `ObservableList` of all the Users in the Hashmap.
+
+To save the database of the users, a new type is added to the storage so that it is able to store the Users in the storage file.
+
+image::StorageClassDiagramwUserwCells.png[width="800"]
+
+Upon initialization of the AddressBook, the AddressBook will read the user data from the storage file and create the internal list of Users. The list is then iterated through and mapped to the HashMap.
+
+When adding and deleting users, both the Hashmap and the internal list are updated so as to reflect accurately in the model and stored correctly in the storage.
+
+Currently, the user data, including passwords are stored in plaintext, which may pose a security problem. For future implementations, we will include hashing of the passwords before storage to as to increase the security of the application.
+
+
+===== Design Considerations
+
+====== Aspect: Data Structures for UniqueUserMap
+* **Alternative 1 (current choice):** Hashmap + ObservableList
+** Pros: Easy to access users, can immediately call up the correct `User` object by passing in the username key. Whereas the ObservableList is used to complement the storage of the user data, where it is necessary to iterate through all the Users in order to store in the storage .xml file.
+** Cons: Duplicate information stored in two different data structures.
+* **Alternative 2:** ObservableList only
+** Pros: No duplication of Users. Storing is also easy as it uses the existing AddressBook storage framework which works with ObservableLists.
+** Cons: Everytime we want to access a specific User, we have to iterate through the entire list of Users in order to do so.
+* **Alternative 3:** HashMap only
+** Pros: Fast access of users in O(1) time
+** Cons: Unable to be stored efficiently with the current method of storing which works with XML file.
+
+====== Aspect: Storage location of User Data
+* **Alternative 1 (current choice):** Stored in the same XML File with the AddressBook data
+** Pros: Easy to implement with current method of saving, where the entire AddressBook is upon an Address Book Changed Event. There is no need to maintain an additional stack for a User Database for UndoRedo.
+** Cons: User data should theoretically be separated from AddressBook data (persons, cells, tags).
+* **Alternative 2:** Store in a separate XML File
+** Pros: Separation of storage for two different aspects. If User data file is corrupted, it does not affect the AddressBook data and vice versa.
+** Cons: Very difficult to implement with the current method of saving. Furthermore, there needs to be addtional stacks implemented to keep track of the past states of User data for the UndoRedo functions.
+
+
+//end::loginsecurity[]
+
+// tag::cellmap[]
+=== Prison Cell System
+==== Current Implementation
+
+In a prison, it is necessary to have cells where prisoners stay in.
+It is important to keep track of the prisoners in the cell and whether the `Cell` is full.
+
+This cell system is most clearly represented using a 2-D array.
+Hence, this was used as the basis of the map system of the prison.
+However, to prevent accidental changes, a read-only version of the cells are returned in an `ObservableList`.
+Since this is part of the `Model` component of the PrisonBook, the `Model` component has been updated accordingly as shown below.
+At the bottom of the `Model` class diagram, it has been updated to show how the cell system is linked to the other components.
+
+image::ModelClassDiagramwSessionwCells.png[Width="550"]
+
+To save and load the data of the cell system, storage also played an important component to ensure no data is lost when closing the app.
+Below is a class diagram of `Storage` to show how the cells are saved. A new type is added to the storage so that it knows how to save and load data for cells.
+
+image::StorageClassDiagramwUserwCells.png[Width="550"]
+
+This map is shown on the user interface on the right side area, shown in the picture below.
+Since the app is still being tested, the `map` command will also show the actual cells in the result display box.
+This basic map shows the cell system and helps keep track of what is happening in the cells.
+
+image::MapPanel.png[width="550"]
+
+This cell system helps users visualise the locations of the prisoners more easily. Not only that, prisoners can also be added and removed from them.
+These changes can be viewed in the bigger map which displays the number of people in individual cells below each cell address.
+
+Assuming the user has access to the functions to add prisoners into prison cells, they can use the `addcell` command to do so.
+Below is the sequence diagram of the logic and model components.
+
+image::AddCellSequenceDiagram.PNG[width="550"]
+image::AddCellModelSequenceDiagram.PNG[width="550"]
+
+Besides the cell map system being updated, we will also update the addresses of these prisoners added to the prison, since they now live in the prison, rather than in their own homes.
+
+Prisoners can also be removed from their cells using the `deletecell` command when they are being transferred to another cell,
+or if they can leave prison and go back home to their loved ones.
+
+To aid in adding prisoners to cells and deleting them from the cells, a `listcell` command has been implemented.
+With this command, users can see who are in a specified cell. This helps users know whether the cell is full and
+if some of these prisoners should not be added to the same cell.
+
+For future implementations, we can also allow only the prison wardens/owners to redefine the maximum size of the prison as their prisons
+may grow or shrink in the future. In this application, we will only show an example with 15 cells with a maximum of 2 prisoners per cell.
+These values can be easily changed and we will customise it based on your needs. The naming of the cells can also be adjusted accordingly.
+
+==== Design Considerations
+===== Aspect: Data Structure of Cells in CellMap
+
+* **Alternative 1 (current choice):** Use a 2-D array
+** Pros: Easy to visualise the system.
+** Cons: Harder to do more functions that the Java API has provided. Does not fit in with the other models of Person and Tag and their internalList.
+It also makes it harder to implement undo and redo functions for actions below.
+* **Alternative 2:** Use a 2-level ArrayList
+** Pros: Can use Java functions meant for Lists, can have different number of units for each block
+** Cons: Not uniform number of units for each block will be harder to take into consideration when using the individual cells.
+* **Alternative 3:** Use an ObservableList
+** Pros: Easier to save state of cells when undoing and redoing.
+** Cons: Harder to visualise where each row of cells/prisons end.
+
+===== Aspect: Implementation of ShowCellsCommand (`map`)
+
+* **Alternative 1 (current choice):** Keep the map always on display.
+** Pros: Easier to see when adding prisoners to cells and removing prisoners from cells.
+** Cons: Anyone walking by from behind can see the information easily and compromises security.
+* **Alternative 2:** Create a new Command to show the map.
+** Pros: Easy to implement, similar to listing. Extending the current list of commands. Only when function is called can the map be seen.
+** Cons: Easy to forget which cell in the map can add prisoners but the map is not permanently there.
+
+===== Aspect: Implementation of AddCellCommand (`addcell`)
+
+* **Alternative 1 (current choice):** Prisoners are added into cells in a cellMap and their addresses will be updated.
+** Pros: Cells are always there and can hold prisoners. Since persons in the PrisonBook can be either prisoners or guards, not all persons may have a cell.
+Easier to delete prisoners from cells and update their addresses accordingly when they are released from prison.
+** Cons: Need to have extra implementation to ensure undo and redo commands work properly when deleting a prisoner who is imprisoned as well
+as to remove them or add them to cells.
+* **Alternative 2:** Not have a cell map but to add cells to prisoners.
+** Pros: Might be more intuitive for the user, to check a prisoner's cell location.
+** Cons: Harder to manage a system of cells. Easy to accidentally overcrowd a cell. Not all persons in PrisonBook are prisoners.
+Some of them are guards.
+* **Alternative 3:** Automatically assigning cells to prisoners
+** Pros: Removes the burden of choosing a cell for user. Fewer commands required as prisoners are automatically added.
+** Cons: More complex in automatically choosing cells for prisoners. User might want to have control on which prisoners should be in which cell.
+
+===== Aspect: Implementation of ListCellCommand (`listcell`)
+
+* **Alternative 1 (current choice):** Users to give cell address to show prisoners in them.
+** Pros: Easy to implement, similar in structure to `Find` Command and its listing of persons.
+** Cons: Need to find address of cell first that is required.
+* **Alternative 2:** Clicking on a cell to show prisoners in them
+** Pros: Might be more intuitive for the user to click on a cell.
+** Cons: Not ideal for users who prefer CLI.
+
+
+===== Aspect: Implementation of DeleteCellCommand (`deletecell`)
+
+* **Alternative 1 (current choice):** Removes a prisoner from a cell by choosing the prisoner and updates his/her address back accordingly.
+** Pros: Faster way to remove since only the index of the prisoner is required. User does not have to figure out which cell the prisoner he or she is in.
+** Cons: Since cells have a size limit of 2, it is easier to delete a person after selecting a cell.
+* **Alternative 2:** Choosing a cell and the person to delete from the cell after seeing the list.
+** Pros: Easier to choose a cell when there are many people in the PrisonBook and is difficult to see who the prisoners are.
+** Cons: Requires more steps to delete a person from the cell, by having to first list then delete.
+Current implementation can work in a similar way that makes it easier to delete a prisoner from a cell.
+// end::cellmap[]
+
+//tag::findbytag[]
+=== Find by Tag Command
+==== Current Implementation
+When the Find command is called, FindCommandParser will look for the tag and/or name prefixes (t/ and n/ respectively).
+The arguments following each prefix will be made into a list. A mapping is then generated between prefixes/values and new predicate instances are created.
+
+image::FindCommand_sequence.png[Width="550"]
+
+==== Design Considerations
+===== Aspect: Find Command
+* **Alternative 1 (current choice):** Add on to the current Find command
+** Pros: Allows filtering by names and/or tags
+** Cons: Requires user to include prefixes in the command to differentiate between name and tag arguments
+* **Alternative 2:** Create new command for finding tags
+** Pros: More convenient if user only needs to filter by tags or filter by names separately, no need for prefixes
+** Cons: Cannot filter by names and tags in a single command
+
+===== Aspect: Argument Deliminator
+* **Alternative 1 (current choice):** Only one prefix with all arguments coming after, delimited by space
+** Pros: Relatively convenient for user when they are inputting multiple arguments
+** Cons: Easier for users to mistakenly merge two arguments into one when forgetting a space
+* **Alternative 2:** One prefix required for each argument
+** Pros: Allows user to order name and tag arguments in any order - the tag arguments and name arguments do not
+ have to be grouped together after a single prefix
+** Cons: May become tedious and redundant when inputting multiple arguments, more prone to typos and human error
+
+//end::findbytag[]
+
+//tag::scheduling[]
+=== Scheduling with Google Calendar
+==== Current Implementation
+The PrisonBook calendar commands will instantiate a calendar class to interact with the Google Calendar API.
+The initial step is to obtain valid credentials authorized from the API side to access its resources, then
+the calendar class will send HTTPS requests to the server, whether it is calling the listEvents, addEvents or delEvents API command.
+
+Calendar Commands that are supported are: +
+* listing upcoming events +
+* adding an event +
+* removing an event
+
+image::CalendarCommands_classDiagrams.PNG[Width="350"]
+
+===== Aspect: Choosing Number of Accounts to Work With
+
+ * **Alternative 1 (current choice):** Using one Google account for all prison staff
+ ** Pros: Very simple to administrate and fits the needs of the project scope.
+ ** Cons: No personalization for calendars of Warden/Guards.
+ * **Alternative 2:** Use one Google account for Warden and one for Guards
+ ** Pros: Two accounts is still relatively simple to maintain, allows for some separation of events-scheduling.
+ ** Cons: All guards still share the same schedule, so they cannot have personal schedules.
+ * **Alternative 3:** Use one Google account for Warden and one for Guards
+ ** Pros: Two accounts is still relatively simple to maintain, allows for some separation of events-scheduling.
+ ** Cons: All guards still share the same schedule, so they cannot have personal schedules.
+ * **Alternative 4:** Use one Google account for Warden and one for Guards
+ ** Pros: All prison staff have their own calendar for private individual events.
+ ** Cons: Hard to maintain because we have to make sure all staff have the master prison schedule of the inmates' activities non-overlapping with personal events. There will also be a lot of calendars to keep track of, depending on how many guards are hired.
+
+===== Aspect: Choosing Number of Calendars per Person
+
+* **Alternative 1 (current choice):** Only one calendar per person
+** Pros: Simple to implement, administrate and satisfies users' daily tasks
+** Cons: Events cannot overlap, limited to fit events in separate rigid time slots.
+* **Alternative 2:** Multiple calendars per person
+** Pros: Users can track multiple events happening at the same time. Different calendars can also be used to organize and group logically-related events.
+** Cons: Complicated on the administration side and oversteps the scope of this enhancement. Not really looking to replace personal Google Calendars, this is just to allow prison staff to work with prison schedules.
+
+=== View Calendar Feature
+==== Current Implementation
+The View Schedule feature can be accessed via entering the command `cal`.
+It allows guards/wardens to see upcoming events and their start times.
+
+===== Aspect: Event Listing UI
+
+* **Alternative 1 (current choice):** List events as a list format
+** Pros: Simple to implement, shows more details than calendar UI
+** Cons: Not as visually pleasing, users cannot use mouse to edit calendar intuitively
+* **Alternative 2:** List events in the calendar UI display
+** Pros: More intuitive with an actual interactive calendar, allows users to click and drag using mouse
+** Cons: No longer command line based, takes up more space than console
+
+=== Add Event to Calendar Feature
+==== Current Implementation
+The Add Event feature can be accessed via entering the command `calAdd event/EVENTNAME loc/LOCATION start/STARTDATETIME end/ENDDATETIME`.
+It allows guards/wardens to add an event, specifying the event name, location, starting and ending times.
+
+image::CalendarAddCommand_sequence.png[Width="550"]
+
+===== Aspect: Relevancy of Event Attendee List
+
+* **Alternative 1 (current choice):** Excluding Attendee List
+** Pros: Less content for user to input when creating events, does not restrict any functionality in a prison setting
+** Cons: Slightly less customization when adding events
+* **Alternative 2:** Including Attendee List
+** Pros: Can invite specific individuals for smaller scale events
+** Cons: Typing each user can become tedious and extra work for the users, also not suitable for prison setting because prisoners are not "invited" for meals or to get back into their cells
+
+=== Delete Event from Calendar Feature
+==== Current Implementation
+The Delete Event feature can be accessed via entering the command `calDel EVENTNUMBER`.
+It allows guards/wardens to remove events from the upcoming events list.
+Since each event has its own eventID which is a random alphanumeric String, they are mapped to Integers through an ArrayList for easier selection by the users.
+
+image::CalendarDeleteCommand_sequence.png[Width="550"]
+
+===== Aspect: Specification of Which Event to Delete
+
+* **Alternative 1 (current choice):** Enumerating the event list and storing it in an array
+** Pros: Easy interface for users, they just pick a simple integer from the list
+** Cons: Have to map these enumerations to the actual IDs
+* **Alternative 2:** Displaying the actual event IDs from the API
+** Pros: No additional parsing or eventID storing is needed
+** Cons: Users have to type the event IDs manually, which are seemingly random alphanumeric strings (prone to human error)
+* **Alternative 3:** No change to list
+** Pros: No additional clutter to existing list
+** Cons: Users have to specify event name and start/end times, which is quite tedious
+
+
+//end::scheduling[]
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -493,295 +791,19 @@ Here are the steps to create a new release.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, PrisonBook depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
 [[GetStartedProgramming]]
 [appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
 == Product Scope
 
 *Target user profile*:
 
+* works at a prison with around 1000 inmates
+* has a need to keep track of prisoner locations and details
+* has a need to organize and direct guards efficiently
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
@@ -790,6 +812,41 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Value proposition*: manage contacts faster than a typical mouse/GUI driven app
 
+*Feature Contributions*:
+
+// tag::FeatureContributionPhilos[]
+
+* Chung-Yen (Philos) Tsai (philos22)
+  1. Major enhancement: +
+  Scheduling: Keeps track of schedule of prisoners and guards.
+  2. Minor enhancement: +
+  Find by tag: This function will allow admins to filter user list by tags. Tags may include classification of Prisoner vs. Guards, Prisoner cell blocks and cell numbers, Guards' current teams and assignments, etc...
+
+// end::FeatureContributionPhilos[]
+// tag::FeatureContributionIsaac[]
+
+* Isaac Gideon Tan (zacci)
+  1. Major enhancement: +
+  Login and Authorization Levels: Enable creation of account for guards, logging in, and authorization levels for commands that may compromise the security of the Prison data.
+  2. Minor enhancement: +
+  Additional Attribute to store 'Role' information. To identify the person as a Prisoner or Guard
+
+// end::FeatureContributionIsaac[]
+// tag::FeatureContributionSarah[]
+
+* Sarah Goh Shi Ning (sarahgoh97)
+  1. Major enhancement: +
+  Creating a cell system of all the prison cells in the prison.
+  This helps users add and remove prisoners to their prison and prevent users from overcrowding their prison.
+  It can also help users keep track of locations of the cells of each prisoner.
+  Users can also add and remove prisoners more easily by first listing people in each cell to decide where to add or remove them.
+  2. Minor enhancement: +
+  Show map of the cell system on the UI.
+  Also implemented the UI to show the list of persons and the map when first logged in
+  and to hide it when logging out and when the application is first opened.
+// end::FeatureContributionSarah[]
+
+// tag::UserStories[]
 [appendix]
 == User Stories
 
@@ -798,62 +855,163 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |administrator |group guards together |form teams to carry out various tasks: patrol rotations, perimeter control, cell guards
 
-|`* * *` |user |add a new person |
+|`* * *` |guard |have a track record of each prisoner’s past offences
+                          Type 1 – Injuring guard
+                          Type 2 – Infighting with other inmates
+                          Type 3 – Vandalism
+ |use the appropriate level of precaution when dealing with unruly individuals
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |guard |keep track of each prisoner’s holding cells |ensure that there are two prisoners per cell and that certain bad prisoner combinations are avoided
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |prison warden |assign ranks to each guard |enforce access rights to view/edit prisoner and officer data
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |guard |check the length of imprisonment of prisoners I am in charge of |know when they are leaving
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |guard |add prisoners to prison cells |the prisoners have a prison cell to stay in
+
+|`* * *` |guard |check number of prison cells available |decide whether to take more prisoners in
+
+|`* * *` |guard |delete a prisoner |add more prisoners to prison
+
+|`* * *` |guard |check when I am on duty |see when I have to come to work
+
+|`* * *` |guard |check who are in my team |coordinate with my team
+
+|`* * *` |prison warden |add police officers |give access to new police officers
+
+|`* *` |guard |assign prisoners to different recess blocks |separate those that start fights or cause trouble when together
+
+|`* *` |prison warden |shuffle patrol guards around teams every day |each team is made up of different members every day, prisoners will acquaint themselves with specific guards
+
+|`* *` |prison warden |divide cells into blocks (1, 2, 3) and name each cell numerically (1-1, 1-2, etc…) |refer to each cell easily when assigning prisoners to them
+
+|`* *` |guard |check whether there are visitor appointments |inform prisoners and bring them to see their visitors
+
+|`* *` |guard |edit details of prisoners |update information of prisoners
+
+|`* *` |guard |transfer people to other prisons |have more empty cells for more prisoners
+
+|`*` |prisoner |know my release date |look forward to the day I can see my family/friends again
+
+|`*` |guard |see my assigned prisoners’ social networks: friends, enemies, family, etc… |use this as reference when dealing with inmates
+
+|`*` |guard |assign prisoners to solitary confinement |punish those that have continuously committed serious offences
+
+|`*` |cook |check dietary requirements of all people in prison |cook sufficient food
+
+|`*` |counselor |check what prisoners' crimes |understand my patients better
+
 |=======================================================================
 
-_{More to be added}_
+// end::UserStories[]
 
+// tag::UseCases[]
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
-
 [discrete]
-=== Use case: Delete person
+=== Use case: Add an event on the calendar.
+Actor: Guard (Guard)
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  Guard requests to add event to calendar.
+2.  PrisonBook adds event to calendar.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 1a. PrisonBook detects that guard's security level is not high enough.
++
+[none]
+** 1a1. PrisonBook shows an error message regarding security level.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+* 1b. The format of adding event to calendar is wrong.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 1b1. PrisonBook shows an error message.
 +
-Use case resumes at step 2.
+Use case ends.
 
-_{More to be added}_
+[discrete]
+=== Use case: Add prisoner to a cell
+Actor: Guard
 
+*MSS*
+
+1. PrisonBook shows a list of available cells.
+2. Guard selects a prisoner and cell to add.
+3. PrisonBook updates prisoner status and cell status.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Guard does not have sufficient access to view cells.
++
+Use case ends.
+
+* 2a. PrisonBook detects that prisoner is already added to a cell.
++
+[none]
+** 2a1. PrisonBook sends an error message regarding prisoner already imprisoned.
++
+Use case resumes at step 1.
+
+* 3a. PrisonBook detects that the cell is already full.
++
+[none]
+** 3a1. PrisonBook sends an error message regarding adding prisoner to a full cell.
++
+Use case resumes at step 1.
+
+* 4a. PrisonBook detects that address of cell is invalid.
++
+[none]
+** 4a1. PrisonBook sends an error message regarding invalid cell address.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Get the list of prisoners in a certain cell
+Actor: Guard
+
+*MSS*
+
+1.  Guard requests a list of prisoners in a specified cell
+2.  PrisonBook shows the list of prisoners in specified cell
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Guard does not have access rights to view the details of the requested cell
++
+Use case ends.
+
+// end::UseCases[]
+
+// tag::NFR[]
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
+.  Should work on any mainstream OS as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should work for 32-bit and 64-bit environments
+.  System should respond within 2 seconds
+.  Should have different levels of access for users of different ranks.
+.  Should have a backup copy at all times in case a user accidentally deletes any information.
 
-_{More to be added}_
+// end::NFR[]
 
 [appendix]
 == Glossary
@@ -861,25 +1019,19 @@ _{More to be added}_
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[warden]] Prison warden::
+Owner of the prison, who has the highest level of access available.
 
-[appendix]
-== Product Survey
+[[guard]] Guard::
+A person working in the prison, to watch over prisoners and ensure order.
 
-*Product Name*
+[[prisoner]] Prisoner::
+A person has been sent to prison for a crime.
 
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+[[cell]] Cell::
+A place where prisoners stay and live in when they are imprisoned.
+Each cell has a maximum number of people who can live in them to prevent overcrowding.
+Their addresses are fixed and cannot be changed unless the application is customised.
 
 [appendix]
 == Instructions for Manual Testing
@@ -895,34 +1047,184 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
-
+   Expected: Shows the GUI with a set of sample prisoners and guards. The window size may not be optimum.
+.. Please do not open the jar file through a terminal.
 . Saving window preferences
 
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+// tag::isaactest[]
 
-=== Deleting a person
+=== Major Feature: Users, Sessions and Security Levels
+==== Logging in and Logging out
+. For security purposes, users of PrisonBook need to login with their user details in order to to view the information on the PrisonBook. They can also logout after finishing their session, so that the next person will need to login again.
 
-. Deleting a person while all persons are listed
+.. Prerequisites: You must not be logged in. (By default, you are not logged in when you first open the application.) +
+   Test case: Type `login user/prisonguard pw/password1` +
+   Expected: PrisonBook will display `Login Success`
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Prerequisites: You are logged in. +
+   Test case: Type `status` to show your current session's details +
+   Expected: `Username: prisonguard Security Level: 1`
+
+.. Prerequisites: You are logged in. +
+   Test case: Type `logout` to logout +
+   Expected: PrisonBook will display `Successfully logged out`. Furthermore the person details in the left panel will be cleared, and the cell details in the right panel will reflect that you have insufficient authority to view the information.
+
+==== Commands have restricted access
+. A minimum Security Level is required to use and access certain commands. +
+Refer to Section 5: Command Summary for the detailed list of commands and their respective minimum security level ranging from 0 to 3.
+
+.. Test case: Type `logout` to ensure that you are logged out. (By default you are not logged in when you first open the application) +
+   Type `list` +
+   Expected: PrisonBook will show `Your security level is insufficient to access this command.` +
+.. Test case: Login using `login user/prisonleader pw/password2` (This user has Security Level of 2) +
+   Type `list` +
+   Expected: PrisonBook will say `Listed all persons` and show the full list of persons on the left column of the UI. +
+   You can test the other commands with the following user details:
+   ... `login user/prisonwarden pw/password3` Security Level 3.
+   ... `login user/prisonleader pw/password2` Security Level 2.
+   ... `login user/prisonguard pw/password1` Security Level 1.
+
+==== Adding a new user
+. You can add new users to the PrisonBook when you want to give access to new people.
+
+.. Prerequisites: Have sufficient security level[3] +
+   Test case: `adduser user/prisonguard99 pw/password2 sl/1` +
+   Expected: `New user prisonguard99 added to PrisonBook` +
+   You can then proceed to logout and attempt to login with the new user `prisonguard99`.
+
+.. Prerequisites: Have sufficient security level[3] +
+   Test case: `adduser user/prisonwarden pw/password3 sl/3` +
+   Expected: `prisonwarden is already a user in PrisonBook` +
+
+==== Deleting a user
+. You can delete users from the PrisonBook
+
+.. Prerequisites: You must be logged in with a higher security level than the user you want to delete. (Users with security level 3 can delete anyone, including other security level 3 users.) +
+   Test case: Login with `login user/prisonleader pw/password2`, then type `deleteuser user/prisonguard99` (Which was added above in F.2.3) +
+   Expected: `User has been successfully deleted`. You can logout and attempt to login to `prisonguard99` but you will not be able to successfully login as the user has been deleted.
+
+.. Prerequisites: You must be logged in with a minimum security level of 2. +
+   Test case: `delete user/nonexistentuser`
+   Expected: `The username does not exist`
+
+=== Minor Feature: Role Attribute added to Persons
+. Allow user to indicate to the PrisonBook if added person is a Guard or a Prisoner.
+
+.. Prerequisites: Have sufficient security level[2]
+.. Test case: `add n/Sample Prisoner a/Chua Chu Kang p/91234567 e/sp@example.com r/p` +
+   Expected: New person to show up on the UI with the name Sample Prisoner and shown to be a Prisoner on the person card.
+.. Test case: `add n/Sample Guard a/Chua Chu Kang p/91234567 e/sg@example.com r/g` +
+   Expected: New person to show up on the UI with the name Sample Guard and shown to be a Guard on the person card.
+
+// end::isaactest[]
+
+// tag::sarahtest[]
+=== Minor Feature: Showing prisoners in the UI
+. Map panel in UI showing the map of cells in the system.
+
+.. Prerequisites: Have sufficient security level[1]
+.. Test case: Starting up the app and before logging in +
+   Expected: No details regarding cells shown on the map. Will show 0 persons in PrisonBook.
+   Map shows that user has insufficient access to view information.
+.. Test case: Using features below while logged in +
+   Expected: UI matches what `map` command shows on the display. Will show number of persons in PrisonBook.
+
+=== Major Feature: Managing prisoners in a prison
+==== Adding a prisoner to a cell
+
+. Adding a prisoner to a cell when all prisoners are listed and has sufficient security level [2].
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list, from initial state of program.
+.. Test case: `addcell 5 1-5` (person at index is a prisoner and is not in a cell and cell is not full) +
+   Expected: Fifth person is added to the cell with address 1-5.
+   Address of the prisoner updated in the person card and message of prisoner added to cell is displayed.
+   The map on the right side of the UI will also update correspondingly by adding to the number corresponding to cell address 1-5.
+   Timestamp in the status bar is updated.
+.. Test case: `addcell 0 1-4` +
+   Expected: No prisoner is added to a cell because of the index.
+   Error message displayed regarding format. The map and status bar will not be updated.
+.. Other incorrect add cell commands to try: `ac`, `addcell 2 1=1` +
+   Expected: No change to UI and displays error message.
+
+==== Deleting prisoner from a cell
+
+. Deleting a prisoner from a cell when all prisoners are listed and has sufficient security level [2].
+
+.. Prerequisites: List all persons using the `list` command. Multiple persons in the list, from initial state of program.
+.. Test case: `deletecell 1` +
+   Expected: Prisoner is deleted from his/her cell and their original cell will be updated.
+   Message regarding prisoner being released will be displayed.
+   The map on the right will be updated, as well as the prisoner's address back to their old address.
+.. Test case: `deletecell 0` +
+   Expected: No change to map and to the list of persons.
+   Message regarding error will be shown for correct format of command.
+.. Other incorrect delete cell commands to try: `dc`, `dc 0` +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+==== Listing prisoners in a cell
+
+. Listing a prisoner from a cell when here is sufficient security level [1].
+.. Test case: `listcell 1-1` +
+   Expected: List of prisoners in cell address 1-1 will be updated and shown.
+.. Test case: `listcell 10-10` +
+   Expected: There is no change in the UI except the error message regarding an invalid cell.
+.. Other incorrect list cell commands to try: `lc`, `lc 1` +
+   Expected: Similar to previous.
+
+// end::sarahtest[]
+
+// tag::philostest[]
+=== Major Feature: Scheduling with Google Calendar
+
+==== Listing 10 upcoming events
+Allows guards and prison warden to view the upcoming 10 events scheduled in Google Calendar.
+
+.. Prerequisites: Have sufficient security level[1] +
+   Test case: Type `cal` or `calendar`, if this is your first time connecting to Google Calendar, you will need to log into the PrisonBook Calendar account:
+   A new browser window will open, do NOT close the window before you have logged in!
+   Use email: prisonbooksystem@gmail.com
+   Use password: prisonbook2018
+   Expected: 10 upcoming events will be listed, each showing an assigned Event Number, Event Name, Time range and Location. +
+
+==== Adding an event
+. You can add new events to the PrisonBook Calendar.
+
+.. Prerequisites: Have sufficient security level[3] +
+   Test case: `calA event/Showing this works loc/NUS start/2018-04-28 12:00:00 end/2018-04-28 13:00:00` +
+   Expected: `A new event will have been added to the calendar on April 28 at 12 o'clock.`
+
+.. Prerequisites: Have sufficient security level[3] +
+   Test case: `calA event/Showing this works loc/NUS start/2018-04-28 12:00:00 end/2017-04-28 13:00:00` +
+   Expected: `The API will throw an error because the end date is earlier than the start date. It will tell you the time range is empty.` +
+
+==== Deleting an event
+. You can delete events from the listed Calendar events
+
+.. Prerequisites: Have sufficient security level[3] +
+   Test case: `calD 2` +
+   Expected: The second event (Event 2) will have been deleted next time you call the `cal` list event command.
+
+.. Prerequisites: Have sufficient security level[3] +
+   Test case: `calD 11`
+   Expected: Since only 10 events are listed, this command will not affect anything as there is no EventID linked to 11.
+
+=== Minor Feature: Find by Tags
+. Allow user to find persons by tags as well as names
+
+.. Prerequisites: Have sufficient security level[1]
+.. Test case: `find n/Alex t/ChickenAllergy` +
+   Expected: 1 person listed: Alex Yeoh who is allergic to chickens.
+.. Test case: `find t/Vegetarian` +
+   Expected: 1 person listed: Bernice Yu who is a Vegetarian.
+// end::philostest[]
 
 === Saving data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Should the data file be missing, a sample prison book will be provided, with the 3 users mentioned in the user guide:
+prisonwarden, prisonleader and prisonguard

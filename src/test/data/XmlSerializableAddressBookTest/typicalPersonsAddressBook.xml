@@ -7,6 +7,8 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <isInCell>false</isInCell>
+        <role>p</role>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -14,6 +16,8 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
+        <isInCell>false</isInCell>
+        <role>g</role>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -21,32 +25,115 @@
         <name>Carl Kurz</name>
         <phone>95352563</phone>
         <email>heinz@example.com</email>
-        <address>wall street</address>
+        <address>1-2 [Old address: wall street]</address>
+        <isInCell>true</isInCell>
+        <role>p</role>
+        <tagged>Tag1</tagged>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <isInCell>false</isInCell>
+        <role>g</role>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
-        <address>michegan ave</address>
+        <address>1-3 [Old address: michegan ave]</address>
+        <isInCell>true</isInCell>
+        <role>p</role>
+        <tagged>Tag1</tagged>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <isInCell>false</isInCell>
+        <role>g</role>
+        <tagged>Tag1</tagged>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
-        <address>4th street</address>
+        <address>1-3 [Old address: 4th street]</address>
+        <isInCell>true</isInCell>
+        <role>p</role>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>
+    <cells>
+        <cellAddress>1-5</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>1-2</cellAddress>
+        <prisoners>
+            <name>Carl Kurz</name>
+            <phone>95352563</phone>
+            <email>heinz@example.com</email>
+            <address>1-2 [Old address: wall street]</address>
+            <isInCell>true</isInCell>
+            <role>p</role>
+            <tagged>ENEMY</tagged>
+        </prisoners>
+    </cells>
+    <cells>
+        <cellAddress>1-3</cellAddress>
+        <prisoners>
+            <name>Elle Meyer</name>
+            <phone>9482224</phone>
+            <email>werner@example.com</email>
+            <address>1-3 [Old address: michegan ave]</address>
+            <isInCell>true</isInCell>
+            <role>p</role>
+        </prisoners>
+        <prisoners>
+            <name>George Best</name>
+            <phone>9482442</phone>
+            <email>anna@example.com</email>
+            <address>1-3 [Old address: 4th street]</address>
+            <isInCell>true</isInCell>
+            <role>p</role>
+        </prisoners>
+    </cells>
+    <cells>
+        <cellAddress>1-4</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>1-5</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>2-1</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>2-2</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>2-3</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>2-4</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>2-5</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>3-1</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>3-2</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>3-3</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>3-4</cellAddress>
+    </cells>
+    <cells>
+        <cellAddress>3-5</cellAddress>
+    </cells>
 </addressbook>

@@ -1,11 +1,18 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DATETIME_FORMAT;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.temporal.TemporalAccessor;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+
+import com.google.api.client.util.DateTime;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -14,6 +21,7 @@ import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Role;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -140,6 +148,30 @@ public class ParserUtil {
     }
 
     /**
+     * Parses a {@code String role} into an {@code role}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code role} is invalid.
+     */
+    public static Role parseRole(String role) throws IllegalValueException {
+        //requireNonNull(role); null accepted for now
+        String trimmedRole = role.trim();
+        if (!Role.isValidRole(trimmedRole)) {
+            throw new IllegalValueException(Role.MESSAGE_ROLE_CONSTRAINTS);
+        }
+        return new Role(trimmedRole);
+    }
+
+    /**
+     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Role> parseRole(Optional<String> role) throws IllegalValueException {
+        //requireNonNull(role); null accepted for now
+        return role.isPresent() ? Optional.of(parseRole(role.get())) : Optional.empty();
+    }
+
+    /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
      *
@@ -165,4 +197,102 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author zacci
+    /**
+     * Parses a @code String username
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code password} is invalid.
+     */
+    public static String parseUsername(String username) throws IllegalValueException {
+        requireNonNull(username);
+        String trimmedUsername = username.trim();
+        if (!trimmedUsername.matches("[\\p{Alnum}]*")) {
+            throw new IllegalValueException("Username can only consist of alphanumeric characters");
+        }
+        return trimmedUsername;
+    }
+
+    /**
+     * Parses a {@code Optional<String> username} into an {@code Optional<username>} if {@code username} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static String parseUsername(Optional<String> username) throws IllegalValueException {
+        //requireNonNull(username); null accepted for now
+        return username.isPresent() ? parseUsername(username.get()) : "";
+    }
+
+    /**
+     * Parses a @code String password
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code password} is invalid.
+     */
+    public static String parsePassword(String password) throws IllegalValueException {
+        requireNonNull(password);
+        String trimmedPassword = password.trim();
+
+        if (!trimmedPassword.matches("[\\p{Alnum}]*")) {
+            throw new IllegalValueException("Password can only consist of alphanumeric characters");
+        }
+        return trimmedPassword;
+    }
+
+    /**
+     * Parses a {@code Optional<String> password} into an {@code Optional<password>} if {@code password} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static String parsePassword(Optional<String> password) throws IllegalValueException {
+        requireNonNull(password);
+        return password.isPresent() ? parsePassword(password.get()) : "";
+    }
+
+    /**
+     * Parses a @code String securityLevel
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code securityLevel} is invalid.
+     */
+    public static int parseSecurityLevel(String securityLevel) throws NumberFormatException, IllegalValueException {
+        requireNonNull(securityLevel);
+        String trimmedSecurityLevel = securityLevel.trim();
+
+        if (!trimmedSecurityLevel.matches("[123]")) {
+            throw new IllegalValueException("Security Level can only take integer values 1, 2 or 3");
+        }
+
+        int intSecurityLevel = Integer.parseInt(trimmedSecurityLevel);
+        return intSecurityLevel;
+    }
+
+    /**
+     * Parses a {@code Optional<int> securityLevel} into an {@code Optional<securityLevel>}
+     * if {@code securityLevel} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static int parseSecurityLevel (Optional<String> password)
+            throws NumberFormatException, IllegalValueException {
+        requireNonNull(password);
+        return password.isPresent() ? parseSecurityLevel(password.get()) : -1;
+    }
+    //@@author
+
+    //@@author philos22
+    /**
+     * Parses a {@code Optional<String> DateTime} if present.
+     */
+    public static DateTime parseDateTime(String dateTime) throws DateTimeParseException {
+
+        String theDateTime = dateTime.replaceAll("[\\[\\]]", "").replaceAll("Optional", "");
+
+        try {
+            TemporalAccessor ta = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss").parse(theDateTime);
+            String strDateTime = LocalDateTime.from(ta).toString() + ":00+08:00";
+            return new DateTime(strDateTime);
+        } catch (DateTimeParseException e) {
+            throw new DateTimeParseException(MESSAGE_INVALID_DATETIME_FORMAT, theDateTime, 0, e);
+        }
+    }
+
 }

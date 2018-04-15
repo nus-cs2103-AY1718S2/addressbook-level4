@@ -22,6 +22,7 @@ public class ModelManagerTest {
     @Test
     public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
+        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         thrown.expect(UnsupportedOperationException.class);
         modelManager.getFilteredPersonList().remove(0);
     }
@@ -34,7 +35,9 @@ public class ModelManagerTest {
 
         // same values -> returns true
         ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        modelManagerCopy.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -60,6 +63,8 @@ public class ModelManagerTest {
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
         differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        ModelManager testModelManager = new ModelManager(addressBook, differentUserPrefs);
+        testModelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        assertTrue(modelManager.equals(testModelManager));
     }
 }

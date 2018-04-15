@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= PrisonBook - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T11-B2/main/
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103-T11-B2`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+PrisonBook is for those who *prefer to use a desktop app for managing their prison and accessing the database of prisoners*. More importantly, PrisonBook is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, PrisonBook can help you manage your prison faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,9 +27,9 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `prisonbook.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your PrisonBook.
+.  Double-click the file to start the app. The GUI should appear in a few seconds. Do NOT use command prompt to open the app.
 +
 image::Ui.png[width="790"]
 +
@@ -37,9 +37,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all prisoners and guards
+* **`add`** `n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to PrisonBook.
+* **`delete`** `3` : deletes the 3rd person shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
@@ -54,33 +54,145 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* For security reasons, users need to log in before having access to certain commands and will only see an empty PrisonBook. Users have a `Security Level` assigned to them. All commands have a minimum `Security Level` required before the user is able to access it.
+** Security Level 0: Most basic commands such as Login and Status.
+** Security Level 1: Most commands that only require read access.
+** Security Level 2: Most commands that require write access.
+** Security Level 3: Complete access to all commands.
+* The minimum `Security Level` to access each command is listed beside each command below in square brackets [].
 ====
 
-=== Viewing help : `help`
+=== Viewing help : `help` [0]
 
 Format: `help`
 
-=== Adding a person: `add`
+// tag::login[]
+=== Logging in: `login` [0] (v1.2)
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
-
-[TIP]
-A person can have any number of tags (including 0)
+Logs in to your account on the PrisonBook +
+Format: `login user/USER_NAME pw/PASSWORD`
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `login user/prisonwarden pw/password3`
 
-=== Listing all persons : `list`
+FOR USER ACCEPTANCE TESTING PURPOSES:
+The following user accounts have been pre-added
 
-Shows a list of all persons in the address book. +
+* Username: prisonguard | Password: password1 | Security Level: 1
+* Username: prisonleader | Password: password2 | Security Level: 2
+* Username: prisonwarden | Password: password3 | Security Level: 3
+// end::login[]
+
+// tag::logout[]
+=== Logging out: `logout` [0] (v1.3)
+
+Logs out of your account +
+After logging out, you will not be able to undo actions that were completed before logging out.
+
+Format: `logout`
+
+// end::logout[]
+
+// tag::status[]
+=== Check Log-in Status: `status` [0] (v1.4)
+
+Checks your current log-in status +
+Format: `status`
+// end::status[]
+
+// tag::adduser[]
+=== Add new user: `adduser` [3] (v1.4)
+
+Adds new user to have access to the PrisonBook +
+Format: `adduser user/NEW_USERNAME pw/NEW_PASSWORD sl/SECURITY_LEVEL`
+
+Higher security levels allow users to access a greater range of commands:
+Security levels for new users must be from levels 1 to 3, refer to the list below for the differences in security levels.
+
+* Security Level 1: Most commands that only require read access.
+* Security Level 2: Most commands that require write access.
+* Security Level 3: Complete access to all commands.
+
+Examples:
+
+* `adduser user/newuser pw/newpassword sl/1`
+// end::adduser[]
+
+// tag::deleteuser[]
+=== Delete a user: `deleteuser` [2] (v1.5rc)
+
+Deletes a user from PrisonBook +
+Format: `deleteuser user/USERNAME`
+
+You can only delete users which have a lower security level than yourself.
+
+Only a user with Security Level 3 is able to delete any user that is of same or lower security level.
+
+Examples:
+
+* `deleteuser user/prisonguard`
+// end::deleteuser[]
+
+=== Adding a person: `add or a` [2]
+
+Adds a person to PrisonBook +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/ROLE [t/TAG]...`
+
+[TIP]
+A person can have any number of tags (including 0). +
+A person can only be a prisoner (ROLE = p) or a guard (ROLE = g).
+
+Examples:
+
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 r/g`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 r/p t/criminal`
+
+// tag::addcell[]
+
+=== Adding a prisoner to a cell: `addcell or ac` [2] (v1.3)
+
+Adds a person to one of the cells in the prison. +
+Format: `addcell INDEX CELL`
+
+[TIP]
+Person added must be a prisoner and not already in a cell within the prison. +
+The cell must be in the map and not full. +
+The maximum number of people in a cell is 2 people.
+
+Examples:
+
+* `addcell 1 1-1`
+* `ac 2 2-1`
+// end::addcell[]
+
+=== Listing all persons : `list or l` [1]
+
+Shows a list of all persons in PrisonBook. +
 Format: `list`
 
-=== Editing a person : `edit`
+// tag::listcell[]
+=== Listing prisoners in a cell : `listcell or lc` [1] (v1.5rc)
 
-Edits an existing person in the address book. +
+Shows a list of all persons in a prison cell in PrisonBook. +
+Format: `listcell CELL`
+
+Examples:
+
+* `listcell 1-1`
+* `lc 3-3`
+// end::listcell[]
+
+// tag::map[]
+=== Showing cells in the map: `map or m` [1] (v1.1)
+
+Shows a table of prison cells like a map in the command display (used for debugging and checking UI). +
+Format: `map`
+// end::map[]
+
+=== Editing a person : `edit or e` [2]
+
+Edits an existing person in PrisonBook. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
@@ -89,6 +201,8 @@ Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* Editing an imprisoned prisoner's address will only change his old address, not address of his/her cell.
+* You cannot edit a person's role.
 ****
 
 Examples:
@@ -98,29 +212,67 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::find[]
+=== Locating persons by name or tags: `find or f` [1]
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds persons whose names/tags contain all of the given keywords. +
+Format: `find n/NAME_KEYWORD [MORE_KEYWORDS] t/TAG_KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* Only the name and tags are searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Persons matching all keywords will be returned (i.e. `AND` search). e.g. `n/Hans t/family` will return `n/Hans t/family`, not `n/Hans t/enemy` or `n/Gret t/family`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/Betsy t/Friends` +
+Returns any person having names `Betsy` and are tagged `Friends`
+// end::find[]
 
-=== Deleting a person : `delete`
+// tag::calendar[]
+=== Various commands to interact with Google Calendar
 
-Deletes the specified person from the address book. +
+For the first time that you open the calendar, you will be prompted to login to PrisonBook Google account. The PrisonBook app will attempt to open the browser for you, alternatively you can copy the link and login with the following details:
+
+* Google Username: prisonbooksystem | Password: prisonbook2018
+
+==== View upcoming events in the calendar: `calendar or cal` [1] (v1.3)
+
+Displays first 10 events in the calendar below Command Line Input. +
+Format: `calendar`
+
+==== Add event to the calendar: `calAdd or calA` [3] (v1.4)
+
+Adds an event to the calendar. +
+Format: `calAdd event/EVENTNAME loc/LOCATION start/STARTDATETIME end/ENDDATETIME`
+
+Examples:
+
+* `calAdd event/IT Skills Training loc/Computer Lab 1 start/2018-06-06 10:00:00 end/2018-06-06 12:00:00` +
+Adds an event `IT Skills Training` at `Computer Lab 1` from `June 6th, 2018 10am` to `June 6th, 2018 12pm`
+
+==== Delete event from the calendar: `calDel or calD` [3] (v1.5)
+
+Deletes an event from the first 10 events in the calendar. +
+Format: `calDel EVENTNUMBER`
+
+Examples:
+
+* `calDel 5` +
+Deletes the 5th event on the calendar events list.
+
+// end::calendar[]
+
+=== Deleting a person : `delete or d` [2]
+
+Deletes the specified person from PrisonBook. +
 Format: `delete INDEX`
 
 ****
@@ -133,32 +285,34 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in PrisonBook.
 * `find Betsy` +
 `delete 1` +
 Deletes the 1st person in the results of the `find` command.
 
-=== Selecting a person : `select`
+//tag::deletecell[]
+=== Deleting a person from a cell : `deletecell or dc` [2] (v1.4)
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Deletes the specified person from his/her cell in PrisonBook. +
+Format: `deletecell INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* 1, 2, 3, ...
+* The person must be imprisoned in the prison already.
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `dc 1` +
+Deletes the first person in PrisonBook from his/her cell if he/she is imprisoned here.
+* `listcell 1-1` +
+`deletecell 1` +
+Deletes the first person in the cell 1-1 if there are any prisoners inside it.
+//end::deletecell[]
 
-=== Listing entered commands : `history`
+=== Listing entered commands : `history or h` [0]
 
 Lists all the commands that you have entered in reverse chronological order. +
 Format: `history`
@@ -169,14 +323,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo or u` [0]
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores PrisonBook to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify PrisonBook's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -185,17 +339,14 @@ Examples:
 `list` +
 `undo` (reverses the `delete 1` command) +
 
-* `select 1` +
-`list` +
+* `list` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` (reverses the `delete 1` command)
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `redo or r` [0]
 
 Reverses the most recent `undo` command. +
 Format: `redo`
@@ -211,19 +362,14 @@ Examples:
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
+`edit 1 e/prison@gmail.com` +
+`undo` (reverses the `edit` command) +
 `undo` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`redo` (reapplies the `edit` command)
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
-
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
+=== Exiting the program : `exit` [0]
 
 Exits the program. +
 Format: `exit`
@@ -244,21 +390,51 @@ _{explain how the user can enable/disable data encryption}_
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: Can I increase the size of the prison in terms of number of cells and the number of prisoners it can contain? +
+*A*: You cannot do it directly as we want to prevent users from accidentally changing these things.
+Let us know what you want and we will adjust it for you according to your custom specifications.
+
+//tag::commandsummary[]
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* Security Level 0: +
+** *Check status* : `status` +
+** *Exit* : `exit` +
+** *Help* : `help` +
+** *History* : `history` or `h` +
+** *Log in* : `login` +
+** *Log out* : `logout` +
+** *Undo* : `undo` or `u` +
+** *Redo* : `redo` or `r`
+
+* Security Level 1: +
+** *Calendar* : `calendar` or `cal` +
+** *Find* : `find n/NAME_KEYWORD [MORE_KEYWORDS] t/TAG_KEYWORD [MORE_KEYWORDS]` +
+e.g. `find n/Meier` +
+** *List* : `list` or `l` +
+** *List prisoners in a cell* : `listcell CELL` +
+e.g. `listcell 1-1` +
+** *Map* : `map` or `m`
+
+* Security Level 2: +
+** *Add* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS r/ROLE [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 r/p t/friend t/colleague` +
+** *Add prisoner to cell* : `addcell INDEX CELL` +
+e.g. `addcell 1 1-1` +
+** *Delete* : `delete INDEX` +
+e.g. `delete 1` +
+** *Delete prisoner from cell* : `deletecell INDEX` +
+e.g. `deletecell 1` +
+** *Edit* : `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+eg. `edit 1 p/91234567 e/johndoe@example.com` +
+** *Delete User*: `deleteuser user/USERNAME_TO_DELETE` +
+eg. deleteuser user/prisonguard1
+
+* Security Level 3: +
+** *Add user* : `adduser user/NEW_USERNAME pw/NEW_PASSWORD sl/SECURITY_LEVEL` +
+e.g. `adduser user/newuser pw/newpassword sl/1`
+**  *Calendar Delete Event* : `calDel EVENTNUMBER` +
+e.g. `calDel 7` +
+** *Add event to calendar* : `calAdd event/EVENTNAME loc/LOCATION start/STARTDATETIME end/ENDDATETIME` +
+e.g. `calAdd event/IT Skills Training loc/Computer Lab 1 start/2018-06-06 10:00:00 end/2018-06-06 12:00:00` +
+// end::commandsummary[]

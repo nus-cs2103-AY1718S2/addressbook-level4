@@ -21,9 +21,12 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.Session;
+import seedu.address.model.cell.exceptions.NotImprisonedException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.user.User;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -95,11 +98,84 @@ public class AddCommandTest {
     /**
      * A default model stub that have all of the methods failing.
      */
+
     private class ModelStub implements Model {
+
+        //@@author zacci
+        @Override
+        public void login(String username, int securityLevel){};
+
+        @Override
+        public void logout(){};
+
+        @Override
+        public Session getSession() {
+            return new Session();
+        };
+
+        @Override
+        public String getSessionDetails() {
+            return "";
+        }
+
+        @Override
+        public boolean attemptLogin(String username, String password) {
+            return true;
+        }
+
+        @Override
+        public int getSecurityLevel() {
+            return 5;
+        }
+
+        @Override
+        public void addUser(User user) {};
+
+        @Override
+        public void deleteUser(String user) {};
+
+        @Override
+        public boolean checkIsLoggedIn() {
+            return true;
+        };
+        //@@author
+
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
         }
+
+        //@@author sarahgoh97
+        @Override
+        public void addPrisonerToCell(Person prisoner, String cellAddress) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePrisonerFromCell(Person prisoner) throws PersonNotFoundException, NotImprisonedException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deletePrisonerFromCellFromUndo(Person prisoner, String cellAddress) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addPrisonerToCellFromUndo(Person prisoner, String cellAddress) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePrisonerFromUndo(Person orignal, Person changed) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPersonListForCell(Predicate <Person> predicate, String cellAddress) {
+            fail("This method should not be called.");
+        }
+        //@@author
 
         @Override
         public void resetData(ReadOnlyAddressBook newData) {

@@ -1,5 +1,7 @@
 package seedu.address.logic;
 
+import static seedu.address.commons.core.Messages.MESSAGE_INSUFFICIENT_SECURITY_CLEARANCE;
+
 import java.util.logging.Logger;
 
 import javafx.collections.ObservableList;
@@ -11,7 +13,9 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.AddressBookParser;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
+import seedu.address.model.cell.Cell;
 import seedu.address.model.person.Person;
+import seedu.address.model.user.User;
 
 /**
  * The main LogicManager of the app.
@@ -37,13 +41,32 @@ public class LogicManager extends ComponentManager implements Logic {
         try {
             Command command = addressBookParser.parseCommand(commandText);
             command.setData(model, history, undoRedoStack);
-            CommandResult result = command.execute();
-            undoRedoStack.push(command);
+            CommandResult result = restrictedExecute(command);
             return result;
         } finally {
             history.add(commandText);
         }
     }
+
+    //@@author zacci
+    /**
+     * Executes the received command if the logged in user's security level meets the MIN_SECURITY_LEVEL for the command
+     */
+    private CommandResult restrictedExecute (Command command) throws CommandException {
+        logger.info("Command MIN_SECURITY_LEVEL: " + command.getMinSecurityLevel());
+        if (command.getMinSecurityLevel() <= model.getSecurityLevel()) {
+            try {
+                CommandResult result = command.execute();
+                undoRedoStack.push(command);
+                return result;
+            } finally {
+            }
+        } else {
+            CommandResult result = new CommandResult(MESSAGE_INSUFFICIENT_SECURITY_CLEARANCE);
+            return result;
+        }
+    }
+    //@@author
 
     @Override
     public ObservableList<Person> getFilteredPersonList() {
@@ -53,5 +76,16 @@ public class LogicManager extends ComponentManager implements Logic {
     @Override
     public ListElementPointer getHistorySnapshot() {
         return new ListElementPointer(history.getHistory());
+    }
+
+    @Override
+    public ObservableList<Cell> getCellList() {
+        return model.getAddressBook().getCellList();
+    }
+
+    //@@author zacci
+    @Override
+    public ObservableList<User> getUserList() {
+        return model.getAddressBook().getUserList();
     }
 }

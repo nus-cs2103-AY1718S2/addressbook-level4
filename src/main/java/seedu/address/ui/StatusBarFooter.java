@@ -9,10 +9,13 @@ import org.controlsfx.control.StatusBar;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.ui.HideMapEvent;
+import seedu.address.model.person.Person;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -39,15 +42,19 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar syncStatus;
     @FXML
+    private StatusBar numberOfPeopleStatus;
+    @FXML
     private StatusBar saveLocationStatus;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(String saveLocation, ObservableList<Person> personList) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        setNumberOfPeopleStatus(personList.size());
         registerAsAnEventHandler(this);
     }
+
 
     /**
      * Sets the clock used to determine the current time.
@@ -63,12 +70,22 @@ public class StatusBarFooter extends UiPart<Region> {
         return clock;
     }
 
-    private void setSaveLocation(String location) {
+    void setSaveLocation(String location) {
         Platform.runLater(() -> this.saveLocationStatus.setText(location));
     }
 
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
+    }
+
+    private void setNumberOfPeopleStatus(int numberOfPeople) {
+        Platform.runLater(() -> this.numberOfPeopleStatus.setText(numberOfPeople + " person(s) total."));
+    }
+
+    @Subscribe
+    private void handleHideMapRequestEvent(HideMapEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        setNumberOfPeopleStatus(0);
     }
 
     @Subscribe
@@ -77,5 +94,6 @@ public class StatusBarFooter extends UiPart<Region> {
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setNumberOfPeopleStatus(abce.data.getPersonList().size());
     }
 }

@@ -55,6 +55,14 @@ public class UndoRedoStack {
     }
 
     /**
+     * Clears undo and redo stack
+     */
+    public void clearStack() {
+        undoStack = new Stack<>();
+        redoStack = new Stack<>();
+    }
+
+    /**
      * Returns true if there are more commands that can be undone.
      */
     public boolean canUndo() {

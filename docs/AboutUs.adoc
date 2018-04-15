@@ -3,53 +3,37 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
+PrisonBook was developed by the https://cs2103jan2018-t11-b2.github.io/docs/Team.html team. +
 {empty} +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Isaac
+image::zacci.jpg[width="150", align="left"]
+{empty}[http://github.com/zacci[github]] [<<zacci#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
+Role: Team Lead + Testing IC
+Responsibilities: Ensuring Code is tested thoroughly before merging. Maintaining Versioning.
 
 '''
 
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
+=== Sarah Goh Shi Ning
+image::sarahgoh97.jpg[width="150", align="left"]
+{empty}[http://github.com/sarahgoh97[github]] [<<sarahgoh97#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Data
+Role: Documentation IC +
+Responsibilities: Assigning tasks regarding documentation and checking pull requests regarding documenation
 
-'''
-
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Dev Ops + Threading
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Chung-Yen (Philos) Tsai
+image::philos22.jpg[width="250", align="left"]
+{empty}[http://github.com/philos22[github]] [<<philos22#, portfolio>>]
 
-Role: Developer +
-Responsibilities: UI
+Role: Code QC/QA IC +
+Responsibilities: Checking for proper coding style and syntax in pull requests
+
 
 '''

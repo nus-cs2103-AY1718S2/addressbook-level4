@@ -25,6 +25,12 @@ public class LogicManagerTest {
     private Model model = new ModelManager();
     private Logic logic = new LogicManager(model);
 
+    //@@author zacci
+    public LogicManagerTest() {
+        model.login("maxSecurityLevelUser", 999);
+    }
+    //@@author
+
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
         String invalidCommand = "uicfhmowqewca";
@@ -97,13 +103,11 @@ public class LogicManagerTest {
 
         try {
             CommandResult result = logic.execute(inputCommand);
-            assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.feedbackToUser);
         } catch (CommandException | ParseException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
-
         assertEquals(expectedModel, model);
     }
 
@@ -121,4 +125,5 @@ public class LogicManagerTest {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
+
 }

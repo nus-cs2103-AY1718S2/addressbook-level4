@@ -1,0 +1,68 @@
+= Isaac Gideon Tan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: PrisonBook
+
+---
+
+== Overview
+
+Prisonbook is a desktop address book application used for Prison Guards/Inmates management. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Added login and logout security system with access levels*
+** What it does: Allows users of the PrisonBook to log in and logout with their usernames and passwords. The system also controls access levels (such as read/write permissions) based on the user rights.
+** Justification: risonBook must have this feature to improve the security of the Prison. Not all prison guards using the PrisonBook should be able to edit and make changes to the database. They should also only be able to view information pertinent to them to avoid security breaches.
+** Highlights: This enhancement affects the logic of the entire PrisonBook and requires thoughtful design to implement.
+
+* *Minor enhancement*: added Prisoner and Guard tags to facilitate all further functionality to our PrisonBook
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B2/main/blob/master/collated/functional/zacci.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B2/main/blob/master/collated/test/zacci.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Code Quality Manager
+*** Opened and Tagged Issues
+*** Assigned issues to different team members
+** Enhancements to existing features:
+*** Command Aliases to shorten the amount of typing that users have to do
+** Documentation:
+*** Updated documentation accordingly
+** Community:
+** Tools:
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=login]
+
+include::../UserGuide.adoc[tag=logout]
+
+include::../UserGuide.adoc[tag=status]
+
+include::../UserGuide.adoc[tag=adduser]
+
+include::../UserGuide.adoc[tag=deleteuser]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=loginsecurity]
+
+include::../DeveloperGuide.adoc[tag=FeatureContributionIsaac]
+
+include::../DeveloperGuide.adoc[tag=isaactest]
+
+---
+

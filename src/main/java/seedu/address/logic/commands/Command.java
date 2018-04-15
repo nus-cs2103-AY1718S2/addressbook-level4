@@ -10,6 +10,9 @@ import seedu.address.model.Model;
  * Represents a command with hidden internal logic and the ability to be executed.
  */
 public abstract class Command {
+
+    protected static final int MIN_SECURITY_LEVEL = 0;
+
     protected Model model;
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
@@ -22,6 +25,16 @@ public abstract class Command {
      */
     public static String getMessageForPersonListShownSummary(int displaySize) {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
+    }
+
+    /**
+     * Constructs a feedback message to summarise an operation that displayed the result of a search by tag.
+     *
+     * @param displaySize used to generate summary
+     * @return summary message for tag search displayed
+     */
+    public static String getMessageForTagShownSummary(int displaySize) {
+        return String.format(Messages.MESSAGE_TAGS_RESULT_LISTED_OVERVIEW, displaySize);
     }
 
     /**
@@ -39,5 +52,15 @@ public abstract class Command {
      */
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
+        this.undoRedoStack = undoRedoStack;
     }
+
+    //@@author zacci
+    /**
+     * Returns the MIN_SECURITY_LEVEL to caller
+     */
+    public int getMinSecurityLevel() {
+        return MIN_SECURITY_LEVEL;
+    }
+    //@@author
 }

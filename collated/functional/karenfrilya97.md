@@ -224,28 +224,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
     }
 }
 ```
-###### \java\seedu\address\model\activity\UniqueActivityList.java
-``` java
-        Collections.sort(internalList, dateTimeComparator);
-    }
-
-    /**
-     * Removes the equivalent activity from the list and its respective task or event list.
-     *
-     * @throws ActivityNotFoundException if no such activity could be found in the list.
-     */
-    public boolean remove(Activity toRemove) throws ActivityNotFoundException {
-        requireNonNull(toRemove);
-        final boolean activityFoundAndDeleted = internalList.remove(toRemove);
-        if (!activityFoundAndDeleted) {
-            throw new ActivityNotFoundException();
-        } else  {
-            internalList.remove(toRemove);
-        }
-        return activityFoundAndDeleted;
-    }
-
-```
 ###### \java\seedu\address\model\DeskBoard.java
 ``` java
     /**

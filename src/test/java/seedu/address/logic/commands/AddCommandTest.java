@@ -24,7 +24,6 @@ import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyImdb;
 import seedu.address.model.appointment.AppointmentEntry;
 import seedu.address.model.appointment.DateTime;
-import seedu.address.model.appointment.UniqueAppointmentList;
 import seedu.address.model.patient.Patient;
 import seedu.address.model.patient.exceptions.DuplicatePatientException;
 import seedu.address.model.patient.exceptions.PatientNotFoundException;
@@ -181,7 +180,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void addPatientAppointment(Patient patient, String dateTimeString) {
+        public void addPatientAppointment(Patient patient, DateTime dateTime) {
             fail("This method should not be called.");
         }
 
@@ -210,7 +209,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) throws UniqueAppointmentList.AppoinmentNotFoundException {
+        public void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) {
             fail("This method should not be called.");
         }
     }

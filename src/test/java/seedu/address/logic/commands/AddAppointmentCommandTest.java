@@ -20,6 +20,6 @@ public class AddAppointmentCommandTest {
     @Test
     public void constructor_nullObject_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        new AddAppointmentCommand(null, null, null);
+        new AddAppointmentCommand(null, null);
     }
 }

@@ -21,11 +21,11 @@ public class AddAppointmentCommandParserTest {
                 AddAppointmentCommand.MESSAGE_USAGE));
     }
 
-    @Test
-    public void parse_validArgs_returnsAddAppointmentCommand() {
-        AddAppointmentCommand expectedCommand = new AddAppointmentCommand(new NameContainsKeywordsPredicate(
-                Arrays.asList("Alice", "2/4/2018", "1030")), "2/4/2018", "1030");
-        assertParseSuccess(parser, "Alice 2/4/2018 1030", expectedCommand);
-        assertParseSuccess(parser, "\n Alice 2/4/2018 1030 \n", expectedCommand);
-    }
+//    @Test
+//    public void parse_validArgs_returnsAddAppointmentCommand() {
+//        AddAppointmentCommand expectedCommand = new AddAppointmentCommand(new NameContainsKeywordsPredicate(
+//                Arrays.asList("Alice", "2/4/2018", "1030")), "2/4/2018", "1030");
+//        assertParseSuccess(parser, "Alice 2/4/2018 1030", expectedCommand);
+//        assertParseSuccess(parser, "\n Alice 2/4/2018 1030 \n", expectedCommand);
+//    }
 }

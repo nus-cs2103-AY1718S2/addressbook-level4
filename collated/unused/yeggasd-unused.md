@@ -1,5 +1,69 @@
 # yeggasd-unused
-###### \TimeTableCommand.java
+###### /TimeTableCommandParserTest.java
+``` java
+/**
+ * As we are only doing white-box testing, our test cases do not cover path variations
+ * outside of the TimeTableCommand code. For example, inputs "1 odd" and "1 abc" take the
+ * same path through the TimeTableCommand, and therefore we test only one of them.
+ * The path variation for those two cases occur inside the ParserUtil, and
+ * therefore should be covered by the ParserUtilTest.
+ */
+public class TimeTableCommandParserTest {
+
+    private TimeTableCommandParser parser = new TimeTableCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsTimeTableCommand() {
+        assertParseSuccess(parser, "1 Odd", new TimeTableCommand(INDEX_FIRST_PERSON, ODD));
+    }
+
+    @Test
+    public void parse_invalidNumArgs_throwsParseException() {
+        assertParseFailure(parser, "1", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "1odd", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                TimeTableCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### /TimeTableCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new TimeTableCommand object
+ */
+public class TimeTableCommandParser implements Parser<TimeTableCommand> {
+    private static final String SPLIT_TOKEN = " ";
+    private static final int PERSON_INDEX = 0;
+    private static final int ODD_EVEN_INDEX = 1;
+    /**
+     * Parses the given {@code String} of arguments in the context of the TimeTableCommand
+     * and returns an TimeTableCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public TimeTableCommand parse(String args) throws ParseException {
+        try {
+            String trimmedArgs = args.trim();
+            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
+            if (splitArgs.length != 2) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+            }
+            Index index = ParserUtil.parseIndex(splitArgs[PERSON_INDEX]);
+            String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
+            return new TimeTableCommand(index, oddEven);
+
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### /TimeTableCommand.java
 ``` java
 /**
  * Retrieves the timetable of a person identified using it's last displayed index from the address book.
@@ -69,71 +133,7 @@ public class TimeTableCommand extends Command {
     }
 }
 ```
-###### \TimeTableCommandParser.java
-``` java
-/**
- * Parses input arguments and creates a new TimeTableCommand object
- */
-public class TimeTableCommandParser implements Parser<TimeTableCommand> {
-    private static final String SPLIT_TOKEN = " ";
-    private static final int PERSON_INDEX = 0;
-    private static final int ODD_EVEN_INDEX = 1;
-    /**
-     * Parses the given {@code String} of arguments in the context of the TimeTableCommand
-     * and returns an TimeTableCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public TimeTableCommand parse(String args) throws ParseException {
-        try {
-            String trimmedArgs = args.trim();
-            String[] splitArgs = trimmedArgs.split(SPLIT_TOKEN);
-            if (splitArgs.length != 2) {
-                throw new ParseException(
-                        String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
-            }
-            Index index = ParserUtil.parseIndex(splitArgs[PERSON_INDEX]);
-            String oddEven = ParserUtil.parseOddEven(splitArgs[ODD_EVEN_INDEX]);
-            return new TimeTableCommand(index, oddEven);
-
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
-        }
-    }
-
-}
-```
-###### \TimeTableCommandParserTest.java
-``` java
-/**
- * As we are only doing white-box testing, our test cases do not cover path variations
- * outside of the TimeTableCommand code. For example, inputs "1 odd" and "1 abc" take the
- * same path through the TimeTableCommand, and therefore we test only one of them.
- * The path variation for those two cases occur inside the ParserUtil, and
- * therefore should be covered by the ParserUtilTest.
- */
-public class TimeTableCommandParserTest {
-
-    private TimeTableCommandParser parser = new TimeTableCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsTimeTableCommand() {
-        assertParseSuccess(parser, "1 Odd", new TimeTableCommand(INDEX_FIRST_PERSON, ODD));
-    }
-
-    @Test
-    public void parse_invalidNumArgs_throwsParseException() {
-        assertParseFailure(parser, "1", String.format(MESSAGE_INVALID_COMMAND_FORMAT, TimeTableCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "1odd", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                TimeTableCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \TimeTableCommandTest.java
+###### /TimeTableCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code TimeTableCommand}.

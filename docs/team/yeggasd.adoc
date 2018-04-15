@@ -2,13 +2,13 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: AddressBook - Level 4
+== PROJECT: StardyTogether
 
 ---
 
 == Overview
 
-StardyTogether is a desktop contacts and venues manager application specially for National University of Singapore (NUS) usestudents to help them find free time and rooms to study together with their friends.
+StardyTogether is a desktop contacts and venues manager application specially for National University of Singapore (NUS) students to help them find free time and rooms to study together with their friends.
 
 == Summary of contributions
 
@@ -22,6 +22,9 @@ StardyTogether is a desktop contacts and venues manager application specially fo
 ** What it does: allows the student have a detailed overview of his/her friend.
 ** Justification: This feature makes it easy for the student to get all the information needed.
 
+* *Suggested enhancement*:Auto Completion and Correction of Commands and Parameters
+** What it does: allows students to auto complete or correct commands or parameters using `Tab` key
+** Justification: This feature will make using of Command Line Interface (CLI) a lot faster than it currently is, improving the user experience.
 * *Code contributed*: [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/main/yeggasd.md[Functional code]] [https://github.com/CS2103JAN2018-W11-B4/main/blob/master/collated/test/yeggasd.md[Test code]]
 * *Other contributions*:
 

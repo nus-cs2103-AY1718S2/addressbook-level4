@@ -435,7 +435,7 @@ _{explain how the user can enable/disable data encryption}_
 == Command Summary
 
 * *Add* `add t/TITLE a/AUTHOR i/ISBN av/AVAIL [tag/TAG]...` +
-e.g. `add n/Animal Farm a/George Orwell i/9780736692427 av/Borrowed and Reserved t/political t/satire`
+e.g. `add n/Animal Farm a/George Orwell i/9780736692427 av/Borrowed t/political t/satire`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
@@ -462,3 +462,34 @@ e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
 e.g. `delete A0123456M`
 * *cleara* : `cleara`
 
+[width="59%",cols="30%, 20%,<50%",options="header",]
+|=======================================================================
+|Privileges |Command |Format
+|All |*Find Book* |`find KEYWORD [MORE_KEYWORDS]` +
+ e.g. `find Animal Dawn`
+|All |*List Book* |`list`
+|All |*Help* |`help`
+|All |*Select Book* |`select INDEX` +
+ e.g.`select 2`
+|Librarian |*Add Book* |`add t/TITLE a/AUTHOR i/ISBN av/AVAIL [tag/TAG]...` +
+ e.g. `add n/Animal Farm a/George Orwell i/9780736692427 av/Borrowed t/political t/satire`
+|Librarian |*Clear Catalogue* |`clear`
+|Librarian |*Delete Book* |`delete INDEX` +
+ e.g. `delete 3`
+|Librarian |*Edit Book* |`edit INDEX [n/TITLE] [a/AUTHOR] [i/ISBN] [av/AVAIL] [t/TAG]...` +
+ e.g. `edit 2 n/Animal Farm e/Available`
+|Librarian |*History* |`history`
+|Librarian |*Undo* |`undo`
+|Librarian |*Redo* |`redo`
+|Librarian |*Borrow Book* |`borrow INDEX` +
+ e.g. `borrow 1`
+|Librarian |*Return Book* |`return INDEX` +
+ e.g. `return 2`
+|Librarian |*Reserve Book* |`reserve INDEX` +
+ e.g. `reserve 2`
+|Librarian |*Add Account* |`addAccount n/NAME m/MATRICNUMBER u/USERNAME p/PASSWORD l/PRIVILEGE LEVEL` +
+ e.g. `addAccount n/Jack Morgan m/A0123456J u/jack p/jack123 l/1`
+|Librarian |*Delete Account* |`deletea USERNAME` +
+ e.g. `deletea A0123456M`
+|Librarian |*Clear Account List* |`cleara`
+|=======================================================================

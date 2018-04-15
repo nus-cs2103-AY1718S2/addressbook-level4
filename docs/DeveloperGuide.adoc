@@ -817,10 +817,10 @@ the `Task` objects added by the user is then displayed using the `TaskListPanel`
 user are displayed using `EventListPanel`. _Figure 28_ and _Figure 29_ are examples of a `TaskListCard` and an `EventListCard` respectively.
 
 .TaskListCard example
-image::TaskCard.png[width="650"]
+image::TaskCard.png[width="450"]
 
 .EventListCard example
-image::EventCard.png[width='650']
+image::EventCard.png[width='450']
 
 `ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
 

@@ -395,7 +395,7 @@
     -fx-background-color: #607D8B;
 }
 #tags .amber {
-    -fx-text-fill: white;
+    -fx-text-fill: black;
     -fx-background-color: #FFC107;
 }
 #tags .yellow {

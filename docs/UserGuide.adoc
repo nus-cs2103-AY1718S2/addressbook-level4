@@ -45,7 +45,7 @@ If you have already set up Medeina, head on to <<CLI>>. +
 If you are already familiar with Medeina's Command Line Interface (CLI), head on to <<Commands>>.
 
 {empty} +
-
+// tag::GUI[]
 == Quick Start
 
 To successsfully install and run Medeina, you need to:
@@ -60,9 +60,10 @@ You can download the latest version of Java link:https://java.com/en/download//[
 .  Copy the file to the folder you want to use as the home folder for Medeina.
 .  Double-click the file to start the app. You should see the GUI (Graphical User Interface) in a few seconds.
 +
+
 .Medeina's GUI
 image::Interface.png[width="1000"]
-
+// end::GUI[]
 {empty} +
 
 // tag::cliUG[]

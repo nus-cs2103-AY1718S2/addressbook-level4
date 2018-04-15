@@ -51,6 +51,8 @@ This application was built upon an existing code base for an address book for th
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
+include::../UserGuide.adoc[tag=GUI]
+
 include::../UserGuide.adoc[tag=listcommand]
 
 include::../UserGuide.adoc[tag=undoredo]
@@ -61,8 +63,12 @@ include::../UserGuide.adoc[tag=undoredo]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+include::../DeveloperGuide.adoc[tag=UIcomponent]
+
 include::../DeveloperGuide.adoc[tag=ListPets]
 
 include::../DeveloperGuide.adoc[tag=calendar]
+
+
 
 

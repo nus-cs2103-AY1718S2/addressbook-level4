@@ -648,7 +648,14 @@ public class XmlAdaptedItem {
     }
 }
 ```
-###### /java/seedu/address/model/person/DisplayPic.java
+###### \java\seedu\address\model\ModelManager.java
+``` java
+    //=========== Item List Accessors ======================================================================
+    public List<String> getItemList() {
+        return Collections.unmodifiableList(filteredDeleteItems);
+    }
+```
+###### \java\seedu\address\model\person\DisplayPic.java
 ``` java
 public class DisplayPic {
 

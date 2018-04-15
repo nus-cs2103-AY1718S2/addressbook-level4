@@ -55,7 +55,7 @@ public class NextOfKinCommandTest {
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
         Person editedPerson = new PersonBuilder().build();
         EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(editedPerson).build();
-        NextOfKinCommand NextOfKinCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        NextOfKinCommand nextOfKinCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
 
         String expectedMessage = String.format(NextOfKinCommand.MESSAGE_ADD_NOK_SUCCESS, editedPerson.getNextOfKin(),
                 editedPerson.getName());
@@ -63,7 +63,7 @@ public class NextOfKinCommandTest {
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
 
-        assertCommandSuccess(NextOfKinCommand, model, expectedMessage, expectedModel);
+        assertCommandSuccess(nextOfKinCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
@@ -114,8 +114,6 @@ public class NextOfKinCommandTest {
 
         Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPerson);
-
-        //assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
     }
 
     @Test

@@ -3,6 +3,8 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_CCA_POSITION;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NOK;
@@ -50,6 +52,8 @@ public class CommandTestUtil {
     public static final String VALID_PHONE = "98765433";
     public static final String VALID_EMAIL = "email@gmail.com";
     public static final String VALID_RELATIONSHIP_REMARK = "Father";
+    public static final String VALID_CCA = "Basketball";
+    public static final String VALID_CCA_POSITION = "Member";
 
     public static final String VALID_NOK_DESC = " " + PREFIX_NAME + VALID_NAME_BOB + " " + PREFIX_PHONE + VALID_PHONE
             + " " + PREFIX_EMAIL + VALID_EMAIL + " " + PREFIX_REMARK + VALID_RELATIONSHIP_REMARK;
@@ -61,6 +65,13 @@ public class CommandTestUtil {
             + VALID_PHONE + " " + PREFIX_EMAIL + "ef2dfwe" + " " + PREFIX_REMARK + VALID_RELATIONSHIP_REMARK;
     public static final String INVALID_NOK_REMARK_DESC = " " + PREFIX_NAME + VALID_NAME_BOB + " " + PREFIX_PHONE
             + VALID_PHONE + " " + PREFIX_EMAIL + VALID_EMAIL + " " + PREFIX_REMARK + "funny";
+
+    public static final String VALID_CCA_DESC = " " + PREFIX_CCA + VALID_CCA + " " + PREFIX_CCA_POSITION
+            + VALID_CCA_POSITION;
+    public static final String EMPTY_CCA_DESC = " " + PREFIX_CCA + "" + " " + PREFIX_CCA_POSITION + VALID_CCA_POSITION;
+    public static final String EMPTY_CCA_POSITION_DESC = " " + PREFIX_CCA + VALID_CCA + " " + PREFIX_CCA_POSITION + "";
+    public static final String NO_CCA_POSITION_STATED = " " + PREFIX_CCA + VALID_CCA;
+    public static final String NO_CCA_STATED = " " + PREFIX_CCA_POSITION + VALID_CCA_POSITION;
 
     public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
     public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;

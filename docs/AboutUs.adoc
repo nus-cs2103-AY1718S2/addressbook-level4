@@ -19,7 +19,7 @@ Responsibilities: Storage
 
 === Kion Shi Rong
 image::cambioforma.png[width="150", align="left"]
-{empty}[http://github.com/cambioforma[github][https://github.com/CS2103JAN2018-T11-B3/main/blob/master/docs/team/cambioforma.adoc[Portfolio]]
+{empty}[http://github.com/cambioforma[github]][https://github.com/CS2103JAN2018-T11-B3/main/blob/master/docs/team/cambioforma.adoc[Portfolio]]
 
 Role: Developer +
 Responsibilities: Logic

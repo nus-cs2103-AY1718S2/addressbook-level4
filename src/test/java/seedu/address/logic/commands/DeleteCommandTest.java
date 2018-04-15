@@ -7,10 +7,10 @@ import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.showCoinAtIndex;
+import static seedu.address.testutil.TypicalCoins.getTypicalCoinBook;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
+import static seedu.address.testutil.TypicalTargets.INDEX_SECOND_COIN;
 
 import org.junit.Test;
 
@@ -21,7 +21,7 @@ import seedu.address.logic.UndoRedoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
+import seedu.address.model.coin.Coin;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -29,56 +29,56 @@ import seedu.address.model.person.Person;
  */
 public class DeleteCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalCoinBook(), new UserPrefs());
 
     @Test
     public void execute_validIndexUnfilteredList_success() throws Exception {
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        Coin coinToDelete = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_COIN);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_COIN_SUCCESS, coinToDelete);
 
-        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
+        ModelManager expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
+        expectedModel.deleteCoin(coinToDelete);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCoinList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
     }
 
     @Test
     public void execute_validIndexFilteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showCoinAtIndex(model, INDEX_FIRST_COIN);
 
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
+        Coin coinToDelete = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_COIN);
 
-        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS, personToDelete);
+        String expectedMessage = String.format(DeleteCommand.MESSAGE_DELETE_COIN_SUCCESS, coinToDelete);
 
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
-        expectedModel.deletePerson(personToDelete);
-        showNoPerson(expectedModel);
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
+        expectedModel.deleteCoin(coinToDelete);
+        showNoCoin(expectedModel);
 
         assertCommandSuccess(deleteCommand, model, expectedMessage, expectedModel);
     }
 
     @Test
     public void execute_invalidIndexFilteredList_throwsCommandException() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showCoinAtIndex(model, INDEX_FIRST_COIN);
 
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
+        Index outOfBoundIndex = INDEX_SECOND_COIN;
         // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getAddressBook().getPersonList().size());
+        assertTrue(outOfBoundIndex.getZeroBased() < model.getCoinBook().getCoinList().size());
 
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
     }
 
     @Test
@@ -86,19 +86,19 @@ public class DeleteCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Coin coinToDelete = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_COIN);
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
 
-        // delete -> first person deleted
+        // delete -> first coin deleted
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered coin list to show all coins
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        // redo -> same first person deleted again
-        expectedModel.deletePerson(personToDelete);
+        // redo -> same first coin deleted again
+        expectedModel.deleteCoin(coinToDelete);
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
@@ -107,11 +107,11 @@ public class DeleteCommandTest {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
+        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredCoinList().size() + 1);
         DeleteCommand deleteCommand = prepareCommand(outOfBoundIndex);
 
         // execution failed -> deleteCommand not pushed into undoRedoStack
-        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(deleteCommand, model, Messages.MESSAGE_INVALID_COMMAND_TARGET);
 
         // no commands in undoRedoStack -> undoCommand and redoCommand fail
         assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
@@ -119,45 +119,45 @@ public class DeleteCommandTest {
     }
 
     /**
-     * 1. Deletes a {@code Person} from a filtered list.
+     * 1. Deletes a {@code Coin} from a filtered list.
      * 2. Undo the deletion.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted person in the
+     * 3. The unfiltered list should be shown now. Verify that the index of the previously deleted coin in the
      * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the person object regardless of indexing.
+     * 4. Redo the deletion. This ensures {@code RedoCommand} deletes the coin object regardless of indexing.
      */
     @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonDeleted() throws Exception {
+    public void executeUndoRedo_validIndexFilteredList_sameCoinDeleted() throws Exception {
         UndoRedoStack undoRedoStack = new UndoRedoStack();
         UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
         RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_PERSON);
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        DeleteCommand deleteCommand = prepareCommand(INDEX_FIRST_COIN);
+        Model expectedModel = new ModelManager(model.getCoinBook(), new UserPrefs());
 
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Person personToDelete = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // delete -> deletes second person in unfiltered person list / first person in filtered person list
+        showCoinAtIndex(model, INDEX_SECOND_COIN);
+        Coin coinToDelete = model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased());
+        // delete -> deletes second coin in unfiltered coin list / first coin in filtered coin list
         deleteCommand.execute();
         undoRedoStack.push(deleteCommand);
 
-        // undo -> reverts addressbook back to previous state and filtered person list to show all persons
+        // undo -> reverts addressbook back to previous state and filtered coin list to show all coins
         assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
 
-        expectedModel.deletePerson(personToDelete);
-        assertNotEquals(personToDelete, model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()));
-        // redo -> deletes same second person in unfiltered person list
+        expectedModel.deleteCoin(coinToDelete);
+        assertNotEquals(coinToDelete, model.getFilteredCoinList().get(INDEX_FIRST_COIN.getZeroBased()));
+        // redo -> deletes same second coin in unfiltered coin list
         assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
     }
 
     @Test
     public void equals() throws Exception {
-        DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST_PERSON);
-        DeleteCommand deleteSecondCommand = prepareCommand(INDEX_SECOND_PERSON);
+        DeleteCommand deleteFirstCommand = prepareCommand(INDEX_FIRST_COIN);
+        DeleteCommand deleteSecondCommand = prepareCommand(INDEX_SECOND_COIN);
 
         // same object -> returns true
         assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
 
         // same values -> returns true
-        DeleteCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST_PERSON);
+        DeleteCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST_COIN);
         assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
 
         // one command preprocessed when previously equal -> returns false
@@ -170,7 +170,7 @@ public class DeleteCommandTest {
         // null -> returns false
         assertFalse(deleteFirstCommand.equals(null));
 
-        // different person -> returns false
+        // different coin -> returns false
         assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
     }
 
@@ -178,7 +178,7 @@ public class DeleteCommandTest {
      * Returns a {@code DeleteCommand} with the parameter {@code index}.
      */
     private DeleteCommand prepareCommand(Index index) {
-        DeleteCommand deleteCommand = new DeleteCommand(index);
+        DeleteCommand deleteCommand = new DeleteCommand(new CommandTarget(index));
         deleteCommand.setData(model, new CommandHistory(), new UndoRedoStack());
         return deleteCommand;
     }
@@ -186,9 +186,9 @@ public class DeleteCommandTest {
     /**
      * Updates {@code model}'s filtered list to show no one.
      */
-    private void showNoPerson(Model model) {
-        model.updateFilteredPersonList(p -> false);
+    private void showNoCoin(Model model) {
+        model.updateFilteredCoinList(p -> false);
 
-        assertTrue(model.getFilteredPersonList().isEmpty());
+        assertTrue(model.getFilteredCoinList().isEmpty());
     }
 }

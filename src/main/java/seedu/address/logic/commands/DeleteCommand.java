@@ -8,60 +8,62 @@ import java.util.Objects;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.coin.Coin;
+import seedu.address.model.coin.exceptions.CoinNotFoundException;
 
 /**
- * Deletes a person identified using it's last displayed index from the address book.
+ * Deletes a coin identified using it's last displayed index from the address book.
  */
 public class DeleteCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "delete";
+    public static final String COMMAND_ALIAS = "d";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Deletes the coin identified by the index number used in the last coin listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_COIN_SUCCESS = "Deleted Coin: %1$s";
 
-    private final Index targetIndex;
+    private final CommandTarget target;
 
-    private Person personToDelete;
+    private Coin coinToDelete;
 
-    public DeleteCommand(Index targetIndex) {
-        this.targetIndex = targetIndex;
+    public DeleteCommand(CommandTarget target) {
+        this.target = target;
     }
 
 
     @Override
     public CommandResult executeUndoableCommand() {
-        requireNonNull(personToDelete);
+        requireNonNull(coinToDelete);
         try {
-            model.deletePerson(personToDelete);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            model.deleteCoin(coinToDelete);
+        } catch (CoinNotFoundException pnfe) {
+            throw new AssertionError("The target coin cannot be missing");
         }
 
-        return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
+        return new CommandResult(String.format(MESSAGE_DELETE_COIN_SUCCESS, coinToDelete));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<Coin> lastShownList = model.getFilteredCoinList();
 
-        if (targetIndex.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        try {
+            Index index = target.toIndex(model.getFilteredCoinList());
+            coinToDelete = lastShownList.get(index.getZeroBased());
+        } catch (IndexOutOfBoundsException e) {
+            throw new CommandException(Messages.MESSAGE_INVALID_COMMAND_TARGET);
         }
-
-        personToDelete = lastShownList.get(targetIndex.getZeroBased());
     }
 
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof DeleteCommand // instanceof handles nulls
-                && this.targetIndex.equals(((DeleteCommand) other).targetIndex) // state check
-                && Objects.equals(this.personToDelete, ((DeleteCommand) other).personToDelete));
+                && this.target.equals(((DeleteCommand) other).target) // state check
+                && Objects.equals(this.coinToDelete, ((DeleteCommand) other).coinToDelete));
     }
 }

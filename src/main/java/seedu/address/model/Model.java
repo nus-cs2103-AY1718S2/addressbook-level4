@@ -1,48 +1,92 @@
 package seedu.address.model;
 
+import java.util.HashMap;
+import java.util.List;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.coin.Coin;
+import seedu.address.model.coin.Price;
+import seedu.address.model.coin.exceptions.CoinNotFoundException;
+import seedu.address.model.coin.exceptions.DuplicateCoinException;
+import seedu.address.model.rule.Rule;
+import seedu.address.model.rule.exceptions.DuplicateRuleException;
+import seedu.address.model.rule.exceptions.RuleNotFoundException;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
     /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
+    Predicate<Coin> PREDICATE_SHOW_ALL_COINS = unused -> true;
 
     /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    void resetData(ReadOnlyCoinBook newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Returns the CoinBook */
+    ReadOnlyCoinBook getCoinBook();
 
-    /** Deletes the given person. */
-    void deletePerson(Person target) throws PersonNotFoundException;
+    /** Deletes the given coin. */
+    void deleteCoin(Coin target) throws CoinNotFoundException;
 
-    /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
+    /** Adds the given coin */
+    void addCoin(Coin coin) throws DuplicateCoinException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
+     * Replaces the given coin {@code target} with {@code editedCoin}.
      *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * @throws DuplicateCoinException if updating the coin's details causes the coin to be equivalent to
+     *      another existing coin in the list.
+     * @throws CoinNotFoundException if {@code target} could not be found in the list.
      */
-    void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    void updateCoin(Coin target, Coin editedCoin)
+            throws DuplicateCoinException, CoinNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    /** Returns an unmodifiable view of the filtered coin list */
+    ObservableList<Coin> getFilteredCoinList();
+
+    //@@author laichengyu
+    /** Returns an unmodifiable view of the code list */
+    List<String> getCodeList();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
+      * Syncs all coin data
+      */
+    void syncAll(HashMap<String, Price> newPriceMetrics)
+            throws DuplicateCoinException, CoinNotFoundException;
+    //@@author
+
+    /**
+     * Updates the filter of the filtered coin list to filter by the given {@code predicate}.
      * @throws NullPointerException if {@code predicate} is null.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void updateFilteredCoinList(Predicate<Coin> predicate);
+
+    //@@author neilish3re
+    void sortCoinList(boolean isSort);
+
+    //@@author
+
+    /** Deletes the given rule. */
+    void deleteRule(Rule target) throws RuleNotFoundException;
+
+    /** Adds the given rule */
+    void addRule(Rule rule) throws DuplicateRuleException;
+
+    /**
+     * Replaces the given rule {@code target} with {@code editedRule}.
+     *
+     * @throws DuplicateRuleException if updating the rule's details causes the rule to be equivalent to
+     *      another existing rule in the list.
+     * @throws RuleNotFoundException if {@code target} could not be found in the list.
+     */
+    void updateRule(Rule target, Rule editedRule)
+            throws DuplicateRuleException, RuleNotFoundException;
+
+    /** Returns the rule book */
+    ReadOnlyRuleBook getRuleBook();
+
+    /** Returns an unmodifiable view of the rule list */
+    ObservableList<Rule> getRuleList();
 
 }

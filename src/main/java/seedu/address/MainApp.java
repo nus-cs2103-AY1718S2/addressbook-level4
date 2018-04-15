@@ -10,6 +10,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.stage.Stage;
+import seedu.address.commons.core.CoinSubredditList;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
@@ -20,18 +21,25 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
+import seedu.address.logic.commands.SyncCommand;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyCoinBook;
+import seedu.address.model.ReadOnlyRuleBook;
+import seedu.address.model.RuleBook;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.CoinBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.RuleBookStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlCoinBookStorage;
+import seedu.address.storage.XmlRuleBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,9 +48,11 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, false);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+
+    public final boolean isTest;
 
     protected Ui ui;
     protected Logic logic;
@@ -51,19 +61,26 @@ public class MainApp extends Application {
     protected Config config;
     protected UserPrefs userPrefs;
 
+    public MainApp() {
+        this.isTest = false;
+    }
+
+    public MainApp(boolean isTest) {
+        this.isTest = isTest;
+    }
 
     @Override
     public void init() throws Exception {
-        logger.info("=============================[ Initializing AddressBook ]===========================");
+        logger.info("=============================[ Initializing CoinBook ]===========================");
         super.init();
 
         config = initConfig(getApplicationParameter("config"));
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
-
+        CoinBookStorage coinBookStorage = new XmlCoinBookStorage(userPrefs.getCoinBookFilePath());
+        RuleBookStorage ruleBookStorage = new XmlRuleBookStorage(userPrefs.getRuleBookFilePath());
+        storage = new StorageManager(coinBookStorage, ruleBookStorage, userPrefsStorage);
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
@@ -73,6 +90,16 @@ public class MainApp extends Application {
         ui = new UiManager(logic, config, userPrefs);
 
         initEventsCenter();
+
+        syncDataOnStartup();
+
+        CoinSubredditList.initialize();
+    }
+
+    private void syncDataOnStartup() throws CommandException, ParseException {
+        if (!this.isTest) {
+            logic.execute(SyncCommand.COMMAND_WORD);
+        }
     }
 
     private String getApplicationParameter(String parameterName) {
@@ -86,23 +113,40 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyCoinBook> coinBookOptional;
+        ReadOnlyCoinBook initialCoins;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            coinBookOptional = storage.readCoinBook();
+            if (!coinBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample CoinBook");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialCoins = coinBookOptional.orElseGet(SampleDataUtil::getSampleCoinBook);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty CoinBook");
+            initialCoins = new CoinBook();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty CoinBook");
+            initialCoins = new CoinBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        Optional<ReadOnlyRuleBook> ruleBookOptional;
+        ReadOnlyRuleBook initialRules;
+        try {
+            ruleBookOptional = storage.readRuleBook();
+            if (!ruleBookOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with an empty rule book");
+            }
+            initialRules = ruleBookOptional.orElseGet(RuleBook::new);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty rule book");
+            initialRules = new RuleBook();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty rule book");
+            initialRules = new RuleBook();
+        }
+
+
+        return new ModelManager(initialCoins, initialRules, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -163,7 +207,7 @@ public class MainApp extends Application {
                     + "Using default user prefs");
             initializedPrefs = new UserPrefs();
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
+            logger.warning("Problem while reading from the file. Will be starting with an empty CoinBook");
             initializedPrefs = new UserPrefs();
         }
 
@@ -183,13 +227,13 @@ public class MainApp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
-        logger.info("Starting AddressBook " + MainApp.VERSION);
+        logger.info("Starting CoinBook " + MainApp.VERSION);
         ui.start(primaryStage);
     }
 
     @Override
     public void stop() {
-        logger.info("============================ [ Stopping Address Book ] =============================");
+        logger.info("============================ [ Stopping Coin Book ] =============================");
         ui.stop();
         try {
             storage.saveUserPrefs(userPrefs);

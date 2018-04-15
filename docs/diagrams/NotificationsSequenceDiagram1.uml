@@ -1,0 +1,50 @@
+.Sequence Diagram for Notifications
+[uml,file="../images/NotificationsSequenceDiagram1.png"]
+--
+
+hide footbox
+skinparam SequenceMessageAlign center
+skinparam shadowing false
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ArrowColor #0070C0
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  ParticipantBackgroundColor #0070C0
+  LifeLineBorderColor #0070C0
+  LifeLineBackgroundColor #0070C0
+  defaultFontName Calibri
+}
+
+participant ":LogicManager" as LM
+participant ":CoinBookParser" as A
+participant "n:NotifyCommand" as N
+participant ":RuleChecker" as M
+
+[-> LM : execute("notify c/BTC p/=15000")
+activate LM
+
+LM -> A : parseCommand("notify c/BTC p/=15000")
+activate A
+
+ref over A : parse command
+LM <-- A : n
+deactivate A
+
+LM -> N : execute()
+activate N
+N -> M : addNotificationRule
+activate M
+N <-- M
+deactivate M
+
+LM <-- N : result
+deactivate N
+[<-- LM : result
+deactivate LM
+destroy N
+
+--

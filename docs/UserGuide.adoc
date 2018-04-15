@@ -1,264 +1,629 @@
-= AddressBook Level 4 - User Guide
+= CoinBook - User Guide
 :toc:
-:toc-title:
+:toc-title: Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
-:xrefstyle: full
+:pdf-stylesdir: stylesheets
+:pdf-style: pdf
+:xrefstyle: basic
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-F09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103JAN2018-F09-B3` Since: `Feb 2018` Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+_CoinBook_ is a desktop application that is made for users who prefer to work on a mouse-free environment where everything can be done through commands typed in with the keyboard. There is no need to click on visual components of the App to perform tasks. In other words, _CoinBook_ offers a command line interface with minimal [gloss]#<<gui,graphical user interface (GUI)>># dependence.
+
+_Coinbook_ allows you to store a portfolio of your cryptocurrency purchases as well as track the latest price trends and news, in addition to providing various
+tools to simplify and expedite your management process such as profit calculation.
+
+This guide will help you set up _CoinBook_, as well as introduce its various features.
+
+== How to Use this Guide
+Read this document to get up and running fast with _CoinBook_. The first thing you need to do is to get it set up, by reading the <<Quick Start>> section. Once you have _CoinBook_ running, get to know the things you can do with it by reading the <<Features>> section. If you prefer to just have a quick overview of the available commands, skip to the <<Command Summary>> section.
+
+You may find the tips below helpful in using this guide.
+
+Boxes::
+There are various types of boxes that provide extra information:
+[TIP]
+====
+This icon indicates tips for usage and points out little details you may have missed.
+====
+[NOTE]
+====
+This icon marks additional noteworthy information provided for reference.
+====
+[WARNING]
+====
+This icon warns you of things you should watch out for. Make sure to keep these in mind!
+====
+
+[[example]]
+Markup::
+Text with special meaning look different. Here are the various types:
+* Commands, filenames, and other miscellaneous keywords are `monospaced for emphasis`
+* Glossary terms have a [gloss]#dotted underline#
+* Keyboard keys are marked like kbd:[this]
+** kbd:[Q] means to press the `Q` key
+** kbd:[Ctrl]+kbd:[Q] means to hold down the `Ctrl` key and then press the `Q` key
+* Links are marked <<example,blue with underline>>
+** Cross-ref links bring you to another part of the document, and look like <<example,this>>
+** External cross-ref links bring you to another document, and look like [exref]#<<example,this>>#
+** External links bring you to another website, and look like [ext]#<<example,this>>#
+
+Finding Information::
+Check the table of contents and click on the desired topic. If you wish to search for a particular keyword, press kbd:[Ctrl]+kbd:[F] and type into the opened find dialog.
+
 
 == Quick Start
+Follow the steps below to begin using _CoinBook_ :
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+.  Ensure you have Java version `1.8.0_60` or later installed in your computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+You can obtain the latest version [ext]#http://www.oracle.com/technetwork/java/javase/downloads/index.html[here]# (Download JRE).
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `coinbook.jar` [exref]#link:{repoURL}/releases[here]#.
+.  Copy the file to the folder you want to use as the home folder for your _CoinBook_.
+.  Double-click the file to start the app. The GUI should appear in a few seconds (Fig. 1).
 +
+.Startup Window
 image::Ui.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+. Type your commands in the command box and press kbd:[Enter] to execute them. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+[TIP]
+  Refer to <<Features>> for details of each command. Command <<alias,aliases>> are specified after the `|` symbol.
 
-.  Refer to <<Features>> for details of each command.
+== How to Read the Main Window
+
+The figure below (Fig. 2) describes each section of the user interface.
+
+.Main Layout Window
+image::LabelledUI.png[width="800"]
+
+<1> File Menu - Contains the buttons to exit and bring up the Help window.
+<2> Command Box - Contains the text box for you to type your commands into.
+<3> Result Display Pane - Contains the text responses of the program. The responses usually either acknowledge commands or notify that an error has occurred.
+<4> Listing Pane - Contains the list of coin accounts that you currently own.
+<5> Coin Account - Contains information on each coin. From top to bottom, left to right:
+* Index of the coin in this listing
+* Coin trading code, and icon (top 100 coins only)
+* Amount currently held
+* Tags
+* Current price
+<6> Detail Window - Shows the price chart and subreddit, if available, that is associated with the coin of your choice.
+<7> Status Bar - Shows various information about the state of the App. From left to right:
+* Update Status - Notifies you when was the last time you had synchronised your program to obtain the latest prices.
+* Filter Status - Shows the current filter applied to the listing via the `find` command.
+* Account Counter - Indicates the total number of coin accounts you currently possess in CoinBook.
+* Storage Filepath - Shows the current file path at which the data is stored.
 
 [[Features]]
 == Features
 
+_CoinBook_ allows you to manage your coin accounts easily through the use of commands. All you need to do is type in the command, followed by its required or optional _parameters_, then press kbd:[Enter] to execute it.
+
+.Terminology
+****
+The following terms are used in the feature list to refer to specific concepts.
+[[spec]]
+* Target
+** Refers to the account or group to execute the command upon
+** This is used in commands requiring a target coin, and can be any one of the coin's:
+*** `INDEX`: Its index number in the current coin listing
+*** `CODE`: The trading code of the coin, e.g. `BTC`
+*** `NAME`: The name of the coin, e.g. `Bitcoin`, and is case-insensitive [Coming in v2.0]
+* Option/Parameter
+** Refers to the additional information you must provide for the command
+** These have a letter representing the option, followed by a slash (`/`), followed by the desired value
+** The name of the option follows each letter. You should replace this with the desired value, e.g. `t/TAG` indicates the desired value of the tag should be typed after `t/`
+****
+
+.Command Format
+****
+Each command comes with a specific _format_ consisting of one or more parts. Please note the following conventions:
+
+* Command parts denoted in `UPPERCASE` should be supplied by the user
+* Parts in square brackets are optional, e.g.
+`TARGET [t/TAG]`
+can be used as either `BTC t/fav` or `BTC`
+* Parts with `...` after them can be used zero or more times, e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/cheap`, `t/active t/fav`, etc.
+* If an option without `...` is used multiple times, only the rightmost value that you typed will be used, e.g. use of `c/CODE` as `c/BTC c/ETH` will be taken as `c/ETH` only
+* Parameters can be in any order, e.g. if the command specifies `t/TAG a/VALUE`, then `a/VALUE t/TAG` is also acceptable
+* Parts in curly braces indicate multiple possibilities, e.g. we use <<spec,`TARGET`>> as shorthand for `{INDEX,NAME,CODE}`
+****
+
+=== View help `help` | `?`
+
+.Format
+----
+help
+----
+
+Opens the help window.
+
+=== Add a new coin account `add` | `a`
+
+.Format
+----
+add c/CODE [t/TAG]...
+----
+[cols="1,3a"]
+|===
+|`*CODE*`
+|Must be alphabets only
+[WARNING]
+If a non-existent trading code is added, its price will not be updated with the latest price data when you run the `sync` command.
+|`*TAG*`
+|Must be alphanumeric, i.e. only alphabets and digits are allowed
+|===
+
+Adds a new coin account into the list, with the given trading code, and the given tags.
+You will be notified in the result pane if the added coin is not known to have a subreddit, for the viewing of news updates. See <<view,`view` command>>.
+
+.Example
+----
+add c/BTC
+----
+Adds the coin with the code `BTC` to _CoinBook_.
+
+=== Add value to an account `buy` | `b` `[Since v1.4]`
+
+.Format
+----
+buy TARGET a/AMOUNT
+----
+[cols="1,3"]
+|===
+|`*AMOUNT*` | Must be a positive number
+|===
+
+Adds the given `AMOUNT`, in coin units, into the specified coin account.
+
+.Example
+----
+buy BTC a/0.5
+----
+Adds 0.5 to the amount held in the `BTC` account.
+
+=== Sell coin from an account `sell` | `s` `[Since v1.4]`
+
+.Format
+----
+sell TARGET a/AMOUNT
+----
+[cols="1,3a"]
+|===
+|`*AMOUNT*` | Must be a positive number
+[NOTE]
+If you enter an amount greater than the amount you hold in that account, only that much will be subtracted, i.e. the value will not go below zero.
+|===
+Removes the given `AMOUNT` from the specified coin account.
+
+.Example
+----
+sell BTC a/0.5
+----
+Subtracts 0.5 from the amount held in the `BTC` account.
+
+=== Delete an account `delete` | `d`
+
+.Format
+----
+delete TARGET
+----
+
+Deletes the specified coin account.
+
+.Example
+----
+delete 3
+----
+The third entry in the current listing is removed.
+
+[NOTE]
+Coin accounts are not automatically removed when their value goes to 0 to allow later reuse, or even for archival or record purposes. You need to remove them explicitly with this command.
+
+=== Clear all entries `clear` | `c`
+
+.Format
+----
+clear
+----
+
+Resets all data in _CoinBook_.
+
+[WARNING]
 ====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+This command can be reversed with `undo`, but only in the same session. The effect is permanent once _CoinBook_ is closed.
 ====
 
-=== Viewing help : `help`
+=== Tag an account `tag` | `t`
 
-Format: `help`
+.Format
+----
+tag TARGET t/TAG...
+----
+[cols="1,3"]
+|===
+|`*TAG*`
+|Must be alphanumeric, i.e. only alphabets and digits are allowed
+|===
 
-=== Adding a person: `add`
+Sets the specified coin's tags to the given tags.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+.Examples
+
+ tag 1 t/fav
+
+The first entry in the list is tagged with the `fav` tag.
+
+ tag 3 t/
+
+The third entry in the list has all of its tags removed.
+
+ tag BTC t/fav t/watch
+
+The `BTC` account is tagged with `fav` and `watch`.
 
 [TIP]
-A person can have any number of tags (including 0)
+A coin account can have any number of tags (including 0)
 
-Examples:
+=== List all accounts `list` | `l`
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+.Format
+----
+list
+----
 
-=== Listing all persons : `list`
+Updates the listing to show all coin accounts in _CoinBook_.
 
-Shows a list of all persons in the address book. +
-Format: `list`
+[[view]]
+=== View details of an account `view` | `v` `[Since v1.5]`
 
-=== Editing a person : `edit`
+.Format
+----
+view TARGET
+----
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Opens up the detail window for the account specified. The detail window includes information such as:
 
+* Total amount in dollars spent in purchasing this coin
+* Amount earned from selling this coin
+* Possible profit if all coin in this account is sold at the current price
+* Chart of the price history
+* Subreddit of this coin, if there is one
+* etc... [More analytics coming in v2.0]
+
+.Examples
+
+ view BTC
+
+See details for the `BTC` account
+
+ view 2
+
+See details for the 2nd account in the current listing
+
+//tag::findcommand[]
+=== Search through accounts `find` | `f` `[Since v1.4]`
+
+.Format
+----
+find CONDITION
+----
+[cols="1,3"]
+|===
+|`*CONDITION*`
+|Must follow the <<find,format>> listed below
+|===
+
+Updates the listing to show only coin accounts whose details satisfy the given condition.
+
+[[find]]
+.Condition Query Format
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
-
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
-
-Examples:
-
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
-
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
-
-Examples:
-
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Possible query options are: +
+** `n/NAME`:  Name of the coin [Coming in v2.0]
+** `c/CODE`: Trading code of the coin (can be a substring, and is case insensitive)
+** `t/TAG...`: Tags attached to the coin
+** `p/PRICE`: Current price, in dollars, of the coin
+** `h/AMOUNT`: Current amount, in coin units, held in an account
+** `b/AMOUNT`: Total amount, in dollars, ever bought in the account
+** `s/AMOUNT`: Total amount, in dollars, ever sold from the account
+** `m/MADE`: Total profit, in dollars, made from this account so far
+** `w/WORTH`: How much, in dollars, the current amount held is worth at the current price
+* To specify amounts, put '=', `>`, or `<` to specify amounts equal to, greater, or less than; for example:
+** `m/=90` : Profit made is exactly $90
+** `p/>500`: Current price exceeding $500
+** `s/<20`: Total amount sold less than $20
+* Possible logical operators include:
+** `AND`: The conditions on both sides need to be matched
+** `OR`: Only one of the conditions on either side need to be matched
+** `NOT`: Reverses the matching result of the following condition
+** `({nbsp})`: Evaluates conditions inside parentheses first, starting with the innermost one
 ****
 
-Examples:
+.Examples
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+ find c/BT
 
-=== Listing entered commands : `history`
+Finds accounts with `BT` in their code
 
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+ find t/fav
+
+Finds accounts with the `fav` tag
+
+ find (p/>500 AND t/fav) OR h/<20
+
+Finds accounts either with current price more than $500 and tagged `fav`, or with less than 20 coins left
+
+// tag::notifications[]
+
+//end::findcommand[]
+=== Set up notifications `notify` | `n` `[Since v1.5rc]`
+
+.Format
+----
+notify CONDITION
+----
+
+Sets a condition that triggers a popup notification whenever the condition matches the new data for a coin after a price update. The condition query mostly follows the same format as that used in <<find,find>>, with the following additional options:
+
+.Notification Options Format
+****
+* You can put `+` or `-` before specifying any of the following amounts to test its change instead of its absolute value:
+** `p/PRICE`: Current price, in dollars, of the coin
+** `w/WORTH`: How much, in dollars, the current amount held is worth at the current price
+* For example:
+** `p/+1000`: Current price rose $1000
+** `p/pass:[-]>500`: Current price fell more than $500
+****
+
+You can click on the notification pop-up to jump quickly to the coin account that triggered it.
+
+.Examples
+----
+notify h/>0
+----
+Notify when the amount held in an account is more than 0 after the update. This always triggers and hence is useless on its own, but can be combined with other conditions to restrict notifications to a smaller set of accounts
+
+----
+notify c/BTC w/=50
+----
+Notify when the amount worth in dollars of the `BTC` account is $50
+
+----
+notify w/+>1000 c/ETH
+----
+Notify when the amount worth in dollars of the `ETH` account rises by more than $1000
+
+=== List added notifications `listnotifs` | `ln` `[Since v1.5]`
+
+.Format
+----
+listnotifs
+----
+
+Opens the notification list window.
+
+// end::notifications[]
+
+
+// tag::order[]
+
+=== Change listing order `order` | `o` `[Since v1.5]`
+
+.Format
+----
+order {a,z}
+----
+
+Orders the coin listing in lexicographical order or reverse lexicographical order. +
+Put `a` after the command word to sort it in lexicographical order, and `z` to sort in reverse lexicographical order. The listing is sorted by the leftmost entered option first, then equal values are sorted by the next one, and so on.
+
+The default order is lexicographical order of the coin names (i.e., option `a`).
+
+.Examples
+
+ order a
+
+Sort the listing in lexicographical order (default option, whether "a" is added after the command word or not).
+
+ order z
+
+Sort the listing in reverse lexicographical order.
+
+[WARNING]
+====
+This command can be reversed with `undo`, but only in the same session. The effect is permanent once _CoinBook_ is closed.
+====
+
+// end::order[]
+
+=== List past commands `history` | `h`
+
+.Format
+----
+history
+----
+
+Lists all the commands that you have entered previously, in reverse chronological order.
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[UP] and kbd:[DOWN] arrow keys will also display the previous and next input respectively in the command box.
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undo previous command `undo` | `z`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+.Format
+----
+undo
+----
+
+Restores the data to the state before the previous _undoable_ command was executed.
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: Commands that modify the data (`buy`, `sell`, `tag` and `clear`)
 ====
 
-Examples:
-
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
-
-* `select 1` +
-`list` +
-`undo` +
+.Examples
+----
+buy BTC a/10 <1>
+list
+undo <1>
+----
+This reverses the `buy BTC a/10` command.
+----
+view 1
+list
+undo
+----
 The `undo` command fails as there are no undoable commands executed previously.
+----
+sell BTC a/10 <2>
+clear <1>
+undo <1>
+undo <2>
+----
+The first `undo` reverses the `clear` command, the second reverses the `sell BTC a/10` command.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+=== Redo undone command `redo` | `y`
 
-=== Redoing the previously undone command : `redo`
+.Format
+----
+redo
+----
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Reverses the most recent `undo` command.
 
-Examples:
+.Examples
+----
+buy BTC a/10 <1>
+undo <1><2>
+redo <2>
+----
+<1> Reverses the `buy BTC a/10` command, and
+<2> Reapplies it
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+The result is as if only the first line was executed.
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+----
+list
+redo
+----
+The command fails as there are no `undo` commands executed previously.
+----
+sell BTC a/10 <2>
+clear <1>
+undo <1><4>
+undo <2><3>
+redo <3>
+redo <4>
+----
+This sequence of commands:
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+<1> Reverses the `clear` command
+<2> Reverses the `sell BTC a/10` command
+<3> Reapplies the `sell BTC a/10` command, and finally
+<4> Reapplies the `clear` command
+
+The result is as if only the first two lines were executed. Notice how the order of redoing is opposite from the undoing.
+
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+// tag::sync[]
+=== Sync with price server `sync` | `sy` `[Since v1.5]`
 
-Clears all entries from the address book. +
-Format: `clear`
+.Format
+----
+sync
+----
 
-=== Exiting the program : `exit`
+Obtains the latest price data to update price metrics of all owned coins.
 
-Exits the program. +
-Format: `exit`
+[NOTE]
+ You may notice some coins disappearing from the list view after syncing. This is most likely because the relevant coins no longer satisfy the currently applied list filter. +
+ Run the `list` command if you wish to see all coins.
 
-=== Saving the data
+// end::sync[]
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+//tag::autocomplete[]
+=== Autocomplete `[Since v1.5]`
+
+Pressing any key will auto-suggest the field with all possible matching inputs.
+
+Pressing the kbd:[UP] and kbd:[DOWN] arrow keys will allow navigation of the input suggestions.
+
+Once the desired command is selected as indicated by light grey highlight, pressing the kbd:[ENTER] key will input the command into the command box.
+//end::autocomplete[]
+
+=== Exit the program : `exit` | `q`
+
+.Format
+----
+exit
+----
+
+Exits the program.
+
+[WARNING]
+ After exiting the program, any changes made in the session will not be undoable with the `undo` command in the next session.
+
+=== Save data
+
+_CoinBook_ data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous _CoinBook_ folder  (default location: `data/`).
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="90%",cols="10%,<23%,<25%",options="header",]
+|=======================================================================
+| Command |Format | Description
+| *Add* | `add c/CODE [t/TAG]...` | Adds a coin account with the specified trading CODE.
+| *Buy* | `buy TARGET a/AMOUNT` | Adds AMOUNT of coin to the targeted account.
+| *Clear* | `clear` | Deletes all coin accounts.
+| *Delete* | `delete TARGET` | Deletes targeted coin account.
+| *Exit* |  `exit` | Exits the program.
+| *Find* | `find CONDITION` | Finds all coin accounts that fit the CONDITION.
+| *Help* | `help` | Displays the help page.
+| *History* | `history` | Shows the user a history of previously input commands.
+| *List* | `list` | Lists all coin accounts.
+| *Notify* | `notify CONDITION` | Sets a notification for when the CONDITION has been met.
+| *Order* | `order {a,z}` | Sorts the coin accounts based on their code.
+| *Redo* | `redo` | Reapplies the previously un-done command.
+| *Sell* | `sell TARGET a/AMOUNT` | Subtracts AMOUNT of coin from the targeted account.
+| *Sync* | `sync` | Fetches data from online sources to update the prices.
+| *Tag* | `tag TARGET [t/TAG]...` | Tags the targeted account with TAG name.
+| *Undo* | `undo` | Reverts the effect of the previous undo-able command.
+| *View* | `view TARGET` | Views information about the targeted account.
+|=======================================================================
+
+[appendix]
+== Glossary
+
+[[alias]] Alias::
+Alternate names for commands.
+
+[[gui]] Graphical User Interface::
+A type of user interface that lets users interact with the app through visual indicators, icons, mouse actions, etc. as compared to typed commands.

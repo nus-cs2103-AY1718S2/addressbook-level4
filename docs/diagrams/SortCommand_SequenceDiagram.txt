@@ -1,0 +1,52 @@
+hide footbox
+
+skinparam belowForResponse true
+skinparam shadowing false
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  LifeLineBorderColor black
+  defaultFontName Calibri
+}
+
+actor " " as A
+participant ":LogicManager" as U #0070C0
+participant ":CoinBookParser" as L #0070C0
+participant ":SortCommand" as M #0070C0
+participant ":Model" as E #7030A0
+participant ":UniqueCoinList" as C #7030A0
+
+A -[#0070C0]> U : execute "sort"
+activate U #0070C0
+U -[#0070C0]> L : parse()
+activate L #0070C0
+
+create M
+L -[#0070C0]> M
+activate M #0070C0
+L <-[#0070C0]- M
+deactivate M #0070C0
+U <-[#0070C0]- L
+deactivate L #0070C0
+
+U -[#0070C0]> M : execute()
+activate M #0070C0
+M -[#0070C0]> E : sortCoinList()
+activate E #7030A0
+
+E -[#7030A0]> C : sort()
+activate C #7030A0
+E <-[#7030A0]- C
+deactivate C
+M <-[#7030A0]- E
+
+deactivate E
+U <-[#0070C0]- M
+deactivate M
+deactivate L
+A <-[#0070C0]- U
+deactivate U

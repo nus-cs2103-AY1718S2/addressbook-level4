@@ -1,14 +1,14 @@
 package systemtests;
 
 import static org.junit.Assert.assertTrue;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_TARGET;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_PERSON_SUCCESS;
+import static seedu.address.logic.commands.DeleteCommand.MESSAGE_DELETE_COIN_SUCCESS;
+import static seedu.address.testutil.TestUtil.getCoin;
 import static seedu.address.testutil.TestUtil.getLastIndex;
 import static seedu.address.testutil.TestUtil.getMidIndex;
-import static seedu.address.testutil.TestUtil.getPerson;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalCoins.KEYWORD_MATCHING_BTC;
+import static seedu.address.testutil.TypicalTargets.INDEX_FIRST_COIN;
 
 import org.junit.Test;
 
@@ -18,10 +18,10 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.coin.Coin;
+import seedu.address.model.coin.exceptions.CoinNotFoundException;
 
-public class DeleteCommandSystemTest extends AddressBookSystemTest {
+public class DeleteCommandSystemTest extends CoinBookSystemTest {
 
     private static final String MESSAGE_INVALID_DELETE_COMMAND_FORMAT =
             String.format(Messages.MESSAGE_INVALID_COMMAND_FORMAT, DeleteCommand.MESSAGE_USAGE);
@@ -30,60 +30,60 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     public void delete() {
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
-        /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
+        /* Case: delete the first coin in the list, command with leading spaces and trailing spaces -> deleted */
         Model expectedModel = getModel();
-        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_PERSON.getOneBased() + "       ";
-        Person deletedPerson = removePerson(expectedModel, INDEX_FIRST_PERSON);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        String command = "     " + DeleteCommand.COMMAND_WORD + "      " + INDEX_FIRST_COIN.getOneBased() + "       ";
+        Coin deletedCoin = removeCoin(expectedModel, INDEX_FIRST_COIN);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_COIN_SUCCESS, deletedCoin);
         assertCommandSuccess(command, expectedModel, expectedResultMessage);
 
-        /* Case: delete the last person in the list -> deleted */
+        /* Case: delete the last coin in the list -> deleted */
         Model modelBeforeDeletingLast = getModel();
-        Index lastPersonIndex = getLastIndex(modelBeforeDeletingLast);
-        assertCommandSuccess(lastPersonIndex);
+        Index lastCoinIndex = getLastIndex(modelBeforeDeletingLast);
+        assertCommandSuccess(lastCoinIndex);
 
-        /* Case: undo deleting the last person in the list -> last person restored */
+        /* Case: undo deleting the last coin in the list -> last coin restored */
         command = UndoCommand.COMMAND_WORD;
         expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: redo deleting the last person in the list -> last person deleted again */
+        /* Case: redo deleting the last coin in the list -> last coin deleted again */
         command = RedoCommand.COMMAND_WORD;
-        removePerson(modelBeforeDeletingLast, lastPersonIndex);
+        removeCoin(modelBeforeDeletingLast, lastCoinIndex);
         expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
         assertCommandSuccess(command, modelBeforeDeletingLast, expectedResultMessage);
 
-        /* Case: delete the middle person in the list -> deleted */
-        Index middlePersonIndex = getMidIndex(getModel());
-        assertCommandSuccess(middlePersonIndex);
+        /* Case: delete the middle coin in the list -> deleted */
+        Index middleCoinIndex = getMidIndex(getModel());
+        assertCommandSuccess(middleCoinIndex);
 
         /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- */
 
-        /* Case: filtered person list, delete index within bounds of address book and person list -> deleted */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        Index index = INDEX_FIRST_PERSON;
-        assertTrue(index.getZeroBased() < getModel().getFilteredPersonList().size());
+        /* Case: filtered person list, delete index within bounds of coin book and person list -> deleted */
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
+        Index index = INDEX_FIRST_COIN;
+        assertTrue(index.getZeroBased() < getModel().getFilteredCoinList().size());
         assertCommandSuccess(index);
 
-        /* Case: filtered person list, delete index within bounds of address book but out of bounds of person list
+        /* Case: filtered person list, delete index within bounds of coin book but out of bounds of person list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
-        int invalidIndex = getModel().getAddressBook().getPersonList().size();
+        showCoinsWithName(KEYWORD_MATCHING_BTC);
+        int invalidIndex = getModel().getCoinBook().getCoinList().size();
         command = DeleteCommand.COMMAND_WORD + " " + invalidIndex;
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_COMMAND_TARGET);
 
-        /* --------------------- Performing delete operation while a person card is selected ------------------------ */
+        /* --------------------- Performing delete operation while a coin card is selected ------------------------ */
 
-        /* Case: delete the selected person -> person list panel selects the person before the deleted person */
-        showAllPersons();
+        /* Case: delete the selected coin -> coin list panel selects the coin before the deleted coin */
+        showAllCoins();
         expectedModel = getModel();
         Index selectedIndex = getLastIndex(expectedModel);
         Index expectedIndex = Index.fromZeroBased(selectedIndex.getZeroBased() - 1);
-        selectPerson(selectedIndex);
+        selectCoin(selectedIndex);
         command = DeleteCommand.COMMAND_WORD + " " + selectedIndex.getOneBased();
-        deletedPerson = removePerson(expectedModel, selectedIndex);
-        expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        deletedCoin = removeCoin(expectedModel, selectedIndex);
+        expectedResultMessage = String.format(MESSAGE_DELETE_COIN_SUCCESS, deletedCoin);
         assertCommandSuccess(command, expectedModel, expectedResultMessage, expectedIndex);
 
         /* --------------------------------- Performing invalid delete operation ------------------------------------ */
@@ -98,12 +98,12 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (size + 1) -> rejected */
         Index outOfBoundsIndex = Index.fromOneBased(
-                getModel().getAddressBook().getPersonList().size() + 1);
+                getModel().getCoinBook().getCoinList().size() + 1);
         command = DeleteCommand.COMMAND_WORD + " " + outOfBoundsIndex.getOneBased();
-        assertCommandFailure(command, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        assertCommandFailure(command, MESSAGE_INVALID_COMMAND_TARGET);
 
-        /* Case: invalid arguments (alphabets) -> rejected */
-        assertCommandFailure(DeleteCommand.COMMAND_WORD + " abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+        /* Case: invalid arguments (symbols) -> rejected */
+        assertCommandFailure(DeleteCommand.COMMAND_WORD + " -#abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid arguments (extra argument) -> rejected */
         assertCommandFailure(DeleteCommand.COMMAND_WORD + " 1 abc", MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
@@ -113,28 +113,28 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
     }
 
     /**
-     * Removes the {@code Person} at the specified {@code index} in {@code model}'s address book.
-     * @return the removed person
+     * Removes the {@code Coin} at the specified {@code index} in {@code model}'s coin book.
+     * @return the removed coin
      */
-    private Person removePerson(Model model, Index index) {
-        Person targetPerson = getPerson(model, index);
+    private Coin removeCoin(Model model, Index index) {
+        Coin targetCoin = getCoin(model, index);
         try {
-            model.deletePerson(targetPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("targetPerson is retrieved from model.");
+            model.deleteCoin(targetCoin);
+        } catch (CoinNotFoundException pnfe) {
+            throw new AssertionError("targetCoin is retrieved from model.");
         }
-        return targetPerson;
+        return targetCoin;
     }
 
     /**
-     * Deletes the person at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+     * Deletes the coin at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
      * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
      */
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
-        Person deletedPerson = removePerson(expectedModel, toDelete);
-        String expectedResultMessage = String.format(MESSAGE_DELETE_PERSON_SUCCESS, deletedPerson);
+        Coin deletedCoin = removeCoin(expectedModel, toDelete);
+        String expectedResultMessage = String.format(MESSAGE_DELETE_COIN_SUCCESS, deletedCoin);
 
         assertCommandSuccess(
                 DeleteCommand.COMMAND_WORD + " " + toDelete.getOneBased(), expectedModel, expectedResultMessage);
@@ -149,8 +149,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * 5. Asserts that the status bar's sync status changes.<br>
      * 6. Asserts that the command box has the default style class.<br>
      * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code CoinBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+     * @see CoinBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
@@ -160,7 +160,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
      * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
      * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     * @see AddressBookSystemTest#assertSelectedCardChanged(Index)
+     * @see CoinBookSystemTest#assertSelectedCardChanged(Index)
      */
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
             Index expectedSelectedCardIndex) {
@@ -173,8 +173,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
             assertSelectedCardUnchanged();
         }
 
-        assertCommandBoxShowsDefaultStyle();
-        assertStatusBarUnchangedExceptSyncStatus();
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
+        assertStatusBarChangedExceptSaveLocation();
     }
 
     /**
@@ -185,8 +185,8 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
      * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
      * 5. Asserts that the command box has the error style.<br>
      * Verifications 1 to 3 are performed by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * {@code CoinBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * @see CoinBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();
@@ -194,7 +194,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
+        assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 }

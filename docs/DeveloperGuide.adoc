@@ -1,22 +1,53 @@
-= AddressBook Level 4 - Developer Guide
+= CoinBook - Developer Guide
 :toc:
-:toc-title:
+:toc-title: Contents
 :toc-placement: preamble
 :sectnums:
+:sectnumlevels: 5
 :imagesDir: images
 :stylesDir: stylesheets
-:xrefstyle: full
+:pdf-stylesdir: stylesheets
+:pdf-style: pdf
+:xrefstyle: basic
+:experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F09-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team CS2103JAN2018-F09-B3` Since: `Feb 2018` Licence: `MIT`
 
-== Setting up
+== Introduction
+__CoinBook__ is a desktop application written in Java with JavaFX. You may refer to the [exref]##<<UserGuide#, User Guide>>## for more information regarding the application itself.
 
-=== Prerequisites
+This guide is for developers interested in contributing to the current project, forking their own project,
+or those who are just interested in the internal design and implementation details of _CoinBook_.
+
+To set up the project and work environment, read the next section, <<Getting Started with CoinBook>>. New developers should also read about the overall <<Design>> to apprise
+themselves of the architecture in this software. Existing developers may also find it useful as a reference.
+
+If you wish to extend the key features in _CoinBook_, the chapter on <<Implementation>> delves into non-trivial details involving these features.
+
+New developers should also read the <<Documentation>>, <<Testing>>, and <<DevOps>>
+sections to learn more about the workflow, tools and frameworks currently being used in the project.
+You must follow the existing workflow if you are keen on contributing to the project.
+
+The appendices serve as a useful reference for both new and existing developers alike. Any new feature contribution
+under consideration should be aligned with the design philosophies and product direction, to be considered for inclusion.
+
+== Getting Started with CoinBook
+Follow the instructions given in this section to get up and running with _CoinBook_. To summarise:
+
+. Make sure you have the prerequisites installed. See <<prereq>> for details.
+. Clone and import the project. See <<Setting Up>> for details.
+. Set up additional requirements before writing your code. See <<config>> for details.
+
+For the full details, continue reading.
+
+=== Obtaining Prerequisites [[prereq]]
+
+The following are required to ensure that _CoinBook_ works well.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -29,220 +60,428 @@ This app will not work with earlier versions of Java 8.
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Do not disable them. If you have disabled them, go to `File` -> `Settings` -> `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Setting Up
+Follow the steps below to set up the project in your computer.
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ. If you are not in the welcome screen, click `File` -> `Close Project` to close the existing project dialog first.
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` -> `Project Defaults` -> `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. Otherwise, check that you have all the <<prereq,system requirements>> and try again. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verifying the Setup
+After setting up the project by following the steps in the previous part, do the below to make sure you have everything set up nicely.
 
-. Run the `seedu.address.MainApp` and try a few commands
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
-=== Configurations to do before writing code
+=== Configuring the Environment [[config]]
+Before embarking on your modifications to _CoinBook_, you should set up the following things to facilitate a smooth development experience.
 
-==== Configuring the coding style
+==== Configuring the Coding Style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows [ext]#https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]#. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify this:
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+. Go to `File` -> `Settings...` (Windows/Linux), or `IntelliJ IDEA` -> `Preferences...` (macOS).
+. Select `Editor` -> `Code Style` -> `Java`.
+. Click on the `Imports` tab, and set the following options within.
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* Set `Class count to use import with '\*'` and `Names count to use static import with '*'` to `999` to prevent IntelliJ from contracting the import statements.
+* Set the order for `Import Layout`: `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, you can follow the [exref]##<<UsingCheckstyle#, UsingCheckstyle.adoc>>## document to configure Intellij to check style-compliance as you write code.
 
-==== Updating documentation to match your fork
+==== Updating Documentation to Match Your Fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F09-B3/main` repo. If you plan to develop this as a separate product (instead of contributing to `CS2103JAN2018-F09-B3/main`), you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
-==== Setting up CI
+==== Setting Up Continuous Integration
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+See [exref]##<<UsingTravis#, UsingTravis.adoc>>## to learn how to set up Travis to perform Continuous Integration (CI) for your fork.
 
-After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
+After setting up Travis, you can optionally set up coverage reporting for your team fork (see [exref]##<<UsingCoveralls#, UsingCoveralls.adoc>>##).
 
 [NOTE]
 Coverage reporting could be useful for a team repository that hosts the final version but it is not that useful for your personal fork.
 
-Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
+Optionally, you can set up AppVeyor as a second CI (see [exref]##<<UsingAppVeyor#, UsingAppVeyor.adoc>>##).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures that your app works on both Unix-based platforms and Windows-based platforms. Travis is Unix-based and AppVeyor is Windows-based.
 
-==== Getting started with coding
+==== Getting Started With Coding
 
-When you are ready to start coding,
-
-1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
+When you are ready to start coding, get some sense of the overall design by reading the next section on _CoinBook_'s <<Design>>.
 
 == Design
+This chapter offers a high-level overview of the components in _CoinBook_ and how they interact with one another. You should read this first to get some idea of which parts you might want to modify to suit your needs.
 
 [[Design-Architecture]]
 === Architecture
 
+The *_Architecture Diagram_* below (Fig. 1) explains the high-level design of the App.
+
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+Following is a quick overview of each component:
 
-[TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+* `*Main*` has only one class called [exref]#link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]#. It is responsible for the following:
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+** (On app launch) Initializes the components in the correct sequence, and connecting them up with one another
+** (On shut down) Shuts down all components and invoking cleanup methods where necessary
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* `*Commons*` represents a collection of classes (the [exref]#link:{repoURL}/src/main/java/seedu/address/commons[`seedu.address.commons`]# package) used by multiple other components. Two of these classes play important roles at the architectural level.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+** `EventsCenter` uses [ext]#https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]#, and is used by other components to communicate with one another using events (i.e. a form of <<event-driven-design,Event Driven Design>>)
+** `LogsCenter` is used by classes to write log messages to the App's log file
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* The rest of the App consists of:
+** <<Design-Ui,*`UI`*>> which holds the UI components of the App +
+** <<Design-Logic,*`Logic`*>> which processes and executes commands +
+** <<Design-Model,*`Model`*>> which holds the data of the App in memory +
+** <<Design-Storage,*`Storage`*>> which reads data from and writes data to the hard disk
 
-The rest of the App consists of four components.
+* Each of the above four components:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+** Defines its [gloss]#<<API,_API_>># in an interface with the same name as the component
+** Exposes its functionality using a `{Component Name}Manager` class
 
-Each of the four components
-
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
-
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+[NOTE]
+For example, the `Logic` component (see Fig. 2 below) defines its API in the `Logic.java` interface and exposes its functionality via the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-[discrete]
-==== Events-Driven nature of the design
+[[event-driven-design]]
+We use event-driven design in order to allow communication between separate components without increasing coupling. The short section below gives a brief introduction to how events are being used in the App.
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below (Fig. 3) shows the interaction between the various components when the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
-
-[NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
-
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
-
-.Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+.Component Interactions for `delete 1` Command Part 1
+image::SDforDeleteCoin.png[width="800"]
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Note how `Model` simply raises `CoinBookChangedEvent` when the data is changed, instead of asking `Storage` to save the updates to the hard disk.
 
-The sections below give more details of each component.
+Fig. 4 below shows how `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+
+.Component Interactions for `delete 1` Command Part 2
+image::SDforDeletePersonEventHandling.png[]
+
+[NOTE]
+The event is propagated through `EventsCenter` to `Storage` and `UI` without `Model` having to be [gloss]#<<coupling,coupled>># to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+
+The following sections give more details about each component.
 
 [[Design-Ui]]
-=== UI component
+=== UI Component
+
+*API* : [exref]#link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]#
+
+*Responsibilities* +
+The `UI` component:
+
+* Executes user commands using the `Logic` component
+* Binds itself to data in `Model` so that the UI can update itself automatically when data in `Model` changes
+* Responds to events raised from various parts of the App and updates the UI accordingly
+
+*Internals* +
+The following diagram (Fig. 5) illustrates the structure of this component:
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+The user interface (UI) consists of a `MainWindow` that is made up of several parts, e.g. `CommandBox`, `ResultDisplay`, `CoinListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including `MainWindow`, inherit from the abstract `UiPart` class.
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
-
-The `UI` component,
-
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+The `UI` component uses the JavaFx UI framework. The layout of the UI parts are defined in matching `.fxml` files located in the `src/main/resources/view` folder. For example, the layout of the
+[exref]#link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`]# is specified in
+[exref]#link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]#.
 
 [[Design-Logic]]
-=== Logic component
+=== Logic Component
+
+*API* :
+[exref]#link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]#
+
+*Responsibilities* +
+The `Logic` component:
+
+* Parses and executes user commands
+* Manages command history and undo/redo information
+
+*Internals* +
+The following diagrams (Fig. 6, 7) illustrate the structure of this component:
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+.Structure of Commands in the Logic Component. Example of `XYZCommand` and `Command` in <<fig-LogicClassDiagram,Fig. 6>>
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+When a user issues a command, the following steps are performed by `Logic` through `LogicManager`:
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+. Parse the user command using the `CoinBookParser` class.
+. Run the `execute` method on the resulting `Command` object.
+.  Encapsulate the result of the execution as a `CommandResult` object which is then passed back to the UI.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+[NOTE]
+ The command execution can affect `Model` (e.g. adding a coin) and/or raise events.
+
+Given below is the Sequence Diagram (Fig. 8) for interactions within the `Logic` component for the `execute("delete{nbsp}1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
-=== Model component
+=== Model Component
+
+*API* :
+[exref]#link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]#
+
+*Responsibilities* +
+The `Model` component:
+
+* Stores a `UserPref` object that represents the user's preferences
+* Stores the CoinBook data
+* Exposes an unmodifiable `ObservableList<Coin>` that can be _observed_ e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list changes
+
+[NOTE]
+ `Model` does not depend on any of the other three components
+
+*Internals* +
+The following diagram (Fig. 9) illustrates the structure of this component:
 
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
-
-The `Model`,
-
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
 
 [[Design-Storage]]
-=== Storage component
+=== Storage Component
+
+*API* :
+[exref]#link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]#
+
+*Responsibilities* +
+The `Storage` component:
+
+* Saves `UserPref` objects in JSON format or reads it back into the App
+* Saves the CoinBook data in XML format or reads it back into the App
+
+*Internals* +
+The following diagram (Fig. 10) illustrates the structure of this component:
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
-
-The `Storage` component,
-
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
-
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
-
 == Implementation
 
-This section describes some noteworthy details on how certain features are implemented.
+This chapter describes some noteworthy details on how certain features and components have been implemented. It is highly recommended to read the previous chapter on <<Design>> first so that you have some picture of where these features fit in.
+//tag::condition[]
+[[condition]]
+
+=== Condition Parser Component
+
+==== Current implementation
+The general parser for the SQL-like arguments for the find command can be broken down into a few sub-components, namely `ArgumentTokenizer`, `SyntaxParser`, `SemanticParser`, and a `ConditionGenerator`, while using classes such as `Condition`,
+`Token`, `TokenType`, `TokenStack` to model the data that is to be operated on throughout the process. Their tasks are
+delegated as follows:
+
+* `ArgumentTokenizer` : Lexically analyzes the input string, then creates a list of tokens
+* `SyntaxParser` : Parses the input by matching the tokens versus a list of rules to ensure they fit the desired
+structure
+* `SemanticParser` : Parses the input by matching the tokens versus a list of rules to ensure their meaning is semantically valid
+* `ConditionGenerator` : Uses the list of tokens to create the equivalent lambda function to evaluate `Coin` objects against.
+* `Condition` : Serves as a wrapper/container for the boolean lambdas used to evaluate coins for filtering purposes.
+* `Token` : Serves as a container for the sectioned input strings.
+
+[NOTE]
+The distinction between the Syntax Parser and the Semantic Parser is that the former is oblivious as to what the
+input actually means, and only cares whether the structure is correct, whereas the latter verifies the meaning behind the
+input. +
+For example, `n/BTC AND OR p/>500` is invalid syntatically, whereas `n/BTC or p/>BTC` is valid syntatically
+but not semantically, since it would not make sense to search for `Coin` objects whose price attribute was more than
+"BTC" (prices cannot be compared to names).
+
+The following sequence diagram (Fig. 11) will show how input arguments accompanying the `find` command are parsed:
+
+.Sequence Diagram for Argument Parsing
+image::FindCommandSequence.png[]
+
+The `SyntaxParser`, `SemanticParser` and `ConditionGenerator` classes reside in a separate module that will be called by the
+`ParserUtil` class during the ParseCondition method.
+
+The following activity diagram (Fig. 12) expands on the Parse Sequence block in the previous diagram.
+
+.Activity Diagram for Parser Operations
+image::FindActivityDiagram.png[]
+
+The `Condition` object that is generated at the end is actually just a `Predicate` object that evaluates properties of
+the Coin objects and returns a true/false value.
+
+==== Error handling
+
+On syntactically and semantically invalid inputs, `ConditionParser` will retrieve the expected and actual type of
+`Token` that were not a match during the parsing phase from `TokenStack` and raise a `ParseException` before returning.
+
+In the event that strings intended to represent tags or numbers are not valid, an `IllegalValueException` is raised instead,
+as per convention from `ParserUtil`.
+
+==== Advanced Details
+
+===== Argument Tokenizing
+We will illustrate the flow of tokenizing an example input:
+```
+> n/BTC OR ( t/fav AND p/>100 )
+```
+The Lexer would tokenize this into:
+
+```
+> [n/,OPTION][BTC,STRING][OR ,BINARYOP][(,LEFTPAREN][t/,OPTION][fav,STRING][AND,BINRARYOP][p/,OPTION][>,COMPARATOR][100,NUMBER][),RIGHTPAREN]
+```
+Notice how the whitespace has now been discarded, since it is not used for the purposes of parsing. Also each section of
+the input (i.e. token) has now been grouped with a type.
+
+Below is a sequence diagram (Fig. 13) describing the behaviour of `ArgumentTokenizer` on the input:
+
+.Sequence Diagram for the `ArgumentTokenizer` Class
+image::Lexer.png[]
+
+===== Syntax Parser
+
+Next, the syntax parser has to ensure that the sequence of tokens is actually structurally valid.
+This is done by matching the tokens off based on the following rules, expressed in Backus-Naur form:
+
+. `EXPRESSION` := `TERM` | `TERM` `BINARYOP` `EXPRESSION`
+. `TERM` := `LEFTPAREN` `EXPRESSION` `RIGHTPAREN` | `UNARYOP` `TERM` | `CONDITION`
+. `CONDITION` := `OPTION` `COMPARATOR` `NUM` | `OPTION` `STRING`
+
+
+```
+> [n/,OPTION][BTC,STRING][ OR ,BINARYOP][(,LEFTPAREN][t/,OPTION][fav,STRING][AND,BINRARYOP][p/,OPTION][>,COMPARATOR][100,NUMBER][),RIGHTPAREN]
+```
+
+Using our example, we will illustrate how we can sequentially express the above tokenized argument based on the provided rules:
+
+. `*EXPRESSION*`
+. `*TERM*` `*BINARYOP*` `*EXPRESSION*`
+. `*CONDITION*` `*BINARYOP*` `*EXPRESSION*`
+. `*OPTION*` `*STRING*` `*BINARYOP*` `*EXPRESSION*`
+. `n/` `*STRING*` `*BINARYOP*` `*EXPRESSION*`
+. `n/` `BTC` `*BINARYOP*` `*EXPRESSION*`
+. `n/` `BTC` `OR` `*EXPRESSION*`
+. `n/` `BTC` `OR` `*TERM*`
+. `n/` `BTC` `OR` `(` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `*TERM*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `*CONDITION*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `*OPTION*` `*STRING*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `*STRING*` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `*BINARYOP*` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*EXPRESSION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*TERM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*CONDITION*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `*OPTION*` `*COMPARATOR*` `*NUM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `p/` `*COMPARATOR*` `*NUM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `p/` `>` `*NUM*` `)`
+. `n/` `BTC` `OR` `(` `t/` `fav` `AND` `p/` `>` `100` `)`
+
+The recursive methods `Expression`, `Term`, `Condition` in the syntax parser class will match their own respective tokens
+as necessary. In fact the method calls in the parser are exactly the same as the matches made in the previously stated sequence.
+For example, here is the implementation for `EXPRESSION`.
+
+[source,java]
+----
+boolean expression() {
+    if (!term()) {
+        return false;
+    }
+    while (tokenStack.matchAndPopTokenType(TokenType.BINARYBOOL)) {
+        if (!term()) {
+            return false;
+        }
+    }
+    return true;
+}
+----
+
+Visually we can represent sequence of matching with the following parse tree (Fig. 14), which also serves as the recursion tree:
+
+.Parse and Recursion Tree for the Example Input
+image::parsetree.png[]
+
+===== Semantic Parser
+
+Following up, the Semantic Parser has to verify that the conditions are correct. This can be done by verifying the
+type of the condition versus the parameters that follow. For example, a name condition should only be followed by a string.
+This can be done by checking the corresponding option class versus the type of token that follows.
+
+Thus, the checks that are made are just to ensure every string type option is followed by a string and every number type
+option is followed by a number.
+
+===== Condition Generator
+
+Lastly, the condition generator creates lambdas based on the type of conditions found, and then recursively composes each
+condition based on the binary operators encounters up the recursion tree.
+
+The final `Condition` object is actually just a composition of many individual `Condition` objects. This can be done
+as a back call at the end of each recursion tree.
+
+For example, consider the following argument:
+
+```
+p/>100 AND t/fav
+```
+
+`p/>100` is a condition on price whereas `t/fav` is a condition on tags, and they can be composed using the `Predicate`
+method `and()` to return a logical conjunction of the two conditions.
+
+==== Design Considerations
+
+===== Aspect: Specification of syntax
+
+* **Alternative 1 (current choice):** Have the structure of the methods reflect exactly the syntax.
+** Pros: Any subsequent changes can be easily made by having the code reflect the new syntax, since the syntax is apparent.
+** Cons: It is more cumbersome to have to alter the code every time there is a change in syntax.
+* **Alternative 2:** Specify the syntax in a separate file (e.g. EBNF file), and metaprogram the parser based on the file.
+** Pros: This requires no code change whenever the syntax has to be modified.
+** Cons: The code to support this would be more complicated and not apparent to developers immediately.
+
+===== Aspect: Implementation of `SyntaxParser`, `SemanticParser`, `ConditionGenerator`
+
+* **Alternative 1 (current choice):** Have separate classes that have the same structure but with different return values.
+** Pros: This approach maintains SRP.
+** Cons: A change in syntax will require changes across 3 classes. It is also very redundant to have similar code.
+* **Alternative 2:** Have a single implementation that performs syntax parsing, semantic parsing and the condition generation.
+** Pros: There will be less redundant code.
+** Cons: This approach clearly violates SRP.
+
+
+// end::condition[]
 
 // tag::undoredo[]
-=== Undo/Redo feature
+=== Undo/Redo Feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports the undoing and redoing of commands that modify the stored data (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. Here is the inheritance diagram for commands (Fig. 15):
 
+.Class Diagram for Logic
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the App data before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks, while the child classes implement the details for executing the specific command. This technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the [ext]#https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern]#.
 
-Commands that are not undoable are implemented this way:
+Commands that are not undoable are implemented in this way:
 [source,java]
 ----
 public class ListCommand extends Command {
@@ -253,7 +492,7 @@ public class ListCommand extends Command {
 }
 ----
 
-With the extra layer, the commands that are undoable are implemented this way:
+With the extra layer, the commands that are undoable are implemented in this way:
 [source,java]
 ----
 public abstract class UndoableCommand extends Command {
@@ -273,47 +512,54 @@ public class DeleteCommand extends UndoableCommand {
 }
 ----
 
-Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
+Suppose that the user has just launched the application. `UndoRedoStack` is empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th entry. The current state of the App data is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto `undoStack` (the current state is saved together with the command). Fig. 16 below illustrates this.
 
+.Undo/Redo Stack Part 1
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to issue more commands, they are added into `undoStack`. For example, the user may execute `add n/BTC` to add a new coin, resulting in the below picture (Fig. 17):
 
+.Undo/Redo Stack Part 2
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
-If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
+If a command fails its execution, it will not be pushed to `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the coin was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+The `Logic` component will pop the most recent command out of `undoStack` and push it to `redoStack`. At the same time, the data is restored to the state before the `add` command executed. The figure below (Fig. 18) illustrates the result:
 
+.Undo/Redo Stack Part 3
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
-If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
+If `undoStack` is empty, i.e., there are no other commands left to be undone, an `Exception` will be thrown when trying to pop `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following sequence diagram (Fig. 19) shows how the undo operation works:
 
+.Sequence Diagram for Undo
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The `redo` command does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores the data to the state after the command is executed).
 
 [NOTE]
-If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
+If `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when attempting to pop `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into `undoStack`. However, now that `redoStack` is not empty, it will be purged as it no longer makes sense to redo the `add n/BTC` command (this is the behavior that most modern desktop applications follow). Refer to Fig. 20 below:
 
+.Undo/Redo Stack Part 4
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution (Fig. 21):
 
+.Undo/Redo Stack Part 5
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram (Fig. 22) summarizes the logic for `UndoRedoStack` when a user executes a new command:
 
+.Activity Diagram for Undo/Redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
@@ -321,580 +567,848 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ===== Aspect: Implementation of `UndoableCommand`
 
 * **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Pros: No undo/redo functionality is lost as it is now part of the default behaviour. +
+Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
+** Cons: It may be harder for new developers to understand the template pattern.
+* **Alternative 2:** Override `execute()`
+** Pros: It is easier for new developers to understand as it does not involve the template pattern.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+===== Aspect: Execution of undo & redo
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+* **Alternative 1 (current choice):** Save the entire state
+** Pros: It is much easier to implement.
+** Cons: This may bring about performance issues in terms of memory usage.
+* **Alternative 2:** Make each command implement specific undo/redo operations
+** Pros: This will use less memory (e.g. for `delete`, just save the coin being deleted).
+** Cons: It is crucial that the implementation of each individual command is correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
-* **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+* **Alternative 1 (current choice):** Include only commands that modify the App data (e.g. `add`, `clear`, `edit`)
+** Pros: Only changes that are hard to do manually can be reverted like this. +
+e.g. The view can easily be re-modified as no data is lost, so not undoable with `undo`.
+** Cons: The user might think that undo also applies when the list is modified (filtering for example), only to realize otherwise after executing `undo`.
+* **Alternative 2:** Include all commands
+** Pros: This might be more intuitive for the user.
+** Cons: The user has no way of skipping such commands if he or she just wants to reset changes made to the data and not the view. +
+**Additional Info:** See the discussion  [ext]#https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here]#.
 
 
 ===== Aspect: Data structure to support the undo/redo commands
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Pros: This implementation will be easier to understand for new Computer Science undergraduates, who represent the majority of incoming developers to the project.
+** Cons: It introduces duplicated logic. Whenever a new command is executed, both `HistoryManager` and `UndoRedoStack` must be updated separately.
+* **Alternative 2:** Use `HistoryManager` for both undo/redo
+** Pros: There will be no need to maintain a separate stack, by just reusing what is already in the codebase.
+** Cons: We must remember to skip already undone commands. +
+This approach also violates the Single Responsibility Principle and the Separation of Concerns Principle as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::notifications[]
 
-_{Explain here how the data encryption feature will be implemented}_
+=== User-Set Notifications
 
-// end::dataencryption[]
+==== Current Implementation
+
+The notification system is facilitated by a `RuleBook`, which is located within the `Model` component as part of the App data. `RuleBook` holds a set of rules which define conditions to trigger some predefined action when met. A `RuleChecker` in `Logic` does this work of checking rules and executing the associated actions.
+
+Let us walk through the implementation of notifications by considering a typical scenario involving this feature. Suppose the user wants to keep track of a certain coin's price, say `BTC`.
+
+The user adds a new notification using `NotifyCommand`, e.g. `notify c/BTC p/>15000`, which sets a new notification to be triggered for when the price of `BTC` crosses $15000. The corresponding rule is added to the `RuleBook`.
+
+Later on, the user may add other notifications. So now, there are a list of different rules stored in _CoinBook_. When the price data is synced with latest data from the web, whether from the regular update or triggered by the user with the `sync` command, a `CoinChangedEvent` is sent out for each updated coin.
+
+`RuleChecker` catches these events, and checks against the `RuleBook`. If any match, the corresponding action is executed. Here, a notification pops up to alert the user.
+
+The diagram below (Fig. 23a,23b) summarises these interactions:
+
+image::NotificationsSequenceDiagram1.png[width="800"]
+.Sequence Diagram for Notifications
+image::NotificationsSequenceDiagram2.png[width="800"]
+
+==== Advanced Details and Proposed Extensions
+
+In order to allow for future extensions, the rule system has been designed to separate, as much as possible, the construction of the rule and its later behaviour.
+
+===== Structure of the `Rule` Class
+
+The `Rule` class looks like the following:
+
+[source,java]
+----
+public class Rule<T> {                    <5>
+
+    public final Predicate<T> condition;
+    public final ActionCommand<T> action; <1>
+
+    public final RuleType type;           <2>
+    public final String description;
+
+    protected Rule(String description, RuleType type,
+                   ActionParser<T> actionParser,
+                   ConditionParser<T> conditionParser) {     <4>
+        this.description = description;
+        this.type = type;
+        this.action = actionParser.parse(description);
+        this.condition = conditionParser.parse(description);
+    }
+
+    @Override
+    public String toString() {
+        return String.format(RULE_FORMAT_STRING, type, description);   <3>
+    }
+
+    @FunctionalInterface
+    protected interface ActionParser<T> {
+        ActionCommand<T> parse(String args);
+    }
+
+    @FunctionalInterface
+    protected interface ConditionParser<T> {
+        Predicate<T> parse(String args) throws IllegalValueException;
+    }
+
+    [...]
+}
+----
+
+The above snippet demonstrates several noteworthy points:
+
+<1> Each `Rule` object is a condition-action pair
+<2> It is completely described by its `type` and `description`
+<3> By storing the above two values as strings, the exact object can be fully reconstructed after restarting
+<4> The constructor has `protected` access so that this base `Rule` class must be extended as new rule types to be used from outside
+<5> The class is generic, and parameterized by the type of the object it is a condition upon, e.g. notification rules test against `Coin` objects
+
+This structure follows very closely the [ext]#https://sourcemaking.com/design_patterns/strategy[Strategy design pattern]# as described in the "Gang of Four" book. It leads to the following class structure, as used above (see Fig. 24):
+
+.Class Diagram for Rule System
+image::NotificationClassDiagram.png[width="800"]
+
+An example concrete implementation is the `NotificationRule` class used for notifications:
+
+[source,java]
+----
+public class NotificationRule extends Rule<Coin> {
+
+    private static final ActionParser<Coin>
+    parseAction = SpawnNotificationCommand::new;
+
+    private static final ConditionParser<Coin>
+    parseCondition = NotifyCommandParser::parseNotifyCondition;
+
+    public NotificationRule(String value) {
+        super(value, RuleType.NOTIFICATION, parseAction, parseCondition);
+    }
+}
+----
+
+The notification command fills in the abstract `actionParser` and `conditionParser` with functions implemented in various places, but which follow the template `FunctionalInterface` shown above.
+
+`conditionParser` takes in the description string and returns a `Predicate<T>` object, which can be tested against an object of type `T`. This results in a `true` or `false` output depending on whether that object satisfies the condition. `NotificationRule` uses the same `ConditionParser` as in the `find` command, explained in the previous <<condition,section>>.
+
+`actionParser` takes in the same description string and returns an `ActionCommand`, which is just:
+
+[source,java]
+----
+public abstract class ActionCommand<T> extends Command {
+    public abstract void setExtraData(T data, BaseEvent event);
+}
+----
+
+It adds a method atop <<fig-LogicClassDiagram,`Command`>> objects, to receive extra data which is only known after matching the rule. An easy example is the object that triggered the rule itself, which cannot be known until it is actually tested, and that only happens after the `Rule` has been constructed. This is the first extra data. You shall see the reason for the second one (`event`) later.
+
+===== Rule Checking System
+
+The rule checker is implemented via the <<event-driven-design,event-driven approach>> described in the previous chapter. The rule checker looks something like the below (simplified from actual):
+
+[source,java]
+----
+public class RuleChecker {
+
+    private final RuleBook rules;
+
+    @Subscribe
+    public void handleCoinChangedEvent(CoinChangedEvent cce) {
+        for (Rule r : rules.getRuleList()) {
+            r.action.setExtraData(cce.data, cce);
+
+            switch (r.type) {
+            case NOTIFICATION:
+                checkAndFire(r, cce.data);
+                break;
+            [...more types in the future]
+            }
+        }
+    }
+
+    private static <T> void checkAndFire(Rule<T> rule, T data) {
+        if (rule.condition.test(data)) {
+            rule.action.execute();
+        }
+    }
+}
+----
+
+An instance of `RuleChecker` lives inside `LogicManager`, at the same level of architecture as the `UndoRedoStack` or the `CommandHistory` (<<fig-LogicClassDiagram,see here>>).
+The rule testing procedure is initiated by an event, usually capturing information about a change in the state of some objects of interest.
+
+`RuleChecker`, upon capturing this event, begins looping through the list of rules, testing each one's condition against the event data, executing the attached action if necessary.
+The extra data is set with the potentially matching object, as well as the event itself as alluded to above. These should consist of all necessary context for the action's execution.
+
+A concrete example from `NotificationRule`:
+
+[source,java]
+----
+public class SpawnNotificationCommand extends ActionCommand<Coin> {
+
+    private final String message;
+    private Coin jumpTo;
+    private Index index;
+
+    public SpawnNotificationCommand(String message) {
+        this.message = message;
+    }
+
+    @Override
+    public void setExtraData(Coin data, BaseEvent event) {
+        jumpTo = data;
+        index = ((CoinChangedEvent) event).index;
+    }
+
+    @Override
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowNotificationRequestEvent(
+            message, index, jumpTo.getCode().toString()));
+        return new CommandResult("");
+    }
+   }
+}
+----
+
+This sends yet another event, `ShowNotificationRequestEvent`, along with some data about the coin that matched the notification rule.
+The event is then captured by the `UI` component, which responds by creating a pop-up notification to show to the user.
+
+===== Proposed Extensions
+
+With the above in mind, you should be able to see that it is relatively easy to add other kinds of rules to _CoinBook_. For example:
+
+* Scheduled tasks
+** Condition: Time-based
+** Action: User-set, e.g. run the `sync` command, export data to file and mail, etc.
+
+* Webhook rules
+** Condition: Similar to notifications
+** Action: Instead of just popping-up a notification, post some preformatted data to a URL
+
+* Associated actions
+** Condition: Action made upon some coin account
+** Action: Another action which depends on the first is generated and executed upon predefined targets
+
+==== Design Considerations
+
+===== Aspect: Implementation of rules
+
+* **Alternative 1 (current choice):** Make them generalized trigger-action pairs
+** Pros: Later extension is easy to make by simply defining new condition and action parsers along with associated input.
+** Cons: This design pattern (Strategy pattern) is more advanced and may be hard for new developers to understand. Code readability may also suffer.
+
+* **Alternative 2:** Make only a single `NotificationRule` type
+** Pros: This is quicker to implement as the behaviour is hard-coded.
+** Cons: It will be more difficult to extend rules to handle other events in the future.
+
+[TIP]
+`RuleBook` is made general-purpose and it can hold other types of rules for future extensions, e.g. Automated Task Rules, etc.
+
+===== Aspect: Type of notification to use
+
+* **Alternative 1:** Use platform-side notifications, e.g. system tray
+** Pros: The user can integrate these into their own workflow, such as setting other programs to listen in on system notifications and forward them to their other device, generate emails, take actions, etc. The user has some control over how notifications look and behave.
+** Cons: They may not work on every platform; they are heavily dependent on implementation of Java features. For example, some distributions of Linux may not include system trays.
+
+* **Alternative 2 (current choice):** Use application-side notifications.
+** Pros: This will only require the same framework which displays the App window itself, so is guaranteed to work alongside the App.
+** Cons: There will be less flexibility in customisation and availability of integration into user's preferred workflow.
+
+===== Aspect: Undo-ability of `NotifyCommand`
+
+* **Alternative 1 (current choice):** Leave it non-undoable
+** Pros: Notification rule data can be kept separate from coin data. +
+The basic functionality of `RuleBook` is implemented inside `Model` which deals with data, but the rules are instantiated only in the `Notifications` component itself. A rule manager window will be available for editing or deleting existing notifications.
+** Cons: The UI will be less intuitive as users have to manage coins and rules in slightly different manners.
+
+* **Alternative 2:** Make it an `UndoableCommand` just like `add`, `edit`, etc.
+** Pros: This offers an intuitive, single interface for similar operations.
+** Cons: This would increase the coupling between the coin data and the rule data parts of `Model`, since the current implementation of `UndoableCommand` requires saving the state of `Model`, which is a wrapper for just the coin data. +
+We want to keep `Model` as an interface for just the coin data itself.
+
+// end::notifications[]
+
+// tag::organisation[]
+
+[[Implementation-Organisation]]
+
+=== Organisation Features
+
+==== Sorting
+
+The sorting mechanism is facilitated by `Collections.sort`. It supports sorting the coin list passed into the sort method to arrange the coins in a manner that the user chooses.
+The way `Collections.sort` works is that it takes the collection's underlying array and calls its sort method to sort the actual elements. The sorting algorithm used by Java is Timsort.
+This sorts the collection in-place, i.e., it modifies the given collection by sorting its elements directly. As a result, a sorted copy need not be made, saving resources.
+
+The diagram (Fig. 25) below is the Sequence Diagram for interactions that occur from when the sort command is first called by the user to when the Coin List is sorted.
+
+.Sequence Diagram for SortCommand
+image::SortCommand_SequenceDiagram.png[width="800"]
+
+The order mechanism is facilitated by `SortCommand` which is also an `UndoableCommand`.
+`SortCommandParser` checks for the sort order (a or z parameter) to decide the relevant `SortCommand` to call.
+The `internalList` object is then sorted using Java's sort method.
+
+How the sort procedure works:
+
+* Sort by lexicographical order
+
+** We can use `compareTo()` for comparing coin code names. For _CoinBook_, we want to order our list of coins lexicographically, based on the alphabetical order of their component letters.
+This is done by passing `internalList` into the sort function which then uses `getCode()` to compare each of the component letters of the coin code, which will then arrange coins based on the lexicographical value of the code string.
+The coin code strings with the lowest lexicographical value will appear first followed by coin code strings with higher lexicographical values as you go further down the list.
+** We can either use the `reversed` function on `Comparator` or change the compare condition of `compareTo()` to invert the default setting and arrange the coins from highest to lowest lexicographical value instead.
+** We do not have to pass in any comparator for the list to be correctly sorted because the 3-letter coin code is a `String` which implements the `Comparable` _interface_, and hence guarantees its own implementation of the sort comparator.
+
+==== Grouping `[Coming in v2.0]`
+
+The group feature can use the `Collectors` class, which provides methods for grouping data stored in collections. Grouping would permit the user to organise coin data based on a common field, e.g coins prices equal to or over 1000 dollars per coin.
+
+The `GroupingBy` method from the `Collectors` class is responsible for organising the coin data into groups. In this case the group is defined by the value of the coin. The `Collect` method from the `Stream` class accepts the `GroupingBy` method as its argument and returns a map containing the results. The results are then displayed.
+
+Using the `GroupingBy` collector from the `Collector` class, it takes a single parameter (or classifier) that assigns a grouping key to every stream element.
+
+By default, elements with the same key are inserted into a `List<T>`, although this can be changed by specifying a second parameter to `GroupingBy`.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand`
+
+* **Alternative 1 (current choice):** Use `Collections.sort`
+
+** Pros: There is no need to pass any comparator for the coin list since `String` already implements the `Comparable` interface.
+** Cons: The developer needs to understand the relationship between array lists and collections.
+
+* **Alternative 2:** Add a new sorting function (e.g. Selection Sort)
+
+** Pros: This possibly allows us to reduce the time required to execute the sorting command.
+** Cons: This would take more time and a considerable amount of effort to incorporate into our CoinBook since we would not be using Java’s in-built sorting method.
+
+===== Aspect: Undo-ability of `SortCommand`
+
+* **Alternative 1 (current choice):** Make it an `UndoableCommand` just like `add`, `clear`, `edit` etc.
+** Pros: This offers an intuitive, single interface for similar operations.
+** Cons: This would increase the coupling between the coin data and the rule data parts of `Model`, since the current implementation of `UndoableCommand` requires saving the state of `Model`, which is a wrapper for just the coin data. +
+We want to keep `Model` as an interface for just the coin data itself.
+
+* **Alternative 2:** Leave it non-undoable
+** Pros: Sort Command data can be kept separate from coin data. +
+** Cons: The UI will be less intuitive as users would have to change how they manage coins and rules. +
+The user would not be able to undo the sort order once it is applied, and this might be inconvenient if the user wanted the sort function for a temporary means only or the user accidentally triggered the sort. +
+Sometimes a user might want their own customised way of arranging coins and so the non-undoable nature might compromise this.
+
+
+===== Aspect: Implementation of Groups function `[Coming in v2.0]`
+
+* **Alternative 1 (current choice):** Use `GroupingBy` method
+
+** Pros: The user has an additional option where he can view coins based on a specified attribute.
+** Cons: The developer needs to understand the relationship between `Stream`, `ArrayList` and `Collector` classes.
+
+* **Alternative 2:** Add additional tags in lieu of grouping
+
+** Pros: The codebase already has support for tags and so not a lot of changes will be required.
+** Cons: Commands will not be executable at a group level because tags merely depict the attribute of the coins, but groups act as a tool to manage several coins at the same time. I.e.: Grouping would add more functionality to the CoinBook for mass coin management.
+
+// end::organisation[]
+
+// tag::sync[]
+=== Sync Feature
+
+The sync mechanism is facilitated by `FetchUtil`, which uses a 3rd party library `AsyncHttpClient` that supports asynchronous dispatching of HTTP requests.
+
+Suppose the user wants to update the prices of all coins owned with the latest data.
+
+The user executes the sync command using `SyncCommand`, i.e. `sync`, which first builds the API URL. The API URL is built using `UrlBuilderUtil`, which first retrieves the coin code of every coin account that the user has, then concatenates to [gloss]#<<ccmp,CryptoCompare>># API URL as HTTP parameters.
+
+`FetchUtil` is then used to send a HTTP GET request to CryptoCompare using this built URL via `AsyncHTTPClient` and returns a `Future<Response>` to `SyncCommand`. When the response data from the `Future<Response>` object is received, this data is then deserialized into `Price` objects to be passed to the `ModelManager` for updating.
+
+Once the `ModelManager` receives the new `Price` objects, it passes them to the `CoinBook` to carry out price updates for each coin via `CoinChangedEvent`.
+
+The following sequence diagram (Fig. 26) is a visual representation of the above described process.
+
+.Sequence Diagram for Sync
+image::SyncCommandSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Asynchronous vs synchronous fetching
+
+* **Alternative 1 (current choice):** Asynchronous fetching
+** Pros: This allows background processes to still continue, such as a loading animation to provide visual feedback to the user that data fetching is in progress and the application has not hanged.
+** Cons: This is more tedious to implement and requires the use of 3rd party libraries that may have bugs.
+* **Alternative 2:** Synchronous fetching.
+** Pros: This is easier to implement and only uses Java API which is much more robust and less susceptible to unforeseen bugs.
+** Cons: This leads to a worse user experience as the user may not know if the sync command is actually running or the application has hanged.
+
+// end::sync[]
+
+// tag::autocomplete[]
+=== Autocomplete Feature
+
+The autocomplete mechanism is facilitated by `CommandBox`, which uses `COMMAND_LIST` from `CommandList`. It supports the predicting of a word or phrase that the user may type based on a partial text query.
+
+Suppose the user is trying to use the `sell` command.
+
+The user will first type `s` into the command line.
+```
+s
+```
+
+Now, the autocomplete feature will then auto-suggest inputs to complete the query by displaying a pop-up of all commands that contain the letter `s` (See Fig. 27).
+
+.Auto-suggestions Display
+image::AutocompleteBefore.png[width="200"]
+
+When the user then presses kbd:[DOWN] twice to reach his desired `sell` command, the selected suggestion will be highlighted light grey (See Fig. 28).
+
+.Command Selection
+image::AutocompleteNav.png[width="200"]
+
+The user can then press kbd:[Enter] to confirm his selection of the `sell` command.
+```
+sell
+```
+
+==== Design Considerations
+
+===== Aspect: The fields which autocomplete works on
+
+* **Alternative 1 (current choice):** Apply only for command word
+** Pros: This reduces the implementation cost.
+** Cons: The reduced functionality may not satisfy every user.
+* **Alternative 2:** Apply for both command word and command parameters.
+** Pros: User experience will be slightly improved over the alternative.
+** Cons: This has a lower value to effort ratio to implement due to restrictions of the ControlsFX and JavaFX libraries.
+
+===== Aspect: Data structure to store the list of commands
+
+* **Alternative 1 :** Use a Radix Tree
+** Pros: This is easier to understand for new Computer Science undergraduates, who represent the majority of incoming developers to the project.
+** Cons: The implementation could be non-trivial.
+* **Alternative 2 (current choice):** Use a linear data structure
+** Pros: This is much easier to implement and integrates nicely with ControlsFX.
+** Cons: The solution will be inefficient, with a higher time complexity incurred.
+
+// end::autocomplete[]
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using the `java.util.logging` package for logging. The `LogsCenter` class is used to manage _logging levels_ and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+Log messages are categorized into four logging levels of varying importance:
 
-*Logging Levels*
+* `SEVERE` : Indicates critical problems which may possibly cause the termination of the App
+* `WARNING` : Indicates the App can continue running, but the user should take caution
+* `INFO` : Indicates information regarding noteworthy actions by the App
+* `FINE` : Indicates details that are not usually noteworthy but may be useful in debugging e.g. printing the list contents instead of just its size
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>).
+
+The `Logger` for a class `Class` can be obtained using `LogsCenter.getLogger(Class)`, which will log messages according to the specified logging level. Currently, log messages are output through `Console` as well as written to a `.log` file.
 
 [[Implementation-Configuration]]
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file. By default, this is `config.json`.
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use AsciiDoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We chose AsciiDoc over Markdown because AsciiDoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
 === Editing Documentation
 
-See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
+See [exref]##<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>>## to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
 === Publishing Documentation
 
-See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
+See [exref]##<<UsingTravis#deploying-github-pages, UsingTravis.adoc>>## to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting Documentation to PDF Format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+We use [ext]#https://www.google.com/chrome/browser/desktop/[Google Chrome]# for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
-.  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
-.  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Follow the instructions in [exref]##<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>>## to convert the AsciiDoc files in the `docs/` directory to HTML format.
+.  Find the generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
+.  In Chrome's menu, click on the `Print` option.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 29) below.
 
-.Saving documentation as PDF files in Chrome
+.Options for Saving Documentation as PDF Files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
 
+When developing new features it is always important to write tests so that you can verify whether the features are working as intended, alone or with one another. This chapter introduces the basics of testing.
+
+=== Types of Tests
+
+We use two types of tests in _Coinbook_:
+
+*Type 1: GUI Tests* - These are tests involving the GUI. They include:
+
+.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
+.. _Unit tests_ that test the individual components. These are in the `seedu.address.ui` package.
+
+*Type 2: Non-GUI Tests* - These are tests not involving the GUI. They include:
+
+..  _Unit tests_ targeting the lowest level methods/classes. +
+e.g. `seedu.address.commons.StringUtilTest`
+..  _Integration tests_ that check the integration of multiple code units (those code units are assumed to be working). +
+e.g. `seedu.address.storage.StorageManagerTest`
+..  Hybrids of unit and integration tests. These tests check multiple code units as well as the connections between them. +
+e.g. `seedu.address.logic.LogicManagerTest`
+
+
 === Running Tests
 
-There are three ways to run tests.
-
-[TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+There are three ways to run tests on your computer before sharing your changes to source control.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run a subset of tests, right-click on a test package, test class, or a test, e.g. `ABC`, and choose `Run 'ABC'` (see Fig. 30)
+
+.Running Tests
+image::RunningTests.png[]
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+Open a console and run the following command:
+
+Windows
+```
+> gradlew clean allTests
+```
+Mac/Linux
+```
+$ ./gradlew clean allTests
+```
 
 [NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+See [exref]##<<UsingGradle#, UsingGradle.adoc>>## for more info on how to run tests using Gradle.
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the [ext]#https://github.com/TestFX/TestFX[TestFX]# library we use, our GUI tests can be run in _headless_ mode. In headless mode, GUI tests do not show up on the screen. This means the developer can do other things on their computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the following command:
 
-=== Types of tests
+Windows
+```
+> gradlew clean headless allTests
+```
+Mac/Linux
+```
+$ ./gradlew clean headless allTests
+```
 
-We have two types of tests:
+[TIP]
+The most reliable way to run tests is the 3rd one. The first two methods might cause some GUI tests to fail due to platform/resolution-specific idiosyncrasies.
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
-
+[NOTE]
+<<Continuous Integration>> also automatically runs the tests specified with Gradle, but it is a good habit to test things on your own machine first.
 
 === Troubleshooting Testing
+
+Here are some common problems you may face when trying to run tests locally.
+
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
-== Dev Ops
+== DevOps
+
+This chapter introduces various systems we can put in place to unify the tasks of _development_ and _operations_, or _DevOps_ in short. We are mostly concerned with ways to reduce turnaround time through simple automation, and ways to manage the distribution of the completed App.
 
 === Build Automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+See [exref]##<<UsingGradle#, UsingGradle.adoc>>## to learn how to use Gradle for build automation.
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use [ext]#https://travis-ci.org/[Travis CI]# and [ext]#https://www.appveyor.com/[AppVeyor]# to perform _Continuous Integration_ on our projects. See [exref]##<<UsingTravis#, UsingTravis.adoc>>## and [exref]##<<UsingAppVeyor#, UsingAppVeyor.adoc>>## for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+We use [ext]#https://coveralls.io/[Coveralls]# to track the code coverage of our projects. See [exref]##<<UsingCoveralls#, UsingCoveralls.adoc>>## for more details.
 
 === Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+When a pull request contains changes to AsciiDoc files, you can use [ext]#https://www.netlify.com/[Netlify]# to see a preview of the HTML version of those AsciiDoc files when the pull request is merged. See [exref]##<<UsingNetlify#, UsingNetlify.adoc>>## for more details.
 
-=== Making a Release
+=== Release Procedure
 
-Here are the steps to create a new release.
+Here are the steps to creating a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
-.  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
-.  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
+.  Update the version number in
+[exref]#link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`]#.
+.  Generate a JAR file [exref]##<<UsingGradle#creating-the-jar-file, using Gradle>>##.
+.  Tag the repo with the version number, e.g. `v0.1`.
+.  [ext]#https://help.github.com/articles/creating-releases/[Create a new release using GitHub]# and upload the JAR file you created in step 2.
 
-=== Managing Dependencies
+=== Dependency Management
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, _CoinBook_ depends on the [ext]#http://wiki.fasterxml.com/JacksonHome[Jackson library]# for XML parsing. Gradle can manage these _dependencies_ for you by downloading the them automatically, instead of having to: +
 
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+* Include those libraries in the repo (this bloats the repo size), or +
+* Require developers to download those libraries manually (this creates extra work for developers)
 
 [appendix]
 == Product Scope
+=== Goals
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
+* has a need to manage a significant number of cryptocurrencies
+* prefers desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* requires various analysis and visualisation tools for decision-making
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage cryptocurrencies faster than a typical mouse/GUI driven app
+
+=== Feature Contribution
+*Eldon Chung*
+
+* Major: Search enhancement. Support for SQL-like queries with logical operators as well as additional search specifiers besides name, such as tags and price. This lets users manage their large portfolio easily through efficient filtering.
+* Minor: Fetch news. Fetches news related to cryptocurrencies from sources such as RSS feeds. This lets users keep track of latest developments in the scene to aid their decision making.
+
+*Ewald Hew*
+
+* Major: Notifications and rule system. Make notifications based on user-set rules, checked when coin data updates. This helps users stay on top of what's happening and obtain important information at the right time.
+* Minor: Charts panel for data visualization. This lets users analyse price trends for decision making.
+
+*Lai Cheng Yu*
+
+* Major: Data fetching system. Syncs and updates the price data, etc., in the model from a source. This lets users keep up to date on latest developments.
+* Minor: User experience and user interface. Create smoother workflow via GUI hints, autocompletion and vibrant GUI with coin icons. This helps users manage their portfolio quickly and efficiently, lets them focus on the more important tasks and attracts/keeps users.
+
+*Neil Mehta*
+
+* Major: Organization options. Sorting options and groups. This lets users switch between different contexts to fit in with their objectives at the moment, and helps them focus on only what is relevant.
 
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="80%",cols="20%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
-
-|`* * *` |user |add a new person |
-
-|`* * *` |user |delete a person |remove entries that I no longer need
-
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
-
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
-
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |new user |see usage instructions |figure out how to use the application.
+|`* * *` |user |see my personal portfolio |track gains/losses.
+|`* * *` |user |add new coin accounts |
+|`* * *` |user |delete coin accounts | remove unwanted information.
+|`* * *` |user |have a tagging system |simplify and categorize my accounts.
+|`* * *` |user actively trading |be able to store up to 2000 cryptocurrencies |maintain my extensive portfolio.
+|`* * *` |user |have a search and find feature |avoid going through all coins manually.
+|`* * *` |user who values privacy |use a program without making accounts |keep it simple.
+|`* * *` |user who values privacy |store my [gloss]#<<sensitive-data,sensitive data>># only on local storage |avoid having my data on potentially insecure servers.
+|`* * *` |user |avoid lots of manual entry |save time.
+|`* *` |user |not to have to exit the current search results before entering a new command |operate on my search results efficiently.
+|`* *` |user |have a sorting feature for names, coin prices, account values, etc. |quickly rank my choices.
+|`* *` |user |have a bookmarks or favourites watchlist |prioritise certain coins.
+|`* *` |user |be able to import/export my data |transfer it to other computers.
+|`*` |user |have different color themes | customise my program.
+|`*` |user |have multilingual support |understand the program better.
+|`*` |user |have fixed interval backups, that can be manually set |ensure my data will not be lost.
+|`*` |user |write custom <<macros,macros>> and aliasing for commands |customize my experience.
+|`*` |user |track price, market cap, and circulating supply |get all my information in one place.
+|`*`  |user |see <<RSI,RSI>> or <<MACD,MACD>> graphs |analyse price trends for decision-making.
+|`*` |user |see Overbought/Oversold lines | do as above.
+|`*` |user |be able to set [gloss]#<<support-lines,support>># and [gloss]#<<resistance-lines,resistance>># lines | do as above.
+|`*` |user |have candlestick graphs with [gloss]#<<simple-moving-average,simple>># / [gloss]#<<exponential-moving-average,exponential>># moving average overlay | do as above.
+|`*` |user |be able to search information on a specific coin |get all my information in one place.
+|`*` |user |have desktop notifications |be informed when something needs my attention.
+|`*` |user |have a daily/hourly report |keep track of the current state of my accounts.
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `CoinBook` and the *Actor* is the `User`, unless specified otherwise)
 
-[discrete]
-=== Use case: Delete person
+=== Use Case: Delete Coin Listings
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to delete a coin listing
+2. CoinBook deletes the specified coin
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The specified coin does not exist in the storage.
++
+[none]
+** 2a1. CoinBook shows an error message.
++
+Use case resumes at step 1.
+
+=== Use Case: Export Storage Data
+
+*MSS*
+
+1.  User requests to export storage data.
+2.  CoinBook requests for the file destination.
+3.  User specifies the file destination.
+4.  CoinBook exports the file.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+*Extensions*
+
+[none]
+* 2a. The storage is empty.
++
+Use case ends.
+
+* 3a. The given file destination is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CoinBook shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use Case: Set Notifications
+
+*MSS*
+
+1. User sets the condition under which he/she wishes to be notified.
+2. CoinBook notifies the user the condition has been acknowledged.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The condition argument was invalid.
+[none]
+** 2a1. CoinBook shows an error message.
++
+Use case ends.
+
+=== Use Case: Tag Items for Group Commands
+
+*MSS*
+
+1. User finds the coins that he wishes to group using the `Find` command.
+2. CoinBook shows a list of coins.
+3. User tags all the found using the `TagAll` command.
+4. CoinBook updates the tags on the coins and the list view.
+5. User then operates on all coins that were tagged. e.g. `buy tag 50`
+6. CoinBook shows the result to the User.
+
+*Extensions*
+
+[none]
+* 2a. The tag name was invalid.
+[none]
+** 2a1. CoinBook shows an error message.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 2000 Coin accounts without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be accurate in the representation of Coin amounts, free of numerical errors.
+.  All sensitive data should be stored locally.
+.  Should only make configuration files in the local directory to remain fully portable.
+.  Should not take more than one minute to generate summary reports.
 
 [appendix]
 == Glossary
 
+[[API]] API::
+Short for Application-Programmer Interface.
+
+[[alias]] Alias::
+Alternative forms of commands that are usually shorter for typing efficiency.
+
+[[ccmp]] CryptoCompare::
+A website that hosts <<cryptocurrency,cryptocurrency>> information, including cap rankings, prices, volumes and circulating supplies.
+
+[[coin]] Coin::
+See <<cryptocurrency, Cryptocurrency>>.
+
+[[coupling]] Coupling::
+Two classes are coupled if a change in the implementation of one may necessitate a change in the other.
+
+[[cryptocurrency]] Cryptocurrency::
+Digital currency. Examples are: Bitcoin, Dogecoin, Etherium.
+
+[[exponential-moving-average]] Exponential moving average::
+A moving average window of closing prices over a past period that places more weight on the more recent days considered. Since cryptocurrencies do not have a closing price, this defaults to their price at 23:59:59 at the timezone of the exchange.
+
+[[MACD]] Moving Average Convergence Divergence (MACD)::
+Moving Average Convergence Divergence is an indicator that is the difference between two moving averages.
+
+[[macros]] Macros::
+A set of commands that can be executed under a single custom command is a macro. For example, if a user wishes to only view coins of a specific tag in a certain sorted order, he can set create a custom macro (e.g. `sortfavourites`) such that upon entering it at a command, the program will internally first call the `search` command on the user set tags, then call the `sort` command.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
-[[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+[[resistance-lines]] Resistance Lines::
+When the price of a coin has risen to a certain amount, the price may eventually sustain its value at this point for a period of time. This is when it obtains "resistance".
 
-[appendix]
-== Product Survey
+[[RSI]] Relative Strength Index::
+Relative Strength Index is used as an indicator to compare the current strength of cryptocurrency versus its historical strength. The strength is calculated based on the closing prices over a period of time.
 
-*Product Name*
+[[sensitive-data]] Sensitive Data::
+Refers to data that is not meant to be shared with others.
 
-Author: ...
+[[simple-moving-average]] Simple Moving Average::
+A moving average window of closing prices over a past period that places equal weight on all days considered. Since cryptocurrencies do not have a closing price, this defaults to their price at 23:59:59 at the timezone of the exchange.
 
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+[[support-lines]] Support lines::
+When the price of a coin has fallen to a certain amount, the price may eventually sustain its value at this point for a period of time. This is when it obtains "support".
 
 [appendix]
 == Instructions for Manual Testing
 
-Given below are instructions to test the app manually.
+Given below are instructions to test the App manually. This is a way to supplement the automated testing and find bugs through some concerted effort to break the software.
 
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launching and Shutting Down
 
-. Initial launch
+. Launching initially
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
+.. Download the jar file and copy into an empty folder.
+.. Double-click the jar file. +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 . Saving window preferences
@@ -903,26 +1417,85 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Deleting a Coin
 
-=== Deleting a person
+. Deleting a coin while all coins are listed
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all coins using the `list` command. Multiple coins in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First coin is deleted from the list. Details of the deleted entry shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+   Expected: No coin is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `delete`, `delete x` (where x is larger than the list size), `delete -1` +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+. Deleting a coin while its details are being displayed
 
-=== Saving data
+.. Prerequisites: List coins as above. Select the second coin using the `view 2` command. The detail window should be open on the right side.
+.. Test case: `delete 2` +
+   Expected: The coin is removed from the list. The detail window should return to a blank one, as when no coin is selected.
+
+=== Saving Data
 
 . Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+.. Start the App so that it is ready to run some commands.
+.. Navigate to the location of the data file, `data/coinbook.xml`, and rename or delete it. +
+Expected: The coin list in App memory remains the same, and a new data file is created upon the next command that modifies it.
 
-_{ more test cases ... }_
+. Transferring data files to another computer
+
+.. Download _CoinBook_ to the new computer.
+.. Copy the `data/` folder in the old installation to the new installation folder.
+.. Launch the App as in F.1.1. +
+Expected: All data from the old installation should be preserved and appear in the listing when the App is launched.
+
+=== Finding Coins
+
+. Finding a coin from a long list of coins
+
+.. Prerequisites: List all coins using the `list` command. Multiple coins in the list. Some coins are tagged with `fav`. +
+Run the command `tag 1 t/fav` to tag the first coin in the list.
+.. Test case: `find c/e` +
+Expected: The list only shows coins with the letter `e` in their trading code.
+.. Test case: `find p/>1` +
+Expected: The list only shows coins with a price greater than $1.
+.. Test case: `find t/fav OR ( p/>1000 AND h/>2000)` +
+Expected: The list only shows coins with either the `fav` tag or with price greater than $1000 and amount held greater than 2000 coins simultaneously.
+
+=== Setting Notifications
+
+. Creating a new notification
+
+.. Prerequisites: Have known coins added to the list that can receive price updates, e.g. BTC. +
+Otherwise, run the command `add c/BTC`
+.. Test case: `notify c/BTC AND p/>1000`, `sync` +
+Expected: The latest price of Bitcoin is fetched, and, assuming the price has not completely crashed, a notification
+should pop up in the bottom-right corner of the screen. +
+If price is below 1000, use a smaller value after `p/` and try again
+.. Test case: `listnotifs` +
+Expected: The notification list window should open, and any added notification rules are listed.
+
+. Using notifications to jump to view coin
+
+.. Prerequisites: Have multiple known coins added to the list that can receive price updates, e.g. BTC, ETH, XRP, DOGE...
+.. Test case: `notify p/>1`, `sync` +
+Click on any notification. +
+Expected: The coin stated on the notification is opened in the detail window, and its price history chart and subreddit page can be seen.
+
+=== Syncing Coin Data
+
+. Running the sync
+
+.. Test case: `sync` +
+Expected: The latest prices are fetched, as mentioned in the previous section F.5.
+
+=== Sorting Coin List
+
+. Sorting in Lexicographical Order
+
+.. Prerequisites: Multiple coins in the list
+.. Test case: `order` +
+Expected: The coins should be sorted by their trading codes alphabetically.
+.. Test case: `order z` +
+Expected: The coins should be sorted in reverse order, again by trading codes.

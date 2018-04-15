@@ -1,0 +1,54 @@
+@startuml
+hide footbox
+
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  ParticipantBackgroundColor #0070C0
+  LifeLineBorderColor #0070C0
+  LifeLineBackgroundColor #0070C0
+  defaultFontName Calibri
+}
+
+skinparam shadowing false
+
+participant ":CoinBookParser" as CoinBookParser
+participant ":FindCommandParser" as FindCommandParser
+participant ":ArgumentTokenizer" as ArgumentTokenizer
+participant ":ParserUtil" as ParserUtil
+
+activate CoinBookParser
+
+create FindCommandParser
+CoinBookParser -> FindCommandParser : new FindCommandParser
+activate FindCommandParser
+FindCommandParser -> CoinBookParser
+deactivate
+
+CoinBookParser -> FindCommandParser : parse("<arg string>")
+activate FindCommandParser
+
+FindCommandParser -> ArgumentTokenizer : tokenizeToTokenList("<arg string>")
+activate ArgumentTokenizer
+
+ArgumentTokenizer -> FindCommandParser : TokenList
+deactivate ArgumentTokenizer
+
+FindCommandParser -> ParserUtil : ParseCondition(TokenList)
+activate ParserUtil
+
+ref over ParserUtil : Parse Sequence
+
+ParserUtil -> FindCommandParser : Condition
+deactivate ParserUtil
+
+FindCommandParser -> CoinBookParser : Condition
+deactivate FindCommandParser
+
+destroy FindCommandParser
+
+@enduml

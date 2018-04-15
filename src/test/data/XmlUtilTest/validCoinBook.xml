@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<coinbook>
+    <coins>
+        <code>BTC</code>
+    </coins>
+    <coins>
+        <code>ETH</code>
+    </coins>
+    <coins>
+        <code>HNG</code>
+    </coins>
+    <coins>
+        <code>COP</code>
+    </coins>
+    <coins>
+        <code>WER</code>
+    </coins>
+    <coins>
+        <code>LYD</code>
+    </coins>
+    <coins>
+        <code>BIG</code>
+    </coins>
+    <coins>
+        <code>WHY</code>
+    </coins>
+    <coins>
+        <code>LYF</code>
+    </coins>
+</coinbook>

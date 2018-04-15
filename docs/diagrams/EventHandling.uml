@@ -1,0 +1,42 @@
+[uml,file="../images/SDforDeletePersonEventHandling.png"]
+--
+
+skinparam shadowing false
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  LifeLineBorderColor black
+  defaultFontName Calibri
+}
+
+hide footbox
+
+participant ":UI" as U #00B050
+participant ":EventsCenter" as E #31859C
+participant ":Storage" as S #E46C0A
+
+[-[#000000]> E : post(CoinBookChangedEvent)
+activate E #31859C
+E -[#31859C]> S : handleCoinBookChangedEvent()
+activate S #E46C0A
+S -[#E46C0A]> S : Save to file
+activate S #E46C0A
+E <-[#E46C0A]- S
+deactivate S
+deactivate S
+E -[#31859C]> U : handleCoinBookChangedEvent()
+activate U #00B050
+U -[#00B050]> U : Update \nstatus bar
+activate U #00B050
+U x<-[#white]- U
+deactivate U
+E <-[#00B050]- U
+deactivate U
+[<-[#31859C]- E
+deactivate E
+
+--

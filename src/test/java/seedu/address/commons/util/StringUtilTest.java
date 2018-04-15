@@ -52,6 +52,43 @@ public class StringUtilTest {
         assertTrue(StringUtil.isNonZeroUnsignedInteger("10"));
     }
 
+    //---------------- Tests for isValidAmount -----------------------------------------------
+
+    @Test
+    public void isValidNumber() {
+
+        // EP: empty strings
+        assertFalse(StringUtil.isValidAmount(""));
+        assertFalse(StringUtil.isValidAmount("  "));
+
+        // EP: not a number
+        assertFalse(StringUtil.isValidAmount("a"));
+        assertFalse(StringUtil.isValidAmount("aaa"));
+
+        // EP: zero
+        assertTrue(StringUtil.isValidAmount("0"));
+
+        // EP: zero as prefix
+        assertTrue(StringUtil.isValidAmount("01"));
+        assertTrue(StringUtil.isValidAmount("001.2"));
+        assertTrue(StringUtil.isValidAmount("00.12"));
+
+        // EP: signed numbers
+        assertFalse(StringUtil.isValidAmount("-1.0"));
+        assertFalse(StringUtil.isValidAmount("+1.0"));
+        assertFalse(StringUtil.isValidAmount("1+2.0"));
+
+        // EP: numbers with white space
+        assertFalse(StringUtil.isValidAmount("1 0"));  // Spaces in the middle
+
+        // EP: numbers with letters
+        assertFalse(StringUtil.isValidAmount("1.a23"));
+        assertFalse(StringUtil.isValidAmount("f.11"));
+        assertFalse(StringUtil.isValidAmount("9.99z"));
+
+        // EP: valid number, should return true
+        assertTrue(StringUtil.isValidAmount("1.2345"));
+    }
 
     //---------------- Tests for containsWordIgnoreCase --------------------------------------
 

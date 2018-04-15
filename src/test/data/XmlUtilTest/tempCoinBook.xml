@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<coinbook>
+    <coins>
+        <id>1</id>
+        <code>ALIS</code>
+        <tagged>favs</tagged>
+        <city></city>
+    </coins>
+    <tags>
+        <code>favs</code>
+    </tags>
+</coinbook>

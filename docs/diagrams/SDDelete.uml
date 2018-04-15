@@ -1,0 +1,43 @@
+[uml,file="../images/SDForDeleteCoin.png"]
+--
+
+hide footbox
+
+skinparam belowForResponse true
+skinparam shadowing false
+skinparam sequence {
+  ActorBackgroundColor #DDDDDD
+  ActorBorderColor black
+  ParticipantFontColor white
+  ParticipantFontSize 16
+  ParticipantFontStyle bold
+  ParticipantBorderThickness 0
+  LifeLineBorderColor black
+  defaultFontName Calibri
+}
+
+actor " " as A
+participant ":UI" as U #00B050
+participant ":Logic" as L #0070C0
+participant ":Model" as M #7030A0
+participant ":EventsCenter" as E #31859C
+
+A -[#000000]> U : delete 1
+activate U #00B050
+U -[#00B050]> L : execute("delete 1")
+activate L #0070C0
+L -[#0070C0]> M : deleteCoin(c)
+activate M #7030A0
+M -[#7030A0]> E : post(CoinBookChangedEvent)
+activate E #31859C
+
+M <-[#31859C]- E
+deactivate E
+L <-[#7030A0]- M
+deactivate M
+U <-[#0070C0]- L
+deactivate L
+A <-[#00B050]- U
+deactivate U
+
+--

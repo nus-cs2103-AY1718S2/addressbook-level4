@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rulebook>
+    <!-- Rule with invalid type field -->
+    <rules>
+        <value> c/btc</value>
+        <type>NOTHING</type>
+    </rules>
+</rulebook>

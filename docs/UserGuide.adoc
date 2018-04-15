@@ -129,6 +129,7 @@ Format: `help` +
 
 Command Alias: `?`
 
+// tag::person[]
 === Managing Persons
 
 This section describes commands you can use to manage person entries in ContactSails.
@@ -194,6 +195,8 @@ The figure below shows the updated contact.
 
 .Result of executing the 'edit' command given above.
 image::EditPersonAfter.png[width="200" align="center"]
+
+// end::person[]
 
 ==== Deleting a person : `delete`
 
@@ -328,6 +331,7 @@ Example:
 Type `preffind computers shoes necklaces` OR `pf computers shoes necklaces` into the Command Box. +
 This shows a list of all persons with preferences `computers`, `shoes`, or `necklaces`.
 
+// tag::mgap[]
 === Managing Groups and Preferences
 
 This section describes commands you can use to manage preference and group tags in ContactSails.
@@ -407,6 +411,8 @@ To refresh the PersonPanel, `select` another contact, and then `select 2` again.
 
 .After refreshing the PersonPanel, 'Bernice Yu' will have the updated information.
 image::PreferenceWarning2.png[width="500" align="center"]
+
+// end::mgap[]
 
 // tag::userguideorders[]
 === Managing Orders

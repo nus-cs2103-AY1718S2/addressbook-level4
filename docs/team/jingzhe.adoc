@@ -8,7 +8,7 @@
 
 == Overview
 
-ContactSails is built upon AddressBook - Level 4. It is a desktop application used for people in sales. The users will benefit from the application through the features in Contact Sails.
+ContactSails is built upon AddressBook - Level 4. It is a desktop application used for people in sales. The users will benefit from the application through the features in ContactSails such as having a calendar and managing orders.
  The user interacts with the application using Command Line Interface (CLI), and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
 
 == Summary of contributions
@@ -18,7 +18,7 @@ ContactSails is built upon AddressBook - Level 4. It is a desktop application us
 ** Justification: Sales people may want a better overview of their clients when making sales decisions. By introducing person panel in the application, this will aid the person in making better sales decisions by giving a better visual overview of the user through the size of the panel.
 ** Highlights: This enhancement also show the groups and preferences the client have. A profile picture could have been added but because the implementation is too challenging, it may be a possible feature only in the future.
 
-* *Minor enhancement*: My minor enhacement is the addition of colours to groups and preferences.
+* *Minor enhancement*: My minor enhancement is the addition of colours to groups and preferences.
 ** Credits: The suggested enhancement in CS2103T appendix A aided me in this.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/functional/AJZ1995.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B1/main/blob/master/collated/test/AJZ1995.md[Test code]]
@@ -30,14 +30,10 @@ ContactSails is built upon AddressBook - Level 4. It is a desktop application us
 ** Enhancements to existing features:
 *** I have fixed a bug found by one of my team mate upon reviewing other bugs. (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/185[#185])
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
+*** I have made a minor language update to the Developer Guide. (Pull request https://github.com/CS2103JAN2018-W13-B1/main/pull/195[#195])
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-*** Contributed to forum discussions (examples:  https://github.com[1], https://github.com[2], https://github.com[3], https://github.com[4])
-*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com[1], https://github.com[2], https://github.com[3])
-*** Some parts of the history feature I added was adopted by several other class mates (https://github.com[1], https://github.com[2])
-
-_{you can add/remove categories in the list above}_
+*** I have reported bugs and suggestions for other teams in the class. (https://github.com/CS2103JAN2018-W10-B1/main/issues/131[#Issue 131], https://github.com/CS2103JAN2018-W10-B1/main/issues/134[#Issue 134],
+https://github.com/CS2103JAN2018-W10-B1/main/issues/136[#Issue 136], https://github.com/CS2103JAN2018-W10-B1/main/issues/137[#Issue 137])
 
 == Contributions to the User Guide
 
@@ -46,9 +42,25 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
+I contributed partially to two sections in the User Guide, *Managing Persons* and *Managing Groups and Preferences*.
+
+In the section of *Managing Persons*, I contributed through the addition of pictures
+and the writing of example.
+
+include::../UserGuide.adoc[tag=person]
+
+In the section of *Managing Groups and Preferences*, I contributed through the addition of pictures
+and the writing of example.
+
+include::../UserGuide.adoc[tag=mgap]
+
 
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
+
+I contributed to the writing of *Person Panel* in the developer guide.
+
+include::../DeveloperGuide.adoc[tag=personpanel]

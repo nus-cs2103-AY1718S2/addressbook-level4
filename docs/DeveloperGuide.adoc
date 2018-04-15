@@ -447,7 +447,7 @@ image::UndoRedoActivityDiagram.png[width="650" align="center"]
 ** Cons: This requires dealing with commands that have already been undone, in which we must remember to skip these commands. This violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-//tag::Person Panel[]
+// tag::personpanel[]
 === Person Panel
 The `PersonPanel` replaces the previous `BrowserPanel`, and is called upon using the methods in `CenterPanel`.
 `PersonPanel` will be used to display contact's information, groups and preferences depending on user's actions.
@@ -539,8 +539,7 @@ returning a `Person` of the selected contact, which then displays the contact in
 * **Alternative 2:** It is to keep the BrowserPanel and use HTML files to display contact's information.
 ** Pros: There isn't a need to modify the existing code but to edit the HTML files to display contact's information.
 ** Cons: It may take a long time to implement and there are other important issues.
-
-//end::Person Panel[]
+// end::personpanel[]
 
 // tag::ordermanagementintro[]
 === Order Management

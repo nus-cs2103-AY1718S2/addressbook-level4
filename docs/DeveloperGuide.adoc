@@ -15,9 +15,8 @@ endif::[]
 
 By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
 
-ifdef::env-github[]
-Please click https://recirecipe.netlify.com/userguide[here] to view the Developer Guide with full formatting.
-endif::[]
+[.print-only]
+Please visit the https://recirecipe.netlify.com/userguide[online page] to view the Developer Guide in full formatting.
 
 == Introduction
 *<<ReciRecipe,ReciRecipé>>* is a desktop recipe storage application for users who prefer using the keyboard instead of a mouse for efficient management. It is useful for tech-savvy cooks that want all their recipes stored in one place.
@@ -140,7 +139,7 @@ Given below is a quick overview of each component:
 . <<Design-Model,*`Model`*>>: Contains the the data of the app in-memory.
 . <<Design-Storage,*`Storage`*>>: Contains the interaction of the app with the external memory, which consists of reading from and writing to the hard disk.
 
-Each of the four components <<Design-Ui,*`UI`*>>, <<Design-Logic,*`Logic`*>>, <<Design-Model,*`Model`*>>, <<Design-Storage,*`Storage`*>>
+Each of the four components <<Design-Ui,*`UI`*>>, <<Design-Logic,*`Logic`*>>, <<Design-Model,*`Model`*>>, <<Design-Storage,*`Storage`*>>:
 
 * Defines its <<API,API>> in an interface with the same name as the component.
 * Exposes its functionality using a `{Component Name}Manager` class.
@@ -148,11 +147,9 @@ Each of the four components <<Design-Ui,*`UI`*>>, <<Design-Logic,*`Logic`*>>, <<
 [discrete]
 ==== Events-driven architecture
 
-For example, the <<Design-Logic,*`Logic`*>> component (see the class diagram given below) defines its <<API,API>> in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
-
 In general, the components are designed in such a way that their interactions are being driven by events. And we will now give an example of what happens when a command is being executed.
 
-The _Sequence Diagram_ below (<<fig-ComponentInteraction>>) shows how the components interact in the scenario where the user issues the command *`delete 1`*.
+The sequence diagram below (<<fig-ComponentInteraction>>) shows how the components interact in the scenario where the user issues the command *`delete 1`*.
 
 [[fig-ComponentInteraction]]
 .Component interactions for *`delete 1`* command (part 1)
@@ -176,7 +173,7 @@ The sections below give more details of each component.
 <<Design-Main,*`Main`*>> has only one class called link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`_MainApp_`]. This class:
 
 * Initializes all the components in the correct sequence, and connects them up with each other at app launch.
-* Shuts down the components and invokes cleanup method where necessary when the app shuts down..
+* Shuts down the components and invokes cleanup method where necessary when the app shuts down.
 
 [[Design-Commons]]
 === Commons component
@@ -188,7 +185,15 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
-The UI consists of a `_MainWindow_` that is made up of smaller parts, for example, `_CommandBox_`, `_ResultDisplay_`, `_RecipeListPanel_`, `_StatusBarFooter_`, `_BrowserPanel_`, etc. All these, including the `_MainWindow_`, inherit from the abstract `_UiPart_` class (see <<fig-UiClassDiagram>>).
+The UI consists of a `_MainWindow_` that is made up of smaller parts:
+
+* A `_CommandBox_` that takes in user input.
+* A `_ResultDisplay_` that displays the command feedback.
+* A `_RecipeListPanel_` that displays all recipes in a list view.
+* A `_StatusBarFooter_` that displays important data changes.
+* A `_BrowserPanel_` that contains the in-app browser.
+
+All these parts, including the `_MainWindow_`, inherit from the abstract `_UiPart_` class (see <<fig-UiClassDiagram>>).
 
 [[fig-UiClassDiagram]]
 .Structure of the `UI` component
@@ -206,12 +211,13 @@ The <<Design-Ui,*`UI`*>> component:
 [[Design-Logic]]
 === Logic component
 
-<<Design-Logic,*`Logic`*>> contains all commands and this is how <<Design-Logic,*`Logic`*>> reacts when the user submits a command:
+The <<Design-Logic,*`Logic`*>> component contains all commands and their their implementation. +
+When the user submits a command, the <<Design-Logic,*`Logic`*>> component:
 
-.  <<Design-Logic,*`Logic`*>> uses the `_RecipeBookParser_` class to parse the user command.
-.  This results in a `_Command_` object which is executed by the `_LogicManager_`.
-.  The command execution can affect the <<Design-Model,*`Model`*>> (e.g. adding a recipe) and/or raise events.
-.  The result of the command execution is encapsulated as a `_CommandResult_` object which is passed back to the <<Design-Ui,*`UI`*>>.
+.  Uses the `_RecipeBookParser_` class to parse the user command.
+.  Creates a `_Command_` object which is executed by the `_LogicManager_`.
+.  Might affect the <<Design-Model,*`Model`*>> (e.g. adding a recipe) and/or raise events.
+.  Passes the result of the command execution, which is encapsulated as a `_CommandResult_` object, back to the <<Design-Ui,*`UI`*>>.
 
 For an overview of the structure of the <<Design-Logic,*`Logic`*>> component, refer to the diagram below <<fig-LogicClassDiagram>>.
 
@@ -238,12 +244,11 @@ image::DeleteRecipeSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
-The <<Design-Model,*`Model`*>>,
+The <<Design-Model,*`Model`*>> stores the app data structures. The structures used in ReciRecipé are:
 
-* stores a `_UserPref_` object that represents the user's preferences.
-* stores the Recipe Book data.
-* exposes an unmodifiable `_ObservableList<Recipe>_` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* `_UserPref_` that represents the user's preferences.
+* `_Recipe_` as well as its information, for example, `_Instruction_`, `_CookingTime_`, etc.
+* `_ObservableList<Recipe>_` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 
 Refer to diagram below <<fig-ModelClassDiagram>> for the interaction between the `Model` component classes.
 
@@ -255,10 +260,10 @@ image::ModelClassDiagram.png[width="800"]
 [[Design-Storage]]
 === Storage component
 
-The <<Design-Storage,*`Storage`*>> component,
+The <<Design-Storage,*`Storage`*>> component:
 
-* can save `_UserPref_` objects in JSON format and read it back.
-* can save the Recipe Book data in XML format and read it back.
+* Can save `_UserPref_` objects in JSON format and read it back.
+* Can save the Recipe Book data in XML format and read it back.
 
 Refer to diagram below <<fig-StorageClassDiagram>> for the interaction between the `Storage` component classes.
 
@@ -405,7 +410,7 @@ image::SDforChangeThemeDetails.png[width="500"]
 [.not-print]
 Below is the implementation of the two operations:
 
-[.not-print,source,java]
+[source,java,role="not-print"]
 ----
 public void loadDefaultPage(boolean isGirlTheme) {
     if (!isLoaded()) {
@@ -571,7 +576,7 @@ When an *`add`* or *`edit`* command has an image field input, that input will be
 [.not-print]
 Below is the implementation of this method:
 
-[.not-print,source,java]
+[source,java,role="not-print"]
 ----
 public static boolean isValidImageUrl(String testUrl) {
     URL imageUrl;
@@ -603,7 +608,7 @@ Why do we need checksum calculation? The `_BufferedImage_` object created by `_I
 [.not-print]
 Below is the implementation of `downloadImage()`:
 
-[.not-print, source,java]
+[source,java,role="not-print"]
 ----
 public static String downloadImage(String imageUrlString) {
     assert isValidImageUrl(imageUrlString);
@@ -920,7 +925,7 @@ We have four logging levels:
 // tag::multiple-lines[]
 ==== Current implementation
 
-Former implementation of the `_CommandBox_` used `_TextField_`, which only allows single-line inputs but supports automatic handler of kbd:[Enter]. To support commands with multiple lines, another class has to be used for `_CommandBox_`. The current implementation of `_CommandBox_`
+Former implementation of the `_CommandBox_` used `_TextField_`, which only allows single-line inputs but has a default handler for kbd:[Enter]. To support commands with multiple lines, another class has to be used for `_CommandBox_`. The current implementation of `_CommandBox_`
 uses `_TextArea_`, a class which has fewer restrictions on the number of input lines allowed. However, the trade off for `_TextArea_` is that it does not support automatic handling of kbd:[Enter].
 
 Currently, the solution is to consume the use of kbd:[Enter] and invoke the function `submitCommand()` whenever `_CommandBox_` receives a keyboard combination that is assigned to command submission (default is kbd:[Enter]). +
@@ -948,13 +953,13 @@ private void createNewLine() {
 
 ===== Aspect: Usage of a component that support multiple lines input.
 
-* **Alternative 1 (current choice):** `_TextArea_`.
+* **Alternative 1 (current choice):** Use `_TextArea_`.
 ** Pros: It is easy to use and very intuitive.
 ** Cons: The <<CSS,CSS>> is particularly hard to handle due to the way `_TextArea_` and its body function separately. There is no default handler for kbd:[Enter].
-* **Alternative 2:** `_TextField_` with support for `\n`.
+* **Alternative 2:** Use `_TextField_` with support for `\n`.
 ** Pros: It hardly requires any changes to the code.
 ** Cons: The inputs are unintuitive and ugly. Also, a long line with hundreds of characters is unavoidable. Once the line gets too long, it is nearly impossible to make changes to the input.
-* **Alternative 3:** `_HTMLEditor_`.
+* **Alternative 3:** Use `_HTMLEditor_`.
 ** Pros: There are abundant formatting features.
 ** Cons: It is too complex to implement and contains unintuitive inputs.
 // end::multiple-lines-consideration[]
@@ -1199,7 +1204,7 @@ private void handleInternetSearchRequestEvent(InternetSearchRequestEvent event) 
 [discrete]
 // tag::ingredient-search[]
 ==== Current implementation
-The user input is parsed and separated into a `String[]` of keywords that represent each ingredient in `_IngredientCommandParser_`. This array is then passed to `_IngredientContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their ingredients. The matching is case-insensitive and the predicate will only be true when the recipe contains ALL ingredients in the parsed array.
+The user input is parsed and separated into a `_String_` array of keywords that represent each ingredient in `_IngredientCommandParser_`. This array is then passed to `_IngredientContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their ingredients. The matching is case-insensitive and the predicate will only be true when the recipe contains ALL ingredients in the parsed array.
 The implementation of that can be seen below:
 [source,java]
 ----
@@ -1224,7 +1229,7 @@ Since the sequence is very similar to searching by tags, the sequence diagram of
 [discrete]
 // tag::tag-search[]
 ==== Current implementation
-The user input is parsed and separated into a `String[]` of keywords in `_TagCommandParser_`. This array is then passed to `_TagContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their tags using a stream, setting the predicate to true when there is any match (i.e. the recipe does not have to contain ALL the tags specified like how the ingredient search was implemented).
+The user input is parsed and separated into a `_String_` array of keywords in `_TagCommandParser_`. This array is then passed to `_TagContainsKeywordsPredicate_` which compares them individually to the entire list of recipes and their tags using a stream, setting the predicate to true when there is any match (i.e. the recipe does not have to contain ALL the tags specified like how the ingredient search was implemented).
 The matching is case-sensitive and the implementation can be seen below:
 [source,java]
 ----
@@ -1385,17 +1390,17 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: How undo & redo executes.
 
-* **Alternative 1 (current choice):** Saves the entire recipe book.
+* **Alternative 1 (current choice):** Save the entire recipe book.
 ** Pros: It is easy to implement.
 ** Cons: There may be performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
+* **Alternative 2:** Hardcode the undo/redo into each command.
 ** Pros: This will use less memory (e.g. for *`delete`*, as it just saves the recipe being deleted).
 ** Cons: We must ensure that the implementation of each individual command is correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone.
 
-* **Alternative 1 (current choice):** Only include commands that modify the recipe book (*`add`*, *`clear`*, *`edit`*).
+* **Alternative 1 (current choice):** Include only commands that modify the recipe book (*`add`*, *`clear`*, *`edit`*).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: The user might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing *`undo`*.
 * **Alternative 2:** Include all commands.
@@ -1407,8 +1412,8 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ===== Aspect: Data structure to support the undo/redo commands.
 
 * **Alternative 1 (current choice):** Use separate stack for undo and redo.
-** Pros: This is easy to for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: The logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `_HistoryManager_` and `_UndoRedoStack_`.
+** Pros: This is easy to for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: The logic is duplicated twice. For example, when a new command is executed, we must remember to update both `_HistoryManager_` and `_UndoRedoStack_`.
 * **Alternative 2:** Use `_HistoryManager_` for undo/redo.
 ** Pros: We do not need to maintain a separate stack, and can just reuse what is already in the codebase.
 ** Cons: This requires dealing with commands that have already been undone, meaning we must remember to skip these commands. It violates Single Responsibility Principle and Separation of Concerns as `_HistoryManager_` now needs to do two * different things.
@@ -1563,7 +1568,7 @@ When a pull request has changes to asciidoc files, you can use https://www.netli
 
 === Making a release
 
-Here are the steps to create a new release.
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/recipe/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
@@ -2197,7 +2202,7 @@ Sample commands can be found in the cheatsheet in the User Guide. Here are some 
 * Steps:
 .. Open data/recipebook.xml, remove line 5, save the file.
 .. Re-launch the app.
-* Expected outcome: The app will be initialized with 12 sample recipes.
+* Expected outcome: The app will be initialized with an empty recipe book.
 
 . Dealing with missing images:
 * Steps:

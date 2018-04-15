@@ -108,7 +108,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tz/PST c/She can speak French t/criminal`
 
 // tag::addappointment[]
-=== Adding an appointment: `addappoinmtment` `Since v1.3`
+=== Adding an appointment: `addappointment` `Since v1.3`
 
 Adds an appointment to the address book +
 Format: `addappointment [INDEX]... n/NAME d/DATETIME tz/TIMEZONE`

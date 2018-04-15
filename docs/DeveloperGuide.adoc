@@ -6,6 +6,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
+:experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
@@ -1901,21 +1902,34 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Make sure you have access to Internet
 
-=== Deleting a person
+Some commands will not work without the access to Internet.
 
-. Deleting a person while all persons are listed
+=== Unlock E.T.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+. E.T. is initially locked by default
 
-_{ more test cases ... }_
+.. type `unlock`, key in `admin` (default password) and press kbd:[Enter].
+
+. Change password
+
+.. type `setPassword`, key in old and new password and press kbd:[Enter]. You can press kbd:[Tab] to switch between
+the input fields.
+.. type `lock` to lock E.T..
+.. type `unlock`, key in the new password you just set. E.T. will be unlocked.
+
+=== Add some sample employees
+
+. There are no sample employees at the beginning, need to manually add some, here is some sample employees that can add.
+Copy and paste it in the command box and execute
+
+.. add n/Carl Smith p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/tester
+.. add n/Betsy Crowe t/tester e/betsycrowe@example.com a/Besty Street p/1234567
+.. add n/John Daniel e/johnda@example.com a/Newgate Prison p/00002222 t/developer
+.. add n/David Li e/davidli@example.com a/David Street p/88881111 t/teamleader
+
+=== See user guide for more commands
 
 === Saving data
 

@@ -15,13 +15,13 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.student.NameContainsKeywordsPredicate;
-import seedu.address.model.student.Student;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.Schedule;
 import seedu.address.model.UserPrefs;
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.student.NameContainsKeywordsPredicate;
+import seedu.address.model.student.Student;
 
 //@@author chweeee
 /**
@@ -64,9 +64,9 @@ public class FindAndDeleteCommandTest {
     }
 
     @Test
-    public void execute_delete_zeroKeywords_noStudentFound() {
+    public void execute_zeroKeywords_noStudentFound() {
         String expectedMessage = "Student to be deleted cannot be found.";
-        FindAndDeleteCommand command = prepareFADCommand(" ");
+        FindAndDeleteCommand command = prepareFadCommand(" ");
         try {
             assertCommandSuccess(command, expectedMessage, Collections.emptyList());
         } catch (CommandException e) {
@@ -75,12 +75,14 @@ public class FindAndDeleteCommandTest {
     }
 
     @Test
-    public void execute_studentDeleted(){
-        String expectedMessage = "Deleted Student: " + ELLE.getName() + " Phone: " + ELLE.getPhone() + " Email: " + ELLE.getEmail() + " Address: "
-                + ELLE.getAddress() + " Programming Language: " + ELLE.getProgrammingLanguage() + " Tags: [friends]" +
-                " Favourite: " + ELLE.getFavourite() + " Profile Picture Path: " + ELLE.getProfilePicturePath() + " Miscellaneous Info: " +
-                ELLE.getMiscellaneousInfo() + " Dashboard: " + ELLE.getDashboard();
-        FindAndDeleteCommand command = prepareFADCommand("ELLE");
+    public void execute_studentDeleted() {
+        String expectedMessage = "Deleted Student: " + ELLE.getName() + " Phone: " + ELLE.getPhone()
+                + " Email: " + ELLE.getEmail() + " Address: "
+                + ELLE.getAddress() + " Programming Language: " + ELLE.getProgrammingLanguage() + " Tags: [friends]"
+                + " Favourite: " + ELLE.getFavourite() + " Profile Picture Path: "
+                + ELLE.getProfilePicturePath() + " Miscellaneous Info: "
+                + ELLE.getMiscellaneousInfo() + " Dashboard: " + ELLE.getDashboard();
+        FindAndDeleteCommand command = prepareFadCommand("ELLE");
         try {
             assertCommandSuccess(command, expectedMessage, Collections.emptyList());
         } catch (CommandException e) {
@@ -92,7 +94,7 @@ public class FindAndDeleteCommandTest {
     /**
      * Parses {@code userInput} into a {@code FindAndSelectCommand}.
      */
-    private FindAndDeleteCommand prepareFADCommand(String userInput) {
+    private FindAndDeleteCommand prepareFadCommand(String userInput) {
         FindAndDeleteCommand command =
                 new FindAndDeleteCommand(new NameContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
         command.setData(model, new CommandHistory(), new UndoRedoStack());
@@ -105,7 +107,8 @@ public class FindAndDeleteCommandTest {
      *     - the {@code FilteredList<Student>} is equal to {@code expectedList}<br>
      *     - the {@code AddressBook} in model remains the same after executing the {@code command}
      */
-    private void assertCommandSuccess(FindAndDeleteCommand command, String expectedMessage, List<Student> expectedList) throws CommandException {
+    private void assertCommandSuccess(FindAndDeleteCommand command, String expectedMessage,
+                                      List<Student> expectedList) throws CommandException {
         CommandResult commandResult = command.execute();
 
         assertEquals(expectedMessage, commandResult.feedbackToUser);

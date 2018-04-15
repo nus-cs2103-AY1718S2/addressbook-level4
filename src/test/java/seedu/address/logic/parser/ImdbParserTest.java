@@ -16,6 +16,7 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddPatientQueueCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -351,6 +352,28 @@ public class ImdbParserTest {
         DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
                 DeleteAppointmentCommand.COMMAND_ALIAS + " " + indexString + " " + dateTimeString);
         assertEquals(new DeleteAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointment() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        String indexString = "1";
+        String dateTimeString = "16/4/2108 1400";
+        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
+                AddAppointmentCommand.COMMAND_WORD + " " + indexString + " " + dateTimeString);
+        assertEquals(new AddAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
+    }
+
+    @Test
+    public void parseCommand_addAppointmentCommandAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        String indexString = "1";
+        String dateTimeString = "16/4/2108 1400";
+        AddAppointmentCommand command = (AddAppointmentCommand) parser.parseCommand(
+                AddAppointmentCommand.COMMAND_ALIAS + " " + indexString + " " + dateTimeString);
+        assertEquals(new AddAppointmentCommand(ParserUtil.parseIndex("1"),
                 ParserUtil.parseDateTime(dateTimeString)), command);
     }
 

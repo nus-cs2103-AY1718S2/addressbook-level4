@@ -6,6 +6,7 @@ import static seedu.address.testutil.TypicalBooks.ARTEMIS;
 import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
 import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
+import java.io.File;
 import java.io.IOException;
 
 import org.junit.Rule;
@@ -70,7 +71,7 @@ public class XmlRecentBooksStorageTest {
 
     @Test
     public void readAndSaveRecentBooksList_allInOrder_success() throws Exception {
-        String filePath = testFolder.getRoot().getPath() + "TempRecentBooksData.xml";
+        String filePath = testFolder.getRoot().getPath() + File.separator + "TempRecentBooksData.xml";
         BookShelf original = getTypicalBookShelf();
         XmlRecentBooksStorage xmlRecentBooksStorage = new XmlRecentBooksStorage(filePath);
 

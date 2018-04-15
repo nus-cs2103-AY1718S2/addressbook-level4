@@ -30,7 +30,7 @@ public class LockCommandTest {
 
     @After
     public void tearDown() {
-        LockManager.getInstance().unlock(LockManager.getInstance().getPassword());
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
     }
 
     @Test

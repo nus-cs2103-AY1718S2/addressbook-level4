@@ -2,13 +2,12 @@ package seedu.address.testutil;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.Base64;
-import java.util.Random;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.CompletionException;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.model.Model;
 import seedu.address.model.book.Book;
 
@@ -21,7 +20,6 @@ public class TestUtil {
      * Folder used for temp files created during testing. Ignored by Git.
      */
     private static final String SANDBOX_FOLDER = FileUtil.getPath("./build/tmp/sandbox/");
-    private static final int RANDOM_BYTE_LENGTH = 9;
     private static final String PREFIX_SEPARATOR = "_";
 
     /**
@@ -34,7 +32,7 @@ public class TestUtil {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        String randomizedFileName = generateRandomPrefix() + PREFIX_SEPARATOR + fileName;
+        String randomizedFileName = StringUtil.generateRandomPrefix() + PREFIX_SEPARATOR + fileName;
         return SANDBOX_FOLDER + randomizedFileName;
     }
 
@@ -68,15 +66,5 @@ public class TestUtil {
         return CompletableFuture.completedFuture(null).thenApply(obj -> {
             throw new CompletionException(new IOException());
         });
-    }
-
-    /**
-     * Returns a random 8 character string to be used as a prefix to a filename.
-     */
-    private static String generateRandomPrefix() {
-        byte[] randomBytes = new byte[RANDOM_BYTE_LENGTH];
-        new Random().nextBytes(randomBytes);
-        byte[] encodedBytes = Base64.getEncoder().encode(randomBytes);
-        return new String(encodedBytes).replace("/", "-");
     }
 }

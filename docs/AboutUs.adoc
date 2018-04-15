@@ -37,7 +37,7 @@ Responsibilities: Data
 
 === Jeremy Lee Jun Wei
 image::Sebry9.jpg[width="150", align="left"]
-{empty}[https://github.com/Sebry9[github]][<<Sebry9#, portfolio>>]
+{empty}[https://github.com/Sebry9[github]][https://github.com/CS2103JAN2018-T11-B3/main/blob/master/docs/team/Sebry9.adoc[Portfolio]]
 
 Role: Developer +
 Responsibilities: UI

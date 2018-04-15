@@ -15,6 +15,8 @@ import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
 
+import seedu.address.model.Insurance.Insurance;
+import seedu.address.model.Insurance.UniqueInsuranceList;
 import seedu.address.model.export.exceptions.CalendarAccessDeniedException;
 import seedu.address.model.export.exceptions.ConnectivityIssueException;
 import seedu.address.model.export.exceptions.InvalidFileNameException;
@@ -37,6 +39,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     private final UniqueGroupList groups;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueInsuranceList insurances;
     private final UserPrefs userPrefs;
 
     /*
@@ -51,6 +54,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags = new UniqueTagList();
         userPrefs = new UserPrefs();
         groups = new UniqueGroupList();
+        insurances = new UniqueInsuranceList();
     }
     /**
      * empty constructor
@@ -85,12 +89,17 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.groups.setGroups(groups);
     }
 
+    public void setInsurances(Set<Insurance> insurances) {
+        this.insurances.setInsurances(insurances);
+    }
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
+        setInsurances(new HashSet<>(newData.getInsuranceList()));
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
@@ -180,6 +189,12 @@ public class AddressBook implements ReadOnlyAddressBook {
         tags.add(t);
     }
 
+    /// insurance-level operations
+
+    public void addInsurance(Insurance i) throws UniqueInsuranceList.DuplicateInsuranceException {
+        insurances.add(i);
+    }
+
     //// export-level operations
 
     //@@author daviddalmaso
@@ -249,6 +264,11 @@ public class AddressBook implements ReadOnlyAddressBook {
     }
 
     @Override
+    public ObservableList<Insurance> getInsuranceList() {
+        return insurances.asObservableList();
+    }
+
+    @Override
     public ObservableList<Group> getGroupList() {
         return groups.asObservableList();
     }
@@ -258,7 +278,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.insurances.equalsOrderInsensitive(((AddressBook) other).insurances));
     }
 
     @Override

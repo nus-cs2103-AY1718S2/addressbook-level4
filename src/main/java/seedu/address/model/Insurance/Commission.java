@@ -20,7 +20,6 @@ public class Commission {
      */
     public Commission(Insurance insurance) {
         requireNonNull(insurance);
-        Insurance insurance1 = insurance;
         String insuranceName = insurance.toString();
         String commission = new String("0");
         Pattern p1 = Pattern.compile("\\{(.*?)\\}");

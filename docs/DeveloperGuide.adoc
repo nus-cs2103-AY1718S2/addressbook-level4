@@ -1108,17 +1108,25 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user |exit my application |exit the application once I am done with it
 
 |`* * *` |user |add remarks of my client |remember my personal comment of the client
+// tag::sebryStory1[]
 
 |`* * *` |user |add the insurance plans that my clients are committed |track what plans he/she has
+
+|`* * *` |user |edit my client's insurance plan |keep the latest plan updated
+
+|`* * *` |user |delete my client's insurance plan |remove undesired plans yet keeping his/her contacts available
 
 |`* * *` |user |add in how much commission I am getting off my client’s insurance plan|calculate my commission
 
 |`* * *` |user |view the commission I get off a client |see how much I am earning off them
 
-|`* * *` |user |view the total commission I am getting |view my total earning
+|`* * *` |user |edit the commission I get off a client |update how much I am earning off them
+
+|`* * *` |user |erase the commission I get off a client |remove the amount I am getting off that insurance plan
 
 |`* * *` |user |rank my clients |to serve them better
 
+// end::sebryStory1[]
 |`* * *` |user |group my clients|to manage the different groups differently
 
 |`* * *` |user |add the birthday date of my client |keep track of my client's birthday
@@ -1135,7 +1143,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |user |view appointment on the calendar |have a more organized view of my schedule and at the same time plan for future appointment
 
-|`* * *` |user |secure my address book by having a password in place
+|`* * *` |user |secure my address book by having a password in place| keep my clients data protected
 
 |`* *` |user |export a calendar of my appointments and client birthdays |can use the data on a calendar outside of the application
 
@@ -1160,7 +1168,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |add in password access to my address book |be viewed/edited only by allowed users
 
 |`* *` |user |change my password |further secure my address book
-
+// tag::sebryStory2[]
+|`* *` |user |use alias for my commands |increase my efficiency in using the app
+// end::sebryStory2[]
 |`*` |user |request access to other address book |seek potential customer from leaving colleague
 
 

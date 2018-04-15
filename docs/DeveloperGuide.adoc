@@ -1153,7 +1153,8 @@ Major: Implement UI element and methods for displaying summary statistics and re
 
 Minor: Recolouring of the GUI to improve look and feel
 
-
+//@@author zhangriqi
+//tag::userstories[]
 [appendix]
 == User Stories
 
@@ -1226,8 +1227,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 
 |=======================================================================
-
-_{More to be added}_
+//@@author
+//end::userstories[]
 
 [appendix]
 == Use Cases

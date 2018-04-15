@@ -84,7 +84,7 @@ it was essential to provide an easy way to generate the error log on demand to h
 *** : Contributed several user stories to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
 *** : Added 6 use cases to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
 *** : Defined most of the NFRs for the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
-*** : Added Quick Start guide to explain the difference between the various Google Calendar integrations built into the SLAP app.
+*** : Added Quick Start guide to explain the difference between the various Google Calendar integrations built into the SLAP app https://github.com/CS2103JAN2018-T15-B3/main/pull/138[#138]
 ** Community:
 *** Reported bugs and suggestions for team F09-B1 (examples: https://github.com/CS2103JAN2018-F09-B1/main/issues/88[#88] https://github.com/CS2103JAN2018-F09-B1/main/issues/94[#94] https://github.com/CS2103JAN2018-F09-B1/main/issues/72[#72] https://github.com/CS2103JAN2018-F09-B1/main/issues/78[#78] https://github.com/CS2103JAN2018-F09-B1/main/issues/75[#75] https://github.com/CS2103JAN2018-F09-B1/main/issues/74[#74] https://github.com/CS2103JAN2018-F09-B1/main/issues/73[#73] https://github.com/CS2103JAN2018-F09-B1/main/issues/67[#67])
 ** Tools:

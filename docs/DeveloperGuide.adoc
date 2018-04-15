@@ -525,9 +525,19 @@ The GUI portion of this feature will be a WebView of the Google Calendar web app
 ===== Aspect: CLI
 The CLI portion of this feature will rely on Google's Calendar API that uses the OAuth 2.0 protocol to allow an application (such as SLAP) to directly read/write to a user's calendar, provided that they have given them access to the calendar. Once a user has authorized the application to read/write to their calendar, they will gain access to the the following commands: `event-add`, `event-delete`, and `event-edit`. The Oauth authentication process will be entirely handled by Google with the only requirement being that the user must log in to their calendar using the GUI interface.
 
-A check will eventually be added to ensure that the user has already logged in before attempting to execute any of the afformentioned commands.
+A check will eventually be added to ensure that the user has already logged in before attempting to execute any of the aforementioned commands.
 
-image::OauthModelDiagram.png[width="800"]
+UML Sequence Diagram of Proposed Command Flow For `calendar-add` Command
+
+Every command that requires OAuth (i.e. calendar-add, calendar-delete, calendar-list, show-schedule, and reauthenticate) will follow a similar flow with the potential commision of the parse step depending on the command.
+
+image::OauthRevisedSequenceDiagram.png[width="800"]
+
+UML Activity Diagram of High Level Logic Flow For `calendar-add` Command
+
+Every command that requires OAuth (i.e. calendar-add, calendar-delete, calendar-list, show-schedule, and reauthenticate) will follow a similar flow with the potential commision of the parse step depending on the command.
+
+image::OauthRevisedActivityDiagram.png[width="800"]
 
 ==== Design Considerations
 ===== Aspect: GUI

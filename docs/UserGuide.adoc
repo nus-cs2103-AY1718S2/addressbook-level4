@@ -142,11 +142,11 @@ image::calendar-quickstart.png[width="790"]
 This section is meant to be a brief explanation on the various Google Calendar integrations built into the SLAP app.
 
 .  WebView versus Command Line Experiences
-.. WebView Experiences include: `switch calendar`, `calendar-launch`, pressing `F8`, and `View > Open Calendar` 
+.. WebView Experiences include: `switch calendar`, `calendar-launch`, pressing `F8`, and `View > Open Calendar`
 .. Command Line Experiences (i.e. require an OAuth certificate) include: `calendar-add`, `calendar-delete`, `calendar-list`, `show-schedule`, and reauthenticate
 
 .  How are these features related?
-.. The WebView Experiences and Command Line experiences are *not* linked by default. That is, you can technically log into one Google account within the WebView experience and authorize SLAP to manage a different account via CLI without any issues programatically. The WebView experiences will work as intended, and the command line experiences will work as well, however they will be operating on seperate Google Calendar accounts. 
+.. The WebView Experiences and Command Line experiences are *not* linked by default. That is, you can technically log into one Google account within the WebView experience and authorize SLAP to manage a different account via CLI without any issues programatically. The WebView experiences will work as intended, and the command line experiences will work as well, however they will be operating on seperate Google Calendar accounts.
 .. The WebView experience is meant to act as a front-end for the CLI operations.
 .. Each of the WebViews share the same cookies / cache. You cannot log into one account in one WebView and another account in a different WebView.
 

@@ -1,4 +1,274 @@
 # Caijun7
+###### \data\ExportCommandTest\aliceAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>friends</tags>
+</addressbook>
+```
+###### \data\ExportCommandTest\aliceBensonAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable>http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <birthday>02011989</birthday>
+        <timetable>http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <password/>
+</addressbook>
+```
+###### \data\GoogleDriveStorageTest\validAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable>http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <birthday>02011989</birthday>
+        <timetable>http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <password/>
+</addressbook>
+```
+###### \data\ImportCommandTest\aliceAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>friends</tags>
+</addressbook>
+```
+###### \data\ImportCommandTest\aliceBensonAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>02011989</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>friends</tags>
+</addressbook>
+```
+###### \data\ImportCommandTest\bensonAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>01021989</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+</addressbook>
+```
+###### \data\ImportCommandTest\invalidFileFormatAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>01021998</birthday>
+        <timetable isPrivate="false">http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+</addressbook>
+```
+###### \data\UploadCommandTest\aliceAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>friends</tags>
+</addressbook>
+```
+###### \data\UploadCommandTest\aliceBensonAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone>85355255</phone>
+        <email>alice@example.com</email>
+        <address>123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable>http://modsn.us/aaaaa</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone>98765432</phone>
+        <email>johnd@example.com</email>
+        <address>311, Clementi Ave 2, #02-25</address>
+        <birthday>02011989</birthday>
+        <timetable>http://modsn.us/bbbbb</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <password/>
+</addressbook>
+```
+###### \data\XmlAddressBookStorageTest\validAddressBook.xml
+``` xml
+<addressbook>
+    <persons>
+        <name>Alice Pauline</name>
+        <phone isPrivate="false">85355255</phone>
+        <email isPrivate="false">alice@example.com</email>
+        <address isPrivate="false">123, Jurong West Ave 6, #08-111</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/oNZLY</timetable>
+        <tagged>friends</tagged>
+    </persons>
+    <persons>
+        <name>Benson Meier</name>
+        <phone isPrivate="false">98765432</phone>
+        <email isPrivate="false">johnd@example.com</email>
+        <address isPrivate="false">311, Clementi Ave 2, #02-25</address>
+        <birthday>01011995</birthday>
+        <timetable isPrivate="false">http://modsn.us/ojGeu</timetable>
+        <tagged>owesMoney</tagged>
+        <tagged>friends</tagged>
+    </persons>
+    <tags>owesMoney</tags>
+    <tags>friends</tags>
+</addressbook>
+```
+###### \data\XmlSerializableAddressBookTest\invalidAliasAddressBook.xml
+``` xml
+<addressbook>
+    <aliases>
+        <command>li!st</command>
+        <aliasName>l</aliasName>
+    </aliases>
+    <password/>
+</addressbook>
+```
+###### \data\XmlSerializableAddressBookTest\typicalAliasesAddressBook.xml
+``` xml
+<addressbook>
+    <aliases>
+        <command>list</command>
+        <aliasName>list1</aliasName>
+    </aliases>
+    <aliases>
+        <command>history</command>
+        <aliasName>history1</aliasName>
+    </aliases>
+    <aliases>
+        <command>exit</command>
+        <aliasName>exit1</aliasName>
+    </aliases>
+    <aliases>
+        <command>clear</command>
+        <aliasName>clear1</aliasName>
+    </aliases>
+    <aliases>
+        <command>redo</command>
+        <aliasName>redo1</aliasName>
+    </aliases>
+    <aliases>
+        <command>alias</command>
+        <aliasName>alias1</aliasName>
+    </aliases>
+    <aliases>
+        <command>edit</command>
+        <aliasName>edit1</aliasName>
+    </aliases>
+    <aliases>
+        <command>help</command>
+        <aliasName>help1</aliasName>
+    </aliases>
+    <aliases>
+        <command>undo</command>
+        <aliasName>undo1</aliasName>
+    </aliases>
+    <aliases>
+        <command>delete</command>
+        <aliasName>delete1</aliasName>
+    </aliases>
+    <aliases>
+        <command>add</command>
+        <aliasName>add1</aliasName>
+    </aliases>
+    <password/>
+</addressbook>
+```
 ###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
     public static final String VALID_IMPORT_FILEPATH = "src/test/data/ImportCommandTest/aliceAddressBook.xml";

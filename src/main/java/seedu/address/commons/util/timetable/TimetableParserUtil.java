@@ -33,8 +33,8 @@ public class TimetableParserUtil {
     public static final String URL_MINUS_SIGN_REGEX = "-";
     public static final String URL_COMMA_SIGN_REGEX = ",";
     public static final String URL_COLON_REGEX = ":";
-    public static final int SEMSTER_NUMBER_URL_INDEX = 4;
-    public static final int SEMSTER_NUMBER_INTEGER_INDEX = 1;
+    public static final int SEMESTER_NUMBER_URL_INDEX = 4;
+    public static final int SEMESTER_NUMBER_INTEGER_INDEX = 1;
     public static final int LAST_STRING_URL_INDEX = 5;
     public static final int MODULE_STRING_INDEX = 1;
     public static final int MODULE_CODE_INDEX = 0;
@@ -64,8 +64,8 @@ public class TimetableParserUtil {
      * Attempts to access NUSMods to obtain the full NUSMods url
      * @param url shortened NUSMods url
      * @return long url
-     * @throws ParseException when the long
-     * @throws NoInternetConnectionException when
+     * @throws ParseException if the parsing fails and returns the default NUSMods URL
+     * @throws NoInternetConnectionException when the app timeouts in obtaining the long url
      */
     public static String parseShortUrl (String url) throws ParseException, NoInternetConnectionException {
         try {
@@ -101,11 +101,11 @@ public class TimetableParserUtil {
         ArrayList<Lesson> totalLessonList = new ArrayList<Lesson>();
         ArrayList<Lesson> lessonsToAddFromModule;
 
-        // Seperate semester number normally found at the fifth part
-        String semNum = urlParts[SEMSTER_NUMBER_URL_INDEX];
-        // Seperate "share" out of last part of url
+        // Separate semester number normally found at the fifth part
+        String semNum = urlParts[SEMESTER_NUMBER_URL_INDEX];
+        // Separate "share" out of last part of url
         String[] toParse = urlParts[LAST_STRING_URL_INDEX].split(URL_QUESTION_MARK_REGEX);
-        // Seperate the modules in last part of url
+        // Separate the modules in last part of url
         String[] modules = toParse[MODULE_STRING_INDEX].split(URL_AND_SIGN_REGEX);
 
         // Loop to find the modules taken and create the Lessons taken to add into Timetable
@@ -129,14 +129,18 @@ public class TimetableParserUtil {
         ArrayList<Lesson> lessonListFromApi;
         ArrayList<Lesson> lessonsTakenList;
         lessonsTakenList = new ArrayList<Lesson>();
+        // Separate the module code
         String[] moduleInfo = module.split(URL_EQUALS_SIGN_REGEX);
+        // Separate the number from SEM-NUM
         String[] semNumToParse = semNum.split(URL_MINUS_SIGN_REGEX);
-        int semNumInt = Integer.parseInt(semNumToParse[SEMSTER_NUMBER_INTEGER_INDEX]);
+        int semNumInt = Integer.parseInt(semNumToParse[SEMESTER_NUMBER_INTEGER_INDEX]);
         String moduleCode = moduleInfo[MODULE_CODE_INDEX];
+        //Separate the individual lessons
         String[] lessonsTaken = moduleInfo[LESSON_STRING_INDEX].split(URL_COMMA_SIGN_REGEX);
 
         lessonListFromApi = obtainModuleInfoFromApi(moduleCode, semNumInt);
 
+        // Main loop to add lessons to list
         for (String lessonTaken : lessonsTaken) {
             String[] lessonToParse = lessonTaken.split(URL_COLON_REGEX);
             String lessonType = convertShortFormToLong(lessonToParse[LESSON_TYPE_INDEX]);

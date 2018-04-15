@@ -104,6 +104,7 @@
     -fx-label-padding: 0 0 0 0;
     -fx-graphic-text-gap : 0;
     -fx-padding: 0 0 0 0;
+    -fx-background-color: derive(-main-colour, 0%);
     -fx-border-color: -borders-colour;
 }
 

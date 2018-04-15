@@ -116,7 +116,9 @@ public class InfoPanel extends UiPart<Region> {
     @Subscribe
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> { hideAllPanel(); });
+        Platform.runLater(() -> {
+            hideAllPanel();
+        });
     }
     //@@author
 

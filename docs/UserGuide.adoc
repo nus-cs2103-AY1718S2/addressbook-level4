@@ -17,20 +17,20 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 == Introduction
 
-CLIndar is a desktop application that helps university computing students to manage their tasks and events.
-CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
-Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for computing students.
+CLIndar is a desktop application that helps university computing students manage their tasks and events, such as:
 
-With CLIndar, you can:
+* Keeping track of tasks and events and be reminded of their due dates.
 
-* Keep track of your tasks and events and be reminded of their due dates.
-* Record all completed tasks and events, so that you know what you have done.
+* Recording all completed tasks and finished events, so that the student knows what he has done.
 
-The current version of CLIndar is 1.5 and is available on Windows and Linux Operating Systems.
+CLIndar is **Command-Line Interface (CLI)** based  and uses **Linux-style commands**, which computing students are familiar with. Thus, compared to traditional Graphical User Interface (GUI) applications,
+CLIndar is faster and provides more convenience for computing students.
+
+The current version of CLIndar is 1.5 and is available on Windows and Linux.
 
 == Get Started
 
-To start using CLIndar, follow the instructions below.
+To start using CLIndar, follow the instructions below:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +

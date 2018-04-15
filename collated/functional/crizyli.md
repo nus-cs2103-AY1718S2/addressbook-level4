@@ -637,8 +637,6 @@ public class AuthenCommand extends Command {
 
     public static final String COMMAND_WORD = "authenET";
 
-    public static final String COMMAND_USAGE = "Authorize ET with your google calendar.";
-
     public static final String MESSAGE_SUCCESS = "You have authorized ET!";
 
     public static final String MESSAGE_FAILURE = "You haven't authorized ET successfully,"
@@ -1744,7 +1742,7 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 
         String description = argMultimap.getValue(PREFIX_DESCCRIPTION).get();
 
-        return new TestAddEventCommand(index, title, location, sTime, eTime, decription);
+        return new TestAddEventCommand(index, title, location, sTime, eTime, description);
 
     }
 
@@ -1760,6 +1758,7 @@ public class TestAddEventCommandParser implements Parser<TestAddEventCommand> {
 ```
 ###### \java\seedu\address\logic\parser\UnlockCommandParser.java
 ``` java
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
 import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -1775,6 +1774,9 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
      * @throws ParseException if the user input does not conform the expected format
      */
     public UnlockCommand parse(String args) throws ParseException {
+        if (!args.trim().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+        }
 
         return new UnlockCommand();
     }
@@ -2361,7 +2363,6 @@ class CalendarBrowser extends Region {
             raise(new SetPasswordEnteredEvent("incomplete"));
         }
     }
-
 ```
 ###### \java\seedu\address\ui\MyCalendarView.java
 ``` java

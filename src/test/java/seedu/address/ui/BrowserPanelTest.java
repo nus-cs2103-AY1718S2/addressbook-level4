@@ -15,6 +15,10 @@ import org.junit.Test;
 import guitests.guihandles.BrowserPanelHandle;
 import seedu.address.MainApp;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.logic.Logic;
+import seedu.address.logic.LogicManager;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
 import seedu.address.model.smplatform.Link;
 
 public class BrowserPanelTest extends GuiUnitTest {
@@ -25,9 +29,12 @@ public class BrowserPanelTest extends GuiUnitTest {
 
     @Before
     public void setUp() {
+        Model model = new ModelManager();
+        Logic logic = new LogicManager(model);
+
         selectionChangedEventStub = new PersonPanelSelectionChangedEvent(new PersonCard(ALICE, 0));
 
-        guiRobot.interact(() -> browserPanel = new BrowserPanel());
+        guiRobot.interact(() -> browserPanel = new BrowserPanel(logic));
         uiPartRule.setUiPart(browserPanel);
 
         browserPanelHandle = new BrowserPanelHandle(browserPanel.getRoot());

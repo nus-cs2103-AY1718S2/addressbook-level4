@@ -39,13 +39,17 @@ public class ResultDisplay extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         Platform.runLater(() -> displayed.setValue(event.message));
 
+        //@@author shadow2496
         if (event.hasError) {
             setStyleToIndicateResultError();
         } else {
             setStyleToDefault();
         }
+
+        //@@author
     }
 
+    //@@author shadow2496
     /**
      * Sets the result display style to use the default style.
      */

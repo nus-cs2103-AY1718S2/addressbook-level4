@@ -19,6 +19,12 @@ public interface Logic {
      */
     CommandResult execute(String commandText) throws CommandException, ParseException;
 
+    //@@author shadow2496
+    /** Passes the verification code for an access token */
+    void passVerificationCode(String code);
+
+    //@@author
+
     /** Returns an unmodifiable view of the filtered list of persons */
     ObservableList<Person> getFilteredPersonList();
 

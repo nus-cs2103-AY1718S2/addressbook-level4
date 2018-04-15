@@ -830,11 +830,10 @@ The code make use the `JumpToEventListRequestEvent` or `JumpToTaskListRequestEve
         return result;
     }
 ----
-If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed' in the GUI.
-{empty} +
-{empty} +
-//end:select[]
 
+
+//end::select[]
+{empty} +
 
 ==== Overdue
 

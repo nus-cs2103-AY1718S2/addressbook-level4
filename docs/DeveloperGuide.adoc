@@ -364,6 +364,67 @@ The archival feature is implemented by adding a boolean variable `isArchived` in
 ** Cons: Harder to implement, more changes have to be made to existing codebase.
 // end::archive[]
 
+//tag::switchtheme[]
+=== Switch theme feature
+==== Current Implementation
+image::SwitchSequenceDiagram.png[width="800"]
+The switch theme feature allows the salesperson to switch between dark and light thenmes as he might have to work under different lighting conditions. The theme that is in used persists across restarts
+
+See sequence diagram. The archival feature is implemented by triggering an `SwitchThemeRequestEvent()` which is then handled in `MainWindow`.
+The theme switching in done in two ways. For the main window, it is done by changing the CSS stylesheet used. For the calendar, because the stylesheet is complicated and is provided by an external library, we use a JavaFX effect to invert all colors.
+
+==== Design Considerations
+
+===== Aspect: Theme switching is triggered by an event
+
+* **Alternative 1 (current choice):** Theme switching is triggered by an event
+** Pros: Preserves modularity, and Separation of Concerns.
+** Cons: More code.
+* **Alternative 2:** Theme switching happens directly in switch theme command
+** Pros: Simpler.
+** Cons: Breaks modularity and Separations of Concerns. UI should be handled in the UI section not the Logic section.
+
+===== Aspect: Calendar theme switching is handled by a JavaFX effect
+
+* **Alternative 1 (current choice):** Calender theme swithing is handled by JavaFX effect
+** Pros: Simple to implement
+** Cons: Potentially ugly and less flexible, as cannot configure the individual colours.
+* **Alternative 2:** Create another calendar CSS for the dark theme
+** Pros: More flexible in choice of colors, resulting in more beautiful UI.
+** Cons: Difficult to implement, due to complexity of CSS stylesheet.
+** Cons: Loses color consistency of simply inverting colors.
+** Cons: Any future change in colors have to update two stylesheets.
+// end::switchtheme[]
+
+//tag::appointment[]
+=== Appointments feature
+==== Current Implementation
+The appointments feature allows the salesperson to add and edit appointments that he have with clients in the contact list. He can also view the appointments in a calendar.
+
+The edit appointment feature is interesting in that editing persons check whether the person is already in the appointment. If so, the person is removed. Otherwise, the person is added.
+This differs from the behaviour of editing tags of a person, which is destructive and overwrite all tags.
+
+==== Design Considerations
+
+===== Aspect: Editing an appointment's person list is non-destructive
+
+* **Alternative 1 (current choice):** Editing an appointment's person list adds the person if not present and removes the person otherwise.
+** Pros: Fits the usual use case of a person saying he is/is unable to make it for the appointment
+** Cons: Cannot overwrite the person list with a new set of persons directly.
+* **Alternative 2:** Destructively edit the person list, replacing it with the new list.
+** Pros: Easier to overwrite the person list.
+** Cons: Does not fit the expected use case
+
+===== Aspect: Calendar is handled by an external library, CalendarFX
+
+* **Alternative 1 (current choice):** Calender is handled by external library, CalendarFX
+** Pros: Less effort, make good use of existing code to reduce duplication of effort.
+** Cons: Calendar is less customisable. Limited to what is already implemented.
+* **Alternative 2:** Create our own calendar
+** Pros: More flexible terms of how the calendar will work
+** Cons: More effort. Time could be used on other features.
+// end::appointment[]
+
 //tag::timezone[]
 === TimeZone feature
 ==== Current Implementation
@@ -968,10 +1029,11 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 === Feature Contribution
 
 ==== Ong Kuan Yang
-* *Major*: A calendar or appointment scheduling feature allows the salesperson to record down when he has appointments with his clients and to see at a glance his future appointments for the days/month ahead.
+* *Major*: A calendar or appointment scheduling feature that allows the salesperson to record down when he has appointments with his clients and to see at a glance his future appointments for the days/month ahead.
 * *Minor*: An archival feature for clients that the salesperson is no longer in contact with so that they do not clutter up the interface as the salesperson has to manage a lot of clients.
 * *Minor*: A switch theme command to switch between dark and light themes.
 * *Minor*: Command alias feature so that user does not have to type long commands.
+* *Minor*: A loading screen for emails so that the app does not become unresponsive
 
 ==== Gloria Law
 * *Major*: An email feature comprised of an email inbox panel and the ability to compose, reply and forward emails.

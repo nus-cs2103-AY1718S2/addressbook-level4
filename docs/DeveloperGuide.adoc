@@ -205,7 +205,8 @@ All these classes inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework.
 The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
-For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
+For example, the layout of the link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is
+specified in link: https://github.com/CS2103JAN2018-W14-B4/main/blob/master/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
 The `UI` component,
 

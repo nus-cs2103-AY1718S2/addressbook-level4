@@ -52,3 +52,5 @@ include::../UserGuide.adoc[tag=maps]
 include::../DeveloperGuide.adoc[tag=customizedalias]
 
 include::../DeveloperGuide.adoc[tag=vacantroomfinder]
+
+include::../DeveloperGuide.adoc[tag=mapconsiderations]

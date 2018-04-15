@@ -22,8 +22,4 @@ public class AliasListHandle extends NodeHandle<TableView> {
     public ObservableList<TableColumn> getTables() {
         return getRootNode().getColumns();
     }
-
-    public boolean getFront() {
-        return getRootNode().getChildrenUnmodifiable().get(0).equals(this);
-    }
 }

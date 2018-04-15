@@ -1,7 +1,6 @@
 package seedu.address;
 
 import java.io.IOException;
-import java.time.LocalDate;
 import java.util.Map;
 import java.util.Optional;
 import java.util.logging.Logger;
@@ -15,7 +14,6 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.Version;
-import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.exceptions.WrongPasswordException;
@@ -23,7 +21,6 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.logic.commands.BirthdaysCommand;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -49,7 +46,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(1, 4, 1, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -83,7 +80,7 @@ public class MainApp extends Application {
 
         logic = new LogicManager(model);
 
-        ui = new UiManager(logic, config, userPrefs);
+        ui = new UiManager(logic, config, userPrefs, model);
 
         initEventsCenter();
     }
@@ -229,8 +226,8 @@ public class MainApp extends Application {
 
         checkPasswordChanged();
 
-        ui.start(primaryStage);
-        autoOpenBirthdayNotification();
+        ui.start(primaryStage); (
+                (UiManager) ui).openBirthdayNotification();
     }
 
     /**
@@ -267,16 +264,4 @@ public class MainApp extends Application {
         launch(args);
     }
 
-    /**
-     * Opens birthday notification
-     * Called after UI is called
-     */
-    private void autoOpenBirthdayNotification() {
-        LocalDate currentDate = LocalDate.now();
-
-        if (model != null && !passwordChanged) {
-            EventsCenter.getInstance().post(new BirthdayNotificationEvent(BirthdaysCommand
-                    .parseBirthdaysForNotification(model.getAddressBook().getPersonList(), currentDate), currentDate));
-        }
-    }
 }

@@ -4,12 +4,16 @@ import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.fail;
 
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.timetable.Lesson;
 import seedu.address.model.person.timetable.Timetable;
+import seedu.address.model.person.timetable.TimetableData;
 import seedu.address.model.person.timetable.TimetableDay;
+import seedu.address.model.person.timetable.TimetableWeek;
 import seedu.address.testutil.Assert;
 import seedu.address.testutil.TimetableBuilder;
 
@@ -27,6 +31,9 @@ public class TimetableTest {
     private static final String EMPTY_URL = " ";
     private static final String VALID_URL = "http://modsn.us/kqUAK";
     private static final String INVALID_URL = "http://google.com";
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
 
     @Test
     public void constructor_null_throwsNullPointerException() {
@@ -86,15 +93,27 @@ public class TimetableTest {
     }
 
     @Test
-    public void getTimeslot_invalidValues_throwsIllegalValueException() {
+    public void getTimeslot_invalidWeek_throwsIllegalValueException() throws IllegalValueException {
         Timetable timetable = new TimetableBuilder().getDummy(0);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(TimetableData.MESSAGE_INVALID_WEEK);
+        timetable.getLessonFromSlot(INVALID_WEEK, VALID_DAY, VALID_TIMESLOT);
+    }
 
-        Assert.assertThrows(IllegalValueException.class, () -> timetable.getLessonFromSlot(INVALID_WEEK,
-                VALID_DAY, VALID_TIMESLOT));
-        Assert.assertThrows(IllegalValueException.class, () -> timetable.getLessonFromSlot(VALID_WEEK,
-                INVALID_DAY, VALID_TIMESLOT));
-        Assert.assertThrows(IllegalValueException.class, () -> timetable.getLessonFromSlot(INVALID_WEEK,
-                VALID_DAY, INVALID_TIMESLOT));
+    @Test
+    public void getTimeslot_invalidDay_throwsIllegalValueException() throws IllegalValueException {
+        Timetable timetable = new TimetableBuilder().getDummy(0);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(TimetableWeek.MESSAGE_INVALID_DAY);
+        timetable.getLessonFromSlot(VALID_WEEK, INVALID_DAY, VALID_TIMESLOT);
+    }
+
+    @Test
+    public void getTimeslot_invalidSlot_throwsIllegalValueException() throws IllegalValueException {
+        Timetable timetable = new TimetableBuilder().getDummy(0);
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(TimetableDay.MESSAGE_INVALID_TIMESLOT);
+        timetable.getLessonFromSlot(VALID_WEEK, VALID_DAY, INVALID_TIMESLOT);
     }
 
     @Test
@@ -115,18 +134,33 @@ public class TimetableTest {
     }
 
     @Test
-    public void addTimeslot_invalidValues() {
+    public void addTimeslot_invalidWeek_throwsIllegalValueException() throws IllegalValueException {
         Timetable timetable = new Timetable(EMPTY_URL);
         Lesson lessonWithInvalidWeek = new Lesson("CS2103T", "T6", "Tutorial", INVALID_WEEK,
                 VALID_DAY, "1100", "1200");
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(TimetableData.MESSAGE_INVALID_WEEK);
+        timetable.addLessonToSlot(lessonWithInvalidWeek);
+    }
+
+    @Test
+    public void addTimeslot_invalidDay_throwsIllegalValueException() throws IllegalValueException {
+        Timetable timetable = new Timetable(EMPTY_URL);
         Lesson lessonWithInvalidDay = new Lesson("CS2103T", "T6", "Tutorial", VALID_WEEK,
                 INVALID_DAY, "1100", "1200");
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(TimetableWeek.MESSAGE_INVALID_DAY);
+        timetable.addLessonToSlot(lessonWithInvalidDay);
+    }
+
+    @Test
+    public void addTimeslot_invalidSlot_throwsIllegalValueException() throws IllegalValueException {
+        Timetable timetable = new Timetable(EMPTY_URL);
         Lesson lessonWithInvalidTime = new Lesson("CS2103T", "T6", "Tutorial", VALID_WEEK,
                 VALID_DAY, "2300", "2400");
-
-        Assert.assertThrows(IllegalValueException.class, () -> timetable.addLessonToSlot(lessonWithInvalidWeek));
-        Assert.assertThrows(IllegalValueException.class, () -> timetable.addLessonToSlot(lessonWithInvalidDay));
-        Assert.assertThrows(IllegalValueException.class, () -> timetable.addLessonToSlot(lessonWithInvalidTime));
+        thrown.expect(IllegalValueException.class);
+        thrown.expectMessage(TimetableDay.MESSAGE_INVALID_TIMESLOT);
+        timetable.addLessonToSlot(lessonWithInvalidTime);
     }
 
 }

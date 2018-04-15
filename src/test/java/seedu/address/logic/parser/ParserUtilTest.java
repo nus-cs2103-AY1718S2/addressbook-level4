@@ -18,6 +18,9 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.MapCommand;
+import seedu.address.model.alias.Alias;
 import seedu.address.model.building.Building;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Birthday;
@@ -51,11 +54,14 @@ public class ParserUtilTest {
 
     //@@author jingyinno
     private static final String VALID_BUILDING = "COM1";
-
+    private static final String VALID_BUILDING_2 = "COM2";
     private static final String INVALID_BUILDING = "COM*";
-
     private static final String VALID_LOCATION = "com1";
-
+    private static final String VALID_POSTAL_CODE = "117417";
+    private static final String VALID_POSTAL_CODE_2 = "138527";
+    private static final String VALID_ALIAS = "add1";
+    private static final String INVALID_ALIAS = "add*";
+    private static final Alias ADD_ALIAS = new Alias(AddCommand.COMMAND_WORD, VALID_ALIAS);
     //@@author
 
     //@@author yeggasd
@@ -336,6 +342,97 @@ public class ParserUtilTest {
     @Test
     public void parseBuilding_invalidBuilding_throwsIllegalValueException() {
         Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseBuilding(INVALID_BUILDING));
+    }
+
+    @Test
+    public void parseBuilding_invalidBuilding_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseBuilding(null));
+    }
+
+    @Test
+    public void parseUnalias_validUnAlias() throws Exception {
+        assertEquals(VALID_ALIAS, ParserUtil.parseUnalias(VALID_ALIAS));
+    }
+
+    @Test
+    public void parseUnalias_invalidUnAlias_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseUnalias(INVALID_ALIAS));
+    }
+
+    @Test
+    public void parseUnalias_invalidUnAlias_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseUnalias(null));
+    }
+
+    @Test
+    public void parseAlias_validAliasCommandAndAlias() throws Exception {
+        assertEquals(ADD_ALIAS, ParserUtil.parseAlias(AddCommand.COMMAND_WORD, VALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_validAliasCommandAndinvalidAlias_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAlias(AddCommand.COMMAND_WORD,
+                INVALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_invalidAliasCommandAndvalidAlias_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAlias(INVALID_ALIAS, VALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_invalidAliasCommandAndvalidAlias_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAlias(null, VALID_ALIAS));
+    }
+
+    @Test
+    public void parseAlias_validAliasCommandAndinvalidAlias_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAlias(AddCommand.COMMAND_WORD, null));
+    }
+
+    @Test
+    public void parseLocations_validLocation_success() {
+        assertEquals(VALID_POSTAL_CODE, ParserUtil.parseLocations(VALID_POSTAL_CODE));
+    }
+
+    @Test
+    public void parseLocations_multipleLocations_success() {
+        String[] locations = new String[] {VALID_POSTAL_CODE, VALID_POSTAL_CODE_2};
+        String joinedLocations = String.join(MapCommand.SPLIT_TOKEN, locations);
+        assertEquals(joinedLocations , ParserUtil.parseLocations(joinedLocations));
+    }
+
+    @Test
+    public void parseLocations_validNusLocations_success() {
+        assertEquals(VALID_POSTAL_CODE , ParserUtil.parseLocations(VALID_BUILDING));
+    }
+
+    @Test
+    public void parseLocations_validNusLocationsMixedCase_success() {
+        assertEquals(VALID_POSTAL_CODE , ParserUtil.parseLocations(VALID_LOCATION));
+    }
+
+    @Test
+    public void parseLocations_validMultipleNusLocations_success() {
+        String[] locationsPostalCode = new String[] {VALID_POSTAL_CODE, VALID_POSTAL_CODE};
+        String expectedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsPostalCode);
+        String[] locations = new String[] {VALID_BUILDING, VALID_BUILDING_2};
+        String joinedLocations = String.join(MapCommand.SPLIT_TOKEN, locations);
+        assertEquals(expectedLocations , ParserUtil.parseLocations(joinedLocations));
+    }
+
+    @Test
+    public void parseLocations_validMixedLocations_success() {
+        String[] locationsPostalCode = new String[] {VALID_POSTAL_CODE_2, VALID_POSTAL_CODE};
+        String expectedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsPostalCode);
+        String[] locations = new String[] {VALID_POSTAL_CODE_2, VALID_BUILDING};
+        String joinedLocations = String.join(MapCommand.SPLIT_TOKEN, locations);
+        assertEquals(expectedLocations , ParserUtil.parseLocations(joinedLocations));
+    }
+
+    @Test
+    public void parseLocations_invalidLocation_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocations(null));
     }
     //@@author
 

@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_LOCATION_BUILDING_UPPERCASE_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_THREE_LOCATIONS;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TWO_LOCATIONS_ADDRESS;
@@ -50,6 +52,25 @@ public class MapCommandTest {
         String expectedMessage = String.format(MapCommand.MESSAGE_SUCCESS);
         CommandResult result = prepareCommand(VALID_THREE_LOCATIONS, model).execute();
         assertEquals(expectedMessage, result.feedbackToUser);
+    }
+
+    @Test
+    public void equals() {
+        MapCommand nus = new MapCommand("nus");
+        MapCommand soc = new MapCommand("soc");
+        MapCommand nusCopy = new MapCommand("nus");
+
+        // same object & values -> returns true
+        assertTrue(nus.equals(nusCopy));
+
+        // different types -> returns false
+        assertFalse(nus.equals(1));
+
+        // null -> returns false
+        assertFalse(nus == null);
+
+        // different person -> returns false
+        assertFalse(nus.equals(soc));
     }
 
     /**

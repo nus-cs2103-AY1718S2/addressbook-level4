@@ -258,6 +258,8 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 // tag::undoredo[]
 === Undo/Redo feature
+Given below is the implementation detail of the Undo/Redo feature and some alternative design considetations.
+
 ==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of contactHeRo (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
@@ -387,6 +389,8 @@ image::UndoRedoActivityDiagram.png[width="650", align="center"]
 
 // tag::details[]
 === Details Panel Implementation
+Given below is the implementation detail of the Details Panel and some alternative design considetations.
+
 ==== Current Implementation
 
 `DetailsPanel` is a TabPane which consists of the following tabs:
@@ -436,6 +440,7 @@ image::ContactDetailsDisplayWireFrame.png[width="600", align="center"]
 
 // tag::tabSwitch[]
 === Tab Switching Mechanism
+Given below is the implementation detail of the Tab Switching Mechanism and some alternative design considetations.
 
 ==== Current Implementation
 Tab Switching Mechanism is an event driven mechanism.
@@ -519,6 +524,7 @@ image::SwitchTabRequestEventSD2.png[width="350", align="center"]
 
 // tag::jobs[]
 === Job Openings Implementation
+Given below is the implementation detail of the Job Openings feature and some alternative design considetations.
 
 ==== Current Implementation
 
@@ -596,8 +602,6 @@ The job openings are displayed towards the right side of the UI in the `JobListP
 
 === Matching jobs mechanism
 
-==== Current Implementation
-
 The `JobMatchCommand` uses `PersonSkillContainsKeywordsPredicate` to match person's skills with a job's skills. It accepts the index for the job to match and then uses the `PersonSkillMatchesKeywordsPredicate` to match the job. Below is the code for the execution of the `JobMatchCommand`:
 
 [source, java]
@@ -633,8 +637,6 @@ To minimize code duplication, we made a utility class `SkillUtil` which is used 
 
 // tag::autoComplete[]
 === Auto-complete Mechanism
-
-==== Current Implementation
 
 The auto-complete mechanism is implemented in the `CommandBox` in the `UI` component. We check the key pressed by the user and if it is the `Tab` key, the auto-complete mechanism is triggered.
 

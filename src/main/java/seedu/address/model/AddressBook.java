@@ -11,6 +11,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.ShowLoginDialogRequestEvent;
+import seedu.address.model.account.Account;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
@@ -24,6 +27,7 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class AddressBook implements ReadOnlyAddressBook {
 
+    private Account account;
     private final UniquePersonList persons;
     private final UniqueTagList tags;
 
@@ -74,6 +78,21 @@ public class AddressBook implements ReadOnlyAddressBook {
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
         }
+    }
+
+    //// account-level operations
+
+    /**
+     * Logs into a social media platform using {@code account}.
+     */
+    public void loginAccount(Account account) {
+        this.account = account;
+        String loadUrl = this.account.getLoginDialogUrl();
+        EventsCenter.getInstance().post(new ShowLoginDialogRequestEvent(loadUrl));
+    }
+
+    public void setVerificationCode(String code) {
+        account.setCode(code);
     }
 
     //// person-level operations

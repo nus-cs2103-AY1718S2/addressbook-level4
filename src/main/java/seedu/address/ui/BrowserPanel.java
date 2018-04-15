@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 import com.google.common.eventbus.Subscribe;
 
 import javafx.application.Platform;
+import javafx.beans.value.ObservableValue;
+import javafx.concurrent.Worker;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Tab;
@@ -18,7 +20,9 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.commons.events.ui.SearchPersonEvent;
+import seedu.address.commons.events.ui.ShowLoginDialogRequestEvent;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.Logic;
 import seedu.address.model.person.Person;
 import seedu.address.model.smplatform.Facebook;
 import seedu.address.model.smplatform.Link;
@@ -36,6 +40,8 @@ public class BrowserPanel extends UiPart<Region> {
     public static final String TWITTER_SEARCH_PAGE_URL =
             "https://twitter.com/search?f=users&vertical=news&q=";
 
+    private static final String SUCCESS_URL = "https://www.facebook.com/connect/login_success.html";
+
     private static final String FXML = "BrowserPanel.fxml";
     private static final String FACEBOOK_TAB_ID = "facebookTab";
     private static final String TWITTER_TAB_ID = "twitterTab";
@@ -45,6 +51,7 @@ public class BrowserPanel extends UiPart<Region> {
     private URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + "default.html");
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
+    private final Logic logic;
 
     private Set<String> openTabIdSet;
 
@@ -63,8 +70,9 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView twitterBrowser;
 
-    public BrowserPanel() {
+    public BrowserPanel(Logic logic) {
         super(FXML);
+        this.logic = logic;
 
         //@@author Nethergale
         openTabIdSet = tabPane.getTabs().stream().map(tab -> tab.getId()).collect(Collectors.toSet());
@@ -214,6 +222,26 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     /**
+     * Passes a verification code when the login is successful.
+     */
+    private void passVerificationCode() {
+        facebookBrowser.getEngine().getLoadWorker().stateProperty().addListener((
+                ObservableValue<? extends Worker.State> observable, Worker.State oldValue, Worker.State newValue) -> {
+            if (newValue != Worker.State.SUCCEEDED) {
+                return;
+            }
+
+            String currentUrl = facebookBrowser.getEngine().getLocation();
+
+            if (currentUrl.endsWith(DEFAULT_PAGE)) {
+            } else if (currentUrl.startsWith(SUCCESS_URL)) {
+                int pos = currentUrl.indexOf("code=");
+                logic.passVerificationCode(currentUrl.substring(pos + "code=".length()));
+            }
+        });
+    }
+
+    /**
      * Frees resources allocated to the browser.
      */
     public void freeResources() {
@@ -254,5 +282,12 @@ public class BrowserPanel extends UiPart<Region> {
             loadBrowserSearchPage(event.getSearchName());
             loadBrowser1SearchPage(event.getSearchName());
         }
+    }
+
+    @Subscribe
+    private void handleShowLoginDialogRequestEvent(ShowLoginDialogRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadFacebookBrowserPage(event.loadUrl);
+        passVerificationCode();
     }
 }

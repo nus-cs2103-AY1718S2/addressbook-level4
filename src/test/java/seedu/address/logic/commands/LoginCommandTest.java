@@ -6,30 +6,33 @@ import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PASSWORD_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_USERNAME_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
+import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
-import org.junit.Rule;
 import org.junit.Test;
-import org.junit.rules.ExpectedException;
 
-import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
+import seedu.address.model.Model;
+import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.account.Account;
 import seedu.address.testutil.AccountBuilder;
 
 //@@author shadow2496
 public class LoginCommandTest {
 
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
     @Test
-    public void execute_throwsCommandException() throws Exception {
+    public void execute_login_success() {
         Account validAccount = new AccountBuilder().build();
         LoginCommand command = new LoginCommand(validAccount);
 
-        thrown.expect(CommandException.class);
-        thrown.expectMessage("Test");
+        String expectedMessage = String.format(LoginCommand.MESSAGE_SUCCESS, validAccount);
 
-        command.execute();
+        Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+
+        assertCommandSuccess(command, model, expectedMessage, model);
     }
 
     @Test

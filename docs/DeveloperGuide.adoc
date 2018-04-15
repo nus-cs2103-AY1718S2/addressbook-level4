@@ -2133,3 +2133,4 @@ These instructions only provide a starting point for testers to work on; testers
 .. Prerequisites: Conduct `find` command. More than one person or petPatient in the lists.
 .. Testcase: `find -o n/Alex` + `list` +
     Expected: Medeina will display the located person and then list out all owners and petPatients in Medeina's storage.
+

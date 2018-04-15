@@ -24,8 +24,6 @@ import com.google.api.services.calendar.model.Event;
 import com.google.api.services.calendar.model.EventDateTime;
 
 import seedu.address.model.appointment.Appointment;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
 
 //@@author kengsengg
 /**
@@ -95,12 +93,12 @@ public class CalendarDisplay {
      * Creates an event on the Google Calendar
      * @throws IOException
      */
-    public void createEvent(Appointment toAdd, Person selectedPerson) throws IOException {
+    public void createEvent(Appointment toAdd, String id) throws IOException {
         Calendar service = getCalendarService();
 
-        Name name = selectedPerson.getName();
+        Event event = new Event().setSummary(toAdd.getName());
 
-        Event event = new Event().setSummary(name.toString());
+        event.setId(String.valueOf(id));
 
         DateTime startDateTime = new DateTime(formattedStartDateTime(toAdd));
         EventDateTime start = new EventDateTime().setDateTime(startDateTime);
@@ -110,8 +108,17 @@ public class CalendarDisplay {
         EventDateTime end = new EventDateTime().setDateTime(endDateTime);
         event.setEnd(end);
 
-        String calendarId = "primary";
-        service.events().insert(calendarId, event).execute();
+        service.events().insert("primary", event).execute();
+    }
+
+    /**
+     * Removes an event on the Google Calendar
+     * @throws IOException
+     */
+    public void removeEvent(String id) throws IOException {
+        Calendar service = getCalendarService();
+
+        service.events().delete("primary", id).execute();
     }
 
     /**

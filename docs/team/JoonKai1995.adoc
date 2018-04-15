@@ -27,27 +27,23 @@ Your TA is a desktop contact and task manager application used to manage the man
 
 ** Justification: *Your TA* is made for teaching assistants in universities, the matriculation number field and the `find` command supporting this field provides more user friendliness when searching for a student.
 
-* *Minor feature*: Added a `toggle` function for the theme (colour scheme) of `Your TA`.
-
-** Justification: This gives the user more freedom to customise `Your TA`.
-
 * *Code contributed*: link:{repoURL}/collated/functional/JoonKai1995.md[functional], link:{repoURL}/collated/test/JoonKai1995.md[test].
 
 * *Other contributions*:
 
-** Enhancements to existing features:
+** Crisis management:
 
-*** Wrote additional test cases for the new task features.
-
-** Documentation:
-
-*** Did cosmetic tweaks to the user guide.
-
-*** Added graphical images to provide a visual aid to the user reading the user guide.
+*** Fixed repository during 2 major repo crashes https://github.com/CS2103JAN2018-F09-B1/main/pull/63[#63] https://github.com/CS2103JAN2018-F09-B1/main/pull/98[#98].
 
 ** Community:
 
-*** Helped fix repo bugs due to bad merge conflict resolution between v1.4 and 1.5rc.
+*** Wrote key tasks classes for teammates todo list feature https://github.com/CS2103JAN2018-F09-B1/main/pull/45[#45].
+
+** Documentation:
+
+*** Did cosmetic tweaks to the user guide https://github.com/CS2103JAN2018-F09-B1/main/pull/128[#128].
+
+*** Added graphical images to provide a visual aid to the user reading the user guide https://github.com/CS2103JAN2018-F09-B1/main/pull/44[#44].
 
 <<<
 

@@ -10,7 +10,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
  */
 public class Alias {
 
-    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias names should be alphanumeric";
+    public static final String MESSAGE_ALIAS_CONSTRAINTS = "Alias arguments should be alphanumeric";
     public static final String ALIAS_VALIDATION_REGEX = "\\p{Alnum}+";
 
     private final String command;
@@ -19,6 +19,7 @@ public class Alias {
     /**
      * Constructs an {@code Alias}.
      *
+     * @param command A valid command word
      * @param aliasName A valid alias name.
      */
     public Alias(String command, String aliasName) {
@@ -29,10 +30,18 @@ public class Alias {
         this.command = command;
     }
 
+    /**
+     *
+     * @return the command word
+     */
     public String getCommand() {
         return command;
     }
 
+    /**
+     *
+     * @return the alias name
+     */
     public String getAlias() {
         return aliasName;
     }

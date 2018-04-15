@@ -28,7 +28,6 @@ public class MapCommand extends Command {
     public static final int FIRST_LOCATION_INDEX = 0;
 
     private String locations;
-    private boolean isOneLocation;
 
     /**
      * Creates a MapCommand to pass locations to Google Maps
@@ -42,7 +41,7 @@ public class MapCommand extends Command {
     public CommandResult execute() throws CommandException {
         requireNonNull(model);
         locations = ParserUtil.parseLocations(this.locations);
-        isOneLocation = !locations.contains(SPLIT_TOKEN);
+        boolean isOneLocation = !locations.contains(SPLIT_TOKEN);
         try {
             EventsCenter.getInstance().post(new GoogleMapsEvent(locations, isOneLocation));
             return new CommandResult(String.format(MESSAGE_SUCCESS));

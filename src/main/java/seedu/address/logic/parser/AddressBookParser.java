@@ -132,7 +132,7 @@ public class AddressBookParser {
      * Parses user input into command for execution.
      *
      * @param userInput full user input string
-     * @return String[] consists of commandWord and arguments
+     * @return String[] of size 2, consists of commandWord and arguments
      * @throws ParseException if the user input does not conform the expected format
      */
     public String[] extractCommandArgs(String userInput) throws ParseException {

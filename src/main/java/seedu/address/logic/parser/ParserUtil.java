@@ -257,18 +257,16 @@ public class ParserUtil {
      * Identifies if one or more locations are specified in the user input
      */
     private static String identifyNumberOfSpecifiedLocations(String[] locationsArray) {
-        String parsedLocations = "";
         if (locationsArray.length >= MapCommand.TWO_LOCATIONS_WORD_LENGTH) {
-            parsedLocations = String.join(MapCommand.SPLIT_TOKEN, locationsArray);
+            return String.join(MapCommand.SPLIT_TOKEN, locationsArray);
         } else {
-            parsedLocations = locationsArray[MapCommand.FIRST_LOCATION_INDEX];
+            return locationsArray[MapCommand.FIRST_LOCATION_INDEX];
         }
-        return parsedLocations;
     }
 
 
     /**
-     * Creates a MapCommand to pass locations to Google Maps
+     * Replace NUS building names with respective postal code
      */
     private static void checkForAndRetrieveNusBuildings(String[] locationsArray) {
         for (int i = 0; i < locationsArray.length; i++) {

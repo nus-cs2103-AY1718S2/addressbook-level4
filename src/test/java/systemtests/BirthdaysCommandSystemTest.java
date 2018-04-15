@@ -52,7 +52,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void openEmptyBirthdayList() {
         //use command box
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         executeCommand(BirthdaysCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals("", getBirthdayList().getText());
@@ -61,7 +61,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void assertBirthdayListWithOnePersonToday() {
         // Simulation of commands to create only one person whose birthday is today
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
                 + buildBirthday(true) + " " + TIMETABLE_DESC_AMY + TAG_DESC_FRIEND + " ");
@@ -79,7 +79,7 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     @Test
     public void assertBirthdayListWithZeroPersonToday() {
         // Simulation of commands to create only one person whose birthday is today
-        deleteAllPersons();
+        deleteAllPersonsAndAliases();
         executeCommand("   " + AddCommand.COMMAND_WORD + "  " + NAME_DESC_AMY + "  " + PHONE_DESC_AMY + " "
                 + EMAIL_DESC_AMY + "   " + ADDRESS_DESC_AMY + "   b/"
                 + buildBirthday(false) + " " + TIMETABLE_DESC_AMY + " " + TAG_DESC_FRIEND + " ");

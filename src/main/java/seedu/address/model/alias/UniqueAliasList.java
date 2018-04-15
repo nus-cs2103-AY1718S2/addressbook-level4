@@ -3,6 +3,7 @@ package seedu.address.model.alias;
 import static java.util.Objects.requireNonNull;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 
 import javafx.collections.FXCollections;
@@ -119,13 +120,6 @@ public class UniqueAliasList {
     }
 
     /**
-     * Replaces the aliases in this aliasCommandMap with the HashMap in the argument.
-     */
-    public void replaceHashmap(HashMap<String, String> aliases) {
-        aliasCommandMap = aliases;
-    }
-
-    /**
      * Clears aliasCommandMap, for clear command.
      */
     public void resetHashmap() {
@@ -189,13 +183,24 @@ public class UniqueAliasList {
      * Groups alias mappings by command.
      */
     private void convertAliasHashmapToArrayList(ArrayList<ArrayList<String>> aliases) {
-        for (String command : AliasCommand.getCommands()) {
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
             aliases.add(new ArrayList<>());
         }
-        for (String key: aliasCommandMap.keySet()) {
+
+        String[] sortedKeys = sortAliasKeysByAlphabeticalOrder();
+        for (String key: sortedKeys) {
             String command = aliasCommandMap.get(key);
             aliases.get(AliasCommand.getCommands().indexOf(command)).add(key);
         }
+    }
+
+    /**
+     * Sorts aliases by alphabetical order.
+     */
+    private String[] sortAliasKeysByAlphabeticalOrder() {
+        String[] sortedKeys = aliasCommandMap.keySet().toArray(new String[0]);
+        Arrays.sort(sortedKeys);
+        return sortedKeys;
     }
 
     /**

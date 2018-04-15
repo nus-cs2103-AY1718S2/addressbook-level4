@@ -18,13 +18,16 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 image:FASTIS.png[width="500"] +
 Fastis is a desktop application which functions as an address book that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos, and schedule suitable meetup time.
 
-This Developer Guide is meant to provides the necessary information for developers who are interested in contributing to this application. The guide consists of the set-up steps to develop the application and the detailed descriptions and implementations of the application’s current features.
+This Developer Guide is meant to provides the necessary information for developers who are interested in contributing to this application.
+
+New developers should begin with the section <<Setting up, SettingUp>>. Experienced developers might want begin instead with the section <<
 
 This can help developers understand the implementation of the features and able to modify any feature for further improvements.
 
 [NOTE]
 Address book in the developer guide refers to Fastis.
 
+[[SettingUp]]
 == Setting up
 The following steps will guide you on the set up of FASTIS.
 

@@ -124,7 +124,7 @@ Given below is an overview of each component.
 This class is written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library].
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
-Each of the last four components:
+The rest of the 4 components does the following:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.

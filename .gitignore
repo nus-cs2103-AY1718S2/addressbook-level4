@@ -8,6 +8,7 @@ lib/*
 *.log
 *.log.*
 *.csv
+*.temp
 config.json
 src/test/data/sandbox/
 preferences.json
@@ -18,3 +19,7 @@ classes/
 /bin/
 src/main/resources/docs/
 out/
+comments.temp
+CS2103-testsheet-comments.xlsx
+workbook.temp
+src/main/resources/.credentials/carvicim-gmail/

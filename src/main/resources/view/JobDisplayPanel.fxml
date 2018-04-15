@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.effect.Glow?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<!-- @@author whenzei -->
+
+<StackPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="328.0" prefWidth="426.0" xmlns="http://javafx.com/javafx/9.0.1" xmlns:fx="http://javafx.com/fxml/1">
+   <children>
+      <GridPane fx:id="jobDisplay" gridLinesVisible="true" prefHeight="395.0" prefWidth="426.0">
+        <columnConstraints>
+          <ColumnConstraints maxWidth="645.0" minWidth="10.0" prefWidth="159.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="709.0" minWidth="0.0" prefWidth="267.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="197.0" minHeight="0.0" prefHeight="25.0" valignment="TOP" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="395.0" minHeight="0.0" prefHeight="27.0" valignment="TOP" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="540.0" minHeight="2.0" prefHeight="25.0" valignment="BASELINE" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="540.0" minHeight="10.0" prefHeight="25.0" valignment="TOP" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="540.0" minHeight="10.0" prefHeight="63.0" valignment="TOP" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="540.0" minHeight="10.0" prefHeight="76.0" valignment="TOP" />
+            <RowConstraints maxHeight="540.0" minHeight="10.0" prefHeight="89.0" valignment="TOP" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="TOP_LEFT" styleClass="label-header" text="Job Number:" underline="true">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <Label alignment="TOP_LEFT" styleClass="label-header" text="Status:" underline="true" GridPane.rowIndex="1">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="155.0" styleClass="label-header" text="Date Added:" underline="true" GridPane.rowIndex="2">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="224.0" styleClass="label-header" text="Vehicle Number:" underline="true" GridPane.rowIndex="3">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="230.0" styleClass="label-header" text="Client Details:" underline="true" GridPane.rowIndex="4">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+            </Label>
+            <VBox prefHeight="88.0" prefWidth="593.0" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <children>
+                  <Label fx:id="name" lineSpacing="2.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+                  <Label fx:id="phone" lineSpacing="2.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+                  <Label fx:id="email" lineSpacing="2.0">
+                     <padding>
+                        <Insets left="5.0" />
+                     </padding></Label>
+               </children>
+            </VBox>
+            <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="239.0" styleClass="label-header" text="Assigned Employees:" underline="true" GridPane.rowIndex="5">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+            </Label>
+            <Label alignment="TOP_LEFT" prefHeight="20.0" prefWidth="116.0" styleClass="label-header" text="Remarks:" underline="true" GridPane.rowIndex="6">
+               <font>
+                  <Font name="MS Outlook" size="16.0" />
+               </font>
+               <padding>
+                  <Insets left="5.0" top="2.0" />
+               </padding>
+            </Label>
+            <Label fx:id="vehicleNumber" GridPane.columnIndex="1" GridPane.rowIndex="3">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <Label fx:id="date" GridPane.columnIndex="1" GridPane.rowIndex="2">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <Label fx:id="status" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <Label fx:id="jobNumber" GridPane.columnIndex="1">
+               <padding>
+                  <Insets left="5.0" />
+               </padding></Label>
+            <ListView fx:id="assignedEmployees" prefHeight="200.0" prefWidth="200.0" styleClass="label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="5">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="3.0" right="3.0" top="10.0" />
+               </GridPane.margin></ListView>
+            <ListView fx:id="remarks" prefHeight="200.0" prefWidth="200.0" styleClass="label" visible="false" GridPane.columnIndex="1" GridPane.rowIndex="6">
+               <GridPane.margin>
+                  <Insets bottom="10.0" left="3.0" right="3.0" top="10.0" />
+               </GridPane.margin>
+            </ListView>
+         </children>
+         <effect>
+            <Glow />
+         </effect>
+      </GridPane>
+   </children>
+</StackPane>

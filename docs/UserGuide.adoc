@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+﻿= CarviciM - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,157 +10,806 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W09-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W09-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Welcome to CarviciM! CarviciM (short for Car Servicing Manager) is a desktop application for *car servicing managers* to *manage car servicing jobs with convenience and ease*. You can use Carvicim to add jobs, close ongoing jobs, import large number of job entries, manage employees for job assignment and notify employees of jobs through email. CarviciM is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CarviciM can get your management of servicing jobs done faster than traditional GUI apps. Interested to speed up your car servicing job allocation process? Jump to the <<Setting Up CarviciM>> to get started. Enjoy!
+
+== About This User Guide
+
+This user guide shows you how to get started using the CarviciM. It shows you how to setup the application, and also how to perform operations in the CarviciM which are lead by examples.
+
+====
+*Legend*
+
+[Warning]
+This icon represents a warning
+
+[NOTE]
+This icon represents something noteworthy
+
+[TIP]
+This icon represents a useful tip
+
+`This represents an input command`
+
+====
+
+== Setting Up CarviciM
+
+This section will show you how to setup the necessary environment in order to run CarviciM on your desktop.
+
+.  Ensure you have link:http://www.oracle.com/technetwork/java/javase/downloads/index.html[Java] version `1.8.0_60` or later installed in your Computer.
++
+[NOTE]
+Having any Java 8 version is not enough. This app will not work with earlier versions of Java 8. +
+Don't have Java `1.8.0_60` or above? Download it link:http://www.oracle.com/technetwork/java/javase/downloads/index.html[here]!
++
+.  Download the latest `CarviciM.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for CarviciM.
+[WARNING]
+Please ensure that there are no other applications using the home folder, it can affect the performance of CarviciM.
+.  Double-click the file to start the app. You should see the Graphical User Interface (GUI) as shown in the image below.
++
+image::Ui.png[width="850"]
++
+
+You are all set to use CarviciM now! To find out more about how to use CarviciM, read the next section.
 
 == Quick Start
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
-[NOTE]
-Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
-+
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
-+
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+This section will cover the basics you need to know for using the guide and the application.
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+=== Various Regions In The GUI
+
+The GUI of CarviciM is made up of the various regions as shown in the image below.
+
+image::UI_Orientation.PNG[width="900"]
+
+Command Box::
+A region on the GUI which allows you to type in commands.
+
+Job List Panel::
+A region on the GUI where you can view the list of jobs.
+
+Job List Indicator::
+A region above the job list panel that indicates if you are viewing unreviewed jobs or saved jobs.
+
+Employee List Panel::
+A region on the GUI where you can view the list of employees.
+
+Job Display Panel::
+A region on the GUI which shows you the details of a selected job.
+
+Result Display::
+A region on the GUI which you can see the feedback to a command, entered in the command box.
+
+=== Executing Your First Command In CarviciM
+
+Execute a command by typing it in the command box and press kbd:[Enter]. +
+e.g. typing *`help`* into the command box (as shown in the image below), and pressing kbd:[Enter] will open the help window.
+
+image::help-command-example.PNG[width="300"]
+_Figure 4.2.1 : Typing *`help`* into the command box_
+
+Here are some example commands you can try:
+
+* *`liste`* : lists all employees' contacts
+* **`adde`**`n/John Doe p/98765432 e/johnd@example.com` : adds an employee named `John Doe` to CarviciM.
+* **`deletee`**`3` : deletes the 3rd employee shown in the current list
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+=== Command Format
+
+Before reading more about commands, you should take note of the command format used throughout this user guide:
+
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `adde n/NAME`, `NAME` is a parameter which can be used as `adde n/John Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/mechanic` or as `n/John Doe`.
+* Items with `…` after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/mechanic`, `t/technician` etc.
+* Items with `+` after them can be used multiple times but has to be used **at least once** e.g. `w/ASSIGNED_EMPLOYEE_INDEX+` can be used as `w/4`, `w/5` etc.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+
+For details of each command, you can refer to <<Features>> below.
 
 [[Features]]
 == Features
 
-====
-*Command Format*
-
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+This section will explain to you how you can use the features of CarviciM.
 
 === Viewing help : `help`
 
+To find out more on using CarviciM, you can use this command to open the help menu: +
 Format: `help`
 
-=== Adding a person: `add`
+// tag::addjob[]
+=== Adding a job entry: `addj`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+To add a new job entry and assign employees to the job, use this command as follows: +
+Format: `addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+`
 
-[TIP]
-A person can have any number of tags (including 0)
+[NOTE]
+====
+* The `addj` command adds a job with the given fields, and assign employees based on specified `ASSIGNED_EMPLOYEE_INDEX`.
+* The index refers to the index number shown in the most recent employee listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+====
+
+Example:
+
+`addj n/John Doe p/98765432 e/johnd@example.com v/bhj123 w/3` +
+You will see "New job added: ... " in the result display as shown in the image below.
+
+image::addj-command-example.PNG[width="500"]
+_Figure 5.2.1 : Result display indicating that a job has been added_
+
+The job list panel will be updated to display the newly added job as seen in the image below.
+
+image::addj-job-list-panel-before.PNG[width="300"]
+_Figure 5.2.2 : Job list panel before addition of job entry_
+
+image::addj-job-list-panel-after.PNG[width="300"]
+_Figure 5.2.3 : Job list panel after addition of job entry_
+// end::addjob[]
+
+// tag::closejob[]
+=== Closing a job entry: `closej`
+
+To indicate that a job is completed in CarviciM, use this command as follows: +
+Format: `closej j/JOB_NUMBER`
+
+Example:
+
+`closej j/2` +
+This command closes the ongoing job of number 2 in CarviciM. +
+You will see "Closed Job..." in the result display as shown in the image below.
+
+image::closej-command-example.PNG[width="500"]
+_Figure 5.3.1 : Result display indicating that a job has been closed_
+
+You will also see the job of number 2 have its status shown as "closed" in the job list panel.
+
+image::closej-job-list-panel-before.PNG[width="300"]
+_Figure 5.3.2 : Job list panel before job is closed_
+
+image::closej-job-list-panel-after.PNG[width="300"]
+_Figure 5.3.3 : Job list panel after job is closed_
+// end::closejob[]
+
+// tag::remark[]
+=== Adding remark to a job: `remark`
+
+To add remark or special note to an ongoing job entry, use this command as follows: +
+Format: `remark j/JOB_NUMBER r/YOUR_REMARK`
+
+Example:
+
+`remark j/2 r/An urgent work that should be completed asap` +
+This command will add the remark "An urgent work that should be completed asap" to a job entry of a job number "2". +
+You will see the message "Remark added to job number ..." reflected in the result display (shown in the image below).
+
+image::remark-command-example.PNG[width="500"]
+_Figure 5.4.1 : Result display showing feedback for remark added_
+// end::remark[]
+
+=== Reassigning employees of a job: `reassign` #[Coming in V2.0]#
+
+To reassign employees belonging to a job due to manpower constraints , use this command as follows: +
+Format: `reassign j/JOB_NUMBER [-/INDEX_OF_EMPLOYEE_TO_RETIRE] [+/INDEX_OF_EMPLOYEE_TO_ASSIGN]`
+
+[NOTE]
+====
+* At least one of the optional fields should be present.
+====
+
+Example:
+
+`reassign -/2 -/1 +/3 +/4` +
+This command will retire employees of index 1 and 2 from the assigned employee list belonging to the specified job, and newly assign employees of index 3 and 4 from the list of employees shown in the employee list panel.
+
+=== Listing all jobs : `listj`
+
+To view a list of all jobs in CarviciM, you can use this command to display them in the job list panel: +
+Format: `listj`
+
+[NOTE]
+====
+* This command will show you all the jobs (closed and ongoing) in CarviciM .
+====
+
+=== Listing all ongoing jobs : `listoj`
+
+To view a list of all *ongoing* jobs in CarviciM, you can use this command to display them in the job list panel: +
+Format: `listoj`
+
+=== Locating jobs by keyword: `findj`
+
+To find jobs of specific details, use this command as follows: +
+Format: `finde KEYWORD [MORE_KEYWORDS]`
+
+[NOTE]
+====
+* The search is case insensitive. e.g `apr` will match `Apr`
+* The order of the keywords does not matter. e.g. `John Doe` will match `Doe John`
+* The *name*, *vehicle number*, *date* and *job number* will be searched.
+* Only full words will be matched e.g. `Joh` will not match `John`
+* Jobs details matching at least one keyword will be returned (i.e. `OR` search). e.g. `John Apr` will return jobs with client name `John Doe` and date `20 Apr 2019`.
+====
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* Example 1: +
++
+`findj John` +
+You will see all jobs with `john` as their client name (not case-sensitive), shown in the job list panel.
 
-=== Listing all persons : `list`
+* Example 2: +
++
+`findj Apr Feb` +
+You will see all jobs with `Apr` or `Feb` as their job detail (not case-sensitive), shown in the job list panel.
 
-Shows a list of all persons in the address book. +
-Format: `list`
+=== Selecting job entry by list number: `selectj`
 
-=== Editing a person : `edit`
+To select a specific job entry from the job list panel, use this command as follows: +
+Format: `selectj j/JOB_NUMBER`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+[NOTE]
+====
+* This command selects the job entry with the provided `JOB_NUMBER`.
+* The `JOB_NUMBER` should be amongst the job entries in the most recent listing.
+* The `JOB_NUMBER` must be a positive integer 1, 2, 3...
+====
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+Example:
 
-Examples:
+`listj` +
+You will see a list of job entries displayed in the job list panel. +
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+`selectj j/2` +
+You will see that the respective job entry is selected in the job list panel, and the job display panel shows the full details of the job (shown in the image below).
 
-=== Locating persons by name: `find`
+image::selectj-command-example.PNG[width="700"]
+_Figure 5.9.1 : Job display panel showing a summary of the selected job_
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+// tag::archive[]
+=== Archiving job entries: `archive`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+To archive closed job entries within a specified range in CarviciM, use this command as follows: +
+Format: `archive sd/START_DATE ed/END_DATE`
 
-Examples:
+[NOTE]
+====
+* Archives the *closed* job entries within the specified `START_DATE` and `END_DATE`.
+* The `START_DATE` *must be earlier than* the `END_DATE`.
+* Both dates should be in the form of *MMM DD YYYY*.
+====
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Example:
 
-=== Deleting a person : `delete`
+`archive sd/Mar 25 2018 ed/Apr 03 2018` +
+The command will save the closed job entries within the selected date range in CarviciM. +
+You will see "Archived Successfully" in the result display (shown in the image below). +
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+image::ArchiveResult1.PNG[width="500"]
+_Figure 5.10.1 : Result display indicating that archiving is completed successfully_
 
-****
-* Deletes the person at the specified `INDEX`.
+You will see the newly created archive xml file (shown in the image below).
+
+image::ArchiveResult2.PNG[width="500"]
+_Figure 5.10.2 : New archivejob xml file created in the data folder_
+// end::archive[]
+
+// tag::analyse[]
+=== Analysing job entries: `analyse`
+
+To analyse job entries within the current month in CarviciM, use this command as follows: +
+Format: `analyse`
+
+Example:
+
+`analyse` +
+The command will analyse the job entries within the current month in CarviciM. +
+You will see "Result: Number of Jobs: ... Number of Ongoing: ... Number of Closed: ..."
+followed by the number of jobs assigned to each employee in the result display (shown in the image below). +
+
+image::AnalyseResult.PNG[width="850"]
+_Figure 5.11.1 : Result display showing a summary of the job entries_
+// end::analyse[]
+
+=== Adding an employee: `adde`
+
+To add a new employee entry into CarviciM, use this command as follows: +
+Format: `adde n/NAME p/PHONE_NUMBER e/EMAIL`
+
+Example:
+
+`adde n/John Doe p/98765432 e/johnd@example.com` +
+The command will add the details of the new employee into CarviciM. +
+You will see "New employee added: ..." followed by details of the new employee (shown in the image below). +
+
+image::AddEmployeeResult1.PNG[width="500"]
+_Figure 5.12.1 : Result display showing the details of the new employee_
+
+You will see the newly added details of the employee in the employee list panel (shown in the image below).
+
+image::AddEmployeeResult2.PNG[width="300"]
+_Figure 5.12.1 : Employee list panel showing the details of the new employee_
+
+=== Listing all employee entries : `liste`
+
+To view a list of employee details in CarviciM, use this command as follows: +
+Format: `liste`
+
+=== Deleting an employee entry : `deletee`
+
+To remove the details of an employee from CarviciM, use this command as follows: +
+Format: `deletee INDEX`
+
+[NOTE]
+====
+* This command deletes the employee entry at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
-****
+====
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* Example 1: +
++
+`liste` +
+You will see a list of employee entries displayed in the employee list panel (shown in the image below). +
++
+image::DeleteEmployeeResult1.PNG[width="300"]
+_Figure 5.14.1 : Employee list panel displaying the details of all employees_
 
-=== Selecting a person : `select`
++
+`deletee 2` +
+You will see an updated employee list panel which has the 2nd employee entry removed (shown in the image below).
++
+image::DeleteEmployeeResult2.PNG[width="850"]
+_Figure 5.14.2 : Employee list panel displaying the updated list of employees_
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+* Example 2: +
++
+`finde david` +
+You will see the results of the `finde` command which shows all employee entries with matching keyword name, in the employee list panel (shown in the image below). +
++
+image::DeleteEmployeeResult3.PNG[width="300"]
+_Figure 5.14.3 : Employee list panel displaying the matching list of employees_
 
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
++
+`deletee 1` +
+You will see an updated employee list panel which has the 1st employee entry removed (shown in the image below).
++
+image::DeleteEmployeeResult4.PNG[width="850"]
+_Figure 5.14.4 : Employee list panel displaying the updated matching list of employees_
+
+// tag::sort[]
+=== Sorting all employee entries : `sort`
+
+To sort the list of employee entries alphabetically for easy viewing, use this command as follows: +
+Format: `sort`
+
+Example:
+
+Given a unsorted list of employees (shown in the image below).
+
+image::SortResult1.PNG[width="300"]
+_Figure 5.15.1 : Employee List Panel showing a list of unsorted employee entries_
+
+You will see the sorted list of employees after the execution of `sort` command (shown in the image below).
+
+image::SortResult2.PNG[width="850"]
+_Figure 5.15.2 : Employee List Panel showing a list of sorted employee entries_
+// end::sort[]
+
+=== Selecting employee entry by list number: `selecte`
+
+To select a specific employee entry from the employee list panel and display the assigned jobs, use this command as follows: +
+Format: `selecte INDEX`
+
+[NOTE]
+====
+* This command selects the employee entry at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
+* The index *must be a positive integer* 1, 2, 3, ...
+====
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* Example 1: +
++
+`liste` +
+You will see a list of employee entries displayed in the employee list panel. +
++
+`selecte 2`
+
+* Example 2: +
++
+`finde Betsy` +
+You will see the results of the `finde` command which shows all employee entries with matching keyword name. +
++
+`selecte 1`
+
+=== Locating employee entries by name: `finde`
+
+To search for employee entries whose names contain any of the given keywords, use this command as follows: +
+Format: `finde KEYWORD [MORE_KEYWORDS]`
+
+[NOTE]
+====
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Only the name is searched.
+* Only full words will be matched e.g. `Han` will not match `Hans`.
+* Employee entries matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+====
+
+Examples:
+
+* Example 1: +
++
+`finde John` +
+You will see all employee entries with `john` as their name (not case-sensitive), shown in the employee list panel.
+
+* Example 2: +
++
+`finde Betsy Tim John` +
+You will see all employee entries with `Betsy`, `Tim`, or `John` (not case-sensitive), shown in the employees list panel.
+
+// tag::findbytag[]
+=== Locating employee entries by tags: `findt`
+
+To search for employee entries by tags, use this command as follows: +
+Format: `findt KEYWORD [MORE_KEYWORDS]`
+
+[NOTE]
+====
+* The search is case insensitive. e.g `Technician` will match `technician`.
+* Only full words will be matched e.g. `mech` will not match `mechanic`.
+* Employee entries matching at least one tag will be returned (i.e. `OR` search). e.g. `technician mechanic` will provide you with a list of employees who are either technicians, mechanics or both.
+====
+
+Examples:
+
+* Example 1: +
++
+`findt technician` +
+You will see all employee entries with the tag `technican` (not case-sensitive), shown in the employee list panel.
+
+* Example 2: +
++
+`findt technician mechanic` +
+You will see all employee entries with the tags `technican` and/or `mechanic`(not case-sensitive), shown in the employees list panel.
+// end::findbytag[]
+
+// tag::login[]
+=== Login to Gmail : `login`
+
+[NOTE]
+====
+Before using this command, ensure that you are connected to the internet.
+====
+
+You will need to login to Gmail before you can use the `email` feature to send out emails to your employees (see Section 5.20 below). To login to Gmail, use the `login` command as follows: +
+Format: `login`
+
+You will be redirected to the Gmail login page on your default internet browser, where you can then proceed to login.
+
+[NOTE]
+====
+When you are redirected to the Gmail login page, CarviciM may (although unlikely to happen) appear as if it is not responding. If so, don't panic! Once you have successfully logged in to Gmail, CarviciM will be up and running again, from exactly where you left off.
+====
+
+When prompted to give your permission to allow CarviciM to access your Gmail account, click on `ALLOW`.
+
+[WARNING]
+====
+Please do NOT click on `CANCEL`. Be assured that CarviciM will only use your account to send out emails to your employees.
+====
+
+For your convenience, your authorization information will be stored on your computer's file system, even after closing and reopening CarviciM. You will, therefore, only need to `login` once.
+// end::login[]
+
+// tag::sendemails[]
+=== Email assigned employees belonging to a job : `email`
+
+[NOTE]
+====
+* Before using this command, ensure that you are connected to the internet.
+* You will need to `login` first before you can send out emails. If you have yet to `login`, the `email` command will first redirect you to the Gmail login page on your default internet browser before sending the emails. Please see Section 5.18 above on how to `login`.
+====
+
+To send auto-generated emails containing the job details from your Gmail account to all assigned employees of the job, use this command as follows: +
+Format: `email j/JOB_NUMBER`
+
+[NOTE]
+====
+* The `JOB_NUMBER` *must be a positive integer* 1, 2, 3, ...
+====
+
+Take a look at the image below for a sample of the contents of the emails that will be sent when you use this command.
+
+image::Email_example.PNG[width="550"]
+_Figure 5.20.1 : Sample of auto-generated email content_
+
+Example:
+
+`email j/1` +
+Auto-generated emails containing the job details of the job at index 1 of the job list panel will be sent from your Gmail account to all employees assigned to the job.
+// end::sendemails[]
+
+// tag::importexport[]
+=== Importing jobs from an excel file `importAll`, `import`, `accept`, `reject`, `acceptAll`, `rejectAll`, `switch`
+==== Importing and accepting all job entries in an excel file: `importAll`
+
+To import all jobs into CarviciM directly, use this command as follows:
+Format: `importAll FILEPATH`
+
+Similar to <<import-command, `import`>> command, `importAll` also loads an excel file,
+additionally it accepts all job entries. `importAll` is equivalent to an
+<<import-command, `import`>> and <<acceptAll-command, `acceptAll`>>.
+
+Example:
+
+`importAll excel-file.xlsx` +
+Imports example excel file excel-file.xlsx shown in <<import-command, `import`>>, accepts all job entries and saves the reviewed job entries as an external excel file.
+You should see:
+
+image::importAll-example.png[width="1200"]
+
+==== Importing job entries discretely `import`, `accept`, `reject`, `acceptAll`, `rejectAll`, `switch`
+To discretely import job entries, here are the steps you should follow:
+
+. <<import-command, import>> a file
+. <<accept-reject, `accept` and `reject`>> job entries.
+
+[[import-command]]
+===== Importing a new excel file: `import`
+
+To start import a file, use this command as follows: +
+Format: `import FILE_PATH`
+
+[TIP]
+====
+If your imported file does not reflect correctly, there is an old save file from the <<save-command, autosave feature>>. To rectify the
+problem:
+
+1. Close CarviciM.
+2. Look for a file in the same folder with the same filename, with `-comments.xlsx` or
+`-comments.xls` behind.
+3. Delete the file.
+4. Start CarviciM and try again.
+====
+
+[NOTE]
+====
+* Filepath: A text representation of the location of the file used by the computer.
+* CarviciM tries to read the file by rows:
+** The first row specifies the type of detail in the column. This can be seen in the table below:
+====
+
+[WARNING]
+====
+* The excel file must not be password-protected
+* It is preferable to only import files within this application's folder, as other programs
+outside the folder might affect CarviciM's performance
+====
+
+Here is an example of an excel sheet that can be imported:
+
+[width="59%",cols="8%,8%,8%,8%,8%,8%,8%,8%,8%,8%,8%",options="header",]
+|=======================================================================
+|client name |client phone |client email |vehicle number |employee name	|employee phone |employee email| status |remarks | empty column|
+|John Doe |91234567 |jd@gmail.com |SXX1234X |Jim |87654321 |jim@gmail.com |Your remark |Ongoing||
+|...||||||||||
+|=======================================================================
+
+[TIP]
+The columns can be interchanged, with `empty column` at the last column.
+
+Example:
+
+`import excel-file.xlsx` +
+Imports the example file excel-file.xlsx shown above. You should see:
+
+image::import-example.png[width="1200"]
+
+
+===== Switching views between unreviewed jobs and jobs in CarviciM: `switch`
+
+You can use this command to switch between the list of unreviewed jobs and jobs in CarviciM. +
+Format: `switch`
+
+[NOTE]
+You can see the current job list in the job list indicator.
+
+[[accept-reject]]
+===== Accepting and rejecting changes
+
+You can use 4 commands when reviewing changes:
+
+* `accept NUMBER`
+* `reject NUMBER`
+* `acceptAll`
+* `rejectAll`
+
+====== Accepting 1 job: `accept`
+
+To accept a job with job index `NUMBER` in the imported list, use this command as follows:
+Format: `accept NUMBER`
+
+Example:
+
+`accept 1` +
+Accepts the job entry with job index number 1 and removes it from imported list.
+
+[[acceptAll-command]]
+====== Accepting all remaining imported jobs: `acceptAll`
+
+To accept all remaining jobs, use this command as follows:
+Format: `acceptAll`
+
+Example:
+
+`acceptAll` +
+Accepts all remaining job entries and clears the imported list.
+
+====== Rejecting 1 job: `reject`
+
+To reject a job with job index `NUMBER` in the imported list, use this command as follows:
+Format: `reject NUMBER`
+
+Example:
+
+`reject 1` +
+Rejects job entry with job index number 1 and removes it from imported list. It is not added to CarviciM.
+
+====== Rejecting all remaining imported jobs: `rejectAll`
+
+To reject all remaining jobs in the imported list, use this command as follows:
+Format: `rejectAll`
+
+Example:
+
+`rejectAll` +
+Rejects all remaining job entries and clears the imported list.
+
+===== Writing comments to your reviews
+
+While accepting or rejecting changes, you can enter your comments behind the command.
+
+[TIP]
+====
+You can type any sentence as a comment, as long as it is separated from the last argument with a
+spacebar character.
+====
+
+Examples:
+
+* Example 1: +
++
+`accept 1` good job` +
+Accepts first job and attaches "good job" as a comment to the first job.
+
+* Example 2: +
++
+`acceptAll well done` +
+Accepts all remaining imported jobs and attaches "well done" as a comment to all the remaining imported jobs.
+
+* Example 3: +
++
+`reject 1 Speak to you during tomorrow's meeting.` +
+Rejects first job and attaches "Speak to you during tomorrow's meeting." as a comment to the first job.
+
+* Example 4: +
++
+`rejectAll Please check the customer details.` +
+Rejects all remaining imported jobs and attaches "Please check the customer details." as a comment to all the remaining imported jobs.
+
+[[save-command]]
+==== Sharing your feedback with your employees:
+
+To send your feedback to the job list providers, look for the save file generated after importing and reviewing your jobs.
+CarviciM autosaves your comments to an excel file with `-comments.xls` or `-comments.xlsx` appended,
+in the same directory.
+
+[WARNING]
+When copying `-comments.xls` or `-comments.xlsx` files, try to keep the original copy in the folder. It helps to prevent
+reimporting the same jobs from the a file with the same name twice.
+// end::importexport[]
+
+// tag::set[]
+=== Changing a command word : `set`
+
+To set an easy to use word in place of a default command word, use this command as follows: +
+Format: `set OLD_COMMAND_WORD NEW_COMMAND_WORD`
+
+[NOTE]
+====
+* The OLD_COMMAND_WORD can be either a default command word or one which user has set previously.
+* The NEW_COMMAND_WORD must be 1 word, with no spacing.
+
+* Any default words or custom words already in use are not allowed.
+====
+
+[TIP]
+====
+* To remove the custom word associated with a command, type the custom word as OLD_COMMAND_WORD and
+COMMAND_WORD of the command as `newWord`
++
+e.g.
++
+`set adde a`
++
+To remove `a`, type:
++
+`set a adde`
+====
+
+You don't have to worry if you forgot your custom words! They will be displayed in the result display
+whenever you make a mistake!
+
+Examples:
+
+* Example 1: +
++
+`set adde a` +
+Sets `adde` command word to `a` using default. +
+You will see "a has been set as an alternative for adde!" in the result display.
+
+* Example 2: +
++
+`set deletee d` +
+`set d delete` +
+Sets `d` to `delete` using default. +
+You will see "d has been replaced with delete!" in the result display.
+// end::set[]
+
+// tag::theme[]
+=== Setting a theme : `theme`
+
+To set the theme of the application for a change of working environment, use this command as follows: +
+Format: `theme INDEX`
+
+[NOTE]
+====
+* Sets the theme based on the specified 'INDEX'
+* The index refers to the index number shown in the most recent listing
+* The index *must be a positive integer* 1, 2, 3,...
+====
+
+You will be able to select from these 3 themes:
+
+image::mauve-theme.PNG[width="800"]
+
+_Figure 5.20.1 : Mauve Theme_
+
+image::dark-theme.PNG[width="800"]
+
+_Figure 5.20.2 : Dark Theme_
+
+image::light-theme.PNG[width="800"]
+
+_Figure 5.20.3 : Light Theme_
+
+Example:
+
+`theme` +
+You will see the list of valid themes to choose from in the result display. +
+
+`theme 1` +
+You will see the theme of the application set as the selected one.
+
+// end::theme[]
 
 === Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+To find out what commands that you have executed recently, use this command to list a history of executed commands in reverse chronological order: +
 Format: `history`
 
 [NOTE]
@@ -171,94 +820,187 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Nobody's perfect. To reverse an undoable command that was executed by mistake, use this command to restore CarviciM to the state before the execution of that command: +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify CarviciM's content (`addj`, `closej`, `adde`, `deletee` `remarkj`, and `sort`).
 ====
+
 
 Examples:
 
-* `delete 1` +
-`list` +
+* Example 1: +
++
+`deletee 1` +
+Deletes the first employee in CarviciM.+You will see that the first employee is no longer displayed in the employee list panel. +
++
+`liste` +
+Shows all employees in CarviciM. +
+You will not see the deleted employee of index 1 in employee list panel. +
++
 `undo` (reverses the `delete 1` command) +
+You will see the deleted employee present in the employee list panel again.
 
-* `select 1` +
-`list` +
+* Example 2: +
++
+`closej j/1` +
+You will see that job number 1 is removed from the job list panel. +
++
+`undo` (reverses the `closej j/1` command) +
+You will see that job number 1 is added back into the job list panel. +
++
 `undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+The `undo` command fails as there are no undoable commands.
 
 === Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+To reverse an unwanted undo command that was executed, use this command as follows: +
 Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* Example 1: +
++
+`deletee 1` +
+You will see that the first employee entry is removed from the employee list panel. +
++
+`undo` (reverses the `deletee 1` command) +
+You will see that the deleted employee entry is added back into the employee list panel. +
++
+`redo` (reapplies the `deletee 1` command) +
+You will see that the same employee entry is removed from the employee list panel again.
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
-
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+* Example 2: +
++
+`closej j/1` +
+You will see that the job number 1 has its status changed to "closed" in the job list panel. +
++
+`deletee 1` +
+You will see that the first employee entry is removed from the employee list panel. +
++
+`undo` (reverses the `deletee 1` command) +
+You will see that the deleted employee entry is added back into the employee list panel. +
++
+`undo` (reverses the `closej j/1` command) +
+You will see that the closed job number 1 has it status changed to "ongoing" in the job list panel. +
++
+`redo` (reapplies the `closej j/1` command) +
+You will see that the job number 1 has its status changed back to "closed" again, in the job list panel. +
++
+`redo` (reapplies the `deletee 1` command) +
+You will see that the same employee entry is removed from the employee list panel.
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing the application : `clear`
 
-Clears all entries from the address book. +
+To have an empty CarviciM app, use this command to clear everything in the app: +
 Format: `clear`
+
+[NOTE]
+====
+* `clear` command will remove all job entries and employee entries in CarviciM
+* Job number will start from 1.
+====
 
 === Exiting the program : `exit`
 
-Exits the program. +
+To exit the program, use this command as follows: +
 Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Your data will be saved saved in your hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
-== Command Summary
+*Q*: Can I use this application without internet connection? +
+*A*: You will be able to use most commands in CarviciM except for the `login` and `email` command.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: Why can't I use my mouse? +
+*A*: CarviciM is targeted at users who can type fast. The commands can be executed faster than with a mouse if you are fast typer.
+
+*Q*: I want to be able to view an employee's schedule on a calendar so that I can better allocate jobs. How can I do that? +
+*A*: We hear you. We are currently working on this feature, and it will be one of the new features in CarviciM 2.0. Do watch out for the update!
+
+*Q*: The problem that I am facing is not listed here. What can I do? +
+*A*: Don't worry, simply drop us an email at _carvicim@gmail.com_ and we will respond to you shortly.
+
+== Command Summary
+This section contains a summary of all the commands that you can use in CarviciM.
+
+[width="59%",cols="22%,<23%,<30%",options="header",]
+
+|=======================================================================
+|Description |Command Format |Example
+
+3+| *_Job Management Features_*
+
+|*Add Job* | `addj n/NAME p/PHONE_NUMBER e/EMAIL v/VEHICLE_NUMBER w/ASSIGNED_EMPLOYEE_INDEX+` + |`addj n/James Ho p/22224444 e/jamesho@example.com v/saa213 w/22`
+
+|*Close Job* |`closej j/JOB_NUMBER` |`closej j/12`
+
+|*List Ongoing Jobs* |`listoj` |
+
+|*List All Jobs* |`listj` |
+
+|*Find Jobs* |`findj KEYWORD [MORE_KEYWORDS]` |`findj Apr Tom`
+
+|*Select A Job Entry* |`selectj j/JOB_NUMBER` |`selectj j/3`
+
+|*Archive Job Entries* |`archive sd/START_DATE ed/END_DATE |`archive sd/Mar 25 2018 ed/Apr 03 2018`
+
+|*Analyse Job Entries* |`analyse` |
+
+3+| *_Employee Entries Management Features_*
+
+|*Add Employee Entry* |`adde n/NAME p/PHONE_NUMBER e/EMAIL [t/TAG]...` |`adde n/James Ho p/22224444 e/jamesho@example.com t/mechanic`
+
+|*Delete Employee Entry* |`deletee INDEX` |`deletee 3`
+
+|*Find Employees Entries* |`finde KEYWORD [MORE_KEYWORDS]` |`finde James Jake`
+
+|*Select Employee* |`selecte INDEX` |`selecte 1`
+
+|*List Employee Entries* |`liste` |
+
+|*Sort Employee* |`sort` |
+
+3+| *_Import Features_*
+
+|*Import Excel File* |`import` |`import excel.xls`
+
+|*Accept Imported Job* |`accept NUMBER` |`accept 1`
+
+|*Reject Imported Job* |`reject NUMBER` |`reject 1`
+
+|*Accept All Imported Jobs* |`acceptAll` |
+
+|*Reject All Imported Jobs* |`rejectAll` |
+
+3+| *_Other Features_*
+
+|*Viewing Help*| `help`|
+
+|*History* |`history` |
+
+|*Undo A Command* |`undo` |
+
+|*Redo A Command* |`redo` |
+
+|*Email Assigned Employees Of A Job* |`email j/JOB_NUMBER` |`email j/123`
+
+|*Change Command Word* |`set` |`set adde a`
+
+|*Apply Theme* |`theme INDEX` |`theme 1`
+
+|*Clear Entire CarviciM* |`clear` |
+
+|*Exit The Application* |`exit` |
+
+|=======================================================================

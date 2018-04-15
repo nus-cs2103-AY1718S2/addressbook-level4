@@ -51,10 +51,16 @@ At this point, _EduBuddy_ should be successfully set up. Here are some example c
 * **`delete` or `d`** `3` : deletes the 3rd student shown in the current list
 * *`exit`* : exits the app
 
-[NOTE]
+
+[IMPORTANT]
+-The person must be re-selected for the information in the profile to be updated!!
+
+.  Refer to <<Features>> for details of each command.
+
 -Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window. +
 -Refer to <<Features>> for details of each command.
+
 
 [[Features]]
 == Features

@@ -1,0 +1,87 @@
+= Lucas Gaylord - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddSurance
+
+
+---
+
+== Overview
+
+*Addsurance* is _the_ insurance book for teh-savy insurance agents. Built specifically to support the functionality you need to organize and maintain your massive and growing list of contacts and demanding schedule, so that you may scale your business with greater ease. The user design is minimalistic, based in a Command Line Interface, to help you get the job done without distractions.
+
+== Summary of contributions
+
+*Major enhancement*:
+
+** Import and Export contacts to/from a `.csv` file
+*** Created and implemented `ImportContactsCommand` and `ImportContactsCommandParser` classes
+*** Created and implemented `ExportContactsCommand` and `ExportContactsCommandParser` classes
+*** Integration with `AddressBookParser` in above cases
+
+** *What it does*:
+
+This functionality allows the user to take a .csv file with a list of contact information and easily import that information into the AddressBook with 1 command. Additionally, the user may want to print the contacts or store them in another AddressBook and can similarly export the contacts to a specified `.csv`. If no file exists at the path specified by the user, one will automatically be created.
+
+** *Justification*:
+
+Users need portability. Without this functionality, a user would manually have to copy every entry from another contact list into our AddressBook. For an insurance agent with a large number of contacts this is just not feasible. Similarly, users may need their contacts outside the context of this AddressBook, which is provided by the export functionality.
+
+** *Highlights*:
+
+Creating new commands requires integration `AddressBookParser` and the model. Additionally, it uses the Apache Commons CSV dependency. When creating the import and export commands, SOLID and OOP design principals were used. Additionally, careful attention was given to ensure the implementation minimized coupling while maximizing cohesion and followed defensive programming. Evidence of defensive programing can be found in that all functions either check for null variables (and additional requirements such as an uninitialize model), or implement checking in another function in order to distinguish between the two purposes.
+
+Furthermore, UML diagrams were created separately for both import and export in order to visualize the functionality.
+
+* Credits: https://www.callicoder.com/java-read-write-csv-file-apache-commons-csv/[Apache Commons CSV]
+
+*Minor enhancement*:
+
+** Sorting alphabetically by name
+*** Creating and implementing `SortCommand` class
+*** Creating and implementing `PersonCompare` class that allows comparing `Persons` by `Name` attribute
+*** Implemented `sortAddressBookAlphabeticallyByName()` function in `AddressBook`, `Model`, and `ModelManager`
+** *Justification*:
+*** Sorting makes it easier for an isurance agent to stay organized. Without this functionality, there would be no other way to organize contacts
+
+** *Highlights*:
+Although sorting seems like a simple task, it requires full integration with all parts of the architecture (excluding the UI). Functions were added to `AddressBook`, `Model`, `ModelManager`, and finally `AddressBookParser`. `SortCommand` and `PersonCompare` were newly created and implemented classes.
+
+The most challenging part of implementing the sorting command was actually in testing, because the model, addressbook, and the command itself all need to be tested. In fact, even after several hours of development to all test cases were passing locally, but failing on Travis. The problem ended up being that when several test cases are run consecutively they share the model and cause it to error, which was problematic for sorting because it requires implementation in all parts of the architecture.
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/functional/luca590.md[Functional Code]][https://github.com/CS2103JAN2018-W10-B4/main/blob/master/collated/test/luca590.md[Test code]]
+
+
+*Other contributions*:
+
+** *Project management*:
+
+*** Reported bugs and suggestions (examples:  https://github.com/CS2103JAN2018-W10-B4/main/issues/108[Modification to .gitignore], https://github.com/CS2103JAN2018-W10-B4/main/issues/174[Changing tag for imported contacts], https://github.com/CS2103JAN2018-W10-B4/main/issues/175[Checking for duplicates in import contacts])
+** Tools:
+*** Integrated a third party library, Apache Commons CSV with the codebase.
+
+== Contributions to the User Guide
+
+
+|===
+|Below are sections of the User Guide to which I contributed.
+|===
+
+include::../UserGuide.adoc[tag=import]
+
+include::../UserGuide.adoc[tag=export]
+
+include::../UserGuide.adoc[tag=sort]
+
+
+== Contributions to the Developer Guide
+
+|===
+| Below are sections of the Developer Guide to which I contributed.
+|===
+
+include::../DeveloperGuide.adoc[tag=import]
+
+include::../DeveloperGuide.adoc[tag=export]
+

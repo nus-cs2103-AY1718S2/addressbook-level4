@@ -7,6 +7,7 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <dateAdded>01/01/2018</dateAdded>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -14,6 +15,7 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
+        <dateAdded>02/02/2018</dateAdded>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -22,31 +24,85 @@
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
+        <dateAdded>03/03/2018</dateAdded>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <dateAdded>04/04/2018</dateAdded>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+        <dateAdded>05/05/2018</dateAdded>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <dateAdded>06/06/2018</dateAdded>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+        <dateAdded>07/07/2018</dateAdded>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>
+    <appointments>
+        <name>Alice Pauline</name>
+        <date>01/01/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>123, Jurong West Ave 6, #08-111</location>
+    </appointments>
+    <appointments>
+        <name>Benson Meier</name>
+        <date>02/02/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>311, Clementi Ave 2, #02-25</location>
+    </appointments>
+    <appointments>
+        <name>Carl Kurz</name>
+        <date>03/03/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>wall street</location>
+    </appointments>
+    <appointments>
+        <name>Daniel Meier</name>
+        <date>04/04/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>10th street</location>
+    </appointments>
+    <appointments>
+        <name>Elle Meyer</name>
+        <date>05/05/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>michegan ave</location>
+    </appointments>
+    <appointments>
+        <name>Fiona Kunz</name>
+        <date>06/06/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>little tokyo</location>
+    </appointments>
+    <appointments>
+        <name>George Best</name>
+        <date>07/07/2018</date>
+        <startTime>10:30</startTime>
+        <endTime>11:30</endTime>
+        <location>4th street</location>
+    </appointments>
 </addressbook>

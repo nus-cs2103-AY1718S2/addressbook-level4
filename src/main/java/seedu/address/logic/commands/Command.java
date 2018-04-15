@@ -1,6 +1,8 @@
 package seedu.address.logic.commands;
 
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.Messages;
+import seedu.address.commons.events.BaseEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -24,6 +26,7 @@ public abstract class Command {
         return String.format(Messages.MESSAGE_PERSONS_LISTED_OVERVIEW, displaySize);
     }
 
+
     /**
      * Executes the command and returns the result message.
      *
@@ -40,4 +43,22 @@ public abstract class Command {
     public void setData(Model model, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.model = model;
     }
+
+    //@@author jlks96
+    /**
+     * Raises the specified event via {@link EventsCenter#post(BaseEvent)}
+     * @param event the event that is being posted
+     */
+    protected void raise(BaseEvent event) {
+        EventsCenter.getInstance().post(event);
+    }
+
+    /**
+     * Registers the command object as an event handler at the {@link EventsCenter}
+     * @param handler usually {@code this}
+     */
+    protected void registerAsAnEventHandler(Object handler) {
+        EventsCenter.getInstance().registerHandler(handler);
+    }
+    //@@author
 }

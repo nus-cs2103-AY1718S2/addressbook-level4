@@ -3,6 +3,7 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.List;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
@@ -12,6 +13,15 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.AppointmentDeletedEvent;
+import seedu.address.commons.events.model.NewAppointmentAddedEvent;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
+import seedu.address.model.email.exceptions.DuplicateTemplateException;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +35,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Appointment> filteredAppointments;
+    private final FilteredList<Template> filteredTemplates;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +49,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredAppointments = new FilteredList<>(this.addressBook.getAppointmentList());
+        filteredTemplates = new FilteredList<>(this.addressBook.getTemplateList());
     }
 
     public ModelManager() {
@@ -59,11 +73,45 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new AddressBookChangedEvent(addressBook));
     }
 
+    //@@author jlks96
+    /** Raises an event to indicate a new appointment has been added */
+    private void indicateAppointmentAdded(Appointment appointment) {
+        raise(new NewAppointmentAddedEvent(appointment));
+    }
+
+    /** Raises an event to indicate an appointment has been deleted */
+    private void indicateAppointmentDeleted(ObservableList<Appointment> appointments) {
+        raise(new AppointmentDeletedEvent(appointments));
+    }
+    //@@author
+
+    //@@author ng95junwei
+    /** Raises an event to indicate a template has been deleted */
+    private void indicateTemplateDeleted(String purpose) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+    /** Raises an event to indicate a template has been added */
+    private void indicateTemplateAdded(Template template) {
+        //raise(new NewTemplateAddedEvent(template)); TO IMPLEMENT
+    }
+
+    //@@author
+
+    //=========== Person Mutators =============================================================
+
     @Override
     public synchronized void deletePerson(Person target) throws PersonNotFoundException {
         addressBook.removePerson(target);
         indicateAddressBookChanged();
     }
+
+    //@@author jlks96
+    @Override
+    public synchronized void deletePersons(List<Person> targets) throws PersonNotFoundException {
+        addressBook.removePersons(targets);
+        indicateAddressBookChanged();
+    }
+    //@@author
 
     @Override
     public synchronized void addPerson(Person person) throws DuplicatePersonException {
@@ -81,8 +129,59 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //=========== Filtered Person List Accessors =============================================================
+    //@@author jlks96
+    //=========== Appointment Mutators =============================================================
 
+    @Override
+    public synchronized void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+        addressBook.removeAppointment(target);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAppointmentDeleted(getFilteredAppointmentList());
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
+        addressBook.addAppointment(appointment);
+        updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENTS);
+        indicateAppointmentAdded(appointment);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
+    //========== Template Mutators ==================================================================
+    //@@author ng95junwei
+    @Override
+    public synchronized void deleteTemplate(String purpose) throws TemplateNotFoundException {
+        addressBook.removeTemplate(purpose);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateDeleted(purpose);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void addTemplate(Template template) throws DuplicateTemplateException {
+        addressBook.addTemplate(template);
+        updateFilteredTemplateList(PREDICATE_SHOW_ALL_TEMPLATES);
+        indicateTemplateAdded(template);
+        indicateAddressBookChanged();
+    }
+    //@@author
+    //========== Template Accessors =================================================================
+    //@@author ng95junwei
+    @Override
+    public ObservableList<Template> getAllTemplates() {
+        return addressBook.getAllTemplates().asObservableList();
+    }
+
+    @Override
+    public Template selectTemplate(String search) throws TemplateNotFoundException {
+        return addressBook.getAllTemplates().search(search);
+    }
+
+    //@@author
+    //=========== Filtered Person List Accessors =============================================================
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
@@ -97,6 +196,50 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredPersons.setPredicate(predicate);
     }
+
+    //=========== Filtered Template List Accessors =============================================================
+    //@@author ng95junwei
+
+    @Override
+    public void updateFilteredTemplateList(Predicate<Template> predicate) {
+        requireNonNull(predicate);
+        filteredTemplates.setPredicate(predicate);
+    }
+
+    @Override
+    public ObservableList<Template> getFilteredTemplateList() {
+        return FXCollections.unmodifiableObservableList(filteredTemplates);
+    }
+    //@@author
+
+    //@@author jlks96
+    //=========== Filtered Appointment List Accessors =============================================================
+
+    /**
+     * Returns an unmodifiable view of the list of {@code Appointment} backed by the internal list of
+     * {@code addressBook}
+     */
+    @Override
+    public ObservableList<Appointment> getFilteredAppointmentList() {
+        return FXCollections.unmodifiableObservableList(filteredAppointments);
+    }
+
+    @Override
+    public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+        requireNonNull(predicate);
+        filteredAppointments.setPredicate(predicate);
+    }
+    //@@author
+
+    //@@author luca590
+    //============ Sorting algo ===========================================================
+    @Override
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        addressBook.sortAddressBookAlphabeticallyByName();
+    }
+
+    //======================================================================================
+    //@@author
 
     @Override
     public boolean equals(Object obj) {
@@ -113,7 +256,8 @@ public class ModelManager extends ComponentManager implements Model {
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredAppointments.equals(other.filteredAppointments);
     }
 
 }

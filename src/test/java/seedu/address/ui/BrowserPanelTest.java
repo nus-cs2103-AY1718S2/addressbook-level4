@@ -1,9 +1,9 @@
 package seedu.address.ui;
 
-import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
+//import static guitests.guihandles.WebViewUtil.waitUntilBrowserLoaded;
 import static org.junit.Assert.assertEquals;
 import static seedu.address.testutil.EventsUtil.postNow;
-import static seedu.address.testutil.TypicalPersons.ALICE;
+import static seedu.address.testutil.TypicalPersonsAndAppointments.ALICE;
 import static seedu.address.ui.BrowserPanel.DEFAULT_PAGE;
 import static seedu.address.ui.UiPart.FXML_FILE_FOLDER;
 
@@ -42,7 +42,7 @@ public class BrowserPanelTest extends GuiUnitTest {
         postNow(selectionChangedEventStub);
         URL expectedPersonUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + ALICE.getName().fullName.replaceAll(" ", "%20"));
 
-        waitUntilBrowserLoaded(browserPanelHandle);
+        //waitUntilBrowserLoaded(browserPanelHandle);
         assertEquals(expectedPersonUrl, browserPanelHandle.getLoadedUrl());
     }
 }

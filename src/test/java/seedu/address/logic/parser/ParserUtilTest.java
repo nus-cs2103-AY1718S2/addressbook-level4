@@ -18,7 +18,13 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.EndTime;
+import seedu.address.model.appointment.Location;
+import seedu.address.model.appointment.PersonName;
+import seedu.address.model.appointment.StartTime;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DateAdded;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
@@ -30,14 +36,20 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_DATE = "12/34";
     private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_TIME = "1130";
+    private static final String INVALID_LOCATION = "";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_DATE = "01/01/2018";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_TIME = "11:30";
+    private static final String VALID_LOCATION = "Silver Way";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -193,6 +205,200 @@ public class ParserUtilTest {
         assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
     }
+
+    //@@author jlks96
+    @Test
+    public void parseDateAdded_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDateAdded((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDateAdded((Optional<String>) null));
+    }
+
+    @Test
+    public void parseDateAdded_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDate(INVALID_DATE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDateAdded(Optional.of(INVALID_DATE)));
+    }
+
+    @Test
+    public void parseDateAdded_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDateAdded(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDateAdded_validValueWithoutWhitespace_returnsDate() throws Exception {
+        DateAdded expectedDate = new DateAdded(VALID_DATE);
+        assertEquals(expectedDate, ParserUtil.parseDateAdded(VALID_DATE));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDateAdded(Optional.of(VALID_DATE)));
+    }
+
+    @Test
+    public void parseDateAdded_validValueWithWhitespace_returnsTrimmedDate() throws Exception {
+        String dateWithWhitespace = WHITESPACE + VALID_DATE + WHITESPACE;
+        DateAdded expectedDate = new DateAdded(VALID_DATE);
+        assertEquals(expectedDate, ParserUtil.parseDateAdded(dateWithWhitespace));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDateAdded(Optional.of(dateWithWhitespace)));
+    }
+
+    @Test
+    public void parsePersonName_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePersonName((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePersonName((Optional<String>) null));
+    }
+
+    @Test
+    public void parsePersonName_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePersonName(INVALID_NAME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePersonName(Optional.of(INVALID_NAME)));
+    }
+
+    @Test
+    public void parsePersonName_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parsePersonName(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parsePersonName_validValueWithoutWhitespace_returnsPersonName() throws Exception {
+        PersonName expectedName = new PersonName(VALID_NAME);
+        assertEquals(expectedName, ParserUtil.parsePersonName(VALID_NAME));
+        assertEquals(Optional.of(expectedName), ParserUtil.parsePersonName(Optional.of(VALID_NAME)));
+    }
+
+    @Test
+    public void parsePersonName_validValueWithWhitespace_returnsTrimmedPersonName() throws Exception {
+        String nameWithWhitespace = WHITESPACE + VALID_NAME + WHITESPACE;
+        PersonName expectedName = new PersonName(VALID_NAME);
+        assertEquals(expectedName, ParserUtil.parsePersonName(nameWithWhitespace));
+        assertEquals(Optional.of(expectedName), ParserUtil.parsePersonName(Optional.of(nameWithWhitespace)));
+    }
+
+    @Test
+    public void parseDate_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDate((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDate((Optional<String>) null));
+    }
+
+    @Test
+    public void parseDate_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDate(INVALID_DATE));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDate(Optional.of(INVALID_DATE)));
+    }
+
+    @Test
+    public void parseDate_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDate(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseDate_validValueWithoutWhitespace_returnsDate() throws Exception {
+        Date expectedDate = new Date(VALID_DATE);
+        assertEquals(expectedDate, ParserUtil.parseDate(VALID_DATE));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(VALID_DATE)));
+    }
+
+    @Test
+    public void parseDate_validValueWithWhitespace_returnsTrimmedDate() throws Exception {
+        String dateWithWhitespace = WHITESPACE + VALID_DATE + WHITESPACE;
+        Date expectedDate = new Date(VALID_DATE);
+        assertEquals(expectedDate, ParserUtil.parseDate(dateWithWhitespace));
+        assertEquals(Optional.of(expectedDate), ParserUtil.parseDate(Optional.of(dateWithWhitespace)));
+    }
+
+    @Test
+    public void parseStartTime_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStartTime((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseStartTime((Optional<String>) null));
+    }
+
+    @Test
+    public void parseStartTime_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseStartTime(INVALID_TIME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseStartTime(Optional.of(INVALID_TIME)));
+    }
+
+    @Test
+    public void parseStartTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseStartTime(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseStartTime_validValueWithoutWhitespace_returnsStartTime() throws Exception {
+        StartTime expectedTime = new StartTime(VALID_TIME);
+        assertEquals(expectedTime, ParserUtil.parseStartTime(VALID_TIME));
+        assertEquals(Optional.of(expectedTime), ParserUtil.parseStartTime(Optional.of(VALID_TIME)));
+    }
+
+    @Test
+    public void parseStartTime_validValueWithWhitespace_returnsTrimmedStartTime() throws Exception {
+        String timeWithWhitespace = WHITESPACE + VALID_TIME + WHITESPACE;
+        StartTime expectedTime = new StartTime(VALID_TIME);
+        assertEquals(expectedTime, ParserUtil.parseStartTime(timeWithWhitespace));
+        assertEquals(Optional.of(expectedTime), ParserUtil.parseStartTime(Optional.of(timeWithWhitespace)));
+    }
+
+    @Test
+    public void parseEndTime_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEndTime((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEndTime((Optional<String>) null));
+    }
+
+    @Test
+    public void parseEndTime_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEndTime(INVALID_TIME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEndTime(Optional.of(INVALID_TIME)));
+    }
+
+    @Test
+    public void parseEndTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseEndTime(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseEndTime_validValueWithoutWhitespace_returnsEndTime() throws Exception {
+        EndTime expectedTime = new EndTime(VALID_TIME);
+        assertEquals(expectedTime, ParserUtil.parseEndTime(VALID_TIME));
+        assertEquals(Optional.of(expectedTime), ParserUtil.parseEndTime(Optional.of(VALID_TIME)));
+    }
+
+    @Test
+    public void parseEndTime_validValueWithWhitespace_returnsTrimmedEndTime() throws Exception {
+        String timeWithWhitespace = WHITESPACE + VALID_TIME + WHITESPACE;
+        EndTime expectedTime = new EndTime(VALID_TIME);
+        assertEquals(expectedTime, ParserUtil.parseEndTime(timeWithWhitespace));
+        assertEquals(Optional.of(expectedTime), ParserUtil.parseEndTime(Optional.of(timeWithWhitespace)));
+    }
+
+    @Test
+    public void parseLocation_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocation((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocation((Optional<String>) null));
+    }
+
+    @Test
+    public void parseLocation_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseLocation(INVALID_LOCATION));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseLocation(Optional.of(INVALID_LOCATION)));
+    }
+
+    @Test
+    public void parseLocation_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseLocation(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseLocation_validValueWithoutWhitespace_returnsLocation() throws Exception {
+        Location expectedLocation = new Location(VALID_LOCATION);
+        assertEquals(expectedLocation, ParserUtil.parseLocation(VALID_LOCATION));
+        assertEquals(Optional.of(expectedLocation), ParserUtil.parseLocation(Optional.of(VALID_LOCATION)));
+    }
+
+    @Test
+    public void parseLocation_validValueWithWhitespace_returnsTrimmedLocation() throws Exception {
+        String locationWithWhitespace = WHITESPACE + VALID_LOCATION + WHITESPACE;
+        Location expectedLocation = new Location(VALID_LOCATION);
+        assertEquals(expectedLocation, ParserUtil.parseLocation(locationWithWhitespace));
+        assertEquals(Optional.of(expectedLocation), ParserUtil.parseLocation(Optional.of(locationWithWhitespace)));
+    }
+    //@@author
 
     @Test
     public void parseTag_null_throwsNullPointerException() throws Exception {

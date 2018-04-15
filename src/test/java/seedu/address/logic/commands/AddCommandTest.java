@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -21,6 +22,10 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -117,6 +122,45 @@ public class AddCommandTest {
             fail("This method should not be called.");
         }
 
+        //@@author ng95junwei
+        @Override
+        public void deleteTemplate(String purpose) {
+            fail("This method should not be called.");
+        }
+        @Override
+        public ObservableList<Template> getFilteredTemplateList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        @Override
+        public void updateFilteredTemplateList(Predicate<Template> predicate) {
+            fail("This method should not be called.");
+        }
+        @Override
+        public ObservableList<Template> getAllTemplates() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Template selectTemplate(String search) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void addTemplate(Template template) {
+            fail("This method should not be called.");
+        }
+        //@@author
+
+        //@@author jlks96
+        @Override
+        public void deletePersons(List<Person> targets) throws PersonNotFoundException {
+            fail("This method should not be called.");
+        }
+        //@@author
+
         @Override
         public void updatePerson(Person target, Person editedPerson)
                 throws DuplicatePersonException {
@@ -133,6 +177,34 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void deleteAppointment(Appointment target) throws AppointmentNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addAppointment(Appointment target) throws DuplicateAppointmentException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Appointment> getFilteredAppointmentList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredAppointmentList(Predicate<Appointment> predicate) {
+            fail("This method should not be called.");
+        }
+
+        //@@author luca590
+        @Override
+        public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+        //@@author
     }
 
     /**

@@ -2,6 +2,8 @@ package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
@@ -10,8 +12,21 @@ import java.util.Objects;
 import java.util.Set;
 import java.util.stream.Collectors;
 
+import com.google.common.collect.Lists;
+
 import javafx.collections.ObservableList;
+
+import seedu.address.model.appointment.Appointment;
+import seedu.address.model.appointment.UniqueAppointmentList;
+import seedu.address.model.appointment.exceptions.AppointmentNotFoundException;
+import seedu.address.model.appointment.exceptions.ClashingAppointmentException;
+import seedu.address.model.appointment.exceptions.DuplicateAppointmentException;
+import seedu.address.model.email.Template;
+import seedu.address.model.email.UniqueTemplateList;
+import seedu.address.model.email.exceptions.DuplicateTemplateException;
+import seedu.address.model.email.exceptions.TemplateNotFoundException;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonCompare;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -26,6 +41,8 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueAppointmentList appointments;
+    private final UniqueTemplateList templates;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,12 +54,14 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        appointments = new UniqueAppointmentList();
+        templates = new UniqueTemplateList();
     }
 
     public AddressBook() {}
 
     /**
-     * Creates an AddressBook using the Persons and Tags in the {@code toBeCopied}
+     * Creates an AddressBook using the Persons, Tags and Appointments in the {@code toBeCopied}
      */
     public AddressBook(ReadOnlyAddressBook toBeCopied) {
         this();
@@ -59,6 +78,19 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author jlks96
+    public void setAppointments(List<Appointment> appointments)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
+        this.appointments.setAppointments(appointments);
+    }
+    //@@author
+
+    //@@author ng95junwei
+    public void setTemplates() throws DuplicateTemplateException {
+        this.templates.setTemplates(generateTemplates());
+    }
+    //@@author
+
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
      */
@@ -71,8 +103,16 @@ public class AddressBook implements ReadOnlyAddressBook {
 
         try {
             setPersons(syncedPersonList);
+            setAppointments(newData.getAppointmentList());
+            setTemplates();
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (DuplicateAppointmentException e) {
+            throw new AssertionError("AddressBooks should not have duplicate appointments");
+        } catch (DuplicateTemplateException e) {
+            throw new AssertionError("AddressBooks should not have duplicate templates");
+        } catch (ClashingAppointmentException e) {
+            throw new AssertionError("AddressBooks should not have clashing appointments");
         }
     }
 
@@ -131,8 +171,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        return new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getDateAdded(), correctTagReferences);
     }
 
     /**
@@ -147,17 +187,120 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author jlks96
+    /**
+     * Removes {@code keys} from this {@code AddressBook}.
+     * @throws PersonNotFoundException if any of the {@code keys} are not in this {@code AddressBook}.
+     */
+    public void removePersons(List<Person> keys) throws PersonNotFoundException {
+        persons.removeAll(keys);
+    }
+    //@@author
+
+    //@@author luca590
+    /**
+     * This function is intended to be called from ModelManager to protect
+     * the private {@code UniquePersonList persons} variable
+     */
+    public void sortAddressBookAlphabeticallyByName() throws DuplicatePersonException {
+        //persons is UniquePersonList implements Iterable
+        //setPersons(List<Persons> ...)
+        List list = Lists.newArrayList(persons);
+        Collections.sort(list, new PersonCompare());
+        setPersons((List<Person>) list);
+
+    }
+    //@@author
+
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
     }
 
+    //@@author jlks96
+    //// appointment-level operations
+
+    /**
+     * Adds an appointment to the address book.
+     *
+     * @throws DuplicateAppointmentException if an equivalent appointment already exists.
+     * @throws ClashingAppointmentException if a clashing appointment already exists.
+     */
+    public void addAppointment(Appointment appointment)
+            throws DuplicateAppointmentException, ClashingAppointmentException {
+        appointments.add(appointment);
+    }
+
+    /**
+     * Removes {@code appointment} from this {@code AddressBook}.
+     * @throws AppointmentNotFoundException if the {@code appointment} is not in this {@code AddressBook}.
+     */
+    public boolean removeAppointment(Appointment appointment) throws AppointmentNotFoundException {
+        if (appointments.remove(appointment)) {
+            return true;
+        } else {
+            throw new AppointmentNotFoundException();
+        }
+    }
+    //@@author
+
+    //@@author ng95junwei
+    //// template-level operations
+
+    /**
+     * TBD replace with DB seed.
+     * @return a List of template to initialize AddressBook with
+     */
+    private static List<Template> generateTemplates() {
+        List<Template> list = new ArrayList<>();
+        Template template1 = new Template("coldEmail", "Meet up over Coffee",
+                "Hey, I am from Addsurance and would like you ask if you are interested in planning your"
+                        + " finances with us. Would you care to meet over coffee in the next week or so?");
+        Template template2 = new Template("followUpEmail", "Follow up from last week",
+                "Hey, we met last week and I was still hoping if you would like to leave your "
+                        + "finances with us at Addsurance. Would you care to meet over coffee in the next week or so"
+                        + " to discuss further?");
+        list.add(template1);
+        list.add(template2);
+        return list;
+    }
+
+    /**
+     * Adds a template to the unique template list
+     * @param template
+     * @throws DuplicateTemplateException
+     */
+    public void addTemplate(Template template) throws DuplicateTemplateException {
+        templates.add(template);
+    }
+
+    /**
+     * Removes template whose purpose is purpose
+     * @param purpose
+     * @return true if template was removed, throw an exception otherwise
+     * @throws TemplateNotFoundException
+     */
+    public boolean removeTemplate(String purpose) throws TemplateNotFoundException {
+        if (templates.remove(purpose)) {
+            return true;
+        } else {
+            throw new TemplateNotFoundException();
+        }
+    }
+
+
+    public synchronized UniqueTemplateList getAllTemplates() {
+        return this.templates;
+    }
+    //@@author
+
     //// util methods
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+                + appointments.asObservableList().size() + " appointments";
         // TODO: refine later
     }
 
@@ -171,17 +314,32 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author jlks96
+    @Override
+    public ObservableList<Appointment> getAppointmentList() {
+        return appointments.asObservableList();
+    }
+    //@@author
+
+    //@@author ng95junwei
+    @Override
+    public ObservableList<Template> getTemplateList() {
+        return templates.asObservableList();
+    }
+    //@@author
+
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
+                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags)
+                && this.appointments.equals(((AddressBook) other).appointments));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return Objects.hash(persons, tags, appointments);
     }
 }

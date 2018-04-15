@@ -72,9 +72,6 @@ public class LogicManager extends ComponentManager implements Logic {
         case ReserveCommand.COMMAND_WORD:
             auto = "reserve 1";
             break;
-        case SelectCommand.COMMAND_WORD:
-            auto = "select 1";
-            break;
         default:
             auto = myString;
         }

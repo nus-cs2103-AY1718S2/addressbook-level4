@@ -59,7 +59,7 @@ This app will not work with earlier versions of Java 8.
 +
 .  Download the latest `imdb.jar` link:{repoURL}/releases[here].
 .  Copy the file to the folder you want to use as the home folder for IMDB.
-.  Double-click the file to start the app. The GUI should appear in a few seconds as shown in the figure below.
+.  Double-click the file to start the app. The GUI should appear in a few seconds as shown in the Figure 1 below.
 +
 .IMDB in action
 [caption="Figure 1: "]
@@ -92,11 +92,11 @@ Before introducing the commands, a brief walkthrough of the user interface is sh
 [caption="Figure 2: "]
 image::ui_walkthrough.png[width="990"]
 
-.	Command box: the user types the command here
-.	Command result: the command result message will be displayed here after a command is entered
-.	Multipurpose panel: the patient's details and appointments will be displayed here
-.	Patient list panel: the list of patients in the database is displayed
-.	Visiting queue panel: the list of patients who are currently waiting for consultation is displayed
+<1>	Command box: the user types the command here
+<2>	Command result: the command result message will be displayed here after a command is entered
+<3>	Multipurpose panel: the patient's details and appointments will be displayed here
+<4>	Patient list panel: the list of patients in the database is displayed
+<5>	Visiting queue panel: the list of patients who are currently waiting for consultation is displayed
 
 *Command Format*
 

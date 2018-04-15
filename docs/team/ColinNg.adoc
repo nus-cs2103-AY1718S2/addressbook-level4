@@ -65,3 +65,4 @@ include::../DeveloperGuide.adoc[tag=filter]
 === Some Instructions for Manual Testing
 
 include::../DeveloperGuide.adoc[tag=manualtestcolin]
+

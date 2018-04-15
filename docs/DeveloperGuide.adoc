@@ -995,6 +995,7 @@ Use case ends.
 Use case ends.
 // end::usecaseloginoutlistfind[]
 
+// tag::usecaseclearaclearhistory[]
 [discrete]
 === Use case: Clear accounts, cleara
 
@@ -1020,7 +1021,7 @@ Use case ends.
 
 *MSS*
 
-1.  User logs in with credentials
+1.  Librarian logs in with credentials
 2.  Catalogue shows successful login message
 3.  Librarian types `clear` in the command box to clear Catalogue
 4.  Catalogue clears all the books from Catalogue
@@ -1050,7 +1051,7 @@ Use case ends.
 * 5a. No commands have been entered as for now
 +
 Use case ends.
-
+// end::usecaseclearaclearhistory[]
 
 [appendix]
 == Non Functional Requirements

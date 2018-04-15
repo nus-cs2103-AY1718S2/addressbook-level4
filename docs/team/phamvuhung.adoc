@@ -1,0 +1,566 @@
+= Pham Vu Hung - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Fastis - MeetUp Manager
+
+---
+
+== Overview
+
+Fastis is a desktop application that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively.
+The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos and schedule suitable meetup time.
+
+== Summary of contributions
+
+* *Major enhancement*: added *Calendar feature*
+** What it does: shows a calendar that allows the user to add events, such as group meetings and job interviews, with `addEvent` command.
+** Justification: This feature helps the user, at a glance, to know if there are any upcoming events in order to prepare for them as well as to avoid planning any events that might clash with other events.
+** Highlights: This enhancement enables users to better plan and prepare for any events, including group meetings. It requires a solid understanding of many JavaFX components and interactions, as well as interactions between different components of the application, namely `Model`, `UI`, and `Logic`.
+
+* *Major enhancement*: added *Timetable feature*
+** What it does: shows a timetable of any person in the address book, as long as their timetable link is imported. It also enables scheduling a suitable time slot for a group meeting based on the members' timetable.
+** Justification: This feature helps the user quickly see their own timetable as well as others, and quickly plan a meeting time for the whole group, which helps a lot in group projects.
+** Highlights: This enhancement enables users to better plan for group meetings, which works conjunction with the Calendar feature. For group meetings, once all members have their timetable link imported, all common free time slots for all members can be displayed with `scheduleGroup` command. Similarly, it requires a solid understanding of JavaFX components as well as the address book's components, namely `Model`, `UI`, and `Logic`.
+
+* *Minor enhancement*: added *changing tags' color feature*: +
+Allow users to better understand meaning of the tags at a glance, as well as better customize the application.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W15-B3/main/tree/master/collated/functional/LeonidAgarth.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B3/main/blob/master/collated/test/LeonidAgarth.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Fixed and closed the most of the issues raised by peers from PE-round 1.
+** Enhancements to existing features:
+*** Wrote additional style classes for `DarkTheme.css` to customize the application
+*** Wrote additional tests for multiple components and existing features to increase coverage.
+** Documentation:
+*** Format the entire User Guide.
+*** Standardize language and structure for User Guide.
+*** Updated class diagrams relevant to the enhancements above in Developer Guide.
+*** Standardize language and structure for the Appendix section in Developer Guide.
+** Community:
+*** Help team members fix bugs
+*** Reported bugs and suggestions
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Changing a  tag's color: `changeTagColor`
+
+Changes a specific group color to one of the supported colors. +
+[blue yellow-background]#*Undoable*# +
+Alias: `color` +
+Format `changeTagColor TAG COLOR`
+
+****
+* The `TAG` specified must belong to one of the people in Fastis
+* Supported `COLORS` are: aqua, black, blue, brown, gold, green, grey, lime, magenta, navy, orange, pink, purple, red, teal, yellow, white.
+****
+
+Examples:
+
+* `changeTagColor friends pink` +
+Changes the color of the tag `friends` to pink.
+* `color family yellow` +
+Changes the color of the tag `family` to yellow.
+
+=== Adding an event: `addEvent`
+
+Adds an event to Fastis and displays it on the calendar. +
+[blue yellow-background]#*Undoable*# +
+Alias: `aE` +
+Format: `addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME`
+
+****
+* DATE must be in the format of DD/MM/YYYY
+* TIME must be in the 24-hour time format of HHmm
+****
+
+Examples:
+
+* `addEvent n/CS2103 Meetup v/School of Computing d/07/04/2018 st/1000 et/1300` +
+Adds an event called CS2103 Meetup to the calendar. +
+Refer to Figure 4 for results of this command.
++
+image:AddEventCommandExample.png[width="800"] +
+*Figure 4:* Example of an event added on the calendar
+
+=== Scheduling a suitable meetup time : `scheduleGroup`
+
+Finds all common free time slots for all group members to meet. +
+Alias: `sG` +
+Format: `scheduleGroup GROUP`
+
+****
+* Computes all time slots when all members in a `GROUP` are free based on each member's timetable.
+* Results are displayed as free "modules" on the GUI timetable.
+* `GROUP` is case-sensitive. Upper case letters are considered different from lower case letters.
+* `GROUP` must be an existing group in Fastis.
+****
+
+Examples:
+
+* `scheduleGroup CS2101 Oral Presentation`  +
+Displays all free time slots for group CS2101 Oral Presentation. +
+Refer to Figure 11 for results of this command.
++
+image:scheduleGroupExample.png[width = "800"] +
+*Figure 11:* Example of scheduleGroup. +
+
+=== Switching between Calendar and Timetable : `switch`
+
+Switches between Calendar view and Timetable view. +
+Alias: `sw` +
+Format: `switch`
+
+****
+* Switches to Timetable view if Fastis is currently in Calendar view, and vice versa.
+* Upon switching to timetable, the default timetable is blank.
+****
+
+== Command Summary
+
+[width="80%",cols="2,10,2,10,2",options="header"]
+|=========================================================
+|Command |Usage |Alias |Format |Undoable?
+
+|`add` |Adds a person to Fastis |`a` |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS l/TIMETABLE_LINK d/DETAIL [t/TAG]...` |X
+
+|`addEvent` |Adds an event to Fastis and display it on the calendar |`aE` |`addEvent n/NAME v/VENUE d/DATE st/STARTTIME et/ENDTIME` |X
+
+|`addGroup` |Adds a group to Fastis |`aG` |`addGroup NAME` |X
+
+|`addGroupMembers` |Adds an existing person in Fastis to a group |`aGM` |`addGroupMember INDEX g/GROUP` |X
+
+|`addToDo` |Adds a to-do to Fastis |`aTD` |`addToDo CONTENT` |X
+
+|`changeTagColor` |Changes a specific group color to one of the supported colors |`color` |`changeTagColor TAG COLOR` |X
+
+|`check` |Marks a to-do in Fastis as done |{nbsp} |`check INDEX` |X
+
+|`clear` |Clears all entries from Fastis |`c` |`clear` |X
+
+|`delete` |Deletes the specified person from Fastis |`d` |`delete INDEX` |X
+
+|`deleteGroup` |Deletes a group from Fastis |`dG` |`deleteGroup GROUP` |X
+
+|`deleteGroupMember` |Removes a member from a group |`dGM` |`deleteGroupMember INDEX g/GROUP` |X
+
+|`deleteToDo` |Deletes the specified to-do from Fastis |`dTD` |`deleteToDo INDEX` |X
+
+|`edit` |Edits an existing person in Fastis |`e` |`edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [l/TIMETABLE_LINK] [d/DETAIL] [t/TAG]...` |X
+
+|`editToDo` |Edits an existing to-do's content in Fastis |`eTD` |`editToDo INDEX c/CONTENT` |X
+
+|`exit` |Exits the program |{nbsp} |`exit` |{nbsp}
+
+|`find` |Finds persons whose name contains any of the given keywords |`f` |`find KEYWORD [MORE_KEYWORDS]` |{nbsp}
+
+|`help` |Displays the help window |{nbsp} |`help` |{nbsp}
+
+|`history` |Lists all the commands that you have entered in reverse chronological order |`h` |`history` |{nbsp}
+
+|`list` |Shows a list of all persons in Fastis |`l` |`list` |{nbsp}
+
+|`listGroupMembers` |Lists all the members in the group that already exists in Fastis |`lGM` |`listGroupMembers GROUP` |{nbsp}
+
+|`listTagMembers` |Lists out all persons with the given tags |`lTM` |`listTagMembers TAG [MORE_TAGS]...` |{nbsp}
+
+|`redo` |Reverses the most recent `undo` command |`r` |`redo` |{nbsp}
+
+|`scheduleGroup` |Finds all common free time slots for all group members to meet |`sG` |`scheduleGroup GROUP` |{nbsp}
+
+|`select` |Selects the person identified by the index number used in the last person listing |`s` |`select INDEX` |{nbsp}
+
+|`switch` |Switches between Calendar view and Timetable view |`sw` |`switch` |{nbsp}
+
+|`uncheck` |Marks a to-do in Fastis as undone |{nbsp} |`uncheck INDEX` |X
+
+|`undo` |Restores Fastis to the state before the previous _undoable_ command was executed |`u` |`undo` |{nbsp}
+|=========================================================
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+//tag::Calendar[]
+=== Calendar Feature
+Fastis uses a stand-alone `Calendar` class, adapted from https://github.com/SirGoose3432/javafx-calendar[javafx-calendar] by SirGoose3432.
+It is used to view the user's upcoming events, e.g. interviews, meetings, etc.
+
+==== Current implementation
+
+The calendar feature is facilitated by `Calendar` and `CalendarDate` classes,
+both of which reside inside `Ui` component. Their sole purpose is to draw out the calendar
+in the application when given a list of `Event` objects.
+
+The calendar is drawn/redrawn whenever a `CalendarChangedEvent` is raised.
+The flow of operation thereafter is shown the sequence diagram below.
+
+image::CalendarSequenceDiagram.png[width="800"]
+
+`Calendar` utilizes the `Event` class to determine which slots in the schedule are occupied.
+Hence, a list of events is passed to every calendar upon construction and saved as a private variable.
+
+The details of these event, e.g. time, location, are saved locally in `.xml` file format.
+It is also retrieved upon start up by the `Storage` component and saved within the `Model` for the whole process.
+
+The implementation of `Calendar` is as follows:
+
+[source,java]
+----
+public Calendar(ObservableList<Event> eventList) {
+    super(FXML);
+    // ... Assigning class fields ...
+    initCalendar();
+    registerAsAnEventHandler(this);
+}
+
+private void initCalendar() {
+    // ... Create the calendar 7x6 GridPane ...
+    // ... Construct 42 CalendarDate objects ...
+    fillCalendar(currentYearMonth);
+    showEvents();
+    // ... show CalendarView ...
+}
+
+private void fillCalendar(YearMonth yearMonth) {
+    // ... Fill the calendar with the correct dates according to yearMonth ...
+}
+
+private void showEvents() {
+    // ... Show all events that are in the current yearMonth in the eventList ...
+}
+----
+
+The current time is retrieved upon startup, and the calendar base on that point in time to display the appropriate time frame.
+
+==== Design Considerations
+[[calendarImplementation]]
+===== Aspect: Implementation of the `Calendar`
+
+* **Alternative 1 (current choice):** Implement a stand-alone `Calendar` class
+** Pros:
+*** Easy to manipulate data.
+*** Easy to customize appearance.
+** Cons:
+*** Likely not optimized implementation.
+*** Might not be aesthetically pleasing.
+* **Alternative 2:** Import external libraries/API
+** Choices:
+*** https://developers.google.com/calendar/[Google Calendar API]
+*** https://github.com/dlemmermann/CalendarFX[CalendarFX]
+** Pros:
+*** Likely optimized algorithms.
+*** Aesthetically pleasing.
+** Cons:
+*** Restricted to what the libraries/API offer.
+*** Need a firm understanding of the whole API to implement well.
+
+===== Aspect: Storing of the `eventList`
+* **Alternative 1 (current choice):** Stores the `eventList` within the `Calendar` object.
+** Pros: Easy to show events and their details, even after the constructor returns.
+** Cons: Takes up some redundant memory if there are no commands for showing these events.
+* **Alternative 2:** Only passes the `eventList` as a parameter to the constructor and not storing it as a field within the `Calendar` object.
+** Pros: Codes are less cluttered and less memory is used.
+** Cons: Hard to show events and their details outside of the constructor.
+// end::Calendar[]
+
+//tag::Timetable[]
+[[Timetable]]
+=== Timetable feature
+Fastis uses a stand-alone `Timetable` class, based largely on the `Calendar` class. It is used to view the user's own NUSMods timetable as well as that of other people in his address book.
+
+==== Current implementation
+
+The timetable is the weekly equivalent to the monthly Calendar.
+This feature is similarly facilitated by the analogous `Timetable` and `TimetableSlot` classes,
+both of which reside inside `Ui` component. Their sole purpose is to draw out the timetable
+in the application when given a list of `WeeklyEvent` objects.
+
+The calendar is drawn/redrawn whenever a `TimetableChangedEvent` is raised.
+This is done either by a precedent `PersonPanelSelectionChangedEvent` or a `ScheduleGroupCommand`.
+The flow of operation thereafter is shown the sequence diagram below.
+
+image::TimetableSequenceDiagram.png[width="800"]
+
+The implementation of `Timetable` is as follows:
+
+[source,java]
+----
+public Timetable(ObservableList<WeeklyEvent> eventList) {
+    super(FXML);
+    // ... Assigning class fields ...
+    initTimetable();
+    registerAsAnEventHandler(this);
+}
+
+private void initTimetable() {
+    // ... Create the calendar 6x11 GridPane ...
+    // ... Construct 66 TimetableSlot objects ...
+    clearTimetable();
+    showSlots();
+    // ... show TimetableView ...
+}
+
+private void clearTimetable() {
+    // ... Draw all slots as blank ...
+    // ... Draw the timeline on the left ...
+}
+
+private void showSlots() {
+    // ... Show all slots that are in the in the eventList ...
+    // ... Make sure no 2 modules with different name would have the same color ...
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of the `Timetable` and Storing of the `eventList`
+As the weekly equivalent of `Calendar`, `Timetable` has the same aspect to consider. See <<calendarImplementation, Implementation of the Calendar>>.
+
+===== Aspect: Supporting modules on weekends and/or after 6pm
+* **Alternative 1 (current choice):** Don't support showing those modules
+** Pros: Make the GUI less cluttered and more readable
+** Cons:
+*** Cannot cater to users with those modules in their timetable
+*** Cannot schedule meetings on the weekends
+* **Alternative 2:** Support showing those modules
+** Pros: Catering to users with those modules, and support scheduling for the weekends.
+** Cons: As the GUI already have 2 other main components which are the PersonListPanel and TodoListPanel, adding more columns to the Timetable makes it looks cluttered.
+// end::Timetable[]
+
+
+//tag::Scheduling[]
+[[Scheduling]]
+=== Scheduling meetings feature
+Fastis supports showing all the common free time slots for all members in based on their timetable.
+
+==== Current implementation
+Fastis utilizes a few components to schedule the meetings, namely the `Group` class and `WeeklyEvent` class in `Model`, `Timetable` in `UI`, and `parseEvents()` in `Database`.
+The command to show the scheduled meetings is `ScheduleGroupCommand`, which resides in `Logic` component.
+
+When a `ScheduleGroupCommand` is executed, it first gets all group members from `Model`.
+For each member, it parses the `TimetableLink` to get all of his/her modules, and add them to an `occupied` list.
+From that list, the command generates all free time slots in another list called `free`, and post that event to be handled by the `UI` component later.
+
+The flow of operation is shown the sequence diagram below.
+
+image::ScheduleGroupSequenceDiagram.png[width="800"]
+
+The implementation of `ScheduleGroupCommand` is as follows:
+
+[source,java]
+----
+public ScheduleGroupCommand(Group group) {
+    requireNonNull(group);
+    // ... Assigning class fields ...
+    EventsCenter.getInstance().registerHandler(this);
+}
+
+public CommandResult execute() throws CommandException {
+    // ... Get the group's member from Model ...
+    fillTimeSlots(group);
+    generateFreeTimeSlots();
+    // ... Post new TimetableChangedEvent ...
+    // ... Return new CommandResult ...
+}
+
+private void fillTimeSlots(Group group) {
+    for (Person member : group.getPersonList()) {
+        // ... Parse the TimetableLink into moduleList
+        // ... Add all modules in moduleList to occupied list
+    }
+}
+
+private void generateFreeTimeSlots() {
+    // ... Generate free time slots logic
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Scheduling algorithm
+* **Alternative 1 (current choice):** Show all free time slots
+** Pros: Intuitive for users, and easy to read.
+** Cons: Slow, as there are a few extra steps to process.
+* **Alternative 2:** Show all occupied time slots
+** Pros: Very fast.
+** Cons:
+*** Could become cluttered as there are normally more occupied slots than free slots.
+*** Not intuitive for users.
+// end::Scheduling[]
+
+
+// tag::ChangeTagColor[]
+=== Tag Color feature
+Fastis supports changing the color of the tags given to people in the address book. There are up to 17 colors to choose from.
+
+==== Current implementation
+
+Changing a tag's color is facilitated by `ChangeTagColorCommand`, which resides inside `Logic` component.
+It supports modifying the `color` field within `Tag` objects.
+
+The flow of operation is shown the sequence diagram below.
+
+image::ChangeTagColorSequenceDiagram.png[width="800"]
+
+`ChangeTagColorCommand` inherit from `UndoableCommand`, therefore it can be undone and redone using `UndoRedoStack`.
+
+The implementation of `ScheduleGroupCommand` is as follows:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class ChangeTagColorCommand extends UndoableCommand {
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        // .. Get the tag's name and color from Model
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... Update tag in Model ...
+        // ... Update Person list in Model ...
+        // ... Return new CommandResult ...
+    }
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Different tags with the same color
+
+* **Alternative 1 (current choice):** Allow
+** Pros:
+*** Users have more freedom.
+*** Code is shorter.
+** Cons: Might result in aesthetically unpleasing GUI
+* **Alternative 2:** Disallow
+** Pros:
+*** More intuitive.
+*** Ensure aesthetic values for GUI.
+** Cons: Code is longer.
+// end::ChangeTagColor[]
+
+[appendix]
+== Use Cases
+
+(For all use cases below, the *System* is the `Fastis` and the *Actor* is the `user`, unless specified otherwise)
+
+[discrete]
+=== Use case: Add an event
+
+*MSS*
+
+1.  User requests to add an event by entering information.
+2.  Fastis adds the event to the calendar.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Meet up clashes with an existing event.
++
+[none]
+** 2a1. Fastis still adds the event, but it's not shown in the calendar.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show a person's timetable
+
+*MSS*
+
+1.  User selects a person, either by `select` command or by clicking on the person in the person list panel.
+2.  Fastis shows the timetable for the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The specified person has no timetable
+[none]
+** 2a1. Fastis shows an empty timetable
++
+Use case ends.
+
+[discrete]
+=== Use case: Change Tag Color
+
+*MSS*
+
+1. User enters a command to change a specific tag color.
+2. Fastis changes the color accordingly and displays it.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The tag specified doesn't exist within the address book.
+** 2a1. Fastis notifies the user.
++
+Use case ends.
+
+[none]
+* 3a. The color specified is not supported by Fastis.
+** 3a1. Fastis notifies the user.
++
+Use case ends.
+
+[appendix]
+== Glossary
+
+[[gui]] GUI::
+Acronym for Graphical User Interface. It is an interface (through which humans to interact with computers) that uses windows, icons and menus and which can be manipulated by a mouse and a keyboard. +
+GUI is used predominantly in Windows and iOS applications, including Fastis.
+
+[[todo]] To-do::
+An objective that must be met by the user. May or may not have deadlines.
+
+
+[appendix]
+== Instructions for Manual Testing
+
+=== Adding an event
+
+Adding an event specified by command line input with required event prefixes.
+
+. Test case: `addEvent n/CS2101 meeting v/COM1 Hackerspace d/15/04/2018 st/1600 et/1800` +
+   Expected: New event "CS2101 meeting" is added to Fastis. Details of the event added are shown in the result display box.
+. Test case: `addEvent v/COM1 Hackerspace d/15/04/2018 st/1600 et/1800` +
+   Expected: No event is added. Essential `NAME` field is missing. Error details are displayed in the result display box.
+. Other incorrect addEvent commands to try: `addEvent d/18/04/15`, `addEvent d/30/02/2018`, `addEvent st/1900 et/1700`, etc. +
+   Expected: Similar to previous.
+
+=== Changing a tag's color
+
+ Changing a tag identified by `TAG` to have the color identified by `COLOR`.
+
+. Prerequisites: `TAG` already exists in Fastis. `COLOR` must be supported by Fastis.
+. Test case: `changeTagColor friends pink` +
+   Expected: Color of all tags named "friends" changes to "pink". Successful message of the change will be displayed in the result display box.
+. Test case: `changeTagColor friends rainbow` +
+   Expected: No tag is changed as an unsupported color "rainbow" was input. Error details are displayed in the result display box.
+. Other incorrect commands to try: `changeTagColor`, `changeTagColor pink friends` +
+   Expected: Same as previous.
+
+
+---

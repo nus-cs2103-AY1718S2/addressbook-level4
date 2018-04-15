@@ -3,6 +3,7 @@ package seedu.address.model.person;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 
@@ -24,13 +25,23 @@ public class UniquePersonList implements Iterable<Person> {
 
     private final ObservableList<Person> internalList = FXCollections.observableArrayList();
 
+    //@@author Sheikh-Umar
     /**
-     * Returns true if the list contains an equivalent person as the given argument.
+     * Returns true if the list contains either the phone number or email address
+     * of the given argument.
      */
     public boolean contains(Person toCheck) {
         requireNonNull(toCheck);
-        return internalList.contains(toCheck);
+        for (int i = 0; i < internalList.size(); i++) {
+            Person currentPersonInCrm = internalList.get(i);
+            if (currentPersonInCrm.getPhone().equals(toCheck.getPhone())
+                    || currentPersonInCrm.getEmail().equals(toCheck.getEmail())) {
+                return true;
+            }
+        }
+        return false;
     }
+    //@@author
 
     /**
      * Adds a person to the list.
@@ -44,6 +55,19 @@ public class UniquePersonList implements Iterable<Person> {
         }
         internalList.add(toAdd);
     }
+
+    //@@author zhuleyan
+    /**
+     * Sorts all persons by name in alphabetical order.
+     */
+    public void sort() {
+        internalList.sort(
+            Comparator.comparing((
+                Person p) -> p.getName().toString(), (
+                s1, s2) -> (s1.compareToIgnoreCase(s2) == 0) ? s1.compareTo(s2) : s1.compareToIgnoreCase(s2))
+        );
+    }
+    //@@author
 
     /**
      * Replaces the person {@code target} in the list with {@code editedPerson}.

@@ -10,10 +10,14 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Contact;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Lead;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Remark;
+import seedu.address.model.person.Type;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -31,6 +35,28 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String remark;
+    //@@author WoodyLau
+    @XmlElement(required = true)
+    private String type;
+    @XmlElement(required = false)
+    private String company;
+    @XmlElement(required = false)
+    private String title;
+    // Fields included for Leads
+    @XmlElement(required = false)
+    private String industry;
+    @XmlElement(required = false)
+    private int rating;
+    @XmlElement(required = false)
+    private String website;
+    // Fields included for Contacts
+    @XmlElement(required = false)
+    private String department;
+    @XmlElement(required = false)
+    private String convertedDate;
+    //@@author
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -49,6 +75,7 @@ public class XmlAdaptedPerson {
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.type = null;
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
@@ -64,10 +91,28 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        remark = source.getRemark().value;
+        type = source.getType().value;
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        //@@author WoodyLau
+        if (source instanceof Lead) {
+            company = ((Lead) source).getCompany();
+            industry = ((Lead) source).getIndustry();
+            rating = ((Lead) source).getRating();
+            title = ((Lead) source).getTitle();
+            website = ((Lead) source).getWebsite();
+        } else if (source instanceof Contact) {
+            if (((Contact) source).getCompany() != null) {
+                company = ((Contact) source).getCompany().toString();
+            }
+            department = ((Contact) source).getDepartment();
+            title = ((Contact) source).getTitle();
+            convertedDate = ((Contact) source).getConvertedDate();
+        }
+        //@@author WoodyLau
     }
 
     /**
@@ -113,8 +158,53 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        final Remark remark = new Remark(this.remark);
+
+        if (this.type == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Type.class.getSimpleName()));
+        }
+        if (!Type.isValidType(this.type)) {
+            throw new IllegalValueException(Type.MESSAGE_ADDRESS_CONSTRAINTS);
+        }
+        final Type type = new Type(this.type);
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        //@@author WoodyLau
+        if (type.value.equals("Lead")) {
+            Lead lead = new Lead(name, phone, email, address, remark, tags);
+            if (this.company != null) {
+                lead.setCompany(this.company);
+            }
+            if (this.industry != null) {
+                lead.setIndustry(this.industry);
+            }
+            lead.setRating(this.rating);
+            if (this.title != null) {
+                lead.setTitle(this.title);
+            }
+            if (this.website != null) {
+                lead.setWebsite(this.website);
+            }
+            return lead;
+        }
+        if (type.value.equals("Contact")) {
+            Contact contact = new Contact(name, phone, email, address, remark, tags);
+            if (this.company != null) {
+                contact.setCompany(this.company);
+            }
+            if (this.department != null) {
+                contact.setDepartment(this.department);
+            }
+            if (this.title != null) {
+                contact.setTitle(this.title);
+            }
+            if (this.convertedDate != null) {
+                contact.setConvertedDate(this.convertedDate);
+            }
+            return contact;
+        }
+        //@@author
+        return new Person(name, phone, email, address, remark, tags);
     }
 
     @Override

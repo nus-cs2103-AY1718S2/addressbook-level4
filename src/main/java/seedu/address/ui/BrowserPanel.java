@@ -1,6 +1,8 @@
 package seedu.address.ui;
 
+import java.io.UnsupportedEncodingException;
 import java.net.URL;
+import java.net.URLEncoder;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
@@ -11,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
@@ -22,9 +25,11 @@ public class BrowserPanel extends UiPart<Region> {
 
     public static final String DEFAULT_PAGE = "default.html";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/search?ei=EmypWtGyJsiEvQSsnbGwDQ&q=";
 
     private static final String FXML = "BrowserPanel.fxml";
+
+    private static Config config;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -63,10 +68,45 @@ public class BrowserPanel extends UiPart<Region> {
     public void freeResources() {
         browser = null;
     }
+    //@@author davidten
+    /**
+     * Gets configuration to be used when showing google maps
+     */
+    public static void getConfig() {
+        config = Config.setupConfig();
+    }
+
+    /**
+     * Generates the google maps url to be shown in the browser
+     */
+    public static String generateUrl(String from, String to) {
+        String url = "https://www.google.com/maps/dir/?api=1&origin=";
+        String encodedUserLocation = "";
+        String encodedDestinationLocation = "";
+        try {
+            encodedUserLocation = URLEncoder.encode(from, "UTF-8");
+            encodedDestinationLocation = URLEncoder.encode(to, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            e.printStackTrace();
+        }
+
+        url += encodedUserLocation + "&destination=" + encodedDestinationLocation;
+
+        return url;
+    }
 
     @Subscribe
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        getConfig();
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+        //if person has no home location set
+        if (config.getUserLocation() == null || config.getUserLocation().length() == 0) {
+            logger.info("No office location set, doing Google search");
+            loadPersonPage(event.getNewSelection().person);
+        } else {
+            String url = generateUrl(config.getUserLocation(), event.getNewSelection().person.getAddress().toString());
+            logger.info("Office location set, Load Google Maps. URL IS " + url);
+            loadPage(url);
+        }
     }
 }

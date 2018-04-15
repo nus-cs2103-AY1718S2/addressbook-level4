@@ -14,10 +14,14 @@ public class ConfigTest {
 
     @Test
     public void toString_defaultObject_stringReturned() {
-        String defaultConfigAsString = "App title : Address App\n"
+        String defaultConfigAsString = "App title : CRM Book\n"
                 + "Current log level : INFO\n"
-                + "Preference file Location : preferences.json";
-
+                + "Preference file Location : preferences.json\n"
+                //@@author davidten
+                + "App Id: 78ameftoz7yvk4\n"
+                + "App Secret: null\n"
+                + "User Location: null";
+        //@@author
         assertEquals(defaultConfigAsString, new Config().toString());
     }
 

@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= CRM Book - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,25 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
-
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+:repoURL: https://github.com/CS2103JAN2018-F11-B1/main
+By: `Team F11-B1`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
+//tag::description[]
+A CRM System is a Customer Relationship Management system, mainly used in the real world by Sales and Marketing teams to manage their business-customer relationships, as well as to manage business contacts, employees, clients, contract wins and sales leads. Some examples of popular CRMs include Salesforce, SAP, and Microsoft Dynamics CRM.
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+A common complaint against such traditional CRMs is that they are large, contain too many functionalities, and in some cases even require additional training before using. (Search for: Salesforce Trailhead)
+
+The CRM Book application aims to assist Salespeople by implementing the most important functionality of a CRM System, that is, managing their business contacts and clients. In a CRM, business contacts are seperated into two categories, Leads and Contacts. Leads are people that the salesperson has sold to in the past, while Contacts are people whom the salesperson has sold to before, even if the company they represent may no longer purchase the product. Also, accounts represent Companies.
+
+Some unique features of this CRM in v1.5 that benefits the individual Salesperson even more is an enhanced detection of duplicates through fields such as email and phone number, importing of a CSV file of leads that the salesperson may have bought through a mailing list or obtained through a tradeshow, sharing of posts about their company through LinkedIn, as well as seeing directions to their Lead's office through Google Maps. It is important to note that these features all enhance the experience of the salesperson, and does not distract from the core functionality of managing their relationship with their leads and contacts.
+
+Future releases of the CRM Book would include the ability to schedule meetings through a Calendar, integration with other Social Media networks to post company related news, allowing a client to choose a meeting slot among a few that the salesperson has specified, and also manage the contracts that tie a Contact to an account.
+
+*More importantly, CRM Book is optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, CRM Book can get your contact management tasks done faster than traditional GUI apps.
+
+Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+//end::description[]
 
 == Quick Start
 
@@ -27,8 +39,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `crmbook.jar` link:https://github.com/CS2103JAN2018-F11-B1/main/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your CRM Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -37,15 +49,25 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all Leads and Contacts
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a Lead named `John Doe` to the CRM Book.
+* **`delete`**`3` : deletes the 3rd person shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
 
 [[Features]]
 == Features
+
+* In v 1.2: Able to add Leads into CRM book and convert Leads into Contacts. All commands can be performed using its respective aliases. Able to start process of LinkedIn Integration. Able to generate a color for the tags added. Able to add/remove/edit the remark of a person.
+
+* In v 1.3: Able to detect a duplicate based on a phone number. Able to fully authenticate linkedIn, and share posts to LinkedIn. All alias commands will be completed. Auto-Complete of commands enabled. Able to sort all persons in list by name alphabetically.
+
+* In v 1.4: Added Accounts. Made CRMBook look nicer.
+
+* In v 1.5: Able to find phone numbers. Able to change theme dynamically. Able to set office location and view directions via Google Maps. There are multiple themes for user to choose from.
+
+* Coming in v2.0: Functional CRM, with Leads, Contacts, and Accounts. Events (such as meetings) play a role in alerting salesperson if a person needs to be reached out to. Data enrichment. Adds a parent company tag to Leads and Contacts if their company has a parent company. Example: Leads and Contacts from Skype and Nokia will have an additional tag called Microsoft.
 
 ====
 *Command Format*
@@ -56,32 +78,64 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== Viewing help: `h`, `help`
 
-Format: `help`
+Format: `h`, `help`
 
-=== Adding a person: `add`
+//tag::linkedinLogin[]
+=== Log in to LinkedIn: `linklog`, `linkedin_login`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Format: 'linklog', 'linkedin_login'
 
 [TIP]
-A person can have any number of tags (including 0)
+A LinkedIn Login is required if you want to share posts to linkedIn. If this is your first login, you will also have to give permissions for CRM Book in LinkedIn via a pop up.
+//end::linkedinLogin[]
+
+//tag::linkedinShare[]
+=== Share a Post on LinkedIn: `linkshare`, `linkedin_share`
+
+Format: 'linkshare [content]', 'linkedin_share [content]'
+
+[TIP]
+This command will allow you to share a post on LinkedIn to all your connections. This will allow you to share any interesting marketing materials your company may be involved in quickly.
+//end::linkedinShare[]
+
+=== Adding a Lead: `a`, `add`
+
+Adds a Lead to the CRM +
+Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`, `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+
+[TIP]
+A Lead can have any number of tags (including 0). +
+To note, to create a Contact, a Lead must be converted; see convert.
 
 Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Jake Tan t/friend e/jaketan@example.com a/Simei Street 1, block 999, #09-09 p/1234567`
 
-=== Listing all persons : `list`
+=== Listing all persons : `l`, `list`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Shows a list of all Leads and Contacts in the CRM. +
+Format: `l`, `list`
 
-=== Editing a person : `edit`
+//tag::displaylist[]
+=== Displaying all Leads or all Contacts: `disp`, `display`
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Shows a list of either Leads or Contacts in the CRM. +
+Format: `disp Lead`, `display Lead`, `disp Contact`, `display Contact`
+
+****
+* The search is case insensitive. e.g `lead` will match `Lead`
+* Only a full word will be matched e.g. `Contact` will not match `Contacts`
+****
+//end::displaylist[]
+
+=== Editing a person : `e`, `edit`
+
+Edits an existing Lead or Contact in the CRM Book. +
+Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`, `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
@@ -97,16 +151,96 @@ Examples:
 Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `e 2 p/99990000 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st person to be `99990000` and `johndoe@example.com` respectively.
 
-=== Locating persons by name: `find`
+=== Adding nonessential details of a person : `adddetails`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Edits an existing person in the CRM Book. +
+For Leads, format: `adddetails INDEX [c/COMPANY] [i/INDUSTRY] [r/RATING (number from 1 to 5)] [t/TITLE] [w/WEBSITE]` +
+
+For Contacts, format: `adddetails INDEX [c/COMPANY] [d/DEPARTMENT] [t/TITLE]`
+
+****
+* Adds details to the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+****
+
+Examples:
+
+* `adddetails 1 c/Macrosoft r/4` +
+For the first person, makes Macrosoft the company and sets the rating to 4. This person must be a Lead.
+* `adddetails 2 d/IT t/Mr.` +
+Sets the department of the 2nd person to be `IT` and sets the title to `Mr.`. This person must be a Contact.
+
+//tag::editdetails[]
+=== Editing nonessential details of a person : `editdetails`
+
+Edits an existing person in the CRM Book. +
+For Leads, format: `editdetails INDEX [c/COMPANY] [i/INDUSTRY] [r/RATING (number from 1 to 5)] [t/TITLE] [w/WEBSITE]` +
+
+For Contacts, format: `editdetails INDEX [c/COMPANY] [d/DEPARTMENT] [t/TITLE]`
+
+****
+* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+* `editdetails 1 c/Macrosoft r/4` +
+For the first person, changes the company to Macrosoft and sets the rating to 4. This person must be a Lead.
+* `editdetails 2 d/IT t/Mr.` +
+Edits the department of the 2nd person to be `IT` and sets the title to `Mr.`. This person must be a Contact.
+//end::editdetails[]
+
+//tag::convert[]
+=== Converting a person : `con`, `convert`
+
+Converts an existing Lead in the CRM Book to a Contact. For further description of Leads and Contacts, see the Introduction +
+Format: `con INDEX`, `convert INDEX`
+
+****
+* Converts the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* If the indicated person is a Contact, an error is thrown
+* This command can be undone and redone as necessary
+****
+
+Examples:
+
+* `convert 2` +
+Converts the 2nd person in the list to a Contact.
+
+* `con 4` +
+Converts the 4th person in the list to a Contact.
+//end::convert[]
+
+//tag::account[]
+=== Adding an Account to a Contact : `account`
+
+Adds an Account to a Contact. +
+Format: `account INDEX an/ACCOUNTNAME`
+
+****
+* Adds an Account `ACCOUNTNAME` to the Contact at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Contacts can only have one Account. If the Contact already has an Account, it will be replaced.
+****
+
+Examples:
+
+* `account 2 an/Macrosoft` +
+Adds the Account Macrosoft to the 2nd person in the list
+//end::account[]
+
+=== Locating persons by name: `f`, `find`
+
+Finds persons whose key information contain any of the given keywords. +
+Format: `f KEYWORD [MORE_KEYWORDS]`, `find KEYWORD [MORE_KEYWORDS]`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
@@ -115,13 +249,17 @@ Examples:
 
 * `find John` +
 Returns `john` and `John Doe`
+* `find 99881234` +
+Returns the Lead or Contact with the phone number `99881234`
 * `find Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find johntan@gmail.com` +
+Returns the Lead or Contact with the email address `johntan@gmail.com`
 
-=== Deleting a person : `delete`
+=== Deleting a person : `d`, `delete`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Deletes the specified person from the CRM Book. +
+Format: `d INDEX`, `delete INDEX`
 
 ****
 * Deletes the person at the specified `INDEX`.
@@ -133,15 +271,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd person in the CRM
+* `list` +
+`d 4` +
+Deletes the 4th person in the CRM
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st person in the results of the `find` command
 
-=== Selecting a person : `select`
+=== Selecting a person : `s`, `select`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Selects the person identified by the index number used in the last Leads/Contacts listing. +
+Format: `s INDEX`, `select INDEX`
 
 ****
 * Selects the person and loads the Google search page the person at the specified `INDEX`.
@@ -153,15 +294,36 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in the address book.
+Selects the 2nd person in the CRM Book
+* `list` +
+`select 4` +
+Selects the 4th person in the CRM Book
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st person in the results of the `find` command
 
-=== Listing entered commands : `history`
+//tag::bulkimport[]
+=== Importing a CSV file: `i`, `import`
+
+When you have a CSV file of Leads, you can directly import the file to the CRM Book without adding them one by one. +
+Format: `i PATH`, `import PATH`
+
+****
+* The path refers to the path of the file that the user wants to import.
+* The path must be a valid file path.
+* The columns in the CSV file should be `name`, `phone`, `email`, `address` respectively. The order has to be followed restrictively to guarantee the success of import.
+****
+
+Examples:
+
+* `import ./sample.csv` +
+Imports the file `sample.csv` to the CRM Book
+//end::bulkimport[]
+
+=== Listing entered commands : `hist`, `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `hist`, `history`
 
 [NOTE]
 ====
@@ -169,14 +331,14 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `u`, `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores the CRM Book to the state before the previous _undoable_ command was executed. +
+Format: `u`, `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the CRM Book's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -186,8 +348,13 @@ Examples:
 `undo` (reverses the `delete 1` command) +
 
 * `select 1` +
-`list` +
+`l` +
 `undo` +
+The `undo` command fails as there are no undoable commands executed previously.
+
+* `select 1` +
+`l` +
+`u` +
 The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
@@ -195,10 +362,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+=== Redoing the previously undone command : `r`, `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `r`, `redo`
 
 Examples:
 
@@ -211,6 +378,10 @@ Examples:
 The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
+`r` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
@@ -218,47 +389,113 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `c`, `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+Clears all entries from the CRM. +
+Format: `c`, `clear`
 
-=== Exiting the program : `exit`
+=== Exiting the program : `ex`, `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `ex`, `exit`
+
+//tag::remark[]
+=== Add or remove a remark to a Lead or Contact: `rem`, `remark`
+
+Adds or removes a remark to a particular Lead or Contact. +
+Format to add remark: `rem [INDEX] r/[KEYWORD]`, `remark [INDEX] r/[KEYWORD]`
+Examples:
+
+* `rem 1 r/Happy` +
+Adds the remark 'Happy' to the 1st Lead or Contact.
+
+* `remark 4 r/` +
+Removes the remark of the 4th Lead or Contact.
+//end::remark[]
+
+//tag::sort[]
+=== Sort persons by name in alphabetical order: `st`, `sort`
+
+Sorts all persons in CRM Book by name. +
+Format: `st`, `sort`
+//end::sort[]
+
+//tag::changetheme[]
+=== Change theme: `changetheme`  [since v1.4]
+
+Changes color theme of CRM Book to the user specified theme. Currently, there are three themes, namely `dark`, `light` and `blue`.
+The `blue` theme is the default theme. When user opens CRM Book for the first time, blue theme will be on display.
+If the user changes the theme, it will be saved in user preferences so that CRM Book will display the user preferred theme in subsequent runs. +
+Format: `changetheme THEME` +
+Example: `changetheme light`
+//end::changetheme[]
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+CRM Book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+// tag::setlocation[]
+=== Setting current location: `set_office_address`, `setA`
+Sets the current office address for Google Maps +
+Format: `setA a/ADDRESS
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+[TIP]
+Setting this address is required if you want to see the Google Map directions to a customer's location
+// end::setlocation[]
+
+// tag::getdirections[]
+=== Get directions to customer's office: commandless
+In order to use this, you must have an office address set. You can then either click on a person card or use the `select` command in order to view the Google Maps directions.
+
+[TIP]
+If a person card was selected while the office location is set, you have to select a different person card to see the map
+
+[TIP]
+Success of this command is also dependent on the success of Google intepreting the address entered
+// end::getdirections[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CRM folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`, `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `a n/John Tan p/99991111 e/johntan@example.com a/123, Tampines Rd, 54321 t/colleague`
+* *AddDetails* :  For Leads: `adddetails INDEX [c/COMPANY] [i/INDUSTRY] [r/RATING (number from 1 to 5)] [t/TITLE] [w/WEBSITE]` +
+For Contacts: `adddetails INDEX [c/COMPANY] [d/DEPARTMENT] [t/TITLE]`
+* *Change Theme* : `changetheme THEME` +
+e.g. `changetheme dark`
+* *Clear* : `c`, `clear`
+* *Convert* : `con INDEX`, `convert INDEX`
+* *Delete* : `d INDEX`, `delete INDEX` +
+e.g. `d 5`, `delete 3`
+//tag::displaycommandsummary[]
+* *Display* : `disp KEYWORD`, `display KEYWORD` +
+e.g. `disp Lead`, `display Contact`
+//end::displaycommandsummary[]
+* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...`, `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+e.g. `e 1 n/John Tan e/johntan@example.com` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+* *EditDetails* :  For Leads: `editdetails INDEX [c/COMPANY] [i/INDUSTRY] [r/RATING (number from 1 to 5)] [t/TITLE] [w/WEBSITE]` +
+For Contacts: `editdetails INDEX [c/COMPANY] [d/DEPARTMENT] [t/TITLE]`
+* *Exit* : `ex`, `exit`
+// tag::findcommandsummary[]
+* *Find* : `f KEYWORD [MORE_KEYWORDS]`, `find KEYWORD [MORE_KEYWORDS]` +
+e.g. `f Chris`, `find James Jake`, `f 99881122`, `find john@gmail.com`
+// end::findcommandsummary[]
+* *Help* : `h`, `help`
+* *History* : `hist`, `history`
+* *Import* : `i PATH`, `import PATH`
+* *Linkedin_login* : `linklog`, `linkedin_login`
+* *Linkedin_share* : `linkshare [content]`, `linkedin_share CONTENT`
+* *List* : `l`, `list`
+* *Redo* : `r`, `redo`
+* *Remark* : `rem`, `remark`
+* *SetOfficeAddress* : `set_office_address a/ADDRESS`, `setA a/ADDRESS`
+* *Select* : `s INDEX`, `select INDEX` +
+e.g.`s 1`, `select 2`
+* *Sort* : `st`, `sort`
+* *Undo* : `u`, `undo`

@@ -12,6 +12,7 @@ import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
 
 import org.junit.Test;
 
+import seedu.address.commons.core.Config;
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.DeleteCommand;
@@ -28,6 +29,7 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
     @Test
     public void delete() {
+        Config.clearUserLocation();
         /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- */
 
         /* Case: delete the first person in the list, command with leading spaces and trailing spaces -> deleted */
@@ -90,6 +92,10 @@ public class DeleteCommandSystemTest extends AddressBookSystemTest {
 
         /* Case: invalid index (0) -> rejected */
         command = DeleteCommand.COMMAND_WORD + " 0";
+        assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
+
+        /* Case: invalid index (0) -> rejected */
+        command = DeleteCommand.COMMAND_ALIAS + " 0";
         assertCommandFailure(command, MESSAGE_INVALID_DELETE_COMMAND_FORMAT);
 
         /* Case: invalid index (-1) -> rejected */

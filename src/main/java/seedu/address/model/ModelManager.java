@@ -12,6 +12,9 @@ import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.exception.InputThemeEqualsCurrentThemeException;
+import seedu.address.model.person.Contact;
+import seedu.address.model.person.Lead;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -25,6 +28,7 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private UserPrefs userPrefs;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -36,6 +40,7 @@ public class ModelManager extends ComponentManager implements Model {
         logger.fine("Initializing with address book: " + addressBook + " and user prefs " + userPrefs);
 
         this.addressBook = new AddressBook(addressBook);
+        this.userPrefs = userPrefs;
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
     }
 
@@ -81,6 +86,22 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+    //@@author WoodyLau
+    @Override
+    public void convertPerson(Lead lead, Contact contact)
+            throws DuplicatePersonException, PersonNotFoundException {
+        requireAllNonNull(lead, contact);
+
+        addressBook.convertPerson(lead, contact);
+        indicateAddressBookChanged();
+    }
+    //@@author
+
+    @Override
+    public void sortAllPersons() {
+        addressBook.sortPersons();
+        indicateAddressBookChanged();
+    }
     //=========== Filtered Person List Accessors =============================================================
 
     /**
@@ -116,4 +137,25 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@@author A0155428B-unused
+    //these methods were used in the implementation of change theme command in v1.4
+    @Override
+    public void updateTheme(String theme) throws InputThemeEqualsCurrentThemeException {
+        if (theme.equals("light")) {
+            if (this.userPrefs.getMainWindowFile().equals("MainWindowLight.fxml")) {
+                throw new InputThemeEqualsCurrentThemeException();
+            }
+            this.userPrefs.setMainWindowFilePath("MainWindowLight.fxml");
+        } else {
+            if (this.userPrefs.getMainWindowFile().equals("MainWindow.fxml")) {
+                throw new InputThemeEqualsCurrentThemeException();
+            }
+            this.userPrefs.setMainWindowFilePath("MainWindow.fxml");
+        }
+    }
+
+    @Override
+    public String getThemeFilePath() {
+        return this.userPrefs.getGuiSettings().getThemeFilePath();
+    }
 }

@@ -15,24 +15,39 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person {
 
-    private final Name name;
-    private final Phone phone;
-    private final Email email;
-    private final Address address;
+    protected Name name;
+    protected Phone phone;
+    protected Email email;
+    protected Address address;
+    protected Remark remark;
+    protected Type type;
 
-    private final UniqueTagList tags;
+    protected UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, Set<Tag> tags) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.type = null;
+    }
+
+    protected Person() {
+        this.name = null;
+        this.phone = null;
+        this.email = null;
+        this.address = null;
+        this.remark = null;
+        // protect internal tags from changes in the arg list
+        this.tags = new UniqueTagList();
+        this.type = null;
     }
 
     public Name getName() {
@@ -49,6 +64,14 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Remark getRemark() {
+        return remark;
+    }
+
+    public Type getType() {
+        return type;
     }
 
     /**
@@ -92,9 +115,10 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Remark: ")
+                .append(getRemark())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
-
 }

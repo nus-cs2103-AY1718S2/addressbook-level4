@@ -8,7 +8,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
+import seedu.address.model.person.Lead;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
@@ -17,8 +17,14 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 public class AddCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "add";
+    //@@author Sheikh-Umar
+    public static final String COMMAND_ALIAS = "a";
+    //@@author
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a person to the address book. "
+    public static final String COMMAND_AUTO_COMPLETE = COMMAND_WORD + " " + PREFIX_NAME + " "
+            + PREFIX_PHONE + " " + PREFIX_EMAIL + " " + PREFIX_ADDRESS + " " + PREFIX_TAG;
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a Lead to the CRM Book. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_PHONE + "PHONE "
@@ -30,18 +36,20 @@ public class AddCommand extends UndoableCommand {
             + PREFIX_PHONE + "98765432 "
             + PREFIX_EMAIL + "johnd@example.com "
             + PREFIX_ADDRESS + "311, Clementi Ave 2, #02-25 "
-            + PREFIX_TAG + "friends "
-            + PREFIX_TAG + "owesMoney";
+            + PREFIX_TAG + "DNC "
+            + PREFIX_TAG + "Entrepreneur";
 
-    public static final String MESSAGE_SUCCESS = "New person added: %1$s";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book";
+    //@@author Sheikh-Umar
+    public static final String MESSAGE_SUCCESS = "New Lead added: %1$s";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This Lead or Contact is already in the CRM Book.";
+    //@@author
 
-    private final Person toAdd;
+    private final Lead toAdd;
 
     /**
      * Creates an AddCommand to add the specified {@code Person}
      */
-    public AddCommand(Person person) {
+    public AddCommand(Lead person) {
         requireNonNull(person);
         toAdd = person;
     }

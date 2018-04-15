@@ -3,6 +3,9 @@ package seedu.address.model;
 import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.exception.InputThemeEqualsCurrentThemeException;
+import seedu.address.model.person.Contact;
+import seedu.address.model.person.Lead;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -26,6 +29,9 @@ public interface Model {
     /** Adds the given person */
     void addPerson(Person person) throws DuplicatePersonException;
 
+    /** Sorts all persons */
+    void sortAllPersons();
+
     /**
      * Replaces the given person {@code target} with {@code editedPerson}.
      *
@@ -36,6 +42,14 @@ public interface Model {
     void updatePerson(Person target, Person editedPerson)
             throws DuplicatePersonException, PersonNotFoundException;
 
+    /**
+     * Replaces the given person {@code lead} with {@code contact}.
+     *
+     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     */
+    public void convertPerson(Lead lead, Contact contact)
+            throws DuplicatePersonException, PersonNotFoundException;
+
     /** Returns an unmodifiable view of the filtered person list */
     ObservableList<Person> getFilteredPersonList();
 
@@ -44,5 +58,9 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate);
+
+    void updateTheme(String theme) throws InputThemeEqualsCurrentThemeException;
+
+    String getThemeFilePath();
 
 }

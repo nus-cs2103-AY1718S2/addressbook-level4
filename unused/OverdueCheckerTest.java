@@ -17,7 +17,8 @@ import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.testutil.TypicalActivities;
 
-//@@author Kyomian
+//@@author Kyomian-unused
+// Unable to get this test working.
 public class OverdueCheckerTest {
 
     private ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);

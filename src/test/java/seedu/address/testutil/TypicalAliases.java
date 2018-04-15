@@ -35,7 +35,7 @@ public class TypicalAliases {
     private TypicalAliases() {} // prevents instantiation
 
     /**
-     * Returns an {@code AddressBook} with all the typical persons.
+     * Returns an {@code AddressBook} with all the typical aliases.
      */
     public static AddressBook getTypicalAddressBook() {
         AddressBook ab = new AddressBook();

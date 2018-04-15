@@ -183,6 +183,25 @@ public class CommandTestUtil {
     public static final String MIXED_CASE_REMOVEPASSWORD_COMMAND_WORD = "DeCrYpT";
     //@@author
 
+    //@@author Caijun7
+    public static final String VALID_IMPORT_FILEPATH = "src/test/data/ImportCommandTest/aliceAddressBook.xml";
+    public static final String ENCRYPTED_IMPORT_FILEPATH =
+            "src/test/data/ImportCommandTest/encryptedAliceBensonAddressBook.xml";
+    public static final String TEST_PASSWORD = "test";
+    public static final String WRONG_PASSWORD = "wrong";
+    public static final String MIXED_CASE_IMPORT_COMMAND_WORD = "ImPoRt";
+    public static final String INVALID_IMPORT_FILEPATH = "src/";
+    public static final String INVALID_FILE_FORMAT = "src/test/data/ImportCommandTest/invalidFileFormatAddressBook.xml";
+
+    public static final String VALID_EXPORT_FILEPATH = "src/test/data/sandbox/temp.xml";
+    public static final String MIXED_CASE_EXPORT_COMMAND_WORD = "ExPoRt";
+    public static final String INVALID_EXPORT_FILEPATH = "src/";
+
+    public static final String VALID_UPLOAD_FILEPATH = "src/test/data/sandbox/temp.xml";
+    public static final String MIXED_CASE_UPLOAD_COMMAND_WORD = "UpLoAd";
+    public static final String INVALID_UPLOAD_FILEPATH = "src/";
+    //@@author
+
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 

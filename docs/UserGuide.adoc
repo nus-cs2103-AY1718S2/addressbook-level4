@@ -352,10 +352,10 @@ Examples:
 image::SelectCommandSuccess.png[width="800"]
 
 * `list` +
-`select 4` +
-Selects the 4th student in _EduBuddy_.
+`select 11` +
+Selects the 11th student in _EduBuddy_.
 
-* `find Johnny` +
+* `find Mary` +
 `s 1` +
 Selects the 1st student in the results of the `find` command.
 // end::select[]

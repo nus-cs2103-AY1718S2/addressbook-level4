@@ -58,10 +58,14 @@ public class AddCommand extends UndoableCommand {
     public CommandResult executeUndoableCommand() throws CommandException, IOException {
         requireNonNull(model);
         try {
+            for (Person p : model.getFilteredPersonList()) {
+                if (toAdd.getNric().equals(p.getNric())) {
+                    throw new CommandException("This NRIC already exists in the address book");
+                }
+            }
             model.addPerson(toAdd);
             model.addPage(toAdd);
 
-            //EventsCenter.getInstance().post(new JumpToListRequestEvent(model.getFilteredPersonList().size() - 1));
             return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
 
 

@@ -39,6 +39,7 @@ public class XmlAdaptedPerson {
     private String comment;
     @XmlElement(required = true)
     private Boolean isArchived;
+
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
 

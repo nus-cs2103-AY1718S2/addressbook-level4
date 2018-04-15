@@ -4,6 +4,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.BLANK_TIMEZONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -192,6 +193,11 @@ public class EditCommandSystemTest extends AddressBookSystemTest {
         /* Case: invalid timezone -> rejected */
         assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
                         + INVALID_TIMEZONE_DESC,
+                CustTimeZone.MESSAGE_TIMEZONE_CONSTRAINTS);
+
+        /* Case: blank timezone -> rejected */
+        assertCommandFailure(EditCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased()
+                        + BLANK_TIMEZONE_DESC,
                 CustTimeZone.MESSAGE_TIMEZONE_CONSTRAINTS);
 
         /* Case: edit a person with new values same as another person's values -> rejected */

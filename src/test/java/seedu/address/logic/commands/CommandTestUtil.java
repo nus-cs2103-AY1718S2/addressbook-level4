@@ -66,7 +66,8 @@ public class CommandTestUtil {
     public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
     public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
     public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TIMEZONE_DESC = " " + PREFIX_TIMEZONE; //empty string not allowed for timezones
+    public static final String BLANK_TIMEZONE_DESC = " " + PREFIX_TIMEZONE; //empty string not allowed for timezones
+    public static final String INVALID_TIMEZONE_DESC = " " + PREFIX_TIMEZONE + "P$T"; //invalid timezone
     public static final String INVALID_COMMENT_DESC = " " + PREFIX_COMMENT; //empty string not allowed for comments
     public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
 

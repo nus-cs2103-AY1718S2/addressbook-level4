@@ -3,6 +3,7 @@ package systemtests;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.BLANK_TIMEZONE_DESC;
 import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.COMMENT_DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.EMAIL_DESC_AMY;
@@ -213,6 +214,12 @@ public class AddCommandSystemTest extends AddressBookSystemTest {
 
         //@@author glorialaw
         /* Case: blank timezone -> rejected */
+        command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
+                + ADDRESS_DESC_AMY + BLANK_TIMEZONE_DESC + COMMENT_DESC_AMY
+                + TAG_DESC_FRIEND;
+        assertCommandFailure(command, CustTimeZone.MESSAGE_TIMEZONE_CONSTRAINTS);
+
+        /* Case: invalid timezone -> rejected */
         command = AddCommand.COMMAND_WORD + NAME_DESC_AMY + PHONE_DESC_AMY + EMAIL_DESC_AMY
                 + ADDRESS_DESC_AMY + INVALID_TIMEZONE_DESC + COMMENT_DESC_AMY
                 + TAG_DESC_FRIEND;

@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<recipebook>
+    <!-- Recipe with invalid name field -->
+    <recipes>
+        <name>Ha!ns Mu@ster</name>
+        <preparationTime isPrivate="false">9482424</preparationTime>
+        <ingredient isPrivate="false">hans@example.com</ingredient>
+        <instruction isPrivate="false">4th street</instruction>
+    </recipes>
+</recipebook>

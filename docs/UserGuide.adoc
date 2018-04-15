@@ -1,264 +1,794 @@
-= AddressBook Level 4 - User Guide
+= ReciRecipé - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
-:xrefstyle: full
+:xrefstyle: short
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-F09-B2/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team F09-B2`      Since: `Jan 2018`      Licence: `MIT`
+
+[.print-only]
+Please visit the https://recirecipe.netlify.com/userguide[online page] to view the User Guide in full formatting (some images may only be viewable on the online page).
+
+---
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+// tag::applicationDescription[]
+*<<ReciRecipe,ReciRecipé>>* is *a recipe management desktop app with a built-in web browser*. ReciRecipé is optimized for those who prefer to work with keyboard while still having the benefits of an intuitive user interface. +
+// end::applicationDescription[]
+So if you are a home cook or are just interested in being exposed to more interesting recipes out there, this app is just for you. It provides an easy way to save old recipes, craft new ones, or just pull the many variations already available online! There are even ways to organise, manage and search through your saved recipes for easy retrieval. +
+This user guide will systematically take you through all the functions available in ReciRecipé and teach you how to use them efficiently. Interested? Jump to <<Quick start>> to get started. Enjoy!
 
-== Quick Start
+[WARNING]
+This product only works on computers with monitors having resolution of at least 1000x600.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
-+
+
+== Quick start
+
+[TIP]
+You can use kbd:[Ctrl]+kbd:[F] to search for words in the user guide.
+
+To start using ReciRecipé, please follow the steps below carefully:
+
+.  Ensure you have Java Runtime Environment (<<JRE, JRE>>) 1.8.0_60 or later installed in your Computer. You can download from http://www.oracle.com/technetwork/java/javase/downloads/jre8-downloads-2133155.html[here].
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
+
+.. Usually, you will find two versions of JRE there, e.g. 8u161 and 8u162. You can download either of these *but not both*.
+.. To download, click on "Accept License Agreement" first (refer to <<java-download>>). +
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+[[java-download]]
+.JRE license agreement
+image::JREdownload.png[width="500"]
 +
+.. Then select the version according to what system you are running on. The file you need to download will be around 60-80MB in size. +
++
+[NOTE]
+If you are using Windows, please download the Offline version. The installation file should end with _.exe_. +
+If you don't know whether to download the x64 or x86 version, you can download and install both!
++
+.  Download the latest _recipebook.jar_ link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your Recipe Book.
+.  Double-click the file to start the app. ReciRecipé should appear in a few seconds (refer to <<recirecipe-gui>>).
++
+[[recirecipe-gui]]
+.ReciRecipé's user interface
 image::Ui.png[width="790"]
-+
+{nbsp} +
+Referring to <<recirecipe-gui>> above:
+.. On the left section, we have the display page that gives more details about a specific recipe selected.
+.. On the upper-half of the center section, we have the command box where commands are entered.
+.. On the bottom-half of the center section, we have the response box where the application will provide feedback on the commands you have executed.
+.. On the right section, we have the list of recipes which will display a brief summary of the first few recipes saved in ReciRecipé.
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+E.g. typing `help` and pressing kbd:[Enter] will open the help window.
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
-
-.  Refer to <<Features>> for details of each command.
+[NOTE]
+If you counter any problems while using ReciRecipé, you might want to refer to <<faq, the FAQ>>.
 
 [[Features]]
 == Features
 
-====
+// tag::command-format[]
+[[CommandFormat]]
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+Words in upper case are the parameters to be supplied by the user. For example:
 
-=== Viewing help : `help`
+* `add name/NAME calories/CALORIES`, *_NAME_* and *_CALORIES_* are parameters which can be substituted in this manner *`add name/Chicken rice calories/500`*.
+* `add name/NAME ingredient/INGREDIENT instruction/INSTRUCTION`,*_NAME_*, *_INGREDIENT_* and *_INSTRUCTION_* are parameters which can be substituted in this manner *`add name/Chicken rice ingredient/chicken, rice instruction/cut chicken into strips before cooking`*.
+* Below is a list of the remaining parameters with examples of their acceptable formats:
 
-Format: `help`
+** *_INGREDIENT_* is a list of ingredients, delimited by commas. E.g. `chicken,fish,rice` and `chicken, fish, rice` are valid.
+** *_INSTRUCTION_* can receive multiple lines as its value.
+** *_PREPARATION_TIME_* and *_COOKING_TIME_* fields accept a number of formats: `1h20m`, `1h20min`, `1 hour 20 minutes`, `80m`, `80min`, `80 mins`, etc. However, sticking to the most simple format `80m` is recommended.
+** *_CALORIES_* and *_SERVINGS_* are positive numbers. E.g. `120`, `5000`, etc.
+** *_URL_* takes a valid website address as its value. E.g. `http://google.com`.
+** *_IMAGE_* takes a valid image path as its value (E.g. for macOS: `/Users/administrator/Desktop/image.png`, for Windows: `C:\Users\admin\image.png`). Or it can also be a valid image URL, for example, `https://i.imgur.com/FhRsgCK.jpg`.
+* Items in square brackets are optional e.g. `name/NAME [tag/TAG]` can be used as *`name/Chicken rice tag/chicken`* or as *`name/Chicken rice`*.
+* Items with `...` after them can be used multiple times including zero times e.g. `[tag/TAG]...` can be used as `{nbsp}` (i.e. 0 times), *`tag/rice`*, *`tag/rice tag/chicken`*, or `ingredient KEYWORD [MORE_KEYWORDS]...` can be used as `ingredient chicken rice salt`.
+* Parameters can be in any order. E.g. if the command specifies `name/RECIPE_NAME instruction/INSTRUCTION`, `instruction/INSTRUCTION name/RECIPE_NAME` has the same effect.
+* White spaces after a slash are automatically trimmed. For example, `add name/ Chicken rice` and `add name/Chicken rice` are the same. However, the former is more visually pleasing.
+* You can split a command into multiple lines for ease of input.
+// end::command-format[]
 
-=== Adding a person: `add`
+// tag::app-navigation[]
+[[Navigation]]
+*Navigation*
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* Press kbd:[Enter] while holding down kbd:[Shift] to add a new line to your input.
+* Press kbd:[Enter] to submit a command.
+* Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
+* Press kbd:[Ctrl]+kbd:[Tab]/kbd:[Tab] to quickly move the caret to previous/next field. (*NOTE:* kbd:[Ctrl]+kbd:[Tab] may not work for Mac users.)
+// end::app-navigation[]
+
+// tag::auto-completion[]
+[[Auto-completion]]
+*Auto-completion*
+
+* Press kbd:[Tab] while holding down kbd:[Shift] to display a list of suggestions for your input. The list will contain application keywords (i.e, commands, field prefixes in commands) that match your current input. If there are words matching your input, they will be shown in alphabetical order. If there is no word found, the list will not be displayed.
+** If you did not type anything, the list will suggest the first commands.
+** If you are typing the first word, the list will suggest some commands that match your current input. For example, if you are typing *`a`*, some commands starting with *`a`* will be displayed.
+** If you are typing not the first word, there are two possible cases:
+*** The first word you typed is not a command keyword, then the list will suggest some commands that match your last word (can be empty string if you have a whitespace at the end of your input).
+*** The first word you typed is a command keyword, then the list will suggest some possible field prefixes of that command. If the command has no field prefix, the list will not be displayed.
+* Press kbd:[&uarr;] and kbd:[&darr;] to choose a suggestion you want.
+* Press kbd:[Enter] to choose the suggestion.
+* The suggestion will be added to your input automatically.
+** If you choose a command keyword, it will replace your current input with the command and possible field prefixes (may be none, some or all possible field prefixes, depending on command).
+** If you choose a field prefix, it will replace the word right before the caret (i.e, the word used to find suggestion).
+
+[NOTE]
+If you choose auto-completion for a command, your input will be cleared and replaced by the command with field prefixes (if any).
+
+// end::auto-completion[]
+
+=== *`add`* : Adding a recipe
+
+Adds a recipe to the recipe book.
+
+Format: `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [img/IMAGE] [tag/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
-
-Examples:
-
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
-
-=== Listing all persons : `list`
-
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+====
+You can add any number of tags (including 0) for a recipe.
+====
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`* +
+[TIP]
+You can split the command into multiple lines as shown in the figure below. In case you forgot how to add a new line, it's kbd:[Shift]+kbd:[Enter]. +
++
+.Add a recipe with multiple lines
+image::Ui_MultipleLine.PNG[width="500"]
++
+{nbsp} +
+If you follow the instructions correctly, the result box will inform you and your recipe will be added to the book (<<fig-AddRecipeResult>>).
+{nbsp} +
+{nbsp} +
++
+[[fig-AddRecipeResult]]
+.After adding a recipe
+image::Ui_AddCommand.PNG[width="750"]
+{nbsp} +
 
-=== Locating persons by name: `find`
+[TIP]
+You can use kbd:[Shift]+kbd:[Tab] for command auto-completion. After choosing auto-completion for a command, all fields associated with that command will be automatically filled.
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+.Auto-completion for command
+image::AutoCompletion.png[width="750"]
+{nbsp} +
 
-Examples:
+=== *`clear`* : Clearing all entries
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Clears all entries from the recipe book.
 
-=== Deleting a person : `delete`
+Format: `clear`
 
-Deletes the specified person from the address book. +
+[WARNING]
+This command clears all data in the application. Use it cautiously.
+
+See <<fig-ClearCommand>> for the expected behavior of this command. +
+{nbsp}
+
+[[fig-ClearCommand]]
+.Effect of the clear command
+image::Ui_Clear.PNG[width="950"]
+{nbsp} +
+[TIP]
+If you clear your recipe book by mistake, you can reverse the command with an `undo` *if you haven't closed the application*.
+
+=== *`delete`* : Deleting a recipe
+
+Deletes the specified recipe from the recipe book.
+
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer*, e.g. 1, 2, 3, ...
 ****
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* *`list`* +
+*`delete 2`* +
+Deletes the 2nd recipe in the recipe book.
+* *`find Chicken`* +
+*`delete 1`* +
+Deletes the 1st recipe in the results of the *`find`* command.
 
-=== Selecting a person : `select`
+=== *`edit`* : Editing a recipe
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Edits an existing recipe in the recipe book.
+
+Format: `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [tag/TAG]`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* See <<CommandFormat,Command Format>> for more details on which input is acceptable for each field.
+* *_INDEX_* refers to the index number shown in the last recipe listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields *must* be provided.
+* Existing values will be updated to the input values.
+* To remove an image attached to a recipe, use "-" as a placeholder (eg. *`edit 1 img/-`*).
+* To remove an embedded URL of a recipe, use "-" as a placeholder (eg. *`edit 1 url/-`*).
+* When editing tags, the existing tags of the recipe will be removed, i.e. adding of tags is not cumulative.
+* You can remove all the recipe's tags by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* *`edit 1 ingredient/fish, bread cooking_time/5m`* +
+Edits the ingredient and cooking time of the 1st recipe to be `_fish, bread_` and `_5m_` respectively.
+* *`edit 2 name/Pizza tag/`* +
+Edits the name of the 2nd recipe to be `_Pizza_` and clears all of its existing tags.
 
-=== Listing entered commands : `history`
+=== *`exit`* : Exiting the program
 
-Lists all the commands that you have entered in reverse chronological order. +
+Exits the program.
+
+Format: `exit`
+
+=== *`find`* : Locating recipes by name
+
+Finds recipes whose names contain any of the given keywords.
+
+Format: `find KEYWORD [MORE_KEYWORDS]`
+
+****
+* The search is case-insensitive. e.g *`find chicken`* will match `_Chicken_`.
+* The order of the keywords does not matter. e.g. *`find Rice Chicken`* will match `_Chicken rice_`.
+* Only the name is searched.
+* Only full words will be matched e.g. *`find Chic`* will not match `_Chicken_`.
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`find Chicken Pizza`* will return `_Chicken rice_` and `_Pizza_`.
+****
+
+Examples:
+
+* *`find chicken`* +
+Returns `_Chicken rice_` and `_Chicken pizza_`.
+* *`find chicken fish pasta`* +
+Returns any recipe having substrings `_chicken_`, `_fish_`, or `_pasta_`.
+
+// tag::group-command[]
+=== *`group`* : Creating a custom group of recipes
+
+Creates a group of one or multiple recipes by the index or indices used in the last recipe listing.
+
+Format: `group group_name/GROUP_NAME index/INDEX [index/INDEX]...`
+
+****
+* Group name is case sensitive.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, …"..
+****
+
+[NOTE]
+If your group name is the same as one of an existing group, the recipes listed in your command will be added to existing group. +
+If you want to avoid this situation, you are advised to use `view_group` command to check whether a group name exists before creating a recipe group.
+
+Examples:
+
+* *`list`* +
+*`group group_name/ My best index/ 1 index/ 3`* +
+Creates a group that contains 1st recipe and 3rd recipe and names the group as `_My best_`. +
+*`group group_name/ My best index/ 2`* +
+Adds 2nd recipe to `_My best_` group. `_My best_` now contains 1st recipe, 2nd recipe and 3rd recipe.
+// end::group-command[]
+
+=== *`help`* : Viewing help
+
+Shows the user guide.
+
+Format: `help`
+
+=== *`history`* : Listing entered commands
+
+Lists all the commands that you have entered in reverse chronological order.
+
 Format: `history`
 
-[NOTE]
+[TIP]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows while holding down kbd:[Ctrl] will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
-=== Undoing previous command : `undo`
+// tag::ingredientCommand[]
+=== *`ingredient`* : Locating recipes by ingredients
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Finds recipes whose ingredients contain all of the given keywords.
 
-[NOTE]
-====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
-====
+Format: `ingredient KEYWORD [MORE_KEYWORDS]...`
+
+****
+* The search is case insensitive. e.g *`ingredient chicken`* will match _Chicken_.
+* Only the ingredients are searched.
+* Only full words will be matched e.g. *`ingredient Chic`* will not match `_Chicken_`.
+* Only recipes matching all keywords will be returned (i.e. "AND" search). E.g. *`ingredient Chicken Pizza`* will only return recipes with both _Chicken_ AND _Pizza_ as their ingredients.
+****
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* *`ingredient chicken`* +
+Returns recipe with ingredient _Chicken_.
+* *`ingredient chicken fish pasta`* +
+Returns only recipes that contain all `_chicken_`, `_fish_`, and `_pasta_` as ingredients.
+// end::ingredientCommand[]
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
+=== *`list`* : Listing all recipes
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+Shows a list of all recipes in the recipe book.
 
-=== Redoing the previously undone command : `redo`
+Format: `list`
 
-Reverses the most recent `undo` command. +
+//tag::web-parse[]
+=== *`parse`* : Parsing a recipe from a website
+
+Gets a recipe from a website loaded in the browser panel.
+
+Format: `parse`
+
+To use this command, you do a `search` first (see <<Search>>) then select a recipe. +
+Suppose you have that done and you are at this step (see <<fig-InternetSearchResult0>>). +
+{nbsp} +
+
+[[fig-InternetSearchResult0]]
+.After you click on a result
+image::Search_Click.PNG[width="450"]
+
+{nbsp} +
+Type *`parse`* in the command box, press kbd:[Enter] and you have <<fig-ParseCommand>>. +
+{nbsp} +
+[[fig-ParseCommand]]
+.Parsed result
+image::Parse_Success.PNG[width="450"]
+[TIP]
+After that, you can add more fields if you want, or you can just press kbd:[Enter] to submit an `add` command!
+
+[NOTE]
+Currently only http://recipes.wikia.com/ and its children sites, e.g. http://cocktails.wikia.com/, http://japaneserecipes.wikia.com/ are supported!
+//end::web-parse[]
+
+=== *`redo`* : Redoing the previously undone command
+
+Reverses the most recent *`undo`* command.
+
 Format: `redo`
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* *`delete 1`* +
+*`undo`* +
+Reverses the *`delete 1`* command. +
+*`redo`* +
+Reapplies the *`delete 1`* command. +
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+* *`delete 1`* +
+*`redo`* +
+The *`redo`* command fails as there are no *`undo`* commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+* *`delete 1`* +
+*`clear`* +
+*`undo`* +
+Reverses the *`clear`* command. +
+*`undo`* +
+Reverses the *`delete 1`* command. +
+*`redo`* +
+Reapplies the *`delete 1`* command. +
+*`redo`* +
+Reapplies the *`clear`* command. +
 
-=== Clearing all entries : `clear`
+//tag::internet-search[]
+[[Search]]
+=== *`search`* : Searching on the Internet
 
-Clears all entries from the address book. +
-Format: `clear`
+Searches for your recipe on the Internet.
 
-=== Exiting the program : `exit`
+Format: `search RECIPE_NAME`
 
-Exits the program. +
-Format: `exit`
+Examples:
+
+* *`search hainanese chicken rice`* +
+See <<fig-InternetSearchCommand>> for the result of this command example. +
+{nbsp} +
++
+[[fig-InternetSearchCommand]]
+.Result of `search hainanese chicken rice`
+image::Search_Result.PNG[width="450"]
+//end::internet-search[]
++
+[.not-print]
+From there, you can click on any recipes that you want. Let's say we click on the first search result, and <<fig-InternetSearchResult>> will be what you see on ReciRecipé. +
+{nbsp} +
++
+[.not-print]
+[[fig-InternetSearchResult]]
+.After you click on a result
+image::Search_Click.PNG[width="450"]
+
+=== *`select`* : Selecting a recipe
+
+Selects the recipe identified by the index number used in the last recipe listing.
+
+Format: `select INDEX`
+
+****
+* If the selected recipe has a URL, the in-app browser will load that URL. Otherwise, it will load the recipe contents.
+* If the selected recipe has a valid embedded URL, the in-app browser will load that URL.
+* If the selected recipe has an invalid embedded URL, the in-app browser will not update upon a recipe selection change.
+* If the recipe has no embedded URL, the in-app browser will load the recipe contents.
+* The result box will always show the recipe content regardless of whether there is an embedded URL or not.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, ...".
+****
+
+Examples:
+
+* *`list`* +
+*`select 2`* +
+Selects the 2nd recipe in the recipe book.
+* *`find Chicken`* +
+*`select 1`* +
+Selects the 1st recipe in the results of the *`find`* command.
+
+//tag::share-command[]
+=== *`share`*: Sharing a recipe on Facebook
+
+Initiates the sharing of a recipe to Facebook, identified by the index number used in the last recipe listing.
+
+Format: `share INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, ...".
+****
+
+Examples:
+
+* *`list`* +
+*`share 2`* +
+Shares the 2nd recipe in the recipe book.
+The Facebook authentication page is shown on the browser for the User to log in.
+
+[[fig-FacebookAuthentication]]
+.Facebook Authentication Page
+image::FacebookAuthentication.jpg[width="600"]
+{nbsp} +
+Upon logging in: if the shared recipe has a URL, the in-app browser will load a feed dialog for the User to share the URL as shown below (see <<fig-FacebookFeedDialog>>).
+The contents in the recipe would have been copied to the clipboard for the User to paste into the Facebook post.
+
+[[fig-FacebookFeedDialog]]
+.Facebook Feed Dialog
+image::FacebookFeedDialog.jpg[width="600"]
+{nbsp} +
+The User will be redirected back to his/her Facebook feed once the post has been made.
+//end::share-command[]
+
+// tag::tagCommand[]
+=== *`tag`* : Locating recipes by tags
+
+Finds recipe whose tags contain any of the given keywords.
+
+Format: `tag KEYWORD [MORE_KEYWORDS]...`
+
+****
+* The search is case sensitive. For example, *`tag drinks`* will not match `_Drinks_`.
+* Only the tags are searched.
+* Only full words will be matched. For example, *`tag drinks`* will not match `_drink_`.
+* Recipes matching at least one keyword will be returned (i.e. "OR" search). E.g. *`tag fast drink`* will return recipes with either `_fast_` OR `_drink_` as one of their tags.
+****
+
+Examples:
+
+* *`tag drink`* +
+Returns all recipes with the tag `_drink_`.
+* *`tag drink Food`* +
+Returns any recipe with the tag `_drink_` or `_Food_`.
+// end::tagCommand[]
+
+//tag::change-theme[]
+=== *`theme`* : Changing theme
+
+Toggles between colourful theme and white theme.
+
+Format: `theme`
+
+You can enjoy the two bright and visually pleasing themes as shown on <<fig-ChangeThemeCommand>>. +
+{nbsp}
+
+[[fig-ChangeThemeCommand]]
+.Two themes provided for ReciRecipé
+image::ChangeTheme.PNG[width="750"]
+
+[TIP]
+You can change theme from the menu bar or by pressing F2 too!
+//end::change-theme[]
+
+// tag::tokenCommand[]
+[[token]]
+=== *`token`* : Exchanging authorization code for access token
+
+Takes in the code given during the user's authorization of our app in Dropbox and coverts it into an access token that can be used to upload files to that specific Dropbox account.
+
+Format: `token AUTHORIZATION_CODE`
+
+See <<fig-AuthorizationCode>> for more information. +
+{nbsp}
+
+[[fig-AuthorizationCode]]
+.Allow ReciRecipé access to your Dropbox
+image::AuthorizationCode.PNG[width="500"]
+{nbsp} +
+
+****
+* This command only accepts valid authorization codes.
+* If the authorization code is invalid, an error will be thrown indicating that the application was unable to upload the file.
+****
+// end::tokenCommand[]
+
+=== *`undo`* : Undoing previous command
+
+Restores the recipe book to the state before the previous _undoable_ command was executed.
+
+Format: `undo`
+
+[NOTE]
+====
+Undoable commands: those commands that modify the recipe book's content (*`add`*, *`delete`*, *`edit`*, and *`clear`*).
+====
+
+Examples:
+
+* *`delete 1`* +
+*`list`* +
+*`undo`* +
+Reverses the `delete 1` command. +
+
+* *`select 1`* +
+*`list`* +
+*`undo`* +
+The *`undo`* command fails as there are no undoable commands executed previously.
+
+* *`delete 1`* +
+*`clear`* +
+*`undo`* +
+Reverses the *`clear`* command. +
+*`undo`* +
+Reverses the *`delete 1`* command. +
+
+// tag::uploadCommand[]
+=== *`upload`* : Uploading all recipes
+
+Uploads the xml file containing data of all recipes to Dropbox, giving it the specified filename.
+
+Format: `upload FILENAME`
+
+****
+* The filename must not contain any invalid characters as defined by Dropbox https://www.dropbox.com/help/syncing-uploads/files-not-syncing[here].
+* The filename will be concatenated with .xml to maintain formatting.
+* If that exact filename already exists in the user's Dropbox, one of two things will happen:
+** File will not be uploaded if contents of the two files are similar.
+** File will be uploaded and renamed to *_FILENAME(1..)_* if contents of the two files are different.
+****
+
+[NOTE]
+====
+If it is the first time the user is using the `upload` command, you will be prompted to login to Dropbox and authorize this app.
+An authorization code will then be given to you which you should copy and paste into this app. See <<token>> for details.
+====
+
+Example:
+
+* *`upload RecipeBook`* +
+Data file will be uploaded to Dropbox with the name RecipeBook.xml. +
+*`add`*, *`delete`* or *`edit`*. +
+*`upload RecipeBook`* +
+Updated data file will be uploaded to Dropbox with the name RecipeBook(1).xml.
+// end::uploadCommand[]
+
+// tag::view-group-command[]
+=== *`view_group`* : Viewing groups of recipes
+
+Views recipes inside a group.
+
+Format: `view_group GROUP_NAME`
+****
+* Group name is case sensitive.
+****
+
+Examples:
+
+* *`group group_name/ My best index/ 1 index/ 3`* +
+Creates `_My best_` group that contains 1st recipe and 3rd recipe. +
+*`view_group My best`* +
+Lists all recipes inside `_My best_` group (i.e, 1st recipe and 3rd recipe). +
+*`view_group my best`* +
+Shows an empty list and a message to inform that the group does not exist since group name is case sensitive (i.e, `_my best_` is different from `_My best_`).
+// end::view-group-command[]
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+No specific command is required to save data in this application. ReciRecipé saves data in the hard disk automatically after any command that changes the data (`add`, `edit`, `clear`, ...). +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+== Upcoming features
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+=== *`pull`* : Getting a recipe from the recipes database (Coming in v2.0)
 
+Downloads a recipe from the recipes server.
+
+Format: `pull RECIPE_NAME`
+
+Examples:
+
+* *`pull chicken rice`* +
+Downloads all recipes that match the query `_Chicken rice_` from the server.
+
+=== *`push`* : Uploading a recipe to the recipes database (Coming in v2.0)
+
+Uploads a selected recipe to the recipes server.
+
+Format: `push INDEX`
+
+****
+* If the selected recipe has a URL, the in-app browser will load that URL.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer*, e.g. "1, 2, 3, ...".
+****
+
+Examples:
+
+* *`push 6`* +
+Uploads the 6th recipe in the recipe book to the server.
+
+[[faq]]
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*Q*: How do I transfer my data to another computer? +
+*A*: Install the app on the other computer and overwrite the empty data file it creates with the file that contains the data of your previous ReciRecipé.
 
-== Command Summary
+*Q*: Where do I find my data file? +
+*A*: image:FAQ2.PNG[width="450"]
+{nbsp}
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+*Q*: There is still something I don't understand after reading this guide! +
+*A*: Please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo] about what you're confused about. We will try our best to answer your query.
+
+*Q*: None of the commands work! Why? +
+*A*: Are you copying from the *command* section instead of the *example* section? If you want to use `add name/RECIPE_NAME [ingredient/INGREDIENT]`, a valid command would be *`add name/Chicken rice ingredient/chicken, rice`* instead of *`add name/Chicken rice [ingredient/chicken, rice]`*.
+
+*Q*: ReciRecipé doesn't appear when I double click _recipebook.jar_! What should I do? +
+*A*: If you are using Windows and ReciRecipé doesn't appear, it might be due to conflicting versions of JRE. +
+As a work around, hold kbd:[Shift] and right click on any blank space in the folder you are using as the home folder for ReciRecipé (refer to <<right-click-windows>>). +
+[[right-click-windows]]
+.Windows context menu
+image::WindowsContext.png[width="276"]
+{nbsp} +
+Select *Open command window here* (earlier versions of Windows) or *Open PowerShell window here* (Windows 10), type in `java -jar recipebook.jar`. +
+After this step, you should get something like <<powershell>> or <<cmd>> depending on the version of Windows you are running:
+[[powershell]]
+.Windows PowerShell
+image::WindowsPowerShell.png[width="400"]
+[[cmd]]
+.Windows command
+image::WindowsCMD.png[width="400"]
+{nbsp} +
+Then press kbd:[Enter] to launch ReciRecipé.
+
+*Q*: I cannot add an online image to my recipe! Why? +
+*A*: Please check if your device is connected to the Internet. Image downloading only works when there is an Internet connection.
+
+*Q*: I found a bug in your program, what should I do? +
+*A*: Please check <<current-issues>> to see whether your bug has been reported already. If it is a new bug, please https://github.com/CS2103JAN2018-F09-B2/main/issues[create a new issue in our repo] describing the problem you encountered as detailed as possible and upload your log file when you create the issue. Usually, the log file has a name like _recipebook.log.0_ or _recipebook.log.1_. You can find the log file in the folder you store ReciRecipé.
+
+*Q*: I know how to code, how can I contribute to your project? +
+*A*: Code contributors are always appreciated! Please https://github.com/CS2103JAN2018-F09-B2/main/pulls[create a PR] with your contribution. You might want to take a look at the <<DeveloperGuide#,Developer Guide>> to get started.
+
+== Cheatsheet
+[width=100%, cols="1,5,5"]
+|===
+| Command | Format | Example
+
+| *Add*             |   `add name/RECIPE_NAME [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [img/IMAGE] [tag/TAG]...`
+                    |   *`add name/Chicken Rice ingredient/chicken, rice cooking_time/10m tag/good tag/fast`*
+| *Change theme*    |  `theme`
+                    |  *`theme`*
+| *Clear*           |  `clear`
+                    |  *`clear`*
+| *Delete*          |  `delete INDEX`
+                    |   *`delete 3`*
+| *Edit*            |  `edit INDEX [name/RECIPE_NAME] [ingredient/INGREDIENT] [instruction/INSTRUCTION] [cooking_time/COOKING_TIME] [preparation_time/PREPARATION_TIME] [calories/CALORIES] [servings/SERVINGS] [url/URL] [img/IMAGE] [tag/TAG]`
+                    |   *`edit 2 name/Chicken pizza ingredient/flour,chicken,pepper`*
+| *Find*            |  `find KEYWORD [MORE_KEYWORDS]`
+                    |   *`find Chicken Pizza`*
+| *Group*           |  `group group_name/GROUP_NAME index/INDEX [index/INDEX]...`
+                    |   *`group group_name/ Best index/ 1 index/ 3`*
+| *Help*            |  `help`
+                    |  *`help`*
+| *History*         |  `history`
+                    |  *`history`*
+| *Ingredient search* |  `ingredient KEYWORD [MORE_KEYWORDS]...`
+                    |   *`ingredient chicken rice`*
+| *Internet search* |  `search RECIPE_NAME`
+                    |   *`search hainanese chicken rice`*
+| *List*            |  `list`
+                    |  *`list`*
+| *Parse*           |  `parse`
+                    |  *`parse`*
+| *Redo*            |  `redo`
+                    |  *`redo`*
+| *Select*          |  `select INDEX`
+                    |   *`select 2`*
+| *Share*           |  `share INDEX`
+                    |   *`share 2`*
+| *Tag*             |  `tag KEYWORD [MORE_KEYWORDS]...`
+                    |   *`tag Cucumber Tomato Egg`*
+| *Token*           |   `token AUTHORIZATION_CODE`
+                    |   *`token someValidCode123456`*
+| *Undo*            |  `undo`
+                    |  *`undo`*
+| *Upload*          |  `upload FILENAME`
+                    |   *`upload RecipeBook`*
+| *View group*      |  `view_group GROUP_NAME`
+                    |   *`view_group Best`*
+|===
+
+== Keyboard shortcuts
+
+[width=100%, cols="2,4"]
+|===
+| Shortcut                  |   Function
+
+| kbd:[Enter]               |   Command submission
+| kbd:[Ctrl] + kbd:[&uarr;] |   Previous command
+| kbd:[Ctrl] + kbd:[&darr;] |   Next command
+| kbd:[Shift] + kbd:[Enter] |   New line in command
+| kbd:[Shift] + kbd:[Tab]   |   Show command suggestions
+| kbd:[Ctrl] + kbd:[Tab]    |   Previous field in command
+| kbd:[Tab]                 |   Next field in command
+|===
+
+[[current-issues]]
+//tag::current-issues[]
+== Current issues
+These are issues that have been reported and might be resolved in the future:
+
+* `parse` command does not work on some sites. +
+_Currently `parse` only works with http://recipes.wikia.com/ and its children sites (both desktop and mobile versions). Support for other sites will be considered for v2.0._
+* `parse` command returns results for pages that are not recipes / doesn't return result for pages that are recipes / returns incorrect results. +
+_A powerful text analyzer that can parse almost anything with high accuracy is out of our product scale. However, we will try our best to improve the parser quality so that you can enjoy a better product._
+* *_PREPARATION_TIME_* and *_COOKING_TIME_* accept invalid time values, e.g. `1h90m`, `200 mins 2 hours`, etc. +
+_We expect you to provide ReciRecipé with a correct and valid time value like `150m` instead of `1h90m`. More restrictive formats will be considered for v2.0._
+* Sometimes `add` command hangs ReciRecipé. +
+_This is likely due to a tricky input that confuses our product. If you encounter such an event while using ReciRecipé, please https://github.com/CS2103JAN2018-F09-B2/main/issues[send us a feedback] with the input that caused the problem._
+* kbd:[F1] and kbd:[F2] sometimes don't work. +
+_This is a known problem with current versions of Java. We have been looking into this problem and the issue might be resolved soon._
+* Big images make ReciRecipé laggy. +
+_Currently, ReciRecipé does not distinguish between large and small images. You should use images under 1MB as a workaround for now. This problem will be resolved in v2.0._ +
+* Suggestion list (auto-completion) sometimes does not show below caret position. +
+_This is due to the limited support of `CommandBox` to get coordinates of caret inside it. We have tried to fix this but have not found an efficient solution. This problem will be resolved in v2.0. Currently, our solution is to show suggestion list at the bottom of `CommandBox` if the input text is long enough to cause the problem. If the input text is short, suggestion list will still be shown below caret position._
+//end:current-issues[]
+
+== Glossary
+
+include::./Glossary.adoc[]
+
+ifndef::env-github[]
+include::./NavBar.adoc[]
+endif::[]

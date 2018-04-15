@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- RecipeBook save file which contains the same Recipe values as in
+{@code TypicalRecipes#getTypicalRecipeBook()}-->
+<recipebook>
+    <recipes>
+        <name>Alice Pauline</name>
+        <ingredient>demolishment,bigwig,archer,negative,appearance,afternoon</ingredient>
+        <instruction>Fill a tea kettle or 2 quart saucepan with water and bring to a boil. Remove excess fat from chilled chicken and place in colander over a large bowl. Spread out with a fork. Pour hot water over meat through colander.
+Place chicken in plastic container with tight fitting lid.
+Add onions, chili powder, oregano, garlic powder, cumin, and paprika to chicken.
+Refrigerate chicken overnight in plastic container with tight fitting lid.
+To make tacos, place chicken mixture in a pan and heat slowly or heat in microwave for 2–3 minutes, stirring after 1½ minutes to heat evenly. Combine finely shredded lettuce and cabbage. Mix cheeses together. Place ¼ cup heated chicken mixture in a tortilla and top with cheese and vegetables.
+Add salsa as desired.</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>85355255</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>http://recipes.wikia.com/wiki/Hainanese_Chicken_Rice</url>
+        <image>-</image>
+        <tagged>family</tagged>
+    </recipes>
+    <recipes>
+        <name>Benson Meier</name>
+        <ingredient>guest, barnyard, genuine, salt</ingredient>
+        <instruction>311, Clementi Ave 2, #02-25</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>98765432</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>http://recipes.wikia.com/wiki/Ugandan_Chicken_Stew?useskin=wikiamobile</url>
+        <image>-</image>
+        <tagged>owesMoney</tagged>
+        <tagged>family</tagged>
+    </recipes>
+    <recipes>
+        <name>Carl Kurz</name>
+        <ingredient>gadget</ingredient>
+        <instruction>wall street</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>95352563</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>https://www.bbcgoodfood.com/recipes/collection/casserole</url>
+        <image>-</image>
+        <tagged>owesMoney</tagged>
+    </recipes>
+    <recipes>
+        <name>Daniel Meier</name>
+        <ingredient>ebony, cold, affliction</ingredient>
+        <instruction>10th street</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>87652533</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>https://www.bbcgoodfood.com/recipes/collection/curry</url>
+        <image>-</image>
+    </recipes>
+    <recipes>
+        <name>Elle Meyer</name>
+        <ingredient>test, aimless</ingredient>
+        <instruction>michegan ave</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>9482224</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>https://www.bbcgoodfood.com/recipes/collection/fish-pie</url>
+        <image>-</image>
+    </recipes>
+    <recipes>
+        <name>Fiona Kunz</name>
+        <ingredient>bluntness, ingredients</ingredient>
+        <instruction>little tokyo</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>9482427</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>https://www.bbcgoodfood.com/recipes/collection/chicken-salad</url>
+        <image>-</image>
+    </recipes>
+    <recipes>
+        <name>George Best</name>
+        <ingredient>confidence, abandon, brass, model, greed, minipill</ingredient>
+        <instruction>4th street</instruction>
+        <cookingTime>50m</cookingTime>
+        <preparationTime>9482442</preparationTime>
+        <calories>5000</calories>
+        <servings>4</servings>
+        <url>https://www.bbcgoodfood.com/recipes/collection/crumble</url>
+        <image>-</image>
+    </recipes>
+    <tags>friends</tags>
+    <tags>owesMoney</tags>
+</recipebook>

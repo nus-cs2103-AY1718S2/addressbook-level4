@@ -10,16 +10,16 @@ import guitests.GuiRobot;
 import guitests.guihandles.exceptions.NodeNotFoundException;
 import javafx.scene.Node;
 import javafx.stage.Stage;
-import seedu.address.commons.core.LogsCenter;
+import seedu.recipe.commons.core.LogsCenter;
 
 /**
  * Provides access to a stage in a JavaFx application for GUI testing purposes.
  */
 public abstract class StageHandle {
     protected final GuiRobot guiRobot = new GuiRobot();
+    protected final Stage stage;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
-    private final Stage stage;
 
     public StageHandle(Stage stage) {
         this.stage = requireNonNull(stage);

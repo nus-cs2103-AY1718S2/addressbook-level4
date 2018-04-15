@@ -810,19 +810,11 @@ A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard
 the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
 user are displayed using `EventListPanel`. _Figure 28_ and _Figure 29_ are examples of a `TaskListCard` and an `EventListCard` respectively.
 
-<<<<<<< HEAD
-.TaskListCard example
-image::TaskCard.png[width="450"]
-
-.EventListCard example
-image::EventCard.png[width='450']
-=======
 .`TaskListCard` example
 image::TaskCard.png[width="300"]
 
 .`EventListCard` example
 image::EventCard.png[width='300']
->>>>>>> 3130b7ac40bb1336a01fb5326a516db877a1699f
 
 `ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
 

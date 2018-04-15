@@ -527,12 +527,12 @@ Dependencies for `Appointment` object is also verified in a similar way in `AddC
 ** Cons: Complex implementation logic
 * **Alternative 2:** 3 different add commands e.g. addperson, addpetpatient, addappointment
 ** Pros: Easy to implement.
-** Cons: Will need a new command for syntax (4). More commands for the user to remember. 
+** Cons: Will need a new command for syntax (4). More commands for the user to remember.
 
 ==== Current Limitations
 Currently, `add`  command uses up to 3 options in its syntax. The order of options must be preserved due to the use of regular expressions to match command syntax pattern. This differs from prefixes which have flexibility in ordering. As a result, the add command may be less intuitive for users.
 
-Another thing to note is that, the syntax for adding an appointment takes in the NRIC of an existing contact and a pet patient name. The pet patient that is specified must be one that assigned under the contact. However, the adding of a new appointment does not account for cases in which a particular contact has pet patients sharing the same name. The `add` command will assign the new appointment for the pet patient which has a lower index in Medeina. A simple workaround over this problem, is to edit the pet patient name with slight variation to differentiate them e.g. "Happy1", "Happy2". 
+Another thing to note is that, the syntax for adding an appointment takes in the NRIC of an existing contact and a pet patient name. The pet patient that is specified must be one that assigned under the contact. However, the adding of a new appointment does not account for cases in which a particular contact has pet patients sharing the same name. The `add` command will assign the new appointment for the pet patient which has a lower index in Medeina. A simple workaround over this problem, is to edit the pet patient name with slight variation to differentiate them e.g. "Happy1", "Happy2".
 
 ==== Future Work
 The problem of multiple pet patient sharing the same name under a contact will be addressed in near future. The `add` command syntax can be modified to include an optional index to differentiate the pet patients without having to edit their names. Aside from this, further improvements can be made to simplify the command syntax of `add`.
@@ -1722,15 +1722,15 @@ These instructions only provide a starting point for testers to work on; testers
 .. add -o n/Jason p/90123456 e/jason@gmail.com a/137 omputing Drive nr/S8899111G
    Expected: Successfully added.
    Enter this command again and you will see an error message "This contact already exists in Medeina."
-   
+
 . To add a pet patient
 .. add -p n/Xiao bai s/Cat b/Persian c/Black bt/A -o
    Expected: Please check your parameters for: option -o
    Missing prefix nr/ for NRIC.
-   
+
 .. add -p n/Xiao bai s/Cat b/Persian c/Black bt/A -o nr/S0123456B
    Expected: Successfully added.
-   
+
 . To add an appointment
 ..
 

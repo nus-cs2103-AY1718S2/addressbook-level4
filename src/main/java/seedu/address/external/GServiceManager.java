@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.logging.Logger;
 
 import com.google.api.client.auth.oauth2.Credential;
 import com.google.api.client.extensions.java6.auth.oauth2.AuthorizationCodeInstalledApp;
@@ -12,13 +13,17 @@ import com.google.api.client.googleapis.auth.oauth2.GoogleAuthorizationCodeFlow;
 import com.google.api.client.googleapis.auth.oauth2.GoogleClientSecrets;
 import com.google.api.client.googleapis.javanet.GoogleNetHttpTransport;
 import com.google.api.client.http.HttpTransport;
+import com.google.api.client.http.javanet.NetHttpTransport;
 import com.google.api.client.json.JsonFactory;
 import com.google.api.client.json.jackson2.JacksonFactory;
 import com.google.api.client.util.store.FileDataStoreFactory;
 import com.google.api.services.calendar.CalendarScopes;
 
+import com.google.api.services.oauth2.Oauth2;
+import com.google.api.services.oauth2.model.Userinfoplus;
 import com.google.gdata.util.ServiceException;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.external.exceptions.CredentialsException;
 import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.ReadOnlySchedule;
@@ -38,8 +43,11 @@ public class GServiceManager {
     /** OAuth 2.0 scopes. */
     public static final List<String> SCOPES = Arrays.asList(SCOPES_ARRAY);
 
+
     public static final String APPLICATION_NAME = "codeducator/v1.5";
 
+    private static final Logger logger = LogsCenter.getLogger(GServiceManager.class);
+    /** Credential information from Google Credentials. Change if any credentials online change**/
     private static final String CLIENT_ID = "126472549776-8cd9bk56sfubm9rkacjivecikppte982.apps.googleusercontent.com";
     private static final String CLIENT_SECRET = "nyBpzm1OjnKNZOd0-kT1uo7W";
 
@@ -74,6 +82,12 @@ public class GServiceManager {
      */
     public void login() throws CredentialsException, IOException {
         if (credential != null) {
+            Oauth2 oauth2 = new Oauth2.Builder(
+                    new NetHttpTransport(), new JacksonFactory(), credential)
+                    .setApplicationName(APPLICATION_NAME).build();
+            Userinfoplus userInfo = oauth2.userinfo().get().execute();
+
+            logger.warning("Already logged in to " + userInfo.getEmail());
             throw new CredentialsException("You are already logged in.");
         }
         // Build flow and trigger user authorization request.
@@ -87,6 +101,12 @@ public class GServiceManager {
 
         credential = new AuthorizationCodeInstalledApp(
                 flow, new LocalServerReceiver()).authorize("user");
+        Oauth2 oauth2 = new Oauth2.Builder(
+                new NetHttpTransport(), new JacksonFactory(), credential)
+                .setApplicationName(APPLICATION_NAME).build();
+        Userinfoplus userInfo = oauth2.userinfo().get().execute();
+
+        logger.info("Successfully logged in to " + userInfo.getEmail());
     }
 
     /**
@@ -118,12 +138,15 @@ public class GServiceManager {
     public void synchronize(ReadOnlyAddressBook addressBook, ReadOnlySchedule schedule)
             throws IOException, ServiceException {
         GContactsService gContactsService = new GContactsService(credential);
+
+        logger.info("====== Starting Google Contacts sync ======");
         gContactsService.synchronize(addressBook);
 
-
+        logger.info("====== Starting Google Calendar sync ======");
         GCalendarService gCalendarService = new GCalendarService(
                 credential, httpTransport, JSON_FACTORY);
         gCalendarService.synchronize(schedule, addressBook);
 
+        logger.info("====== Google Contacts and Calendar synced! ======");
     }
 }

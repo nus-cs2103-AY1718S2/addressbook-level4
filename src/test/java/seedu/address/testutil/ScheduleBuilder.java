@@ -5,7 +5,7 @@ import seedu.address.model.lesson.Lesson;
 import seedu.address.model.lesson.exceptions.DuplicateLessonException;
 import seedu.address.model.lesson.exceptions.InvalidLessonTimeSlotException;
 
-// @@author demitycho
+//@@author demitycho
 /**
  * A utility class to help with building Schedule objects.
  * Example usage: <br>

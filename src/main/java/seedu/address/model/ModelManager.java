@@ -122,6 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.removeTag(tag);
     }
 
+    //@@author
     @Override
     public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime)
             throws DuplicateLessonException, StudentNotFoundException, InvalidLessonTimeSlotException {
@@ -138,6 +139,7 @@ public class ModelManager extends ComponentManager implements Model {
     }
 
     /**
+     * Removes the {@code target} from schedule
      * @param target
      */
     @Override
@@ -230,6 +232,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredStudents.setPredicate(predicate);
     }
 
+    //@@author demitycho
     @Override
     public void loginGoogleAccount() throws CredentialsException, IOException {
         this.gServiceManager.login();
@@ -244,6 +247,7 @@ public class ModelManager extends ComponentManager implements Model {
     public void synchronize() throws ServiceException, IOException {
         this.gServiceManager.synchronize(addressBook, schedule);
     }
+    //@@author
 
     @Override
     public boolean equals(Object obj) {

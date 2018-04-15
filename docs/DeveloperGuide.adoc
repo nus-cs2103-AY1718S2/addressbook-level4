@@ -1379,9 +1379,10 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 *Caryn*:
 
 . *Timetable (Major)*:
-.. *Timetable GUI*: Added the interactive timetable GUI for employees to interact through the Shift commands.
-.. *Export Timetable*: Added a command for exporting timetable as image.
-.. *View Shifts applied by employee*: Modified a command for employees to view their own shifts on the timetable GUI.
+.. *Timetable view*: Added the interactive timetable for users to interact through the Shift commands.
+.. *Export timetable*: Added a command for exporting timetable as image.
+.. *View shifts applied by employee*: Modified a command for employees to view their own shifts on the timetable.
+.. *View employees working in shift*: Added a command for listing employees working in any particular shift.
 . *Tag colors (Minor)*: Added different colors for different tags inside person cards. Tags are allocated colors based on their hashcode.
 
 *Bangjie*:

@@ -17,8 +17,8 @@ public class HtmlWriterTest {
     @Test
     public void checkOpeningLine() {
         String testOpeningLine = "<!DOCTYPE html><html><head>\n"
-                + "<body style=\"background-color:#383838;\"\n>"
-                + "<font face=\"Segoe UI\" size=\"5\" color=\"white\">"
+                + "<body style=\"background-color:#CEDBFB;\"\n>"
+                + "<font face=\"Segoe UI\" size=\"5\" color=\"black\">"
                 + "<table><tr><th align=\"left\" colspan=\"2\">";
         assertEquals(testOpeningLine, htmlWriter.OPENING_LINE);
     }

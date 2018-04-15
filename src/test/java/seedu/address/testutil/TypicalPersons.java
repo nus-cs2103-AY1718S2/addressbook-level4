@@ -21,9 +21,12 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 
 /**
  * A utility class containing a list of {@code Person} objects to be used in tests.
+ * NOTE: Some tests are DEPENDENT on the Customers and Runners already initalized in this list
+ * It is suggested to add elements rather than modify the elements.
  */
 public class TypicalPersons {
 
+    //Customers:
     public static final Person ALICE = new PersonBuilder().withName("Alice Pauline")
             .withAddress("123, Jurong West Ave 6, #08-111").withEmail("alice@example.com")
             .withPhone("85355255")
@@ -38,6 +41,7 @@ public class TypicalPersons {
             .withEmail("cornelia@example.com").withAddress("10th street").buildCustomer();
     public static final Person ELLE = new PersonBuilder().withName("Elle Meyer").withPhone("9482224")
             .withEmail("werner@example.com").withAddress("michegan ave").buildCustomer();
+    //Runners:
     public static final Person FIONA = new PersonBuilder().withName("Fiona Kunz").withPhone("9482427")
             .withEmail("lydia@example.com").withAddress("little tokyo").buildRunner();
     public static final Person GEORGE = new PersonBuilder().withName("George Best").withPhone("9482442")

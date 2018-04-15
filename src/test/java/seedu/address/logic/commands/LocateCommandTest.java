@@ -4,6 +4,7 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_PERSONS_LISTED_OVERVIEW;
 import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
@@ -18,6 +19,7 @@ import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
@@ -77,6 +79,28 @@ public class LocateCommandTest {
                 new LocateCommand(predicate);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
+    }
+
+    /**
+     * Executes a {@code LocateCommand}
+     * the command feedback is equal to {@code expectedMessage}<br>
+     * the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
+     * the {@code AddressBook} in model remains the same after executing the {@code command}
+     * and checks that a {@code CommandException}
+     * is thrown with the {@code expectedMessage}.
+     */
+    private void assertExecutionFailure(LocateCommand command, String expectedMessage, List<Person> expectedList) {
+        String arguments = " ";
+        String[] splitArguments = arguments.split("\\s+");
+        List<String> list = Arrays.asList(splitArguments);
+        LocateCommand locateCommand = prepareCommand(new PersonContainsKeywordsPredicate(list));
+        try {
+            locateCommand.execute();
+            fail("The expected CommandException was not thrown.");
+        } catch (CommandException ce) {
+            assertEquals(expectedMessage, ce.getMessage());
+            assertTrue(eventsCollectorRule.eventsCollector.isEmpty());
+        }
     }
 
     /**

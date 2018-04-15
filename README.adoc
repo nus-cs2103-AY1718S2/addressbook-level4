@@ -1,4 +1,4 @@
-= HuatAh! v1.5rc
+= HuatAh! v1.5
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
 https://travis-ci.org/CS2103JAN2018-F12-B4/main[image:https://travis-ci.org/CS2103JAN2018-F12-B4/main.svg?branch=master[Build Status]]
@@ -18,13 +18,15 @@ endif::[]
 
 == Site Map
 
+* *Download our latest release https://github.com/CS2103JAN2018-F12-B4/main/releases[here]!*
 * *Documentation:*
 ** <<UserGuide#, User Guide>>
 ** <<DeveloperGuide#, Developer Guide>>
-* *Contacting the Devs:*
+* *The Team:*
 ** <<AboutUs#, About Us>>
 ** <<ContactUs#, Contact Us>>
 * *Contributing*:
+** View our https://github.com/CS2103JAN2018-F12-B4/main[source code]!
 ** Visit our https://github.com/CS2103JAN2018-F12-B4/main/issues[issue tracker]!
 ** Submit a https://github.com/CS2103JAN2018-F12-B4/main/pulls[pull request]!
 

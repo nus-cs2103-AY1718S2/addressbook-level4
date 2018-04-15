@@ -47,7 +47,6 @@ public class CalendarPanel extends UiPart<Region> {
         super(FXML);
         calendarSource = new CalendarSource("calendar");
         calendar = new Calendar("calendar");
-        calendar.setReadOnly(true);
         calendar.setStyle(Calendar.Style.STYLE2);
         calendarSource.getCalendars().add(calendar);
 

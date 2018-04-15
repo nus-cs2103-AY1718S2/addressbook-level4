@@ -13,7 +13,7 @@ import com.google.maps.model.LatLng;
  */
 public class GoogleWebServices {
 
-    // 5 API keys for accessing google server
+    // 6 API keys for accessing google server
     public static final String API_KEY_1 = "AIzaSyB78sjE5UtuPn9T7u1WHowRkWj2KFo92rI";
     public static final String API_KEY_2 = "AIzaSyAplrsZatzM_d2ynML097uqXd1-usgscOA";
     public static final String API_KEY_3 = "AIzaSyDdJMB6Jug8D_45K72FpbEL8S5XQF_98Oc";

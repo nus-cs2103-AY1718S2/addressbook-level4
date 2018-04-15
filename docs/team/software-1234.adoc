@@ -8,19 +8,17 @@
 
 == Overview
 
-This is a desktop application allowing people, particularly travellers, to keep track of amounts of money
- lent or borrowed from contacts. User interactions are command-line based, but the app also consists of
- of a GUI created with JavaFX, which includes a command box, a browser panel, a status bar footer, a list panel
- and more. It is written in Java.
-
+This application allows travelers to keep track of money borrowed or lent from other people. It is a command line based application that consists of a JavaFX GUI. The application GUI consists of the addressbook with relevant info, a CLI, a status box etc.
 == Summary of Contributions
 
 * *Major Enhancement*: Implemented currency conversion feature to allow people to quickly convert their currencies from one currency to another. Total balances can also be converted.
 ** What it does: The command allows users to convert specific entries' balances from one currency to another currency. This allows the user to convert to different currencies because it is not clear where the user will be located. The feature supports 170 currencies.
+** Justification: It is not guaranteeed that a certain person will be in the same location or use the same currency as the owner so it is neccesary to have a currency converter that can allow people to use the application from all around the world.
 ** Credits:
 Used third-party currency converter library from github: https://github.com/Ritaja/java-exchange-rates
 
-* *Minor Enhancements*: Allow users to wipe all balances in their addressbook, show the all the people who owe the user money, and all the people who the user owes money to
+* *Minor Enhancement*: Allow users to wipe all balances in their addressbook, show the all the people who owe the user money, and all the people who the user owes money to, added support for negative balances for money field
+
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/functional/software-1234.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B4/main/blob/master/collated/test/software-1234.md[Test code]]
 
@@ -29,12 +27,13 @@ Used third-party currency converter library from github: https://github.com/Rita
 
 ** Project management:
 *** Contributed code from v1.0 on
-*** Created milestones from v1.2 to v1.5rc and managed releases for v1.3.
-*** Created issues from v1.2
+*** Created milestones from v1.2 to v1.5rc and managed release for v1.3.
+*** Created issues and ensured they were relevant to the epics from v1.2 on
+
 ** Documentation:
 *** Updated documentation to ensure latest versions were correct
 ** Tools:
-*** Added new third party library to use for currency conversion
+*** Added new third party library (https://github.com/Ritaja/java-exchange-rates) to use for currency conversion
 
 == Contributions to the User Guide
 
@@ -42,15 +41,8 @@ Used third-party currency converter library from github: https://github.com/Rita
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-
 include::../UserGuide.adoc[tag=convert]
-
 include::../UserGuide.adoc[tag=wipe]
-
-include::../UserGuide.adoc[tag=debt]
-
-include::../UserGuide.adoc[tag=lend]
-
 
 == Contributions to the Developer Guide
 
@@ -59,6 +51,7 @@ include::../UserGuide.adoc[tag=lend]
 |===
 
 include::../DeveloperGuide.adoc[tag=posneg]
+include::../DeveloperGuide.adoc[tag=convert]
 
 
 

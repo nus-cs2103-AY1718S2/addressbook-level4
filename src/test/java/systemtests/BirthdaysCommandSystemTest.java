@@ -21,7 +21,8 @@ import seedu.address.logic.commands.BirthdaysCommand;
 
 //@@author AzuraAiR
 /**
- * A system test class for the help window, which contains interaction with other UI components.
+ * A system test class for the birthdays list and todays notification,
+ * which contains interaction with other UI components.
  */
 public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
     private static final String ERROR_MESSAGE = "ATTENTION!!!! : On some computers, this test may fail when run on "
@@ -46,6 +47,15 @@ public class BirthdaysCommandSystemTest extends AddressBookSystemTest {
         executeCommand(BirthdaysCommand.COMMAND_WORD);
         guiRobot.pauseForHuman();
         assertEquals(expectedResult, getBirthdayList().getText());
+    }
+
+    @Test
+    public void openEmptyBirthdayList() {
+        //use command box
+        deleteAllPersons();
+        executeCommand(BirthdaysCommand.COMMAND_WORD);
+        guiRobot.pauseForHuman();
+        assertEquals("", getBirthdayList().getText());
     }
 
     @Test

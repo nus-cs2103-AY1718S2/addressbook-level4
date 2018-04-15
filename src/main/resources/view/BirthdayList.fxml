@@ -4,8 +4,11 @@
 <?import javafx.scene.layout.StackPane?>
 
 <!-- @@author AzuraAiR -->
+<?import javafx.scene.control.ScrollPane?>
 <StackPane fx:id="birthdayPlaceholder" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
    <children>
-      <TextArea fx:id="birthdayList" editable="false" />
+      <ScrollPane fx:id="scrollPane" styleClass="pane-with-border" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+            <TextArea fx:id="birthdayList" editable="false" />
+      </ScrollPane>
    </children>
 </StackPane>

@@ -1252,7 +1252,6 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
-//tag::OngKuanYangTestCases[]
 === Add appointment
 
 . Adding an appointment
@@ -1311,7 +1310,68 @@ _{ more test cases ... }_
    Expected: Theme is switched from dark to light and vice-versa.
 .. Test case: Close and open the application. +
    Expected: Theme is saved across restarts.
-// end::OngKuanYangTestCases[]
+
+=== Lock
+
+. Lock the addressbook to prevent further modification on contacts or appointment
+
+.. Test case: Run `lock` . +
+   Expected: All the contacts and appointments are gone. And further commands are not accepted
+
+=== Unlock
+
+. Unlock the addressbook for further modification on contacts or appointment
+
+.. Prerequisite: The addressbook is already locked.
+.. Test case: Run `unlock PASSWORD` . +
+   Expected: The addressbook is unlock and starts to accept more commands. Please note that the contatcs and appointments will not be shown automatically, please use list and listappointment command to see.
+
+=== Change Password
+
+. Change the lock password
+
+.. Test case: Run `setPassword OLD_PASSWORD NEW_PASSWORD` . +
+   Expected: The password is changed.
+
+=== List all appointments
+
+. Listing all appointments
+
+.. Test case: Run `listappointment` . +
+   Expected: All the appointments are listed.
+
+=== Sort all contacts
+
+. Sorting all contacts
+
+.. Test case: Run `sort` . +
+   Expected: All the contacts in addressbook are sorted based on alphabetical order.
+
+=== Remove tags from all contacts
+
+. Removing tags from all contatcs
+
+.. Prerequisite: There are already some tags in the addressbook.
+.. Test case: Run `removetag TAGNAME` . +
+   Expected: The specified tag is removed from all the contacts in addressbook.
+
+=== Export all contacts
+
+. Export all contatcs
+
+.. Prerequisite: There are already some contactss in the addressbook.
+.. Test case: Run `export` . +
+   Expected: All the contacts in the addressbook are exported to a csv file.
+
+=== Add comments to contacts
+
+. Add comments to contacts
+
+.. Prerequisite: There are already some contactss in the addressbook.
+.. Test case: Run `add n/David p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 tz/PST c/interested in football t/friends t/owesMoney` . +
+   Expected: A contact is created with comment interested in football.
+.. Test case: Run `edit 1 c/interested in basketball` . +
+   Expected: The first contact's comment is modified to interested in basketball.
 
 === Saving data
 

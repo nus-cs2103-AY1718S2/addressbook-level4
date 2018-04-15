@@ -1,4 +1,95 @@
 # Sebry9
+###### /resources/view/DarkTheme.css
+``` css
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+    }
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+    }
+
+#tags .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+    }
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+    }
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+    }
+
+#tags .purple {
+    -fx-text-fill: white;
+    -fx-background-color: purple;
+    }
+
+#tags .grey {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
+    }
+```
+###### /resources/view/DarkTheme.css
+``` css
+#insurances {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#insurances .label {
+    -fx-padding: 1 1 1 1;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+```
+###### /resources/view/PersonListCard.fxml
+``` fxml
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+        <Label fx:id="name" styleClass="cell_big_label" text="\$first" />
+      </HBox>
+      <FlowPane fx:id="tags" />
+    </VBox>
+      <Label fx:id="commission" prefHeight="38.0" prefWidth="205.0" text="\$commission" GridPane.halignment="LEFT" GridPane.rowIndex="8">
+         <padding>
+            <Insets bottom="10.0" left="30.0" right="10.0" top="10.0" />
+         </padding>
+      </Label>
+     <Label fx:id="group" styleClass="cell_small_label" text="\$group" GridPane.halignment="LEFT" GridPane.rowIndex="6" />
+   <Label fx:id="appointment" styleClass="cell_small_label" text="\$appointment" GridPane.halignment="LEFT" GridPane.rowIndex="5" />
+   <Label fx:id="birthday" styleClass="cell_small_label" text="\$birthday" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
+   <Label fx:id="email" styleClass="cell_small_label" text="\$email" GridPane.halignment="LEFT" GridPane.rowIndex="3" />
+   <Label fx:id="address" styleClass="cell_small_label" text="\$address" GridPane.halignment="LEFT" GridPane.rowIndex="2" />
+     <Label fx:id="phone" styleClass="cell_small_label" text="\$phone" GridPane.halignment="LEFT" GridPane.rowIndex="1" />
+      <FlowPane fx:id="insurances" GridPane.rowIndex="7" />
+      <rowConstraints>
+         <RowConstraints percentHeight="0.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints minHeight="10.0" />
+         <RowConstraints />
+         <RowConstraints />
+      </rowConstraints>
+  </GridPane>
+   <Group />
+</HBox>
+```
 ###### /java/seedu/address/ui/PersonCard.java
 ``` java
     private String getTagColorStyleFor(String tag) {
@@ -18,19 +109,15 @@
         case "owesMoney":
             return TAG_COLOR_STYLES[2]; //red
 
-        case "boyfriend":
-        case "girlfriend":
-            return TAG_COLOR_STYLES[5]; //purple
-
         case "grandparent":
         case "neighbours":
-            return TAG_COLOR_STYLES[6]; //grey
+            return TAG_COLOR_STYLES[5]; //purple
 
         case "colleagues":
             return TAG_COLOR_STYLES[4]; //orange
 
         default:
-            return "";
+            return TAG_COLOR_STYLES[6];
         }
     }
 
@@ -285,7 +372,6 @@ public class Commission {
      */
     public Commission(Insurance insurance) {
         requireNonNull(insurance);
-        Insurance insurance1 = insurance;
         String insuranceName = insurance.toString();
         String commission = new String("0");
         Pattern p1 = Pattern.compile("\\{(.*?)\\}");
@@ -493,7 +579,7 @@ public class UniqueInsuranceList implements Iterable<Insurance> {
 public class Insurance {
 
     public static final String MESSAGE_INSURANCE_CONSTRAINTS =
-        "Insurance should only contain alphanumeric characters";
+        "Insurance should only contain alphanumeric characters and Commission should contain only non negative numbers";
 
     private static final String SPECIAL_CHARACTERS = "\\[\\]{|}";
     private static final String INSURANCE_NAME = "[\\p{Alnum} ]*";

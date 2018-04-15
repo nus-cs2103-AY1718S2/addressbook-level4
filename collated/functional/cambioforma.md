@@ -35,6 +35,13 @@
             logger.severe("Failed to save preferences " + StringUtil.getDetails(e));
         }
         Platform.exit();
+        try {
+            UserPrefs userPrefs = new UserPrefs();
+            File file = new File(userPrefs.getAddressBookFilePath());
+            EncryptionUtil.encrypt(file);
+        } catch (IOException ioe) {
+            logger.warning("File not found" + ioe.getMessage());
+        }
         System.exit(0);
     }
 

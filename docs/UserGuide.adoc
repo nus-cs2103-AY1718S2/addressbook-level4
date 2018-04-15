@@ -695,7 +695,6 @@ Command Alias: `ea` +
 * `ENTRY_TITLE` must be alphanumeric, but whitespaces are allowed in between words.
 * If input does not contain `START_DATE`, it is assumed that `START DATE` is the same as `END_DATE`.
 * If input does not contain `START_TIME`, it is assumed that `START_TIME` is 00:00.
-* `TITLE` is alphanumeric and accepts white space. `TITLE` accepts maximum of 40 characters.
 * `START_DATE` and `END_DATE` must follow the format: DD-MM-YYYY (E.g. 04-04-2020 represents 4 April 2020)
 * `START_TIME` and `END_TIME` must follow the 24-Hour format: HH:MM (E.g. 23:59)
 * Duration of an entry must be at least 15 minutes.

@@ -17,15 +17,15 @@ public class LoginManagerTest {
     public void equals() {
 
         // same values -> returns true
-        LoginManager LoginManager = new LoginManager();
+        LoginManager loginManager = new LoginManager();
 
         // same object -> returns true
-        assertTrue(LoginManager.equals(LoginManager));
+        assertTrue(loginManager.equals(loginManager));
 
         // null -> returns false
-        assertFalse(LoginManager.equals(null));
+        assertFalse(loginManager.equals(null));
 
         // different types -> returns false
-        assertFalse(LoginManager.equals(5));
+        assertFalse(loginManager.equals(5));
     }
 }

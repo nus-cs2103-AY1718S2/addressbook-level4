@@ -19,7 +19,7 @@ Responsibilities: Logic component
 
 '''
 
-=== Gloria Law
+=== Gloria Ho Yan Law
 image::Gloria.jpg[width="150", align="left"]
 {empty}[https://github.com/glorialaw[github]] [<<glorialaw#, portfolio>>]
 

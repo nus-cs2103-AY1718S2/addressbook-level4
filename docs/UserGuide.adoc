@@ -62,6 +62,11 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [TIP]
 The command keywords and parameters are *case sensitive*.
 
+[TIP]
+There is a floating real-time parsing panel below the command box that shows parsed results before commands are executed. +
+However, it only verifies that the command format is correct. Commands that are shown to be "valid commands" might not execute successfully. +
+For example, when you use a correct `add` command format to add a duplicate student into HR+, the real time parser shows that it is a valid command but it will not be successfully executed.
+
 === Viewing help : `help`
 
 Format: `help`

@@ -1646,14 +1646,14 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: A student named Damith with the above particulars will be added into HR+. The student will be shown in the persons list panel.
 .. Add a resume pdf file named resume.pdf to the same folder as the jar file. It also must be valid PDF and smaller than 1MB. +
    Add an image named image.jpg to the same folder as the jar file. It also must be valid image file and smaller than 1MB. +
-   Command: `add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg +
+   Command: `add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg` +
    Expected: A student named Irene is added with the above particulars. A resume and a profile image will be added.
 
 === Showing info panel or resume
 
 . Showing either student info or resume in the right panel
 
-.. Prerequisites: A student is selected using the `select` command.
+.. Prerequisites: A student is selected using the `select` command. The student selected has a resume added into HR+.
 .. Command: `show resume` +
    Expected: The resume of the student is displayed when it is available.
    Command: `show info` +

@@ -1019,6 +1019,8 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *`|user| be able to transfer data between computers |  share my data with others and change computers seamlessly
 
+|`* * *`|user| be able to upload to Google Drive easily |  store and restore backups and transfer data between computers without the use of hard drive
+
 |`* * *`|user who is concerned about privacy| be able to transfer encrypted data |share my data in its encrypted form
 
 |`* * *`|user with many friends| track the birthdays of my friends | not miss a friend's birthday

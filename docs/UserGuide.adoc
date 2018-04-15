@@ -315,7 +315,7 @@ If the specified patient is in the queue, you have to remove the patient from th
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`.
 ****
 
 Examples:
@@ -339,7 +339,7 @@ This command is undoable.
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The index *must be a positive integer* `1, 2, 3, ...`.
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing conditions, the existing conditions of the patient will be removed i.e adding of conditions is not cumulative.
@@ -559,10 +559,10 @@ Adds the third person in the result of the list command into the visiting queue.
 
 * `find bernice` +
 `aq 2` +
-Adds Bernice Lee into the visiting queue as shown in Figure 3 below.
+Adds Bernice Lee into the visiting queue as shown in Figure 9 below.
 
 .Add patient to queue according to list index
-[caption="Figure 3: "]
+[caption="Figure 9: "]
 image::addq_duplicate.PNG[width="990"]
 
 ==== Removing a patient from the visiting queue: `removeq` [since v1.2]
@@ -626,7 +626,7 @@ This command is only for medical staff.
 
 ****
 * The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index *must be a positive integer* `1, 2, 3, ...`.
 * The date of the appointment must be in the following format: DD/MM/YYYY.
 * The date of the appointment must be after the current date and time.
 * The time of the appointment must be given in 24 hour clock format: HHMM.
@@ -638,28 +638,40 @@ Examples:
 * `viewappt` +
 `addappt 1 19/6/2018 1000` +
 `viewappt` +
-Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 9.
+Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 10.
 
 .Calendar panel in IMDB
-[caption="Figure 9: "]
+[caption="Figure 10: "]
 image::addappt_window.PNG[width="990"]
 
 * `aa 1 23/7/2019 1430` +
 Adds a medical appointment for the first person in the list on 23/3/2018 at 2:30pm.
 
-==== Viewing medical appointments by patient name: `viewappt` [since v1.3]
+==== Viewing medical appointments by index: `viewappt` [since v1.3]
 
 Shows the list of medical appointments of a patient.
 
-Format: `viewappt PATIENT_NAME` or `va PATIENT_NAME`
+Format: `viewappt INDEX` or `va INDEX`
+
+[CAUTION]
+This command is for both doctor and medical staff.
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`.
+****
 
 Examples:
 
-* `viewappt Betsy` +
-Lists the medical appointments made by Betsy.
+* `viewappt 1` +
+Lists the medical appointments made by the first patient in the list as shown in Figure 11.
 
-* `va John` +
-Lists the medical appointments made by John.
+.Patient Appointment panel in IMDB
+[caption="Figure 11: "]
+image::viewappt_patient_window.PNG[width="990"]
+
+* `va 2` +
+Lists the medical appointments made by the second patient in the list.
 
 ==== Viewing medical appointments in calendar: `viewappt` [since v1.4]
 

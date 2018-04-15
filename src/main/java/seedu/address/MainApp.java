@@ -242,7 +242,7 @@ public class MainApp extends Application {
             ui = new PasswordUiManager(storage, model, ui);
         }
     }
-    //author
+    //@@author
 
     @Override
     public void stop() {

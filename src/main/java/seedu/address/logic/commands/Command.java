@@ -12,7 +12,7 @@ import seedu.address.storage.Storage;
  */
 public abstract class Command {
     protected Model model;
-    protected Storage storage;
+    protected Storage storage; // only required for export command, can be null otherwise
     protected CommandHistory history;
     protected UndoRedoStack undoRedoStack;
 
@@ -43,10 +43,9 @@ public abstract class Command {
         this.model = model;
     }
 
+    //@@author karenfrilya97
     /**
      * Provides any needed dependencies to the command.
-     * Commands making use of any of these should override this method to gain
-     * access to the dependencies.
      */
     public void setData(Model model, Storage storage, CommandHistory history, UndoRedoStack undoRedoStack) {
         this.setData(model, history, undoRedoStack);

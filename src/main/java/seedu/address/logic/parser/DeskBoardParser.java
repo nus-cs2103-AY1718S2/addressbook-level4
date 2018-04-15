@@ -113,7 +113,6 @@ public class DeskBoardParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
-        //@@author karenfrilya97
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 

@@ -381,6 +381,7 @@ Can only renew book that has been borrowed
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
 
+// tag::addaccount[]
 === Add an account : `addAccount`
 
 Add a given account to the list of accounts +
@@ -398,7 +399,8 @@ Press TAB after writing `addAccount` to use the auto-complete function.
 Examples:
 
 * `addAccount` --> (press TAB) --> `addAccount n/ m/ u/ p/ l/ `
-
+// end::addaccount[]
+// tag::deleteaccount[]
 === Deleting an account : `deleteAccount`
 
 Deletes the specified account from the list of accounts. +
@@ -416,7 +418,7 @@ Examples:
 Deletes account linked to Jack Morgan.
 * `delete tommy` +
 Deletes the account linked to Tommy.
-
+// end::deleteaccount[]
 === Exiting the program : `exit`
 
 Exits the program. +

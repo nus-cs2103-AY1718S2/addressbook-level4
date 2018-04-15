@@ -368,6 +368,35 @@ The authentication mechanism is managed by Model and Logic, where Model maintain
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+=== Account Functions
+// tag::addaccount[]
+==== Add Account
+===== Current Implementation
+1. The addAccount function helps to add new accounts with different privileges into the database. It includes the accounts with privilege level 1 for students and privilege level 2 for administrators or librarians.
+2. Only accounts with privilege level 2 (administrators and librarians) can access the addAccount function.
+
+===== Future Implementation
+
+1. The addAccount function will be able to add accounts based on an excel sheet that is provided instead of having to manually add the accounts one by one. +
+2. The addAccount function will be provided to the students such that they can create their own account as long as they have a registered matriculation number in the system without having a administrator privilege level.
+3. An edit account function will be created to allow borrowers/users to edit their own passwords if necessary instead of having to go through the librarian to delete and add a new account with a different password.
+// end::addaccount[]
+
+// tag::deleteaccount[]
+==== Delete Account
+===== Current Implementation
+1. The deleteAccount function helps to delete accounts in the existing account database.
+2. Only accounts with privilege level 2 (administrators and librarians) can access the deleteAccount function.
+
+===== Future Implementation
+1. When the list account function is set up, the administrators will be able to use the addAccount function by clicking on the the shown list to delete the accounts in large scales.
+2. The deleteAccount function will be able to delete the account by range of date created so that students that are registered into the school library can be deleted in bulk based on their matriculation and graduation date information.
+// end::deleteaccount[]
+
+
+
+
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 

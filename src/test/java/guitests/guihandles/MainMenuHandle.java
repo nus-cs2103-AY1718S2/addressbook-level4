@@ -16,14 +16,14 @@ public class MainMenuHandle extends NodeHandle<Node> {
     }
 
     /**
-     * Opens the {@code HelpWindow} using the menu bar in {@code MainWindow}.
+     * Opens the {@code BrowserWindow} using the menu bar in {@code MainWindow}.
      */
     public void openHelpWindowUsingMenu() {
         clickOnMenuItemsSequentially("Help", "F1");
     }
 
     /**
-     * Opens the {@code HelpWindow} by pressing the shortcut key associated
+     * Opens the {@code BrowserWindow} by pressing the shortcut key associated
      * with the menu bar in {@code MainWindow}.
      */
     public void openHelpWindowUsingAccelerator() {

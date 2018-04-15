@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Coin with an invalid code field -->
+<coin>
+    <code>9482asf424</code>
+    <tagged>favs</tagged>
+</coin>

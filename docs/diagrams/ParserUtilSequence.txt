@@ -1,0 +1,65 @@
+@startuml
+hide footbox
+participant ":ParserUtil" as ParserUtil
+participant ":ConditionParser" as ConditionParser
+participant ":SyntaxParser" as SyntaxParser
+participant ":SemanticParser" as SemanticParser
+participant ":ConditionGenerator" as ConditionGenerator
+
+-> ParserUtil : parseCondition(TokenList)
+activate ParserUtil
+
+ParserUtil -> ConditionParser : parse(TokenList)
+activate ConditionParser
+
+/' Construct SyntaxParser'/
+create SyntaxParser
+ConditionParser -> SyntaxParser : new SyntaxParser(TokenList)
+activate SyntaxParser
+SyntaxParser -> ConditionParser
+deactivate SyntaxParser
+
+/'Parse the token list'/
+ConditionParser -> SyntaxParser : parse(TokenList)
+activate SyntaxParser
+SyntaxParser -> ConditionParser : true
+deactivate SyntaxParser
+
+/'Construct the SemanticParser'/
+create SemanticParser
+ConditionParser -> SemanticParser : new SemanticParser(TokenList)
+activate SemanticParser
+SemanticParser -> ConditionParser
+deactivate SemanticParser
+
+/'Parse the token list'/
+ConditionParser -> SemanticParser : parse(TokenList)
+activate SemanticParser
+SemanticParser -> ConditionParser : true
+deactivate SemanticParser
+
+/'Construct the ConditionGenerator'/
+create ConditionGenerator
+ConditionParser -> ConditionGenerator : new ConditionGenerator(TokenList)
+activate ConditionGenerator
+ConditionGenerator -> ConditionParser
+deactivate ConditionGenerator
+
+/'Generate the Condition'/
+ConditionParser -> ConditionGenerator : generate(TokenList)
+activate ConditionGenerator
+ConditionGenerator -> ConditionParser : Condition
+
+deactivate ConditionGenerator
+
+
+ConditionParser -> ParserUtil : Condition
+deactivate ConditionParser
+
+destroy ConditionGenerator
+destroy SyntaxParser
+destroy SemanticParser
+
+<- ParserUtil : Condition
+deactivate ParserUtil
+@enduml

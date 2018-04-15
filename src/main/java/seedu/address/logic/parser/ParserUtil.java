@@ -6,14 +6,18 @@ import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.logging.Logger;
 
+import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.logic.commands.CommandTarget;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.coin.Amount;
+import seedu.address.model.coin.Code;
+import seedu.address.model.coin.Coin;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,11 +32,18 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
+    public static final String MESSAGE_INVALID_NUMBER = "Argument is not a valid number.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_ARG = "Argument that is provided is not valid.";
+    public static final String MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX = "%s structure of the argument is invalid:"
+            + " Expected %s but instead got %s.";
+
+    private static Logger logger = LogsCenter.getLogger(ParserUtil.class);
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -49,94 +60,53 @@ public class ParserUtil {
      *
      * @throws IllegalValueException if the given {@code name} is invalid.
      */
-    public static Name parseName(String name) throws IllegalValueException {
+    public static Code parseName(String name) throws IllegalValueException {
         requireNonNull(name);
         String trimmedName = name.trim();
-        if (!Name.isValidName(trimmedName)) {
-            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        if (!Code.isValidName(trimmedName)) {
+            throw new IllegalValueException(Code.MESSAGE_NAME_CONSTRAINTS);
         }
-        return new Name(trimmedName);
+        return new Code(trimmedName);
     }
 
     /**
      * Parses a {@code Optional<String> name} into an {@code Optional<Name>} if {@code name} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Name> parseName(Optional<String> name) throws IllegalValueException {
+    public static Optional<Code> parseName(Optional<String> name) throws IllegalValueException {
         requireNonNull(name);
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
     /**
-     * Parses a {@code String phone} into a {@code Phone}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses a {@code String target} into a {@code CommandTarget}.
+     * Can be any of: code or index.
      *
-     * @throws IllegalValueException if the given {@code phone} is invalid.
+     * @throws IllegalValueException
      */
-    public static Phone parsePhone(String phone) throws IllegalValueException {
-        requireNonNull(phone);
-        String trimmedPhone = phone.trim();
-        if (!Phone.isValidPhone(trimmedPhone)) {
-            throw new IllegalValueException(Phone.MESSAGE_PHONE_CONSTRAINTS);
+    public static CommandTarget parseTarget(String target) throws IllegalValueException {
+        requireNonNull(target);
+        try {
+            return new CommandTarget(parseIndex(target));
+        } catch (IllegalValueException ive) {
+            return new CommandTarget(parseName(target));
+            // may still throw again, handle it at call site
         }
-        return new Phone(trimmedPhone);
+
     }
 
     /**
-     * Parses a {@code Optional<String> phone} into an {@code Optional<Phone>} if {@code phone} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Phone> parsePhone(Optional<String> phone) throws IllegalValueException {
-        requireNonNull(phone);
-        return phone.isPresent() ? Optional.of(parsePhone(phone.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String address} into an {@code Address}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Parses {@code value} into an {@code Amount} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
      *
-     * @throws IllegalValueException if the given {@code address} is invalid.
+     * @throws IllegalValueException if the specified index is invalid (not number value).
      */
-    public static Address parseAddress(String address) throws IllegalValueException {
-        requireNonNull(address);
-        String trimmedAddress = address.trim();
-        if (!Address.isValidAddress(trimmedAddress)) {
-            throw new IllegalValueException(Address.MESSAGE_ADDRESS_CONSTRAINTS);
+    public static Amount parseAmount(String value) throws IllegalValueException {
+        String trimmedValue = value.trim();
+        if (!StringUtil.isValidAmount(trimmedValue)) {
+            throw new IllegalValueException(MESSAGE_INVALID_NUMBER);
         }
-        return new Address(trimmedAddress);
-    }
-
-    /**
-     * Parses a {@code Optional<String> address} into an {@code Optional<Address>} if {@code address} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Address> parseAddress(Optional<String> address) throws IllegalValueException {
-        requireNonNull(address);
-        return address.isPresent() ? Optional.of(parseAddress(address.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String email} into an {@code Email}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code email} is invalid.
-     */
-    public static Email parseEmail(String email) throws IllegalValueException {
-        requireNonNull(email);
-        String trimmedEmail = email.trim();
-        if (!Email.isValidEmail(trimmedEmail)) {
-            throw new IllegalValueException(Email.MESSAGE_EMAIL_CONSTRAINTS);
-        }
-        return new Email(trimmedEmail);
-    }
-
-    /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
-        requireNonNull(email);
-        return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
+        return new Amount(trimmedValue);
     }
 
     /**
@@ -165,4 +135,59 @@ public class ParserUtil {
         }
         return tagSet;
     }
+    //@@author neilish3re
+    /**
+     * Parses sortOrder and returns it
+     * Throws IllegalValueException if index that is specified is invalid
+     */
+    public static boolean parseSort(String sortOrder) throws IllegalValueException {
+        sortOrder = sortOrder.trim();
+        switch (sortOrder) {
+        case "":
+        case "a":                       //ascending alphabetical order
+            return false;
+        case "z":
+            return true;                //descending alphabetical order
+        default:
+            throw new IllegalValueException(MESSAGE_INVALID_ARG);
+        }
+    }
+    //@@author
+
+    //@@author Eldon-Chung
+    /**
+     * Parses a {@code String condition} represented by a {@code TokenStack} into a {@code Predicate<Coin>}.
+     * @param argumentTokenStack a {@code TokenStack} representing the tokenized argument.
+     * @return a predicate representing the argument
+     * @throws IllegalValueException if the given tag names or numbers as parameters are invalid
+     *          and if the argument is either syntactically or semantically invalid.
+     */
+    public static Predicate<Coin> parseCondition(TokenStack argumentTokenStack)
+            throws IllegalValueException {
+        requireNonNull(argumentTokenStack);
+        TokenType expectedTokenType;
+        TokenType actualTokenType;
+
+        ConditionSyntaxParser conditionSyntaxParser = new ConditionSyntaxParser(argumentTokenStack);
+        if (!conditionSyntaxParser.parse()) {
+            expectedTokenType = conditionSyntaxParser.getExpectedType();
+            actualTokenType = conditionSyntaxParser.getActualType();
+            logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Syntactic",
+                    expectedTokenType.description, actualTokenType.typeName));
+            throw new ParseException("command arguments invalid.");
+        }
+
+        ConditionSemanticParser conditionSemanticParser = new ConditionSemanticParser(argumentTokenStack);
+        if (!conditionSemanticParser.parse()) {
+            expectedTokenType = conditionSemanticParser.getExpectedType();
+            actualTokenType = conditionSemanticParser.getActualType();
+            logger.warning(String.format(MESSAGE_CONDITION_ARGUMENT_INVALID_SYNTAX, "Semantic",
+                    expectedTokenType.description, actualTokenType.typeName));
+            throw new ParseException("command arguments invalid.");
+        }
+
+        ConditionGenerator conditionGenerator = new ConditionGenerator(argumentTokenStack);
+        return conditionGenerator.generate();
+    }
+    //author@@
 }

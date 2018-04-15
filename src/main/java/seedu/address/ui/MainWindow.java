@@ -2,22 +2,36 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.Notifications;
+
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.geometry.Pos;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ProgressIndicator;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.LoadingEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowNotifManRequestEvent;
+import seedu.address.commons.events.ui.ShowNotificationRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -31,13 +45,20 @@ public class MainWindow extends UiPart<Stage> {
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
+    private Stage secondaryStage;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ChartsPanel chartsPanel;
+    private CoinListPanel coinListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private NotificationsWindow notificationsWindow;
+
+    @FXML
+    private StackPane chartsPlaceholder;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -49,13 +70,16 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane coinListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox loadingAnimation;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -66,8 +90,11 @@ public class MainWindow extends UiPart<Stage> {
         this.config = config;
         this.prefs = prefs;
 
+        secondaryStage = new Stage();
+
         // Configure the UI
         setTitle(config.getAppTitle());
+        setLoadingAnimation();
         setWindowDefaultSize(prefs);
 
         setAccelerators();
@@ -119,13 +146,17 @@ public class MainWindow extends UiPart<Stage> {
         browserPanel = new BrowserPanel();
         browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        chartsPanel = new ChartsPanel();
+        chartsPlaceholder.getChildren().add(chartsPanel.getRoot());
+
+        coinListPanel = new CoinListPanel(logic.getFilteredCoinList());
+        coinListPanelPlaceholder.getChildren().add(coinListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(logic.getFilteredCoinList().size(),
+                prefs.getCoinBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -139,6 +170,14 @@ public class MainWindow extends UiPart<Stage> {
     private void setTitle(String appTitle) {
         primaryStage.setTitle(appTitle);
     }
+
+    //@@author laichengyu
+    private void setLoadingAnimation() {
+        ProgressIndicator pi = new ProgressIndicator();
+        loadingAnimation = new VBox(pi);
+        loadingAnimation.setAlignment(Pos.CENTER);
+    }
+    //@@author
 
     /**
      * Sets the default size based on user preferences.
@@ -165,7 +204,7 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        BrowserWindow helpWindow = new BrowserWindow(BrowserWindow.USERGUIDE_FILE_PATH);
         helpWindow.show();
     }
 
@@ -181,8 +220,8 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public CoinListPanel getCoinListPanel() {
+        return this.coinListPanel;
     }
 
     void releaseResources() {
@@ -194,4 +233,85 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author ewaldhew
+    @Subscribe
+    private void handleShowNotifManEvent(ShowNotifManRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        notificationsWindow = new NotificationsWindow(secondaryStage, event.data);
+        notificationsWindow.show();
+    }
+
+    @Subscribe
+    private void handleShowNotificationEvent(ShowNotificationRequestEvent nre) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(nre));
+        spawnNotification(nre.toString(), nre.targetIndex, nre.codeString);
+    }
+
+    /**
+     * Spawns a popup notification with the given message.
+     */
+    private void spawnNotification(String message, Index index, String code) {
+        Notifications.create()
+                     .title("The following rule has triggered this notification:")
+                     .text(String.format("%1$s\nClick to jump to view %2$s", message, code))
+                     .graphic(new ImageView(IconUtil.getCoinIcon(code)))
+                     .onAction(event -> {
+                         try {
+                             logic.execute(ListCommand.COMMAND_WORD);
+                             EventsCenter.getInstance().post(new JumpToListRequestEvent(index));
+                             event.consume();
+                         } catch (Exception e) {
+                             throw new RuntimeException();
+                         }
+                     })
+                     .show();
+    }
+    //@@author
+
+
+
+    //@@author laichengyu
+    /**
+     * Displays loading animation when isLoading is true and hides it otherwise
+     * @param isLoading loading state of the application
+     */
+    @FXML
+    private void handleLoading(boolean isLoading) {
+        toggleLoadingAnimation(isLoading);
+    }
+
+    /**
+     * Adds or remove the loading animation from {@code coinListPanelPlaceholder}
+     * depending on the loading status
+     * @param isLoading the loading status of the application
+     */
+    private void toggleLoadingAnimation(boolean isLoading) {
+        Platform.runLater(() -> {
+            if (isLoading) {
+                activateLoadingAnimation();
+            } else {
+                deactivateLoadingAnimation();
+            }
+        });
+    }
+
+    private void activateLoadingAnimation() {
+        loadingAnimation.setVisible(true);
+        coinListPanelPlaceholder.getChildren().add(loadingAnimation);
+        setTitle("Syncing...");
+    }
+
+    private void deactivateLoadingAnimation() {
+        loadingAnimation.setVisible(false);
+        coinListPanelPlaceholder.getChildren().remove(loadingAnimation);
+        setTitle(config.getAppTitle());
+    }
+
+    @Subscribe
+    private void handleLoadingEvent(LoadingEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleLoading(event.isLoading);
+    }
+    //@@author
 }

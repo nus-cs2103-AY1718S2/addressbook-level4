@@ -2,6 +2,9 @@ package seedu.address.ui;
 
 import java.util.logging.Logger;
 
+import org.controlsfx.control.textfield.TextFields;
+
+import impl.org.controlsfx.autocompletion.SuggestionProvider;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TextField;
@@ -9,6 +12,7 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.logic.CommandList;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
@@ -35,6 +39,10 @@ public class CommandBox extends UiPart<Region> {
         this.logic = logic;
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
+        //@@author laichengyu
+        SuggestionProvider<String> suggestionProvider = SuggestionProvider.create(CommandList.COMMAND_LIST);
+        TextFields.bindAutoCompletion(commandTextField, suggestionProvider);
+        //@@author
         historySnapshot = logic.getHistorySnapshot();
     }
 
@@ -107,14 +115,14 @@ public class CommandBox extends UiPart<Region> {
             // process result of the command
             commandTextField.setText("");
             logger.info("Result: " + commandResult.feedbackToUser);
-            raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
+            raise(new NewResultAvailableEvent(commandResult.feedbackToUser, false));
 
         } catch (CommandException | ParseException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();
             logger.info("Invalid command: " + commandTextField.getText());
-            raise(new NewResultAvailableEvent(e.getMessage()));
+            raise(new NewResultAvailableEvent(e.getMessage(), true));
         }
     }
 

@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<coinbook>
+    <!-- Coin with invalid code field -->
+    <coins>
+        <code>BT!C</code>
+    </coins>
+</coinbook>

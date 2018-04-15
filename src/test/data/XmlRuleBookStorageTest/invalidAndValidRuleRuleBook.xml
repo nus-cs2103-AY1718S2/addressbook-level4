@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<rulebook>
+    <rules>
+        <value> c/b</value>
+        <type>NOTIFICATION</type>
+    </rules>
+    <rules>
+        <value> p0/</value>
+        <type>NOTIFICATION</type>
+    </rules>
+</rulebook>

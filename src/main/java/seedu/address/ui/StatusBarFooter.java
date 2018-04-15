@@ -12,7 +12,8 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.CoinBookChangedEvent;
+import seedu.address.commons.events.ui.FilterChangedEvent;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -21,6 +22,8 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String ITEM_COUNT_STATUS = "%d item(s) total";
+    public static final String FIND_COMMAND_STATUS = "Current filter: %s";
 
     /**
      * Used to generate time stamps.
@@ -40,11 +43,16 @@ public class StatusBarFooter extends UiPart<Region> {
     private StatusBar syncStatus;
     @FXML
     private StatusBar saveLocationStatus;
+    @FXML
+    private StatusBar itemCountStatus;
+    @FXML
+    private StatusBar filterStatus;
 
 
-    public StatusBarFooter(String saveLocation) {
+    public StatusBarFooter(int numItems, String saveLocation) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
+        setItemCountStatus(numItems);
         setSaveLocation("./" + saveLocation);
         registerAsAnEventHandler(this);
     }
@@ -67,15 +75,30 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.saveLocationStatus.setText(location));
     }
 
+    private void setItemCountStatus(int numItems) {
+        Platform.runLater(() -> this.itemCountStatus.setText(String.format(ITEM_COUNT_STATUS, numItems)));
+    }
+
     private void setSyncStatus(String status) {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setFindCommandStatus(String status) {
+        Platform.runLater(() -> this.filterStatus.setText(String.format(FIND_COMMAND_STATUS, status)));
+    }
+
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+    public void handleCoinBookChangedEvent(CoinBookChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setItemCountStatus(abce.data.getCoinList().size());
+    }
+
+    @Subscribe
+    public void handleFilterChangedEvent(FilterChangedEvent fce) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(fce, "Setting filter info..."));
+        setFindCommandStatus(fce.status);
     }
 }

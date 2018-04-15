@@ -5,7 +5,7 @@
 # --no-daemon: Prevent the daemon from launching to prevent file-in-use errors
 #     when we cache the ~/.gradle directory
 build_script:
-    - gradlew.bat --no-daemon assemble checkstyleMain checkstyleTest
+    - gradlew.bat --no-daemon fixWhitespace assemble checkstyleMain checkstyleTest
 
 test_script:
     - appveyor-retry gradlew.bat --no-daemon headless allTests

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<coinbook>
+    <!-- Valid Coin -->
+    <coins>
+        <code>BTC</code>
+    </coins>
+    <!-- Coin with invalid code field -->
+    <coins>
+        <code>948asdf2424</code>
+    </coins>
+</coinbook>

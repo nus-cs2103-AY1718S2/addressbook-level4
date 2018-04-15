@@ -4,27 +4,25 @@ import static java.util.Objects.requireNonNull;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static org.junit.Assert.fail;
+import static seedu.address.testutil.TestUtil.getAddCommandSuccessMessage;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.function.Predicate;
 
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import javafx.collections.ObservableList;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.commands.CommandTestUtil.ModelStub;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.ReadOnlyCoinBook;
+import seedu.address.model.coin.Coin;
+import seedu.address.model.coin.exceptions.DuplicateCoinException;
+import seedu.address.testutil.CoinBuilder;
 
 public class AddCommandTest {
 
@@ -32,37 +30,37 @@ public class AddCommandTest {
     public ExpectedException thrown = ExpectedException.none();
 
     @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
+    public void constructor_nullCoin_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
         new AddCommand(null);
     }
 
     @Test
-    public void execute_personAcceptedByModel_addSuccessful() throws Exception {
-        ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_coinAcceptedByModel_addSuccessful() throws Exception {
+        ModelStubAcceptingCoinAdded modelStub = new ModelStubAcceptingCoinAdded();
+        Coin validCoin = new CoinBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddCommandForCoin(validCoin, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(getAddCommandSuccessMessage(validCoin), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validCoin), modelStub.coinsAdded);
     }
 
     @Test
-    public void execute_duplicatePerson_throwsCommandException() throws Exception {
-        ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+    public void execute_duplicateCoin_throwsCommandException() throws Exception {
+        ModelStub modelStub = new ModelStubThrowingDuplicateCoinException();
+        Coin validCoin = new CoinBuilder().build();
 
         thrown.expect(CommandException.class);
-        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
+        thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_COIN);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddCommandForCoin(validCoin, modelStub).execute();
     }
 
     @Test
     public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+        Coin alice = new CoinBuilder().withName("Alice").build();
+        Coin bob = new CoinBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -79,92 +77,49 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different coin -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddCommand with the details of the given coin.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand getAddCommandForCoin(Coin coin, Model model) {
+        AddCommand command = new AddCommand(coin);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
 
     /**
-     * A default model stub that have all of the methods failing.
+     * A Model stub that always throw a DuplicateCoinException when trying to add a coin.
      */
-    private class ModelStub implements Model {
+    private class ModelStubThrowingDuplicateCoinException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            fail("This method should not be called.");
+        public void addCoin(Coin coin) throws DuplicateCoinException {
+            throw new DuplicateCoinException();
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
+        public ReadOnlyCoinBook getCoinBook() {
+            return new CoinBook();
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always accept the coin being added.
      */
-    private class ModelStubThrowingDuplicatePersonException extends ModelStub {
+    private class ModelStubAcceptingCoinAdded extends ModelStub {
+        final ArrayList<Coin> coinsAdded = new ArrayList<>();
+
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addCoin(Coin coin) throws DuplicateCoinException {
+            requireNonNull(coin);
+            coinsAdded.add(coin);
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the person being added.
-     */
-    private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
-
-        @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyCoinBook getCoinBook() {
+            return new CoinBook();
         }
     }
 

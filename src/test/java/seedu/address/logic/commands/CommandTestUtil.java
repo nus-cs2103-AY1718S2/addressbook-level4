@@ -3,73 +3,65 @@ package seedu.address.logic.commands;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.logic.parser.TokenType.PREFIX_CODE;
+import static seedu.address.logic.parser.TokenType.PREFIX_TAG;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
+import java.util.function.Predicate;
 
+import javafx.collections.ObservableList;
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.CoinBook;
 import seedu.address.model.Model;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.EditPersonDescriptorBuilder;
+import seedu.address.model.ReadOnlyCoinBook;
+import seedu.address.model.ReadOnlyRuleBook;
+import seedu.address.model.coin.Coin;
+import seedu.address.model.coin.NameContainsKeywordsPredicate;
+import seedu.address.model.coin.Price;
+import seedu.address.model.coin.exceptions.CoinNotFoundException;
+import seedu.address.model.coin.exceptions.DuplicateCoinException;
+import seedu.address.model.rule.Rule;
+import seedu.address.model.rule.exceptions.DuplicateRuleException;
+import seedu.address.model.rule.exceptions.RuleNotFoundException;
+import seedu.address.testutil.EditCoinDescriptorBuilder;
 
 /**
  * Contains helper methods for testing commands.
  */
 public class CommandTestUtil {
 
-    public static final String VALID_NAME_AMY = "Amy Bee";
-    public static final String VALID_NAME_BOB = "Bob Choo";
-    public static final String VALID_PHONE_AMY = "11111111";
-    public static final String VALID_PHONE_BOB = "22222222";
-    public static final String VALID_EMAIL_AMY = "amy@example.com";
-    public static final String VALID_EMAIL_BOB = "bob@example.com";
-    public static final String VALID_ADDRESS_AMY = "Block 312, Amy Street 1";
-    public static final String VALID_ADDRESS_BOB = "Block 123, Bobby Street 3";
-    public static final String VALID_TAG_HUSBAND = "husband";
-    public static final String VALID_TAG_FRIEND = "friend";
+    public static final String VALID_NAME_AMB = "AMB";
+    public static final String VALID_NAME_BOS = "BOS";
+    public static final String VALID_NAME_JOBS = "JOBS";
+    public static final String VALID_TAG_HOT = "hot";
+    public static final String VALID_TAG_FAV = "fav";
 
-    public static final String NAME_DESC_AMY = " " + PREFIX_NAME + VALID_NAME_AMY;
-    public static final String NAME_DESC_BOB = " " + PREFIX_NAME + VALID_NAME_BOB;
-    public static final String PHONE_DESC_AMY = " " + PREFIX_PHONE + VALID_PHONE_AMY;
-    public static final String PHONE_DESC_BOB = " " + PREFIX_PHONE + VALID_PHONE_BOB;
-    public static final String EMAIL_DESC_AMY = " " + PREFIX_EMAIL + VALID_EMAIL_AMY;
-    public static final String EMAIL_DESC_BOB = " " + PREFIX_EMAIL + VALID_EMAIL_BOB;
-    public static final String ADDRESS_DESC_AMY = " " + PREFIX_ADDRESS + VALID_ADDRESS_AMY;
-    public static final String ADDRESS_DESC_BOB = " " + PREFIX_ADDRESS + VALID_ADDRESS_BOB;
-    public static final String TAG_DESC_FRIEND = " " + PREFIX_TAG + VALID_TAG_FRIEND;
-    public static final String TAG_DESC_HUSBAND = " " + PREFIX_TAG + VALID_TAG_HUSBAND;
+    public static final String NAME_DESC_AMB = " " + PREFIX_CODE + VALID_NAME_AMB;
+    public static final String NAME_DESC_BOS = " " + PREFIX_CODE + VALID_NAME_BOS;
+    public static final String NAME_DESC_JOBS = " " + PREFIX_CODE + VALID_NAME_JOBS;
+    public static final String TAG_DESC_FAV = " " + PREFIX_TAG + VALID_TAG_FAV;
+    public static final String TAG_DESC_HOT = " " + PREFIX_TAG + VALID_TAG_HOT;
 
-    public static final String INVALID_NAME_DESC = " " + PREFIX_NAME + "James&"; // '&' not allowed in names
-    public static final String INVALID_PHONE_DESC = " " + PREFIX_PHONE + "911a"; // 'a' not allowed in phones
-    public static final String INVALID_EMAIL_DESC = " " + PREFIX_EMAIL + "bob!yahoo"; // missing '@' symbol
-    public static final String INVALID_ADDRESS_DESC = " " + PREFIX_ADDRESS; // empty string not allowed for addresses
-    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hubby*"; // '*' not allowed in tags
+    public static final String INVALID_NAME_DESC = " " + PREFIX_CODE + "BTC&"; // '&' not allowed in names
+    public static final String INVALID_TAG_DESC = " " + PREFIX_TAG + "hot*"; // '*' not allowed in tags
 
     public static final String PREAMBLE_WHITESPACE = "\t  \r  \n";
     public static final String PREAMBLE_NON_EMPTY = "NonEmptyPreamble";
 
-    public static final EditCommand.EditPersonDescriptor DESC_AMY;
-    public static final EditCommand.EditPersonDescriptor DESC_BOB;
+    public static final TagCommand.EditCoinDescriptor DESC_AMY;
+    public static final TagCommand.EditCoinDescriptor DESC_BOB;
 
     static {
-        DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
-                .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
-                .withTags(VALID_TAG_FRIEND).build();
-        DESC_BOB = new EditPersonDescriptorBuilder().withName(VALID_NAME_BOB)
-                .withPhone(VALID_PHONE_BOB).withEmail(VALID_EMAIL_BOB).withAddress(VALID_ADDRESS_BOB)
-                .withTags(VALID_TAG_HUSBAND, VALID_TAG_FRIEND).build();
+        DESC_AMY = new EditCoinDescriptorBuilder().withName(VALID_NAME_AMB)
+                .withTags(VALID_TAG_FAV).build();
+        DESC_BOB = new EditCoinDescriptorBuilder().withName(VALID_NAME_BOS)
+                .withTags(VALID_TAG_HOT, VALID_TAG_FAV).build();
     }
 
     /**
@@ -92,47 +84,47 @@ public class CommandTestUtil {
      * Executes the given {@code command}, confirms that <br>
      * - a {@code CommandException} is thrown <br>
      * - the CommandException message matches {@code expectedMessage} <br>
-     * - the address book and the filtered person list in the {@code actualModel} remain unchanged
+     * - the address book and the filtered coin list in the {@code actualModel} remain unchanged
      */
     public static void assertCommandFailure(Command command, Model actualModel, String expectedMessage) {
         // we are unable to defensively copy the model for comparison later, so we can
         // only do so by copying its components.
-        AddressBook expectedAddressBook = new AddressBook(actualModel.getAddressBook());
-        List<Person> expectedFilteredList = new ArrayList<>(actualModel.getFilteredPersonList());
+        CoinBook expectedCoinBook = new CoinBook(actualModel.getCoinBook());
+        List<Coin> expectedFilteredList = new ArrayList<>(actualModel.getFilteredCoinList());
 
         try {
             command.execute();
             fail("The expected CommandException was not thrown.");
         } catch (CommandException e) {
             assertEquals(expectedMessage, e.getMessage());
-            assertEquals(expectedAddressBook, actualModel.getAddressBook());
-            assertEquals(expectedFilteredList, actualModel.getFilteredPersonList());
+            assertEquals(expectedCoinBook, actualModel.getCoinBook());
+            assertEquals(expectedFilteredList, actualModel.getFilteredCoinList());
         }
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the person at the given {@code targetIndex} in the
+     * Updates {@code model}'s filtered list to show only the coin at the given {@code targetIndex} in the
      * {@code model}'s address book.
      */
-    public static void showPersonAtIndex(Model model, Index targetIndex) {
-        assertTrue(targetIndex.getZeroBased() < model.getFilteredPersonList().size());
+    public static void showCoinAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredCoinList().size());
 
-        Person person = model.getFilteredPersonList().get(targetIndex.getZeroBased());
-        final String[] splitName = person.getName().fullName.split("\\s+");
-        model.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
+        Coin coin = model.getFilteredCoinList().get(targetIndex.getZeroBased());
+        final String[] splitName = coin.getCode().fullName.split("\\s+");
+        model.updateFilteredCoinList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
-        assertEquals(1, model.getFilteredPersonList().size());
+        assertEquals(1, model.getFilteredCoinList().size());
     }
 
     /**
-     * Deletes the first person in {@code model}'s filtered list from {@code model}'s address book.
+     * Deletes the first coin in {@code model}'s filtered list from {@code model}'s address book.
      */
-    public static void deleteFirstPerson(Model model) {
-        Person firstPerson = model.getFilteredPersonList().get(0);
+    public static void deleteFirstCoin(Model model) {
+        Coin firstCoin = model.getFilteredCoinList().get(0);
         try {
-            model.deletePerson(firstPerson);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Person in filtered list must exist in model.", pnfe);
+            model.deleteCoin(firstCoin);
+        } catch (CoinNotFoundException pnfe) {
+            throw new AssertionError("Coin in filtered list must exist in model.", pnfe);
         }
     }
 
@@ -153,4 +145,95 @@ public class CommandTestUtil {
         redoCommand.setData(model, new CommandHistory(), undoRedoStack);
         return redoCommand;
     }
+
+
+    /**
+     * A default model stub that have all of the methods failing.
+     */
+    public static class ModelStub implements Model {
+        @Override
+        public void addCoin(Coin coin) throws DuplicateCoinException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyCoinBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyCoinBook getCoinBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deleteCoin(Coin target) throws CoinNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateCoin(Coin target, Coin editedCoin)
+                throws DuplicateCoinException {
+            fail("This method should not be called.");
+        }
+
+        //@@author laichengyu
+        @Override
+        public void syncAll(HashMap<String, Price> newPriceMetrics)
+                throws DuplicateCoinException, CoinNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public List<String> getCodeList() {
+            fail("This method should not be called.");
+            return null;
+        }
+        //@@author
+
+        @Override
+        public ObservableList<Coin> getFilteredCoinList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredCoinList(Predicate<Coin> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortCoinList(boolean isSort) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteRule(Rule target) throws RuleNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addRule(Rule rule) throws DuplicateRuleException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateRule(Rule target, Rule editedRule) throws DuplicateRuleException, RuleNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyRuleBook getRuleBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Rule> getRuleList() {
+            fail("This method should not be called.");
+            return null;
+        }
+    }
+
 }

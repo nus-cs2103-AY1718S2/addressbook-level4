@@ -11,6 +11,7 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:warning-caption: :warning:
 endif::[]
 :repoURL: https://github.com/CS2103JAN2018-W11-B4/main
 
@@ -42,9 +43,9 @@ image::Ui.png[width="790"]
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
-* *`list`* : lists all contacts and aliases
-* **`add`**`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY` : adds a contact named `John Doe` to StardyTogether.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+* *`list`* : lists all friends and aliases
+* **`add`**`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 b/01011995 tt/http://modsn.us/oNZLY` : adds a friend named `John Doe` to ST.
+* **`delete`**`3` : deletes the 3rd friend shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to the next section, <<Features>>, for details of each command, or refer to <<Command Summary>> for the summary of all the commands.
@@ -61,21 +62,22 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 =====
 === Contact Commands
-==== Adding a person: `add`
+==== Adding a friend: `add`
 
-Adds a person to StardyTogether. +
+To add a friend to ST, you can enter the command `add` followed by the various parameters +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY tt/TIMETABLE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A friend can have any number of tags (including 0)
 
-[NOTE]
+[WARNING]
 =====
 * Birthday must be in DDMMYYYY format
-* Timetable must either be a valid NUSMods shortened link or left empty (in which a empty timetable will be created)
-* Timetable from NUSMods should not have clashes
-* If the computer has no internet access, a empty timetable will be created instead
+* Timetable must either be a valid NUSMods shortened link or left empty
 =====
+
+[NOTE]
+If timetable is invalid, left empty or there is no internet access, an empty timetable will be created for you
 
 For more information on how to get a valid link, refer to <<FAQ>>.
 
@@ -85,38 +87,38 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/28021997 tt/http://modsn.us/ojGeu t/criminal`
 
 // tag::list[]
-==== Listing all persons and aliases: `list`
+==== Listing all friends and aliases: `list`
 
-Shows a list of all persons and a table of created aliases in StardyTogether. +
+To show a list of all your friends and a table of created aliases in ST, you can enter the command `list` +
 Format: `list`
 
 image::aliasList.png[width="790"]
 
 // end::list[]
 
-==== Editing a person : `edit`
+==== Editing a friend : `edit`
 
-Edits an existing person in StardyTogether. +
+To edit a friend's particulars, you can enter the command `edit` followed by the respective parameters you wish to edit. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tt/TIMETABLE] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the friend at the specified `INDEX`. The index refers to the index number shown in the last friend listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the friend will be removed i.e adding of tags is not cumulative.
+* You can remove all the tags tagged to the friend by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st friend to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd friend to be `Betsy Crower` and clears all existing tags.
 
-==== Locating persons by name: `find`
+==== Locating friends by name: `find`
 
-Finds persons whose names contain any of the given keywords. +
+To find specific friends by their names, you can enter the command `find`, followed by KEYWORD. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
 
 ****
@@ -124,7 +126,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Friends matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -132,15 +134,15 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any friend having names `Betsy`, `Tim`, or `John`
 
-==== Deleting a person : `delete`
+==== Deleting a friend : `delete`
 
-Deletes the specified person from StardyTogether. +
+To remove a specified friend from ST :cry: , you can enter the command `delete` followed by his INDEX.+
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the friend at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -149,18 +151,18 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in StardyTogether.
+Deletes the 2nd friend in ST.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st friend in the results of the `find` command.
 
-==== Selecting a person : `select`
+==== Selecting a friend : `select`
 
-Selects the person identified by the index number used in the last person listing. +
+To select a friend, you can identify his/her index number used in the last friend listing and enter the command `select` followed by his/her index+
 Format: `select INDEX`
 
 ****
-* Selects the person and opens the detail card of the person at the specified `INDEX`.
+* Selects the friend and opens the detail card of the friend at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -169,21 +171,19 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in StardyTogether.
+Selects the 2nd friend in ST.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st friend in the results of the `find` command.
 
 // tag::birthdays[]
-==== Viewing a collated birthday list: `birthdays` (since v1.3)
+==== Viewing a collated birthday list/notification: `birthdays` _(since v1.3)_
 
-Displays a list that contains all the birthdays of all contacts ordered by date +
-Or display a notification of the birthdays today +
+To get a list that contains all the birthdays of all your friends (ordered by date) +
+Or to know whose birthday is it today, you can enter the following commands +
 Format: `birthdays [ADDITIONAL_PARAMETER]`
+
 The following parameters can be inputted into the [ADDITIONAL_PARAMETER] field +
-
-image::birthdaysToday.png[width="790"]
-
 ****
 * `todays`: Shows a notification of the birthdays occurring today +
 ****
@@ -191,45 +191,50 @@ image::birthdaysToday.png[width="790"]
 Examples:
 
 * `birthdays` +
-Displays a list of all birthdays
+Displays a list of all your friends' birthdays +
+
+image::birthdaysList.PNG[width="790"]
+
 * `birthdays today` +
-Displays a window with the birthdays today
+Displays a window with the birthdays occuring today +
+
+image::birthdaysToday.png[width="790"]
+
 // end::birthdays[]
 
 === NUS Commands
 
 // tag::union[]
-==== Viewing common time slots in timetable: `union` (since v1.5)
+==== Viewing common time slots in timetable: `union` _(since v1.5rc)_
 
-Displays the common free time of multiple people in StardyTogether.(Minimum: 2) +
+To know your free slots together with your friends, you can use `union` to display the common free time of multiple friends in ST. (Minimum: 2) +
 Format: `union ODD/EVEN INDEX INDEX [INDEX]...`
 
-****
-* Only indexes of the current filtered list are valid
-* Overlap of the persons' timetables will be displayed.
-****
+[TIP]
+ODD/EVEN is case-insensitive
+
+[NOTE]
+Only indexes of the current filtered list are valid
 
 Examples:
 
 * `union Odd 1 2 3` +
-Displays the combined odd timetable for persons at Index 1, 2 and 3.
+Displays the combined odd timetable for friends at Index 1, 2 and 3.
 
 * `union Even 1 2` +
-Displays the combined even timetable for persons at Index 1 and 2.
+Displays the combined even timetable for friends at Index 1 and 2.
 // end::union[]
 
 // tag::vacant[]
-==== Vacant study rooms finder : `vacant` (since v1.3)
+==== Vacant study rooms finder : `vacant` _(since v1.3)_
 
-Displays a list of rooms in the specified building and whether each room is vacant or not, in blocks of 1 hours. +
+To get a list of study rooms in the specified building and their vacancy (in blocks of 1 hours), you can enter `vacant` follwed by the BUILDING code. +
 Format: `vacant BUILDING`
 
 image::vacant.png[width="790"]
 
-****
-* Finds vacant study rooms in the specified `BUILDING`.
-* The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`
-****
+[WARNING]
+The building must be in NUS venue format, e.g. `COM1`, `S17`, `E2`
 
 Examples:
 
@@ -238,9 +243,9 @@ Finds the vacancy status of study rooms in COM1 building.
 // end::vacant[]
 
 // tag::maps[]
-==== Google maps display : `map` (since v1.4)
+==== Google maps display : `map` _(since v1.4)_
 
-Launches Google Maps with the specified location(s).
+To find locations or a path from one place to another, you can enter the command `map` along with the locations to launch Google Maps with the specified location(s).
 Format: `map LOCATION` or `map LOCATION/LOCATION...` or `map current location`
 
 image::map.png[width="790"]
@@ -269,12 +274,14 @@ Displays the directions from `Tampines Mall` to `COM1` to `Airport Blvd`.
 === Utility Commands
 ==== Viewing help : `help`
 
+If you find yourself lost on what to do in ST, you can enter the command `help`!
+
 Format: `help`
 
 // tag::alias[]
-==== Adding a command alias: `alias` (since v1.1)
+==== Adding a command alias: `alias` _(since v1.1)_
 
-Creates customized aliases for any valid command. +
+To create customized aliases for any valid command, you can enter the command `alias` followed by your desired command and your very own alias.+
 Format: `alias [COMMAND] [ALIAS]`
 
 ****
@@ -287,9 +294,9 @@ Examples:
 * `alias find f`
 * `alias alias al`
 
-==== Removing a currently existing alias: `unalias` (since v1.3)
+==== Removing a currently existing alias: `unalias` _(since v1.3)_
 
-Removes a previously created alias. +
+To remove a previously created alias, you can enter the command `unalias` followed by the alias you wish to remove+
 Format: `unalias [CURRENT_ALIAS]`
 
 Examples:
@@ -299,7 +306,8 @@ Examples:
 
 ==== Listing entered commands : `history`
 
-Lists all the commands that you have entered in reverse chronological order. +
+To list all the commands that you have entered in reverse chronological order, you can enter `history`. +
+This will be particularly useful if you wish to `undo` or `redo` commands.
 Format: `history`
 
 [NOTE]
@@ -310,12 +318,13 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 ==== Undoing previous command : `undo`
 
-Restores the StardyTogether instance to the state before the previous _undoable_ command was executed. +
+To revert a command you executed previously (in case you accidentally changed something), you can enter the command `undo`.
+This will restore the ST instance to the state before the previous _undoable_ command was executed. +
 Format: `undo`
 
 [NOTE]
 =====
-Undoable commands: those commands that modify the StardyTogether's content (`add`, `alias`, `unalias`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the ST's content (`add`, `alias`, `unalias`, `delete`, `edit` and `clear`).
 =====
 
 Examples:
@@ -336,7 +345,7 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 ==== Redoing the previously undone command : `redo`
 
-Reverses the most recent `undo` command. +
+To reverse the most recent `undo` command, you can enter the command `redo`. +
 Format: `redo`
 
 Examples:
@@ -359,20 +368,20 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 ==== Clearing all entries : `clear`
 
-Clears all entries from StardyTogether. +
+To clear all entries of your friends from ST :sob: , you can enter the command `clear`. +
 Format: `clear`
 
 // tag::dataencryption[]
-==== Encrypting data files : `encrypt` (since v1.2)
+==== Encrypting data files : `encrypt` _(since v1.2)_
 
-Encrypt StardyTogether with the password provided. +
+To encrypt ST and protect your data, you can enter the command `encrypt` followed by your password. +
 Format: `encrypt PASSWORD`
 
-****
-* Encrypts StardyTogether using the specified PASSWORD.
+[WARNING]
+=====
 * Passwords are case-sensitive.
 * The password string can only contain characters in the UTF-8 format.
-****
+=====
 
 Examples:
 
@@ -385,75 +394,114 @@ image::passwordBox.png[width="790"]
 
 ==== Removal of password: `decrypt` (since v1.3)
 
-Removes the password of the application and decrypts `addressbook.xml`. +
+To remove the password protection of ST and decrypt `addressbook.xml`, you can enter the command `decrypt`. +
 Format: `decrypt`
 
 // end::dataencryption[]
 
 // tag::datatransfer[]
-==== Importing data : `import` (since v1.1)
+==== Importing data : `import` _(since v1.1)_
 
-Imports an encrypted or unencrypted StardyTogether instance from filepath to the existing StardyTogether application. Persons, Tags, and Aliases that are not in your StardyTogether will be added. +
+To import your friend's ST to your own ST, you can enter the command `import` followed by the various parameters.
+An encrypted or unencrypted ST instance from filepath to the existing ST application. Friends, Tags, and Aliases that are not in your ST will be added. +
 Format: `import FILEPATH PASSWORD`
 
 ****
-* Imports an instance of StardyTogether from the specified `FILEPATH`.
+* Imports an instance of ST from the specified `FILEPATH`.
 * Decrypt that instance using the `PASSWORD` provided.
-* If no `PASSWORD` is provided, the instance will be read without decryption.
 * The filepath refers to the filepath where the instance file is stored.
-* The instance file *must be in XML file format* after decryption.
 ****
+
+[WARNING]
+=====
+* If no `PASSWORD` is provided, the instance will be read without decryption.
+* The instance file *must be in XML file format* after decryption.
+=====
 
 Example:
 
 * `import data/addressBook.xml testpassword` +
 Imports `addressBook.xml` file at data folder using "testpassword" as the password.
 
-==== Exporting data : `export` (since v1.4)
+==== Exporting data : `export` _(since v1.4)_
 
-Exports the current view of the existing StardyTogether application with or without password encryption to the specified filepath. +
+To export your ST for your friends' ST to import, you can enter `export` with the various parameters.
+The current view of the existing ST application with or without password encryption to the specified filepath. +
 Format: `export FILEPATH PASSWORD`
 
 ****
-* Exports an instance of StardyTogether to the specified `FILEPATH`.
+* Exports an instance of ST to the specified `FILEPATH`.
 * Encrypt that instance using the `PASSWORD` provided.
 * If no `PASSWORD` is provided, the instance will be exported without encryption.
 * The filepath refers to the filepath where the instance file will be stored.
 ****
+
+[TIP]
+Execute `find` command before `export` to select the students' contact details you want to export
 
 Example:
 
 * `export data/addressBookBackUp.xml testpassword` +
-Exports the current list of StardyTogether application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption. +
+Exports the current list of ST application to the `addressBook.xml` file at data folder using "testpassword" as the password for encryption. +
 
-==== Uploading data : `upload` (since v1.5rc)
+==== Uploading data : `upload` _(since v1.5rc)_
 
-Uploads the current view of the existing StardyTogether application with or without password encryption to the specified filename in Google Drive.
+To upload your ST to Google Drive, you can enter the command `upload` with the various parameters.
+The current view of the existing ST application with or without password encryption to the specified filename in Google Drive.
 Format: `upload FILENAME PASSWORD`
 
 ****
 * Application will redirect you to a browser url to request for access to Google Drive
-* Uploads an instance of StardyTogether with the specified `FILENAME`.
+* Uploads an instance of ST with the specified `FILENAME`.
 * Encrypt that instance using the `PASSWORD` provided.
 * If no `PASSWORD` is provided, the instance will be exported without encryption.
 * The filepath refers to the filepath where the instance file will be stored.
 ****
 
+[NOTE]
+Application will be blocked from executing another command while waiting for authorization response +
+Authorization request will timed out after 20 seconds
+
 Example:
 
 * `upload addressBook.xml testpassword` +
-Uploads the current list of StardyTogether application to the `addressBook.xml` file in Google Drive using "testpassword" as the password for encryption.
+Uploads the current list of ST application to the `addressBook.xml` file in Google Drive using "testpassword" as the password for encryption.
 // end::datatransfer[]
 
 ==== Exiting the program : `exit`
 
-Exits the program. +
+To exit the program, you can enter the command `exit` +
+
+[TIP]
+Or you can simply press the 'X' located at the top right hand corner
+
 Format: `exit`
 
 ==== Saving the data
 
-StardyTogether data are saved in the hard disk automatically after any command that changes the data. +
+ST data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
+
+== Upcoming Features
+We have a few exciting ideas to further improve ST for you!
+
+=== Use current location to find vacant rooms _(coming in v2.0)_
+
+=== Modules Tag _(coming in v2.0)_
+
+Each friend will be able to have their own list of modules they have taken. +
+To find out which friends have not taken a module (so as to plan with them to take), you can enter the command `module` followed by the module code
+Format: `module MODULE_CODE`
+
+[NOTE]
+Module code follows the traditional naming conventions used by NUS (Example: CS2103T or CS2101)
+
+Examples:
+
+* `module CS2103` +
+Displays the list of friends who have not taken the module CS2103
+
+=== Command Autocomplete Function _(coming in v2.0)_
 
 // tag::FAQ[]
 == FAQ
@@ -479,7 +527,7 @@ There is no need to save manually.
 ****
 
 *Q*: How do I import my timetable from NUSMods? +
-*A*: When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
+*A*: When adding or editing a friend, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
 ****
 .   Go to NUSMods
 .   Click `Share/Sync` at the bottom right hand corner
@@ -490,9 +538,34 @@ image::NUSMods_Screenshot_First.PNG[width="790"]
 +
 image::NUSMods_Screenshot_Second.PNG[width="790"]
 +
-.   Paste it in StardyTogether at the tt/TIMETABLE field
+.   Paste it in ST at the tt/TIMETABLE field
+****
+
+*Q*: How do I upload StardyTogether file to Google Drive? +
+*A*: Input upload command and accept the authorization request
+****
+.   Input upload command, example `upload stardyTogether.xml`
+.   The redirect url will open in default browser like this:
++
+image::Redirect_First.PNG[width="790"]
+.   Click your Gmail or login your Gmail account and click accept:
++
+image::Redirect_Second.PNG[width="790"]
+.   File should be uploaded to your Google Drive
++
+image::Redirect_Third.PNG[width="790"]
 ****
 // end::FAQ[]
+
+== Troubleshooting
+[width="790",cols="<15%,75%",options="header",]
+|=======================================================================
+|Problem |How to solve
+|The timetable I entered is empty!|Do check the validity of your NUSMods link by inputting it in your internet browser, and your internet connection.
+|I am having trouble accessing the Google Drive functions!|
+1)  Go to your user directory (Example: C:/users/USER) +
+2)  Delete .googlecredentials folder (if it doesn't appear, show hidden files in Settings)
+|=======================================================================
 
 == Command Summary
 [width="790",cols="<15%,<23%, 45%",options="header",]

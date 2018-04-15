@@ -54,8 +54,6 @@ public class Milestone {
         return this == obj
                 || (obj instanceof Milestone
                 && this.dueDate.equals(((Milestone) obj).getDueDate())
-                && this.taskList.equals(((Milestone) obj).getTaskList())
-                && this.progress.equals(((Milestone) obj).getProgress())
                 && this.description.equals(((Milestone) obj).getDescription()));
     }
 

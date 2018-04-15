@@ -35,8 +35,6 @@ reInsurance is adapted from https://github.com/nus-cs2103-AY1718S2/addressbook-l
 ** Tools:
 *** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/152[#152]
 
-_{you can add/remove categories in the list above}_
-
 == Contributions to the User Guide
 
 

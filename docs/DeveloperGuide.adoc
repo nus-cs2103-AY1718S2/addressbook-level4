@@ -258,7 +258,7 @@ This section describes some noteworthy details on how certain features are imple
 // tag::undoredo[]
 // tag::undoredo[]
 === Undo/Redo feature
-Given below is the implementation detail of the Undo/Redo feature and some alternative design considetations.
+Given below is the implementation detail of the Undo/Redo feature and some alternative design considerations.
 
 ==== Current Implementation
 
@@ -389,7 +389,7 @@ image::UndoRedoActivityDiagram.png[width="650", align="center"]
 
 // tag::details[]
 === Details Panel Implementation
-Given below is the implementation detail of the Details Panel and some alternative design considetations.
+Given below is the implementation detail of the Details Panel and some alternative design considerations.
 
 ==== Current Implementation
 
@@ -440,7 +440,7 @@ image::ContactDetailsDisplayWireFrame.png[width="600", align="center"]
 
 // tag::tabSwitch[]
 === Tab Switching Mechanism
-Given below is the implementation detail of the Tab Switching Mechanism and some alternative design considetations.
+Given below is the implementation detail of the Tab Switching Mechanism and some alternative design considerations.
 
 ==== Current Implementation
 Tab Switching Mechanism is an event driven mechanism.
@@ -524,7 +524,7 @@ image::SwitchTabRequestEventSD2.png[width="350", align="center"]
 
 // tag::jobs[]
 === Job Openings Implementation
-Given below is the implementation detail of the Job Openings feature and some alternative design considetations.
+Given below is the implementation detail of the Job Openings feature and some alternative design considerations.
 
 ==== Current Implementation
 

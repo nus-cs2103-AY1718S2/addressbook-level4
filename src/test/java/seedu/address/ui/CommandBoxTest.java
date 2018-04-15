@@ -3,6 +3,9 @@ package seedu.address.ui;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TYPE;
 
 import java.util.ArrayList;
 
@@ -25,6 +28,10 @@ public class CommandBoxTest extends GuiUnitTest {
 
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
+    private static final String EXAMPLE_NAME = "Aaron";
+    private static final String EXAMPLE_PHONE = "96781452";
+    private static final String EXAMPLE_COMMAND_TEMPLATE = AddCommand.COMMAND_WORD + " " + PREFIX_TYPE + "  "
+            + PREFIX_NAME + " " + EXAMPLE_NAME + " " + PREFIX_PHONE + EXAMPLE_PHONE + " ";
 
     @Rule
     public final EventsCollectorRule eventsCollectorRule = new EventsCollectorRule();
@@ -136,137 +143,130 @@ public class CommandBoxTest extends GuiUnitTest {
 
     //@@author jonleeyz
     @Test
-    public void handleKeyPress_tab() {
-        commandBoxHandle.setInput(AddCommand.COMMAND_TEMPLATE);
-        String testString = "";
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+    public void handleKeyPress_shiftTab_whenNoPrefixesPresent() {
+        commandBoxHandle.setInput(COMMAND_THAT_FAILS);
+        int expectedCaretPosition = COMMAND_THAT_FAILS.length();
+        commandBoxHandle.setCaretPosition(expectedCaretPosition);
 
-        // @TODO to be extended
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat("add ty: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" n: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" p: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" e: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" s: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" d: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" m: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" i: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.TAB);
-        testString = testString.concat(" t: ");
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+        assertShiftTabPressBehaviour(expectedCaretPosition, COMMAND_THAT_FAILS);
     }
 
     @Test
-    public void handleKeyPress_shiftTab() {
-        commandBoxHandle.setInput(AddCommand.COMMAND_TEMPLATE);
-        commandBoxHandle.setCaretPosition(commandBoxHandle.getInput().length());
-        String testString = AddCommand.COMMAND_TEMPLATE;
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+    public void handleKeyPress_shiftTab_whenPrefixesPresent() {
+        // initialisation
+        commandBoxHandle.setInput(EXAMPLE_COMMAND_TEMPLATE);
+        int expectedCaretPosition = EXAMPLE_COMMAND_TEMPLATE.length();
+        commandBoxHandle.setCaretPosition(expectedCaretPosition);
 
-        // @TODO to be extended
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+        // test skipping past third prefix's argument and one trailing space
+        expectedCaretPosition =
+                assertShiftTabPressBehaviour(expectedCaretPosition, EXAMPLE_PHONE + " ");
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+        // test skipping past second prefix's argument and third prefix, with no trailing spaces
+        expectedCaretPosition =
+                assertShiftTabPressBehaviour(expectedCaretPosition, EXAMPLE_NAME + " " + PREFIX_PHONE);
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+        // test skipping past second prefix, with one trailing space following second prefix's argument
+        expectedCaretPosition =
+                assertShiftTabPressBehaviour(expectedCaretPosition, " " + PREFIX_NAME + " ");
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
-
-        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getCaretPosition(), testString.length());
+        // test skipping past command word and first prefix, to before the entire CommandBox input
+        assertShiftTabPressBehaviour(expectedCaretPosition, AddCommand.COMMAND_WORD + " " + PREFIX_TYPE + " ");
     }
 
     @Test
-    public void handleKeyPress_shiftBackspace() {
-        commandBoxHandle.setInput(AddCommand.COMMAND_TEMPLATE);
-        commandBoxHandle.setCaretPosition(commandBoxHandle.getInput().length());
-        String testString = AddCommand.COMMAND_TEMPLATE;
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+    public void handleKeyPress_tab_whenNoPrefixesPresent() {
+        commandBoxHandle.setInput(COMMAND_THAT_FAILS);
+        int expectedCaretPosition = 0;
+        commandBoxHandle.setCaretPosition(expectedCaretPosition);
 
-        // @TODO to be extended
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        assertTabPressBehaviour(expectedCaretPosition, COMMAND_THAT_FAILS);
+    }
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+    @Test
+    public void handleKeyPress_tab_whenPrefixesPresent() {
+        // initialisation
+        commandBoxHandle.setInput(EXAMPLE_COMMAND_TEMPLATE);
+        int expectedCaretPosition = 0;
+        commandBoxHandle.setCaretPosition(expectedCaretPosition);
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        // test skipping past command word and first prefix
+        expectedCaretPosition =
+                assertTabPressBehaviour(expectedCaretPosition, AddCommand.COMMAND_WORD + " " + PREFIX_TYPE + " ");
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        // test skipping past second prefix, with one trailing space following second prefix
+        expectedCaretPosition =
+                assertTabPressBehaviour(expectedCaretPosition, " " + PREFIX_NAME + " ");
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        // test skipping past second prefix's argument and third prefix, without no trailing spaces
+        expectedCaretPosition =
+                assertTabPressBehaviour(expectedCaretPosition, EXAMPLE_NAME + " " + PREFIX_PHONE);
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        // test skipping past third prefix's argument and one trailing space, to after the entire CommandBox input
+        assertTabPressBehaviour(expectedCaretPosition, EXAMPLE_PHONE + " ");
+    }
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+    @Test
+    public void handleKeyPress_shiftBackspace_whenNoPrefixesPresent() {
+        commandBoxHandle.setInput(COMMAND_THAT_FAILS);
+        int initialCaretPosition = COMMAND_THAT_FAILS.length();
+        commandBoxHandle.setCaretPosition(initialCaretPosition);
 
-        guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        assertShiftBackspacePressBehaviour(COMMAND_THAT_FAILS);
+    }
 
+    @Test
+    public void handleKeyPress_shiftBackspace_whenPrefixesPresent() {
+        // initialisation
+        commandBoxHandle.setInput(EXAMPLE_COMMAND_TEMPLATE);
+        int initialCaretPosition = EXAMPLE_COMMAND_TEMPLATE.length();
+        commandBoxHandle.setCaretPosition(initialCaretPosition);
+
+        // test deleting third prefix's argument and one trailing space
+        assertShiftBackspacePressBehaviour(EXAMPLE_PHONE + " ");
+
+        // test deleting second prefix's argument and third prefix, with no trailing spaces
+        assertShiftBackspacePressBehaviour(EXAMPLE_NAME + " " + PREFIX_PHONE);
+
+        // test deleting second prefix, with one trailing space following second prefix's argument
+        assertShiftBackspacePressBehaviour(" " + PREFIX_NAME + " ");
+
+        // test deleting command word and first prefix
+        assertShiftBackspacePressBehaviour(AddCommand.COMMAND_WORD + " " + PREFIX_TYPE + " ");
+    }
+
+    /**
+     * Presses the keyboard shortcut Shift + Tab, then ensures <br>
+     *      - the command box's caret position is expected.
+     */
+    private int assertShiftTabPressBehaviour(int lastCaretPosition, String stringLiteralSkipped) {
+        guiRobot.push(KeyCode.SHIFT, KeyCode.TAB);
+        int expectedCaretPosition = lastCaretPosition - stringLiteralSkipped.length();
+        assertEquals(expectedCaretPosition, commandBoxHandle.getCaretPosition());
+        return expectedCaretPosition;
+    }
+
+    /**
+     * Presses the keyboard shortcut Tab, then ensures <br>
+     *      - the command box's caret position is expected.
+     */
+    private int assertTabPressBehaviour(int lastCaretPosition, String stringLiteralSkipped) {
+        guiRobot.push(KeyCode.TAB);
+        int expectedCaretPosition = lastCaretPosition + stringLiteralSkipped.length();
+        assertEquals(expectedCaretPosition, commandBoxHandle.getCaretPosition());
+        return expectedCaretPosition;
+    }
+
+    /**
+     * Presses the keyboard shortcut Shift + Backspace, then ensures <br>
+     *      - the command box's input is updated as expected.
+     */
+    private void assertShiftBackspacePressBehaviour(String stringLiteralDeleted) {
+        String inputBeforePush = commandBoxHandle.getInput();
         guiRobot.push(KeyCode.SHIFT, KeyCode.BACK_SPACE);
-        testString = testString.substring(0, testString.length() - 4);
-        assertEquals(commandBoxHandle.getInput().length(), testString.length());
+        String inputAfterPush =
+                inputBeforePush.substring(0, inputBeforePush.length() - stringLiteralDeleted.length());
+        assertEquals(inputAfterPush, commandBoxHandle.getInput());
     }
     //@@author
 

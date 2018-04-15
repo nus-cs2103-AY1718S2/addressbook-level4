@@ -1,7 +1,5 @@
 package seedu.address.model.util;
 
-import static java.util.Calendar.MARCH;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -112,23 +110,6 @@ public class SampleDataUtil {
                     createDate(2010, 10, 10), createDate(2022, 9, 22),
                     new StandardInterest(2.309), new LateInterest(), new Runner()),
         };
-    }
-
-    /**
-     * helper method to generate a meaningful date. Currently hard-coded for 1 March 2018.
-     *
-     * @return
-     */
-    private static Date defaultDate() {
-        int year = 2018;
-        int month = MARCH;
-        int dayOfMonth = 1;
-        int hourOfDay = 0;
-        int minute = 0;
-        int second = 0;
-
-        GregorianCalendar calendar = new GregorianCalendar(year, month, dayOfMonth, hourOfDay, minute, second);
-        return calendar.getTime();
     }
 
     /**

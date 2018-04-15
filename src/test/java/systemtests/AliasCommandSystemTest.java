@@ -1,6 +1,14 @@
 package systemtests;
 
-import static seedu.address.logic.commands.CommandTestUtil.*;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_ADD;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_HISTORY;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_MAP1;
+import static seedu.address.logic.commands.CommandTestUtil.ALIAS_DESC_MAP2;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_SYNTAX_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_ALIAS_WORD_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_SYNTAX_DESC;
+import static seedu.address.logic.commands.CommandTestUtil.INVALID_COMMAND_WORD_DESC;
+import static seedu.address.testutil.TypicalAliases.ADD;
 import static seedu.address.testutil.TypicalAliases.HISTORY;
 import static seedu.address.testutil.TypicalAliases.MAP_1;
 import static seedu.address.testutil.TypicalAliases.MAP_2;

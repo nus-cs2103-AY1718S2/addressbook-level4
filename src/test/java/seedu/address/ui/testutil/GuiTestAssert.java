@@ -184,7 +184,7 @@ public class GuiTestAssert {
     private static ArrayList<String> createNewInnerList(String emptyAlias) {
         // Generate empty alias ("") for inner list
         ArrayList<String> innerList = new ArrayList<>();
-        for (int i = 0; i < AliasCommand.getCommands().size(); i ++) {
+        for (int i = 0; i < AliasCommand.getCommands().size(); i++) {
             innerList.add(emptyAlias);
         }
         return innerList;

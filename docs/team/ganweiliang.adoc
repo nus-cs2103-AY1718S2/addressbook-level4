@@ -20,7 +20,7 @@ EPIC is optimized for event planners who prefer typing to using the mouse.
 
 == Summary of contributions
 
-* *Major enhancement*: implemented the `toggle` command to toggle attendance of registrants to events.
+* *Major enhancement*: Implemented the `toggle` command to toggle attendance of registrants to events.
 ** What it does: The `toggle` command allows the user to toggle the attendance of a
 registrant based on their index in the Attendance Pane. It toggles the attendance of a
 registrant from attended to not attended and vice versa. It also supports undoing and
@@ -30,7 +30,7 @@ it helps event planners easily manage the attendance of a large number of regist
 within a single GUI.
 ** Highlights: In order to support attendance related operations, I restructured EPIC
 and added the `Attendance` and `UniqueAttendanceList` classes.
-* *Minor enhancement*: updated the structure of the app and added an EpicEvent class in order
+* *Minor enhancement*: Updated the structure of the app and added an EpicEvent class in order
 to support all operations related to events. Implemented the `add-event` command to support adding of
 events to EPIC.
 * *Code contributed*: [https://github.com/CS2103JAN2018-W13-B2/main/blob/master/collated/functional/william6364.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B2/main/blob/master/collated/test/william6364.md[Test code]]
@@ -72,10 +72,12 @@ _Excerpts from Model Component_
 
 include::../DeveloperGuide.adoc[tag=modelcomponent]
 
+<<<
 _Excerpts from Toggle Attendance Feature_
 
 include::../DeveloperGuide.adoc[tag=markattendance]
 
+<<<
 _Excerpts from Mass Registration_
 
 include::../DeveloperGuide.adoc[tag=massregistration]

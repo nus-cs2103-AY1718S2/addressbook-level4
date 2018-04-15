@@ -207,7 +207,7 @@ Selects the person identified by the index number used in the Persons Pane. +
 Format: `select INDEX`
 
 ****
-* The index refers to the index number shown in the Persons pane.
+* The index refers to the index number shown in the Persons Pane.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
 
@@ -245,7 +245,7 @@ Format: `list-events`
 // tag::selectevent[]
 === Selecting an Event: `select-event`
 
-Selects the event identified by the index number used in the Events List Pane.
+Selects the event identified by the index number used in the Events Pane.
 The Attendance Pane will display the persons registered for that event.
 
 Format: `select-event INDEX`
@@ -465,7 +465,7 @@ The index refers to the index number shown in the Attendance Pane.
 
 Examples:
 
-*`select-event 2` +
+* `select-event 2` +
 `toggle 3` +
 Toggles the attendance of the 3rd registrant in the attendance list of
 the 2nd event currently listed. See <<#toggle>> below for UI changes. +

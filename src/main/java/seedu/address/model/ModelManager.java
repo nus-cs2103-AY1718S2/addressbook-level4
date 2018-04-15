@@ -177,6 +177,7 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author JoonKai1995
     //=========== Filtered Task List Accessors =============================================================
 
     /**
@@ -193,7 +194,7 @@ public class ModelManager extends ComponentManager implements Model {
         requireNonNull(predicate);
         filteredTasks.setPredicate(predicate);
     }
-
+    //@@author
     //=========== Item List Accessors ======================================================================
     public List<String> getItemList() {
         return Collections.unmodifiableList(filteredDeleteItems);

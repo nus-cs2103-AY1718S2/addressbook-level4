@@ -84,14 +84,15 @@ public class OrganizerTest {
         organizer.getTagList().remove(0);
     }
 
+    //@@author natania-reused
     @Test
     public void updateTask_detailsChanged_tasksAndTagsListUpdated() throws Exception {
-        Organizer organizerUpdatedToAmy = new OrganizerBuilder().withTask(STUDY).build();
-        organizerUpdatedToAmy.updateTask(STUDY, EXAM);
+        Organizer organizerUpdatedToExam = new OrganizerBuilder().withTask(STUDY).build();
+        organizerUpdatedToExam.updateTask(STUDY, EXAM);
 
         Organizer expectedOrganizer = new OrganizerBuilder().withTask(EXAM).build();
 
-        assertEquals(expectedOrganizer, organizerUpdatedToAmy);
+        assertEquals(expectedOrganizer, organizerUpdatedToExam);
     }
 
     @Test
@@ -107,10 +108,10 @@ public class OrganizerTest {
     public void removeTag_tagUsedByMultipleTasks_tagRemoved() throws Exception {
         organizerWithStudyAndExam.removeTag(new Tag(VALID_TAG_FRIEND));
 
-        Task amyWithoutFriendTag = new TaskBuilder(EXAM).withTags().build();
-        Task bobWithoutFriendTag = new TaskBuilder(STUDY).withTags(VALID_TAG_HUSBAND).build();
-        Organizer expectedOrganizer = new OrganizerBuilder().withTask(bobWithoutFriendTag)
-                .withTask(amyWithoutFriendTag).build();
+        Task examWithoutFriendTag = new TaskBuilder(EXAM).withTags().build();
+        Task studyWithoutFriendTag = new TaskBuilder(STUDY).withTags(VALID_TAG_HUSBAND).build();
+        Organizer expectedOrganizer = new OrganizerBuilder().withTask(studyWithoutFriendTag)
+                .withTask(examWithoutFriendTag).build();
 
         assertEquals(expectedOrganizer, organizerWithStudyAndExam);
     }

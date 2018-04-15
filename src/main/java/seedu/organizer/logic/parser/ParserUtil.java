@@ -254,8 +254,8 @@ public class ParserUtil {
         requireNonNull(times);
         return times.isPresent() ? Optional.of(parseTimes(times.get())) : Optional.empty();
     }
-
     //@@author
+
     /**
      * Parses a {@code String organizer} into an {@code Description}.
      * Leading and trailing whitespaces will be trimmed.

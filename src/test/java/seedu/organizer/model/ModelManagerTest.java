@@ -40,6 +40,7 @@ public class ModelManagerTest {
         modelManager.getFilteredTaskList().remove(0);
     }
 
+    //@@author natania-reused
     @Test
     public void deleteTag_nonExistentTag_modelUnchanged() throws Exception {
         Organizer organizer = new OrganizerBuilder().withTask(EXAM).withTask(STUDY).build();
@@ -66,6 +67,7 @@ public class ModelManagerTest {
 
         assertEquals(new ModelManager(expectedOrganizer, userPrefs), modelManager);
     }
+    //@@author
 
     @Test
     public void equals() {

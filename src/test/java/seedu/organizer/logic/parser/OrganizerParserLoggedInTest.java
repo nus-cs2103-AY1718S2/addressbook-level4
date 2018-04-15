@@ -7,12 +7,15 @@ import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORM
 import static seedu.organizer.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_ANSWER;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_QUESTION;
+import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.organizer.testutil.TypicalIndexes.INDEX_FIRST_TASK;
 import static seedu.organizer.testutil.TypicalTasks.ADMIN_USER;
 import static seedu.organizer.testutil.TypicalTasks.getTypicalOrganizer;
 
 import java.util.Arrays;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 import java.util.stream.Collectors;
 
 import org.junit.Before;
@@ -26,6 +29,7 @@ import seedu.organizer.logic.commands.AddSubtaskCommand;
 import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
+import seedu.organizer.logic.commands.DeleteRecurredTasksCommand;
 import seedu.organizer.logic.commands.DeleteSubtaskCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.EditSubtaskCommand;
@@ -43,6 +47,7 @@ import seedu.organizer.logic.commands.LogoutCommand;
 import seedu.organizer.logic.commands.NextMonthCommand;
 import seedu.organizer.logic.commands.PreviousMonthCommand;
 import seedu.organizer.logic.commands.RedoCommand;
+import seedu.organizer.logic.commands.RemoveTagsCommand;
 import seedu.organizer.logic.commands.ToggleCommand;
 import seedu.organizer.logic.commands.ToggleSubtaskCommand;
 import seedu.organizer.logic.commands.UndoCommand;
@@ -52,6 +57,7 @@ import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.UserPrefs;
 import seedu.organizer.model.subtask.Subtask;
+import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.predicates.DeadlineContainsKeywordsPredicate;
 import seedu.organizer.model.task.predicates.DescriptionContainsKeywordsPredicate;
@@ -138,6 +144,17 @@ public class OrganizerParserLoggedInTest {
                 DeleteCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased());
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK), command);
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK), commandAlias);
+    }
+
+    //@@author natania-reused
+    @Test
+    public void parseCommand_deleteRecurredTasks() throws Exception {
+        DeleteRecurredTasksCommand command = (DeleteRecurredTasksCommand) parser.parseCommand(
+                DeleteRecurredTasksCommand.COMMAND_WORD + " " + INDEX_FIRST_TASK.getOneBased());
+        DeleteRecurredTasksCommand commandAlias = (DeleteRecurredTasksCommand) parser.parseCommand(
+                DeleteRecurredTasksCommand.COMMAND_ALIAS + " " + INDEX_FIRST_TASK.getOneBased());
+        assertEquals(new DeleteRecurredTasksCommand(INDEX_FIRST_TASK), command);
+        assertEquals(new DeleteRecurredTasksCommand(INDEX_FIRST_TASK), commandAlias);
     }
 
     @Test
@@ -372,7 +389,21 @@ public class OrganizerParserLoggedInTest {
         assertTrue(parser.parseCommand(CurrentMonthCommand.COMMAND_ALIAS + " 3")
                 instanceof CurrentMonthCommand);
     }
-    //@@author
+
+    //@@author natania
+    @Test
+    public void parseCommand_removeTags() throws Exception {
+        Set<Tag> tag = new HashSet<>();
+        tag.add(model.getOrganizer().getTagList().get(0));
+        RemoveTagsCommand command = (RemoveTagsCommand) parser.parseCommand(
+                RemoveTagsCommand.COMMAND_WORD + " "
+                        + PREFIX_TAG + model.getOrganizer().getTagList().get(0).tagName);
+        RemoveTagsCommand commandAlias = (RemoveTagsCommand) parser.parseCommand(
+                RemoveTagsCommand.COMMAND_ALIAS + " "
+                        + PREFIX_TAG + model.getOrganizer().getTagList().get(0).tagName);
+        assertEquals(new RemoveTagsCommand(tag), command);
+        assertEquals(new RemoveTagsCommand(tag), commandAlias);
+    }
 
     @Test
     public void parseCommand_unrecognisedInput_throwsParseException() throws Exception {

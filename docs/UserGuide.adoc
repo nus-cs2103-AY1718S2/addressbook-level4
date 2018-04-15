@@ -364,7 +364,7 @@ Delete the specified task from PrioriTask. +
 [format-title]#Format:# `delete INDEX`
 ====
 
-* Delete the task at the specified `INDEX`.
+* Deletes the task at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* (i.e. 1, 2, 3, ...).
 
@@ -389,7 +389,7 @@ Edit an existing task in PrioriTask. +
 [format-title]#Format:# `edit INDEX [n/NAME] [p/PRIORITY_LEVEL] [d/DEADLINE] [des/DESCRIPTION] [t/TAG]…​`
 ====
 
-* Edits the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* (i.e. 1, 2, 3, ...).
+* Edit the task at the specified `INDEX`. The index refers to the index number shown in the last task listing. The index *must be a positive integer* (i.e. 1, 2, 3, ...).
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the task will be removed (i.e adding of tags is not cumulative).
@@ -623,6 +623,56 @@ Recurs an existing task in PrioriTask.
 Recurs the 1st task weekly for 3 times.
 ====
 // end::recurw[]
+
+// tag::deleter{}
+=== Deleting a task and all its recurred versions : `deleter` or `dr` `[since v1.5]`
+
+Deletes the specified task and all its recurred versions from PrioriTask. +
+
+[.format]
+====
+[format-title]#Format:# `deleter INDEX`
+====
+
+* Deletes the task at the specified `INDEX` and all its recurred versions.
+* The task must have been recurred before.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* (i.e. 1, 2, 3, ...).
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`list`# +
+[example]#`deleter 2`# +
+Deletes the 2nd task and all its recurred versions in PrioriTask, if it has been recurred before.
+* [example]#`find Developer`# +
+[example]#`deleter 1`# +
+Deletes the 1st task and all its recurred versions in the results of the `find` command, if it has been recurred before.
+====
+// end::deleter[]
+
+// tag::remove[]
+=== Removing tags from all tasks : `remove` or `r` `[since v1.5]`
+
+Removes specified tags from all tasks in PrioriTask. +
+
+[.format]
+====
+[format-title]#Format:# `remove t/TAG1 [t/TAG2]…​`
+====
+
+* Removes TAG1 and TAG2 (if present) from all tasks.
+* Tags do not have to already exist in PrioriTask.
+
+[.example]
+====
+[example-title]#Examples:#
+
+* [example]#`remove t/friends t/homework`# +
+Removes the tags `friends` and `homework` from all tasks.
+====
+// end::remove[]
 
 // tag::subtaskFeature[]
 == Subtask Management Features
@@ -986,6 +1036,10 @@ e.g.[example-no-box]#`toggle 3`#
 * *Clear* : [format-no-box]#`clear`#
 * *Recur weekly* : [format-no-box]#`recurw INDEX x/TIMES`# +
 e.g.[example-no-box]#`recurw 2 x/2`#
+* *Delete task and its recurred versions* : [format-no-box]#`deleter INDEX`# +
+e.g. [example-no-box]#`deleter 3`#
+* *Remove tags* : [format-no-box]#`remove t/TAG1 [t/TAG2]…​`# +
+e.g. [example-no-box]#`remove t\friends t\homework`#
 
 // tag::subtaskFeatureSummary[]
 === Subtask management features

@@ -123,4 +123,6 @@ public interface Model {
 
     /** Deletes all appointment dependencies. */
     List<Appointment> deleteAppointmentDependencies(PetPatient target);
+
+    boolean hasConcurrentAppointment(LocalDateTime oldDateTime, LocalDateTime newDateTime);
 }

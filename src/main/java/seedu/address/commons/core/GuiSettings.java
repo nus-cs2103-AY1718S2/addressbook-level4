@@ -9,8 +9,8 @@ import java.util.Objects;
  */
 public class GuiSettings implements Serializable {
 
-    private static final double DEFAULT_HEIGHT = 600;
-    private static final double DEFAULT_WIDTH = 740;
+    public static final double DEFAULT_WIDTH = 1732;
+    public static final double DEFAULT_HEIGHT = 1080;
     private static final String DEFAULT_THEME = "/view/LightTheme.css";
 
     private Double windowWidth;
@@ -44,7 +44,7 @@ public class GuiSettings implements Serializable {
         return windowCoordinates;
     }
 
-    public String getApplicationTheme() {
+    public String getCurrentTheme() {
         return currentTheme;
     }
 

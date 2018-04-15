@@ -104,9 +104,9 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPersons(syncedPersonList);
         } catch (DuplicatePersonException e) {
-            throw new AssertionError("Medeina should not have duplicate persons.");
+            throw new AssertionError("Medeina should not have duplicate contacts.");
         } catch (DuplicateNricException e) {
-            throw new AssertionError("Medeina should not have two person sharing the same NRIC.");
+            throw new AssertionError("Medeina should not have two contacts sharing the same NRIC.");
         }
 
         setTags(new HashSet<>(newData.getTagList()));
@@ -116,11 +116,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setAppointments(syncedAppointmentList);
         } catch (DuplicateAppointmentException dae) {
-            throw new AssertionError("AddressBook should not have duplicate appointments.");
+            throw new AssertionError("Medeina should not have duplicate appointments.");
         } catch (DuplicateDateTimeException ddte) {
-            throw new AssertionError("AddressBook should not have appointments on the same slot");
+            throw new AssertionError("Medeina should not have appointments on the same slot");
         } catch (ConcurrentAppointmentException cae) {
-            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+            throw new AssertionError("Medeina should not add appointments to on-going appointment slots");
         } catch (PastAppointmentException pae) {
             throw new AssertionError("AddressBook should not add appointments with past DateTime");
         }
@@ -133,11 +133,11 @@ public class AddressBook implements ReadOnlyAddressBook {
         try {
             setPetPatients(syncedPetPatientList);
         } catch (DuplicatePetPatientException e) {
-            throw new AssertionError("AddressBooks should not have duplicate pet patients");
+            throw new AssertionError("Medeina should not have duplicate pet patients");
         } catch (ConcurrentAppointmentException cae) {
-            throw new AssertionError("AddressBook should not add appointments to on-going appointment slots");
+            throw new AssertionError("Medeina should not add appointments to on-going appointment slots");
         } catch (PastAppointmentException pe) {
-            throw new AssertionError("AddressBook should not add appointments with past DateTime");
+            throw new AssertionError("Medeina should not add appointments with past DateTime");
         }
     }
 
@@ -494,7 +494,7 @@ public class AddressBook implements ReadOnlyAddressBook {
             try {
                 updatePerson(person, updatedPerson);
             } catch (DuplicatePersonException dpe) {
-                throw new AssertionError("Modifying tag only should not result in duplicate person.");
+                throw new AssertionError("Modifying tag only should not result in duplicate contact.");
             }
         } else {
             return;
@@ -511,7 +511,7 @@ public class AddressBook implements ReadOnlyAddressBook {
                 removeTagParticular(tag, currPerson);
             }
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("Impossible as obtained from address book.");
+            throw new AssertionError("Impossible as obtained from Medeina.");
         }
     }
 
@@ -520,7 +520,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     //@@author
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, "
+        return persons.asObservableList().size() + " contacts, "
                 + petPatients.asObservableList().size() + " pet patients, "
                 + appointments.asObservableList().size() + " appointments, "
                 + tags.asObservableList().size() + " tags";

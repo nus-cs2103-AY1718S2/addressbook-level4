@@ -29,44 +29,44 @@ public class DeleteCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + " -[f]o/-[f]p/-a"
-            + ": Deletes the person/pet/appointment identified by the index number used in the last listing.\n"
-            + "Additional -[f] options indicates forcefully deleting object and all related dependencies.\n"
+            + ": Deletes the contact/pet/appointment identified by the index number used in the latest listing.\n"
+            + "Additional -[f] options indicates forcefully deleting object all of its related dependencies.\n"
             + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -o 1";
 
     public static final String MESSAGE_USAGE_OWNER = COMMAND_WORD
             + " -o"
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Deletes the contact identified by the index number used in the latest contact listing.\n"
             + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -o 1";
 
     public static final String MESSAGE_USAGE_PET_PATIENT = COMMAND_WORD
             + " -p"
-            + ": Deletes the pet patient identified by the index number used in the last pet patient listing.\n"
+            + ": Deletes the pet patient identified by the index number used in the latest pet patient listing.\n"
             + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -p 1";
 
     public static final String MESSAGE_USAGE_APPOINTMENT = COMMAND_WORD
             + " -a"
-            + ": Deletes the appointment identified by the index number used in the last appointment listing.\n"
+            + ": Deletes the appointment identified by the index number used in the latest appointment listing.\n"
             + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -a 1";
 
     public static final String MESSAGE_USAGE_FORCE_OWNER = COMMAND_WORD
             + " -fo"
-            + ": Forcefully deletes the person and all related dependencies "
-            + "identified by the index number used in the last person listing.\n"
+            + ": Forcefully deletes a contact and all related dependencies "
+            + "identified by the index number used in the latest contact listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " -fo 1";
 
     public static final String MESSAGE_USAGE_FORCE_PET_PATIENT = COMMAND_WORD
             + " -fp"
-            + ": Forcefully deletes the pet and all related dependencies "
-            + "identified by the index number used in the last person listing.\n"
+            + ": Forcefully deletes a pet patient and all related dependencies "
+            + "identified by the index number used in the latest pet patient listing.\n"
             + "Parameters: INDEX (must be a positive integer, must not be invalid)\n"
             + "Example: " + COMMAND_WORD + " -fp 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Contact: %1$s";
     public static final String MESSAGE_DELETE_PET_PATIENT_SUCCESS = "Deleted Pet Patient: %1$s";
     public static final String MESSAGE_DELETE_APPOINTMENT_SUCCESS = "Deleted Appointment: %1$s";
 
@@ -110,7 +110,7 @@ public class DeleteCommand extends UndoableCommand {
             requireNonNull(personToDelete);
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target contact cannot be missing");
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));
@@ -134,7 +134,7 @@ public class DeleteCommand extends UndoableCommand {
             requireNonNull(petPatientToDelete);
             model.deletePetPatient(petPatientToDelete);
         } catch (PetPatientNotFoundException ppnfe) {
-            throw new AssertionError("The target pet cannot be missing");
+            throw new AssertionError("The target pet patient cannot be missing");
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PET_PATIENT_SUCCESS, petPatientToDelete));
@@ -193,7 +193,7 @@ public class DeleteCommand extends UndoableCommand {
             }
             model.deletePerson(personToDelete);
         } catch (PersonNotFoundException e) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target contact cannot be missing");
         } catch (PetDependencyNotEmptyException e) {
             throw new AssertionError("Pet dependencies still exist!");
         }
@@ -217,7 +217,7 @@ public class DeleteCommand extends UndoableCommand {
             }
             model.deletePetPatient(petPatientToDelete);
         } catch (PetPatientNotFoundException ppnfe) {
-            throw new AssertionError("The target pet cannot be missing");
+            throw new AssertionError("The target pet patient cannot be missing");
         }  catch (AppointmentDependencyNotEmptyException e) {
             throw new AssertionError("Appointment dependencies still exist!");
         }

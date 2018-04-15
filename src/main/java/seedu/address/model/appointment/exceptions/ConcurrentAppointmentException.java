@@ -11,7 +11,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class ConcurrentAppointmentException extends IllegalValueException {
 
     public ConcurrentAppointmentException () {
-        super("AddressBook should not add appointments to on-going appointment slots");
+        super("Medeina should not add appointments to on-going appointment slots");
     }
 
 }

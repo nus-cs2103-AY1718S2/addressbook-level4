@@ -72,7 +72,7 @@ public class GoogleCalendarClient {
     public static void checkInternetConnection() throws ConnectivityIssueException {
         try {
             InetAddress byName = InetAddress.getByName("www.google.com");
-            if (!byName.isReachable(1000)) {
+            if (!byName.isReachable(10000)) {
                 throw new ConnectivityIssueException();
             }
             logger.info("Connected to internet");

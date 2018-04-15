@@ -1,5 +1,5 @@
 # XavierMaYuqian
-###### \main-master\src\main\java\seedu\address\commons\events\model\GetPersonRequestEvent.java
+###### /java/seedu/address/commons/events/model/GetPersonRequestEvent.java
 ``` java
 /**
  *  Event to request current list of employees
@@ -13,7 +13,7 @@ public class GetPersonRequestEvent extends BaseEvent {
 
 }
 ```
-###### \main-master\src\main\java\seedu\address\commons\events\model\PasswordChangedEvent.java
+###### /java/seedu/address/commons/events/model/PasswordChangedEvent.java
 ``` java
 /**
  * Indicates password cahnged
@@ -32,7 +32,7 @@ public class PasswordChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\commons\events\model\ReturnedPersonEvent.java
+###### /java/seedu/address/commons/events/model/ReturnedPersonEvent.java
 ``` java
 /**
  * Indicates employees list returned.
@@ -55,7 +55,7 @@ public class ReturnedPersonEvent extends BaseEvent {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\DeleteTagCommand.java
+###### /java/seedu/address/logic/commands/DeleteTagCommand.java
 ``` java
 /**
  * Delete certain tags in the address book.
@@ -94,13 +94,13 @@ public class DeleteTagCommand extends UndoableCommand {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         public void setComment(Comment comment) {
             this.comment = comment; }
 
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\EditCommand.java
+###### /java/seedu/address/logic/commands/EditCommand.java
 ``` java
         public Optional<Comment> getComment() {
             return Optional.ofNullable(comment);
@@ -149,7 +149,7 @@ public class DeleteTagCommand extends UndoableCommand {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\ExportPersonCommand.java
+###### /java/seedu/address/logic/commands/ExportPersonCommand.java
 ``` java
 /**
  * export employees to a csv file.
@@ -231,7 +231,7 @@ public class ExportPersonCommand extends Command {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\ListAppointmentCommand.java
+###### /java/seedu/address/logic/commands/ListAppointmentCommand.java
 ``` java
 /**
  * Lists all unarchived persons in the address book to the user.
@@ -251,7 +251,7 @@ public class ListAppointmentCommand extends Command {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\LockCommand.java
+###### /java/seedu/address/logic/commands/LockCommand.java
 ``` java
 /**
  * Locks the app with a password
@@ -280,7 +280,7 @@ public class LockCommand extends Command {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\SetPasswordCommand.java
+###### /java/seedu/address/logic/commands/SetPasswordCommand.java
 ``` java
 /**
  * Set the application password
@@ -292,7 +292,7 @@ public class SetPasswordCommand extends Command {
     public static final String COMMAND_ALIAS = "sp";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Set new application password, and old "
-            + "password requeired."
+            + "password required."
             + "Parameters: "
             + "oldPassword" + " newPassword ";
 
@@ -337,7 +337,7 @@ public class SetPasswordCommand extends Command {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\SortCommand.java
+###### /java/seedu/address/logic/commands/SortCommand.java
 ``` java
 /**
  * Sorts all persons in the address book based on alphabetical order of their names.
@@ -356,7 +356,7 @@ public class SortCommand extends UndoableCommand {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\commands\UnlockCommand.java
+###### /java/seedu/address/logic/commands/UnlockCommand.java
 ``` java
 /**
  * Unlocks the addressbook
@@ -367,7 +367,9 @@ public class UnlockCommand extends Command {
 
     public static final String COMMAND_ALIAS = "ulk";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlock the address book. ";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlock the address book. "
+            + "Parameters: "
+            + "Password ";
 
     public static final String MESSAGE_SUCCESS = "Address book has been unlocked!";
 
@@ -405,7 +407,159 @@ public class UnlockCommand extends Command {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/parser/DeleteTagCommandParser.java
+``` java
+/**
+ * Parses input arguments and creates a new DeleteTagCommand object
+ */
+public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the DeleteTagCommand
+     * and returns an DeleteTagCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public DeleteTagCommand parse(String args) throws ParseException {
+        try {
+            Tag t = ParserUtil.parseTag(args);
+            return new DeleteTagCommand(t);
+        } catch (IllegalValueException ive) {
+            throw new ParseException(
+                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
+        }
+    }
+
+}
+```
+###### /java/seedu/address/logic/parser/LockCommandParser.java
+``` java
+/**
+ * LockCommandParser
+ */
+public class LockCommandParser implements Parser<LockCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the FindCommand
+     * and returns an FindCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public LockCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+
+        return new LockCommand();
+    }
+}
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String comment} into a {@code Comment}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code comment} is invalid.
+     */
+    public static Comment parseComment(String comment) throws IllegalValueException {
+        requireNonNull(comment);
+        String trimmedComment = comment.trim();
+        if (!Comment.isValidComment(trimmedComment)) {
+            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
+        }
+        return new Comment(trimmedComment);
+    }
+
+```
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+    /**
+     * Parses a {@code Optional<String> comment} into an {@code Optional<Comment>} if {@code comment} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Comment> parseComment(Optional<String> comment) throws IllegalValueException {
+        requireNonNull(comment);
+        return comment.isPresent() ? Optional.of(parseComment(comment.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String tag} into a {@code Tag}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code tag} is invalid.
+     */
+    public static Tag parseTag(String tag) throws IllegalValueException {
+        requireNonNull(tag);
+        String trimmedTag = tag.trim();
+        if (!Tag.isValidTagName(trimmedTag)) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
+        }
+        return new Tag(trimmedTag);
+    }
+
+    /**
+     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            tagSet.add(parseTag(tagName));
+        }
+        return tagSet;
+    }
+}
+```
+###### /java/seedu/address/logic/parser/SetPasswordCommandParser.java
+``` java
+/**
+ * Parses arguments for the SetPasswordCommand'
+ */
+public class SetPasswordCommandParser implements Parser<SetPasswordCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the SetPasswordCommand
+     * and returns an SetPasswordCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public SetPasswordCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        String trimmedArgs = args.trim();
+        Scanner sc = new Scanner(trimmedArgs);
+        if (!sc.hasNext()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));
+        }
+        String oldPsw = sc.next();
+        if (!sc.hasNext()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));
+        }
+        String newPsw = sc.next();
+
+        return new SetPasswordCommand(oldPsw, newPsw);
+    }
+}
+```
+###### /java/seedu/address/logic/parser/UnlockCommandParser.java
+``` java
+/**
+ * Parses arguments for the UnlockCommand'
+ */
+public class UnlockCommandParser implements Parser<UnlockCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the UnlockCommand
+     * and returns an UnlockCommand object for execution.
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public UnlockCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+        if (args.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
+        }
+        String trimmedArgs = args.trim();
+
+        return new UnlockCommand(trimmedArgs);
+    }
+}
+```
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     @Override
     public CommandResult execute(String commandText) throws CommandException, ParseException {
@@ -454,194 +608,161 @@ public class UnlockCommand extends Command {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     public static String getPassword() {
         return password;
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     public static void setPassword(String psw) {
         password = psw;
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     public static void unLock() {
         isLocked = false;
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     public static void lock() {
         isLocked = true;
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\logic\LogicManager.java
+###### /java/seedu/address/logic/LogicManager.java
 ``` java
     public static boolean isLocked() {
         return isLocked;
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\parser\DeleteTagCommandParser.java
+###### /java/seedu/address/model/person/Comment.java
 ``` java
 /**
- * Parses input arguments and creates a new DeleteTagCommand object
+ * Represents a person's comment in the address book.
  */
-public class DeleteTagCommandParser implements Parser<DeleteTagCommand> {
+public class Comment {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the DeleteTagCommand
-     * and returns an DeleteTagCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+    public static final String MESSAGE_COMMENT_CONSTRAINTS =
+            "Comment can take any values, and it should not be blank. "
+                    + "If you don't have thing to note down, please put 'NIL'";
+
+    /*
+     * The first character of the comment must not be a whitespace,
+     * otherwise " " (a blank string) becomes a valid input.
      */
-    public DeleteTagCommand parse(String args) throws ParseException {
-        try {
-            Tag t = ParserUtil.parseTag(args);
-            return new DeleteTagCommand(t);
-        } catch (IllegalValueException ive) {
-            throw new ParseException(
-                    String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteTagCommand.MESSAGE_USAGE));
-        }
-    }
+    public static final String COMMENT_VALIDATION_REGEX = "[^\\s].*";
 
-}
-```
-###### \main-master\src\main\java\seedu\address\logic\parser\LockCommandParser.java
-``` java
-/**
- * LockCommandParser
- */
-public class LockCommandParser implements Parser<LockCommand> {
+    public final String value;
 
     /**
-     * Parses the given {@code String} of arguments in the context of the FindCommand
-     * and returns an FindCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public LockCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-
-        return new LockCommand();
-    }
-}
-```
-###### \main-master\src\main\java\seedu\address\logic\parser\ParserUtil.java
-``` java
-    /**
-     * Parses a {@code String comment} into a {@code Comment}.
-     * Leading and trailing whitespaces will be trimmed.
+     * Constructs an {@code Comment}.
      *
-     * @throws IllegalValueException if the given {@code comment} is invalid.
+     * @param comment A valid comment.
      */
-    public static Comment parseComment(String comment) throws IllegalValueException {
+    public Comment(String comment) {
         requireNonNull(comment);
-        String trimmedComment = comment.trim();
-        if (!Comment.isValidComment(trimmedComment)) {
-            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
-        }
-        return new Comment(trimmedComment);
-    }
-
-```
-###### \main-master\src\main\java\seedu\address\logic\parser\ParserUtil.java
-``` java
-    /**
-     * Parses a {@code Optional<String> comment} into an {@code Optional<Comment>} if {@code comment} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Comment> parseComment(Optional<String> comment) throws IllegalValueException {
-        requireNonNull(comment);
-        return comment.isPresent() ? Optional.of(parseComment(comment.get())) : Optional.empty();
+        checkArgument(isValidComment(comment), MESSAGE_COMMENT_CONSTRAINTS);
+        this.value = comment;
     }
 
     /**
-     * Parses a {@code String tag} into a {@code Tag}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code tag} is invalid.
+     * Returns true if a given string is a valid comment.
      */
-    public static Tag parseTag(String tag) throws IllegalValueException {
-        requireNonNull(tag);
-        String trimmedTag = tag.trim();
-        if (!Tag.isValidTagName(trimmedTag)) {
-            throw new IllegalValueException(Tag.MESSAGE_TAG_CONSTRAINTS);
-        }
-        return new Tag(trimmedTag);
+    public static boolean isValidComment(String test) {
+        return test.matches(COMMENT_VALIDATION_REGEX);
     }
 
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
-     */
-    public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
-        requireNonNull(tags);
-        final Set<Tag> tagSet = new HashSet<>();
-        for (String tagName : tags) {
-            tagSet.add(parseTag(tagName));
-        }
-        return tagSet;
+    @Override
+    public String toString() {
+        return value;
     }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Comment // instanceof handles nulls
+                && this.value.equals(((Comment) other).value)); // state check
+    }
+
+    @Override
+    public int hashCode() {
+        return value.hashCode();
+    }
+
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\parser\SetPasswordCommandParser.java
+###### /java/seedu/address/model/person/HideAllPerson.java
 ``` java
 /**
- * Parses arguments for the SetPasswordCommand'
+ * HideAllPerson
  */
-public class SetPasswordCommandParser implements Parser<SetPasswordCommand> {
+public class HideAllPerson implements Predicate<Person> {
+
+    public HideAllPerson() {}
+
+    @Override
+    public boolean test(Person person) {
+        return false;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return false;
+    }
+
+}
+```
+###### /java/seedu/address/model/person/UniquePersonList.java
+``` java
+    /**
+     * Sort all persons based on alphabetical order of their full names
+     */
+    public void sort() {
+        internalList.sort((personA, personB) -> (
+            personA.getName().fullName.toLowerCase().compareTo(personB.getName().fullName.toLowerCase())));
+    }
 
     /**
-     * Parses the given {@code String} of arguments in the context of the SetPasswordCommand
-     * and returns an SetPasswordCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
+     * Returns the backing list as an unmodifiable {@code ObservableList}.
      */
-    public SetPasswordCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        String trimmedArgs = args.trim();
-        Scanner sc = new Scanner(trimmedArgs);
-        if (!sc.hasNext()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));
-        }
-        String oldPsw = sc.next();
-        if (!sc.hasNext()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));
-        }
-        String newPsw = sc.next();
+    public ObservableList<Person> asObservableList() {
+        return FXCollections.unmodifiableObservableList(internalList);
+    }
 
-        return new SetPasswordCommand(oldPsw, newPsw);
+    @Override
+    public Iterator<Person> iterator() {
+        return internalList.iterator();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof UniquePersonList // instanceof handles nulls
+                        && this.internalList.equals(((UniquePersonList) other).internalList));
+    }
+
+    @Override
+    public int hashCode() {
+        return internalList.hashCode();
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\logic\parser\UnlockCommandParser.java
+###### /java/seedu/address/model/tag/TagNotFoundException.java
 ``` java
 /**
- * Parses arguments for the UnlockCommand'
+ * Signals that the operation is unable to find the specified tag.
  */
-public class UnlockCommandParser implements Parser<UnlockCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the UnlockCommand
-     * and returns an UnlockCommand object for execution.
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public UnlockCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-        if (args.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, UnlockCommand.MESSAGE_USAGE));
-        }
-        String trimmedArgs = args.trim();
-
-        return new UnlockCommand(trimmedArgs);
-    }
-}
+public class TagNotFoundException extends Exception {}
 ```
-###### \main-master\src\main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Removes all {@code Tag}s that are not used by any {@code Person} in this {@code AddressBook}.
@@ -655,7 +776,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Sorts all the persons alphabetical order of their names
@@ -666,7 +787,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Removes tags from persons
@@ -682,7 +803,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     /**
      * Removes tags from persons
@@ -706,7 +827,7 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     @Override
     public String getPassword() {
@@ -714,35 +835,14 @@ public class UnlockCommandParser implements Parser<UnlockCommand> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\AddressBook.java
+###### /java/seedu/address/model/AddressBook.java
 ``` java
     public void setPassword(String password) {
         this.password = password;
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\appointment\HideAllAppointment.java
-``` java
-/**
- * HideAllPerson
- */
-public class HideAllAppointment implements Predicate<Appointment> {
-
-    public HideAllAppointment() {}
-
-    @Override
-    public boolean test(Appointment appointment) {
-        return false;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return false;
-    }
-
-}
-```
-###### \main-master\src\main\java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Sorts the persons in AddressBook based on the alphabetical order of their names*/
     void sort();
@@ -758,26 +858,26 @@ public class HideAllAppointment implements Predicate<Appointment> {
             throws DuplicatePersonException, PersonNotFoundException;
 
 ```
-###### \main-master\src\main\java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Removes the given {@code tag} from all {@code Person}s. */
     void deleteTag(Tag t);
 
 ```
-###### \main-master\src\main\java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Adds the given password */
     void setPassword(String e);
 
 ```
-###### \main-master\src\main\java\seedu\address\model\Model.java
+###### /java/seedu/address/model/Model.java
 ``` java
     /** Gets the password */
     String getPassword();
 
 }
 ```
-###### \main-master\src\main\java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public synchronized void sort() {
@@ -795,7 +895,7 @@ public class HideAllAppointment implements Predicate<Appointment> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag t) {
@@ -807,7 +907,7 @@ public class HideAllAppointment implements Predicate<Appointment> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     @Override
     public void setPassword(String password) {
@@ -817,7 +917,7 @@ public class HideAllAppointment implements Predicate<Appointment> {
     }
 
 ```
-###### \main-master\src\main\java\seedu\address\model\ModelManager.java
+###### /java/seedu/address/model/ModelManager.java
 ``` java
     public String getPassword() {
         return addressBook.getPassword();
@@ -883,73 +983,17 @@ public class HideAllAppointment implements Predicate<Appointment> {
 
 }
 ```
-###### \main-master\src\main\java\seedu\address\model\person\Comment.java
-``` java
-/**
- * Represents a person's comment in the address book.
- */
-public class Comment {
-
-    public static final String MESSAGE_COMMENT_CONSTRAINTS =
-            "Comment can take any values, and it should not be blank. "
-                    + "If you don't have thing to note down, please put 'NIL'";
-
-    /*
-     * The first character of the comment must not be a whitespace,
-     * otherwise " " (a blank string) becomes a valid input.
-     */
-    public static final String COMMENT_VALIDATION_REGEX = "[^\\s].*";
-
-    public final String value;
-
-    /**
-     * Constructs an {@code Comment}.
-     *
-     * @param comment A valid comment.
-     */
-    public Comment(String comment) {
-        requireNonNull(comment);
-        checkArgument(isValidComment(comment), MESSAGE_COMMENT_CONSTRAINTS);
-        this.value = comment;
-    }
-
-    /**
-     * Returns true if a given string is a valid comment.
-     */
-    public static boolean isValidComment(String test) {
-        return test.matches(COMMENT_VALIDATION_REGEX);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Comment // instanceof handles nulls
-                && this.value.equals(((Comment) other).value)); // state check
-    }
-
-    @Override
-    public int hashCode() {
-        return value.hashCode();
-    }
-
-}
-```
-###### \main-master\src\main\java\seedu\address\model\person\HideAllPerson.java
+###### /java/seedu/address/model/appointment/HideAllAppointment.java
 ``` java
 /**
  * HideAllPerson
  */
-public class HideAllPerson implements Predicate<Person> {
+public class HideAllAppointment implements Predicate<Appointment> {
 
-    public HideAllPerson() {}
+    public HideAllAppointment() {}
 
     @Override
-    public boolean test(Person person) {
+    public boolean test(Appointment appointment) {
         return false;
     }
 
@@ -960,49 +1004,7 @@ public class HideAllPerson implements Predicate<Person> {
 
 }
 ```
-###### \main-master\src\main\java\seedu\address\model\person\UniquePersonList.java
-``` java
-    /**
-     * Sort all persons based on alphabetical order of their full names
-     */
-    public void sort() {
-        internalList.sort((personA, personB) -> (
-            personA.getName().fullName.toLowerCase().compareTo(personB.getName().fullName.toLowerCase())));
-    }
-
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<Person> asObservableList() {
-        return FXCollections.unmodifiableObservableList(internalList);
-    }
-
-    @Override
-    public Iterator<Person> iterator() {
-        return internalList.iterator();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                        && this.internalList.equals(((UniquePersonList) other).internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
-}
-```
-###### \main-master\src\main\java\seedu\address\model\tag\TagNotFoundException.java
-``` java
-/**
- * Signals that the operation is unable to find the specified tag.
- */
-public class TagNotFoundException extends Exception {}
-```
-###### \main-master\src\main\java\seedu\address\storage\XmlAdaptedPassword.java
+###### /java/seedu/address/storage/XmlAdaptedPassword.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Password.
@@ -1033,7 +1035,7 @@ public class XmlAdaptedPassword {
     }
 }
 ```
-###### \main-master\src\main\java\seedu\address\ui\StatusBarFooter.java
+###### /java/seedu/address/ui/StatusBarFooter.java
 ``` java
     private void setTotalPersons(int totalPersons) {
         Platform.runLater(() -> this.totalPersonsStatus.setText(String.format(TOTAL_PERSONS_STATUS, totalPersons)));

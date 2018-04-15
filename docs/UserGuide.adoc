@@ -111,22 +111,154 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Schedule interview for a person : `interview`
+// tag::interview[]
+=== Scheduling an interview for a person : `interview` `[since v1.2]`
 
-Schedule interview of an existing person in HR+. +
-Format: `interview INDEX DATETIME`
+Schedules interview of an existing person in HR+. +
+Format: `interview INDEX DATE_TIME_EXPRESSION`
 
 ****
-* Schedule interview for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* `DATETIME` is the English representation of the date and time
+* interview command schedules interview for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, etc.
+* `DATE_TIME_EXPRESSION` is the natural language date and time expression in English
 ****
 
 Examples:
 
 * `interview 1 next Friday at 3pm` +
-Schedule the interview of the 1st person to be next Friday at 3pm.
+schedules the interview of the 1st person to be next Friday at 3pm.
+
 * `interview 2 Mar 14 2pm` +
-Schedule the interview of the 2nd person to be 14 March at 2pm.
+schedules the interview of the 2nd person to be 14 March at 2pm.
+
+Due to the complexity of languages, the parser might fail to interpret what you mean.
+Always refer to the real time floating panel below the command box (As shown in figure below) to check what is the parsed result.
+
+image::userinterface/float_panel.png[width="250"]
+
+Below are some of the syntax for natural date and time parser:
+
+==== Formal dates
+Formal dates are represented using integers, separated by character - or /.
+
+===== Format
+****
+- `YYYY-MM-DD`
+- `YYYY/MM/DD`
+- `MM-DD-YYYY`
+- `MM/DD/YYYY`
+****
+- `DD` represent the day of a month
+- `MM` represent the month of a year
+- `YYYY` represent the year
+
+===== Example
+|===
+| *Input*    | *Output*
+| 2018-04-21 | 21/04/2018
+| 2018/04/21 | 21/04/2018
+| 04-21-2018 | 21/04/2018
+| 04/21/2018 | 21/04/2018
+|===
+
+==== Relaxed dates
+Relaxed dates are those in which the information are provided as words instead of integers.
+
+===== Example
+|===
+| *Input*          | *Output*
+| 21st April 2018  | 21/04/2018
+| Sat, 21 Apr 2018 | 21/04/2018
+| Apr 21           | 21/04, the year when the command executed
+|===
+
+==== Relative dates
+Relative dates are those that are relative to the current date.
+Do note that a week starts on Sunday and ends on the next Saturday.
+
+****
+- `YYYY-MM-DD`
+- `YYYY/MM/DD`
+- `MM-DD-YYYY`
+- `MM/DD/YYYY`
+****
+- `DD` represent the day of a month
+- `MM` represent the month of a year
+- `YYYY` represent the year
+
+===== Format
+****
+- next `DAY`
+- last `DAY`
+- `NUMBER` days from now
+- `NUMBER` weeks ago
+****
+- `DAY` represent the day of the week (Monday, Tuesday, ...)
+- `NUMBER` represent the integer or word representation of a number (1, two, 5)
+
+===== Example
+|===
+| *Input*          | *Output*
+| next thursday    | Next Thursday after the command executed
+| last wednesday   | The Wednesday before the command executed
+| today            | The day when the command executed
+| tomorrow         | The next day after the command executed
+| yesterday        | The day before the command executed
+| 3 days from now  | 3 days after the command executed
+| three weeks ago  | 3 weeks before the command executed
+|===
+
+==== Time
+Time of a day.
+
+===== Format
+****
+- `HH`[`MM`][`SS`][`MERIDIAN`]
+- [`WORD`]
+****
+- `HH` represent the hour of a day (Range of 00-23)
+- `MM` represent the minute of an hour (Range of 00-59), optional
+- `SS` represent the second of a minute (Range of 00-59), optional
+- `MERIDIAN` indicates the meridian (a, p, am, pm, a.m., p.m.), optional
+- `WORD` can be any of (afternoon: 12pm, noon: 12pm, midnight: 12am, morning: 8am, evening: 7pm)
+- : can be added to separate between HH, MM and SS (such as 21:00)
+
+===== Example
+|===
+| *Input*    | *Output*
+| 21         | 9:00:00pm
+| 232015     | 11:20:15pm
+| 21:00      | 9:00:00pm
+| 8a         | 8:00:00am
+| 7am        | 7:00:00am
+| 6:30 a.m.  | 6:30:00am
+| afternoon  | 12:00:00pm
+| midnight   | 12:00:00am
+|===
+
+==== Relative Time
+Similar to relative dates, it is used to specify time that are relative to the current time.
+
+===== Format
+****
+- `NUMBER` `UNIT` ago
+- `NUMBER` `UNIT` from now
+- `NUMBER` `UNIT` later
+- in `NUMBER` `UNIT`
+****
+- `NUMBER` represent the integer or word representation of a number (1, two, 5)
+- `UNIT` represent the unit of the
+
+===== Example
+|===
+| *Input*             | *Output*
+| 10 seconds ago      | 10 second before the command executed
+| 4 minutes from now  | 4 minutes after the command executed
+| 8 hours later       | 8 hours after the command executed
+| in 5 minutes        | 5 minutes after the command executed
+|===
+
+The syntax above is just part of the accepted values, detailed grammar definition can be found on http://natty.joestelmach.com/doc.jsp[Natty's documentation]
+// end::interview[]
 
 // tag::find[]
 === Locating persons by field: `find` `[since v1.2]`
@@ -426,6 +558,26 @@ Format: `status INDEX STATUS_INDEX`
 8. Withdrawn
 ****
 // end::status[]
+
+// tag::show[]
+=== Showing a specific panel: `show` `[since v1.5]`
+
+Showing a specific panel for more information about the currently selected person in HR+. +
+Format: `show PANEL`
+
+****
+* Make sure person are selected using `select` command before executing this command
+* When resume is requested, it will only shows when it is available.
+* `PANEL` must be either 'info' or 'resume', case sensitive
+****
+
+Examples:
+
+* `show info` +
+shows the info panel of the currently selected person.
+* `show resume` +
+shows the resume panel of the currently selected person.
+// end::show[]
 
 === Listing entered commands : `history`
 

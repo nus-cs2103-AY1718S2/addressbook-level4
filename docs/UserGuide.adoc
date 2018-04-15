@@ -664,7 +664,7 @@ Format: `switchTab`
 Figure below shows the result of entering command `switchTab` switching from Person List to Todo List and the display of command result.
 
 .Switches between tabs with command result displayed.
-image::switchTabs.PNG[width="800"]
+image::switchTabs.png[width="800"]
 // end::switchTab[]
 
 === Sorting all entries : `sort`

@@ -19,7 +19,7 @@ Sell IT is for salesmen who prefer to use a desktop app for managing their clien
 
 * *Minor enhancement*: added a timezone command that allows the user to enter their client's timezone so that they can schedule meetings more effectively.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/glorialaw.md] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/glorialaw.md] [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/test/glorialaw.md] _{give links to collated code files}_
 
 * *Other contributions*: Modified the GUI so that when the command entered is incorrect, the text turns red.
 

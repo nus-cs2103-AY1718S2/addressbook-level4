@@ -10,6 +10,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.appointment.DateTime;
 import seedu.address.model.patient.Address;
 import seedu.address.model.patient.BloodType;
 import seedu.address.model.patient.DateOfBirth;
@@ -264,5 +265,20 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String} into a {@code DateTime}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static DateTime parseDateTime(String dateTimeString) throws IllegalValueException {
+        requireNonNull(dateTimeString);
+        String trimmedDateTimeString = dateTimeString.trim();
+
+        if (!DateTime.isValidDateTime(trimmedDateTimeString)) {
+            throw new IllegalValueException(DateTime.MESSAGE_DATE_TIME_CONSTRAINTS);
+        }
+
+        return new DateTime(dateTimeString);
     }
 }

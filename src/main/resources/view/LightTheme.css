@@ -116,7 +116,7 @@
     -fx-border-width: 1;
 }
 
-.list-cell:filled:selected #appointmentCardPane {
+.list-cell:filled:selected #appointmentCardPane #emailCardPane {
     -fx-border-color: #bdb2a0;
     -fx-border-width: 1;
 }
@@ -321,6 +321,11 @@
     -fx-border-width: 0;
 }
 
+#emailCardPane {
+    -fx-background-color: transparent;
+    -fx-border-width: 0;
+}
+
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
@@ -337,7 +342,7 @@
     -fx-text-fill: black;
 }
 
-#filterField, #personListPanel, #appointmentListPanel, #personWebpage {
+#filterField, #personListPanel, #appointmentListPanel, #personWebpage #mailPanel {
     -fx-effect: innershadow(gaussian, white, 10, 0, 0, 0);
 }
 

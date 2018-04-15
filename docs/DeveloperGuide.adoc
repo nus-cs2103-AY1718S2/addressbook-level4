@@ -1863,6 +1863,19 @@ _{ more test cases ... }_
 
 .  Adding a calendar event
 .. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-add` and not logged in +
+   Expected: calendar-add command states that you must be logged in to use the feature.
+.. Test case: `calendar-add` and logged in +
+   Expected: calendar-add will detect missing parameters and inform the user how to use the feature.
+.. Test case: `calendar-add title/Some Event` and logged in (i.e. missing start/DATETIME and/or end/DATETIME flag) +
+   Expected: calendar-add will detect missing parameters and inform the user how to use the feature.
+.. Test case: `calendar-add title/Test Event start/ end/` and logged in (i.e. missing start/ and/or end/ flag input) +  +
+   Expected: Nothing will happen (no feedback to user -- will be fixed in v2.0).
+.. Test case: `calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday` and logged in (i.e. missing loc/LOCATION flag) +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will freeze the application. calendar-add command will add event to authorized Google Calendar and show the user the event details with a link to the event.
+.. Test case: `calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday loc/NUS School of Computing, COM1, 13 Computing Drive, Singapore 117417` and logged in +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will freeze the application. calendar-add command will add event to authorized Google Calendar and show the user the event details with a link to the event.
 
 .  Listing upcoming calendar events in the command results box
 .. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
@@ -1886,7 +1899,6 @@ _{ more test cases ... }_
    Expected: calendar-delete command will delete the event at index 1 and inform the user of the deleted event.
 .. Test case: `calendar-delete 5` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero, but less than 5, number of events are displayed+
    Expected: calendar-delete command will delete an invalid index exception and inform the user of the proper command usage.
-
 // end::calendarTesting[]
 
 // tag::showScheduleTesting[]

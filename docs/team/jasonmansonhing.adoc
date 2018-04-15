@@ -75,6 +75,7 @@ it was essential to provide an easy way to generate the error log on demand to h
 
 ** Project management:
 *** Managed releases `v1.2` - `v1.4` (3 releases), co-managed release `v1.5rc and v1.5` on GitHub
+*** Set up the GitHub pages website
 ** Enhancements to existing features:
 *** Updated the menu to include option to open standalone calendar instance as well as view the error log (Pull requests https://github.com/CS2103JAN2018-T15-B3/main/pull/1[#1], https://github.com/CS2103JAN2018-T15-B3/main/pull/21[#21])
 *** Set up issue labels, created milestones each week, wrote detailed issues every week, and ensured that housekeeping was performed weekly (i.e. closing issues and milestones, creating releases, etc.) in accordance to their deadlines
@@ -83,6 +84,7 @@ it was essential to provide an easy way to generate the error log on demand to h
 *** : Contributed several user stories to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
 *** : Added 6 use cases to the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
 *** : Defined most of the NFRs for the Developer Guide https://github.com/CS2103JAN2018-T15-B3/main/pull/112[#112]
+*** : Added Quick Start guide to explain the difference between the various Google Calendar integrations built into the SLAP app.
 ** Community:
 *** Reported bugs and suggestions for team F09-B1 (examples: https://github.com/CS2103JAN2018-F09-B1/main/issues/88[#88] https://github.com/CS2103JAN2018-F09-B1/main/issues/94[#94] https://github.com/CS2103JAN2018-F09-B1/main/issues/72[#72] https://github.com/CS2103JAN2018-F09-B1/main/issues/78[#78] https://github.com/CS2103JAN2018-F09-B1/main/issues/75[#75] https://github.com/CS2103JAN2018-F09-B1/main/issues/74[#74] https://github.com/CS2103JAN2018-F09-B1/main/issues/73[#73] https://github.com/CS2103JAN2018-F09-B1/main/issues/67[#67])
 ** Tools:
@@ -98,6 +100,8 @@ _{you can add/remove categories in the list above}_
 |===
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
+
+include::../UserGuide.adoc[tag=calendarquickstart]
 
 include::../UserGuide.adoc[tag=calendar]
 

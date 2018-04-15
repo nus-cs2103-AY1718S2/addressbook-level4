@@ -1266,16 +1266,16 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 |Name |Major enhancement(s) |Minor enhancement(s)
 |Jacqueline Cheong
 a|
-* *Autocomplete*
+*Autocomplete*
 
 To enhance user experience and usage efficiency of the CLI by providing autocomplete suggestions
 
-* *Add command*
+*Add command*
 
 A single add command with options to add a contact, pet patient and appointment to Medeina. Users don't have to remember multiple commands performing similar functions. The new add command also enables the user to all 3 objects at one go to reduce typing.
 
 a|
-* *Add support to change theme (persistent beyond app restart)*
+*Add support to change theme (persistent beyond app restart)*
 
 This allows Vets to change the application's appearance to better suit their preferences and working environment (e.g. dark theme for night time)
 
@@ -1708,12 +1708,3 @@ These instructions only provide a starting point for testers to work on; testers
 .. Prerequisites: Conduct `find` command. More than one person or petPatient in the lists.
 .. Testcase: `find -o n/Alex` + `list` +
     Expected: Medeina will display the located person and then list out all owners and petPatients in Medeina's storage.
-
-
-=== Saving data
-
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_

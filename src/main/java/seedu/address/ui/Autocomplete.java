@@ -198,9 +198,9 @@ public class Autocomplete {
      *Returns true if command input {@code trimmedCommandInput} is the syntax for adding a new appointment.
      */
     private boolean hasReferenceToExistingPetPatientNames() {
-        final Pattern ADD_NEW_APPOINTMENT = Pattern.compile(AddCommand.COMMAND_WORD + " -(a)+(?<apptInfo>.*)"
+        final Pattern addNewAppointment = Pattern.compile(AddCommand.COMMAND_WORD + " -(a)+(?<apptInfo>.*)"
                 + "-(o)+(?<ownerNric>.*)" + "-(p)+(?<petName>.*)");
-        final Matcher matcherForNewAppt = ADD_NEW_APPOINTMENT.matcher(trimmedCommandInput);
+        final Matcher matcherForNewAppt = addNewAppointment.matcher(trimmedCommandInput);
 
         if (matcherForNewAppt.matches()) {
             return true;

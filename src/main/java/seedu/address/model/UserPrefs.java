@@ -12,10 +12,10 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/medeina.xml";
     private String addressBookName = "Medeina";
-    private String theme = "/view/DarkTheme.css";
+    private String defaultTheme = "/view/LightTheme.css";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0, theme);
+        this.setGuiSettings(500, 500, 0, 0, defaultTheme);
     }
 
     public GuiSettings getGuiSettings() {
@@ -72,7 +72,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nMedeina name : " + addressBookName);
         return sb.toString();
     }
 

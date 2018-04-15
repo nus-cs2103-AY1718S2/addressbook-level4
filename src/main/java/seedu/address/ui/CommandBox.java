@@ -92,18 +92,10 @@ public class CommandBox extends UiPart<Region> {
             navigateToNextInput();
             break;
         case F2:
-            if (isAutocompleting) {
-                commandTextField.textProperty().removeListener(getAutocompleteListener());
-                isAutocompleting = false;
-            } else {
-                commandTextField.textProperty().addListener(getAutocompleteListener());
-                isAutocompleting = true;
-            }
+            toggleAutocomplete();
             break;
         default:
-            if (suggestionBox.isShowing()) {
-                suggestionBox.hide();
-            }
+            hideSuggestionBox();
             // let JavaFx handle the keypress
         }
     }
@@ -198,6 +190,28 @@ public class CommandBox extends UiPart<Region> {
 
     //@@author aquarinte
     /**
+     * Toggles autocomplete on or off.
+     */
+    private void toggleAutocomplete() {
+        if (isAutocompleting) {
+            commandTextField.textProperty().removeListener(getAutocompleteListener());
+            isAutocompleting = false;
+            hideSuggestionBox();
+            logger.info("Autocomplete has been toggled [OFF]");
+        } else {
+            commandTextField.textProperty().addListener(getAutocompleteListener());
+            isAutocompleting = true;
+            logger.info("Autocomplete has been toggled [ON]");
+        }
+    }
+
+    private void hideSuggestionBox() {
+        if (suggestionBox.isShowing()) {
+            suggestionBox.hide();
+        }
+    }
+
+    /**
      * Calls Autocomplete class to process commandTextField's content.
      *
      * @param newValue New user input.
@@ -259,7 +273,7 @@ public class CommandBox extends UiPart<Region> {
     }
 
     /**
-     * Returns text in {@code commandTextField} based on {@code cursorPosition} and {@code userInputLength}.
+     * Returns remaining text in {@code commandTextField} after {@code cursorPosition}, if any.
      */
     private String getRemainingInput(int cursorPosition, int userInputLength) {
         String restOfInput = "";

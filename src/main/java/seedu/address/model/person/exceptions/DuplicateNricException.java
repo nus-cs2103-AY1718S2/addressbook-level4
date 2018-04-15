@@ -7,6 +7,6 @@ import seedu.address.commons.exceptions.DuplicateDataException;
  */
 public class DuplicateNricException extends DuplicateDataException {
     public DuplicateNricException() {
-        super("Operation will result in two persons having the same nric value");
+        super("Operation will result in two contacts having the same nric value");
     }
 }

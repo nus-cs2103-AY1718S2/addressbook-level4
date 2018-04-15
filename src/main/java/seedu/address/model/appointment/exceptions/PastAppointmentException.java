@@ -10,7 +10,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 public class PastAppointmentException extends IllegalValueException {
 
     public PastAppointmentException() {
-        super("AddressBook should not add appointments with past DateTime");
+        super("Medeina should not add appointments with past DateTime");
     }
 }
 

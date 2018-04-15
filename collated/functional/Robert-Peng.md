@@ -1,4 +1,89 @@
 # Robert-Peng
+###### \java\seedu\address\logic\parser\ParserUtil.java
+``` java
+    /**
+     * Parses a {@code String nric} into a {@code NRIC}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @param nric
+     * @return
+     * @throws IllegalValueException
+     */
+    public static Nric parseNric(String nric) throws IllegalValueException {
+        requireNonNull(nric);
+        String trimmedNric = nric.trim();
+        if (!Nric.isValidNric(trimmedNric)) {
+            throw new IllegalValueException(Nric.MESSAGE_NRIC_CONSTRAINTS);
+        }
+        return new Nric(trimmedNric);
+    }
+
+    /**
+     * Parses a {@code Optional<String> nric} into an {@code Optional<NRIC>} if {@code nric} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @param nric
+     * @return
+     * @throws IllegalValueException
+     */
+    public static Optional<Nric> parseNric(Optional<String> nric) throws IllegalValueException {
+        requireNonNull(nric);
+        return nric.isPresent() ? Optional.of(parseNric(nric.get())) : Optional.empty();
+    }
+
+```
+###### \java\seedu\address\model\appointment\Appointment.java
+``` java
+    /**
+     * Returns a list of tags as a string
+     */
+    public String getTagString() {
+        StringBuilder tagString = new StringBuilder();
+        Set<Tag> tagSet = Collections.unmodifiableSet(appointmentTags.toSet());
+        Iterator iterator = tagSet.iterator();
+        Tag tag = (Tag) iterator.next();
+        while (iterator.hasNext()) {
+            tagString.append(tag.tagName);
+            tagString.append(", ");
+            tag = (Tag) iterator.next();
+        }
+        tagString.append(tag.tagName);
+        return tagString.toString().trim();
+    }
+}
+```
+###### \java\seedu\address\model\appointment\exceptions\ConcurrentAppointmentException.java
+``` java
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents an error message when user attempt to add new appointment that
+ * interfere with other appointment time interval
+ */
+public class ConcurrentAppointmentException extends IllegalValueException {
+
+    public ConcurrentAppointmentException () {
+        super("AddressBook should not add appointments to on-going appointment slots");
+    }
+
+}
+
+```
+###### \java\seedu\address\model\appointment\exceptions\PastAppointmentException.java
+``` java
+
+import seedu.address.commons.exceptions.IllegalValueException;
+
+/**
+ * Represents an error message when adding appointment with a past date
+ */
+public class PastAppointmentException extends IllegalValueException {
+
+    public PastAppointmentException() {
+        super("AddressBook should not add appointments with past DateTime");
+    }
+}
+
+```
 ###### \java\seedu\address\model\person\Nric.java
 ``` java
 /**
@@ -7,9 +92,10 @@
  */
 public class Nric {
     public static final String MESSAGE_NRIC_CONSTRAINTS = "Person NRIC should be of the format #0000000@ "
-        + "where # is a letter that can be S T F or G,\n "
-        + "0000000 is a 7 digit serial number assigned to the document holder, \n "
-        + "@ is the checksum letter calculated with respect to # and 0000000. ";
+        + "where # is a letter that can be S T F or G,\n"
+        + "0000000 represents 7 digits which can be any number from 0-9,\n"
+        + "@ can be any alphabet A-Z.\n"
+        + "Both # and @ must be in upper case.";
 
     private static final String FIRST_CHAR_REGEX = "[STFG]";
     private static final String MIDDLE_NUM_REGEX = "[0-9][0-9][0-9][0-9][0-9][0-9][0-9]";
@@ -71,6 +157,8 @@ public class CalendarWindow extends UiPart<Region> {
 
     @FXML
     private CalendarView calendarView;
+    private DayView dayView;
+    private WeekView weekView;
 
     /**
      *
@@ -80,13 +168,25 @@ public class CalendarWindow extends UiPart<Region> {
         super(DEFAULT_PAGE);
 
         this.appointmentList = appointmentList;
-
         calendarView = new CalendarView();
 
+
+        setView();
         setTime();
         setCalendar();
         disableViews();
         registerAsAnEventHandler(this);
+
+    }
+
+    private void setView() {
+        this.dayView = calendarView.getDayPage().getDetailedDayView().getDayView();
+        dayView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
+        dayView.setHourHeight(250);
+
+        this.weekView = calendarView.getWeekPage().getDetailedWeekView().getWeekView();
+        weekView.setHoursLayoutStrategy(DayViewBase.HoursLayoutStrategy.FIXED_HOUR_HEIGHT);
+        weekView.setHourHeight(250);
     }
 
     private void setTime() {
@@ -104,12 +204,18 @@ public class CalendarWindow extends UiPart<Region> {
         CalendarSource calendarSource = new CalendarSource("Appointments");
         int styleNumber = 0;
         int appointmentCounter = 0;
+
         for (Appointment appointment : appointmentList) {
+
             Calendar calendar = createCalendar(styleNumber, appointment);
+            calendar.setReadOnly(true);
             calendarSource.getCalendars().add(calendar);
 
             LocalDateTime ldt = appointment.getDateTime();
-            Entry entry = new Entry (++appointmentCounter + ". " + appointment.getPetPatientName().toString());
+            appointmentCounter++;
+
+            Entry entry = new Entry (buildAppointment(appointment, appointmentCounter).toString());
+
             entry.setInterval(new Interval(ldt, ldt.plusMinutes(30)));
 
             styleNumber++;
@@ -119,6 +225,25 @@ public class CalendarWindow extends UiPart<Region> {
 
         }
         calendarView.getCalendarSources().add(calendarSource);
+    }
+
+    /**
+     *
+     * @param appointment
+     * @param appointmentCounter
+     * @return
+     */
+    private StringBuilder buildAppointment (Appointment appointment, int appointmentCounter) {
+        final StringBuilder builder = new StringBuilder();
+        builder.append(appointmentCounter)
+            .append(". ")
+            .append(appointment.getPetPatientName().toString() + "\n")
+            .append("Owner Nric: " + appointment.getOwnerNric() + "\n")
+            .append("Appointment type: " + appointment.getTagString());
+
+        builder.append("\n");
+        builder.append("Remarks: " + appointment.getRemark().toString());
+        return builder;
     }
 
     /**
@@ -145,17 +270,25 @@ public class CalendarWindow extends UiPart<Region> {
         calendarView.setShowSearchResultsTray(false);
         calendarView.setShowPrintButton(false);
         calendarView.setShowSourceTrayButton(false);
+        calendarView.setShowPageSwitcher(false);
+        calendarView.setShowToolBar(false);
         calendarView.showDayPage();
+        calendarView.setShowSourceTray(false);
+        calendarView.setShowPageToolBarControls(false);
     }
 
     public CalendarView getRoot() {
         return this.calendarView;
     }
 
+    @Subscribe
+    private void handleNewAppointmentEvent(AddressBookChangedEvent event) {
+        appointmentList = event.data.getAppointmentList();
+        Platform.runLater(
+                this::setCalendar
+        );
 
-
-}
-
+    }
 
 ```
 ###### \java\seedu\address\ui\PersonCard.java
@@ -220,10 +353,10 @@ public class PetPatientCard extends UiPart<Region> {
         this.petPatient = petPatient;
         id.setText(displayedIndex + ". ");
         name.setText(petPatient.getName().toString());
-        species.setText(petPatient.getSpecies());
-        breed.setText(petPatient.getBreed());
-        colour.setText(petPatient.getColour());
-        bloodType.setText(petPatient.getBloodType());
+        species.setText(petPatient.getSpecies().toString());
+        breed.setText(petPatient.getBreed().toString());
+        colour.setText(petPatient.getColour().toString());
+        bloodType.setText(petPatient.getBloodType().toString());
         ownerNric.setText(petPatient.getOwner().toString());
         createTags(petPatient);
     }
@@ -358,6 +491,130 @@ public class PetPatientListPanel extends UiPart<Region> {
     </children>
 </StackPane>
 ```
+###### \resources\view\DarkTheme.css
+``` css
+
+.tab-pane .tab-header-area .tab-background{
+-fx-opacity: 0;
+}
+
+#owner-Tab {
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
+}
+
+#petPatient-Tab {
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
+}
+
+#owner-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-background-color: derive(#1d1d1d, 20%);
+
+}
+
+#petPatient-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+```
+###### \resources\view\DarkTheme.css
+``` css
+
+#personListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+#petPatientListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#petPatientListView .list-cell:filled:odd {
+    -fx-background-color: #515658
+}
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: transparent;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: transparent;
+}
+```
+###### \resources\view\LightTheme.css
+``` css
+
+#personListView {
+    -fx-background-color: derive(white, 20%);
+}
+
+
+.list-view {
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:odd {
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:even {
+    -fx-background-color: #f7f1dc;
+}
+
+#petPatientListView {
+    -fx-background-color: derive(white, 20%);
+}
+
+#petPatientListView .list-cell:filled:odd {
+    -fx-background-color: white;
+}
+
+#petPatientListView .list-cell:filled:even {
+    -fx-background-color: #f7f1dc;
+}
+
+
+.list-cell {
+    -fx-label-padding: 0 0 0 0;
+    -fx-graphic-text-gap : 0;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-cell:filled:even {
+    -fx-background-color: white;
+}
+
+.list-cell:filled:odd {
+    -fx-background-color: white;
+}
+
+```
 ###### \resources\view\PetPatientListCard.fxml
 ``` fxml
 <HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1">
@@ -391,9 +648,21 @@ public class PetPatientListPanel extends UiPart<Region> {
 ###### \resources\view\PetPatientListPanel.fxml
 ``` fxml
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
 <VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+    <TabPane id="petPatient-pane" prefHeight="42.0" prefWidth="200.0" tabClosingPolicy="UNAVAILABLE" VBox.vgrow="NEVER">
+        <tabs>
+            <Tab id="petPatient-Tab" text=" Pet Patients " >
+                <content>
+                    <AnchorPane  minHeight="0.0" minWidth="0.0" prefHeight="170.0" prefWidth="200.0" />
+                </content>
+            </Tab>
+        </tabs>
+    </TabPane>
     <ListView fx:id="petPatientListView" VBox.vgrow="ALWAYS" />
 </VBox>
 ```

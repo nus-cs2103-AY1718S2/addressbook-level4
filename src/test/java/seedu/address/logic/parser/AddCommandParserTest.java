@@ -152,7 +152,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryPersonFieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON);
+        String expectedMessage = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON);
 
         // missing name prefix
         assertParseFailure(parser, OPTION_OWNER + VALID_NAME_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
@@ -213,7 +213,7 @@ public class AddCommandParserTest {
         // non-empty preamble
         assertParseFailure(parser, OPTION_OWNER + PREAMBLE_NON_EMPTY + NAME_DESC_BOB + PHONE_DESC_BOB + EMAIL_DESC_BOB
                 + ADDRESS_DESC_BOB + NRIC_DESC_BOB + TAG_DESC_HUSBAND + TAG_DESC_FRIEND,
-                String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PERSON));
+                String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PERSON));
     }
 
     //@@author aquarinte
@@ -278,7 +278,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryPetPatientFieldMissing_failure() {
-        String invalidPetPatient = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_PETPATIENT);
+        String invalidPetPatient = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_PETPATIENT);
         String invalidAddCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
         String missingNricPrefix = String.format(MESSAGE_INVALID_PARAMETER_FORMAT,
                 AddCommand.MESSAGE_MISSING_NRIC_PREFIX);
@@ -404,7 +404,7 @@ public class AddCommandParserTest {
 
     @Test
     public void parse_compulsoryAppointmentFieldMissing_failure() {
-        String invalidAppt = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_APPOINTMENT);
+        String invalidAppt = String.format(MESSAGE_INVALID_PARAMETER_FORMAT, AddCommand.MESSAGE_ERROR_APPOINTMENT);
         String invalidCommand = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddCommand.MESSAGE_USAGE);
 
         // missing date time prefix

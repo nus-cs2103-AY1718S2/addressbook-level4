@@ -146,7 +146,7 @@ public class CalendarWindow extends UiPart<Region> {
         builder.append(appointmentCounter)
             .append(". ")
             .append(appointment.getPetPatientName().toString() + "\n")
-            .append("Owner Nric: " + appointment.getOwnerNric() + "\n")
+            .append("Contact Nric: " + appointment.getOwnerNric() + "\n")
             .append("Appointment type: " + appointment.getTagString());
 
         builder.append("\n");
@@ -215,7 +215,6 @@ public class CalendarWindow extends UiPart<Region> {
     private void changeWeekView(LocalDate date) {
         WeekFields weekFields = WeekFields.SUNDAY_START;
         int week = date.get(weekFields.weekOfWeekBasedYear()) - 1;
-        System.out.println(week);
 
         if (week == 0 && date.getMonthValue() == 12) {
             //wraparound

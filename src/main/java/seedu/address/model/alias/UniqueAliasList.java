@@ -83,9 +83,7 @@ public class UniqueAliasList {
     }
 
     /**
-     * Converts the HashMap of alias and command pairings into an observable list of Alias objects
-     * Add in all the aliases in the given {@code aliases}
-     * if the Alias is not a duplicate of an existing Alias in the list.
+     * Replace all the current alias and command pairings with {@code aliases}
      */
     public void setAliases(HashMap<String, String> aliases) {
         requireNonNull(aliases);

@@ -161,7 +161,7 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiComponentUpdated.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -377,18 +377,33 @@ image::UndoRedoActivityDiagram.png[width="650"]
 // tag::customizedalias[]
 === Customized Alias feature
 ==== Current Implementation
+The alias mechanism is maintained in a HashMap which resides in `UniqueAliasList` in the Model component. It supports the undoable command.
+The alias as specified by the user is used as the key in the HashMap, with its respective command as the value.
+Whenever a user enters a command, the application will be able to check if the command is a previously-set alias efficiently by using the API provided by the `UniqueAliasList`.
+If the input command word is an existing alias, it will be replaced with its respective command as shown below.
+[source,java]
+----
+public String getCommandFromAlias(String aliasKey) {
+    if (aliases.contains(aliasKey)) {
+        return aliases.getCommandFromAlias(aliasKey);
+    }
+    return aliasKey;
+}
+----
+
+When the user creates a new alias for a command, the `AliasCommand` checks that the command is a valid command, and the alias is not an existing application command word.
+The following sequence diagram shows how the `AliasCommand` works:
 
 .Alias Command Sequence Diagram for Logic Component
 image::LogicComponentAliasSequenceDiagram.png[width="800"]
-
-.Storage Component
-image::StorageClassDiagram.png[width="800"]
 
 ==== Design Considerations
 
 ===== Aspect: How alias list is maintained
 .Model Component
 image::ModelClassDiagram.png[width="800"]
+
+The alias list is maintained in a UniqueAliasList which is stored in the Model component.
 
 * **Alternative 1 (current choice):** Create an `UniqueAliasList` in the `alias` model
 ** Pros: Reduce coupling between `Alias` and other commands. This design follows the Open Closed Principle where a command is open to extension and closed to modification.
@@ -398,6 +413,10 @@ image::ModelClassDiagram.png[width="800"]
 ** Cons: High coupling between `Alias` and other commands and the HashMaps of every command needs to be iterated through to find to find the aliased command.
 
 ===== Aspect: How alias is stored
+The following class diagram shows how the aliases are stored:
+
+.Storage Component
+image::StorageClassDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Store as `XmlAdaptedAlias` and save to `addressbook.xml`
 ** Pros: Reduces files where data need to be stored, as all the user saved data is in one file.
@@ -405,6 +424,15 @@ image::ModelClassDiagram.png[width="800"]
 * **Alternative 2:** Store in `UserPrefsStorage`
 ** Pros: Easier to implement.
 ** Cons: Affects Import command, to import `UserPrefsStorage` as well, than just importing `addressbook.xml`
+
+===== Aspect: Displaying stored aliases
+* **Alternative 1 (current choice):** Use the original `list` command to display aliases
+** Pros: Utilizes unused `infoPanel` space in the UI.
+** Cons: Need to integrate with the `ListCommand`.
+* **Alternative 2:** Modifying `AliasCommand` to support `alias list` command
+** Pros: Easier to implement as only modification of the command is required.
+** Cons: `alias list` should not be an undoable command, and conflicts with the `AliasCommand`.
+
 // end::customizedalias[]
 
 // tag::mapconsiderations[]
@@ -415,16 +443,16 @@ We are using the Google Maps Browser and passing the location(s) specified by th
 We have implemented two functionalities for the Google Maps: Address locator and locations navigator.
 
 * For one location specified, the "https://www.google.com/maps/search/" URL prefix is used.
-* For more than one locations specified, the "https://www.google.com/maps/dir/" url prefix is used.
+* For more than one locations specified, the "https://www.google.com/maps/dir/" URL prefix is used.
 
-When a location specified by the user is an NUS building e.g. S1, our application compares the input with the list of NUS buildings to check from, and recognizes it as an NUS building.
+When a location specified by the user is an NUS building e.g. `S1`, our application compares the input with the list of NUS buildings to check from, and recognizes it as an NUS building.
 The location is replaced with its respective postal code and passed to form the Google Maps URL.
 
 ==== Design Considerations
 
 ===== Aspect: Google Maps implementation
 * **Alternative 1 (current choice):** Use Google Maps in browser
-** Pros: Requires a re-setup of project to link with the Google API.
+** Pros: Does not require a re-setup of project to link with the Google API.
 ** Cons: Browser mode (Google Lite Maps) does not support some advanced Google Maps features.
 (But these additional features are not used in this project and thus having the browser implementation fulfils the intended functionality)
 * **Alternative 2:** Use Google Maps API
@@ -724,6 +752,7 @@ As shown in diagram above, all Rooms weekday schedule will be return in an `Arra
 ** Pros: User is able to see which rooms are vacant at current time immediately
 ** Cons: User is not able to see the room schedule for the whole day
 
+===== Aspect: Design of converting JSON to objects
 * **Alternative 1 (current choice):** Create a Building, Room, Week and Weekday class
 ** Pros: Follows the Single Responsibility Principle where each class should have responsibility over a single part of the functionality provided by the software
 ** Cons: More difficult to implement as the design of the flow of work between classes has to be thought out
@@ -1179,7 +1208,6 @@ Use case ends.
 
 *Extensions*
 
-[none]
 * 3a. Incorrect number of arguments specified.
 +
 [none]

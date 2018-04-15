@@ -533,12 +533,159 @@ The `Storage` component then converts the JSON file into a hashMap of modules to
 
 // end::ModuleDatabase[]
 
-//tag::showingTimetable[]
-[[showingTimetable]]
-=== Show Timetable feature
+//tag::Calendar[]
+=== Calendar Feature
+Fastis uses a stand-alone `Calendar` class, adapted from https://github.com/SirGoose3432/javafx-calendar[javafx-calendar] by SirGoose3432.
+It is used to view the user's upcoming events, e.g. interviews, meetings, etc.
+
 ==== Current implementation
 
-When a person is selected, either by the `select` command or by mouse click via the `UI`, a `PersonPanelSelectionChangedEvent`. The flow of operation thereafter is shown the sequence diagram below.
+The calendar feature is facilitated by `Calendar` and `CalendarDate` classes,
+both of which reside inside `Ui` component. Their sole purpose is to draw out the calendar
+in the application when given a list of `Event` objects.
+
+The calendar is drawn/redrawn whenever a `CalendarChangedEvent` is raised.
+The flow of operation thereafter is shown the sequence diagram below.
+
+image::CalendarSequenceDiagram.png[width="800"]
+
+`Calendar` utilizes the `Event` class to determine which slots in the schedule are occupied.
+Hence, a list of events is passed to every calendar upon construction and saved as a private variable.
+
+The details of these event, e.g. time, location, are saved locally in `.xml` file format.
+It is also retrieved upon start up by the `Storage` component and saved within the `Model` for the whole process.
+
+The implementation of `Calendar` is as follows:
+
+[source,java]
+----
+public Calendar(ObservableList<Event> eventList) {
+    super(FXML);
+    // ... Assigning class fields ...
+    initCalendar();
+    registerAsAnEventHandler(this);
+}
+
+private void initCalendar() {
+    // ... Create the calendar 7x6 GridPane ...
+    // ... Construct 42 CalendarDate objects ...
+    fillCalendar(currentYearMonth);
+    showEvents();
+    // ... show CalendarView ...
+}
+
+private void fillCalendar(YearMonth yearMonth) {
+    // ... Fill the calendar with the correct dates according to yearMonth ...
+}
+
+private void showEvents() {
+    // ... Show all events that are in the current yearMonth in the eventList ...
+}
+----
+
+The current time is retrieved upon startup, and the calendar base on that point in time to display the appropriate time frame.
+
+==== Design Considerations
+[[calendarImplementation]]
+===== Aspect: Implementation of the `Calendar`
+
+* **Alternative 1 (current choice):** Implement a stand-alone `Calendar` class
+** Pros:
+*** Easy to manipulate data.
+*** Easy to customize appearance.
+** Cons:
+*** Likely not optimized implementation.
+*** Might not be aesthetically pleasing.
+* **Alternative 2:** Import external libraries/API
+** Choices:
+*** https://developers.google.com/calendar/[Google Calendar API]
+*** https://github.com/dlemmermann/CalendarFX[CalendarFX]
+** Pros:
+*** Likely optimized algorithms.
+*** Aesthetically pleasing.
+** Cons:
+*** Restricted to what the libraries/API offer.
+*** Need a firm understanding of the whole API to implement well.
+
+===== Aspect: Storing of the `eventList`
+* **Alternative 1 (current choice):** Stores the `eventList` within the `Calendar` object.
+** Pros: Easy to show events and their details, even after the constructor returns.
+** Cons: Takes up some redundant memory if there are no commands for showing these events.
+* **Alternative 2:** Only passes the `eventList` as a parameter to the constructor and not storing it as a field within the `Calendar` object.
+** Pros: Codes are less cluttered and less memory is used.
+** Cons: Hard to show events and their details outside of the constructor.
+// end::Calendar[]
+
+//tag::Timetable[]
+[[Timetable]]
+=== Timetable feature
+Fastis uses a stand-alone `Timetable` class, based largely on the `Calendar` class. It is used to view the user's own NUSMods timetable as well as that of other people in his address book.
+
+==== Current implementation
+
+The timetable is the weekly equivalent to the monthly Calendar.
+This feature is similarly facilitated by the analogous `Timetable` and `TimetableSlot` classes,
+both of which reside inside `Ui` component. Their sole purpose is to draw out the timetable
+in the application when given a list of `WeeklyEvent` objects.
+
+The calendar is drawn/redrawn whenever a `TimetableChangedEvent` is raised.
+This is done either by a precedent `PersonPanelSelectionChangedEvent` or a `ScheduleGroupCommand`.
+The flow of operation thereafter is shown the sequence diagram below.
+
+image::TimetableSequenceDiagram.png[width="800"]
+
+The implementation of `Timetable` is as follows:
+
+[source,java]
+----
+public Timetable(ObservableList<WeeklyEvent> eventList) {
+    super(FXML);
+    // ... Assigning class fields ...
+    initTimetable();
+    registerAsAnEventHandler(this);
+}
+
+private void initTimetable() {
+    // ... Create the calendar 6x11 GridPane ...
+    // ... Construct 66 TimetableSlot objects ...
+    clearTimetable();
+    showSlots();
+    // ... show TimetableView ...
+}
+
+private void clearTimetable() {
+    // ... Draw all slots as blank ...
+    // ... Draw the timeline on the left ...
+}
+
+private void showSlots() {
+    // ... Show all slots that are in the in the eventList ...
+    // ... Make sure no 2 modules with different name would have the same color ...
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of the `Timetable` and Storing of the `eventList`
+As the weekly equivalent of `Calendar`, `Timetable` has the same aspect to consider. See <<calendarImplementation, Implementation of the Calendar>>.
+
+===== Aspect: Supporting modules on weekends and/or after 6pm
+* **Alternative 1 (current choice):** Don't support showing those modules
+** Pros: Make the GUI less cluttered and more readable
+** Cons:
+*** Cannot cater to users with those modules in their timetable
+*** Cannot schedule meetings on the weekends
+* **Alternative 2:** Support showing those modules
+** Pros: Catering to users with those modules, and support scheduling for the weekends.
+** Cons: As the GUI already have 2 other main components which are the PersonListPanel and TodoListPanel, adding more columns to the Timetable makes it looks cluttered.
+// end::Timetable[]
+
+
+//tag::showingTimetable[]
+[[showingTimetable]]
+=== Showing the Timetable feature
+==== Current implementation
+When a person is selected, either by the `select` command or by mouse click via the GUI, a `PersonPanelSelectionChangedEvent` is raised. The flow of operation thereafter is shown the sequence diagram below.
 
 image::nusModsSequenceDiagram.png[width="800"]
 
@@ -582,6 +729,66 @@ The method then takes the `query` and parses them into modules and lessons, whic
 
 //end::showingTimetable[]
 
+//tag::Scheduling[]
+[[Scheduling]]
+=== Scheduling meetings feature
+Fastis supports showing all the common free time slots for all members in based on their timetable.
+
+==== Current implementation
+Fastis utilizes a few components to schedule the meetings, namely the `Group` class and `WeeklyEvent` class in `Model`, `Timetable` in `UI`, and `parseEvents()` in `Database`.
+The command to show the scheduled meetings is `ScheduleGroupCommand`, which resides in `Logic` component.
+
+When a `ScheduleGroupCommand` is executed, it first gets all group members from `Model`.
+For each member, it parses the `TimetableLink` to get all of his/her modules, and add them to an `occupied` list.
+From that list, the command generates all free time slots in another list called `free`, and post that event to be handled by the `UI` component later.
+
+The flow of operation is shown the sequence diagram below.
+
+image::ScheduleGroupSequenceDiagram.png[width="800"]
+
+The implementation of `ScheduleGroupCommand` is as follows:
+
+[source,java]
+----
+public ScheduleGroupCommand(Group group) {
+    requireNonNull(group);
+    // ... Assigning class fields ...
+    EventsCenter.getInstance().registerHandler(this);
+}
+
+public CommandResult execute() throws CommandException {
+    // ... Get the group's member from Model ...
+    fillTimeSlots(group);
+    generateFreeTimeSlots();
+    // ... Post new TimetableChangedEvent ...
+    // ... Return new CommandResult ...
+}
+
+private void fillTimeSlots(Group group) {
+    for (Person member : group.getPersonList()) {
+        // ... Parse the TimetableLink into moduleList
+        // ... Add all modules in moduleList to occupied list
+    }
+}
+
+private void generateFreeTimeSlots() {
+    // ... Generate free time slots logic
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Scheduling algorithm
+* **Alternative 1 (current choice):** Show all free time slots
+** Pros: Intuitive for users, and easy to read.
+** Cons: Slow, as there are a few extra steps to process.
+* **Alternative 2:** Show all occupied time slots
+** Pros: Very fast.
+** Cons:
+*** Could become cluttered as there are normally more occupied slots than free slots.
+*** Not intuitive for users.
+// end::Scheduling[]
+
 // tag::listTagMembers[]
 === List Tag Members Feature
 
@@ -606,59 +813,8 @@ tag and list out all members under the same  tag.
 
 // end::listTagMembers[]
 
-
-//tag::Calendar[]
-=== Calendar Feature
-==== Current implementation
-
-Fastis uses a stand-alone `Calendar` class, adapted from `javafx-calendar` by SirGoose3432 (https://github.com/SirGoose3432/javafx-calendar).
-
-Two instances of calendar are implemented:
-
-* A monthly calendar to keep track of upcoming events and deadlines.
-* A weekly timetable to facilitate scheduling a suitable meet-up.
-
-The current time is retrieved upon startup, and both calendars base on that point in time to display the appropriate time frame.
-
-Both calendars utilize the `Event` class to determine which slots in the schedule are occupied.
-Users can associate each event to a `Person` or a `Group`, and can modify these events through commands.
-
-The details of these event, e.g. time, location, people involved, are saved locally in `.xml` file format.
-It is also retrieved upon start up by the `Storage` component and saved within the `Model` for the whole process.
-
-The weekly component of the `Calendar` is dependent on the `NUSMods` component for importing the timetable.
-
-==== Design Considerations
-
-===== Aspect: Implementation of the Calendar
-
-* **Alternative 1 (current choice):** Implement a stand-alone `Calendar` class
-** Pros:
-*** Easy to manipulate data.
-*** Easy to customize apperance.
-** Cons:
-*** Implementation is likely not optimized.
-*** Might not be aesthetically pleasing.
-* **Alternative 2:** Import external libraries/API
-** Choices:
-*** https://developers.google.com/calendar/[Google Calendar API]
-*** https://github.com/dlemmermann/CalendarFX[CalendarFX]
-** Pros:
-*** Likely optimized algorithms.
-*** Aesthetically pleasing.
-** Cons:
-*** Restricted to what the libraries/API offer.
-*** Need a firm understanding of the whole API to implement well.
-
-===== Aspect: Implementation of the `Event` class
-* **Alternative 1 (current choice):** One `Event` class for both monthly and weekly calendars.
-** Pros: The codes are concise and can be used interchangeably.
-** Cons: Prone to flawed and buggy implementations where methods are used where they are not supposed to.
-* **Alternative 2:** One `Event` interface with 2 classes implementing it accordingly.
-** Pros: The codes are modularized and safe from buggy behaviours.
-** Cons: There is likely a lot of code to write.
-
 // tag::addGroup[]
+[[Group]]
 === Add Group feature
 
 Fastis has a group feature that can:
@@ -949,6 +1105,64 @@ image:dGSequenceDiagram.png[width="800"]
 ** Cons: It is hard for new developers to understand the template pattern.
 
 // end::addGroup[]
+
+// tag::ChangeTagColor[]
+=== Tag Color feature
+Fastis supports changing the color of the tags given to people in the address book. There are up to 17 colors to choose from.
+
+==== Current implementation
+
+Changing a tag's color is facilitated by `ChangeTagColorCommand`, which resides inside `Logic` component.
+It supports modifying the `color` field within `Tag` objects.
+
+The flow of operation is shown the sequence diagram below.
+
+image::ChangeTagColorSequenceDiagram.png[width="800"]
+
+`ChangeTagColorCommand` inherit from `UndoableCommand`, therefore it can be undone and redone using `UndoRedoStack`.
+
+The implementation of `ScheduleGroupCommand` is as follows:
+[source,java]
+----
+public abstract class UndoableCommand extends Command {
+    @Override
+    public CommandResult execute() {
+        // ... undo logic ...
+
+        executeUndoableCommand();
+    }
+}
+
+public class ChangeTagColorCommand extends UndoableCommand {
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        // .. Get the tag's name and color from Model
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() {
+        // ... Update tag in Model ...
+        // ... Update Person list in Model ...
+        // ... Return new CommandResult ...
+    }
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Different tags with the same color
+
+* **Alternative 1 (current choice):** Allow
+** Pros:
+*** Users have more freedom.
+*** Code is shorter.
+** Cons: Might result in aesthetically unpleasing GUI
+* **Alternative 2:** Disallow
+** Pros:
+*** More intuitive.
+*** Ensure aesthetic values for GUI.
+** Cons: Code is longer.
+// end::ChangeTagColor[]
 
 === Logging
 

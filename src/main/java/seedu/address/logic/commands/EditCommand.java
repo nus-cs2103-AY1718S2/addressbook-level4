@@ -30,7 +30,7 @@ import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 import seedu.address.model.tag.Tag;
 
-//@Author YuanQLLer
+//@@author YuanQLLer
 /**
  * Edits the details of an existing activity in the desk board.
  */

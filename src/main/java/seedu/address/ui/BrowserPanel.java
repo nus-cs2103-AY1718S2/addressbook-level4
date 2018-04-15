@@ -105,6 +105,7 @@ public class BrowserPanel extends UiPart<Region> {
             defaultSetup();
             return new Group(name, dateTime, remark, tags);
         } else {
+            remark = new Text();
             defaultSetup();
             return new Group(name, dateTime, tags);
         }
@@ -133,10 +134,14 @@ public class BrowserPanel extends UiPart<Region> {
             locationEvent = new Text(event.getLocation().toString());
             locationEvent.setTranslateY(70.0);
             locationEvent.setId("emphasizeText");
+        } else {
+            locationEvent = new Text();
         }
         if (event.getRemark() != null) {
             remark = new Text(event.getRemark().value);
             remark.setTranslateY(88.0);
+        } else {
+            remark = new Text();
         }
         defaultSetup();
         return new Group(name, dateTime, locationEvent, remark, tags);

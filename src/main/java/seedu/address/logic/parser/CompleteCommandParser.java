@@ -7,7 +7,7 @@ import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CompleteCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
-//@@Author YuanQLLer
+//@@author YuanQLLer
 /**
  * Parses input arguments and creates a new CompleteCommand object
  */

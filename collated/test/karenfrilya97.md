@@ -1,176 +1,313 @@
 # karenfrilya97
-###### \java\seedu\address\commons\util\XmlUtilTest.java
+###### \java\seedu\address\logic\commands\CommandTestUtil.java
 ``` java
-/**
- * Tests {@code XmlUtil} read and save methods
- */
-public class XmlUtilTest {
+    /**
+     * Generates file to be imported containing activities in the {@code activityList}
+     * and in the directory {@code filePath}.
+     */
+    public static void createXmlFile(List<Activity> activityList, String filePath) throws IOException {
+        if (new File(filePath).exists()) {
+            new File(filePath).delete();
+        }
 
-    private static final String TEST_DATA_FOLDER = FileUtil.getPath("src/test/data/XmlUtilTest/");
-    private static final File EMPTY_FILE = new File(TEST_DATA_FOLDER + "empty.xml");
-    private static final File MISSING_FILE = new File(TEST_DATA_FOLDER + "missing.xml");
-    private static final File VALID_FILE = new File(TEST_DATA_FOLDER + "validDeskBoard.xml");
-    private static final File MISSING_TASK_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingTaskField.xml");
-    private static final File INVALID_TASK_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidTaskField.xml");
-    private static final File VALID_TASK_FILE = new File(TEST_DATA_FOLDER + "validTask.xml");
-    private static final File MISSING_EVENT_FIELD_FILE = new File(TEST_DATA_FOLDER + "missingEventField.xml");
-    private static final File INVALID_EVENT_FIELD_FILE = new File(TEST_DATA_FOLDER + "invalidEventField.xml");
-    private static final File VALID_EVENT_FILE = new File(TEST_DATA_FOLDER + "validEvent.xml");
+        DeskBoard deskBoard = new DeskBoard();
+        deskBoard.addActivities(activityList);
 
-    private static final File TEMP_FILE = new File(TestUtil.getFilePathInSandboxFolder("tempDeskBoard.xml"));
-
-    private static final String INVALID_DATE_TIME = "9482asf424";
-    private static final String INVALID_LOCATION = " michegan ave";
-
-    private static final String VALID_TASK_NAME = "Hans Muster";
-    private static final String VALID_TASK_DUE_DATE_TIME = "9482424";
-    private static final String VALID_TASK_REMARK = "4th street";
-    private static final List<XmlAdaptedTag> VALID_TASK_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
-
-    private static final String VALID_EVENT_NAME = "CIP";
-    private static final String VALID_EVENT_START_DATE_TIME = "02/04/2018 08:00";
-    private static final String VALID_EVENT_END_DATE_TIME = "02/04/2018 12:00";
-    private static final String VALID_EVENT_LOCATION = "michegan ave";
-    private static final List<XmlAdaptedTag> VALID_EVENT_TAGS = Collections.singletonList(new XmlAdaptedTag("CIP"));
+        Storage storage = new StorageManager(new XmlDeskBoardStorage(""),
+                new JsonUserPrefsStorage(""));
+        storage.saveDeskBoard(deskBoard, filePath);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\ExportCommandTest.java
+``` java
+public class ExportCommandTest {
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+    private Storage storage = new StorageManager(new XmlDeskBoardStorage(""), new JsonUserPrefsStorage(""));
+
     @Test
-    public void getDataFromFile_nullFile_throwsNullPointerException() throws Exception {
+    public void constructor_nullFilePath_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        XmlUtil.getDataFromFile(null, DeskBoard.class);
+        new ExportCommand(null);
     }
 
     @Test
-    public void getDataFromFile_nullClass_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        XmlUtil.getDataFromFile(VALID_FILE, null);
+    public void execute_validFilePath_success() throws Exception {
+        ExportCommand exportCommand = getExportCommandForGivenFilePath(EXPORT_FILE_PATH, model, storage);
+
+        CommandResult commandResult = exportCommand.execute();
+        ReadOnlyDeskBoard actualDeskBoard = new XmlDeskBoardStorage(EXPORT_FILE_PATH).readDeskBoard()
+                .orElseThrow(() -> new CommandException(String.format(MESSAGE_FILE_NOT_FOUND, EXPORT_FILE_PATH)));
+
+        assertEquals(String.format(ExportCommand.MESSAGE_SUCCESS, EXPORT_FILE_PATH), commandResult.feedbackToUser);
+        assertEquals(getTypicalDeskBoard(), actualDeskBoard);
+        new File(EXPORT_FILE_PATH).deleteOnExit();
     }
 
     @Test
-    public void getDataFromFile_missingFile_fileNotFoundException() throws Exception {
-        thrown.expect(FileNotFoundException.class);
-        XmlUtil.getDataFromFile(MISSING_FILE, DeskBoard.class);
-    }
+    public void execute_existingFile_throwsCommandException() throws Throwable {
+        String expectedMessage = String.format(MESSAGE_FILE_EXISTS, EXISTING_FILE_PATH);
 
-    @Test
-    public void getDataFromFile_emptyFile_dataFormatMismatchException() throws Exception {
-        thrown.expect(JAXBException.class);
-        XmlUtil.getDataFromFile(EMPTY_FILE, DeskBoard.class);
-    }
+        createXmlFile(Collections.emptyList(), EXISTING_FILE_PATH);
+        ExportCommand exportCommand = getExportCommandForGivenFilePath(EXISTING_FILE_PATH, model, storage);
 
-    //TODO: TEST
-    //@Test
-    public void getDataFromFile_validFile_validResult() throws Exception {
-        DeskBoard dataFromFile = XmlUtil.getDataFromFile(VALID_FILE, XmlSerializableDeskBoard.class).toModelType();
-        assertEquals(7, dataFromFile.getActivityList().size());
-        assertEquals(3, dataFromFile.getTagList().size());
-    }
-
-    @Test
-    public void xmlAdaptedTaskFromFile_fileWithMissingTaskField_validResult() throws Exception {
-        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
-                MISSING_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
-        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
-                null, VALID_TASK_DUE_DATE_TIME, VALID_TASK_REMARK, VALID_TASK_TAGS);
-        assertEquals(expectedTask, actualTask);
-    }
-
-    @Test
-    public void xmlAdaptedTaskFromFile_fileWithInvalidTaskField_validResult() throws Exception {
-        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
-                INVALID_TASK_FIELD_FILE, XmlAdaptedTaskWithRootElement.class);
-        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
-                VALID_TASK_NAME, INVALID_DATE_TIME, VALID_TASK_REMARK, VALID_TASK_TAGS);
-        assertEquals(expectedTask, actualTask);
-    }
-
-    @Test
-    public void xmlAdaptedTaskFromFile_fileWithValidTask_validResult() throws Exception {
-        XmlAdaptedTask actualTask = XmlUtil.getDataFromFile(
-                VALID_TASK_FILE, XmlAdaptedTaskWithRootElement.class);
-        XmlAdaptedTask expectedTask = new XmlAdaptedTask(
-                VALID_TASK_NAME, VALID_TASK_DUE_DATE_TIME, VALID_TASK_REMARK, VALID_TASK_TAGS);
-        assertEquals(expectedTask, actualTask);
-    }
-
-    @Test
-    public void xmlAdaptedEventFromFile_fileWithMissingEventField_validResult() throws Exception {
-        XmlAdaptedEvent actualEvent = XmlUtil.getDataFromFile(
-                MISSING_EVENT_FIELD_FILE, XmlAdaptedEventWithRootElement.class);
-        XmlAdaptedEvent expectedEvent = new XmlAdaptedEvent(VALID_EVENT_NAME, VALID_EVENT_START_DATE_TIME,
-                null, VALID_EVENT_LOCATION, null, VALID_EVENT_TAGS);
-        assertEquals(expectedEvent, actualEvent);
-    }
-
-    @Test
-    public void xmlAdaptedEventFromFile_fileWithInvalidEventField_validResult() throws Exception {
-        XmlAdaptedEvent actualEvent = XmlUtil.getDataFromFile(
-                INVALID_EVENT_FIELD_FILE, XmlAdaptedEventWithRootElement.class);
-        XmlAdaptedEvent expectedEvent = new XmlAdaptedEvent(VALID_EVENT_NAME, VALID_EVENT_START_DATE_TIME,
-                VALID_EVENT_END_DATE_TIME, INVALID_LOCATION, null, VALID_EVENT_TAGS);
-        assertEquals(expectedEvent, actualEvent);
-    }
-
-    @Test
-    public void xmlAdaptedEventFromFile_fileWithValidEvent_validResult() throws Exception {
-        XmlAdaptedEvent actualEvent = XmlUtil.getDataFromFile(
-                VALID_EVENT_FILE, XmlAdaptedEventWithRootElement.class);
-        XmlAdaptedEvent expectedEvent = new XmlAdaptedEvent(VALID_EVENT_NAME, VALID_EVENT_START_DATE_TIME,
-                VALID_EVENT_END_DATE_TIME, VALID_EVENT_LOCATION, null, VALID_EVENT_TAGS);
-        assertEquals(expectedEvent, actualEvent);
-    }
-
-    @Test
-    public void saveDataToFile_nullFile_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        XmlUtil.saveDataToFile(null, new DeskBoard());
-    }
-
-    @Test
-    public void saveDataToFile_nullClass_throwsNullPointerException() throws Exception {
-        thrown.expect(NullPointerException.class);
-        XmlUtil.saveDataToFile(VALID_FILE, null);
-    }
-
-    @Test
-    public void saveDataToFile_missingFile_fileNotFoundException() throws Exception {
-        thrown.expect(FileNotFoundException.class);
-        XmlUtil.saveDataToFile(MISSING_FILE, new DeskBoard());
-    }
-
-    @Test
-    public void saveDataToFile_validFile_dataSaved() throws Exception {
-        TEMP_FILE.createNewFile();
-        XmlSerializableDeskBoard dataToWrite = new XmlSerializableDeskBoard(new DeskBoard());
-        XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        XmlSerializableDeskBoard dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableDeskBoard.class);
-        assertEquals(dataToWrite, dataFromFile);
-
-        DeskBoardBuilder builder = new DeskBoardBuilder(new DeskBoard());
-        dataToWrite = new XmlSerializableDeskBoard(
-                builder.withActivity(new TaskBuilder().build()).withTag("Friends").build());
-
-        XmlUtil.saveDataToFile(TEMP_FILE, dataToWrite);
-        dataFromFile = XmlUtil.getDataFromFile(TEMP_FILE, XmlSerializableDeskBoard.class);
-        assertEquals(dataToWrite, dataFromFile);
+        assertCommandFailure(exportCommand, model, expectedMessage);
     }
 
     /**
-     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data
-     * to {@code XmlAdaptedTask} objects.
+     * Generates a new ExportCommand with the given file path.
      */
-    @XmlRootElement(name = "task")
-    private static class XmlAdaptedTaskWithRootElement extends XmlAdaptedTask {}
-
-    /**
-     * Test class annotated with {@code XmlRootElement} to allow unmarshalling of .xml data
-     * to {@code XmlAdaptedEvent} objects.
-     */
-    @XmlRootElement(name = "event")
-    private static class XmlAdaptedEventWithRootElement extends XmlAdaptedEvent {}
+    private ExportCommand getExportCommandForGivenFilePath(String filePathString, Model model, Storage storage) {
+        ExportCommand command = new ExportCommand(new FilePath(filePathString));
+        command.setData(model, storage, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
 }
+```
+###### \java\seedu\address\logic\commands\ImportCommandTest.java
+``` java
+public class ImportCommandTest {
+
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    private Model actualModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+    private Storage storage = new StorageManager(new XmlDeskBoardStorage(""), new JsonUserPrefsStorage(""));
+
+    @Test
+    public void constructor_nullFilePath_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        new ImportCommand(null);
+    }
+
+    @Test
+    public void execute_validFilePath_success() throws Throwable {
+        String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, ASSIGNMENT3_DEMO1_FILE_PATH);
+        Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        expectedModel.addActivity(ASSIGNMENT3);
+        expectedModel.addActivity(DEMO1);
+
+        createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1), ASSIGNMENT3_DEMO1_FILE_PATH);
+        ImportCommand importCommand =
+                getImportCommandForGivenFilePath(ASSIGNMENT3_DEMO1_FILE_PATH, actualModel, storage);
+
+        assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_nonexistentFilePath_throwsCommandException() {
+        String expectedMessage = String.format(MESSAGE_FILE_NOT_FOUND, MISSING_FILE_PATH);
+
+        ImportCommand importCommand = getImportCommandForGivenFilePath(MISSING_FILE_PATH, actualModel, storage);
+
+        assertCommandFailure(importCommand, expectedMessage);
+    }
+
+    /**
+     * Test
+     */
+    public void execute_illegalValuesInFile_throwsCommandException() throws Throwable {
+        String expectedMessage = String.format(MESSAGE_ILLEGAL_VALUES_IN_FILE, ILLEGAL_VALUES_FILE_PATH);
+
+        ImportCommand importCommand = getImportCommandForGivenFilePath(ILLEGAL_VALUES_FILE_PATH, actualModel, storage);
+
+        assertCommandFailure(importCommand, expectedMessage);
+    }
+
+    /**
+     * The file in {@code DUPLICATE_ACTIVITY_FILE_PATH} contains {@code ASSIGNMENT3}, {@code DEMO1} and some activities
+     * already in Desk Board. Only {@code ASSIGNMENT3} and {@code DEMO1} should be added into Desk Board, while
+     * the existing activities are ignored.
+     */
+    @Test
+    public void execute_fileContainsExistingActivity_addsAllExceptExistingActivity() throws Throwable {
+        String expectedMessage = String.format(ImportCommand.MESSAGE_SUCCESS, DUPLICATE_ACTIVITY_FILE_PATH);
+        Model expectedModel = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
+        expectedModel.addActivity(ASSIGNMENT3);
+        expectedModel.addActivity(DEMO1);
+
+        createXmlFile(Arrays.asList(ASSIGNMENT3, DEMO1, ASSIGNMENT1, CIP), DUPLICATE_ACTIVITY_FILE_PATH);
+        ImportCommand importCommand =
+                getImportCommandForGivenFilePath(DUPLICATE_ACTIVITY_FILE_PATH, actualModel, storage);
+
+        assertCommandSuccess(importCommand, actualModel, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void equals() {
+        FilePath filePath = new FilePath(IMPORT_TEST_DATA_FOLDER + "deskBoard.xml");
+        FilePath differentFilePath = new FilePath(IMPORT_TEST_DATA_FOLDER + "differentDeskBoard.xml");
+
+        ImportCommand importCommand = new ImportCommand(filePath);
+        ImportCommand differentImportCommand = new ImportCommand(differentFilePath);
+
+        // same object -> returns true
+        assertTrue(importCommand.equals(importCommand));
+
+        // same values -> returns true
+        ImportCommand importAssignmentCommandCopy = new ImportCommand(filePath);
+        assertTrue(importCommand.equals(importAssignmentCommandCopy));
+
+        // null -> returns false
+        assertFalse(importCommand.equals(null));
+
+        // different types -> returns false
+        assertFalse(importCommand.equals(1));
+
+        // different file path -> returns false
+        assertFalse(importCommand.equals(differentImportCommand));
+    }
+
+    /**
+     * Generates a new ImportCommand with the given file path.
+     */
+    private ImportCommand getImportCommandForGivenFilePath(String filePathString, Model model, Storage storage) {
+        ImportCommand command = new ImportCommand(new FilePath(filePathString));
+        command.setData(model, storage, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### \java\seedu\address\logic\logictestutil\ImportExportTestConstants.java
+``` java
+/**
+ * Constants to test import and export commands.
+ */
+public class ImportExportTestConstants {
+
+    // ============================= IMPORT ============================================
+    public static final String IMPORT_TEST_DATA_FOLDER = "src\\test\\data\\ImportCommandTest\\";
+    public static final String ASSIGNMENT3_DEMO1_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "validImportFile.xml";
+    public static final String MISSING_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "missing.xml";
+    public static final String ILLEGAL_VALUES_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "illegalValues.xml";
+    public static final String DUPLICATE_ACTIVITY_FILE_PATH = IMPORT_TEST_DATA_FOLDER + "duplicateActivity.xml";
+    public static final String FILE_PATH_DESC_IMPORT = " " + PREFIX_FILE_PATH + ASSIGNMENT3_DEMO1_FILE_PATH;
+    public static final String FILE_PATH_DESC_DUPLICATE = " " + PREFIX_FILE_PATH + DUPLICATE_ACTIVITY_FILE_PATH;
+    public static final String INVALID_FILE_PATH_DESC = " " + PREFIX_FILE_PATH + "no.xmlAtTheEnd";
+
+    // ============================= EXPORT ============================================
+    public static final String EXPORT_TEST_DATA_FOLDER = "src\\test\\data\\ExportCommandTest\\";
+    public static final String EXPORT_FILE_PATH = EXPORT_TEST_DATA_FOLDER + "validExportFile.xml";
+    public static final String EXISTING_FILE_PATH = EXPORT_TEST_DATA_FOLDER + "existingFile.xml";
+    public static final String FILE_PATH_DESC_EXPORT = " " + PREFIX_FILE_PATH + EXPORT_FILE_PATH;
+}
+```
+###### \java\seedu\address\logic\parser\DeskBoardParserTest.java
+``` java
+    @Test
+    public void parseCommand_import() throws Exception {
+        FilePath filePath = new FilePath(ASSIGNMENT3_DEMO1_FILE_PATH);
+        ImportCommand command = (ImportCommand) parser.parseCommand(ImportCommand.COMMAND_WORD + FILE_PATH_DESC_IMPORT);
+        assertEquals(new ImportCommand(filePath), command);
+    }
+
+    @Test
+    public void parseCommand_export() throws Exception {
+        FilePath filePath = new FilePath(EXPORT_FILE_PATH);
+        ExportCommand command = (ExportCommand) parser.parseCommand(ExportCommand.COMMAND_WORD + FILE_PATH_DESC_EXPORT);
+        assertEquals(new ExportCommand(filePath), command);
+    }
+
+```
+###### \java\seedu\address\logic\parser\ExportCommandParserTest.java
+``` java
+public class ExportCommandParserTest {
+
+    private ExportCommandParser parser = new ExportCommandParser();
+
+    @Test
+    public void parse_validFilePath_success() {
+        FilePath filePath = new FilePath(EXPORT_FILE_PATH);
+
+        // whitespace only preamble
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + FILE_PATH_DESC_EXPORT, new ExportCommand(filePath));
+
+        // multiple file paths - last file path accepted
+        assertParseSuccess(parser, FILE_PATH_DESC_DUPLICATE + FILE_PATH_DESC_EXPORT, new ExportCommand(filePath));
+
+        // multiple file paths, the first one being invalid - last file path accepted with no exception thrown
+        assertParseSuccess(parser, INVALID_FILE_PATH_DESC + FILE_PATH_DESC_EXPORT, new ExportCommand(filePath));
+    }
+
+    @Test
+    public void parse_filePathMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE);
+
+        // missing file path prefix
+        assertParseFailure(parser, EXPORT_FILE_PATH, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        // invalid file path
+        assertParseFailure(parser, INVALID_FILE_PATH_DESC, FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
+
+        // multiple file paths, the last one being invalid
+        assertParseFailure(parser, FILE_PATH_DESC_EXPORT + INVALID_FILE_PATH_DESC,
+                FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
+
+        // non-empty preamble
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + FILE_PATH_DESC_EXPORT,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ExportCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ImportCommandParserTest.java
+``` java
+public class ImportCommandParserTest {
+
+    private ImportCommandParser parser = new ImportCommandParser();
+
+    @Test
+    public void parse_validFilePath_success() {
+        FilePath filePath = new FilePath(ASSIGNMENT3_DEMO1_FILE_PATH);
+
+        // whitespace only preamble
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + FILE_PATH_DESC_IMPORT, new ImportCommand(filePath));
+
+        // multiple file paths - last file path accepted
+        assertParseSuccess(parser, FILE_PATH_DESC_DUPLICATE + FILE_PATH_DESC_IMPORT, new ImportCommand(filePath));
+
+        // multiple file paths, the first one being invalid - last file path accepted with no exception thrown
+        assertParseSuccess(parser, INVALID_FILE_PATH_DESC + FILE_PATH_DESC_IMPORT, new ImportCommand(filePath));
+    }
+
+    @Test
+    public void parse_filePathMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE);
+
+        // missing file path prefix
+        assertParseFailure(parser, ASSIGNMENT3_DEMO1_FILE_PATH, expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        // invalid file path
+        assertParseFailure(parser, INVALID_FILE_PATH_DESC, FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
+
+        // multiple file paths, the last one being invalid
+        assertParseFailure(parser, FILE_PATH_DESC_IMPORT + INVALID_FILE_PATH_DESC,
+                FilePath.MESSAGE_FILE_PATH_CONSTRAINTS);
+
+        // non-empty preamble
+        assertParseFailure(parser, PREAMBLE_NON_EMPTY + FILE_PATH_DESC_IMPORT,
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ImportCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\model\DeskBoardTest.java
+``` java
+    @Test
+    public void addActivities_withDuplicateActivities_ignoresDuplicate() {
+        DeskBoard modifiedDeskBoard = getTypicalDeskBoard();
+        modifiedDeskBoard.addActivities(Collections.singletonList(ASSIGNMENT1));
+        assertEquals(getTypicalDeskBoard(), modifiedDeskBoard);
+    }
+
 ```
 ###### \java\seedu\address\model\UniqueActivityListTest.java
 ``` java
@@ -206,7 +343,7 @@ public class XmlAdaptedEventTest {
 
     private static final String INVALID_NAME = "Rachel's Bday";
     private static final String INVALID_DATE_TIME = "23 April 2018";
-    private static final String INVALID_LOCATION = " ";
+    private static final String INVALID_LOCATION = "";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = CIP_EVENT.getName().toString();

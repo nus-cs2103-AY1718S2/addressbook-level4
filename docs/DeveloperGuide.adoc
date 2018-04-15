@@ -17,20 +17,21 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 [[Introduction]]
 == Introduction
-
 CLIndar is a desktop application that helps university computing students to manage their tasks and events.
-CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
-Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for computing students.
-
 With CLIndar, you can:
 
 * keep track of your tasks and events and be reminded of their due dates; and
 * record all completed tasks and events, so that you know what you have done.
 
+
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
+Thus, compared to traditional Graphical User Interface (GUI) applications, this application is faster and provides more convenience for computing students.
+
 We are looking for developers who are savvy, keen to learn about developing Java applications using JavaFx UI
 framework and most importantly keen on developing CLIndar further. If you are interested, send us an email at CLIndar@gmail.com.
+CLIndar is *Common-Line Interface (CLI)-based and uses Linux-style commands*, which computing students are familiar with.
 
-This guide provides information on the core functionality of CLIndar and their implementation, so that a developer can
+This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
 get started customizing and contributing to the application.
 
 [[ComputerSetup]]
@@ -534,7 +535,7 @@ Once the `Event` is successfully added, it will be reflected in the CLIndar GUI 
 {empty} +
 {empty} +
 
-//tag::sorting
+//tag::sorting[]
 ===== Sorting task and event lists automatically
 When a `Task` or `Event` is added, it is inserted into the respective list such that the list is sorted in terms of their `dueDateTime` or `startDateTime` respectively.
 The sorting is done in the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
@@ -686,7 +687,6 @@ If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed
 
 //tag::activitydesign[]
 ==== Design Considerations
-This section describes various design considerations related to the backend design of the application.
 
 ===== Aspect: Implementation of `Activity`, `Task` and `Event` class
 There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
@@ -713,11 +713,11 @@ We will need to write codes for classes and methods related to `Task` and `Event
 
 // tag::guiimplementation[]
 
-=== Managing the GUI
+=== GUI Management
 
 This section describes implementation of features related to the GUI.
 
-==== Current implementation
+==== Current Implementation
 
 There are 3 views for the GUI of CLIndar - `MainView`, `TaskView` and `EventView`.
 
@@ -801,10 +801,9 @@ Below is a snippet of how `BrowserPanel` displays the details of the `Task` sele
 
 {empty} +
 
-There are two types of commands related to the GUI: `list` and `overdue`. The following sections will describe
-the implementation for each command.
 
-===== Listing of `Task` and `Event`
+[discrete]
+===== Listing tasks and events
 
 A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
 the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
@@ -824,7 +823,7 @@ in a scenario where the user issues the command `list task`.
 .Component interactions for `list task` command (part 1)
 image::SDListCommand.png[width='650']
 
-_Figure 11_ below shows how the `EventsCenter` reacts to that event, which eventually
+_Figure 31_ below shows how the `EventsCenter` reacts to that event, which eventually
 results in 'centerStagePlaceholder` of the UI being updated to display `TaskView`.
 
 .Component interactions for `list task` command (part 2)
@@ -860,6 +859,48 @@ If `ListCommand` is successful:
 {empty} +
 {empty} +
 
+// tag::select[]
+===== Selecting a task or event
+`Task` objects can be selected through the use of the `SelectCommand` by specifying the `Task`'s or `Event`'s index reflected
+in the GUI.
+
+Below is a snippet of how the `execute()` of `SelectCommand` that select the specified activity.
+The code make use the `JumpToEventListRequestEvent` or `JumpToTaskListRequestEvent` to inform the GUI to select the specified `Task` or `Event`.
+
+[source,java]n
+----
+    public CommandResult execute() throws CommandException {
+        CommandResult result = null;
+        if (type.equalsIgnoreCase(TYPE_TASK)) {
+            List<Activity> lastShownList = model.getFilteredTaskList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+            }
+
+            EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
+            result = new CommandResult(String.format(MESSAGE_SELECT_ACTIVITY_SUCCESS, targetIndex.getOneBased()));
+        } else if (type.equalsIgnoreCase(TYPE_EVENT)) {
+            List<Activity> lastShownList = model.getFilteredEventList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+            }
+
+            EventsCenter.getInstance().post(new JumpToEventListRequestEvent(targetIndex));
+            result = new CommandResult(String.format(MESSAGE_SELECT_ACTIVITY_SUCCESS, targetIndex.getOneBased()));
+        } else {
+            assert false : "Type is neither task or event, this should not happened!";
+        }
+        return result;
+    }
+----
+
+
+//end::select[]
+{empty} +
+
+
 ==== Design Considerations
 
 This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
@@ -886,19 +927,17 @@ definitely the preferred approach here.
 {empty} +
 {empty} +
 
-[discrete]
-
 // tag::storage[]
 === Desk Board Storage Management
 
 This section describes the implementation and design considerations for the storage of `Task` and `Event` objects.
 
-==== Current implementation
+==== Current Implementation
 
 The management of Desk Board storage in CLIndar includes automatic saving and loading of data, as well as export and import operations.
 The following describes how each feature is implemented.
 
-===== Storing `Task` and `Event` objects
+===== Storing tasks and events
 
 In CLIndar, Desk Board data are stored using an xml file. For this purpose, `DeskBoard`, which is composed of `Task` and `Event` objects,
 is converted into `XmlSerializableDeskBoard` containing `XmlAdaptedTask` and `XmlAdaptedEvent` objects.
@@ -973,7 +1012,7 @@ two separate lists.
 
 ===== Exporting data
 
-_Figure ##_ below shows the UML sequence diagram for export operation.
+_Figure 32_ below shows the sequence diagram for export operation.
 
 .Export sequence diagram
 image::ExportSequenceDiagram.png[width="800"]
@@ -982,7 +1021,7 @@ As seen above, this operation requires the `Logic` component to access the `Stor
 In particular, there needs to be an association between `ExecuteCommand` and `Storage`.
 The way such association can be created is similar to how an association between any subclass of `Command`
 and `Model` is formed.
-The modifications made to classes in the `Logic` component are shown in red in _Figure ##_.
+The modifications made to classes in the `Logic` component are shown in red in _Figure 33_.
 
 .Modification to `Logic` component
 image::LogicCommandClassDiagramModified.png[width="800"]
@@ -994,7 +1033,7 @@ the `saveDeskBoard()` method in `Storage` which allows Desk Board data to be sav
 
 ===== Importing data
 
-_Figure ##_ below shows the sequence diagram for import operation.
+_Figure 34_ below shows the sequence diagram for import operation.
 
 .Import sequence diagram
 image::ImportSequenceDiagram.png[width="800"]
@@ -1003,7 +1042,7 @@ Just like `ExportCommand`, `ImportCommand` also needs to have access to the appl
 This object reads the xml file at the given `filePath` and returns a `ReadOnlyDeskBoard` object based on the data saved in the file.
 Each `Activity` in the `ReadOnlyDeskBoard` is then added into the application's `DeskBoard`.
 This operation is abstracted to follow Single Level of Abstraction Principle (SLAP).
-_Figure ##_ below shows how `addActivities` is implemented in `Model` component which results in new entries from
+_Figure 35_ below shows how `addActivities` is implemented in `Model` component which results in new entries from
 another `DeskBoard` object being added into the application's `Model`.
 
 .`addActivities()` sequence diagram
@@ -1011,7 +1050,7 @@ image::AddActivitiesSequenceDiagram.png[width="800"]
 
 {empty} +
 
-==== Design considerations
+==== Design Considerations
 
 This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
@@ -1047,11 +1086,11 @@ This section describes various design considerations related to the implementati
 
 The current implementation and design considerations for the undo/redo feature are explained in this section.
 
-==== Current implementation
+==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of Desk Board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. _Figure 36_ below shows the inheritance diagram for commands.
 
 .Class diagram of a Logic command
 image::LogicCommandClassDiagram.png[width="800"]
@@ -1093,14 +1132,14 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in Desk Board. The current state of Desk Board is saved before the `delete 5` command executes.
 The `delete 5` command will then be pushed onto the `undoStack`
-(the current state is saved together with the command) as shown in _Figure 31_ below.
+(the current state is saved together with the command) as shown in _Figure 37_ below.
 
 .Undo and redo starting stack diagram
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`.
 For example, the user may execute `add n/David ...` to add a new activity.
-_Figure 32_ shows the undo and redo stack diagram after the add command is executed.
+_Figure 38_ shows the undo and redo stack diagram after the add command is executed.
 
 .Undo and redo stack diagram after more command is added
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
@@ -1111,7 +1150,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 The user now decides that adding the activity was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore Desk Board to the state before the `add` command executed.
-_Figure 33_ below shows the undo and redo stacks after the redo command is executed.
+_Figure 39_ below shows the undo and redo stacks after the redo command is executed.
 
 .Undo stack pops into the redo stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
@@ -1144,7 +1183,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 .Activity diagram for undo and redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design considerations
+==== Design Considerations
 
 This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
@@ -1191,14 +1230,14 @@ This section describes various design considerations related to the implementati
 ** Cons: This requires dealing with commands that have already been undone: We must remember to skip these commands. This violates SRP and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-=== Auto overdue
-The auto overdue feature will automatically tag tasks as "overdue" once their due date times have passed and tag events as "finished" once their end date times have passed.
+=== Overdue Feature
+The overdue feature will automatically tag tasks as "overdue" once their due date times have passed and tag events as "finished" once their end date times have passed.
 The current implementation and design considerations for this feature are explained in this section.
 
 ==== Current Implementation
-The auto overdue feature is implemented using the `ScheduledExecutorService` class, provided by the `java.util.concurrent` package. This class creates another thread in the system and that thread is scheduled to run a checker every 30 seconds.
+The overdue feature is implemented using the `ScheduledExecutorService` class, provided by the `java.util.concurrent` package. This class creates another thread in the system and that thread is scheduled to run a checker every 30 seconds.
 
-It is implemented in `DateTimeScheduler` as shown:
+It is implemented in `DateTimeScheduler` as shown below.
 [source, java]
 ----
 public class DateTimeScheduler {
@@ -1215,7 +1254,7 @@ public class DateTimeScheduler {
 The `checker` in the method `scheduleWithFixedDelay()` is implemented using the `Runnable` interface. The `checker`
 checks if a task has passed its due date time and if an event has passed its end date time. If so, the checker will tag an "Overdue" tag to the task and a "Finished" tag to the event.
 
-The `checker` is implemented as shown:
+The `checker` is implemented as shown below.
 
 [source, java]
 ----
@@ -1239,13 +1278,16 @@ it traverses the list of events and compares the end date time of each event to 
 Note that `Platform.runLater()` must wrap around the codes as https://stackoverflow.com/questions/21083945/how-to-avoid-not-on-fx-application-thread-currentthread-javafx-application-th[you cannot update the GUI from a thread other than the JavaFx Application thread.]
 
 ==== Design Considerations
-This section describes various design considerations related to the auto overdue feature.
+This section describes various design considerations related to the overdue feature.
 
-* Alternative 1 (current choice): Using `ScheduledExecutorService` to check for overdue tasks and finished events every 30 seconds.
+[discrete]
+===== Aspect: Overdue check time interval
+
+* *Alternative 1 (current choice):* Use `ScheduledExecutorService` to check for overdue tasks and finished events every 30 seconds.
 ** Pros: As 30 seconds are short, tasks and events can be checked whether they are overdue or finished respectively in **real time**.
 ** Cons: As there is a thread created in the system, CLIndar would be more memory-intensive.
 
-* Alternative 2: Using `ScheduledExecutorService` to check for overdue tasks and finished events every 1 hour.
+* *Alternative 2:* Use `ScheduledExecutorService` to check for overdue tasks and finished events every 1 hour.
 ** Pros: CLIndar would be less memory-intensive as the checker is conducted at a longer interval.
 ** Cons: Overdue tasks and finished events will not be identified promptly.
 
@@ -1299,7 +1341,7 @@ Here are the steps to convert the project documentation files to PDF format:
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in _Figure 44_ below.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -1345,9 +1387,9 @@ To run tests in headless mode, open a console and run the command `gradlew clean
 
 === Test Types
 
-There is two types of tests, based on whether the tests involve the GUI:
+We have two types of tests, based on whether the tests involve the GUI:
 
-.  *GUI tests* which include :
+.  *GUI tests* which include:
 .. _System tests_ +
 These test the entire App by simulating user actions on the GUI. System tests are in the `systemtests` package.
 .. _Unit tests_ +
@@ -1730,7 +1772,7 @@ The following section describes the major and minor enhancements that each of ou
 
 * **clearing** tasks and events from Desk Board; and
 
-* **keeping track** of overdue tasks and finished events with the auto overdue feature and `overdue` command.
+* **keeping track** of overdue tasks and finished events with the overdue feature and `overdue` command.
 
 *Minor enhancement:* Implementing Java 8 `LocalDateTime` API. This API is used to parse the date times of tasks and events provided by the user and formats the date times for display in the UI.
 {empty} +
@@ -1746,7 +1788,7 @@ The following section describes the major and minor enhancements that each of ou
 ==== Karen
 *Major enhancement:* Management of the storage of task and event data, which includes:
 
-** *automatic saving* of task and event data after each change;
+** *automatic saving* of task and event data after each update;
 ** *automatic loading* of latest task and event data upon launching of application;
 ** *exporting* of task and event data into an xml file (when `export` command is called); and
 ** *importing* of task and event data from an xml file (when `import` command is called).

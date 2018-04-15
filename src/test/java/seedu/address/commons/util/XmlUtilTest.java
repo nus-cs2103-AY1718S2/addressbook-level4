@@ -23,7 +23,6 @@ import seedu.address.testutil.DeskBoardBuilder;
 import seedu.address.testutil.TaskBuilder;
 import seedu.address.testutil.TestUtil;
 
-//@@author karenfrilya97
 /**
  * Tests {@code XmlUtil} read and save methods
  */

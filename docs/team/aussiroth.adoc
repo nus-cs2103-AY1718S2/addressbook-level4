@@ -60,6 +60,7 @@ Each attribute has a special color associated with it to make visual recognition
 |===
 
 Part of extract for Add and Edit in the user guide was done by me - About the optional fields and how the attribute tags work.
+
 include::../UserGuide.adoc[tag=add]
 include::../UserGuide.adoc[tag=edit]
 include::../UserGuide.adoc[tag=findmissing]

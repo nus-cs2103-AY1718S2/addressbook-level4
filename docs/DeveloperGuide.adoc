@@ -514,6 +514,9 @@ image::location_ss.png[width="600"]
 
 // tag::programmingLanguage[]
 === Programming Language Feature
+
+The `programmingLanguage` field is part of the student model and helps to keep track of what programming language he/she is being taught with.
+
 ==== Current Implementation
 
 The programming language feature involves having an additional class to the student model called `ProgrammingLanguage`.
@@ -595,10 +598,9 @@ The editedStudent will have the new programming language attribute and will henc
 
 // tag::profilePage[]
 === Profile Page feature
+The profile page feature allows the user to view the full information of contacts(students) kept in their data. This page has each student's main info, miscellaneous info, and their profle picture.
 
 ==== Current Implementation
-
-The profile page feature allows the user to view the full information of contacts(students) kept in their data. This page has each student's main info, miscellaneous info, and their profle picture.
 Users will also be able to edit the miscellaneous information of a student as well as his/her profile picture. The profile picture is changed by providing a file path to the actual picture file.
 
 [NOTE]

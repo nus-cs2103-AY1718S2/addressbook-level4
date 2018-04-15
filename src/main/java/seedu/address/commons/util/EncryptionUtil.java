@@ -5,9 +5,12 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.UnsupportedEncodingException;
-import java.security.*;
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.security.NoSuchProviderException;
+import java.security.SecureRandom;
 import java.util.logging.Logger;
-
+import java.security.GeneralSecurityException;
 import javax.crypto.BadPaddingException;
 import javax.crypto.Cipher;
 
@@ -70,7 +73,7 @@ public class EncryptionUtil {
             md.update(salt);
             byte[] bytes = md.digest(passwordToHash.getBytes());
             StringBuilder sb = new StringBuilder();
-            for(int i=0; i< bytes.length ;i++) {
+            for (int i=0; i < bytes.length ;i++) {
                 sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1)); }
                 generatedPassword = sb.toString();
         } catch (NoSuchAlgorithmException e) {
@@ -164,7 +167,6 @@ public class EncryptionUtil {
      * @return SecretKey generated using AES encryption
      */
     public static SecretKey generateKey() {
-        final String password = "EncryptionisImportant";
         SecretKeySpec secretKeySpec = null;
         try {
             salt = getSalt();

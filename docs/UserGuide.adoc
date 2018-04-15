@@ -181,7 +181,7 @@ All transactions will be re-displayed and the debtors panel and creditors panel 
 // end::select[]
 
 // tag::addTransaction[]
-=== Adding a transaction: `addTransaction` `[Since v1.2]` `[Updated for v1.5rc]`
+=== Adding a transaction: `addTransaction` `[Since v1.2]` `[Updated for v1.5]`
 
 Adds a transaction between one payer and one or multiple payees for payment transaction. +
 Format with 1 Payee: `addTransaction type/TRANSACTION TYPE payer/PAYER NAME a/AMOUNT d/DESCRIPTION payee/PAYEE NAME m/SPLIT METHOD [units/LIST OF UNITS] [percentages/LIST OF PERCENTAGES]` +

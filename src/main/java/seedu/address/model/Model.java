@@ -6,6 +6,7 @@ import javafx.collections.ObservableList;
 import seedu.address.model.account.Account;
 import seedu.address.model.account.Credential;
 import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.UniqueAccountList;
 import seedu.address.model.account.exceptions.AccountNotFoundException;
 import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.model.book.Book;
@@ -32,6 +33,11 @@ public interface Model {
     void resetData(ReadOnlyCatalogue newData);
 
     /**
+     * Clears existing backing model and replaces with the provided new data.
+     */
+    void resetAccount(UniqueAccountList newData);
+
+    /**
      * Returns the Catalogue
      */
     ReadOnlyCatalogue getCatalogue();
@@ -56,10 +62,21 @@ public interface Model {
     void updateBook(Book target, Book editedBook)
         throws DuplicateBookException, BookNotFoundException;
 
+    void returnBook(Book target, Book returnedBook) throws BookNotFoundException;
+
+    void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException;
+
+    void reserveBook(Book target, Book reservedBook) throws BookNotFoundException;
+
     /**
      * Returns an unmodifiable view of the filtered book list
      */
     ObservableList<Book> getFilteredBookList();
+
+    /**
+     * Returns an unmodifiable view of the account list
+     */
+    UniqueAccountList getAccountList();
 
     /**
      * Updates the filter of the filtered book list to filter by the given {@code predicate}.

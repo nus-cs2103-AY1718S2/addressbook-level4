@@ -17,6 +17,7 @@ import javafx.collections.ObservableList;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.model.book.Book;
 
+
 public class BookListPanelTest extends GuiUnitTest {
     private static final ObservableList<Book> TYPICAL_BOOKS =
         FXCollections.observableList(getTypicalBooks());

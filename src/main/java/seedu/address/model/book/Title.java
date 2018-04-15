@@ -1,3 +1,4 @@
+//@@author khiayi
 package seedu.address.model.book;
 
 import static java.util.Objects.requireNonNull;
@@ -31,6 +32,7 @@ public class Title {
         this.fullTitle = title;
     }
     //@@author
+
     /**
      * Returns true if a given string is a valid book name.
      */

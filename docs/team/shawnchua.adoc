@@ -1,0 +1,60 @@
+= Shawn Chua - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Flashy
+
+---
+image::logo.png[width="320"]
+
+== Overview
+
+include::../UserGuide.adoc[tag=overview]
+
+== Summary of contributions
+
+* *Major enhancement*: Enhanced flashcards to be *polymorphic*.
+** What it does: Allows users to add and edit MCQ or fill-in-the-blanks flashcards (on top of normal ones).
+** Justification: This feature improves the product significantly because users learn differently (some need prompts) and the ability to add different kinds of flashcards would allow them to add those that suit their learning style.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands, and care has to be taken so as to not affect the existing features.
+
+* *Minor enhancement*: Added a delete flashcard feature so that flashcards can be deleted when users no longer have a use for them.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B4/main/blob/master/collated/functional/shawnclq.md[Functional Code]] [https://github.com/CS2103JAN2018-W09-B4/main/blob/master/collated/test/shawnclq.md[Test Code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Added issues and milestones
+** Project enhancement:
+*** Performed a refactor from the original addressbook to the current Flashy application.
+** Enhancements to existing features:
+*** Changed typical cards to aid tests for existing features (Pull requests https://github.com/CS2103JAN2018-W09-B4/main/commit/8b586a700cd7d31a4b1d5ccd3a9ff4f386add7f2#diff-d8bf209606ae9b177294a457ab8118b6[#66], https://github.com[#38])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the Developer Guide (Pull Requests https://github.com/CS2103JAN2018-W09-B4/main/commit/1578c3de904822845d6fb1cd479c967ab0036bad[#76], https://github.com/CS2103JAN2018-W09-B4/main/commit/f03ce114f6356baec24bf9af75fcd7fbc85f4d43[#200])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=addcard]
+
+include::../UserGuide.adoc[tag=editcard]
+
+include::../UserGuide.adoc[tag=deletecard]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=polymorphiccards]
+
+include::../DeveloperGuide.adoc[tag=storage]
+
+include::../DeveloperGuide.adoc[tag=addcardusecase]

@@ -1,0 +1,57 @@
+= Wong Ding Feng - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Flashy
+
+---
+image::logo.png[width="320"]
+
+== Overview
+
+include::../UserGuide.adoc[tag=overview]
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to automatically schedule and answer flashcard*
+** What it does: correctly approximate the forgetting curve to remind user when is the best time to study
+** Justification: This feature is core to flashcard memorisation technique. Spaced repetition for better memory.
+** Highlights: This enhancement affects existing commands and commands to be added in future.
+It required an in-depth analysis of design alternatives.
+The implementation too was challenging as it required changes to existing commands.
+
+* *Minor enhancement*: added a simple Tag functionality that was eventually changed into CardTag Association.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W09-B4/main/blob/master/collated/functional/pukipuki.md[Functional Code]] [https://github.com/CS2103JAN2018-W09-B4/main/blob/master/collated/test/pukipuki.md[Test Code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Added issues and milestones.
+** Enhancements to existing features:
+*** Added logging (Pull requests https://github.com[#199])
+*** Wrote additional tests for features. (Pull requests https://github.com[#129])
+** Documentation:
+*** Added Logo. (Pull requests https://github.com[#198])
+*** Added prefaces and introduction. (Pull requests https://github.com[#198])
+*** Did cosmetic tweaks to existing contents of the User Guide: (Pull requests https://github.com[#198])
+** Tools:
+*** Personal pull and push scripts to Github.
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=introduction]
+
+include::../UserGuide.adoc[tag=usingflashcards]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=spacedrepetition]

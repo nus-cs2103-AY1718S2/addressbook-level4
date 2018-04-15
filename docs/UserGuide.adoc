@@ -7,7 +7,7 @@
 :stylesDir: stylesheets
 :pdf-stylesdir: stylesheets
 :pdf-style: pdf
-:xrefstyle: full
+:xrefstyle: basic
 :experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
@@ -25,23 +25,6 @@ _Coinbook_ allows you to store a portfolio of your cryptocurrency purchases as w
 tools to simplify and expedite your management process such as profit calculation.
 
 This guide will help you set up _CoinBook_, as well as introduce its various features.
-
-== How the program looks like
-
-The figure below (Fig. 1) describes each section of the interface.
-
-.Main Layout Window
-image::LabelledUI.png[width="790"]
-
-1. File Menu - Contains the buttons to exit and bring up the Help window.
-2. Command prompt - Contains the text box for you to type your commands into.
-3. Response pane - Contains the text responses of the program. The responses are usually to either acknowledge user commands or to notify them that an error has occurred.
-4. Coin list pane - Contains the list of coin accounts that you currently own.
-5. Coin account - Contains information such coin such as the coin Code name. Additionally, to its right the amount that you currently hold, and below it are the tags and current price.
-6. Detail pane - Brings up the price chart and subreddit that is associated with the coin of your choice.
-7. Update status - Notifies you when was the last time you had synchronised your program to obtain the latest prices.
-8. Account counter - Indicates the current number of coin accounts you currently possess in CoinBook.
-9. Storage filepath - Shows the current file path at which the data is stored.
 
 == How to Use this Guide
 Read this document to get up and running fast with _CoinBook_. The first thing you need to do is to get it set up, by reading the <<Quick Start>> section. Once you have _CoinBook_ running, get to know the things you can do with it by reading the <<Features>> section. If you prefer to just have a quick overview of the available commands, skip to the <<Command Summary>> section.
@@ -92,7 +75,7 @@ You can obtain the latest version [ext]#http://www.oracle.com/technetwork/java/j
 +
 .  Download the latest `coinbook.jar` [exref]#link:{repoURL}/releases[here]#.
 .  Copy the file to the folder you want to use as the home folder for your _CoinBook_.
-.  Double-click the file to start the app. The GUI should appear in a few seconds (Fig. 2).
+.  Double-click the file to start the app. The GUI should appear in a few seconds (Fig. 1).
 +
 .Startup Window
 image::Ui.png[width="790"]
@@ -102,6 +85,30 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 
 [TIP]
   Refer to <<Features>> for details of each command. Command <<alias,aliases>> are specified after the `|` symbol.
+
+== How to Read the Main Window
+
+The figure below (Fig. 2) describes each section of the user interface.
+
+.Main Layout Window
+image::LabelledUI.png[width="800"]
+
+<1> File Menu - Contains the buttons to exit and bring up the Help window.
+<2> Command Box - Contains the text box for you to type your commands into.
+<3> Result Display Pane - Contains the text responses of the program. The responses usually either acknowledge commands or notify that an error has occurred.
+<4> Listing Pane - Contains the list of coin accounts that you currently own.
+<5> Coin Account - Contains information on each coin. From top to bottom, left to right:
+* Index of the coin in this listing
+* Coin trading code, and icon (top 100 coins only)
+* Amount currently held
+* Tags
+* Current price
+<6> Detail Window - Shows the price chart and subreddit, if available, that is associated with the coin of your choice.
+<7> Status Bar - Shows various information about the state of the App. From left to right:
+* Update Status - Notifies you when was the last time you had synchronised your program to obtain the latest prices.
+* Filter Status - Shows the current filter applied to the listing via the `find` command.
+* Account Counter - Indicates the total number of coin accounts you currently possess in CoinBook.
+* Storage Filepath - Shows the current file path at which the data is stored.
 
 [[Features]]
 == Features
@@ -284,7 +291,7 @@ list
 Updates the listing to show all coin accounts in _CoinBook_.
 
 [[view]]
-=== View details of an account `view` | `v` `[Coming in v1.5]`
+=== View details of an account `view` | `v` `[Since v1.5]`
 
 .Format
 ----
@@ -311,7 +318,7 @@ See details for the `BTC` account
 See details for the 2nd account in the current listing
 
 //tag::findcommand[]
-=== Search through accounts `find` | `f` `[Coming in v1.5]`
+=== Search through accounts `find` | `f` `[Since v1.4]`
 
 .Format
 ----
@@ -366,7 +373,7 @@ Finds accounts either with current price more than $500 and tagged `fav`, or wit
 // tag::notifications[]
 
 //end::findcommand[]
-=== Set up notifications `notify` | `n` `[Coming in v1.5]`
+=== Set up notifications `notify` | `n` `[Since v1.5rc]`
 
 .Format
 ----
@@ -393,8 +400,6 @@ notify h/>0
 ----
 Notify when the amount held in an account is more than 0 after the update. This always triggers and hence is useless on its own, but can be combined with other conditions to restrict notifications to a smaller set of accounts
 
-// end::notifications[]
-
 ----
 notify c/BTC w/=50
 ----
@@ -405,6 +410,18 @@ notify w/+>1000 c/ETH
 ----
 Notify when the amount worth in dollars of the `ETH` account rises by more than $1000
 
+=== List added notifications `listnotifs` | `ln` `[Since v1.5]`
+
+.Format
+----
+listnotifs
+----
+
+Opens the notification list window.
+
+// end::notifications[]
+
+
 // tag::order[]
 
 === Change listing order `order` | `o` `[Since v1.5]`
@@ -414,14 +431,10 @@ Notify when the amount worth in dollars of the `ETH` account rises by more than 
 order {a,z}
 ----
 
+Orders the coin listing in lexicographical order or reverse lexicographical order. +
+Put `a` after the command word to sort it in lexicographical order, and `z` to sort in reverse lexicographical order. The listing is sorted by the leftmost entered option first, then equal values are sorted by the next one, and so on.
 
-Orders the coin listing in lexicographical order. +
-This is also the default option if {a,z} is not specified after the command.
-=======
-Orders the coin listing in lexicographical order (default option if sort order is not specified).
-
-
-Put `a` after the command word to sort it in lexicographical order, and `z` to sort in reverse lexicographical order. The listing is sorted by the leftmost entered option first, then equal values are sorted by the next one, and so on. The default order is lexicographical order of the coin names.
+The default order is lexicographical order of the coin names (i.e., option `a`).
 
 .Examples
 
@@ -433,12 +446,10 @@ Sort the listing in lexicographical order (default option, whether "a" is added 
 
 Sort the listing in reverse lexicographical order.
 
-
-
+[WARNING]
 ====
 This command can be reversed with `undo`, but only in the same session. The effect is permanent once _CoinBook_ is closed.
 ====
-=======
 
 // end::order[]
 
@@ -546,6 +557,10 @@ sync
 
 Obtains the latest price data to update price metrics of all owned coins.
 
+[NOTE]
+ You may notice some coins disappearing from the list view after syncing. This is most likely because the relevant coins no longer satisfy the currently applied list filter. +
+ Run the `list` command if you wish to see all coins.
+
 // end::sync[]
 
 //tag::autocomplete[]
@@ -595,8 +610,7 @@ There is no need to save manually.
 | *History* | `history` | Shows the user a history of previously input commands.
 | *List* | `list` | Lists all coin accounts.
 | *Notify* | `notify CONDITION` | Sets a notification for when the CONDITION has been met.
-| *Order* | `order {a,z}` | Sorts the coin accounts based on their OPTION.
-| *Order* | `order OPTION/{a,z}...` | Sorts the coin accounts based on their OPTION.
+| *Order* | `order {a,z}` | Sorts the coin accounts based on their code.
 | *Redo* | `redo` | Reapplies the previously un-done command.
 | *Sell* | `sell TARGET a/AMOUNT` | Subtracts AMOUNT of coin from the targeted account.
 | *Sync* | `sync` | Fetches data from online sources to update the prices.

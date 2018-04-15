@@ -334,28 +334,8 @@ the Coin objects and returns a true/false value.
 On syntactically and semantically invalid inputs, `ConditionParser` will retrieve the expected and actual type of
 `Token` that were not a match during the parsing phase from `TokenStack` and raise a `ParseException` before returning.
 
-In the event that strings intended to represent tags or numbers are not valid, an `IllegalValueException` instead,
+In the event that strings intended to represent tags or numbers are not valid, an `IllegalValueException` is raised instead,
 as per convention from `ParserUtil`.
-
-==== Design Considerations
-
-===== Aspect: Specification of syntax
-
-* **Alternative 1 (current choice):** Have the structure of the methods reflect exactly the syntax.
-** Pros: Any subsequent changes can be easily made by having the code reflect the new syntax, since the syntax is apparent.
-** Cons: It is more cumbersome to have to alter the code every time there is a change in syntax.
-* **Alternative 2:** Specify the syntax in a separate file (e.g. EBNF file), and metaprogram the parser based on the file.
-** Pros: This requires no code change whenever the syntax has to be modified.
-** Cons: The code to support this would be more complicated and not apparent to developers immediately.
-
-===== Aspect: Implementation of `SyntaxParser`, `SemanticParser`, `ConditionGenerator`
-
-* **Alternative 1 (current choice):** Have separate classes that have the same structure but with different return values.
-** Pros: This approach maintains SRP.
-** Cons: A change in syntax will require changes across 3 classes. It is also very redundant to have similar code.
-* **Alternative 2:** Have a single implementation that performs syntax parsing, semantic parsing and the condition generation.
-** Pros: There will be less redundant code.
-** Cons: This approach clearly violates SRP.
 
 ==== Advanced Details
 
@@ -464,6 +444,28 @@ p/>100 AND t/fav
 
 `p/>100` is a condition on price whereas `t/fav` is a condition on tags, and they can be composed using the `Predicate`
 method `and()` to return a logical conjunction of the two conditions.
+
+==== Design Considerations
+
+===== Aspect: Specification of syntax
+
+* **Alternative 1 (current choice):** Have the structure of the methods reflect exactly the syntax.
+** Pros: Any subsequent changes can be easily made by having the code reflect the new syntax, since the syntax is apparent.
+** Cons: It is more cumbersome to have to alter the code every time there is a change in syntax.
+* **Alternative 2:** Specify the syntax in a separate file (e.g. EBNF file), and metaprogram the parser based on the file.
+** Pros: This requires no code change whenever the syntax has to be modified.
+** Cons: The code to support this would be more complicated and not apparent to developers immediately.
+
+===== Aspect: Implementation of `SyntaxParser`, `SemanticParser`, `ConditionGenerator`
+
+* **Alternative 1 (current choice):** Have separate classes that have the same structure but with different return values.
+** Pros: This approach maintains SRP.
+** Cons: A change in syntax will require changes across 3 classes. It is also very redundant to have similar code.
+* **Alternative 2:** Have a single implementation that performs syntax parsing, semantic parsing and the condition generation.
+** Pros: There will be less redundant code.
+** Cons: This approach clearly violates SRP.
+
+
 // end::condition[]
 
 // tag::undoredo[]
@@ -611,7 +613,7 @@ This approach also violates the Single Responsibility Principle and the Separati
 
 ==== Current Implementation
 
-The notification system is facilitated by a `RuleBook`, which is located with the `Model` component as part of the App data. `RuleBook` holds a set of rules which define conditions to trigger some predefined action when met. A `RuleChecker` in `Logic` does this work of checking rules and executing the associated actions.
+The notification system is facilitated by a `RuleBook`, which is located within the `Model` component as part of the App data. `RuleBook` holds a set of rules which define conditions to trigger some predefined action when met. A `RuleChecker` in `Logic` does this work of checking rules and executing the associated actions.
 
 Let us walk through the implementation of notifications by considering a typical scenario involving this feature. Suppose the user wants to keep track of a certain coin's price, say `BTC`.
 
@@ -639,11 +641,11 @@ The `Rule` class looks like the following:
 ----
 public class Rule<T> {                    <5>
 
+    public final Predicate<T> condition;
+    public final ActionCommand<T> action; <1>
+
     public final RuleType type;           <2>
     public final String description;
-
-    public final ActionCommand<T> action; <1>
-    public final Predicate<T> condition;
 
     protected Rule(String description, RuleType type,
                    ActionParser<T> actionParser,
@@ -673,18 +675,18 @@ public class Rule<T> {                    <5>
 }
 ----
 
-A few things to note from this:
+The above snippet demonstrates several noteworthy points:
 
 <1> Each `Rule` object is a condition-action pair
 <2> It is completely described by its `type` and `description`
-<3> By storing the above two values as strings, the exact object can be reconstructed on startup
-<4> The constructor has been made `protected` so that new rule types must be defined by extending this base `Rule` class to be constructed and accessed from outside
+<3> By storing the above two values as strings, the exact object can be fully reconstructed after restarting
+<4> The constructor has `protected` access so that this base `Rule` class must be extended as new rule types to be used from outside
 <5> The class is generic, and parameterized by the type of the object it is a condition upon, e.g. notification rules test against `Coin` objects
 
 This structure follows very closely the [ext]#https://sourcemaking.com/design_patterns/strategy[Strategy design pattern]# as described in the "Gang of Four" book. It leads to the following class structure, as used above (see Fig. 24):
 
 .Class Diagram for Rule System
-image::NotificationClassDiagram.png[width="800]
+image::NotificationClassDiagram.png[width="800"]
 
 An example concrete implementation is the `NotificationRule` class used for notifications:
 
@@ -706,7 +708,7 @@ public class NotificationRule extends Rule<Coin> {
 
 The notification command fills in the abstract `actionParser` and `conditionParser` with functions implemented in various places, but which follow the template `FunctionalInterface` shown above.
 
-`conditionParser` takes in the description string and returns a `Predicate<T>` object, which can be tested against with an object of type `T`. This results in a `true` or `false` output depending on whether that object satisfies the condition. `NotificationRule` uses the same `ConditionParser` as in the `find` command, explained in the previous <<condition,section>>.
+`conditionParser` takes in the description string and returns a `Predicate<T>` object, which can be tested against an object of type `T`. This results in a `true` or `false` output depending on whether that object satisfies the condition. `NotificationRule` uses the same `ConditionParser` as in the `find` command, explained in the previous <<condition,section>>.
 
 `actionParser` takes in the same description string and returns an `ActionCommand`, which is just:
 
@@ -751,11 +753,11 @@ public class RuleChecker {
 }
 ----
 
-An instance of `RuleChecker` lives inside `LogicManager`, at the same level of architecture as the `UndoRedoStack` or the `CommandHistory` (<<fig-LogicClassDiagram,see above>>).
+An instance of `RuleChecker` lives inside `LogicManager`, at the same level of architecture as the `UndoRedoStack` or the `CommandHistory` (<<fig-LogicClassDiagram,see here>>).
 The rule testing procedure is initiated by an event, usually capturing information about a change in the state of some objects of interest.
 
-`RuleChecker`, upon capturing this event, begins looping through the list of rules, testing each one's condition against the event data and performing the custom action defined with it.
-The extra data as above is also set with the potentially matching object, as well as the event itself, as alluded to above, which should contain all other necessary context for the action's execution.
+`RuleChecker`, upon capturing this event, begins looping through the list of rules, testing each one's condition against the event data, executing the attached action if necessary.
+The extra data is set with the potentially matching object, as well as the event itself as alluded to above. These should consist of all necessary context for the action's execution.
 
 A concrete example from `NotificationRule`:
 
@@ -787,7 +789,8 @@ public class SpawnNotificationCommand extends ActionCommand<Coin> {
 }
 ----
 
-This sends yet another event `ShowNotificationRequestEvent`, which is captured by the `UI` component that then creates a pop-up notification to show to the user.
+This sends yet another event, `ShowNotificationRequestEvent`, along with some data about the coin that matched the notification rule.
+The event is then captured by the `UI` component, which responds by creating a pop-up notification to show to the user.
 
 ===== Proposed Extensions
 
@@ -803,7 +806,7 @@ With the above in mind, you should be able to see that it is relatively easy to 
 
 * Associated actions
 ** Condition: Action made upon some coin account
-** Action: The same action is done on a specified target
+** Action: Another action which depends on the first is generated and executed upon predefined targets
 
 ==== Design Considerations
 
@@ -818,7 +821,7 @@ With the above in mind, you should be able to see that it is relatively easy to 
 ** Cons: It will be more difficult to extend rules to handle other events in the future.
 
 [TIP]
-`RuleBook` is actually made general-purpose in the sense that it can hold other types of rules for future extensions, e.g. Automated Task Rules, etc.
+`RuleBook` is made general-purpose and it can hold other types of rules for future extensions, e.g. Automated Task Rules, etc.
 
 ===== Aspect: Type of notification to use
 
@@ -934,7 +937,7 @@ The sync mechanism is facilitated by `FetchUtil`, which uses a 3rd party library
 
 Suppose the user wants to update the prices of all coins owned with the latest data.
 
-The user executes the sync command using `SyncCommand`, i.e. `sync`, which first builds the API URL. The API URL is built using `UrlBuilderUtil`, which first retrieves the coin code of every coin account that the user has, then concatenates to CryptoCompare API URL as HTTP parameters.
+The user executes the sync command using `SyncCommand`, i.e. `sync`, which first builds the API URL. The API URL is built using `UrlBuilderUtil`, which first retrieves the coin code of every coin account that the user has, then concatenates to [gloss]#<<ccmp,CryptoCompare>># API URL as HTTP parameters.
 
 `FetchUtil` is then used to send a HTTP GET request to CryptoCompare using this built URL via `AsyncHTTPClient` and returns a `Future<Response>` to `SyncCommand`. When the response data from the `Future<Response>` object is received, this data is then deserialized into `Price` objects to be passed to the `ModelManager` for updating.
 
@@ -970,12 +973,12 @@ The user will first type `s` into the command line.
 s
 ```
 
-Now, the autocomplete feature will then auto-suggest inputs to complete the query by displaying a pop-up of all commands that contain the letter `s`.
+Now, the autocomplete feature will then auto-suggest inputs to complete the query by displaying a pop-up of all commands that contain the letter `s` (See Fig. 27).
 
 .Auto-suggestions Display
 image::AutocompleteBefore.png[width="200"]
 
-When the user then presses kbd:[DOWN] twice to reach his desired `sell` command, the selected suggestion will be highlighted light grey.
+When the user then presses kbd:[DOWN] twice to reach his desired `sell` command, the selected suggestion will be highlighted light grey (See Fig. 28).
 
 .Command Selection
 image::AutocompleteNav.png[width="200"]
@@ -1052,7 +1055,7 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Follow the instructions in [exref]##<<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>>## to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Find the generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  In Chrome's menu, click on the `Print` option.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 26) below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot (Fig. 29) below.
 
 .Options for Saving Documentation as PDF Files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
@@ -1088,7 +1091,7 @@ There are three ways to run tests on your computer before sharing your changes t
 *Method 1: Using IntelliJ JUnit test runner*
 
 * To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, right-click on a test package, test class, or a test, e.g. `ABC`, and choose `Run 'ABC'` (see Fig. 27)
+* To run a subset of tests, right-click on a test package, test class, or a test, e.g. `ABC`, and choose `Run 'ABC'` (see Fig. 30)
 
 .Running Tests
 image::RunningTests.png[]
@@ -1190,7 +1193,7 @@ A project often depends on third-party libraries. For example, _CoinBook_ depend
 
 *Value proposition*: manage cryptocurrencies faster than a typical mouse/GUI driven app
 
-=== Feature contribution
+=== Feature Contribution
 *Eldon Chung*
 
 * Major: Search enhancement. Support for SQL-like queries with logical operators as well as additional search specifiers besides name, such as tags and price. This lets users manage their large portfolio easily through efficient filtering.
@@ -1226,7 +1229,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |user actively trading |be able to store up to 2000 cryptocurrencies |maintain my extensive portfolio.
 |`* * *` |user |have a search and find feature |avoid going through all coins manually.
 |`* * *` |user who values privacy |use a program without making accounts |keep it simple.
-|`* * *` |user who values privacy |store my data only on local storage |avoid having my data on potentially insecure servers.
+|`* * *` |user who values privacy |store my [gloss]#<<sensitive-data,sensitive data>># only on local storage |avoid having my data on potentially insecure servers.
 |`* * *` |user |avoid lots of manual entry |save time.
 |`* *` |user |not to have to exit the current search results before entering a new command |operate on my search results efficiently.
 |`* *` |user |have a sorting feature for names, coin prices, account values, etc. |quickly rank my choices.
@@ -1234,13 +1237,13 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* *` |user |be able to import/export my data |transfer it to other computers.
 |`*` |user |have different color themes | customise my program.
 |`*` |user |have multilingual support |understand the program better.
-|`*` |user |have a fixed interval backups, that can also be manually set |ensure my data will not be lost.
-|`*` |user |macro and write custom aliasing for commands |customize my experience.
-|`*` |user |track price, market cap, and circulating supply from coinmarket |get all my information in one place.
+|`*` |user |have fixed interval backups, that can be manually set |ensure my data will not be lost.
+|`*` |user |write custom <<macros,macros>> and aliasing for commands |customize my experience.
+|`*` |user |track price, market cap, and circulating supply |get all my information in one place.
 |`*`  |user |see <<RSI,RSI>> or <<MACD,MACD>> graphs |analyse price trends for decision-making.
 |`*` |user |see Overbought/Oversold lines | do as above.
-|`*` |user |be able to set support and resistance lines | do as above.
-|`*` |user |have candlestick graphs with simple/exponential moving average overlay | do as above.
+|`*` |user |be able to set [gloss]#<<support-lines,support>># and [gloss]#<<resistance-lines,resistance>># lines | do as above.
+|`*` |user |have candlestick graphs with [gloss]#<<simple-moving-average,simple>># / [gloss]#<<exponential-moving-average,exponential>># moving average overlay | do as above.
 |`*` |user |be able to search information on a specific coin |get all my information in one place.
 |`*` |user |have desktop notifications |be informed when something needs my attention.
 |`*` |user |have a daily/hourly report |keep track of the current state of my accounts.
@@ -1251,7 +1254,7 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 (For all use cases below, the *System* is `CoinBook` and the *Actor* is the `User`, unless specified otherwise)
 
-=== Use case: Delete coin listings
+=== Use Case: Delete Coin Listings
 
 *MSS*
 
@@ -1270,7 +1273,7 @@ Use case ends.
 +
 Use case resumes at step 1.
 
-=== Use case: Export storage data
+=== Use Case: Export Storage Data
 
 *MSS*
 
@@ -1295,7 +1298,7 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-=== Use case: Set notifications
+=== Use Case: Set Notifications
 
 *MSS*
 
@@ -1313,7 +1316,7 @@ Use case ends.
 +
 Use case ends.
 
-=== Use case: Tag items for group commands
+=== Use Case: Tag Items for Group Commands
 
 *MSS*
 
@@ -1343,7 +1346,6 @@ Use case ends.
 .  All sensitive data should be stored locally.
 .  Should only make configuration files in the local directory to remain fully portable.
 .  Should not take more than one minute to generate summary reports.
-.  Should update news and charts automatically at the user-specified frequency, with tolerance of 1% (e.g. +/-18s for 30min interval)
 
 [appendix]
 == Glossary
@@ -1354,7 +1356,7 @@ Short for Application-Programmer Interface.
 [[alias]] Alias::
 Alternative forms of commands that are usually shorter for typing efficiency.
 
-[[coinmarketcap]] Coinmarketcap::
+[[ccmp]] CryptoCompare::
 A website that hosts <<cryptocurrency,cryptocurrency>> information, including cap rankings, prices, volumes and circulating supplies.
 
 [[coin]] Coin::
@@ -1403,7 +1405,7 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Launching and Shutting Down
 
-. Initial launch
+. Launching initially
 
 .. Download the jar file and copy into an empty folder.
 .. Double-click the jar file. +
@@ -1478,5 +1480,5 @@ Expected: The notification list window should open, and any added notification r
 
 .. Prerequisites: Have multiple known coins added to the list that can receive price updates, e.g. BTC, ETH, XRP, DOGE...
 .. Test case: `notify p/>1`, `sync` +
-Click on any notification.
+Click on any notification. +
 Expected: The coin stated on the notification is opened in the detail window, and its price history chart and subreddit page can be seen.

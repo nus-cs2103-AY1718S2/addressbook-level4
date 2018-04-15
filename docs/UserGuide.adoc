@@ -71,8 +71,7 @@ The following image illustrates the command format used in Medeina. You can refe
 
 .Command format
 image::commandSyntax.png[width="600"]
-
-
+{empty} +
 
 [width="100%", cols="15%,<45%a,<40%", options="header"]
 |=====
@@ -81,13 +80,12 @@ image::commandSyntax.png[width="600"]
 | Notes
 
 .^a|Command word
-| `add`, `clear`, `help`, `undo`
+| `add`, `edit`, `clear`, `help`, `undo`
 a| * Medeina's syntax starts with a command word.
 
 .^a|Alias
-| `a`, `f`, `d`, `cls`, `h`
-a| * Aliases can be used to replace command words.
-* They help you to reduce typing.
+| `a`, `ed`, `cls`, `h`, `ud`
+a| * Aliases are short-forms that can be used to replace command words.
 
 .^a|Options
 | `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-fa**`, `**-y**`
@@ -124,28 +122,26 @@ a| * In this guide and also in error messages, when tag is bounded in square bra
 .Medeina's autocomplete for command words, prefixes and options
 image::autocomplete.png[width="500"]
 
-
+{empty} +
 Medeina comes with an autocomplete feature in the CLI to help you manage your contacts, pet patients and appointments faster. 
 
 * Medeina supports autocomplete for command words, options, prefixes, and parameters such as tags, NRIC, pet patient name, species, breed, colour and blood type.
 * Autocomplete will provide suggestions for NRIC when you are adding a new pet patient or new appointment, assigning pet patient under another contact using the edit command, and finding a contact by NRIC.
 * Autocomplete will provide suggestions for pet patient name when you are adding an appointment.
-* Suggestions for tags, species, breed, colour and blood type will be shown when their corresponding prefixes is detected.
+* Suggestions for tags, species, breed, colour and blood type will be shown when their corresponding prefixes are detected.
 * Autocomplete matching is case-insensitive e.g. you will see autocomplete suggestions 'edit' and 'exit' when you type 'E'.
 * You can use kbd:[Up] and kbd:[Down], or kbd:[Tab] to traverse through the autocomplete suggestions in the drop-down menu.
 * Press kbd:[Enter] to select an autocomplete suggestion in the drop-down menu.
-* You can toggle autocomplete on/off using kbd:[F2] when the command box is focused.
 
 [NOTE]
 ====
 Autocomplete for options, prefixes and parameters works only for commands that require them: `add`, `edit`, `find`, `delete` and `listappt`.
 ====
 
-[NOTE]
+[TIP]
 ====
 You can toggle autocomplete on/off using kbd:[F2] when the command box is focused.
 ====
-
 // end::autocompleteUG[]
 // end::cliUG[]
 
@@ -594,16 +590,15 @@ This command **cannot** be undone. Please be certain that you have backed up you
 // tag::changethemeUG[]
 === Changing theme : `theme` or `t` `[Since v1.1]`
 
-You can use `theme THEME_NAME` or `t THEME_NAME` to change Medeina's theme to one of the following: +
+If you would like change Medeina's theme to better suit your preference, simply use the command `theme THEME_NAME` or `t THEME_NAME` to change theme. Medeina currently supports the following themes:
 
 * dark
 * light
 
 [TIP]
 ====
-`THEME_NAME` is case insensitive. e.g DARK will match dark.
+`THEME_NAME` is case insensitive. e.g DaRK will match dark.
 ====
-{empty} +
 
 .Dark theme
 image::Theme_Dark.PNG[width:790]
@@ -616,7 +611,7 @@ image::Ui.png[width:790]
 
 === Exiting the program : `exit` or `q`
 
-You can easily exit Medeina without any mouse click by entering `exit` or `q` in the command box. +
+You can easily close the Medeina application by entering `exit` or `q` in the command box. +
 
 {empty} +
 

@@ -93,7 +93,7 @@ a| * Medeina's syntax starts with a command word.
 a| * Aliases are short-forms that can be used to replace command words.
 
 .^a|Options
-| `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-fa**`, `**-y**`
+| `**-o**`, `**-p**`, `**-a**`, `**-fo**`, `**-fp**`, `**-y**`
 a| * Options are used in `add`, `edit`, `find`, `delete` and `listappt` commands.
 * You can specify them to execute variants of a command. For example in figure 2, `**-p**` option denotes editing a pet patient.
 * If there are multiple options used in a command, the order must be preserved.
@@ -208,6 +208,7 @@ Options are in order. For example, the add command for pet patient will have an 
 ====
 
 image::add_examples.PNG[width="800"]
+// end::addcommandUG[]
 
 .**Copy & paste to try out the above examples**
 ----
@@ -221,7 +222,6 @@ add -a d/2018-05-27 14:30 r/had poor appetite the last 3 days t/vaccination t/ch
 add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/S1234567G -p n/jewel
  s/cat b/persian c/calico bt/AB -a d/2018-12-31 12:30 r/nil t/surgery t/sterilization
 ----
-// end::addcommandUG[]
 {empty} +
 
 // tag::listcommand[]
@@ -465,8 +465,7 @@ delete -fo 1
 
 === Listing entered commands : `history` or `his`
 
-To list all the commands that you have entered in reverse chronological order. +
-The command format should be: `history` or `his`
+If you would like to check what commands have been performed on Medeina for verification purposes, enter `history` or `his` in the command box. +
 
 image::History_Command.PNG[width="800"]
 
@@ -590,7 +589,7 @@ image::Redo_Clear.PNG[width="500"]
 
 === Clearing all entries : `clear` or `cls`
 
-You can use `clear` or `cls` to delete all entries in Medeina. +
+If you want to delete all entries in Medeina, simply use the `clear` or `cls` command. +
 
 .Executed clear command
 image::After_Clear.PNG[width="500"]
@@ -669,7 +668,7 @@ You do not need to manually encrypt your data files.
 
 === Creating other user profiles `[coming in v2.0]`
 
-Coming v2.0, Medeina will have user accounts, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves.
+User accounts will be implemented in Medeina, so that veterinarians and their assistants can collaborate on the same computer, but at the same time keep their information private to themselves. They can also customize Medeina to their own preferences.
 
 {empty} +
 
@@ -691,7 +690,7 @@ Information that vets should not change:
 
 === Supporting multiple users `[coming in v2.0]`
 
-Coming v2.0, Medeina can be used concurrently on different systems. The data will be synced over an internet connection. This allow Veterinarians and their assistants to access Medeina simultaneously in different rooms, making it easier to collaborate with others.
+Medeina will have support to run concurrently on different systems. The data will be synced over an internet connection. This allow veterinarians and their assistants to access Medeina simultaneously in different rooms, making it convenient to collaborate with one another.
 
 {empty} +
 
@@ -729,6 +728,10 @@ Coming v2.0, Medeina can be used concurrently on different systems. The data wil
 *Q*: When click on appointments, a pop over window appears to show details of appointments but its unmodifiable, why? +
 *A*: Because of Medeina's command line based property, modifying of appointments details using mouse is disabled. Instead, users should use `edit` command.
 
+*Q*: Suppose I want to make an appointment for a pet patient named "Happy". However, the contact that "Happy" is assigned under, has yet another pet patient that is named "Happy" as well. I end up making an appointment for the other "Happy" instead. What can I do?
+*A*: Medeina is developed with the assumption that no pet patients under the same contact will share a name. However, there is a solution for such rare cases. Edit one of the pet patients to a name with a slight variation e.g. "Happy dog" to include species in the name for differentiation, or "Happy 1" to indicate the older pet patient for differentiation.
+
+=======
 // end::FAQ[]
 {empty} +
 

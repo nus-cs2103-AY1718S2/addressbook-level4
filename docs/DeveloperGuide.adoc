@@ -574,7 +574,7 @@ Qiu Hao Ze:
 Victor Tardieu:
 .  Book Class with bookList
 .. Creates book objects.
-.  List Command
+.  Clear Account Command
 .. List the books in the catalogue in order.
 
 Wong Khia Yi:
@@ -583,6 +583,12 @@ Wong Khia Yi:
 .  Reserve Command
 .. Allows students to reserve books.
 
+=== Future Features
+
+* Borrow and reserve feature will implement an association class called loan and reserve respectively. This association class would include the details of the user borrowing the book and the due date. This will allow the librarian to access the details of the user borrowing the book and its due date.
+* Function to see the number of books that a student has borrowed
+* Implement a calendar so that the student can be reminded when the book is due.
+* System to send a fine to the student account when a book is overdue
 
 [[GetStartedProgramming]]
 [appendix]

@@ -270,14 +270,6 @@ Selects the 2nd book in the catalogue.
 `select 1` +
 Selects the 1st book in the results of the `find` command.
 
-[TIP]
-Press TAB after writing `select` to use the auto-complete function.
-
-Examples:
-
-* `select` --> (press TAB) --> `select 1`
-// end::select[]
-
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
@@ -450,8 +442,8 @@ Privilege Level: 2(Librarian)
 
 Examples:
 
-* `addAccount n/Jack Morgan u/jacky p/jack123 m/A0123456J I/1`
-* `addAccount n/Tom Madison u/tommy p/tom123 m/A1234567T  I/2`
+* `addAccount n/Jack Morgan u/jacky p/jack123 m/A0123456J l/1`
+* `addAccount n/Tom Madison u/tommy p/tom123 m/A1234567T  l/2`
 
 [TIP]
 Press TAB after writing `addAccount` to use the auto-complete function.

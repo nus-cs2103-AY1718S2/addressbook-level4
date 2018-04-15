@@ -23,6 +23,8 @@ SellIt is a desktop addressbook and calendar application built for salesmen. It 
 
 * *Minor enhancement*: Command alias feature so that user does not have to type long commands.
 
+* *Minor enhancement*: Loading Screen for emails so app does not become unresponsive.
+
 * *Code contributed*: [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/functional/ongkuanyang.md[Functional code]] [https://github.com/CS2103JAN2018-W10-B2/main/blob/master/collated/test/ongkuanyang.md[Test code]]
 
 * *Other contributions*:

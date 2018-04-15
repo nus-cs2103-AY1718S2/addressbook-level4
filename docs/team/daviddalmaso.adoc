@@ -28,7 +28,7 @@ reInsurance is the premier organizational tool for insurance agents around the w
 *** Set up initial team organization and repository.
 *** Managed release `v1.4` and `v1.5rc` on GitHub
 *** Created jar for release `v1.4` and `v1.5rc` on Github
-*** Set up Travis CI for team repository to check for build errors.
+*** Set up Travis CI for team repository to check for build errors: https://github.com/CS2103JAN2018-T11-B3/main/pull/92[#92]
 *** Set up auto publishing of docs for team repository.
 *** Set up Coveralls for team repository to check for code coverage.
 ** Enhancements to existing features:
@@ -38,8 +38,9 @@ reInsurance is the premier organizational tool for insurance agents around the w
 ** Community:
 *** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-T11-B3/main/pull/22[#22], https://github.com/CS2103JAN2018-T11-B3/main/pull/21[#21]
 *** PRs approved of: https://github.com/CS2103JAN2018-T11-B3/main/pull/17[#17]
+*** Help with build issues in code outside of my own: https://github.com/CS2103JAN2018-T11-B3/main/pull/26[#26]
 ** Tools:
-*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/152[#152]
+*** Integrated Google Calendar API to the project https://github.com/CS2103JAN2018-T11-B3/main/pull/96[#96]
 
 == Contributions to the User Guide
 

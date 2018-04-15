@@ -31,9 +31,11 @@ with managing their cryptocurrency portfolio.
 ** Documentation:
 *** Did cosmetic tweaks to existing contents of the User Guide: https://github.com[#14]
 ** Tools:
-*** Used PlantUML for generating diagrams for the Developer Guide
+
+*** Used PlantUML for generating diagrams for the Developer Guide https://github.com[#92]
 ** Project management:
-*** Helping to note down minutes for group meetings
+*** Note down minutes for group meetings
+*** Did acceptance testing to discover bugs in the application
 
 == Contributions to the User Guide
 

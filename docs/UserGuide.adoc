@@ -406,14 +406,20 @@ notify w/+>1000 c/ETH
 Notify when the amount worth in dollars of the `ETH` account rises by more than $1000
 
 // tag::order[]
-=== Change listing order `order` | `o`
+
+=== Change listing order `order` | `o` `[Since v1.5]`
 
 .Format
 ----
 order {a,z}
 ----
 
+
+Orders the coin listing in lexicographical order. +
+This is also the default option if {a,z} is not specified after the command.
+=======
 Orders the coin listing in lexicographical order (default option if sort order is not specified).
+
 
 Put `a` after the command word to sort it in lexicographical order, and `z` to sort in reverse lexicographical order. The listing is sorted by the leftmost entered option first, then equal values are sorted by the next one, and so on. The default order is lexicographical order of the coin names.
 
@@ -426,6 +432,14 @@ Sort the listing in lexicographical order (default option, whether "a" is added 
  order z
 
 Sort the listing in reverse lexicographical order.
+
+
+
+====
+This command can be reversed with `undo`, but only in the same session. The effect is permanent once _CoinBook_ is closed.
+====
+=======
+
 // end::order[]
 
 === List past commands `history` | `h`
@@ -579,6 +593,7 @@ There is no need to save manually.
 | *History* | `history` | Shows the user a history of previously input commands.
 | *List* | `list` | Lists all coin accounts.
 | *Notify* | `notify CONDITION` | Sets a notification for when the CONDITION has been met.
+| *Order* | `order {a,z}` | Sorts the coin accounts based on their OPTION.
 | *Order* | `order OPTION/{a,z}...` | Sorts the coin accounts based on their OPTION.
 | *Redo* | `redo` | Reapplies the previously un-done command.
 | *Sell* | `sell TARGET a/AMOUNT` | Subtracts AMOUNT of coin from the targeted account.

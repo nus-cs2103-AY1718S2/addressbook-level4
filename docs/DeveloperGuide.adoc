@@ -887,7 +887,7 @@ By default, elements with the same key are inserted into a `List<T>`, although t
 
 ==== Design Considerations
 
-===== Aspect: Implementation of Sort function
+===== Aspect: Implementation of `SortCommand`
 
 * **Alternative 1 (current choice):** Use `Collections.sort`
 
@@ -898,6 +898,20 @@ By default, elements with the same key are inserted into a `List<T>`, although t
 
 ** Pros: This possibly allows us to reduce the time required to execute the sorting command.
 ** Cons: This would take more time and a considerable amount of effort to incorporate into our CoinBook since we would not be using Java’s in-built sorting method.
+
+===== Aspect: Undo-ability of `SortCommand`
+
+* **Alternative 1 (current choice):** Make it an `UndoableCommand` just like `add`, `clear`, `edit` etc.
+** Pros: This offers an intuitive, single interface for similar operations.
+** Cons: This would increase the coupling between the coin data and the rule data parts of `Model`, since the current implementation of `UndoableCommand` requires saving the state of `Model`, which is a wrapper for just the coin data. +
+We want to keep `Model` as an interface for just the coin data itself.
+
+* **Alternative 2:** Leave it non-undoable
+** Pros: Sort Command data can be kept separate from coin data. +
+** Cons: The UI will be less intuitive as users would have to change how they manage coins and rules. +
+The user would not be able to undo the sort order once it is applied, and this might be inconvenient if the user wanted the sort function for a temporary means only or the user accidentally triggered the sort. +
+Sometimes a user might want their own customised way of arranging coins and so the non-undoable nature might compromise this.
+
 
 ===== Aspect: Implementation of Groups function `[Coming in v2.0]`
 

@@ -45,3 +45,4 @@ include::../UserGuide.adoc[tag=remark]
 |===
 
 include::../DeveloperGuide.adoc[tag=record]
+include::../DeveloperGuide.adoc[tag=remark]

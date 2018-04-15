@@ -56,6 +56,18 @@ include::../UserGuide.adoc[tag=print]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
+=== Feature Implementation
+
 include::../DeveloperGuide.adoc[tag=login]
 
 include::../DeveloperGuide.adoc[tag=print]
+
+=== Use Cases
+
+include::../DeveloperGuide.adoc[tag=login-use-case]
+
+=== Instructions for Manual Testing
+
+include::../DeveloperGuide.adoc[tag=login-test-case]
+
+include::../DeveloperGuide.adoc[tag=print-test-case]

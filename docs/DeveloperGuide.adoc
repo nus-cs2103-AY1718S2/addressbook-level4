@@ -1568,6 +1568,7 @@ Use case ends
 +
 Use case resumes from step 3
 
+// tag::login-use-case[]
 [discrete]
 === Use case: Login to access IMDB
 
@@ -1600,6 +1601,7 @@ Use case resumes at step 1
 ** Steps 3a1-3a2 are repeated until username and password match
 +
 Use case resumes at step 4
+//end::login-use-case[]
 
 [discrete]
 === Use case: Update patient details
@@ -1809,6 +1811,7 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
+//tag::login-test-case[]
 === Login
 
 . Logging into IMDB as a doctor
@@ -1819,7 +1822,9 @@ Expected: IMDB shows successful login message, and all commands for doctor can b
 .. Type `login`
 .. A login window will be opened. In that window, type "bob" for the username field and "password456" for the password field. +
 Expected: IMDB shows successful login message, and all commands for doctor can be executed.
+//end::login-test-case[]
 
+//tag::print-test-case[]
 === Print
 
 . Printing a patient's medical records while all patients are listed.
@@ -1828,6 +1833,7 @@ Expected: IMDB shows successful login message, and all commands for doctor can b
 Expected: Medical records of first patient in the list is printed into a PDF, which is opened by a PDF-reading program.
 .. Type `print 0` +
 Expected: Nothing is printed. Error details shown in the status message.
+//end::print-test-case[]
 
 === Add Conditions
 

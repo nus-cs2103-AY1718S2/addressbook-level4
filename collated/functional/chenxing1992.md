@@ -1,52 +1,66 @@
 # chenxing1992
 ###### /resources/view/MainWindow.fxml
 ``` fxml
-<VBox xmlns="http://javafx.com/javafx/8.0.111" xmlns:fx="http://javafx.com/fxml/1">
+
+<VBox onKeyPressed="#handleKeyPress" xmlns="http://javafx.com/javafx/8"
+      xmlns:fx="http://javafx.com/fxml/1">
     <stylesheets>
         <URL value="@NUSCouples.css" />
         <URL value="@Extensions.css" />
     </stylesheets>
+   <children>
 
-    <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
-        <Menu mnemonicParsing="false" text="File">
-            <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
-        </Menu>
-        <Menu mnemonicParsing="false" text="Help">
-            <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
-        </Menu>
-    </MenuBar>
+       <MenuBar fx:id="menuBar" VBox.vgrow="NEVER">
+      <menus>
+              <Menu mnemonicParsing="false" text="File">
+                 <items>
+                     <MenuItem mnemonicParsing="false" onAction="#handleExit" text="Exit" />
+                 </items>
+              </Menu>
+              <Menu mnemonicParsing="false" text="Help">
+                 <items>
+                     <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+                 </items>
+              </Menu>
+      </menus>
+       </MenuBar>
 
-    <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-        <VBox fx:id="personList" minWidth="100" prefWidth="500" SplitPane.resizableWithParent="false">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-            <StackPane fx:id="listPanelPlaceholder" VBox.vgrow="ALWAYS" />
-        </VBox>
+       <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
+      <items>
+              <VBox fx:id="personList" minWidth="100" prefWidth="500" SplitPane.resizableWithParent="false">
+                  <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                  </padding>
+                 <children>
+                     <StackPane fx:id="listPanelPlaceholder" VBox.vgrow="ALWAYS" />
+                 </children>
+              </VBox>
 
-        <StackPane fx:id="browserPlaceholder" prefWidth="200">
-            <padding>
-                <Insets bottom="10" left="10" right="10" top="10" />
-            </padding>
-        </StackPane>
-    </SplitPane>
+              <StackPane fx:id="browserPlaceholder" prefWidth="200">
+                  <padding>
+                      <Insets bottom="10" left="10" right="10" top="10" />
+                  </padding>
+              </StackPane>
+      </items>
+       </SplitPane>
 
-    <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets bottom="5" left="10" right="10" top="5" />
-        </padding>
-    </StackPane>
+       <StackPane fx:id="resultDisplayPlaceholder" maxHeight="100" minHeight="100" prefHeight="100" styleClass="pane-with-border" VBox.vgrow="NEVER">
+           <padding>
+               <Insets bottom="5" left="10" right="10" top="5" />
+           </padding>
+       </StackPane>
 
-    <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
-        <padding>
-            <Insets left="20.0" right="20.0" top="5.0" />
-        </padding>
-        <VBox.margin>
-            <Insets />
-        </VBox.margin>
-    </StackPane>
+       <StackPane fx:id="commandBoxPlaceholder" styleClass="pane-with-border" VBox.vgrow="NEVER">
+           <padding>
+               <Insets left="20.0" right="20.0" top="5.0" />
+           </padding>
+           <VBox.margin>
+               <Insets />
+           </VBox.margin>
+       </StackPane>
 
-    <StackPane fx:id="statusbarPlaceholder" prefHeight="13.0" prefWidth="692.0" VBox.vgrow="ALWAYS" />
+       <StackPane fx:id="statusbarPlaceholder" prefHeight="13.0" prefWidth="692.0" VBox.vgrow="ALWAYS" />
+   </children>
 </VBox>
 ```
 ###### /resources/view/NUSCouples.css
@@ -81,6 +95,7 @@ background {
     -fx-font-size: 12pt;
     -fx-font-family: sans-serif;
     -fx-border-color: transparent;
+    -fx-prompt-text-fill: white;
 }
 
 .tab-pane {
@@ -160,8 +175,8 @@ background {
 }
 
 .list-cell:filled:selected #cardPane { /* Used for border on selected cell */
-    -fx-border-color: green;
-    -fx-border-width: 0;
+    -fx-border-color: darkblue;
+    -fx-border-width: 1;
 }
 
 .list-cell .label {
@@ -208,7 +223,7 @@ background {
 
 .status-bar .label { /* Status bar font */
     -fx-font-family: sans-serif;
-    -fx-text-fill: white;
+    -fx-text-fill: dimgray;
 }
 
 .status-bar-with-border {
@@ -248,7 +263,7 @@ background {
 }
 
 .menu .left-container {
-    -fx-background-color: black;
+    -fx-background-color: green;
 }
 
 /*
@@ -322,7 +337,7 @@ background {
 }
 
 .scroll-bar .thumb { /* Scroll bar background color */
-    -fx-background-color: #B3B3B3;
+    -fx-background-color: #762cb9;
     -fx-background-insets: 3;
 }
 
@@ -343,9 +358,21 @@ background {
     -fx-padding: 8 1 8 1;
 }
 
-#cardPane { /*Background of Listed contacts*/
-    -fx-background-color: #CD69FF;
-    -fx-border-width: 0;
+#partnerLabel{
+
+    -fx-text-fill: purple;
+    -fx-font-size: 18px;
+    -fx-font-weight: heavy;
+    -fx-background-color: pink;
+}
+
+#journalLabel{
+
+    -fx-text-fill: purple;
+    -fx-font-size: 18px;
+    -fx-font-weight: heavy;
+    -fx-background-color: pink;
+
 }
 
 #commandTypeLabel {
@@ -360,6 +387,11 @@ background {
     -fx-font-size: 14pt;
     -fx-text-fill: purple;
     -fx-opacity: 0.9;
+}
+
+#cardPane { /*Background of Listed contacts*/
+    -fx-background-color: #CD69FF;
+    -fx-border-width: 0;
 }
 
 #filterField, #personListPanel, #personWebpage {
@@ -379,19 +411,6 @@ background {
 
     -fx-background-color: #CD69FF;
 
-}
-#tags {
-    -fx-hgap: 7;
-    -fx-vgap: 3;
-}
-
-#tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #4F6D7A;
-    -fx-padding: 2 7 2 7;
-    -fx-border-radius: 2;
-    -fx-background-radius: 10;
-    -fx-font-size: 11;
 }
 ```
 ###### /resources/view/CalendarDisplay.fxml
@@ -553,7 +572,6 @@ background {
 ```
 ###### /java/seedu/address/ui/CommandBox.java
 ``` java
-
     /**
      * Checks if sentence starts with " add " or " a ".
      * Accounts for blank space in front.
@@ -851,7 +869,7 @@ background {
      * Handles the Enter button pressed event.
      */
     @FXML
-    private void handleCommandInputChanged() {
+    private void handleCommandInputChanged() { //here
         try {
             CommandResult commandResult = logic.execute(commandTextField.getText());
             initHistory();
@@ -873,24 +891,25 @@ background {
 ```
 ###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
-    public BrowserPanel(ObservableList<ReadOnlyPerson> personList) {
+    public BrowserPanel(ReadOnlyPerson partner) {
         super(FXML);
 
         // To prevent triggering events for typing inside the loaded Web page.
-        //  getRoot().setOnKeyPressed(Event::consume);
+        getRoot().setOnKeyPressed(Event::consume);
 
-        this.personList = personList;
+        this.partner = partner;
 
         calendarView = new CalendarView();
         calendarView.setRequestedTime(LocalTime.now());
         calendarView.setToday(LocalDate.now());
         calendarView.setTime(LocalTime.now());
-        updateCalendar();
+        if (partner != null) {
+            updateCalendar();
+        }
+
         disableViews();
         registerAsAnEventHandler(this);
 
-        //loadDefaultPage();
-        //registerAsAnEventHandler(this);
     }
 
 ```
@@ -984,20 +1003,20 @@ background {
      * Creates a new a calendar with the update information
      */
     private void updateCalendar() {
-        setTime();
-        CalendarSource calendarSource = new CalendarSource("Appointments");
-        int styleNum = 0;
-        for (ReadOnlyPerson person : personList) {
-            Calendar calendar = getCalendar(styleNum, person);
+        try {
+            setTime();
+            CalendarSource calendarSource = new CalendarSource("Appointments");
+            int styleNum = 0;
+            Calendar calendar = getCalendar(styleNum,  partner);
             calendarSource.getCalendars().add(calendar);
-            ArrayList<Entry> entries = getEntries(person);
-            styleNum++;
-            styleNum = styleNum % 5;
+            ArrayList<Entry> entries = getEntries(partner);
             for (Entry entry : entries) {
                 calendar.addEntry(entry);
             }
+            calendarView.getCalendarSources().add(calendarSource);
+        } catch (NullPointerException npe) {
+            return;
         }
-        calendarView.getCalendarSources().add(calendarSource);
     }
 ```
 ###### /java/seedu/address/ui/BrowserPanel.java
@@ -1029,12 +1048,6 @@ public class CalendarViewEvent extends BaseEvent {
     }
 
 }
-```
-###### /java/seedu/address/logic/Logic.java
-``` java
-    /** Returns an unmodifiable view of the filtered list of persons */
-    ObservableList<ReadOnlyPerson> getFilteredPersonList();
-
 ```
 ###### /java/seedu/address/logic/parser/CancelAppointmentParser.java
 ``` java
@@ -1122,11 +1135,10 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
         }
 
         try {
-            Index index = Index.fromOneBased(Integer.parseInt(args[1]));
             Appointment appointment = getAppointmentFromString(argumentMultimap.getValue(PREFIX_DATE).get());
-            return new AddAppointmentCommand(index, appointment);
+            return new AddAppointmentCommand(appointment);
         } catch (NumberFormatException e) {
-            throw new ParseException("Please input an index for Appointment.\n"
+            throw new ParseException("Please input an index for appointment.\n"
                     + String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAppointmentCommand.MESSAGE_USAGE));
         }
@@ -1141,13 +1153,13 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
     }
 
     /**
-     * Natty parser that takes in a string and returns an Appointment
+     * Natty parser that takes in a string and returns an appointment
      */
     public static Appointment getAppointmentFromString(String str) throws ParseException {
         String[] args = str.split(",");
 
         if (args.length != 2) {
-            throw new ParseException("Please follow format for adding Appointment.\n"
+            throw new ParseException("Please follow format for adding appointment.\n"
                     + AddAppointmentCommand.MESSAGE_USAGE);
         }
 
@@ -1157,7 +1169,7 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
         List<DateGroup> groups = parser.parse(args[1]);
         Calendar calendar = Calendar.getInstance();
         if (groups.size() == 0) {
-            throw new ParseException("Please be more specific with your Appointment time");
+            throw new ParseException("Please be more specific with your appointment time");
         }
 
         //If there is a start and end time that is parsed
@@ -1179,49 +1191,38 @@ public class AddAppointmentParser implements Parser<AddAppointmentCommand> {
 ``` java
 
 /**
- * Command to add Appointment to a person in addressBook
+ * Command to add appointment to a person in addressBook
  */
 public class AddAppointmentCommand extends UndoableCommand {
 
-    public static final String COMMAND_WORD = "Appointment";
+    public static final String COMMAND_WORD = "appointment";
     public static final String COMMAND_ALIAS = "appt";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an Appointment to a person in address book. \n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an appointment to a person in address book. \n"
             + COMMAND_ALIAS + ": Shorthand equivalent for add. \n"
             + "Parameters: " + COMMAND_WORD + " INDEX "
             + PREFIX_DATE + "DESCRIPTION, TIME" + "\n"
             + "Example 1:" + COMMAND_WORD + " 1 "
             + PREFIX_DATE + "Lunch, Next Monday 3pm";
 
-    public static final String MESSAGE_SUCCESS = "New Appointment added. ";
+    public static final String MESSAGE_SUCCESS = "New appointment added. ";
     public static final String INVALID_PERSON = "This person is not in your address book";
     public static final String INVALID_DATE = "Invalid Date. Please enter a valid date.";
-    public static final String SORT_APPOINTMENT_FEEDBACK = "Rearranged contacts to show upcoming appointments.";
+    public static final String DUPLICATE_APPT = "Duplicate Event found on same timing. Please select other time.";
 
-
-    private final Index index;
     private final Appointment appointment;
 
-    public AddAppointmentCommand(Index index, Appointment appointment) {
-        this.index = index;
+    public AddAppointmentCommand(Appointment appointment) {
         this.appointment = appointment;
     }
+
 ```
 ###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
 ``` java
     @Override
     protected CommandResult executeUndoableCommand() throws CommandException {
 
-        List<ReadOnlyPerson> lastShownList = model.getFilteredPersonList();
-
-        requireNonNull(index);
-        requireNonNull(appointment);
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
-
-        ReadOnlyPerson personToAddAppointment = lastShownList.get(index.getZeroBased());
+        ReadOnlyPerson personToAddAppointment = model.getPartner();
 
         if (appointment.getDate() != null && !isDateValid()) {
             return new CommandResult(INVALID_DATE);
@@ -1239,19 +1240,14 @@ public class AddAppointmentCommand extends UndoableCommand {
 ```
 ###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
 ``` java
+
     /**
-     * Checks if Appointment date set to after current time
+     * Checks if appointment date set to after current time
      */
     private boolean isDateValid() {
         requireNonNull(appointment);
         Calendar calendar = Calendar.getInstance();
         return !appointment.getDate().before(calendar.getTime());
-    }
-```
-###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
-``` java
-    public Index getIndex() {
-        return this.index;
     }
 
 ```
@@ -1261,19 +1257,7 @@ public class AddAppointmentCommand extends UndoableCommand {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof AddAppointmentCommand // instanceof handles nulls
-                && (this.index.getZeroBased() == ((AddAppointmentCommand) other).index.getZeroBased())
                 && (this.appointment.equals(((AddAppointmentCommand) other).appointment)));
-    }
-
-```
-###### /java/seedu/address/logic/commands/AddAppointmentCommand.java
-``` java
-    /**
-     * For testing purposes
-     *
-     */
-    public void setData(Model model) {
-        this.model = model;
     }
 
 }
@@ -1289,7 +1273,7 @@ public class CancelAppointmentCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "cancel";
     public static final String NO_SUCH_PERSON_FOUND = "No such person found";
     public static final String NO_SUCH_APPOINTMENT = "No such appointment found";
-    public static final String MESSAGE_SUCCESS = "Appointment canceled.";
+    public static final String MESSAGE_SUCCESS = "appointment canceled.";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Cancels an appointment from a person. \n"
             + "Parameters: " + "DESCRIPTION with PERSON NAME \n"
             + "Example 1:" + COMMAND_WORD + " "
@@ -1342,10 +1326,8 @@ public class CancelAppointmentCommand extends UndoableCommand {
      */
     private ReadOnlyPerson getPersonFromName(String personName) throws PersonNotFoundException {
 
-        for (ReadOnlyPerson person : model.getAddressBook().getPersonList()) {
-            if (person.getName().toString().equalsIgnoreCase(personName.trim())) {
-                return person;
-            }
+        if (model.getPartner().getName().fullName.equalsIgnoreCase(personName.trim())) {
+            return model.getPartner();
         }
 
         throw new PersonNotFoundException();
@@ -1395,19 +1377,87 @@ public class CalendarViewCommand extends Command {
     }
 }
 ```
-###### /java/seedu/address/logic/LogicManager.java
-``` java
-    @Override
-    public ObservableList<ReadOnlyPerson> getFilteredPersonList() {
-        return model.getFilteredPersonList();
-    }
-
-```
-###### /java/seedu/address/model/person/Appointment/Appointment.java
+###### /java/seedu/address/storage/XmlAdaptedAppointment.java
 ``` java
 
 /**
- *  Appointment class to hold all the start and end time of the Appointment and the description
+ * AXB-friendly version of the appointment list of a person
+ */
+public class XmlAdaptedAppointment {
+
+    @XmlElement(required = true)
+    private String description;
+
+    @XmlElement(required = true)
+    private String appointmentStart;
+
+    @XmlElement(required = true)
+    private String appointmentEnd;
+
+    /**
+     * Constructs an XmlAdaptedAppointment.
+     * This is the no-arg constructor that is required by JAXB.
+     */
+    public XmlAdaptedAppointment() {}
+
+    /**
+     * Converts a given appointment into this class for JAXB use
+     */
+    public XmlAdaptedAppointment(Appointment source) {
+        description = source.getDescription();
+        appointmentStart = source.getDateInStringFormat();
+        appointmentEnd = source.getDateEndInStringFormat();
+    }
+
+    /**
+     * Creates a XmlAdaptedAppointment from the given strings.
+     */
+    public XmlAdaptedAppointment(String description, String appointmentStart, String appointmentEnd) {
+        this.description = description;
+        this.appointmentStart = appointmentStart;
+        this.appointmentEnd = appointmentEnd;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        if (other == this) {
+            return true;
+        }
+
+        if (!(other instanceof XmlAdaptedAppointment)) {
+            return false;
+        }
+
+        XmlAdaptedAppointment otherXmlAdaptedAppointment = (XmlAdaptedAppointment) other;
+        return this.description.equals(otherXmlAdaptedAppointment.description)
+                && this.appointmentStart.equals(otherXmlAdaptedAppointment.appointmentStart)
+                && this.appointmentEnd.equals(otherXmlAdaptedAppointment.appointmentEnd);
+    }
+
+    /**
+     * Converts this jaxb-friendly adapted appointment object into the model's appointment object.
+     *
+     * @throws ParseException if there were any data constraints violated in the adapted person
+     */
+    public Appointment toModelType() throws ParseException {
+        String description = this.description;
+
+        Calendar calendarStart = Calendar.getInstance();
+        calendarStart.setTime(Appointment.DATE_FORMATTER.parse(appointmentStart));
+
+        Calendar calendarEnd = Calendar.getInstance();
+        calendarEnd.setTime(Appointment.DATE_FORMATTER.parse(appointmentEnd));
+
+        return new Appointment(description, calendarStart, calendarEnd);
+    }
+
+}
+```
+###### /java/seedu/address/model/person/appointment/Appointment.java
+``` java
+
+/**
+ *  appointment class to hold all the start and end time of the appointment and the description
  *  */
 public class Appointment {
 
@@ -1445,21 +1495,21 @@ public class Appointment {
     @Override
     public String toString() {
         if (date != null) {
-            return "Appointment on " + DATE_FORMATTER.format(date);
+            return "appointment on " + DATE_FORMATTER.format(date);
         } else {
-            return "No Appointment";
+            return "No appointment";
         }
     }
 
     /**
-     * @return starting Appointment time in the format yyyy/MM/dd HH:mm
+     * @return starting appointment time in the format yyyy/MM/dd HH:mm
      */
     public String getDateInStringFormat() {
         return DATE_FORMATTER.format(date);
     }
 
     /**
-     * @return ending Appointment time in the format yyyy/MM/dd HH:mm
+     * @return ending appointment time in the format yyyy/MM/dd HH:mm
      */
     public String getDateEndInStringFormat() {
         return DATE_FORMATTER.format(endDate);
@@ -1474,7 +1524,7 @@ public class Appointment {
     }
 }
 ```
-###### /java/seedu/address/model/person/Appointment/AppointmentList.java
+###### /java/seedu/address/model/person/appointment/AppointmentList.java
 ``` java
 
 /**
@@ -1485,14 +1535,14 @@ public class AppointmentList {
     private final ObservableList<Appointment> internalList = FXCollections.observableArrayList();
 
     /**
-     * Constructs empty Appointment list
+     * Constructs empty appointment list
      */
     public AppointmentList() {
 
     }
 
     /**
-     * Contructs an Appointment list with new appointments
+     * Contructs an appointment list with new appointments
      */
     public AppointmentList(List<Appointment> appointments) {
         requireAllNonNull(appointments);
@@ -1528,7 +1578,7 @@ public class AppointmentList {
     }
 
     /**
-     * Returns true if list contains and equivalent Appointment
+     * Returns true if list contains and equivalent appointment
      */
     public boolean contains (Appointment appointment) {
         return internalList.contains(appointment);
@@ -1552,9 +1602,9 @@ public class AppointmentList {
     @Override
     public String toString() {
         if (internalList.isEmpty()) {
-            return "No Appointment set";
+            return "No appointment set";
         } else {
-            return internalList.size() == 1 ? "" + internalList.size() + " Appointment set"
+            return internalList.size() == 1 ? "" + internalList.size() + " appointment set"
                     : "" + internalList.size() + " appointments set";
         }
     }
@@ -1570,29 +1620,36 @@ public class AppointmentList {
 public interface ReadOnlyPerson {
 
     ObjectProperty<Name> nameProperty();
-    Name getName();
     ObjectProperty<Phone> phoneProperty();
-    Phone getPhone();
     ObjectProperty<Email> emailProperty();
-    Email getEmail();
     ObjectProperty<Address> addressProperty();
-    Address getAddress();
     ObjectProperty<Timetable> timeTableProperty();
-    Timetable getTimetable();
-    ObjectProperty<UniqueTagList> tagProperty();
-    Set<Tag> getTags();
     ObjectProperty<AppointmentList> appointmentProperty();
+
+    Name getName();
+
+    Phone getPhone();
+
+    Email getEmail();
+
+    Address getAddress();
+
+    Timetable getTimetable();
+
     List<Appointment> getAppointments();
+
+    /**
     /**Same state detected will return true.
      */
-    default boolean isSameStateAs(ReadOnlyPerson rp) {
+    default boolean equals(ReadOnlyPerson rp) {
         return rp == this // short circuit if same object
                 || (rp != null // this is first to avoid NPE below
                 && rp.getName().equals(this.getName()) // state checks here onwards
                 && rp.getPhone().equals(this.getPhone())
                 && rp.getEmail().equals(this.getEmail())
                 && rp.getAddress().equals(this.getAddress())
-                && rp.getTimetable().equals((this.getTimetable())));
+                && rp.getTimetable().equals((this.getTimetable()))
+                && rp.getAppointments().equals(this.getAppointments()));
     }
 
 ```
@@ -1611,92 +1668,9 @@ public interface ReadOnlyPerson {
                 .append(" Address: ")
                 .append(getAddress())
                 .append(" TimeTable: ")
-                .append(getTimetable())
-                .append(" Tags: ");
-        getTags().forEach(b::append);
+                .append(getTimetable());
+
         return b.toString();
-    }
-
-}
-
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
-    /**
-     * Returns the backing list as an unmodifiable {@code ObservableList}.
-     */
-    public ObservableList<ReadOnlyPerson> asObservableList() {
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
-    /**
-     * @return the list as an unmodifiable list and sorted by name in ascending order
-     */
-    public ObservableList<ReadOnlyPerson> asObservableListSortedByNameAsc() {
-        internalList.sort((o1, o2) -> {
-            int output = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName) >= 0) ? 1 : -1;
-            return output;
-        });
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
-    /**
-     * @return a unmodifiable list and will be sorted by name in descending order
-     */
-    public ObservableList<ReadOnlyPerson> asObservableListSortedByNameDsc() {
-        internalList.sort((o1, o2) -> {
-            int op = (o1.getName().fullName.compareToIgnoreCase(o2.getName().fullName) <= 0) ? 1 : -1;
-            return op;
-        });
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-```
-###### /java/seedu/address/model/person/UniquePersonList.java
-``` java
-    /**
-     * @return list is reversed
-     */
-    public ObservableList<ReadOnlyPerson> asObservableListReversed() {
-        FXCollections.reverse(internalList);
-        return FXCollections.unmodifiableObservableList(mappedList);
-    }
-
-
-    @Override
-    public Iterator<Person> iterator() {
-        return internalList.iterator();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof UniquePersonList // instanceof handles nulls
-                && this.internalList.equals(((UniquePersonList) other).internalList));
-    }
-
-    @Override
-    public int hashCode() {
-        return internalList.hashCode();
-    }
-
-
-    /**
-     * Util method to extract person out from a list
-     */
-    private Person getPerson(ReadOnlyPerson target) throws PersonNotFoundException {
-        requireNonNull(target);
-        for (Person person : internalList) {
-            if (person.equals(target)) {
-                return person;
-            }
-        }
-        throw new PersonNotFoundException();
     }
 
 }
@@ -1708,6 +1682,14 @@ public interface ReadOnlyPerson {
  * Signals that the appointment cannot be found
  */
 public class AppointmentNotFoundException extends Exception {
+}
+```
+###### /java/seedu/address/model/person/exceptions/DuplicateAppointmentFoundException.java
+``` java
+/**
+ * Signals that the appointment cannot be found
+ */
+public class DuplicateAppointmentFoundException extends Exception {
 }
 ```
 ###### /java/seedu/address/model/person/Person.java
@@ -1725,7 +1707,6 @@ public class Person implements ReadOnlyPerson {
     private ObjectProperty<Email> email;
     private ObjectProperty<Address> address;
     private ObjectProperty<Timetable> timetable;
-    private ObjectProperty<UniqueTagList> tags;
     private ObjectProperty<AppointmentList> appointments;
 
 ```
@@ -1735,19 +1716,18 @@ public class Person implements ReadOnlyPerson {
      * Every field must be present and not null.
      */
     public Person(Name name, Phone phone, Email email, Address address,
-                  Timetable timetable, Set<Tag> tags, List<Appointment> appointments) {
+                  Timetable timetable, List<Appointment> appointments) {
 
-        requireAllNonNull(name, phone, email, address, timetable, tags, appointments);
+        requireAllNonNull(name, phone, email, address, timetable);
 
         this.name = new SimpleObjectProperty<>(name);
         this.phone = new SimpleObjectProperty<>(phone);
         this.email = new SimpleObjectProperty<>(email);
         this.address = new SimpleObjectProperty<>(address);
         this.timetable = new SimpleObjectProperty<>(timetable);
-        // protect internal tags from changes in the arg list
-        this.tags = new SimpleObjectProperty<>(new UniqueTagList(tags));
-        this.appointments = new SimpleObjectProperty<>(new AppointmentList(appointments));
-
+        if (appointments != null) {
+            this.appointments = new SimpleObjectProperty<>(new AppointmentList(appointments));
+        }
     }
 
 ```
@@ -1758,15 +1738,32 @@ public class Person implements ReadOnlyPerson {
      */
     public Person(ReadOnlyPerson source) {
         this(source.getName(), source.getPhone(), source.getEmail(), source.getAddress(),
-                source.getTimetable(), source.getTags(), source.getAppointments());
-    }
-    public void setName(Name name) {
-        this.name.set(requireNonNull(name));
+                source.getTimetable(), source.getAppointments());
     }
 
     @Override
     public ObjectProperty<Name> nameProperty() {
         return name;
+    }
+    @Override
+    public ObjectProperty<Phone> phoneProperty() {
+        return phone;
+    }
+    @Override
+    public ObjectProperty<Email> emailProperty() {
+        return email;
+    }
+    @Override
+    public ObjectProperty<Address> addressProperty() {
+        return address;
+    }
+    @Override
+    public ObjectProperty<Timetable> timeTableProperty() {
+        return timetable;
+    }
+    @Override
+    public ObjectProperty<AppointmentList> appointmentProperty() {
+        return appointments;
     }
 
     @Override
@@ -1774,13 +1771,8 @@ public class Person implements ReadOnlyPerson {
         return name.get();
     }
 
-    public void setPhone(Phone phone) {
-        this.phone.set(requireNonNull(phone));
-    }
-
-    @Override
-    public ObjectProperty<Phone> phoneProperty() {
-        return phone;
+    public void setName(Name name) {
+        this.name.set(requireNonNull(name));
     }
 
     @Override
@@ -1788,13 +1780,8 @@ public class Person implements ReadOnlyPerson {
         return phone.get();
     }
 
-    public void setEmail(Email email) {
-        this.email.set(requireNonNull(email));
-    }
-
-    @Override
-    public ObjectProperty<Email> emailProperty() {
-        return email;
+    public void setPhone(Phone phone) {
+        this.phone.set(requireNonNull(phone));
     }
 
     @Override
@@ -1802,13 +1789,8 @@ public class Person implements ReadOnlyPerson {
         return email.get();
     }
 
-    public void setAddress(Address address) {
-        this.address.set(requireNonNull(address));
-    }
-
-    @Override
-    public ObjectProperty<Address> addressProperty() {
-        return address;
+    public void setEmail(Email email) {
+        this.email.set(requireNonNull(email));
     }
 
     @Override
@@ -1816,35 +1798,17 @@ public class Person implements ReadOnlyPerson {
         return address.get();
     }
 
-    public void setTimetable(Timetable timetable) {
-        this.timetable.set(requireNonNull(timetable));
-    }
-
-    @Override
-    public ObjectProperty<Timetable> timeTableProperty() {
-        return timetable;
+    public void setAddress(Address address) {
+        this.address.set(requireNonNull(address));
     }
 
     @Override
     public Timetable getTimetable() {
         return timetable.get();
     }
-    /**
-     * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
-     * if modification is attempted.
-     */
-    @Override
-    public Set<Tag> getTags() {
-        return Collections.unmodifiableSet(tags.get().toSet());
-    }
 
-    public ObjectProperty<UniqueTagList> tagProperty() {
-        return tags;
-    }
-
-    @Override
-    public ObjectProperty<AppointmentList> appointmentProperty() {
-        return appointments;
+    public void setTimetable(Timetable timetable) {
+        this.timetable.set(requireNonNull(timetable));
     }
 
     @Override
@@ -1856,161 +1820,30 @@ public class Person implements ReadOnlyPerson {
         this.appointments.set(new AppointmentList(appointments));
     }
 
-    /**
-     * Replaces this person's tags with the tags in the argument tag set.
-     */
-    public void setTags(Set<Tag> replacement) {
-        tags.set(new UniqueTagList(replacement));
-    }
-
-    public boolean hasTag(Tag tag) {
-        return tags.get().contains(tag);
-    }
-
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof ReadOnlyPerson // instanceof handles nulls
-                && this.isSameStateAs((ReadOnlyPerson) other));
+                && this.equals((ReadOnlyPerson) other));
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, timetable, tags);
+        return Objects.hash(name, phone, email, address, timetable);
     }
 
     @Override
     public String toString() {
-        return getAsText();
-    }
-
-}
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-
-    /**
-     * Help to remove unwanted tags
-     */
-    public void removeUnusedTags(Set<Tag> tagToRemove) {
-        Set<Tag> newTags = getTagsExcluding(tagToRemove);
-        tags.setTags(newTags);
-        syncMasterTagListWith(persons);
-    }
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-
-    /**
-     * Help to exclude unwanted tags
-     */
-    public Set<Tag> getTagsExcluding(Set<Tag> tagsToExclude) {
-        Set<Tag> output = tags.toSet();
-        for (Tag tagExcluded : tagsToExclude) {
-            output.remove(tagExcluded);
-        }
-        return output;
-    }
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-
-    /**
-     * Make sure that these people:
-     * - appear in the master list {@link #tags}
-     * - Tag objects are pointed in the master list
-     *
-     * @see #syncMasterTagListWith(Person)
-     */
-    private void syncMasterTagListWith(UniquePersonList persons) {
-        persons.forEach(this::syncMasterTagListWith);
-    }
-
-```
-###### /java/seedu/address/model/AddressBook.java
-``` java
-
-    /**
-     * Make sure this person:
-     * - Appear in the master list {@link #tags}
-     * - Tag object is pointed in the master list
-     */
-    private void syncMasterTagListWith(Person person) {
-        final UniqueTagList tags = new UniqueTagList(person.getTags());
-        this.tags.mergeFrom(tags);
-
-        // Create map with values = tag object references in the master list
-        // used for checking person tag references
-        final Map<Tag, Tag> mainTagObjects = new HashMap<>();
-        this.tags.forEach(tag -> mainTagObjects.put(tag, tag));
-
-        // Rebuild the list of person tags to point to the relevant tags in the master tag list.
-        final Set<Tag> correctTagReferences = new HashSet<>();
-        tags.forEach(tag -> correctTagReferences.add(mainTagObjects.get(tag)));
-        person.setTags(correctTagReferences);
-    }
-
-    /**
-     * Removes {@code key} from this {@code AddressBook}.
-     *
-     * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
-     */
-    public boolean removePerson(ReadOnlyPerson key) throws PersonNotFoundException {
-        if (persons.remove(key)) {
-            return true;
-        } else {
-            throw new PersonNotFoundException();
-        }
-    }
-
-    //// tag-level operations
-
-    public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
-        tags.add(t);
-    }
-
-
-    //// util methods
-
-    @Override
-    public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() + " tags";
-        // TODO: refine later
-    }
-
-    @Override
-    public ObservableList<ReadOnlyPerson> getPersonList() {
-        return persons.asObservableList();
-    }
-
-    //@Override
-    //public ObservableList<Tag> getTagList() {
-    //  return tags.asObservableList();
-    // }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof AddressBook // instanceof handles nulls
-                && this.persons.equals(((AddressBook) other).persons)
-                && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
-    }
-
-    @Override
-    public int hashCode() {
-        // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(persons, tags);
+        return getName().toString();
     }
 }
+
 ```
 ###### /java/seedu/address/model/Model.java
 ``` java
     /**
-     * Adds Appointment to a person
+     * Adds appointment to a person
      */
     void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
@@ -2019,11 +1852,4 @@ public class Person implements ReadOnlyPerson {
      */
     void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
-    /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
-     */
-    void updateFilteredPersonList(Predicate<ReadOnlyPerson> predicate);
-
-}
 ```

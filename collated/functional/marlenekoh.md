@@ -28,11 +28,48 @@ th {
 ###### /java/seedu/address/ui/BrowserPanel.java
 ``` java
     /**
-     * Loads the timetable page of a person into browser panel
+     * Loads the timetable page of a person into browser panel.
      */
     public void loadTimetablePage() {
-        URL timetablePage = MainApp.class.getResource(FXML_FILE_FOLDER + TIMETABLE_PAGE);
-        loadPage(timetablePage.toExternalForm());
+        String timetablePageUrl;
+        if (runningFromIntelliJ()) {
+            timetablePageUrl = FILE_PREFIX + getIntellijRootDir() + INTELLIJ_DATA_FILE_FOLDER + TIMETABLE_PAGE;
+        } else {
+            timetablePageUrl = getJarDir() + JAR_DATA_FILE_FOLDER + TIMETABLE_PAGE;
+        }
+        loadPage(timetablePageUrl);
+    }
+
+    /**
+     * Gets the directory containing the root folder
+     * @return a String containing the directory path
+     */
+    private String getIntellijRootDir() {
+        return System.getProperty("user.dir");
+    }
+
+    /**
+     * Gets the directory containing the executing jar.
+     * @return a String containing the directory path
+     */
+    private String getJarDir() {
+        String jarPath = getClass().getProtectionDomain().getCodeSource().getLocation().toExternalForm();
+        try {
+            jarPath = URLDecoder.decode(jarPath, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            logger.warning("The Character Encoding is not supported.");
+        }
+        return jarPath.substring(0, jarPath.lastIndexOf('/'));
+    }
+
+    /**
+     * Checks if the current code is running from IntelliJ (for debugging) or from the jar file.
+     * @return true if running from IntelliJ
+     */
+    private static boolean runningFromIntelliJ() {
+        String classPath = System.getProperty("java.class.path");
+        Logger logger = LogsCenter.getLogger(MainApp.class);
+        return classPath.contains("idea_rt.jar");
     }
 
 ```
@@ -43,7 +80,9 @@ th {
      */
     public void handleShowTimetable() {
         browserPanel.loadTimetablePage();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        if (!browserPlaceholder.getChildren().contains(browserPanel.getRoot())) {
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        }
     }
 
     /**
@@ -68,13 +107,22 @@ th {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHideTimetable();
     }
+}
+```
+###### /java/seedu/address/ui/ListPanel.java
+``` java
+    @Subscribe
+    private void handleShowTimetableRequestEvent (ShowTimetableRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(PARTNER_INDEX);
+    }
 
     @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+    private void handleHideTimetableRequestEvent (HideTimetableRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        handleShowTimetable();
+        deselect();
     }
-}
+
 ```
 ###### /java/seedu/address/commons/events/ui/ShowTimetableRequestEvent.java
 ``` java
@@ -108,236 +156,238 @@ public class HideTimetableRequestEvent extends BaseEvent {
     }
 }
 ```
-###### /java/seedu/address/model/person/timetable/TimetableComparatorUtil.java
+###### /java/seedu/address/commons/events/model/TimetableChangedEvent.java
 ``` java
+/** Indicates the Timetable of the partner has changed*/
+public class TimetableChangedEvent extends BaseEvent {
+    public final Timetable timetable;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-
-/**
- * A class containing utility methods for comparing two timetables
- */
-public class TimetableComparatorUtil {
-
-    /**
-     * Overloads compareTimetable method.
-     * @param first Timetable to compare with
-     * @param second String containing valid short NUSMods URL
-     */
-    public static void compareTimetable(Timetable first, String second) {
-        compareTimetable(first, new Timetable(second));
+    public TimetableChangedEvent(Timetable timetable) {
+        this.timetable = timetable;
     }
 
-    /**
-     * Set ups files for comparing.
-     * @param first Timetable to compare
-     * @param second Timetable to compare
-     */
-    public static void compareTimetable(Timetable first, Timetable second) {
-        ArrayList<TimetableModuleSlot> allUnsortedModulesSlots =
-                TimetableDisplayUtil.setUpUnsortedModuleSlotsForComparing(first, second);
-        HashMap<String, ArrayList<TimetableModuleSlot>> sortedModuleSlots =
-                TimetableParserUtil.sortModuleSlotsByDay(allUnsortedModulesSlots);
-        String timetableString = TimetableDisplayUtil.convertTimetableToString(sortedModuleSlots);
-        TimetableDisplayUtil.setUpTimetableDisplayInfoFile(timetableString);
-        TimetableDisplayUtil.setUpTimetablePageScriptFile();
+    @Override
+    public String toString() {
+        return timetable.value;
+    }
+}
+```
+###### /java/seedu/address/logic/commands/ShowCalendarCommand.java
+``` java
+/**
+ * Deselects your partner from NUSCouples.
+ */
+public class ShowCalendarCommand extends Command {
+    public static final String COMMAND_WORD = "cview";
+    public static final String COMMAND_ALIAS = "cv";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Shows your calendar view.\n"
+            + "Example: " + COMMAND_WORD;
+
+    public static final String MESSAGE_DESELECT_PERSON_SUCCESS = "Calendar view displayed.";
+    public static final String MESSAGE_DESELECT_PERSON_FAILURE = "Calendar view is already displayed.";
+
+    private ReadOnlyPerson partner;
+
+    public ShowCalendarCommand() {
+    }
+
+    @Override
+    public CommandResult execute() throws CommandException {
+        try {
+            partner = model.getPartner();
+            partner.getTimetable();
+            model.requestHideTimetable();
+        } catch (NullPointerException npe) {
+            throw new CommandException(MESSAGE_DESELECT_PERSON_FAILURE);
+        }
+        return new CommandResult(MESSAGE_DESELECT_PERSON_SUCCESS);
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof ShowCalendarCommand // instanceof handles nulls
+                && this.partner.equals(((ShowCalendarCommand) other).partner)); // state check
     }
 
 }
 ```
-###### /java/seedu/address/model/person/timetable/TimetableDisplayUtil.java
+###### /java/seedu/address/storage/TimetableStorage.java
 ``` java
 /**
- * A class containing utility methods for displaying a Timetable in the browser panel.
+ * Represents a storage for {@link seedu.address.model.person.timetable}.
  */
-public class TimetableDisplayUtil {
-    public static final String[] DAYS = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday"};
-    public static final String[] TIMES = {
-        "0800", "0830", "0900", "0930", "1000", "1030", "1100", "1130",
-        "1200", "1230", "1300", "1330", "1400", "1430", "1500", "1530",
-        "1600", "1630", "1700", "1730", "1800", "1830", "1900", "1930",
-        "2000", "2030", "2100", "2130", "2200", "2230", "2300", "2330"
-    };
-    public static final String[] WEEKS = {"Odd Week", "Even Week", "Every Week"};
-    private static String timetableDisplayInfoFilePath = "src/main/resources/timetableDisplayInfo";
-    private static String timetablePageJsPath = "src/main/resources/view/TimetablePageScript.js";
-    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
-```
-###### /java/seedu/address/model/person/timetable/TimetableDisplayUtil.java
-``` java
-            + "timetable = [\n"
-            + "];\n"
-            + "var myTimetable = \"\";\n"
-            + "var nRows = \"\";\n"
-            + "var nCells = \"\";\n"
-            + "function displaySchedule(){\n"
-            + "    for (i=0; i<nRows; i++) {\n"
-            + "        for (n=0; n<nCells; n++) {\n"
-            + "            myTimetable.rows[i+1].cells[n+1].lastChild.data = timetable[n+(i*nCells)];\n"
-            + "        }\n"
-            + "    }\n"
-            + "}\n"
-            + "function mapTable(){\n"
-            + "    myTimetable = document.getElementById('myTimetable');\n"
-            + "    nRows = myTimetable.rows.length-1;\n"
-            + "    nCells = myTimetable.rows[0].cells.length-1;\n"
-            + "    displaySchedule();\n"
-            + "}\n"
-            + "onload=mapTable;\n";
+public interface TimetableStorage {
 
     /**
-     * Sets up the javascript file at path {@code timetablePageJsPath}
-     * @param timetable Timetable to be set up
+     * Creates TimetableStyle.css file at path {@code timetablePageCssPath}
      */
-    public static void setUpTimetableDisplayInfo(Timetable timetable) {
-        setUpTimetableDisplayInfoFile(timetable);
-        setUpTimetablePageScriptFile();
-    }
+    void createTimetablePageCssFile();
 
     /**
-     * Updates TimetablePageScript file at path {@code timetablePageJsPath} with new timetable module information
+     * Updates TimetablePage.html file at path {@code timetablePageHtmlPath} with new timetable module information
      */
-    public static void setUpTimetablePageScriptFile() {
-        try {
-            String oldContent = getFileContents(timetablePageJsPath);
-            String toReplace = getFileContents(timetableDisplayInfoFilePath);
-            String newContent = replaceFirstLine(oldContent, toReplace);
-            writeToTimetablePageScriptFile(newContent);
-        } catch (FileNotFoundException e) {
-            timetablePageJsPath = "data/TimetablePageScript.js";
-            writeToTimetablePageScriptFile(DEFAULT_TIMETABLE_PAGE_SCRIPT);
-        }
-    }
+    void setUpTimetablePageHtmlFile();
 
     /**
-     * Writes Timetable information to a text file
-     * @param timetable the timetable to convert into string and write
+     * Writes the given string to {@code timetableInfoFilePath}
+     * @param toWrite contents to write to {@code timetableInfoFilePath}
      */
-    public static void setUpTimetableDisplayInfoFile(Timetable timetable) {
-        File timetableDisplayInfo = new File(timetableDisplayInfoFilePath);
-        try {
-            PrintWriter printWriter = new PrintWriter(timetableDisplayInfo);
-            String toWrite = convertTimetableToString(timetable);
-            printWriter.write(toWrite);
-            timetable.setTimetableDisplayInfo(toWrite);
-            printWriter.close();
-        } catch (FileNotFoundException e) {
-            logger.warning("File not found, creating new file");
-            try {
-                timetableDisplayInfoFilePath = "data/timetableDisplayInfo";
-                timetableDisplayInfo = new File(timetableDisplayInfoFilePath);
-                timetableDisplayInfo.createNewFile();
-                setUpTimetableDisplayInfo(timetable);
-            } catch (IOException ioe) {
-                logger.severe("Unable to create new file");
-            }
-        }
-    }
+    void setUpTimetableDisplayFiles(String toWrite);
 
     /**
-     * Writes a string to the file at {@code timetableDisplayInfoFilePath}
+     * Writes a string to the file at {@code path}
      * @param toWrite the String to write
+     * @param path the path of the file
      */
-    public static void setUpTimetableDisplayInfoFile(String toWrite) {
-        File timetableDisplayInfo = new File(timetableDisplayInfoFilePath);
-        try {
-            PrintWriter printWriter = new PrintWriter(timetableDisplayInfo);
-            printWriter.write(toWrite);
-            printWriter.close();
-        } catch (FileNotFoundException e) {
-            logger.warning("File not found, creating new file");
-            try {
-                timetableDisplayInfoFilePath = "data/timetableDisplayInfo";
-                timetableDisplayInfo = new File(timetableDisplayInfoFilePath);
-                timetableDisplayInfo.createNewFile();
-                setUpTimetableDisplayInfoFile(toWrite);
-            } catch (IOException ioe) {
-                logger.severe("Unable to create new file");
-            }
-        }
-    }
-
-    /**
-     * Processes the given timetable for viewing.
-     * @param timetable to view
-     * @return an ArrayList containing the combined {@code TimetableModuleSlots} from both Timetables.
-     */
-    public static ArrayList<TimetableModuleSlot> setUpUnsortedModuleSlotsForViewing(Timetable timetable) {
-        ArrayList<TimetableModuleSlot> allUnsortedModulesSlots = timetable.getAllModulesSlots();
-
-        for (TimetableModuleSlot t : allUnsortedModulesSlots) {
-            t.setComparing(false);
-        }
-        return allUnsortedModulesSlots;
-    }
-
-    /**
-     * Combines the two lists of {@code TimetableModuleSlots} from each timetable and process them for comparing.
-     * @param first Timetable to compare
-     * @param second Timetable to compare
-     * @return an ArrayList containing the combined {@code TimetableModuleSlots} from both Timetables.
-     */
-    public static ArrayList<TimetableModuleSlot> setUpUnsortedModuleSlotsForComparing(Timetable first,
-                                                                                      Timetable second) {
-        ArrayList<TimetableModuleSlot> allUnsortedModulesSlots = new ArrayList<TimetableModuleSlot>();
-        allUnsortedModulesSlots.addAll(first.getAllModulesSlots());
-        allUnsortedModulesSlots.addAll(second.getAllModulesSlots());
-
-        for (TimetableModuleSlot t : allUnsortedModulesSlots) {
-            t.setComparing(true);
-        }
-        return allUnsortedModulesSlots;
-    }
-
-    /**
-     * Converts the {@code daysToTimetableModuleSlots} belonging to {@code timetable} into a String object for parsing
-     * @param timetable which contains schedule to convert into JSON object
-     */
-    public static String convertTimetableToString(Timetable timetable) {
-        return convertTimetableToString(timetable.getListOfDays());
-    }
-
-    /**
-     * Converts the {@code daysToTimetableModuleSlots} into a String object for parsing
-     * @param daysToTimetableModuleSlots ArrayLists of timetableModuleSlots sorted by time
-     */
-    public static String convertTimetableToString(HashMap<String, ArrayList<TimetableModuleSlot>> daysToTimetableModuleSlots) {
-        StringBuilder sb = new StringBuilder();
-
-        ArrayList<TimetableModuleSlot> slotsForTheDay = null;
-        for (int i = 0; i < TIMES.length; i++) {
-            if (i < TIMES.length - 1) {
-                sb.append(daysToTimetableModuleSlots.get(DAYS[MONDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[TUESDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[WEDNESDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[THURSDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[FRIDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-            } else {
-                sb.append(daysToTimetableModuleSlots.get(DAYS[MONDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[TUESDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[WEDNESDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[THURSDAY_INDEX].toUpperCase()).get(i).toString());
-                sb.append(", ");
-                sb.append(daysToTimetableModuleSlots.get(DAYS[FRIDAY_INDEX].toUpperCase()).get(i).toString());
-            }
-        }
-        sb.append("\n");
-        return sb.toString();
-    }
+    void writeToFile(String toWrite, String path);
 
     /**
      * Gets file contents from the file at the given path
      * @return String containing file contents
      */
-    public static String getFileContents(String path) throws FileNotFoundException {
+    String getFileContents(String path) throws FileNotFoundException;
+
+    /**
+     * Replaces some text of {@code contents} with {@code replace}
+     * @param contents original content of the javascript file
+     * @param replace new text
+     * @param start of text in {@code contents} to replace (exclusive)
+     * @param end of text in {@code contents} to replace (exclusive)
+     * @return new content
+     */
+    String replaceLineExcludingStartEnd(String contents, String replace, String start, String end);
+}
+```
+###### /java/seedu/address/storage/Storage.java
+``` java
+
+    /**
+     * Saves the timetable display info to the hard disk.
+     *   Creates the data file if it is missing.
+     * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
+     */
+    void handleTimetableChangedEvent(TimetableChangedEvent event);
+}
+```
+###### /java/seedu/address/storage/StorageManager.java
+``` java
+    @Override
+    public void createTimetablePageCssFile() {
+        timetableStorage.createTimetablePageCssFile();
+    }
+
+    @Override
+    public void setUpTimetablePageHtmlFile() {
+        timetableStorage.setUpTimetablePageHtmlFile();
+    }
+
+    @Override
+    public void setUpTimetableDisplayFiles(String toWrite) {
+        timetableStorage.setUpTimetableDisplayFiles(toWrite);
+    }
+
+    @Override
+    public void writeToFile(String toWrite, String path) {
+        timetableStorage.writeToFile(toWrite, path);
+    }
+
+    @Override
+    public String getFileContents(String path) throws FileNotFoundException {
+        return timetableStorage.getFileContents(path);
+    }
+
+    @Override
+    public String replaceLineExcludingStartEnd(String contents, String replace, String start, String end) {
+        return timetableStorage.replaceLineExcludingStartEnd(contents, replace, start, end);
+    }
+
+    @Subscribe
+    public void handleTimetableChangedEvent(TimetableChangedEvent event) {
+        setUpTimetableDisplayFiles(event.timetable.getTimetableDisplayInfo());
+        setUpTimetablePageHtmlFile();
+        raise(new ShowTimetableRequestEvent());
+    }
+}
+```
+###### /java/seedu/address/storage/FileTimetableStorage.java
+``` java
+/**
+ * A class to write and read Timetable data stored on the hard disk.
+ */
+public class FileTimetableStorage implements TimetableStorage {
+    private static final Logger logger = LogsCenter.getLogger(FileTimetableStorage.class);
+
+    private String timetablePageHtmlPath;
+    private String timetablePageCssPath;
+    private String timetableDisplayInfoFilePath;
+
+    public FileTimetableStorage(String timetablePageHtmlPath, String timetablePageCssPath,
+                                String timetableDisplayInfoFilePath) {
+        this.timetablePageHtmlPath = timetablePageHtmlPath;
+        this.timetablePageCssPath = timetablePageCssPath;
+        this.timetableDisplayInfoFilePath = timetableDisplayInfoFilePath;
+    }
+
+    public String getTimetablePageHtmlPath() {
+        return timetablePageHtmlPath;
+    }
+
+    public String getTimetablePageCssPath() {
+        return timetablePageCssPath;
+    }
+
+    public String getTimetableDisplayInfoFilePath() {
+        return timetableDisplayInfoFilePath;
+    }
+
+    @Override
+    public void setUpTimetableDisplayFiles(String toWrite) {
+        writeToFile(toWrite, timetableDisplayInfoFilePath);
+        createTimetablePageCssFile();
+        setUpTimetablePageHtmlFile();
+    }
+
+    @Override
+    public void createTimetablePageCssFile() {
+        try {
+            writeToFile(SampleDataUtil.getDefaultTimetablePageCss(), timetablePageCssPath);
+        } catch (IOException e) {
+            logger.severe("Unable to get default timetable style");
+        }
+    }
+
+    @Override
+    public void setUpTimetablePageHtmlFile() {
+        try {
+            writeToFile(SampleDataUtil.getDefaultTimetablePageHtml(), timetablePageHtmlPath);
+            String oldContent = getFileContents(timetablePageHtmlPath);
+            String toReplace = getFileContents(timetableDisplayInfoFilePath);
+            String newContent = replaceLineExcludingStartEnd(oldContent, toReplace, "timetable", "];");
+            writeToFile(newContent, timetablePageHtmlPath);
+        } catch (FileNotFoundException e) {
+            logger.warning("File not found");
+        } catch (IOException e) {
+            logger.severe("Unable to get default timetable page");
+        }
+    }
+
+    @Override
+    public void writeToFile(String toWrite, String path) {
+        File file = new File(path);
+        try {
+            PrintWriter printWriter = new PrintWriter(file);
+            printWriter.write(toWrite);
+            printWriter.close();
+        } catch (FileNotFoundException e) {
+            logger.warning("File not found");
+        }
+    }
+
+    @Override
+    public String getFileContents(String path) throws FileNotFoundException {
         File file = new File(path);
         try {
             if (file.exists()) {
@@ -361,149 +411,52 @@ public class TimetableDisplayUtil {
         return null;
     }
 
-    /**
-     * Replaces file contents of file at {@code timetablePageJsPath} with {@code contents}
-     * @param contents the new contents of the file
-     */
-    public static void writeToTimetablePageScriptFile(String contents) {
-        File timetablePageScript = new File(timetablePageJsPath);
-        try {
-            PrintWriter printWriter = new PrintWriter(timetablePageScript);
-            printWriter.write(contents);
-            printWriter.close();
-        } catch (FileNotFoundException e) {
-            logger.warning("File not found");
-        }
-    }
-
-    /**
-     * Replaces first line of {@code contents} with {@code replace}
-     * @param contents original content of the javascript file
-     * @param replace new line
-     * @return new content
-     */
-    public static String replaceFirstLine(String contents, String replace) {
+    @Override
+    public String replaceLineExcludingStartEnd(String contents, String replace, String start, String end) {
         StringBuilder sb = new StringBuilder();
-```
-###### /java/seedu/address/model/person/timetable/TimetableDisplayUtil.java
-``` java
-        sb.append("timetable = [");
+        int startPos = contents.indexOf(start);
+        int endPos = contents.indexOf(end);
+        sb.append(contents.substring(0, startPos));
         sb.append(replace);
-        int pos = contents.indexOf(';');
-        sb.append(contents.substring(pos - 1));
+        sb.append(contents.substring(endPos + end.length()));
         return sb.toString();
     }
 }
 ```
-###### /java/seedu/address/model/person/timetable/Timetable.java
+###### /java/seedu/address/model/util/SampleDataUtil.java
 ``` java
-/**
- * Represents the NUSMODS timetable of the partner
- */
-public class Timetable {
-    public static final String MESSAGE_TIMETABLE_CONSTRAINTS = "Short NUSMods timetable URL should be of the format "
-            + "http://modsn.us/code-part "
-            + "and adhere to the following constraints:\n"
-            + "1. The URL should start with http://modsn.us/\n"
-            + "2. The code-part should not be empty and should only contain alphanumeric characters.";
-    private static final String SHORT_NUSMODS_URL_REGEX = "http://modsn.us/";
-    private static final String CODE_PART_REGEX = "[\\w]+";
-    private static final String TIMETABLE_VALIDATION_REGEX = SHORT_NUSMODS_URL_REGEX + CODE_PART_REGEX;
-
-    public final String value;
-    private int currentSemester;
-    private HashMap<String, ArrayList<TimetableModuleSlot>>
-            daysToTimetableModuleSlots; // HashMap of <Day, Sorted list of TimetableModuleSlots>
-    private HashMap<String, TimetableModule> moduleCodeToTimetableModule; // HashMap of <module code, TimetableModule>
-    private ArrayList<TimetableModuleSlot> allModulesSlots; //ArrayList Containing all TimetableModuleSlots
-    private String expandedUrl;
-    private String timetableDisplayInfo;
-
-
-    public Timetable(String timetableUrl) {
-        requireNonNull(timetableUrl);
-        checkArgument(isValidTimetable(timetableUrl), MESSAGE_TIMETABLE_CONSTRAINTS);
-        this.value = timetableUrl;
-        TimetableParserUtil.setUpTimetableInfo(this);
-        TimetableDisplayUtil.setUpTimetableDisplayInfo(this);
+    public static String getDefaultTimetablePageHtml() throws IOException {
+        URL url = MainApp.class.getResource("/view/TimetablePage.html");
+        return Resources.toString(url, Charsets.UTF_8);
     }
 
-    public String getExpandedUrl() {
-        return expandedUrl;
+    public static String getDefaultTimetablePageCss() throws IOException {
+        URL url = MainApp.class.getResource("/view/TimetableStyle.css");
+        return Resources.toString(url, Charsets.UTF_8);
     }
 
-    public void setExpandedUrl(String expandedUrl) {
-        this.expandedUrl = expandedUrl;
-    }
-
-    public void setListOfModules(HashMap<String, TimetableModule> moduleCodeToTimetableModule) {
-        this.moduleCodeToTimetableModule = moduleCodeToTimetableModule;
-    }
-
-    public HashMap<String, TimetableModule> getListOfModules() {
-        return moduleCodeToTimetableModule;
-    }
-
-    public int getCurrentSemester() {
-        return currentSemester;
-    }
-
-    public void setCurrentSemester(int currentSemester) {
-        this.currentSemester = currentSemester;
-    }
-
-    public void setListOfDays(HashMap<String, ArrayList<TimetableModuleSlot>> daysToTimetableModuleSlots) {
-        this.daysToTimetableModuleSlots = daysToTimetableModuleSlots;
-    }
-
-    public HashMap<String, ArrayList<TimetableModuleSlot>> getListOfDays() {
-        return daysToTimetableModuleSlots;
-    }
-
-    public ArrayList<TimetableModuleSlot> getAllModulesSlots() {
-        return allModulesSlots;
-    }
-
-    public void setAllModulesSlots(ArrayList<TimetableModuleSlot> allModulesSlots) {
-        this.allModulesSlots = allModulesSlots;
-    }
-
-    public void setTimetableDisplayInfo(String timetableDisplayInfo) {
-        this.timetableDisplayInfo = timetableDisplayInfo;
-    }
-
-    /**
-     * Returns if a given string is a valid short NUSMods timetable URL.
-     */
-    public static boolean isValidTimetable(String test) {
-        return test.matches(TIMETABLE_VALIDATION_REGEX);
-    }
-
-    @Override
-    public String toString() {
-        return value;
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-                || (other instanceof Timetable // instanceof handles nulls
-                && this.value.equals(((Timetable) other).value)); // state check
-    }
 }
 ```
-###### /java/seedu/address/model/person/timetable/TimetableParserUtil.java
+###### /java/seedu/address/model/person/timetable/TimetableUtil.java
 ``` java
 /**
  * A class containing utility methods for parsing an NUSMods short URL and setting up a Timetable
  */
-public class TimetableParserUtil {
+public class TimetableUtil {
     public static final int MONDAY_INDEX = 0;
     public static final int TUESDAY_INDEX = 1;
     public static final int WEDNESDAY_INDEX = 2;
     public static final int THURSDAY_INDEX = 3;
     public static final int FRIDAY_INDEX = 4;
-    private static final Logger logger = LogsCenter.getLogger(MainApp.class);
+    public static final String[] DAYS = {"MONDAY", "TUESDAY", "WEDNESDAY", "THURSDAY", "FRIDAY"};
+    public static final String[] TIMES = {
+        "0800", "0830", "0900", "0930", "1000", "1030", "1100", "1130",
+        "1200", "1230", "1300", "1330", "1400", "1430", "1500", "1530",
+        "1600", "1630", "1700", "1730", "1800", "1830", "1900", "1930",
+        "2000", "2030", "2100", "2130", "2200", "2230", "2300", "2330"
+    };
+    public static final String[] WEEKS = {"Odd Week", "Even Week", "Every Week"};
+    private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
     private static final String SPLIT_QUESTION_MARK = "\\?";
     private static final String SPLIT_AMPERSAND = "&";
     private static final String SPLIT_EQUALS = "=";
@@ -533,9 +486,45 @@ public class TimetableParserUtil {
             setSemNumFromExpandedUrl(timetable);
             setListOfModules(timetable);
             setListOfDays(timetable);
+            setTimetableDisplayInfo(timetable);
         } catch (ParseException e) {
             logger.warning(MESSAGE_INVALID_SHORT_URL);
         }
+    }
+
+    /**
+     * Sets up timetable for viewing.
+     * @param timetable to set up
+     * @return a timetable containing the timetableDisplayInfo
+     */
+    public static Timetable setUpTimetableInfoView(Timetable timetable) {
+        requireNonNull(timetable);
+        ArrayList<TimetableModuleSlot> unsortedModuleSlots =
+                TimetableUtil.setUpUnsortedModuleSlotsForViewing(timetable);
+        timetable.setAllModulesSlots(unsortedModuleSlots);
+
+        HashMap<String, ArrayList<TimetableModuleSlot>> sortedModuleSlots =
+                TimetableUtil.sortModuleSlotsByDay(unsortedModuleSlots);
+        timetable.setDaysToTimetableModuleSlots(sortedModuleSlots);
+
+        TimetableUtil.setTimetableDisplayInfo(timetable);
+        return timetable;
+    }
+
+    /**
+     * Sets up timetable for comparing.
+     * @param first timetable to compare
+     * @param second timetable to compare
+     * @return a timetable containing the combined timetableDisplayInfo
+     */
+    public static Timetable setUpTimetableInfoCompare(Timetable first, Timetable second) {
+        ArrayList<TimetableModuleSlot> unsortedModuleSlots =
+                setUpUnsortedModuleSlotsForComparing(first, second);
+        HashMap<String, ArrayList<TimetableModuleSlot>> sortedModuleSlots =
+                sortModuleSlotsByDay(unsortedModuleSlots);
+        second.setDaysToTimetableModuleSlots(sortedModuleSlots);
+        setTimetableDisplayInfo(second);
+        return second;
     }
 
     /**
@@ -578,7 +567,7 @@ public class TimetableParserUtil {
      * Sets the {@code currentSemester} for {@code timetable}.
      * @param timetable Timetable whose {@code currentSemester} is to be set
      */
-    public static void setSemNumFromExpandedUrl(Timetable timetable) {
+    private static void setSemNumFromExpandedUrl(Timetable timetable) {
         timetable.setCurrentSemester(getSemNumFromExpandedUrl(timetable));
     }
 
@@ -595,12 +584,12 @@ public class TimetableParserUtil {
     }
 
     /**
-     * Sets moduleCodeToTimetableModule in {@code timetable}
+     * Sets listOfModules in {@code timetable}
      * @param timetable whose long url is to be split
      */
     public static void setListOfModules(Timetable timetable) {
-        HashMap<String, TimetableModule> moduleCodeToTimetableModule = splitExpandedUrl(timetable);
-        timetable.setListOfModules(moduleCodeToTimetableModule);
+        HashMap<String, TimetableModule> listOfModules = splitExpandedUrl(timetable);
+        timetable.setModuleCodeToTimetableModule(listOfModules);
     }
 
     /**
@@ -615,7 +604,7 @@ public class TimetableParserUtil {
         String[] moduleInformation = expandedUrl.split(SPLIT_QUESTION_MARK);
         String[] modules = moduleInformation[MODULE_INFORMATION_INDEX].split(SPLIT_AMPERSAND);
 
-        HashMap<String, TimetableModule> moduleCodeToTimetableModule = new  HashMap<String, TimetableModule>();
+        HashMap<String, TimetableModule> listOfModules = new  HashMap<String, TimetableModule>();
         HashMap<String, String> listOfLessons;
         String moduleCode;
         String lessonType;
@@ -637,41 +626,108 @@ public class TimetableParserUtil {
                     logger.warning("Unable to convert lesson type");
                 }
             }
-            moduleCodeToTimetableModule.put(moduleCode, new TimetableModule(moduleCode, listOfLessons));
+            listOfModules.put(moduleCode, new TimetableModule(moduleCode, listOfLessons));
         }
-        return moduleCodeToTimetableModule;
+        return listOfModules;
     }
 
     /**
-     * Sets {@code daysToTimetableModuleSlots} in {@code timetable} given
+     * Sets {@code listOfDays} in {@code timetable} given using the NUSMods short url
      * @param timetable timetable to set List of days
      */
     public static void setListOfDays(Timetable timetable) {
-        requireNonNull(timetable.getListOfModules());
+        requireNonNull(timetable.getModuleCodeToTimetableModule());
         ArrayList<TimetableModuleSlot> allTimetableModuleSlots = retrieveModuleSlotsFromApi(timetable);
         timetable.setAllModulesSlots(allTimetableModuleSlots);
         HashMap<String, ArrayList<TimetableModuleSlot>> sortedTimetableModuleSlots =
                 sortModuleSlotsByDay(allTimetableModuleSlots);
-        timetable.setListOfDays(sortedTimetableModuleSlots);
+        timetable.setDaysToTimetableModuleSlots(sortedTimetableModuleSlots);
     }
 
     /**
-     * Gets module information from nusmods api for the all modules in moduleCodeToTimetableModule in {@code timetable}
+     * Sets {@code timetableDisplayInfo} in {@code timetable} given using the {@code listOfDays}
+     * @param timetable timetable to set timetableDisplayInfo
+     */
+    public static void setTimetableDisplayInfo(Timetable timetable) {
+        timetable.setTimetableDisplayInfo(formatTimetableDisplayInfo(
+                convertListOfDaysToString(timetable.getDaysToTimetableModuleSlots())));
+    }
+
+    /**
+     * Formats timetable display info string for use in {@code TimetablePage.html}.
+     * @param timetableDisplayInfo the String to format
+     * @return the formatted String
+     */
+    private static String formatTimetableDisplayInfo(String timetableDisplayInfo) {
+        return "timetable = [" + timetableDisplayInfo + "];\n";
+    }
+
+    /**
+     * Converts the {@code listOfDays} into a String object for parsing.
+     */
+    private static String convertListOfDaysToString(HashMap<String, ArrayList<TimetableModuleSlot>> listOfDays) {
+        StringBuilder sb = new StringBuilder();
+
+        for (int i = 0; i < TIMES.length; i++) {
+            if (i < TIMES.length - 1) {
+                sb.append(listOfDays.get(DAYS[MONDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[TUESDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[WEDNESDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[THURSDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[FRIDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+            } else {
+                sb.append(listOfDays.get(DAYS[MONDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[TUESDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[WEDNESDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[THURSDAY_INDEX]).get(i).toString());
+                sb.append(", ");
+                sb.append(listOfDays.get(DAYS[FRIDAY_INDEX]).get(i).toString());
+            }
+        }
+        return sb.toString();
+    }
+
+    /**
+     * Gets module information from nusmods api for the all modules in listOfModules in {@code timetable}.
      * @param timetable containing list of all modules
      */
     private static ArrayList<TimetableModuleSlot> retrieveModuleSlotsFromApi(Timetable timetable) {
         String currentModuleInfo;
         ArrayList<TimetableModuleSlot> allTimetableModuleSlots = new ArrayList<TimetableModuleSlot>();
-        Set<Map.Entry<String, TimetableModule>> entrySet = timetable.getListOfModules().entrySet();
+        Set<Map.Entry<String, TimetableModule>> entrySet = timetable.getModuleCodeToTimetableModule().entrySet();
+        String acadYear = getAcadYear();
 
         for (Map.Entry<String, TimetableModule> currentModule : entrySet) {
-            //TODO: Remove magic number acadYear
-            currentModuleInfo = getJsonContentsFromNusModsApiForModule("2017-2018",
+            currentModuleInfo = getJsonContentsFromNusModsApiForModule(acadYear,
                     Integer.toString(timetable.getCurrentSemester()), currentModule.getKey());
             allTimetableModuleSlots.addAll(getAllTimetableModuleSlots(currentModuleInfo, timetable,
                     currentModule.getKey()));
         }
         return allTimetableModuleSlots;
+    }
+
+    /**
+     * Calculates the current Academic Year for NUS students.
+     * @return a String containing the current academic year.
+     */
+    private static String getAcadYear() {
+        LocalDate currentDate = LocalDate.now();
+        String acadYear;
+
+        if (currentDate.getMonthValue() <= 6) {
+            acadYear = (currentDate.getYear() - 1) + "-" + (currentDate.getYear());
+        } else {
+            acadYear = currentDate.getYear() + "-" + (currentDate.getYear() + 1);
+        }
+        return acadYear;
     }
 
     /**
@@ -735,7 +791,7 @@ public class TimetableParserUtil {
      */
     public static ArrayList<TimetableModuleSlot> getAllTimetableModuleSlots(String contents, Timetable timetable,
                                                                String moduleCode) {
-        requireNonNull(timetable.getListOfModules());
+        requireNonNull(timetable.getModuleCodeToTimetableModule());
 
         JSONObject jsonObject = null;
         JSONParser parser = new JSONParser();
@@ -756,8 +812,8 @@ public class TimetableParserUtil {
             String tempEndTime;
             String tempVenue;
 
-            HashMap<String, TimetableModule> moduleCodeToTimetableModule = timetable.getListOfModules();
-            TimetableModule timetableModule = moduleCodeToTimetableModule.get(moduleCode);
+            HashMap<String, TimetableModule> listOfModules = timetable.getModuleCodeToTimetableModule();
+            TimetableModule timetableModule = listOfModules.get(moduleCode);
             HashMap<String, String> listOfLessons = timetableModule.getListOfLessons();
 
             for (Object t : arrOfClassInformation) {
@@ -781,29 +837,64 @@ public class TimetableParserUtil {
     }
 
     /**
+     * Processes the given timetable for viewing.
+     *
+     * @param timetable to view
+     * @return an ArrayList containing the {@code TimetableModuleSlots} from the Timetable.
+     */
+    public static ArrayList<TimetableModuleSlot> setUpUnsortedModuleSlotsForViewing(Timetable timetable) {
+        ArrayList<TimetableModuleSlot> allUnsortedModulesSlots = timetable.getAllModulesSlots();
+
+        for (TimetableModuleSlot t : allUnsortedModulesSlots) {
+            t.setComparing(false);
+        }
+        return allUnsortedModulesSlots;
+    }
+
+    /**
+     * Combines the two lists of {@code TimetableModuleSlots} from each timetable and process them for comparing.
+     *
+     * @param first  Timetable to compare
+     * @param second Timetable to compare
+     * @return an ArrayList containing the combined {@code TimetableModuleSlots} from both Timetables.
+     */
+    public static ArrayList<TimetableModuleSlot> setUpUnsortedModuleSlotsForComparing(Timetable first,
+                                                                                      Timetable second) {
+        ArrayList<TimetableModuleSlot> allUnsortedModulesSlots = new ArrayList<TimetableModuleSlot>();
+        allUnsortedModulesSlots.addAll(first.getAllModulesSlots());
+        allUnsortedModulesSlots.addAll(second.getAllModulesSlots());
+
+        for (TimetableModuleSlot t : allUnsortedModulesSlots) {
+            t.setComparing(true);
+        }
+        return allUnsortedModulesSlots;
+    }
+
+    /**
      * Sorts TimetableModuleSlots
+     *
      * @return HashMap of {@code Day}, {@code list of TimetableModuleSlots sorted by time}
      */
     public static HashMap<String, ArrayList<TimetableModuleSlot>> sortModuleSlotsByDay(
             ArrayList<TimetableModuleSlot> unsortedTimetableModuleSlots) {
-        ArrayList<ArrayList<TimetableModuleSlot>> daysToTimetableModuleSlots = new ArrayList<ArrayList<TimetableModuleSlot>>();
+        ArrayList<ArrayList<TimetableModuleSlot>> listOfDays = new ArrayList<ArrayList<TimetableModuleSlot>>();
 
         // add ArrayList for Monday to Friday
-        daysToTimetableModuleSlots.add(new ArrayList<TimetableModuleSlot>());
-        daysToTimetableModuleSlots.add(new ArrayList<TimetableModuleSlot>());
-        daysToTimetableModuleSlots.add(new ArrayList<TimetableModuleSlot>());
-        daysToTimetableModuleSlots.add(new ArrayList<TimetableModuleSlot>());
-        daysToTimetableModuleSlots.add(new ArrayList<TimetableModuleSlot>());
+        listOfDays.add(new ArrayList<TimetableModuleSlot>());
+        listOfDays.add(new ArrayList<TimetableModuleSlot>());
+        listOfDays.add(new ArrayList<TimetableModuleSlot>());
+        listOfDays.add(new ArrayList<TimetableModuleSlot>());
+        listOfDays.add(new ArrayList<TimetableModuleSlot>());
 
         for (TimetableModuleSlot t : unsortedTimetableModuleSlots) {
             try {
-                daysToTimetableModuleSlots.get(convertDayToInteger(t.getDay())).add(t);
+                listOfDays.get(convertDayToInteger(t.getDay())).add(t);
             } catch (IllegalValueException e) {
                 logger.warning("Invalid day entered");
             }
         }
 
-        for (ArrayList<TimetableModuleSlot> t : daysToTimetableModuleSlots) {
+        for (ArrayList<TimetableModuleSlot> t : listOfDays) {
             ArrayList<TimetableModuleSlot> temp = sortModuleSlotsByTime(t);
             t.clear();
             t.addAll(temp);
@@ -811,18 +902,18 @@ public class TimetableParserUtil {
 
         HashMap<String, ArrayList<TimetableModuleSlot>> sortedTimetableModuleSlots =
                 new HashMap<String, ArrayList<TimetableModuleSlot>>();
-        sortedTimetableModuleSlots.put("MONDAY", daysToTimetableModuleSlots.get(MONDAY_INDEX));
-        sortedTimetableModuleSlots.put("TUESDAY", daysToTimetableModuleSlots.get(TUESDAY_INDEX));
-        sortedTimetableModuleSlots.put("WEDNESDAY", daysToTimetableModuleSlots.get(WEDNESDAY_INDEX));
-        sortedTimetableModuleSlots.put("THURSDAY", daysToTimetableModuleSlots.get(THURSDAY_INDEX));
-        sortedTimetableModuleSlots.put("FRIDAY", daysToTimetableModuleSlots.get(FRIDAY_INDEX));
+        sortedTimetableModuleSlots.put(DAYS[MONDAY_INDEX], listOfDays.get(MONDAY_INDEX));
+        sortedTimetableModuleSlots.put(DAYS[TUESDAY_INDEX], listOfDays.get(TUESDAY_INDEX));
+        sortedTimetableModuleSlots.put(DAYS[WEDNESDAY_INDEX], listOfDays.get(WEDNESDAY_INDEX));
+        sortedTimetableModuleSlots.put(DAYS[THURSDAY_INDEX], listOfDays.get(THURSDAY_INDEX));
+        sortedTimetableModuleSlots.put(DAYS[FRIDAY_INDEX], listOfDays.get(FRIDAY_INDEX));
         return sortedTimetableModuleSlots;
     }
 
     /**
-     * Sorts Module Slots by Time
+     * Sorts Module Slots by time
      * @param timetableModuleSlots
-     * @return
+     * @return a list of sorted TimetableModuleSlots
      */
     private static ArrayList<TimetableModuleSlot> sortModuleSlotsByTime(
             ArrayList<TimetableModuleSlot> timetableModuleSlots) {
@@ -832,6 +923,7 @@ public class TimetableParserUtil {
 
     /**
      * Splits each TimetableModuleSlots into half hour slots and adds empty slots to represent breaks
+     *
      * @param timetableModuleSlots the ArrayList to split into half hour slots
      * @return an ArrayList of TimetableModuleSlot with each slot representing one half-hour slot in the timetable
      */
@@ -863,6 +955,8 @@ public class TimetableParserUtil {
         }
         return filled;
     }
+
+    // ================ Helper methods ==============================
 
     /**
      * Converts shortened lesson type from URL to long lesson type in API
@@ -905,26 +999,133 @@ public class TimetableParserUtil {
      * @param day in String
      * @return int representing day
      */
-    private static int convertDayToInteger(String day) throws IllegalValueException {
-        switch (day.toLowerCase()) {
-        case "monday":
+    public static int convertDayToInteger(String day) throws IllegalValueException {
+        switch (day.toUpperCase()) {
+        case "MONDAY":
             return MONDAY_INDEX;
 
-        case "tuesday":
+        case "TUESDAY":
             return TUESDAY_INDEX;
 
-        case "wednesday":
+        case "WEDNESDAY":
             return WEDNESDAY_INDEX;
 
-        case "thursday":
+        case "THURSDAY":
             return THURSDAY_INDEX;
 
-        case "friday":
+        case "FRIDAY":
             return FRIDAY_INDEX;
 
         default:
             throw new IllegalValueException(MESSAGE_INVALID_DAY_TYPE);
         }
+    }
+}
+```
+###### /java/seedu/address/model/person/timetable/Timetable.java
+``` java
+/**
+ * Represents the NUSMODS timetable of the partner
+ */
+public class Timetable {
+    public static final String MESSAGE_TIMETABLE_CONSTRAINTS = "Short NUSMods timetable URL should be of the format "
+            + "http://modsn.us/code-part "
+            + "and adhere to the following constraints:\n"
+            + "1. The URL should start with http://modsn.us/\n"
+            + "2. The code-part should not be empty and should only contain alphanumeric characters.";
+    private static final String SHORT_NUSMODS_URL_REGEX = "http://modsn.us/";
+    private static final String CODE_PART_REGEX = "[\\w]+";
+    private static final String TIMETABLE_VALIDATION_REGEX = SHORT_NUSMODS_URL_REGEX + CODE_PART_REGEX;
+
+    public final String value;
+    private int currentSemester;
+    private HashMap<String, ArrayList<TimetableModuleSlot>>
+            daysToTimetableModuleSlots; // HashMap of <Day, Sorted list of TimetableModuleSlots>
+    private HashMap<String, TimetableModule> moduleCodeToTimetableModule; // contains all TimetableModules
+    private ArrayList<TimetableModuleSlot> allModulesSlots; //ArrayList containing all TimetableModuleSlots
+    private String expandedUrl;
+    private String timetableDisplayInfo;
+
+
+    public Timetable(String timetableUrl) {
+        requireNonNull(timetableUrl);
+        checkArgument(isValidTimetable(timetableUrl), MESSAGE_TIMETABLE_CONSTRAINTS);
+        this.value = timetableUrl;
+        setUpTimetable();
+    }
+
+    private void setUpTimetable() {
+        TimetableUtil.setUpTimetableInfo(this);
+    }
+
+    // ================ Getter and Setter methods ==============================
+
+    public String getExpandedUrl() {
+        return expandedUrl;
+    }
+
+    public void setExpandedUrl(String expandedUrl) {
+        this.expandedUrl = expandedUrl;
+    }
+
+    public void setModuleCodeToTimetableModule(HashMap<String, TimetableModule> moduleCodeToTimetableModule) {
+        this.moduleCodeToTimetableModule = moduleCodeToTimetableModule;
+    }
+
+    public HashMap<String, TimetableModule> getModuleCodeToTimetableModule() {
+        return moduleCodeToTimetableModule;
+    }
+
+    public int getCurrentSemester() {
+        return currentSemester;
+    }
+
+    public void setCurrentSemester(int currentSemester) {
+        this.currentSemester = currentSemester;
+    }
+
+    public void setDaysToTimetableModuleSlots(
+            HashMap<String, ArrayList<TimetableModuleSlot>> daysToTimetableModuleSlots) {
+        this.daysToTimetableModuleSlots = daysToTimetableModuleSlots;
+    }
+
+    public HashMap<String, ArrayList<TimetableModuleSlot>> getDaysToTimetableModuleSlots() {
+        return daysToTimetableModuleSlots;
+    }
+
+    public ArrayList<TimetableModuleSlot> getAllModulesSlots() {
+        return allModulesSlots;
+    }
+
+    public void setAllModulesSlots(ArrayList<TimetableModuleSlot> allModulesSlots) {
+        this.allModulesSlots = allModulesSlots;
+    }
+
+    public void setTimetableDisplayInfo(String timetableDisplayInfo) {
+        this.timetableDisplayInfo = timetableDisplayInfo;
+    }
+
+    public String getTimetableDisplayInfo() {
+        return timetableDisplayInfo;
+    }
+
+    /**
+     * Returns if a given string is a valid short NUSMods timetable URL.
+     */
+    public static boolean isValidTimetable(String test) {
+        return test.matches(TIMETABLE_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return value;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof Timetable // instanceof handles nulls
+                && this.value.equals(((Timetable) other).value)); // state check
     }
 }
 ```
@@ -1055,4 +1256,50 @@ public class TimetableModuleSlot implements Comparable<TimetableModuleSlot> {
         }
     }
 }
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Override
+    public void indicateTimetableChanged(Timetable timetable) {
+        raise(new TimetableChangedEvent(timetable));
+    }
+
+    @Override
+    public void requestHideTimetable() {
+        raise(new HideTimetableRequestEvent());
+    }
+
+    @Override
+    public void requestShowTimetable() {
+        raise(new ShowTimetableRequestEvent());
+    }
+
+```
+###### /java/seedu/address/model/ModelManager.java
+``` java
+    @Subscribe
+    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        TimetableUtil.setUpTimetableInfoView(getPartner().getTimetable());
+        indicateTimetableChanged(getPartner().getTimetable());
+        raise(new ShowTimetableRequestEvent());
+    }
+
+```
+###### /java/seedu/address/model/Model.java
+``` java
+    /**
+     * Raises an event to indicate the timetable storage has changed.
+     */
+    void indicateTimetableChanged(Timetable timetable);
+    /**
+     * Raises an event to hide timetable.
+     */
+    void requestHideTimetable();
+
+    /**
+     * Raises an event to show timetable.
+     */
+    void requestShowTimetable();
+
 ```

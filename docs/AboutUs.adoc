@@ -23,7 +23,7 @@ Responsibilities: Logic
 === Jasmund Toh
 
 image::jasmoon.png[width="150", align="left"]
-{empty}[http://github.com/jasmoon[github]] [<<jasmond#, portfolio>>]
+{empty}[http://github.com/jasmoon[github]] [<<jasmund#, portfolio>>]
 
 Role: Scheduling and tracking, JavaFX expert +
 Responsibilities: UI

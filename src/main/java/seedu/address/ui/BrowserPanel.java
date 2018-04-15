@@ -83,14 +83,9 @@ public class BrowserPanel extends UiPart<Region> {
     public String testIfFileExists(String testPath) {
         File toTest = new File(testPath.substring(6).replace("%20", " "));
         if (!toTest.exists()) {
-            try {
-                String resourceFile = MainApp.class.getResource(FXML_FILE_FOLDER).toExternalForm();
-                String mainFile = resourceFile.substring(0, resourceFile.lastIndexOf("out"));
-                return new String(mainFile + "data/view/" + STUDENT_MISC_INFO_PAGE);
-            } catch (Exception e) {
-                e.printStackTrace();
-                return null;
-            }
+            String resourceFile = MainApp.class.getResource(FXML_FILE_FOLDER).toExternalForm();
+            String mainFile =  resourceFile.substring(0, resourceFile.lastIndexOf("out"));
+            return new String(mainFile + "data/view/" + STUDENT_MISC_INFO_PAGE);
         } else {
             return testPath;
         }

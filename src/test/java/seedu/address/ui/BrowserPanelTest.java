@@ -47,14 +47,5 @@ public class BrowserPanelTest extends GuiUnitTest {
         postNow(browserEventStub);
         URL expectedStudentUrl = new URL(BrowserPanel.SEARCH_PAGE_URL + CARL.getAddress().urlstyle());
 
-        // profile page of a student
-        //@@author samuelloh
-        postNow(moreInfoEventStub);
-        String mainFilePath = browserPanel.constructPathToLoad();
-        String finalFilePath = browserPanel.testIfFileExists(mainFilePath);
-        URL expectedMoreInfoUrl = new URL(finalFilePath);
-
-        assertEquals(expectedMoreInfoUrl, browserPanelHandle.getLoadedUrl());
-        //@@author
     }
 }

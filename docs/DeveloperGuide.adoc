@@ -1,4 +1,4 @@
-= contactHeRo - Developer Guide
+= image:../../src/main/resources/images/displayscreenimage.png[width="80"] contactHeRo - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -594,7 +594,7 @@ The job openings are displayed towards the right side of the UI in the `JobListP
 **Pros**: Data is segregated by type. +
 **Cons**: Certain jobs and persons may have the same skills and in this implementation, there might be duplicate skills having one copy in each file.
 
-=== Matching jobs implementation
+=== Matching jobs mechanism
 
 ==== Current Implementation
 
@@ -1635,23 +1635,6 @@ Windows, Linux, Unix, OS-X
 A contact detail that is not meant to be shared with others
 
 [appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
-
-[appendix]
 == Instructions for Manual Testing
 
 Given below are instructions to test the app manually.
@@ -1673,26 +1656,147 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites:
+** List all persons using the `list` command.
+** There must be multiple persons in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First contact is deleted from the person list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size), `delete -1` (negative index) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Adding a job opening
 
-=== Saving data
+. Adding a job opening
 
-. Dealing with missing/corrupted data files
+.. Prerequisites:
+** You must be logged in to contactHeRo.
+.. Test case: `addjob p/Job1 t/Team1 l/Singapore n/1 s/Java` +
+   Expected: A job opening is added to the job list and its details are displayed on the task pane(far right). Timestamp in the status bar is updated.
+.. Test case: `addjob p/Job2 t/Team2 l/Malaysia` +
+   Expected: No job opening is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `addjob p/Job3 t/Team3 l/Malaysia n/abc s/C++` (invalid number of positions), `addjob p/Job2 t/Team2 l/Malaysia n/1 s/` (empty skills) +
+   Expected: Similar to previous.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+=== Deleting a job opening
 
-_{ more test cases ... }_
+. Deleting a job opening while all job openings are listed
+
+.. Prerequisites:
+** List all job openings using the `listjob` command.
+** There must be multiple job openings in the list.
+.. Test case: `deletejob 2` +
+   Expected: Second job opening is deleted from the job opening list. Details of the deleted job opening shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `deletejob 0` +
+   Expected: No job opening is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect deletejob commands to try: `deletejob`, `deletejob x` (where x is larger than the list size), `deletejob -1` (negative index) +
+    Expected: Similar to previous.
+
+. Deleting a job opening by finding it
+
+.. Prerequisites:
+** Job opening to find must exist in the job opening list.
+.. Test case: `findjob p/Software` followed by `deletejob 1` +
+   Expected: First job opening is deleted from the search results of `findjob` command. Details of the deleted job opening shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `findjob p/Software` followed by `deletejob 4` +
+   Expected: No job opening is deleted since the `findjob` results contain only one job opening. Error details shown in the status message. Status bar remains the same.
+
+=== Editing a job opening
+
+. Editing a job opening
+
+.. Prerequisites:
+** List all job openings using the `listjob` command.
+** There must be atleast two job openings in the list.
+.. Test case: `editjob 1 p/Hardware Engineer` +
+   Expected: The first job opening is edited and updated job opening is displayed. Details of the edited job opening shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `editjob 2 p/Hardware Engineer t/Cloud Services l/Singapore n/2 s/Java s/Algorithms` +
+   Expected: Assuming you have successfully executed the test case in Step 1.b above, the job opening will not be edited as it will result in a duplicate job. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect editjob commands to try: `editjob`, `editjob 1`, `editjob 1 p/` (empty field) +
+    Expected: No job opening is edited. Error details shown in the status message. Status bar remains the same.
+
+=== Finding a job opening
+
+. Finding a job opening
+
+.. Prerequisites:
+** List all job openings using the `listjob` command.
+** There must be atleast one job openings in the list.
+.. Test case: `findjob p/Engineer` +
+Expected: All job openigns containing 'Engineer' in their position name are displayed in the job opening list. Status bar remains the same.
+.. Test case: `findjob l/New York p/Engineer` +
+Expected: Job openings are not searched since two fields are searched at the same time. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect findjob commands to try: `findjob`, `findjob Engineer` (without prefix), `findjob 1 p/` (empty field) +
+Expected: Job openings are not searched. Error details shown in the status message. Status bar remains the same.
+
+=== Matching a job opening
+
+. Matching a job opening
+
+.. Prerequisites:
+** List all job openings using the `listjob` command.
+** There must be atleast one job openings in the list.
+.. Test case: `matchjob 1` +
+Expected: All persons whose skills match any of those required for the job opening at index 1 are displayed in the person list. Status bar remains the same.
+.. Test case: `matchjob 0` +
+Expected: No job opening is matched. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect matchjob commands to try: `matchjob`, `delete x` (where x is larger than the list size), `matchjob Engineer` (matching by position) +
+Expected: Job openings are not searched. Error details shown in the status message. Status bar remains the same.
+
+=== Searching a person on LinkedIn
+
+. Searching a person on LinkedIn
+
+.. Prerequisites:
+** List all persons using the `list` command.
+** There must be atlest one person in the list.
+.. Test case: `linkedIn 1` +
+   Expected: LinkedIn tab is visible and once you login/signup, the first person in the person list is searched on LinkedIn. Status bar remains the same.
+.. Test case: `linkedIn 2` +
+   Expected: Assuming you are already logged in to LinkedIn, the second person in the person list is searched on LinkedIn. Status bar remains the same.
+.. Test case: `linkedIn 0` +
+   Expected: No person is searched on LinkedIn. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect linkedIn commands to try: `linkedIn`, `linkedIn x` (where x is larger than the list size), `linkedIn -1` (negative index), `linkedIn Alex` (by name) +
+   Expected: Similar to previous.
+
+=== Auto-completing the command
+
+. Auto-completing the command
+
+.. Prerequisites: None.
+.. Test case: Type `a` and press `Tab`. +
+   Expected: The command is auto-completed to `add` with its syntax.
+.. Test case: Type `l` and press `Tab` repeatedly. +
+   Expected: The auto-completed command cycles between `linkedIn`, `list`, `listjob` and `login`.
+.. Test case: Type `ab` and press `Tab`. +
+   Expected: The command is not auto-completed.
+
+=== Logging in to Google
+
+. Logging in to Google using the command
+
+.. Type `googlelogin` into the command box.
+.. The display panel should switch to the `Google` tab and the Google Account Login page should be displayed.
+.. Login using your Google account, click `Allow` to allow contactHeRo some access to your Gmail account.
+.. After you have logged in, you should be redirected to the Google homepage.
+
+=== Sending an email
+
+. Sending Email to contact
+
+.. Prerequisites: Logged in to Google using the command `googlelogin`.
+.. Test case: `email 1` +
+   Expected: First contact's email address is displayed in the `To:` textbox.
+   First Contact's name is used in the template "Dear [NAME]" in the `Body:` textbox.
+.. Test case: `email 1 sub/Interview on 13 May` +
+   Expected: First contact's email address is displayed in the `To:` textbox.
+   First Contact's name is used in the template "Dear [NAME]" in the `Body:` textbox.
+   The subject title "Interview on 13 May" is displayed in the `Subject:` textbox.
+.. Test case: clicking `Send` +
+   Expected: Email should be sent to the correct email address, a pop-up box should
+   be displayed to show that you have sent the email successfully.

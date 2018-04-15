@@ -1,4 +1,4 @@
-= contactHeRo - User Guide
+= image:../../src/main/resources/images/displayscreenimage.png[width="80"] contactHeRo - User Guide
 :toc:
 :toclevels: 6
 :toc-title:
@@ -85,7 +85,7 @@ Thank you for choosing us as your contact management solution!
 == Features
 contactHeRo is a *Command Line Interface(CLI) application*. Hence you need to type in the commands in order to use its features.
 
-Below is the interface(Refer to figure 2) that contactHeRo provides for you to type your command.
+Below is the interface(Refer to figure 3) that contactHeRo provides for you to type your command.
 
 .Command Box in contactHeRo
 image::commandBox.png[width="790", align="center"]
@@ -337,7 +337,7 @@ On running the above command, you should see the following success message: +
 
 * `addjob p/Marketing Intern t/Social Media Marketing l/Singapore n/1 s/Excel s/Writing`
 +
-On running the above command, you should see the following success message and the job opening UI(Refer to figure 6) added to the Job List Panel(Refer to figure 1): +
+On running the above command, you should see the following success message and the job opening UI(Refer to figure 6) added to the Job List Panel(Refer to figure 2): +
 
  New job opening added: Marketing Intern Team: Social Media Marketing Location: Kuala Lampur, Malaysia Number of Positions: 1 Skills: [Excel][Writing]
 
@@ -440,7 +440,7 @@ This will show any person whose skills match any of those required for the job o
 `matchjob 1` +
 This will show any person whose skills match any of those required for the job opening at index 1 in the results of the findjob command.
 +
-On running this command, you should see a similar result as the following (Refer to figure 5). All persons having any skill as required by the job 'Software Engineer' will be shown.
+On running this command, you should see a similar result as the following (Refer to figure 7). All persons having any skill as required by the job 'Software Engineer' will be shown.
 
 .MatchJob Command Execution
 image::matchjobCommand.png[width="800", align="center"]

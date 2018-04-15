@@ -849,6 +849,7 @@ There are a couple of aspects with regards to `Notification` that can be impleme
 
 // tag::sort[]
 === Sort existing employees
+==== Current Implementation
 The implementation of `sort` command involves following objects: +
 
 . Command: SortCommand.

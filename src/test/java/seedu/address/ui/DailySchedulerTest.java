@@ -48,7 +48,6 @@ public class DailySchedulerTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        
         postNow(dailyScheduleShownChangedEventStub);
         postNow(updateNumberOfButtonsEventStub);
 

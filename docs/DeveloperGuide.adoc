@@ -934,7 +934,7 @@ Currently, the solution is to consume the use of kbd:[Enter] and invoke the func
 Because the default use of kbd:[Enter] has been replaced by command submission, another key combination is used for line breaks. The default combination for line breaks is kbd:[Shift]+kbd:[Enter] (like in Facebook). +
 For the implementation of the keyboard shortcuts, please refer to <<keyboard-shortcut>>.
 
-When `_CommandBox_` receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `_CommandBox_` generates a `_StringBuilder_` from current text inside `_CommandBox_`, gets the caret location. The `_StringBuilder_` then inserts a new line at the given caret location, returns a `_String_` and `_CommandBox_` replaces its entire body with the new `_String_`.
+When `_CommandBox_` receives a keyboard combination that is assigned to line breaks (default is kbd:[Shift]+kbd:[Enter]), `_CommandBox_` generates a `_StringBuilder_` from the current text inside `_CommandBox_` and gets the caret location. The `_StringBuilder_` then inserts a new line at the given caret location and returns a `_String_`. After that, `_CommandBox_` replaces its entire body with the new `_String_` returned by the `_StringBuilder_`.
 
 The implementation of line breaks is as below:
 [source,java]

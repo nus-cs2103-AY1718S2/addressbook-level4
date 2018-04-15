@@ -865,6 +865,114 @@ main thread in order to wait for the user to authenticate, if the user close the
 
 // end::email[]
 
+// tag::loginsystem[]
+=== Login System Implementation
+
+==== Current Implementation
+
+The login system is currently implemented such that there is only one user per application. Logging in and out of contactHeRo is done in the same way as the other commmands which is through the command line.
+
+==== Logging in
+
+When the user starts the application, the user will see the display screen. The user will need to login in order to switch to the main display to view the data.
+Most of the commands will be locked so as to prevent modification of the data in contactHeRo before a user logs in. The commands that are available for use are `LoginCommand`, `HelpCommand`, `ClearHistoryCommand` and `ExitCommand`.
+
+The user will need to enter the `login` command to log in before he can get to the main window. The image below shows
+the sequence diagram for the `login` command in the logic component.
+
+.Logic Component Sequence Diagram for logging in
+image::LoginSDLogicComponent.png[width="800", align="center"]
+
+As seen in the image, when the user logs in, an instance of `LogicCommand` is created which then makes a function call to `Model` to check the validity of the inputs. Afterwards, the `LogicCommand` instance will post a `LoginEvent` to \
+`EventsCenter` and the event will be handled by the `UI` component to switch the display.
+
+==== Logging out
+
+When the user is done with using the application, the user can use the `LogoutCommand` to log out. Once the log out is entered, the user will be brought back to the display screen.
+
+==== Customizing username and password
+
+Currently, a default username and password is given for first time users of contactHeRo. This information can be seen in the in the `ResultDisplayPanel` in the display window when the user starts up the application. See the image below.
+
+.LoginScreen.png
+image::LoginPrompt.png[width="800", align="center"]
+
+Users can change the username and password by using the `updateusername` command and `updatepassword` command respectively.
+
+[TIP]
+Constraints are set to both username and password to prevent illegal values from being used, such as an empty string. The code snippets for the regex of both username and password are shown below.
+
+[source, java]
+public static final String USERNAME_VALIDATION_REGEX = "\\S\\w{3,20}";
+
+[source, java]
+public static final String PASSWORD_VALIDATION_REGEX = "(?=.*[A-Za-z])(?=.*\\d)[\\p{Alnum}](\\S{4,20})";
+
+==== Storing of user account
+
+In our implementation, the `Account` class in the `model` component stores the in-memory data for the username and password. The `AccountsManager` class handles the methods which interacts with the data in `Account`, such as login and update password.
+
+For storing of the user account data in hard disk, it is handled by the `XmlAccountData` class in the `storage` component. The data will be stored as an XML file in a JAXB-friendly version `XmlAdaptedAccount`. This data file is a separate file from the file which stores the main data of contactHeRo.
+
+==== Design Considerations
+
+**Aspect:** Storing of user account data +
+
+**Alternative 1 (current choice):** Stores user account data in the same file with the main data. +
+**Pros**: +
+**Cons**: Data in contactHeRo becomes lost if user forgets the customized username or password. +
+
+**Alternative 2:** Stores user account data in a separate file.+
+**Pros**:  User can still retrieve their data if they forget their customize username or password by simply removing the file storing account data and restart with a +
+**Cons**: Data becomes insecure as now everyone can access the data through the default username and password. +
+
+**Aspect:** How login UI is implemented +
+
+**Alternative 1 (current choice):** Use the same window for the display screen and main screen. +
+**Pros**: Faster to implement as layout is similar to main screen. Also reduces code duplication. +
+**Cons**: Can only do small changes to layout for display screen. +
+
+**Alternative 2:** Create a separate login window. +
+**Pros**: Login UI can be customized to make it more user friendly for users visually. +
+**Cons**: User do not have to deal with the opening and closing of windows which may slow the app. +
+
+=== Matching jobs implementation
+
+==== Current Implementation
+
+The `JobMatchCommand` uses `PersonSkillContainsKeywordsPredicate` to match person's skills with a job's skills. It accepts the index for the job to match and then uses the `PersonSkillMatchesKeywordsPredicate` to match the job. Below is the code for the execution of the `JobMatchCommand`:
+
+[source, java]
+----
+@Override
+public CommandResult execute() throws CommandException {
+    ...
+    Job jobToMatch = lastShownList.get(targetIndex.getZeroBased());
+
+    model.updateFilteredPersonList(new PersonSkillContainsKeywordsPredicate(
+            CollectionUtil.getSetAsStringList(jobToMatch.getSkills())));
+    // return result
+}
+----
+
+`PersonSkillMatchesKeywordsPredicate` takes in the list of skills of the job as the keywords as the parameter and then checks if the person has any of these skills using the `SkillUtil`. The code for matching the skills is as follows:
+
+[source, java]
+----
+/**
+ * Checks if a set of skills contains any of the {@code keywords}.
+ */
+public static boolean match(List<String> keywords, Set<Skill> list) {
+    String skillList = getSkillsAsString(list);
+    return keywords.stream()
+            .anyMatch(keyword -> StringUtil.containsWordIgnoreCase(skillList, keyword));
+}
+----
+
+[NOTE]
+To minimize code duplication, we made a utility class `SkillUtil` which is used both by `PersonSkillMatchesKeywordsPredicate` during execution of `matchjob` and `find s/` commands and `JobSkillMatchesKeywordsPredicate` during the execution of `findjob s/` command.
+// end::loginsystem[]
+
 == Documentation
 
 We use asciidoc for writing documentation.

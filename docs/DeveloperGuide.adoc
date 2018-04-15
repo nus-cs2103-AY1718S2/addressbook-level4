@@ -580,7 +580,7 @@ Calendar Commands that are supported are:
 * adding an event
 * removing an event
 
-image::CalendarCommands_classDiagrams.PNG[Width="550"]
+image::CalendarCommands_classDiagrams.PNG[Width="350"]
 
 ===== Aspect: Choosing Number of Accounts to Work With
 

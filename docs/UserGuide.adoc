@@ -136,7 +136,7 @@ This section describes commands you can use to manage person entries in ContactS
 The figure below shows how ContactSails looks currently.
 
 .Current state of ContactSails.
-image::Start.png[width="500" align="center"]
+image::ManagingPersonsInit.png[width="500" align="center"]
 
 ==== Adding a person : `add`
 
@@ -357,7 +357,7 @@ Example:
 The figure below shows ContactSails, with the 1st contact selected.
 
 .ContactSails with the 1st contact selected.
-image::BeforeContacts.png[width="500" align="center"]
+image::BeforeGroupDelete.png[width="500" align="center"]
 
 Type `groupdelete friends` OR `gd friends` into the Command Box.
 
@@ -892,7 +892,8 @@ Command Alias: `u`
 
 [NOTE]
 ====
-Undoable commands: These are commands that modify ContactSails's state (`add`, `delete`, `edit`, `clear`, etc.).
+Undoable commands: All commands that add, edit, or delete any data in ContactSails are undoable commands.
+This applies to all commands that perform these operations on persons, orders, and calendar entries.
 ====
 
 Example:

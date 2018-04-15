@@ -1252,6 +1252,65 @@ _{ more test cases ... }_
 
 _{ more test cases ... }_
 
+=== Add appointment
+
+. Adding an appointment
+
+.. Test case: Run `addappointment` with valid parameters. +
+   Expected: Appointment added.
+.. Test case: Run `addappointment` with invalid parameters. +
+   Expected: Error message displayed showing the required format.
+
+=== Delete appointment
+
+. Deleting an appointment
+
+.. Test case: Run `deleteappointment 1` +
+   Expected: The first appointment is deleted
+.. Test case: Run `deleteappointment InvalidIndex` +
+   Expected: Error message displayed.
+
+=== Edit appointment
+
+. Editing an appointment
+
+.. Test case: Run `editappointment` with valid parameters. +
+   Expected: Appointment edited.
+.. Test case: Run `editappointment` without any edit information. +
+   Expected: Error message displayed.
+
+=== Archive client
+
+. Archiving a client
+
+.. Test case: Run `archive INDEX` where INDEX is a valid person index. +
+   Expected: Person disappears from list.
+
+=== List all clients
+
+. Listing all clients including archived
+
+.. Prerequisite: Archive some client as in the archive client test.
+.. Test case: Run `listall` . +
+   Expected: Archived person is listed with red font and strikethrough.
+
+=== Unarchive client
+
+. Unarchiving a client
+
+.. Prerequisite: Some person archived and listed as in List all clients test.
+.. Test case: Run `unarchive INDEX` where INDEX is the index of an archived person. +
+   Expected: Person becomes unarchived and is listed in a normal font.
+
+=== Switch theme
+
+. Switching theme
+
+.. Test case: Run `switch` . +
+   Expected: Theme is switched from dark to light and vice-versa.
+.. Test case: Close and open the application. +
+   Expected: Theme is saved across restarts.
+
 === Saving data
 
 . Dealing with missing/corrupted data files

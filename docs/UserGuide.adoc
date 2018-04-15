@@ -88,7 +88,7 @@ For more information on the various commands,  refer to <<Features>> for the spe
 
 Before introducing the commands, a brief walkthrough of the user interface is shown in Figure 2 below.
 
-.User Interface Walkthrough of IMDB
+.User interface walkthrough of IMDB
 [caption="Figure 2: "]
 image::ui_walkthrough.png[width="990"]
 
@@ -116,7 +116,7 @@ The commands listed in this section are related to the general usage of IMDB.
 Opens the user guide in a separate window as shown in Figure 3 below. +
 Format: `help` or `h`
 
-.Help Window
+.Help window
 [caption="Figure 3: "]
 image::help_window.PNG[width="990"]
 
@@ -127,7 +127,7 @@ Opens a window for the user to log into the IMDB with a matching username and pa
 There are two placeholder accounts currently in the IMDB. There is alice, who is a doctor, and bob, who is a medical staff member. Some commands are restricted based on which role the user is logged into. +
 Format: `login` or `lg`
 
-.Login Window
+.Login window
 [caption="Figure 4: "]
 image::login_window.PNG[width="990"]
 
@@ -138,7 +138,7 @@ Username: alice +
 Password: password123 +
 Logs the user in as alice, who is a doctor as shown in Figure 5 below.
 
-.IMDB Main Interface (Logged in as Alice)
+.IMDB main window (Logged in as Alice)
 [caption="Figure 5: "]
 image::login_window_doctor.PNG[width="990"]
 
@@ -148,7 +148,7 @@ Password: password456 +
 Logs the user in as bob, who is a medical staff as shown in Figure 6 below.
 // end::login[]
 
-.IMDB Main Interface (Logged in as Bob)
+.IMDB main window (Logged in as Bob)
 [caption="Figure 6: "]
 image::login_window_staff.PNG[width="990"]
 
@@ -481,7 +481,7 @@ Examples:
 `record 1 in/1` +
 Displays the first medical record for the first person in the result of the list command as shown Figure 7 below.
 
-.Record Window
+.Record window
 [caption="Figure 7: "]
 image::record_window.PNG[width="990"]
 
@@ -513,13 +513,13 @@ Deletes the first medical record for the first person in the result of the list 
 // tag::print[]
 ==== Printing a patient's formatted medical records : `print` [since v1.4]
 
-Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application as shown in Figure 8 below. +
+Formats and prints a patient's medical records into a PDF file. This PDF file is located in the same directory as the IMDB application as shown in Figure 8 below. +
 Format: `print INDEX` or `p INDEX`
 
 [CAUTION]
 This command is only accessible to doctors.
 
-.PDF File in the directory
+.PDF file in the directory
 [caption="Figure 8: "]
 image::print_window.PNG[width="990"]
 
@@ -544,6 +544,12 @@ This command is undoable.
 
 [CAUTION]
 This command is only accessible to medical staff.
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* This command will only add a patient if they are currently not in the visiting queue.
+****
 
 Examples:
 
@@ -592,7 +598,7 @@ This command is undoable.
 This command is only accessible to medical staff.
 
 ****
-* The index refers to the index number shown in the most recent listing.
+* The index refers to the index number shown in the visiting queue.
 * The index *must be a positive integer* `1, 2, 3, ...`
 * This command will only remove a patient if they are currently in the visiting queue.
 ****
@@ -613,23 +619,33 @@ The commands listed in this section are related to the management of patients’
 
 Adds a medical appointment to a patient.
 
-Format: `addappt PATIENT_NAME DATE TIME` or `aa PATIENT_NAME DATE TIME`
+Format: `addappt INDEX DATE TIME` or `aa PATIENT_NAME DATE TIME`
 
 [CAUTION]
 This command is only for medical staff.
 
 ****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
 * The date of the appointment must be in the following format: DD/MM/YYYY.
+* The date of the appointment must be after the current date and time.
 * The time of the appointment must be given in 24 hour clock format: HHMM.
+* This command will only add the appointment if it does not book by any other patient.
 ****
 
 Examples:
 
-* `addappt Betsy 19/3/2018 1000` +
-Adds a medical appointment for Betsy on 19/3/2018 at 10am.
+* `viewappt` +
+`addappt 1 19/6/2018 1000` +
+`viewappt` +
+Adds a medical appointment for the first person in the list on 19/3/2018 at 10am as shown in Figure 9.
 
-* `aa John 23/3/2019 1430` +
-Adds a medical appointment for John on 23/3/2018 at 2:30pm.
+.Calendar panel in IMDB
+[caption="Figure 9: "]
+image::addappt_window.PNG[width="990"]
+
+* `aa 1 23/7/2019 1430` +
+Adds a medical appointment for the first person in the list on 23/3/2018 at 2:30pm.
 
 ==== Viewing medical appointments by patient name: `viewappt` [since v1.3]
 

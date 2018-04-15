@@ -549,7 +549,7 @@ We use `Runtime.java` in `java.lang` package to `execute` the scripts via the co
 ** The program will not need to create any folder or script file but rather initialize a `String` array with
 all the contents of the script.
 
-image::RunscriptAD.png[width="800"]
+image::RunScriptAD.png[width="800"]
 // end::script[]
 
 == Documentation

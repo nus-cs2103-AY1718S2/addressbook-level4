@@ -48,3 +48,5 @@ include::../DeveloperGuide.adoc[tag=activitydesign]
 include::../DeveloperGuide.adoc[tag=find]
 
 include::../DeveloperGuide.adoc[tag=edit]
+
+include::../DeveloperGuide.adoc[tag=select]

@@ -1,5 +1,443 @@
 # demitycho
-###### \java\seedu\address\commons\events\model\ScheduleChangedEvent.java
+###### \build\resources\main\view\CalendarPanel.fxml
+``` fxml
+<?import javafx.scene.layout.StackPane?>
+<?import com.calendarfx.view.CalendarView?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1">
+  <CalendarView fx:id="calendarView"/>
+</StackPane>
+```
+###### \build\resources\main\view\main.css
+``` css
+ */
+@font-face {
+    src: url("./ProFontWindows.ttf");
+}
+@font-face {
+    src: url("./Montserrat-Semibold.ttf");
+}
+.background {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #383838; /* Used in the default.html file */
+}
+
+.root * {
+    base: black;
+    light: white;
+    primary: #71b280;
+    secondary: #134e5e;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-family: "Montserrat Light", sans-serif;
+}
+
+#details {
+    -fx-background-color: linear-gradient(to right, #134e5e, #71b280);
+}
+#studentListView {
+    -fx-background-color: white;
+
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.9) , 15, 0.0 , 0 , 2 );
+}
+
+#commandBoxPlaceholder {
+    -fx-border-color: transparent transparent white transparent;
+
+}
+
+#commandTypeLabel {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+
+}
+
+.context-menu {
+    -fx-background-color: derive(secondary, 30%);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+#commandTextField {
+    -fx-font-family: "ProFontWindows", "Courier New";
+    -fx-font-size: 18pt;
+    -fx-text-fill: white;
+
+}
+
+.result-display {
+    -fx-font-size: 15pt;
+    -fx-text-fill: white;
+}
+
+/*
+ * Student panels
+ */
+.list-cell {
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-border-width: 3;
+}
+.list-cell:filled:selected {
+    -fx-background-color: rgba(0, 0, 0, 0.6);
+}
+.list-cell:filled:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*
+ *  Scroll bars
+ */
+
+.scroll-bar {
+    -fx-background-color: derive(darkgrey, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(lightgray, 80%);
+    -fx-background-insets: 1;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 4 1 4;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 4 1 4 1;
+}
+
+#infoPanel {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 15, 0.0 , 0 , 2 );
+}
+
+.pane-with-border {
+
+}
+/**
+ * Menu Bar
+ */
+
+#menuBar {
+    -fx-background-color: linear-gradient(to right, #134e5e, #71b280);
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent lightgray transparent;
+
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+.anchor-pane{
+    -fx-text-fill: white;
+}
+
+
+/*For Tags*/
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+    -fx-opacity: 0.8;
+}
+
+#tags .label {
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+#tags .teal {
+    -fx-text-fill: black;
+    -fx-background-color: teal;
+}
+
+#tags .red {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .cyan {
+    -fx-text-fill: black;
+    -fx-background-color: cyan;
+}
+
+#tags .gold {
+    -fx-text-fill: white;
+    -fx-background-color: gold;
+}
+#tags .khaki {
+    -fx-text-fill: black;
+    -fx-background-color: khaki;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .olive {
+    -fx-text-fill: white;
+    -fx-background-color: olive;
+}
+
+.test {
+    -fx-font-size: 25px !important;
+
+}
+```
+###### \out\production\classes\view\CalendarPanel.fxml
+``` fxml
+<?import javafx.scene.layout.StackPane?>
+<?import com.calendarfx.view.CalendarView?>
+
+<StackPane xmlns:fx="http://javafx.com/fxml/1">
+  <CalendarView fx:id="calendarView"/>
+</StackPane>
+```
+###### \out\production\classes\view\main.css
+``` css
+ */
+@font-face {
+    src: url("./ProFontWindows.ttf");
+}
+@font-face {
+    src: url("./Montserrat-Semibold.ttf");
+}
+.background {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    background-color: #383838; /* Used in the default.html file */
+}
+
+.root * {
+    base: black;
+    light: white;
+    primary: #71b280;
+    secondary: #134e5e;
+    -fx-background-color: transparent;
+    -fx-text-fill: black;
+    -fx-font-size: 13px;
+    -fx-font-family: "Montserrat Light", sans-serif;
+}
+
+#details {
+    -fx-background-color: linear-gradient(to right, #134e5e, #71b280);
+}
+#studentListView {
+    -fx-background-color: white;
+
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.9) , 15, 0.0 , 0 , 2 );
+}
+
+#commandBoxPlaceholder {
+    -fx-border-color: transparent transparent white transparent;
+
+}
+
+#commandTypeLabel {
+    -fx-font-size: 20px;
+    -fx-text-fill: white;
+
+}
+
+.context-menu {
+    -fx-background-color: derive(secondary, 30%);
+}
+
+.context-menu .label {
+    -fx-text-fill: white;
+}
+#commandTextField {
+    -fx-font-family: "ProFontWindows", "Courier New";
+    -fx-font-size: 18pt;
+    -fx-text-fill: white;
+
+}
+
+.result-display {
+    -fx-font-size: 15pt;
+    -fx-text-fill: white;
+}
+
+/*
+ * Student panels
+ */
+.list-cell {
+    -fx-border-color: transparent transparent lightgrey transparent;
+    -fx-border-width: 3;
+}
+.list-cell:filled:selected {
+    -fx-background-color: rgba(0, 0, 0, 0.6);
+}
+.list-cell:filled:hover {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+}
+
+/*
+ *  Scroll bars
+ */
+
+.scroll-bar {
+    -fx-background-color: derive(darkgrey, 20%);
+}
+
+.scroll-bar .thumb {
+    -fx-background-color: derive(lightgray, 80%);
+    -fx-background-insets: 1;
+}
+
+.scroll-bar .increment-button, .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-bar .increment-arrow, .scroll-bar .decrement-arrow {
+    -fx-shape: " ";
+}
+
+.scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 4 1 4;
+}
+
+.scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 4 1 4 1;
+}
+
+#infoPanel {
+    -fx-effect: dropshadow( three-pass-box , rgba(0,0,0,0.8) , 15, 0.0 , 0 , 2 );
+}
+
+.pane-with-border {
+
+}
+/**
+ * Menu Bar
+ */
+
+#menuBar {
+    -fx-background-color: linear-gradient(to right, #134e5e, #71b280);
+    -fx-text-fill: white;
+    -fx-border-color: transparent transparent lightgray transparent;
+
+}
+
+.menu-bar .label {
+    -fx-font-size: 14pt;
+    -fx-font-family: "Segoe UI Light";
+    -fx-text-fill: white;
+    -fx-opacity: 0.9;
+}
+
+.menu .left-container {
+    -fx-background-color: black;
+}
+
+.anchor-pane{
+    -fx-text-fill: white;
+}
+
+
+/*For Tags*/
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+    -fx-opacity: 0.8;
+}
+
+#tags .label {
+    -fx-padding: 1 3 1 3;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+    -fx-font-size: 11;
+}
+
+#tags .teal {
+    -fx-text-fill: black;
+    -fx-background-color: teal;
+}
+
+#tags .red {
+    -fx-text-fill: white;
+    -fx-background-color: red;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .yellow {
+    -fx-text-fill: black;
+    -fx-background-color: yellow;
+}
+
+#tags .cyan {
+    -fx-text-fill: black;
+    -fx-background-color: cyan;
+}
+
+#tags .gold {
+    -fx-text-fill: white;
+    -fx-background-color: gold;
+}
+#tags .khaki {
+    -fx-text-fill: black;
+    -fx-background-color: khaki;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .olive {
+    -fx-text-fill: white;
+    -fx-background-color: olive;
+}
+
+.test {
+    -fx-font-size: 25px !important;
+
+}
+```
+###### \src\main\java\seedu\address\commons\events\model\ScheduleChangedEvent.java
 ``` java
 /**
  * Indicates the AddressBook in the model has changed
@@ -28,7 +466,7 @@ public class ScheduleChangedEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\commons\events\ui\ShowScheduleEvent.java
+###### \src\main\java\seedu\address\commons\events\ui\ShowScheduleEvent.java
 ``` java
  * Indicates a request to show the milestones in a student's dashboard
  */
@@ -55,7 +493,7 @@ public class ShowScheduleEvent extends BaseEvent {
     }
 }
 ```
-###### \java\seedu\address\external\exceptions\CredentialsException.java
+###### \src\main\java\seedu\address\external\exceptions\CredentialsException.java
 ``` java
 /**
  * An exception related to stored Google credentials
@@ -71,7 +509,7 @@ public class CredentialsException extends Exception {
     }
 }
 ```
-###### \java\seedu\address\external\GCalendarService.java
+###### \src\main\java\seedu\address\external\GCalendarService.java
 ``` java
 
 /**
@@ -294,7 +732,7 @@ public class GCalendarService {
     }
 }
 ```
-###### \java\seedu\address\external\GContactsService.java
+###### \src\main\java\seedu\address\external\GContactsService.java
 ``` java
 /**
  * Constructs a new GContactsService object to communicate with Google's APIs
@@ -491,7 +929,7 @@ public class GContactsService {
 }
 
 ```
-###### \java\seedu\address\external\GServiceManager.java
+###### \src\main\java\seedu\address\external\GServiceManager.java
 ``` java
 
 /**
@@ -615,7 +1053,7 @@ public class GServiceManager {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\AddLessonCommand.java
+###### \src\main\java\seedu\address\logic\commands\AddLessonCommand.java
 ``` java
 /**
  * Adds a lesson to the schedule for a student in the address book.
@@ -696,7 +1134,7 @@ public class AddLessonCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteLessonCommand.java
+###### \src\main\java\seedu\address\logic\commands\DeleteLessonCommand.java
 ``` java
 /**
  * Deletes a lesson identified using it's last displayed index from the address book.
@@ -754,7 +1192,7 @@ public class DeleteLessonCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\FindTagCommand.java
+###### \src\main\java\seedu\address\logic\commands\FindTagCommand.java
 ``` java
 /**
  * Finds and lists all students in address book whose tag contains any of the argument keywords.
@@ -789,7 +1227,7 @@ public class FindTagCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\LoginCommand.java
+###### \src\main\java\seedu\address\logic\commands\LoginCommand.java
 ``` java
 /**
  * Logs in to user's Google Account.
@@ -847,7 +1285,7 @@ public class LoginCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\ScheduleCommand.java
+###### \src\main\java\seedu\address\logic\commands\ScheduleCommand.java
 ``` java
 /**
  * Displays the user's schedule.
@@ -871,7 +1309,7 @@ public class ScheduleCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\SyncCommand.java
+###### \src\main\java\seedu\address\logic\commands\SyncCommand.java
 ``` java
 
 /**
@@ -907,7 +1345,7 @@ public class SyncCommand extends Command {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddLessonCommandParser.java
+###### \src\main\java\seedu\address\logic\parser\AddLessonCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddCommandCommand object
@@ -961,22 +1399,22 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
 
 }
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### \src\main\java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case AddLessonCommand.COMMAND_WORD:
             return new AddLessonCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### \src\main\java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case DeleteLessonCommand.COMMAND_WORD:
             return new DeleteLessonCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### \src\main\java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case FindTagCommand.COMMAND_WORD:
             return new FindTagCommandParser().parse(arguments);
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### \src\main\java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case LoginCommand.COMMAND_WORD:
             return new LoginCommand();
@@ -999,7 +1437,7 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
 ```
-###### \java\seedu\address\logic\parser\AddressBookParser.java
+###### \src\main\java\seedu\address\logic\parser\AddressBookParser.java
 ``` java
         case ScheduleCommand.COMMAND_WORD:
             return new ScheduleCommand();
@@ -1007,7 +1445,7 @@ public class AddLessonCommandParser implements Parser<AddLessonCommand> {
         case SyncCommand.COMMAND_WORD:
             return new SyncCommand();
 ```
-###### \java\seedu\address\logic\parser\FindTagCommandParser.java
+###### \src\main\java\seedu\address\logic\parser\FindTagCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindTagCommand object
@@ -1033,7 +1471,7 @@ public class FindTagCommandParser implements Parser<FindTagCommand> {
 
 }
 ```
-###### \java\seedu\address\model\lesson\Day.java
+###### \src\main\java\seedu\address\model\lesson\Day.java
 ``` java
 /**
  * Represents a Student's day in a lesson in the Schedule.
@@ -1185,7 +1623,7 @@ public class Day implements Comparable<Day> {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\exceptions\DuplicateLessonException.java
+###### \src\main\java\seedu\address\model\lesson\exceptions\DuplicateLessonException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Lesson objects.
@@ -1196,7 +1634,7 @@ public class DuplicateLessonException extends DuplicateDataException {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\exceptions\InvalidLessonTimeSlotException.java
+###### \src\main\java\seedu\address\model\lesson\exceptions\InvalidLessonTimeSlotException.java
 ``` java
 /**
  * Signals that the operation will result in duplicate Lesson objects.
@@ -1207,14 +1645,14 @@ public class InvalidLessonTimeSlotException extends IllegalValueException {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\exceptions\LessonNotFoundException.java
+###### \src\main\java\seedu\address\model\lesson\exceptions\LessonNotFoundException.java
 ``` java
 /**
  * Signals that the operation is unable to find the specified lesson.
  */
 public class LessonNotFoundException extends Exception { }
 ```
-###### \java\seedu\address\model\lesson\Hour.java
+###### \src\main\java\seedu\address\model\lesson\Hour.java
 ``` java
 /**
  * Represents the Hour value in the Time.
@@ -1245,7 +1683,7 @@ public class Hour implements Comparable<Hour> {
 
 }
 ```
-###### \java\seedu\address\model\lesson\Lesson.java
+###### \src\main\java\seedu\address\model\lesson\Lesson.java
 ``` java
 /**
  * Represents a Student in the address book.
@@ -1350,7 +1788,7 @@ public class Lesson implements Comparable<Lesson> {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\LessonList.java
+###### \src\main\java\seedu\address\model\lesson\LessonList.java
 ``` java
 /**
  * A list of lessons that enforces non clashes int timings between its elements and does not allow nulls.
@@ -1466,7 +1904,7 @@ public class LessonList implements Iterable<Lesson> {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\Min.java
+###### \src\main\java\seedu\address\model\lesson\Min.java
 ``` java
 /**
  * Represents the Hour value in the Time.
@@ -1496,7 +1934,7 @@ public class Min implements Comparable<Min> {
     }
 }
 ```
-###### \java\seedu\address\model\lesson\Time.java
+###### \src\main\java\seedu\address\model\lesson\Time.java
 ``` java
 /**
  * Represents a Student's time in a lesson in the Schedule.
@@ -1577,7 +2015,7 @@ public class Time implements Comparable<Time> {
 
 }
 ```
-###### \java\seedu\address\model\ModelManager.java
+###### \src\main\java\seedu\address\model\ModelManager.java
 ``` java
     @Override
     public void loginGoogleAccount() throws CredentialsException, IOException {
@@ -1594,12 +2032,12 @@ public class Time implements Comparable<Time> {
         this.gServiceManager.synchronize(addressBook, schedule);
     }
 ```
-###### \java\seedu\address\model\ReadOnlyAddressBook.java
+###### \src\main\java\seedu\address\model\ReadOnlyAddressBook.java
 ``` java
     Student findStudentByKey(UniqueKey key);
 }
 ```
-###### \java\seedu\address\model\ReadOnlySchedule.java
+###### \src\main\java\seedu\address\model\ReadOnlySchedule.java
 ``` java
 /**
  * Unmodifiable view of a schedule
@@ -1617,7 +2055,7 @@ public interface ReadOnlySchedule {
     Time getLatestEndTime();
 }
 ```
-###### \java\seedu\address\model\Schedule.java
+###### \src\main\java\seedu\address\model\Schedule.java
 ``` java
 /**
  * Wraps all data at the schedule level
@@ -1765,7 +2203,7 @@ public class Schedule implements ReadOnlySchedule {
     }
 }
 ```
-###### \java\seedu\address\model\student\UniqueKey.java
+###### \src\main\java\seedu\address\model\student\UniqueKey.java
 ``` java
 /**
  * Represents a Student's UniqueKey in the address book. Generated by {@code UniqueStudentList.add()} method
@@ -1831,7 +2269,7 @@ public class UniqueKey {
 
 }
 ```
-###### \java\seedu\address\model\student\UniqueStudentList.java
+###### \src\main\java\seedu\address\model\student\UniqueStudentList.java
 ``` java
     /**
      * Finds a unique key not in the {@code internalList}
@@ -1877,7 +2315,7 @@ public class UniqueKey {
         return foundStudent;
     }
 ```
-###### \java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
+###### \src\main\java\seedu\address\model\tag\TagContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code Student}'s {@code Tag} matches any of the keywords given.
@@ -1910,7 +2348,7 @@ public class TagContainsKeywordsPredicate implements Predicate<Student> {
 
 }
 ```
-###### \java\seedu\address\storage\ScheduleStorage.java
+###### \src\main\java\seedu\address\storage\ScheduleStorage.java
 ``` java
 /**
  * Represents a storage for {@link seedu.address.model.Schedule}.
@@ -1956,7 +2394,7 @@ public interface ScheduleStorage {
 
 }
 ```
-###### \java\seedu\address\storage\Storage.java
+###### \src\main\java\seedu\address\storage\Storage.java
 ``` java
     @Override
     String getScheduleFilePath();
@@ -1967,14 +2405,14 @@ public interface ScheduleStorage {
     @Override
     void saveSchedule(ReadOnlySchedule schedule) throws IOException;
 ```
-###### \java\seedu\address\storage\Storage.java
+###### \src\main\java\seedu\address\storage\Storage.java
 ``` java
     /**
      * Handles the event where the required student index for displaying misc info is changed
      */
     void handleRequiredStudentIndexChangedEvent(RequiredStudentIndexChangeEvent rsice);
 ```
-###### \java\seedu\address\storage\Storage.java
+###### \src\main\java\seedu\address\storage\Storage.java
 ``` java
     /**
      * Handles the event where the profile picture of a student is being changed
@@ -1987,7 +2425,7 @@ public interface ScheduleStorage {
     void setupViewFiles() throws IOException;
 }
 ```
-###### \java\seedu\address\storage\XmlAdaptedLesson.java
+###### \src\main\java\seedu\address\storage\XmlAdaptedLesson.java
 ``` java
 /**
  * JAXB-friendly version of the Lesson.
@@ -2093,7 +2531,7 @@ public class XmlAdaptedLesson {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlScheduleStorage.java
+###### \src\main\java\seedu\address\storage\XmlScheduleStorage.java
 ``` java
 /**
  * A class to access Schedule data stored as an xml file on the hard disk.
@@ -2166,7 +2604,7 @@ public class XmlScheduleStorage implements ScheduleStorage {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlSerializableSchedule.java
+###### \src\main\java\seedu\address\storage\XmlSerializableSchedule.java
 ``` java
 /**
  * An Immutable Schedule that is serializable to XML format
@@ -2222,7 +2660,7 @@ public class XmlSerializableSchedule {
     }
 }
 ```
-###### \java\seedu\address\ui\CalendarPanel.java
+###### \src\main\java\seedu\address\ui\CalendarPanel.java
 ``` java
 /**
  * The Calendar Panel using the InfoPanel of Codeducator.
@@ -2377,7 +2815,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
     }
 
 ```
-###### \resources\view\CalendarPanel.fxml
+###### \src\main\resources\view\CalendarPanel.fxml
 ``` fxml
 <?import javafx.scene.layout.StackPane?>
 <?import com.calendarfx.view.CalendarView?>
@@ -2386,7 +2824,7 @@ public class CalendarPanel extends UiPart<CalendarView> {
   <CalendarView fx:id="calendarView"/>
 </StackPane>
 ```
-###### \resources\view\main.css
+###### \src\main\resources\view\main.css
 ``` css
  */
 @font-face {
@@ -2594,5 +3032,613 @@ public class CalendarPanel extends UiPart<CalendarView> {
 .test {
     -fx-font-size: 25px !important;
 
+}
+```
+###### \src\test\java\seedu\address\logic\commands\AddLessonCommandIntegrationTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code AddLessonCommand}.
+ */
+public class AddLessonCommandIntegrationTest {
+
+    private Model model;
+
+    @Before
+    public void setUp() {
+        model = new ModelManager(
+                getTypicalAddressBook(), new UserPrefs(), getTypicalSchedule());
+    }
+
+    @Test
+    public void execute_newStudent_success() throws Exception {
+        Lesson lesson = FIONA_SAT_15_17;
+
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), model.getSchedule());
+        Student student = expectedModel.getAddressBook().getStudentList().get(INDEX_SIXTH.getZeroBased());
+        expectedModel.addLesson(student, lesson.getDay(), lesson.getStartTime(), lesson.getEndTime());
+
+        assertCommandSuccess(prepareCommand(INDEX_SIXTH, lesson), model,
+                String.format(AddLessonCommand.MESSAGE_SUCCESS, student.getName()), expectedModel);
+    }
+
+    @Test
+    public void execute_clashingLesson_throwsCommandException() {
+        assertCommandFailure(prepareCommand(Index.fromOneBased(1),
+                ALICE_WED_15_17), model, AddLessonCommand.MESSAGE_INVALID_TIME_SLOT);
+    }
+
+    /**
+     * Generates a new {@code AddCommand} which upon execution, adds {@code student} into the {@code model}.
+     */
+    private AddLessonCommand prepareCommand(Index index, Lesson lesson) {
+        AddLessonCommand command = new AddLessonCommand(
+                index, lesson.getDay(), lesson.getStartTime(), lesson.getEndTime());
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+}
+```
+###### \src\test\java\seedu\address\logic\commands\DeleteLessonCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
+ * {@code DeleteLessonCommand}.
+ */
+public class DeleteLessonCommandTest {
+
+    private Model model = new ModelManager(
+            getTypicalAddressBook(), new UserPrefs(), getTypicalSchedule());
+
+    @Test
+    public void execute_validIndex_success() throws Exception {
+        Lesson lessonToDelete = model.getSchedule().getSchedule().get(INDEX_FIRST.getZeroBased());
+        DeleteLessonCommand deleteLessonCommand = prepareCommand(INDEX_FIRST);
+
+        String expectedMessage = String.format(DeleteLessonCommand.MESSAGE_DELETE_LESSON_SUCCESS, lessonToDelete);
+
+        ModelManager expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), getTypicalSchedule());
+        expectedModel.deleteLesson(lessonToDelete);
+
+        assertCommandSuccess(deleteLessonCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidIndexUnfilteredList_throwsCommandException() throws Exception {
+        Index outOfBoundIndex = Index.fromOneBased(model.getSchedule().getSchedule().size() + 1);
+        DeleteLessonCommand deleteLessonCommand = prepareCommand(outOfBoundIndex);
+
+        assertCommandFailure(deleteLessonCommand, model, Messages.MESSAGE_INVALID_LESSON_DISPLAYED_INDEX);
+    }
+
+    @Test
+    public void executeUndoRedo_validIndex_success() throws Exception {
+        UndoRedoStack undoRedoStack = new UndoRedoStack();
+        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
+        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
+        Lesson lessonToDelete = model.getSchedule().getSchedule().get(INDEX_FIRST.getZeroBased());
+        DeleteLessonCommand deleteLessonCommand = prepareCommand(INDEX_FIRST);
+        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs(), getTypicalSchedule());
+
+        // delete -> first student deleted
+        deleteLessonCommand.execute();
+        undoRedoStack.push(deleteLessonCommand);
+
+        // undo -> reverts addressbook back to previous state and filtered student list to show all studentFs
+        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
+
+        // redo -> same first student deleted again
+        expectedModel.deleteLesson(lessonToDelete);
+        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
+    }
+
+    @Test
+    public void equals() throws Exception {
+        DeleteLessonCommand deleteFirstCommand = prepareCommand(INDEX_FIRST);
+        DeleteLessonCommand deleteSecondCommand = prepareCommand(INDEX_SECOND);
+
+        // same object -> returns true
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommand));
+
+        // same values -> returns true
+        DeleteLessonCommand deleteFirstCommandCopy = prepareCommand(INDEX_FIRST);
+        assertTrue(deleteFirstCommand.equals(deleteFirstCommandCopy));
+
+        // one command preprocessed when previously equal -> returns false
+        deleteFirstCommandCopy.preprocessUndoableCommand();
+        assertFalse(deleteFirstCommand.equals(deleteFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(deleteFirstCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(deleteFirstCommand.equals(null));
+
+        // different student -> returns false
+        assertFalse(deleteFirstCommand.equals(deleteSecondCommand));
+    }
+
+    /**
+     * Returns a {@code DeleteLessonCommand} with the parameter {@code index}.
+     */
+    private DeleteLessonCommand prepareCommand(Index index) {
+        DeleteLessonCommand deleteLessonCommand = new DeleteLessonCommand(index);
+        deleteLessonCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return deleteLessonCommand;
+    }
+
+}
+```
+###### \src\test\java\seedu\address\logic\commands\FindTagCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ */
+public class FindTagCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs(), new Schedule());
+
+    @Test
+    public void equals() {
+        TagContainsKeywordsPredicate firstPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("first"));
+        TagContainsKeywordsPredicate secondPredicate =
+                new TagContainsKeywordsPredicate(Collections.singletonList("second"));
+
+        FindTagCommand findFirstTagCommand = new FindTagCommand(firstPredicate);
+        FindTagCommand findSecondTagCommand = new FindTagCommand(secondPredicate);
+
+        // same object -> returns true
+        assertTrue(findFirstTagCommand.equals(findFirstTagCommand));
+
+        // same values -> returns true
+        FindTagCommand findFirstCommandCopy = new FindTagCommand(firstPredicate);
+        assertTrue(findFirstTagCommand.equals(findFirstCommandCopy));
+
+        // different types -> returns false
+        assertFalse(findFirstTagCommand.equals(1));
+
+        // null -> returns false
+        assertFalse(findFirstTagCommand.equals(null));
+
+        // different student -> returns false
+        assertFalse(findFirstTagCommand.equals(findSecondTagCommand));
+    }
+
+    @Test
+    public void execute_zeroKeywords_noStudentFound() {
+        String expectedMessage = String.format(MESSAGE_STUDENT_LISTED_OVERVIEW, 0);
+        FindTagCommand command = prepareCommand(" ");
+        assertCommandSuccess(command, expectedMessage, Collections.emptyList());
+    }
+
+    @Test
+    public void execute_multipleKeywords_multipleStudentsFound() {
+        String expectedMessage = String.format(MESSAGE_STUDENT_LISTED_OVERVIEW, 1);
+        FindTagCommand command = prepareCommand("owesMoney");
+        assertCommandSuccess(command, expectedMessage, Arrays.asList(BENSON));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand}.
+     */
+    private FindTagCommand prepareCommand(String userInput) {
+        FindTagCommand command =
+                new FindTagCommand(new TagContainsKeywordsPredicate(Arrays.asList(userInput.split("\\s+"))));
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the command feedback is equal to {@code expectedMessage}<br>
+     *     - the {@code FilteredList<Student>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(FindTagCommand command, String expectedMessage, List<Student> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        CommandResult commandResult = command.execute();
+
+        assertEquals(expectedMessage, commandResult.feedbackToUser);
+        assertEquals(expectedList, model.getFilteredStudentList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### \src\test\java\seedu\address\model\lesson\DayTest.java
+``` java
+public class DayTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Day(null));
+    }
+
+    @Test
+    public void constructor_invalidDay_throwsIllegalArgumentException() {
+        String invalidDay = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Day(invalidDay));
+    }
+
+    @Test
+    public void isValidDay() {
+        // null address
+        Assert.assertThrows(NullPointerException.class, () -> Day.isValidDay(null));
+
+        // invalid days
+        assertFalse(Day.isValidDay(""));        // blank
+        assertFalse(Day.isValidDay("monday"));  // long form names
+        assertFalse(Day.isValidDay("mo"));      // short form names
+        assertFalse(Day.isValidDay("f"));       // Single character day name
+        assertFalse(Day.isValidDay("MON"));     // Capital letters
+        assertFalse(Day.isValidDay("funday"));  // Wrong name
+
+        // valid days
+        assertTrue(Day.isValidDay("mon"));      //Valid tests
+        assertTrue(Day.isValidDay("tue"));      //Valid tests
+        assertTrue(Day.isValidDay("wed"));
+        assertTrue(Day.isValidDay("thu"));      //Valid tests
+        assertTrue(Day.isValidDay("fri"));
+        assertTrue(Day.isValidDay("sat"));      //Valid tests
+        assertTrue(Day.isValidDay("sun"));      //Valid tests
+    }
+}
+```
+###### \src\test\java\seedu\address\model\lesson\TimeTest.java
+``` java
+public class TimeTest {
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Time(null));
+    }
+
+    @Test
+    public void constructor_invalidTime_throwsIllegalArgumentException() {
+        String invalidTime = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Time(invalidTime));
+    }
+
+    @Test
+    public void isValidTime() {
+        // null address
+        Assert.assertThrows(NullPointerException.class, () -> Time.isValidTime(null));
+
+        // invalid addresses
+        assertFalse(Time.isValidTime(""));          // blank
+        assertFalse(Time.isValidTime("9:00"));      // short form time
+        assertFalse(Time.isValidTime("09:60"));     // Invalid minute
+        assertFalse(Time.isValidTime("24:00"));     // Boundary value
+        assertFalse(Time.isValidTime("09-10"));     // Using dash -
+        assertFalse(Time.isValidTime("09.10"));     // Using .
+
+        // valid addresses
+        assertTrue(Time.isValidTime("10:00"));
+        assertTrue(Time.isValidTime("22:00"));
+        assertTrue(Time.isValidTime("00:00"));      //boundary
+        assertTrue(Time.isValidTime("23:59"));
+    }
+}
+```
+###### \src\test\java\seedu\address\model\LessonListTest.java
+``` java
+public class LessonListTest {
+    @Rule
+    public ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void asObservableList_modifyList_throwsUnsupportedOperationException() {
+        LessonList uniqueStudentList = new LessonList();
+        thrown.expect(UnsupportedOperationException.class);
+        uniqueStudentList.asObservableList().remove(0);
+    }
+}
+```
+###### \src\test\java\seedu\address\storage\XmlAdaptedStudentTest.java
+``` java
+    @Test
+    public void toModelType_invalidKey_throwsIllegalValueException() {
+        XmlAdaptedStudent student =
+                new XmlAdaptedStudent(INVALID_KEY, VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                        VALID_ADDRESS, VALID_SUBJECT, VALID_TAGS, VALID_FAVOURITE, VALID_PROFILEPICTUREPATH,
+                        VALID_DASHBOARD, VALID_MISCELLANEOUS);
+        String expectedMessage = UniqueKey.MESSAGE_UNIQUE_KEY_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, student::toModelType);
+    }
+```
+###### \src\test\java\seedu\address\testutil\LessonBuilder.java
+``` java
+/**
+ * A utility class to help with building Lesson objects.
+ */
+public class LessonBuilder {
+
+    public static final String DEFAULT_KEY = "ffff00";
+    public static final String DEFAULT_DAY = "mon";
+    public static final String DEFAULT_START_TIME = "10:00";
+    public static final String DEFAULT_END_TIME = "12:00";
+
+
+    private UniqueKey key;
+    private Day day;
+    private Time startTime;
+    private Time endTime;
+
+    public LessonBuilder() {
+        key = new UniqueKey(DEFAULT_KEY);
+        day = new Day(DEFAULT_DAY);
+        startTime = new Time(DEFAULT_START_TIME);
+        endTime = new Time(DEFAULT_END_TIME);
+    }
+
+    /**
+     * Initializes the LessonBuilder with the data of {@code lessonToCopy}.
+     */
+    public LessonBuilder(Lesson lessonToCopy) {
+        key = lessonToCopy.getUniqueKey();
+        day = lessonToCopy.getDay();
+        startTime = lessonToCopy.getStartTime();
+        endTime = lessonToCopy.getEndTime();
+    }
+
+    /**
+     * Sets the {@code UniqueKey} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withKey(String key) {
+        this.key = new UniqueKey(key);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Day} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withDay(String day) {
+        this.day = new Day(day);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Time} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withStartTime(String startTime) {
+        this.startTime = new Time (startTime);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Time} of the {@code Lesson} that we are building.
+     */
+    public LessonBuilder withEndTime(String endTime) {
+        this.endTime = new Time(endTime);
+        return this;
+    }
+
+    /**
+     * Builds the lesson with given attributes
+     */
+    public Lesson build() {
+        return new Lesson(key, day, startTime, endTime);
+    }
+}
+```
+###### \src\test\java\seedu\address\testutil\LessonUtil.java
+``` java
+/**
+ * A utility class for Lesson.
+ */
+public class LessonUtil {
+
+    /**
+     * Returns an add command string for adding the {@code lesson}.
+     */
+    public static String getAddLessonCommand(Lesson lesson, Index targetIndex) {
+        return AddLessonCommand.COMMAND_WORD + " " + getLessonDetails(lesson, targetIndex);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code lesson}'s details.
+     */
+    public static String getLessonDetails(Lesson lesson, Index targetIndex) {
+        StringBuilder sb = new StringBuilder();
+        sb.append(targetIndex + "  ");
+        sb.append(PREFIX_DAY + lesson.getDay().value + " ");
+        sb.append(PREFIX_START_TIME + lesson.getStartTime().value + " ");
+        sb.append(PREFIX_END_TIME + lesson.getEndTime().value + " ");
+        return sb.toString();
+    }
+}
+```
+###### \src\test\java\seedu\address\testutil\ScheduleBuilder.java
+``` java
+/**
+ * A utility class to help with building Schedule objects.
+ * Example usage: <br>
+ *     {@code Schedule sd = new ScheduleBuilder().withLesson.build();}
+ */
+public class ScheduleBuilder {
+
+    private Schedule schedule;
+
+    public ScheduleBuilder() {
+        schedule = new Schedule();
+    }
+
+    public ScheduleBuilder(Schedule schedule) {
+        this.schedule = schedule;
+    }
+
+    /**
+     * Adds a new {@code Student} to the {@code Schedule} that we are building.
+     */
+    public ScheduleBuilder withLesson(Lesson lesson) {
+        try {
+            schedule.addLesson(lesson);
+        } catch (DuplicateLessonException dpe) {
+            throw new IllegalArgumentException("lesson is expected to be unique.");
+        } catch (InvalidLessonTimeSlotException iltse) {
+            throw new IllegalArgumentException("Lesson is expected to be non-clashing");
+        }
+        return this;
+    }
+
+    public Schedule build() {
+        return schedule;
+    }
+}
+```
+###### \src\test\java\seedu\address\testutil\TypicalLessons.java
+``` java
+/**
+ * A utility class containing a list of {@code Milestone} objects to be used in tests.
+ */
+public class TypicalLessons {
+
+    //Variable names in terms of <Student>_<Day>_<StartTime>_<EndTime>
+    public static final Lesson ALICE_MON_10_12 = new LessonBuilder().withKey("c5daab").withDay("mon")
+            .withStartTime("10:00").withEndTime("12:00").build();
+    public static final Lesson ALICE_WED_14_16 = new LessonBuilder().withKey("c5daab").withDay("wed")
+            .withStartTime("14:00").withEndTime("16:00").build();
+    public static final Lesson ALICE_WED_15_17 = new LessonBuilder().withKey("c5daab").withDay("wed")
+            .withStartTime("15:00").withEndTime("17:00").build();
+    public static final Lesson CARL_THU_11_13 = new LessonBuilder().withKey("8e90ba").withDay("thu")
+            .withStartTime("11:00").withEndTime("13:00").build();
+    public static final Lesson FIONA_SAT_15_17 = new LessonBuilder().withKey("9d2b20").withDay("sat")
+            .withStartTime("15:00").withEndTime("17:00").build();
+    public static final Lesson RANDOM_THU_11_13 = new LessonBuilder().withKey("c0ffee").withDay("thu")
+            .withStartTime("11:00").withEndTime("13:00").build();
+
+    public static List<Lesson> getTypicalLessons() {
+        return new ArrayList<>(Arrays.asList(ALICE_MON_10_12, ALICE_WED_14_16, CARL_THU_11_13));
+    }
+
+    /**
+     * Returns an {@code AddressBook} with all the typical students.
+     */
+    public static Schedule getTypicalSchedule() {
+        Schedule sch = new Schedule();
+        for (Lesson lesson : getTypicalLessons()) {
+            try {
+                sch.addLesson(lesson);
+            } catch (DuplicateLessonException e) {
+                throw new AssertionError("not possible");
+            } catch (InvalidLessonTimeSlotException iltse) {
+                throw new AssertionError("cannot clash");
+            }
+        }
+        return sch;
+    }
+}
+```
+###### \src\test\java\systemtests\FindTagCommandSystemTest.java
+``` java
+
+public class FindTagCommandSystemTest extends AddressBookSystemTest {
+
+    @Test
+    public void find() {
+        /* Case: find a student in address book, command with leading spaces and trailing spaces
+         * -> 1 students found
+         */
+        String command = "   " + FindTagCommand.COMMAND_WORD + " " + TAG_MATCHING_OWESMONEY + "   ";
+        Model expectedModel = getModel();
+        ModelHelper.setFilteredList(expectedModel, BENSON); // Benson's tag is "owesMoney"
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: repeat previous find command where student list is displaying the tag we are finding
+         * -> 1 students found
+         */
+        command = FindTagCommand.COMMAND_WORD + " " + TAG_MATCHING_OWESMONEY;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: undo previous find command -> rejected */
+        command = UndoCommand.COMMAND_WORD;
+        String expectedResultMessage = UndoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: redo previous find command -> rejected */
+        command = RedoCommand.COMMAND_WORD;
+        expectedResultMessage = RedoCommand.MESSAGE_FAILURE;
+        assertCommandFailure(command, expectedResultMessage);
+
+        /* Case: find student in address book, tag is same as name but of different case -> 1 student found */
+        command = FindTagCommand.COMMAND_WORD + " oWesMOney";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find student in address book, keyword is substring of tag -> 0 students found */
+        command = FindTagCommand.COMMAND_WORD + " owe";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find student in address book, tag is substring of keyword -> 0 students found */
+        command = FindTagCommand.COMMAND_WORD + " owesMoneys";
+        ModelHelper.setFilteredList(expectedModel);
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find tag not in address book -> 0 students found */
+        command = FindTagCommand.COMMAND_WORD + " poor";
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find phone number of student in address book -> 0 students found */
+        command = FindTagCommand.COMMAND_WORD + " " + BENSON.getPhone().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find address of student in address book -> 0 students found */
+        command = FindTagCommand.COMMAND_WORD + " " + BENSON.getAddress().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: find email of student in address book -> 0 students found */
+        command = FindTagCommand.COMMAND_WORD + " " + BENSON.getEmail().value;
+        assertCommandSuccess(command, expectedModel);
+        assertSelectedCardUnchanged();
+
+        /* Case: mixed case command word -> rejected */
+        command = "FiNd owesMoney";
+        assertCommandFailure(command, MESSAGE_UNKNOWN_COMMAND);
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays an empty string, the result display
+     * box displays {@code Messages#MESSAGE_STUDENT_LISTED_OVERVIEW} with the number of people in the filtered list,
+     * and the model related components equal to {@code expectedModel}.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the status bar remains unchanged, and the command box has the default style class, and the
+     * selected card updated accordingly, depending on {@code cardStatus}.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandSuccess(String command, Model expectedModel) {
+        String expectedResultMessage = String.format(
+                MESSAGE_STUDENT_LISTED_OVERVIEW, expectedModel.getFilteredStudentList().size());
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
+        assertCommandBoxShowsDefaultStyle();
+        assertStatusBarUnchanged();
+    }
+
+    /**
+     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
+     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
+     * These verifications are done by
+     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
+     * error style.
+     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     */
+    private void assertCommandFailure(String command, String expectedResultMessage) {
+        Model expectedModel = getModel();
+
+        executeCommand(command);
+        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
+        assertSelectedCardUnchanged();
+        assertCommandBoxShowsErrorStyle();
+        assertStatusBarUnchanged();
+    }
 }
 ```

@@ -163,7 +163,7 @@ public class XmlAdaptedStudentTest {
         Assert.assertThrows(IllegalValueException.class, student::toModelType);
     }
 
-    //@@author samulloh
+    //@@author samuelloh
     @Test
     public void toModelType_nullPicturePath_throwsIllegalValueException() {
         XmlAdaptedStudent student = new XmlAdaptedStudent(VALID_KEY, VALID_NAME, VALID_PHONE, VALID_EMAIL,

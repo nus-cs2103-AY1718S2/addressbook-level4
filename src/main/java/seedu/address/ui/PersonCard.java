@@ -55,17 +55,17 @@ public class PersonCard extends UiPart<Region> {
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
-        phone.setText(person.getPhone().value);
-        address.setText(person.getAddress().value);
-        email.setText(person.getEmail().value);
-        birthday.setText(person.getBirthday().value);
+        phone.setText("Phone: " + person.getPhone().value);
+        address.setText("Address: " + person.getAddress().value);
+        email.setText("Email: " + person.getEmail().value);
+        birthday.setText("Birthday: " + person.getBirthday().value);
         if (person.getAppointment() == null || person.getAppointment().equals("")) {
             appointment.setText("No Appointment Date");
         } else {
-            appointment.setText(person.getAppointment().value);
+            appointment.setText("Appointment: " + person.getAppointment().value);
         }
-        commission.setText(person.getTotalCommission());
-        group.setText(person.getGroup().groupName);
+        commission.setText("Total Commission: " + person.getTotalCommission());
+        group.setText("Group: " + person.getGroup().groupName);
         person.getInsurance().forEach(insurance -> insurances.getChildren().add(new Label(insurance.insuranceName)));
 
         startTag(person);
@@ -89,19 +89,15 @@ public class PersonCard extends UiPart<Region> {
         case "owesMoney":
             return TAG_COLOR_STYLES[2]; //red
 
-        case "boyfriend":
-        case "girlfriend":
-            return TAG_COLOR_STYLES[5]; //purple
-
         case "grandparent":
         case "neighbours":
-            return TAG_COLOR_STYLES[6]; //grey
+            return TAG_COLOR_STYLES[5]; //purple
 
         case "colleagues":
             return TAG_COLOR_STYLES[4]; //orange
 
         default:
-            return "";
+            return TAG_COLOR_STYLES[6];
         }
     }
 

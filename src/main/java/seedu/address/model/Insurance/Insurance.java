@@ -11,7 +11,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class Insurance {
 
     public static final String MESSAGE_INSURANCE_CONSTRAINTS =
-        "Insurance should only contain alphanumeric characters";
+        "Insurance should only contain alphanumeric characters and Commission should contain only non negative numbers";
 
     private static final String SPECIAL_CHARACTERS = "\\[\\]{|}";
     private static final String INSURANCE_NAME = "[\\p{Alnum} ]*";

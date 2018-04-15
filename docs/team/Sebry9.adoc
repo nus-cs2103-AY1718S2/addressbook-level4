@@ -20,7 +20,7 @@ reInsurance is a desktop client tracking application used for insurance agent to
 
 * *Minor enhancement*: added alias command for most existing commands such as add, edit, redo, undo etc.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/Sebry9.md[Functional code]] [https://github.com[Test code]] _{give links to collated code files}_
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/functional/Sebry9.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/collated/test/Sebry9.md[Test code]] _{give links to collated code files}_
 
 * *Other contributions*:
 
@@ -28,12 +28,10 @@ reInsurance is a desktop client tracking application used for insurance agent to
 *** Monitoring the documentation status of the project.
 *** Organise weekly meeting to distribute workload.
 *** Project's time keeper.
+*** Resolved Code style issues within the project caused by teammates(Including myself) : https://github.com/CS2103JAN2018-T11-B3/main/pull/72/files[#72]
+*** Updating product UI: https://github.com/CS2103JAN2018-T11-B3/main/pull/68[#68] https://github.com/CS2103JAN2018-T11-B3/main/pull/173[#173]
 ** Enhancements to existing features:
 *** Updated the Tag color scheme (Pull requests https://github.com/CS2103JAN2018-T11-B3/main/pull/6[#6])
-** Documentation:
-** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com[#12], https://github.com[#32], https://github.com[#19], https://github.com[#42]
-** Tools:
 
 == Contributions to the User Guide
 
@@ -43,14 +41,20 @@ reInsurance is a desktop client tracking application used for insurance agent to
 |===
 include::../UserGuide.adoc[tag=insurance]
 
+include::../UserGuide.adoc[tag=colorTag]
+
 
 == Contributions to the Developer Guide
 
 |===
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
+
+include::../DeveloperGuide.adoc[tag=sebryStory1]
+
+include::../DeveloperGuide.adoc[tag=sebryStory2]
+
 include::../DeveloperGuide.adoc[tag=insurance]
-include::../DeveloperGuide.adoc[tag=commission]
 
 ---
 

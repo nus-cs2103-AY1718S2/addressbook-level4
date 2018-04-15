@@ -1,7 +1,6 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.fail;
 
 import java.util.Arrays;
 import java.util.List;
@@ -34,17 +33,20 @@ public class GuiTestAssert {
             assertEquals(expectedCard.getTagStyleClasses(tag), actualCard.getTagStyleClasses(tag)));
     }
 
+    //@@author Sebry9
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
         assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals("Phone: " + expectedPerson.getPhone().value, actualCard.getPhone());
+        assertEquals("Email: " + expectedPerson.getEmail().value, actualCard.getEmail());
+        assertEquals("Address: " + expectedPerson.getAddress().value, actualCard.getAddress());
+        assertEquals("Group: " + expectedPerson.getGroup().groupName, actualCard.getGroup());
 
         assertTagsEqual(expectedPerson, actualCard);
     }
+
     //@@author Sebry9
     /**
      * Return the color style for {@code tagName}'s label.
@@ -67,20 +69,15 @@ public class GuiTestAssert {
         case "owesMoney":
             return "red";
 
-        case "boyfriend":
-        case "girlfriend":
-            return "purple";
-
         case "grandparent":
         case "neighbours":
-            return "grey";
+            return "purple";
 
         case "colleagues":
             return "orange";
 
         default:
-            fail(tagName + " does not have a color assigned to it.");
-            return "";
+            return "grey";
         }
     }
 

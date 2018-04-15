@@ -48,6 +48,7 @@ public class UserPrefs {
         this.addressBookName = addressBookName;
     }
 
+    //@@author daviddalmaso
     public String getExportPortfolioFilePath() {
         return exportPortfolioFilePath;
     }
@@ -55,6 +56,7 @@ public class UserPrefs {
     public void setExportPortfolioFilePath(String exportPortfolioFilePath) {
         this.exportPortfolioFilePath = exportPortfolioFilePath;
     }
+    //@@author
 
     public String getCalendarIdFilePath() {
         return calendarIdFilePath;

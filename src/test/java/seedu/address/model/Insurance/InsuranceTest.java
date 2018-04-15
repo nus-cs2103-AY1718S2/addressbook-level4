@@ -12,8 +12,15 @@ public class InsuranceTest {
     }
 
     @Test
+    public void constructor_invalidInsuranceName_throwsIllegalArgumentException() {
+        String invalidInsuranceName = "@Health";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Insurance(invalidInsuranceName));
+    }
+
+    @Test
     public void isValidInsurance() {
         //null insurance name
         Assert.assertThrows(NullPointerException.class, () -> Insurance.isValidInsurance(null));
     }
 }
+//@@author

@@ -87,20 +87,32 @@ Format: `i/INSURANCE[COMMISSION]`
 [TIP]
 A person can have any number of insurances, to add in the commission of a particular insurance simply put the amount immediately after the insurance name and inside a '[]' or a '{}' bracket.
 
-Examples:
+[NOTE]
+Insurance only accept alpha numeric characters and Commission needs to be non-negative
 
-* `add n/Jeremy Lee p/82286918 e/sebry9@gmail.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 i/Health[10] i/General{20}`
+Examples:
+ `add n/Jeremy Lee p/82286918 e/sebry9@gmail.com a/311, Clementi Ave 2, #02-25 b/09-12-1994 i/Health[10] i/General{20}`
 // end::insurance[]
+
+// tag::colorTag[]
+=== Colour Tag [Since V1.2]
+
+Common tags in reInsurances are colour highlighted. Tags input type is non restrictive and up to the user's imagination.
+
+// end::colorTag[]
 
 === Listing all persons : `list`
 
 Shows a list of all persons in reInsurance. +
 Format: `list` Alias: `l`
 
-=== Getting count of reInsurance size : `count`
+// tag::count[]
+=== View number of persons : `count`
 
-Returns the number of client in reInsurance
+Returns the number of clients stored in the reInsurance application
 Format: `count`
+
+// end::count[]
 
 // tag::edit[]
 === Editing a person : `edit`
@@ -287,9 +299,8 @@ Clearing all entries from reInsurance can also be done by moving the mouse over 
 // tag::export[]
 === Export data : `export`
 
-Exports the data from the specified export type (case insensitive). +
+Exports the data from the specified export type: `calendar` or `portfolio` (case insensitive). +
 Format: `export EXPORT_TYPE`
-** The `EXPORT_TYPE` must be either `calendar` or `portfolio`.
 
 Exports the portfolio to a specified export location. +
 Format `export portfolio FILENAME`.
@@ -297,8 +308,13 @@ Format `export portfolio FILENAME`.
 Examples:
 
 * `export calendar` +
-Exports the data on the calendar to Google Calendar
-** When running this command, you will be prompted to enter your credentials to your Google Account.
+Exports the birthday and appointment data to Google Calendar
+** When running this command, you will be prompted to enter your credentials to your Google Account. DO NOT EXIT THE BROWSER. This will stall the application.
+** After entering credentials, you will be asked if reInsurance can access your account at a page as pictured in _Figure 1_. +
+** Hit `ALLOW` to proceed the export or `CANCEL` to deny reInsurance access.
+
+.Authorization Window
+image::calendar_access.png[width="600"]
 * `export portfolio` +
 Exports the data in the portfolio to a `portfolio.csv` file.
 * `export portfolio my_data` +
@@ -307,7 +323,7 @@ Exports the data in the portfolio to a `my_data.csv` file.
 [NOTE]
 ====
 * Coming in v2.0, there will be more options on the types of data to export.
-* As of v1.5rc, the application handles the command for the portfolio and calendar.
+* As of v1.5, the application handles the command for the portfolio and calendar.
 * Default destination file is at `portfolio.csv` for the `export portfolio` command.
 * The default calendar created in Google Calendars is titled `reInsurance Events`, which contains birthdays and appointments.
 * Coming in v2.0, the user will be able to specify what the created calendar is called.

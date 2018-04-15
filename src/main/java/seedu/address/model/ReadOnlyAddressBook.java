@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import javafx.collections.ObservableList;
+import seedu.address.model.Insurance.Insurance;
 import seedu.address.model.person.Group;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
@@ -26,4 +27,10 @@ public interface ReadOnlyAddressBook {
      * This list will not contain any duplicate groups.
      */
     ObservableList<Group> getGroupList();
+    /**
+     * Returns an unmodifiable view of the Insurance list.
+     * This list will not contain any duplicate insurance.
+     */
+    ObservableList<Insurance> getInsuranceList();
+
 }

@@ -26,6 +26,13 @@ public class PersonCardTest extends GuiUnitTest {
         personCard = new PersonCard(personWithTags, 2);
         uiPartRule.setUiPart(personCard);
         assertCardDisplay(personCard, personWithTags, 2);
+
+        //@@author Sebry9
+        // with default color Tags
+        Person personWithDefaultColorTag = new PersonBuilder().withTags("default").build();
+        personCard = new PersonCard(personWithDefaultColorTag, 3);
+        uiPartRule.setUiPart(personCard);
+        assertCardDisplay(personCard, personWithDefaultColorTag, 3);
     }
 
     @Test

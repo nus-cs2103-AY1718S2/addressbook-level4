@@ -40,7 +40,7 @@ public class GoogleWebServices {
     private void initialiseConnection() {
         isInitialised = true;
         context = new GeoApiContext.Builder()
-                .apiKey(API_KEY_1)
+                .apiKey(API_KEY_2)
                 .build();
         try {
             GeocodingResult[] results = GeocodingApi.geocode(context,

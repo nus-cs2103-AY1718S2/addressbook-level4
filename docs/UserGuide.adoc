@@ -448,5 +448,7 @@ e.g. `find James Jake`
 * *listtag* : `listtag TAG...`
 * *Help* : `help`
 * *History* : `history`
+* *Sort* : `sort`
+* *Export* : `export`
 * *Undo* : `undo`
 * *Redo* : `redo`

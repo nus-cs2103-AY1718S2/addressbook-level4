@@ -1,28 +1,95 @@
-# raymond511
-###### \java\seedu\address\commons\util\EncryptionUtil.java
-``` java
+package seedu.address.commons.util;
+
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.security.*;
+import java.util.logging.Logger;
+
+import javax.crypto.BadPaddingException;
+import javax.crypto.Cipher;
+
+import javax.crypto.IllegalBlockSizeException;
+import javax.crypto.SecretKey;
+
+import javax.crypto.spec.SecretKeySpec;
+
+import seedu.address.commons.core.LogsCenter;
+
+/**
+ * A Class that encrypts and decrypts XML files stored on the hard disk.
+ *
+ */
+//@@author raymond511
 public class EncryptionUtil {
+
     /**
      *The standard version of the JRE/JDK are under export restrictions.
      *That also includes that some cryptographic algorithms are not allowed to be shipped in the standard version.
      *Replace files in library with Java Cryptography Extension (JCE) Unlimited Strength Jurisdiction Policy Files 8
      */
 
-    private static final String password = "CS210321CS210321";
     private static final Logger logger = LogsCenter.getLogger(EncryptionUtil.class);
+    private static final String passwordToHash = "password";
+    private static byte[] salt = new byte[0];
+    private static final String password = getSecurePassword(passwordToHash, salt);
 
     /**
-     * Encrypts XML file
+     * Adds salt to password cryptography
+     * @throws NoSuchAlgorithmException if salt acnnot be generated
+     * @throws NoSuchProviderException if salt cannot be generated
+     */
+
+    private static byte[] getSalt() throws NoSuchAlgorithmException, NoSuchProviderException {
+        try {
+            SecureRandom sr = SecureRandom.getInstance("SHA1PRNG", "SUN");
+            byte[] salt = new byte[16];
+            sr.nextBytes(salt);
+        } catch (NoSuchAlgorithmException e) {
+            logger.severe("This algorithm is not supported " + e.getMessage());
+        } catch (NoSuchProviderException e) {
+            logger.severe("The provider is not available " + e.getMessage());
+        }
+        return salt;
+    }
+
+    /**
+     * Generates a secure password
+     *
+     * @param passwordToHash used to generate a new password
+     * @param salt to adds security to the new password
+     * @throws NoSuchAlgorithmException if new password cannot be generated
+     */
+
+    private static String getSecurePassword(String passwordToHash, byte[] salt) {
+        String generatedPassword = null;
+        try {
+            MessageDigest md = MessageDigest.getInstance("MD5");
+            md.update(salt);
+            byte[] bytes = md.digest(passwordToHash.getBytes());
+            StringBuilder sb = new StringBuilder();
+            for(int i=0; i< bytes.length ;i++) {
+                sb.append(Integer.toString((bytes[i] & 0xff) + 0x100, 16).substring(1)); }
+                generatedPassword = sb.toString();
+        } catch (NoSuchAlgorithmException e) {
+            logger.severe("This algorithm is not supported " + e.getMessage());
+        }
+        return generatedPassword;
+    }
+
+    /**
+     * Encrypts an XML file
      *
      * @param file path of the file to be encrypted
      * @throws IOException if file could not be found
      */
     public static void encrypt(File file) throws IOException {
-
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            SecretKey secretKey = generateKey();
-            cipher.init(Cipher.ENCRYPT_MODE, secretKey);
+            SecretKey privateKey = generateKey();
+            cipher.init(Cipher.ENCRYPT_MODE, privateKey);
             fileToBytes(cipher, file);
         } catch (GeneralSecurityException gse) {
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
@@ -42,8 +109,8 @@ public class EncryptionUtil {
 
         try {
             Cipher cipher = Cipher.getInstance("AES/ECB/PKCS5Padding");
-            SecretKey secretKey = generateKey();
-            cipher.init(Cipher.DECRYPT_MODE, secretKey);
+            SecretKey privateKey = generateKey();
+            cipher.init(Cipher.DECRYPT_MODE, privateKey);
             fileToBytes(cipher, file);
         } catch (GeneralSecurityException gse) {
             logger.severe("Cipher or Padding might not be supported " + gse.getMessage());
@@ -97,9 +164,10 @@ public class EncryptionUtil {
      * @return SecretKey generated using AES encryption
      */
     public static SecretKey generateKey() {
-
+        final String password = "EncryptionisImportant";
         SecretKeySpec secretKeySpec = null;
         try {
+            salt = getSalt();
             MessageDigest digester = MessageDigest.getInstance("SHA-256");
             digester.update(password.getBytes("UTF-8"));
             byte[] key = digester.digest();
@@ -108,9 +176,9 @@ public class EncryptionUtil {
             logger.info("Algorithm Unsupported " + nae.getMessage());
         } catch (UnsupportedEncodingException use) {
             logger.info("Encoding Unsupported " + use.getMessage());
+        } catch (NoSuchProviderException e) {
+            logger.severe("The provider is not available " + e.getMessage());
         }
-
         return secretKeySpec;
     }
 }
-```

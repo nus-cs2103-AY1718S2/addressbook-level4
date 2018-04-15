@@ -2294,7 +2294,8 @@ url/http://recipes.wikia.com/wiki/Spaghetti_alla_Amatriciana?useskin=wikiamobile
 
 . Searching without any arguments:
 * Steps:
-.. Type `*search*` in the command box then press kbd:[Enter].
+.. Type `*search*` in the command box.
+.. Press kbd:[Enter].
 * Expected outcome: The result box will say that it is an invalid command and show the correct command format.
 
 . Parsing a recipe:

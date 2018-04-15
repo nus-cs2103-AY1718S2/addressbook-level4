@@ -23,7 +23,7 @@ public class AddPatientQueueCommand extends UndoableCommand {
 
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a patient into visiting queue. "
             + "Parameters: "
-            + "INDEX (must be a positive integer)\n "
+            + "INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "%1$s is added into visiting queue";

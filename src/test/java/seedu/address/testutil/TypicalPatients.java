@@ -152,7 +152,7 @@ public class TypicalPatients {
                     .withRemark("Comes for checkup every Tuesday").withNric("S1234567A")
                     .withBloodType("B+")
                     .withDob("11/11/1991")
-                    .withAppointments("28/3/2018 1230").build();
+                    .withAppointments("2/3/2018 1330").build();
         } catch (ParseException pe) {
             try {
                 throw pe;

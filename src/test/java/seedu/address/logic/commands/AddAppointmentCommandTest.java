@@ -44,11 +44,11 @@ public class AddAppointmentCommandTest {
 
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 
-    public String name;
-    public String info;
-    public String date;
-    public String startTime;
-    public String endTime;
+    private String name;
+    private String info;
+    private String date;
+    private String startTime;
+    private String endTime;
 
     @Test
     public void constructor_nullAppointment_throwsNullPointerException() {
@@ -59,8 +59,8 @@ public class AddAppointmentCommandTest {
 
     @Test
     public void execute_duplicateAppointment_throwsCommandException() throws Exception {
-        AddAppointmentCommandTest.ModelStub modelStub = new AddAppointmentCommandTest.
-                ModelStubThrowingDuplicateAppointmentException();
+        AddAppointmentCommandTest.ModelStub modelStub = new AddAppointmentCommandTest
+                .ModelStubThrowingDuplicateAppointmentException();
         Appointment validAppointment = new Appointment(name, info, date, startTime, endTime);
 
         thrown.expect(CommandException.class);

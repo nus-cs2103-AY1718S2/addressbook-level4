@@ -8,7 +8,7 @@ import seedu.address.commons.events.BaseEvent;
  */
 public class DisplayCalendarRequestEvent extends BaseEvent {
 
-    String parameter;
+    private String parameter;
 
     public DisplayCalendarRequestEvent(String parameter) {
         this.parameter = parameter;

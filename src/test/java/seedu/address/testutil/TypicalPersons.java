@@ -77,15 +77,15 @@ public class TypicalPersons {
     public static final String KEYWORD_MATCHING_MEIER = "Meier"; // A keyword that matches MEIER
 
     //Appointments
-    public static final Appointment a1 = new Appointment("Alex Yeoh", "Consultation", "04042018",
+    public static final Appointment A1 = new Appointment("Alex Yeoh", "Consultation", "04042018",
             "1200", "1300");
-    public static final Appointment a2 = new Appointment("David Li", "Remedial", "05052018",
+    public static final Appointment A2 = new Appointment("David Li", "Remedial", "05052018",
             "1400", "1600");
-    public static final Appointment a3 = new Appointment("Bon", "Remedial", "01052018",
+    public static final Appointment A3 = new Appointment("Bon", "Remedial", "01052018",
             "0800", "1000");
-    public static final Appointment a4 = new Appointment("Carl", "Consultation", "18042018",
+    public static final Appointment A4 = new Appointment("Carl", "Consultation", "18042018",
             "1400", "1500");
-    public static final Appointment a5 = new Appointment("Emily", "Remedial", "01042018",
+    public static final Appointment A5 = new Appointment("Emily", "Remedial", "01042018",
             "0900", "1000");
 
     private TypicalPersons() {} // prevents instantiation
@@ -117,6 +117,6 @@ public class TypicalPersons {
     }
 
     public static List<Appointment> getTypicalAppointments() {
-        return new ArrayList<>(Arrays.asList(a1, a2, a3, a4, a5));
+        return new ArrayList<>(Arrays.asList(A1, A2, A3, A4, A5));
     }
 }

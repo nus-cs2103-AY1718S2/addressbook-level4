@@ -31,7 +31,7 @@ The user is mostly required to interact with the application through a Command L
 
 * *Minor feature*: Added a new *theme* for the application
 
-* *Code contributed*: link:{repoURL}/collated/functional/Pearlissa.md[functional], link:{repoURL}/collated/test/Pearlissa.md[test].
+* *Code contributed*: [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Pearlissa.md[Functional]] [https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/Pearlissa.md[Test]].
 
 * *Other contributions*: _TO BE FILLED IN_
 

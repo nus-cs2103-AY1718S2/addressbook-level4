@@ -421,6 +421,9 @@ Format: `export FILEPATH PASSWORD`
 * The filepath refers to the filepath where the instance file will be stored.
 ****
 
+[TIP]
+Execute `find` command before `export` to select the students' contact details you want to export
+
 Example:
 
 * `export data/addressBookBackUp.xml testpassword` +
@@ -438,6 +441,10 @@ Format: `upload FILENAME PASSWORD`
 * If no `PASSWORD` is provided, the instance will be exported without encryption.
 * The filepath refers to the filepath where the instance file will be stored.
 ****
+
+[NOTE]
+Application will be blocked from executing another command while waiting for authorization response +
+Authorization request will timed out after 20 seconds
 
 Example:
 
@@ -491,6 +498,21 @@ image::NUSMods_Screenshot_First.PNG[width="790"]
 image::NUSMods_Screenshot_Second.PNG[width="790"]
 +
 .   Paste it in StardyTogether at the tt/TIMETABLE field
+****
+
+*Q*: How do I upload StardyTogether file to Google Drive? +
+*A*: Input upload command and accept the authorization request
+****
+.   Input upload command, example `upload stardyTogether.xml`
+.   The redirect url will open in default browser like this:
++
+image::Redirect_First.PNG[width="790"]
+.   Click your Gmail or login your Gmail account and click accept:
++
+image::Redirect_Second.PNG[width="790"]
+.   File should be uploaded to your Google Drive
++
+image::Redirect_Third.PNG[width="790"]
 ****
 // end::FAQ[]
 

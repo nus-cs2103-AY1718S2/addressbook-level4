@@ -12,7 +12,7 @@ import seedu.address.model.activity.Activity;
 import seedu.address.model.activity.exceptions.ActivityNotFoundException;
 import seedu.address.model.activity.exceptions.DuplicateActivityException;
 
-//@@Author YuanQLLer
+//@@author YuanQLLer
 /**
  *
  * Complete a task identified using it's last displayed index from the CLInder.

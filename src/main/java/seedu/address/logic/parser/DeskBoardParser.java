@@ -21,6 +21,7 @@ import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.OverdueCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.RemoveCommand;
+import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.TaskCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -113,6 +114,10 @@ public class DeskBoardParser {
         case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
 
+        case SelectCommand.COMMAND_WORD:
+            return new SelectCommandParser().parse(arguments);
+
+        //@@author karenfrilya97
         case ImportCommand.COMMAND_WORD:
             return new ImportCommandParser().parse(arguments);
 

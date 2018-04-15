@@ -99,10 +99,16 @@ public class BrowserPanel extends UiPart<Region> {
         tags = new FlowPane();
         task.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         dateTime = new Text(getDisplayedDateTime(task));
-        remark = new Text(task.getRemark().value);
-        remark.setTranslateY(64.0);
-        defaultSetup();
-        return new Group(name, dateTime, remark, tags);
+        if (task.getRemark() != null) {
+            remark = new Text(task.getRemark().value);
+            remark.setTranslateY(64.0);
+            defaultSetup();
+            return new Group(name, dateTime, remark, tags);
+        } else {
+            remark = new Text();
+            defaultSetup();
+            return new Group(name, dateTime, tags);
+        }
     }
 
     /**
@@ -124,11 +130,19 @@ public class BrowserPanel extends UiPart<Region> {
         tags = new FlowPane();
         event.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         dateTime = new Text(getDisplayedStartDateTime(event) + " - " + getDisplayedEndDateTime(event));
-        locationEvent = new Text(event.getLocation().toString());
-        locationEvent.setTranslateY(70.0);
-        locationEvent.setId("emphasizeText");
-        remark = new Text(event.getRemark().value);
-        remark.setTranslateY(88.0);
+        if (event.getLocation() != null) {
+            locationEvent = new Text(event.getLocation().toString());
+            locationEvent.setTranslateY(70.0);
+            locationEvent.setId("emphasizeText");
+        } else {
+            locationEvent = new Text();
+        }
+        if (event.getRemark() != null) {
+            remark = new Text(event.getRemark().value);
+            remark.setTranslateY(88.0);
+        } else {
+            remark = new Text();
+        }
         defaultSetup();
         return new Group(name, dateTime, locationEvent, remark, tags);
     }

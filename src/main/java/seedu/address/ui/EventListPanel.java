@@ -17,7 +17,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.DeselectEventListCellEvent;
-import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.JumpToEventListRequestEvent;
+import seedu.address.commons.events.ui.JumpToTaskListRequestEvent;
 import seedu.address.commons.events.ui.PanelSelectionChangedEvent;
 import seedu.address.model.activity.Activity;
 
@@ -104,10 +105,27 @@ public class EventListPanel extends UiPart<Region> {
         });
     }
 
+    //@@author YuanQLLer
+    /**
+     * Unselect a tab..
+     */
+    private void unselect() {
+        Platform.runLater(() -> {
+            eventListView.getSelectionModel().clearSelection();
+        });
+    }
+
     @Subscribe
-    private void handleJumpToListRequestEvent(JumpToListRequestEvent event) {
+    private void handleJumpToEventListRequestEvent(JumpToEventListRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
+    }
+
+    //@@author YuanQLLer
+    @Subscribe
+    private void handleJumpToTaskListRequestEvent(JumpToTaskListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        unselect();
     }
 
     @Subscribe

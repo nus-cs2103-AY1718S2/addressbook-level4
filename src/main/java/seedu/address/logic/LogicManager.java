@@ -14,7 +14,6 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ReserveCommand;
 import seedu.address.logic.commands.ReturnCommand;
-import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.CatalogueParser;
 import seedu.address.logic.parser.exceptions.ParseException;

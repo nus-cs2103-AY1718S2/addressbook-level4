@@ -408,6 +408,7 @@ _Returns all persons with phone number "91234567"._
 * This command searches for relevant persons with the specified information then displays the first relevant person's address on google maps.
 * Name, phone, email, address and tags are searched by when no `SPECIFIER` or the `-all` `SPECIFIER` is input)
 * `Customer` and `Runner` specific fields are not queried in this version [coming in v2.0]
+* Select using Index when more than one person with the same information are found is not provided in this version [coming in v2.0]
 * Only one `SPECIFIER` can be used at a time.
 * If more than one `SPECIFIER` is specified, only the first will be considered. The others will be ignored.
 * Description of `SPECIFIERS`:
@@ -556,6 +557,7 @@ _The `redo` command fails as there are no `undo` commands executed previously._
 
 * `Find` Command: Searching fields specific to Runners and Customers.
 * `Find` Command: ability to filter the currently displayed list further
+* `Locate` Command: ability to select by Index when there're conflicts
 
 *Other New Features:*
 

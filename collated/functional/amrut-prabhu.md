@@ -99,6 +99,30 @@ public class DataReadingExceptionEvent extends BaseEvent {
 
 }
 ```
+###### \java\seedu\club\commons\events\storage\DataSavingExceptionEvent.java
+``` java
+package seedu.club.commons.events.storage;
+
+import seedu.club.commons.events.BaseEvent;
+
+/**
+ * Indicates an exception during a file saving
+ */
+public class DataSavingExceptionEvent extends BaseEvent {
+
+    public final Exception exception;
+
+    public DataSavingExceptionEvent(Exception exception) {
+        this.exception = exception;
+    }
+
+    @Override
+    public String toString() {
+        return exception.toString();
+    }
+
+}
+```
 ###### \java\seedu\club\commons\exceptions\PhotoReadException.java
 ``` java
 package seedu.club.commons.exceptions;
@@ -480,20 +504,6 @@ public class CsvUtil {
     }
 
     /**
-     * Saves the data to the file in csv format.
-     *
-     * @param file A valid existing csv file.
-     * @throws IOException Thrown if there is an error writing to the file.
-     */
-    public static void saveDataToFile(File file, String data) throws IOException {
-        requireNonNull(file);
-        requireNonNull(data);
-
-        logger.fine("Writing headers and info of members to the file");
-        FileUtil.writeToFile(file, data);
-    }
-
-    /**
      * Loads a {@code UniqueMemberList} from the data in the csv file.
      * Assumes file exists.
      * Ignores DataConversionException and DuplicateMemberException.
@@ -508,7 +518,7 @@ public class CsvUtil {
         String data = FileUtil.readFromFile(file);
         String[] membersData = data.split("\n");
 
-        for (int i = 1; i < membersData.length; i++) { //membersData[0] contains Headers
+        for (int i = 1; i < membersData.length; i++) { //membersData[0] contains column headers
             try {
                 Member member = getMember(membersData[i]);
                 importedMembers.add(member);
@@ -1451,8 +1461,8 @@ public class ProfilePhoto {
 ``` java
     @Override
     public int importMembers(File importFile) throws IOException {
-        CsvClubBookStorage storage = new CsvClubBookStorage(importFile);
-        UniqueMemberList importedMembers = storage.readClubBook();
+        CsvClubBookStorage csvStorage = new CsvClubBookStorage(importFile);
+        UniqueMemberList importedMembers = csvStorage.readClubBook();
         int numberMembers = 0;
 
         for (Member member: importedMembers) {
@@ -1488,9 +1498,6 @@ public class ProfilePhoto {
 
         List<Member> members = new ArrayList<>(clubBook.getMemberList());
         StringBuilder csvMemberList = new StringBuilder();
-        /*for (Member member: members) {
-            csvMemberList.append(getMemberDataToExport(member));
-        }*/
         members.forEach(member -> csvMemberList.append(getMemberDataToExport(member)));
         indicateNewExport(exportFile, csvMemberList.toString());
     }
@@ -1622,6 +1629,11 @@ public class CsvClubBookStorage extends ComponentManager {
         return CsvFileStorage.readClubBook(importFile);
     }
 
+    /**
+     * Returns data from the file as a {@link UniqueMemberList}.
+     *
+     * @throws IOException Thrown if there is an error writing to the file.
+     */
     public void saveData(String data) throws IOException {
         saveData(data, file);
     }
@@ -1637,6 +1649,8 @@ public class CsvClubBookStorage extends ComponentManager {
 
         String columnHeaders = CsvUtil.getHeaders();
         String dataToExport = columnHeaders + data;
+
+        logger.fine("Writing headers and info of members to the file");
         CsvFileStorage.saveDataToFile(file, dataToExport);
     }
 }
@@ -1649,6 +1663,7 @@ import java.io.File;
 import java.io.IOException;
 
 import seedu.club.commons.util.CsvUtil;
+import seedu.club.commons.util.FileUtil;
 import seedu.club.model.member.UniqueMemberList;
 
 /**
@@ -1660,11 +1675,7 @@ public class CsvFileStorage {
      * Saves the given clubBook {@code data} to the specified file.
      */
     public static void saveDataToFile(File file, String data) throws IOException {
-        try {
-            CsvUtil.saveDataToFile(file, data);
-        } catch (IOException ioe) {
-            throw new IOException("Unexpected error " + ioe.getMessage());
-        }
+        FileUtil.writeToFile(file, data);
     }
 
     /**
@@ -1688,7 +1699,7 @@ import seedu.club.commons.exceptions.PhotoWriteException;
 public interface PhotoStorage {
 
     /**
-     * Returns UserPrefs data from storage.
+     * Makes a copy of the image specified by {@code originalPhotoPath} with the {@code newPhotoName}.
      *
      * @param originalPhotoPath The absolute file path of the {@link seedu.club.model.member.ProfilePhoto}.
      * @param newPhotoName The file name of the copy of the photo specified by {@code originalPhotoPath}.
@@ -1770,6 +1781,16 @@ public class ProfilePhotoStorage implements  PhotoStorage {
 ```
 ###### \java\seedu\club\storage\Storage.java
 ``` java
+
+    /**
+     * Makes a copy of the image specified by {@code originalPhotoPath} with the {@code newPhotoName}.
+     *
+     * @param originalPhotoPath The absolute file path of the {@link seedu.club.model.member.ProfilePhoto}.
+     * @param newPhotoName The file name of the copy of the photo specified by {@code originalPhotoPath}.
+     *
+     * @throws PhotoReadException if the {@code originalPhotoPath} is invalid.
+     * @throws PhotoWriteException if there was an error while copying the photo.
+     */
     void copyOriginalPhotoFile(String originalPhotoPath, String newPhotoName)
             throws PhotoReadException, PhotoWriteException;
 
@@ -1778,6 +1799,15 @@ public class ProfilePhotoStorage implements  PhotoStorage {
      * Raises {@link DataSavingExceptionEvent} if there was an error during saving.
      */
     void handleProfilePictureChangedEvent(ProfilePhotoChangedEvent event);
+
+    /**
+     * Writes the {@code data} to the {@code exportFile}.
+     *
+     * @param data Data that is to be written to the file.
+     * @param exportFile File to which data is to be exported.
+     * @throws IOException Thrown if there is an error writing to the file.
+     */
+    void exportDataToFile(String data, File exportFile) throws IOException;
 
     /**
      * Writes data to a CSV file on the hard disk.
@@ -1814,14 +1844,19 @@ public class ProfilePhotoStorage implements  PhotoStorage {
     // ================ CSV Storage methods ==============================
 
     @Override
+    public void exportDataToFile(String data, File exportFile) throws IOException {
+        csvClubBookStorage.setClubBookFile(exportFile);
+        logger.fine("Attempting to export data to file: " + csvClubBookStorage.getClubBookFile());
+        csvClubBookStorage.saveData(data);
+    }
+
+    @Override
     @Subscribe
     public void handleExportDataEvent(NewExportDataAvailableEvent event) {
         assert event.exportFile != null : "exportFile should be pointing to a valid file";
-        csvClubBookStorage.setClubBookFile(event.exportFile);
 
-        logger.fine("Attempting to export data to file: " + csvClubBookStorage.getClubBookFile());
         try {
-            csvClubBookStorage.saveData(event.data);
+            exportDataToFile(event.data, event.exportFile);
         } catch (IOException e) {
             event.setDataExported(false);
             raise(new DataSavingExceptionEvent(e));

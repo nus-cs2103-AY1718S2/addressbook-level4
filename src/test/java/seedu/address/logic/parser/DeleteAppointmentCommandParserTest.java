@@ -56,6 +56,12 @@ public class DeleteAppointmentCommandParserTest {
     }
 
     @Test
+    public void parse_dateTimeArgSwap_throwParseException() {
+        assertParseFailure(parser, "alex 1200 14/3/2018", String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                DeleteAppointmentCommand.MESSAGE_USAGE));
+    }
+
+    @Test
     public void parse_validArgs_returnDeleteAppointmentCommand() throws IllegalValueException {
         DeleteAppointmentCommand expectedCommand = new DeleteAppointmentCommand(
                 ParserUtil.parseIndex("1"), ParserUtil.parseDateTime("14/3/2018 1200"));

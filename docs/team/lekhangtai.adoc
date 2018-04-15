@@ -25,7 +25,7 @@
 ** Highlights:This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it involves addition of new command to the existing application.
 
 
-* *Code contributed*: https://github.com/CS2103JAN2018-T16-B1/main/tree/master/collated/functional[functional] https://github.com/CS2103JAN2018-T16-B1/main/tree/master/collated/test[test]
+* *Code contributed*: https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/functional/LeKhangTai.md[Functional] | https://github.com/CS2103JAN2018-T16-B1/main/blob/master/collated/test/LeKhangTai.md[Test]
 
 * *Other contributions*:
 

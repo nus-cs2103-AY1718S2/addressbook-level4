@@ -1144,38 +1144,6 @@ public class Username implements Serializable {
         accountList.setAccount(account, account);
         indicateAccountListChanged();
     }
-
-    @Override
-    public synchronized void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
-        catalogue.returnBook(target, returnedBook);
-        indicateCatalogueChanged();
-    }
-    @Override
-    public synchronized void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
-        catalogue.borrowBook(target, borrowedBook);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
-        indicateCatalogueChanged();
-    }
-    @Override
-    public synchronized void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
-        catalogue.reserveBook(target, reservedBook);
-        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
-        indicateCatalogueChanged();
-    }
-
-    /**
-     * Adds the initial admin account to the accountList
-     */
-    private void addFirstAccount() {
-        Account admin = Account.createDefaultAdminAccount();
-        if (!this.accountList.contains(admin)) {
-            try {
-                this.accountList.add(admin);
-            } catch (DuplicateAccountException e) {
-                e.printStackTrace();
-            }
-        }
-    }
 ```
 ###### \java\seedu\address\model\ModelManager.java
 ``` java

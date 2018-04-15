@@ -8,24 +8,26 @@
 
 == Overview
 
-contactHeRo is a desktop contact management application
-made for Human Resource (HR) managers, specifically for
-recruiters in a company.
+**contactHeRo** is a contact management solution for recruiters across companies who need a quick and efficient way to manage the profiles of their potential recruits, current job openings and their appointments. It is a Command Line Interface(CLI) application with intuitive usage and effective features. +
+This project portfolio is to showcase my contribution in the team toward this project. It also illustrates my documentation skills and what I have learned in CS2103T. In the end, I also proposed some potential enhancement based on what I have done.
+
+If you find out any grammar errors or want to clarify anything, please contact me via this email: trafalgarandre@gmail.com. Thank you!
 
 == Summary of contributions
+This part summarizes my major enhancement, minor enhancement and other contribution in contactHeRo. +
 
 * *Major enhancement*: added *a calendar and the ability to arrange appointments on this calendar.*
-** What it does: allows the user to arrange appointments on a calendar.
-** Justification: This feature is beneficial to HR managers as they have many appointments. +
-By putting those appointments on contactHeRo, they can easily add and check their appointments without switching tabs.
-** Highlights: This enhancement has potentials for further development such as integrating with Google Calendar.It required working with all the main components of contactHeRo and a third-party API.
+** What it does: allows the user to arrange and view appointments effectively on a calendar.
+** Justification: This feature is beneficial to HR managers as they have many appointments. By putting those appointments on contactHeRo, they can easily add and check their appointments without switching tabs.
+** Highlights: This enhancement includes eight new commands, namely, `calendar`, `addapp`, `delapp`, `date`, `datetime`, `week`, `month` and `year`. It requires integrating with a third-party API, namely, CalendarFX and working with all the main components of contactHeRo. +
+
 ** Credits: calendarFX, stackoverflow.com
 
-* *Minor enhancement*: added Profile Picture.
+* *Minor enhancement*: added Profile Picture for contacts.
 ** What it does: allows the user to add people's profile picture.
 ** Justification: This feature is beneficial to HR managers as they need to contact with many people. +
 By having profile pictures on contactHeRo, they can easily recognize and memorize people.
-** Highlights: This enhancement has many approaches. Hence, it is challenging to choose the most suitable approach. This feature also helps me to familiarise with the code, especially the connection between model and UI
+** Highlights: This enhancement involves adding attribute `ProfilePicture` to `Person`. This feature helps me to familiarise with the code, especially the connection between model and UI.
 ** Credits: stackoverflow.com.
 
 
@@ -34,16 +36,18 @@ By having profile pictures on contactHeRo, they can easily recognize and memoriz
 * *Other contributions*:
 
 ** Project management:
-*** Created and closed issues.
+*** Created, assigned and closed issues.
+
 ** Enhancements to existing features:
 *** Added ProfilePicture attribute to addCommand (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/56[#56]).
 ** Documentation:
-*** Made user guide and developer guide more friendly (Pull requests https://github.com/CS2103JAN2018-W09-B2/main/pull/58[#58], https://github.com/CS2103JAN2018-W09-B2/main/pull/159[#159], https://github.com/CS2103JAN2018-W09-B2/main/pull/115[#115]).
+*** Made user guide and developer guide more friendly (Pull requests: https://github.com/CS2103JAN2018-W09-B2/main/pull/58[#58], https://github.com/CS2103JAN2018-W09-B2/main/pull/159[#159], https://github.com/CS2103JAN2018-W09-B2/main/pull/115[#115]).
+*** Documented my own features (Pull requests: https://github.com/CS2103JAN2018-F11-B4/main/issues/126[#126], https://github.com/CS2103JAN2018-W09-B2/main/pull/133[#133], https://github.com/CS2103JAN2018-W09-B2/main/pull/159[#159]).
 ** Community:
-*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W09-B2/main/pull/114[#114], https://github.com/CS2103JAN2018-W09-B2/main/pull/213[#213], https://github.com/CS2103JAN2018-W09-B2/main/pull/87[#87].
-
+*** PRs reviewed (with non-trivial review comments) and merged PRs (Pull Requests: https://github.com/CS2103JAN2018-W09-B2/main/pull/114[#114], https://github.com/CS2103JAN2018-W09-B2/main/pull/213[#213], https://github.com/CS2103JAN2018-W09-B2/main/pull/87[#87]).
+*** Reported bugs and gave suggestions to other team in class (Pull requests:  https://github.com/CS2103JAN2018-F11-B4/main/issues/101[#103], https://github.com/CS2103JAN2018-F11-B4/main/issues/125[#125], https://github.com/CS2103JAN2018-F11-B4/main/issues/126[#126], https://github.com/CS2103JAN2018-F11-B4/main/issues/130[#130], https://github.com/CS2103JAN2018-F11-B4/main/issues/134[#134], https://github.com/CS2103JAN2018-F11-B4/main/issues/137[#137]).
 ** Tools:
-*** Integrated a third party library (CalendarFX) to the project (Pull request https://github.com/CS2103JAN2018-W09-B2/main/pull/121[#121])
+*** Integrated a third party library (CalendarFX) to the project (Pull request: https://github.com/CS2103JAN2018-W09-B2/main/pull/121[#121])
 
 
 == Contributions to the User Guide
@@ -57,6 +61,8 @@ include::../UserGuide.adoc[tag=calendar]
 
 include::../UserGuide.adoc[tag=faq]
 
+include::../UserGuide.adoc[tag=conclusion]
+
 == Contributions to the Developer Guide
 
 |===
@@ -67,8 +73,17 @@ include::../DeveloperGuide.adoc[tag=intro]
 
 include::../DeveloperGuide.adoc[tag=profilepicture]
 
+include::../DeveloperGuide.adoc[tag=andremanualtest]
 
+has potentials for further development such as integrating with Google Calendar.It required working with all the main components of contactHeRo and a third-party API.
 
 
 ---
+== Potential Enhancements
+=== Interactive UI for Calendar
+Currently, the Calendar can only be viewed by typing command. The challenge with making an Interactive UI for Calendar is to deal with all events of the original interactive UI of CalendarFX.
+By solving this challenge, the user can change views, choose dates, add and delete appointments by clicking on the Calendar Tab.
+Hence, interaction with Calendar will be more dynamic and effective.
 
+=== Syncing with Google Calendar
+Keeping appointment offline is not always effective as people do not bring their laptop with them everywhere. Hence, by syncing with Google Calendar, appointments which have been added online via Google Calendar can be copied to contactHeRo effectively. Moreover, appointments added in contactHeRo can also be copied to Google Calendar.

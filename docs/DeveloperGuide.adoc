@@ -386,6 +386,7 @@ The feature can be used via the `findtag` command
 * **Alternative 2:** findtag command can find by name and/or tag(s)
 ** Pros: findtag command has increased search flexibility
 ** Cons: Less intuitive as findtag is more specific to tags only
+// end::findtag[]
 
 
 // tag::appointments[]

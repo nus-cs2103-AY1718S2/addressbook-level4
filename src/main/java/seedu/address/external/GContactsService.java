@@ -27,6 +27,8 @@ import seedu.address.model.student.Student;
 //@@author demitycho
 /**
  * Constructs a new GContactsService object to communicate with Google's APIs
+ * The upload process is still synchronous, the UI will freeze as data is being uploaded
+ * There will be logging here to show state updates as it is difficult to show UI changes.
  */
 public class GContactsService {
     public static final String STRING_STUDENT_GROUP_NAME = "Students";

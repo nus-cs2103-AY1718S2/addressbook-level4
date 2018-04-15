@@ -751,9 +751,6 @@ The method `createEditedStudent` creates the student wi
 // tag::schedule[]
 === Schedule feature
 ==== Current Implementation
-
-===== Adding a lesson
-
 To get better control of one's weekly schedule, we will now attach a component called `Schedule` to `Model`.
 
 At startup, a new `Schedule` object is instantiated in `ModelManager`.
@@ -766,10 +763,15 @@ A `Lesson` has a `UniqueKey` attribute, a `Day` attribute, a starting `TIME STAR
 
 image::LessonClassDiagram.png[width="800"]
 
-A `Schedule` has a list of `Lesson` objects. A `Lesson` has a `UniqueKey` attribute, a `Day` attribute, a starting `TIME START_TIME` and an ending `TIME END_TIME` attribute
+===== Implementation of commands that edit your Schedule
 
-* Students have a unique `UniqueKey` field, which we will now use in `Lesson` to create a relation to Student objects.
+Commands that modify the schedule are `addLesson` and `deleteLesson`.
+Editing a student's name will edit the name of the event in the schedule.
+Deleting a student will also delete all his lessons in the schedule.
+
+* Students have the `UniqueKey` field, which we will now use in `Lesson` to create a relation to Student objects.
 * A `Lesson` object called `newLesson` will be created by `ModelManager.addLesson(UniqueKey key, Day day, Time startTime, Time endTime)`, which is implemented as such:
+
 [source, java]
 ----
     public void addLesson(Student studentToAddLesson, Day day, Time startTime, Time endTime) {
@@ -781,20 +783,37 @@ A `Schedule` has a list of `Lesson` objects. A `Lesson` has a `UniqueKey` attrib
     }
 ----
 
+A sequence diagram of the result can be seen from the below diagram.
+
+.Sequence Diagram of `addLesson` command
+image::AddLessonSequenceDiagram.png[width='800']
+
 The student will be selected by the Index of the last seen list of students.
-The UniqueKey is retrieved from the Student. A new `Lesson` will now be added for that student at the specific `Day`, `startTime` and `endTime`, associated with the Student by the `key`
+The UniqueKey is then retrieved from the Student. A new `Lesson` will now be added for that student at the specific `Day`, `startTime` and `endTime`, associated with the Student by the `key`
+
+No `Lesson` objects can be created for students not in contact list.
 
 [NOTE]
 If you have a future implementation that requires the addition of a new attribute in the `Schedule` class, you must take note of updating the `Model.addLesson(Student, Day, Time START_TIME, Time END_TIME)` method to reflect the new attribute.
 
+===== Implementation of viewing your Schedule
 
-===== Viewing lessons in schedule
+The `schedule` command displays of a student’s dashboard. The `schedule` command is implemented this way:
+
+.Sequence Diagram of `schedule` command
+image::ScheduleCommandSequenceDiagram.png[width='800']
+
+From the following diagram,
+
+. `InfoPanel` handles the `showScheduleEvent` event. It changes the view to the `CalendarPanel`, hiding `DashboardPanel` and `BrowserPanel`.
+. `InfoPanel` raises the `showScheduleEvent` which is also handled by `CalendarPanel` to display the lessons of the student in the schedule.
+
 
 ==== Design Considerations
 [width="100%", cols="1, 1, 1"options="header",]
 |=======================================================================
 | Aspect | Alternatives | Pros (+)/ Cons(-)
-.2+| Aspect: Implementation of `Schedule`
+.2+| Implementation of `Lesson` in `Schedule`
 | *`Schedule` contains `Lesson` objects, schedule is made up of only one layer, with attributes directly attached to `Lesson` (current choice)*
 | + : It is easier implement, just add `Lesson` to a `Schedule`, which is a list of `Lessons` +
 {empty} +
@@ -803,21 +822,46 @@ If you have a future implementation that requires the addition of a new attribut
 | + : Less coupling and more cohesive design +
  {empty} +
  - : Much harder to implement and gets overly complicated
+ .2+| Data structure of `Schedule`
+ | *Relational database related by a uniquekey attribute (current choice)*
+ | + : Much better normalised design. Modifying contacts list in any way will not affect the Schedule database. +
+ {empty} +
+ - : Another layer of abstraction. Harder to implement
+ | Adding Student objects to lessons in schedule
+ | + : Easier implementation. +
+ {empty} +
+ - : Changes in contacts list data will require more workarounds to modify schedule data.
+
 |=======================================================================
 
 === Google Service Integration
+
 
 To sync with Google Contacts and Google Calendar, a `GServiceManager` class is implemented to handle the 2 services.
 `GServiceManager` contains a `GContactsService` and `GCalendarService` objects. `GServiceManager.synchronize` calls `GContactsService.synchronize` and
 `GCalendarService.synchronize`
 
+==== Prerequisites/Dependencies
+
+Google Contacts and Calendar APIs require an external libaries. Remember to add the following to your dependencies
+
+[source, java]
+--------
+dependencies {
+    compile 'com.google.api-client:google-api-client:1.23.0'
+    compile 'com.google.oauth-client:google-oauth-client-jetty:1.23.0'
+    compile 'com.google.apis:google-api-services-oauth2:v1-rev139-1.23.0'
+    compile 'com.google.apis:google-api-services-calendar:v3-rev305-1.23.0'
+    compile group: 'com.google.gdata', name: 'core', version: '1.47.1'
+}
+--------
 
 ==== Design Considerations
 
 [width="100%", cols="1, 1, 1"options="header",]
 |=======================================================================
 | Aspect | Alternatives | Pros (+)/ Cons(-)
-.2+| Aspect: Implementation of `GServiceManager`
+.2+| Implementation of `GServiceManager` class
 | *Separate out 2 Google Services into two classes (current choice)*
 | + : Less coupling +
  {empty} +
@@ -826,8 +870,18 @@ To sync with Google Contacts and Google Calendar, a `GServiceManager` class is i
 | + : Fewer files and code to read +
 {empty} +
  - : More coupling
+.2+| Implementation of flow of data for a sync
+| *Only Upload (current choice)*
+| As we have to store the IDs of contacts and events created offline, that would create a massive database issue.
++ : Reduces the complexity of the implementation of syncing data. +
+{empty}
++
+- : User cannot download updated data that he synced from another Codeducator instance
+| Upload and download
+| + : Much more convenient for the user to sync his data to the cloud. +
+{empty} +
+- : Much harder to implement. At every session, need to keep track of which users were edited, added or deleted (similar to a diff program)
 |=======================================================================
-
 // end::schedule[]
 
 
@@ -1392,7 +1446,6 @@ Use case resumes at step 3.
 +
 Use case ends.
 
-
 [discrete]
 === Use Case: Edit a student's miscellaneous information
 
@@ -1436,12 +1489,157 @@ Use case resumes at step 3.
 +
 Use case ends.
 
+[discrete]
+=== Use case: Show a student's dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. The student index is invalid
++
+[none]
+** 1a1. Codeducator shows an error message.
 
 
+[discrete]
+=== Use case: Add a milestone to a dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to add a specific milestone to the dashboard of that student.
+4. Codeducator adds the milestone to the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The milestone is a duplicate of an existing milestone in the dashboard.
++
+[none]
+** 3a1. Codeducator shows an error message.
++
 
 
+[discrete]
+=== Use case: Add a task to a milestone in a dashboard
 
+*MSS*
 
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to add a specific task to a milestone in the dashboard of that student.
+4. Codeducator adds the task to the milestone in the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The task is a duplicate of an existing task in the milestone.
++
+[none]
+** 3a1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete a milestone in a dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to delete a milestone in the dashboard of that student.
+4. Codeducator deletes the milestone in the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given student index is invalid
++
+[none]
+** 3a1. Codeducator shows an error message.
+
+* 3b. The given milestone index is invalid
++
+[none]
+** 3b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete a task in a milestone in the dashboard
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to delete a task in a milestone in the dashboard of that student.
+4. Codeducator deletes the task in the milestone in the dashboard of that student.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given student index is invalid
++
+[none]
+** 3a1. Codeducator shows an error message.
+
+* 3b. The given milestone index is invalid
++
+[none]
+** 3b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given task index is invalid
++
+[none]
+** 3c1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Mark a task in a milestone as completed
+
+*MSS*
+
+1. User requests view the dashboard of a student.
+2. Codeducator shows the dashboard the student.
+3. User requests to mark a task in a milestone in the dashboard of that student as completed.
+4. Codeducator marks the task in the milestone in the dashboard of that student as completed.
++
+Use case ends.
+
+*Extensions*
+
+* 3a. The given student index is invalid
++
+[none]
+** 3a1. Codeducator shows an error message.
+
+* 3b. The given milestone index is invalid
++
+[none]
+** 3b1. Codeducator shows an error message.
++
+Use case resumes at step 2.
+
+* 3c. The given task index is invalid
++
+[none]
+** 3c1. Codeducator shows an error message.
++
+Use case resumes at step 2.
 
 
 

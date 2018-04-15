@@ -35,8 +35,7 @@ recruiters to switch between different pre-defined theme.
 ** Description: Added a flexible 'remark' field and the command to edit it.
 ** Justification: Tech recruiters might have additional information for their contacts and relying on tags alone is not enough.
 
-* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/tiny767.md[Functional code]]
-[https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/tiny767.md[Test code]] 
+* *Code contributed*: [https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/functional/tiny767.md[Functional code]][https://github.com/CS2103JAN2018-W11-B3/main/blob/master/collated/test/tiny767.md[Test code]]
 
 * *Other contributions*:
 

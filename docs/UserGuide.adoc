@@ -89,7 +89,7 @@ _Figure 2_ shows the 5 major components of the user interface of Employees Track
 * Notification cards: where ET reminds you about ended events
 
 .User Interface
-image::UiLabelled.jpg[width="790"]
+image::UiLabelled.png[width="800"]
 
 ==== Reading the result display box
 

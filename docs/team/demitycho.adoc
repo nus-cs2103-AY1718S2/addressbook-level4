@@ -65,6 +65,8 @@ Both add up to around 3k lines of code.
 == Scheduling component
 include::../UserGuide.adoc[tag=schedule]
 
+And more (Deleting lessons, syncing with Google)...
+
 == Contributions to the Developer Guide
 
 |===

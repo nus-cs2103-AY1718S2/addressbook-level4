@@ -298,7 +298,7 @@ before the `delete 5` command executes. The `delete 5` command will then be push
 .Structure of the stacks before and after deletion
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`, as shown in Figure 13. For example, the user may execute `add n/David ...` to add a new patient.
+As the user continues to use the program, more commands are added into the `undoStack`, as shown in Figure 13 below. For example, the user may execute `add n/David ...` to add a new patient.
 
 .Structure of the stacks before and after addition
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
@@ -309,7 +309,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 The user now decides that adding the patient was a mistake, and decides to undo that action using `undo`.
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
-We will restore the address book to the state before the `add` command executed, as shown in Figure 14.
+We will restore the address book to the state before the `add` command executed, as shown in Figure 14 below.
 
 .Structure of the stacks before and after redoing
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
@@ -418,7 +418,7 @@ public CommandResult executeUndoableCommand() throws CommandException {
 Suppose that the user has just launched the application. The current patient queue is shown in Figure 19 below.
 
 .The current queue
-image::Figure 3.2.1.1.png[width="800"]
+image::Figure 3.2.1.1.PNG[width="800"]
 
 The user now decides to edit the remarks of the first person in the list.
 
@@ -427,13 +427,13 @@ The user now decides to edit the remarks of the first person in the list.
 which will be based on the user input. This new patient will be stored as the edited patient as shown in Figure 20 below.
 
 .The patient before and after editing
-image::Figure 3.2.1.2.png[width="800"]
+image::Figure 3.2.1.2.PNG[width="800"]
 
 `RemarkCommand` will finally call the for the utility method `updatePerson` under `Model`, to replace the patient to be edited with the edited patient,
 the new list will be as shown in Figure 21 below.
 
 .The queue with updated details
-image::Figure 3.2.1.3.png[width="800"]
+image::Figure 3.2.1.3.PNG[width="800"]
 
 ==== Design Considerations
 
@@ -1699,6 +1699,24 @@ Expected: Invalid index error is shown.
 Expected: The first patient in the list is selected and his or her details displayed in the right panel.
 .. Type `select 9999` +
 Expected: Invalid index error is shown.
+
+=== Record
+
+. Views the medical record at the specified record index for a patient specified by the index number used in the last patient listing.
+.. Type `record 1 in/1` +
+Expected: The first patient in the list is selected and his or her first medical record details are displayed in a new window.
+.. Type `record 1 in/999` +
+Expected: The first patient in the list is selected and a new empty medical record is generate.
+.. Type `record 1 in/0` +
+Expected: Invalid record index error is shown.
+
+=== Remark
+
+. Edits the remarks for a patient specified by the index number used in the last patient listing.
+.. Type `remark 1 r/Weekly visits` +
+Expected: The first patient in the list is selected and his or her remarks are changed to `Weekly visits`.
+.. Type `remark 1 r/` +
+Expected: The first patient in the list is selected and his or her remarks are removed.
 
 [appendix]
 == Glossary

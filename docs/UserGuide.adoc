@@ -513,11 +513,16 @@ Deletes the first medical record for the first person in the result of the list 
 // tag::print[]
 ==== Printing a patient's formatted medical records : `print` [since v1.4]
 
-Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application. +
+Formats and prints a patient's medical records into a pdf file. This pdf file is located in the same directory as the IMDB application as shown in Figure 8 below. +
 Format: `print INDEX` or `p INDEX`
 
 [CAUTION]
 This command is only accessible to doctors.
+
+.PDF File in the directory
+[caption="Figure 8: "]
+image::print_window.PNG[width="990"]
+
 // end::print[]
 
 ==== Attaching and viewing the X-ray scans for a patient `[coming in v2.0]`

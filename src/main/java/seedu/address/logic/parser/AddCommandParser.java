@@ -49,7 +49,7 @@ public class AddCommandParser implements Parser<AddCommand> {
             Remark remark;
             Cca cca = ParserUtil.parseCca("", "");
             InjuriesHistory injuriesHistory = ParserUtil.parseInjuriesHistory(" ");
-            NextOfKin nextOfKin = ParserUtil.parseNextOfKin("NA", "NA", "NA", "NA");
+            NextOfKin nextOfKin = ParserUtil.parseNextOfKin(" ", " ", " ", " ");
             if (!(argMultimap.getValue(PREFIX_REMARK)).isPresent()) {
                 remark = ParserUtil.parseRemark(" ");
             } else {

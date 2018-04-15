@@ -7,16 +7,14 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddAppointmentCommand;
-import seedu.address.logic.commands.AddCcaCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInjuriesHistoryCommand;
 import seedu.address.logic.commands.AddRemarkCommand;
 import seedu.address.logic.commands.AddSubjectCommand;
+import seedu.address.logic.commands.CcaCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.commands.DeleteAppointmentCommand;
-import seedu.address.logic.commands.DeleteCcaCommand;
 import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteInjuriesHistoryCommand;
 import seedu.address.logic.commands.DeleteRemarkCommand;
@@ -71,11 +69,8 @@ public class AddressBookParser {
         case ChangeThemeCommand.COMMAND_WORD:
             return new ChangeThemeCommandParser().parse(arguments);
 
-        case AddCcaCommand.COMMAND_WORD:
-            return new AddCcaCommandParser().parse(arguments);
-
-        case DeleteCcaCommand.COMMAND_WORD:
-            return new DeleteCcaCommandParser().parse(arguments);
+        case CcaCommand.COMMAND_WORD:
+            return new CcaCommandParser().parse(arguments);
 
         case AddInjuriesHistoryCommand.COMMAND_WORD:
             return new AddInjuriesHistoryCommandParser().parse(arguments);
@@ -117,10 +112,6 @@ public class AddressBookParser {
         case AddAppointmentCommand.COMMAND_WORD:
         case AddAppointmentCommand.COMMAND_ALIAS:
             return new AddAppointmentCommandParser().parse(arguments);
-
-        case DeleteAppointmentCommand.COMMAND_WORD:
-        case DeleteAppointmentCommand.COMMAND_ALIAS:
-            return new DeleteAppointmentCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:

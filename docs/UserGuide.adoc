@@ -62,13 +62,13 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 =====
 === Contact Commands
-==== Adding a person: `add`
+==== Adding a friend: `add`
 
 To add a friend to ST, you can enter the command `add` followed by the various parameters +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS b/BIRTHDAY tt/TIMETABLE [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+A friend can have any number of tags (including 0)
 
 [WARNING]
 =====
@@ -87,7 +87,7 @@ Examples:
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 b/28021997 tt/http://modsn.us/ojGeu t/criminal`
 
 // tag::list[]
-==== Listing all persons and aliases: `list`
+==== Listing all friends and aliases: `list`
 
 To show a list of all your friends and a table of created aliases in ST, you can enter the command `list` +
 Format: `list`
@@ -96,27 +96,27 @@ image::aliasList.png[width="790"]
 
 // end::list[]
 
-==== Editing a person : `edit`
+==== Editing a friend : `edit`
 
 To edit a friend's particulars, you can enter the command `edit` followed by the respective parameters you wish to edit. +
 Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [b/BIRTHDAY] [tt/TIMETABLE] [t/TAG]...`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* Edits the friend at the specified `INDEX`. The index refers to the index number shown in the last friend listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* When editing tags, the existing tags of the friend will be removed i.e adding of tags is not cumulative.
+* You can remove all the tags tagged to the friend by typing `t/` without specifying any tags after it.
 ****
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
+Edits the phone number and email address of the 1st friend to be `91234567` and `johndoe@example.com` respectively.
 * `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the name of the 2nd friend to be `Betsy Crower` and clears all existing tags.
 
-==== Locating persons by name: `find`
+==== Locating friends by name: `find`
 
 To find specific friends by their names, you can enter the command `find`, followed by KEYWORD. +
 Format: `find KEYWORD [MORE_KEYWORDS]`
@@ -126,7 +126,7 @@ Format: `find KEYWORD [MORE_KEYWORDS]`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Friends matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
@@ -134,15 +134,15 @@ Examples:
 * `find John` +
 Returns `john` and `John Doe`
 * `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+Returns any friend having names `Betsy`, `Tim`, or `John`
 
-==== Deleting a person : `delete`
+==== Deleting a friend : `delete`
 
 To remove a specified friend from ST :cry: , you can enter the command `delete` followed by his INDEX.+
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
+* Deletes the friend at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -156,13 +156,13 @@ Deletes the 2nd friend in ST.
 `delete 1` +
 Deletes the 1st friend in the results of the `find` command.
 
-==== Selecting a person : `select`
+==== Selecting a friend : `select`
 
 To select a friend, you can identify his/her index number used in the last friend listing and enter the command `select` followed by his/her index+
 Format: `select INDEX`
 
 ****
-* Selects the person and opens the detail card of the person at the specified `INDEX`.
+* Selects the friend and opens the detail card of the friend at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -171,10 +171,10 @@ Examples:
 
 * `list` +
 `select 2` +
-Selects the 2nd person in ST.
+Selects the 2nd friend in ST.
 * `find Betsy` +
 `select 1` +
-Selects the 1st person in the results of the `find` command.
+Selects the 1st friend in the results of the `find` command.
 
 // tag::birthdays[]
 ==== Viewing a collated birthday list: `birthdays` (since v1.3)
@@ -217,10 +217,10 @@ Only indexes of the current filtered list are valid
 Examples:
 
 * `union Odd 1 2 3` +
-Displays the combined odd timetable for persons at Index 1, 2 and 3.
+Displays the combined odd timetable for friends at Index 1, 2 and 3.
 
 * `union Even 1 2` +
-Displays the combined even timetable for persons at Index 1 and 2.
+Displays the combined even timetable for friends at Index 1 and 2.
 // end::union[]
 
 // tag::vacant[]
@@ -402,7 +402,7 @@ Format: `decrypt`
 ==== Importing data : `import` (since v1.1)
 
 To import your friend's ST to your own ST, you can enter the command `import` followed by the various parameters.
-An encrypted or unencrypted ST instance from filepath to the existing ST application. Persons, Tags, and Aliases that are not in your ST will be added. +
+An encrypted or unencrypted ST instance from filepath to the existing ST application. Friends, Tags, and Aliases that are not in your ST will be added. +
 Format: `import FILEPATH PASSWORD`
 
 ****
@@ -505,7 +505,7 @@ There is no need to save manually.
 ****
 
 *Q*: How do I import my timetable from NUSMods? +
-*A*: When adding or editing a person, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
+*A*: When adding or editing a friend, you can input his/her NUSMods shortened link in the tt/TIMETABLE field
 ****
 .   Go to NUSMods
 .   Click `Share/Sync` at the bottom right hand corner

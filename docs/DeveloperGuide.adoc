@@ -539,10 +539,30 @@ The imported StardyTogether must be a XML file that follows `XmlAdaptedPerson`, 
 
 `Person`,`Tag`, and `Alias` from imported StardyTogether file that are not a duplicate of existing `Person`, `Tag`, and `Alias` in the user's StardyTogether will be added.
 
+The following code shows how `Person`,`Tag`, and `Alias` are imported into StardyTogether:
+
+----
+public AddressBook addToAddressBook(AddressBook addressBook) throws IllegalValueException {
+    for (XmlAdaptedTag t : tags) {
+        addressBook.importTag(t.toModelType());
+    }
+    for (XmlAdaptedPerson p : persons) {
+        addressBook.importPerson(p.toModelType());
+    }
+    for (XmlAdaptedAlias a : aliases) {
+        addressBook.importAlias(a.toModelType());
+    }
+    return addressBook;
+}
+----
+
 The following sequence diagram shows how the import operation works:
 
 .Import Command Sequence Diagram for Logic Component
 image::LogicComponentImportSequenceDiagram.png[width="800"]
+
+.Import Command Sequence Diagram for Model and Storage Component
+image::ModelStorageComponentImportSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -573,8 +593,8 @@ The exported StardyTogether file contains all `Person` in `filteredPersons`, whi
 
 The following sequence diagram shows how the export operation works:
 
-.Export Command Sequence Diagram for Logic Component
-image::ExportCommandSequenceDiagram.png[width="800"]
+.Export Command Sequence Diagram for Model and Storage Component
+image::ModelStorageComponentExportSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -611,11 +631,10 @@ The upload StardyTogether mechanism is facilitated by using https://developers.g
 
 The uploaded StardyTogether file is the same as exported StardyTogether file stored.
 
-
 The following sequence diagram shows how the upload operation works:
 
-.Upload Command Sequence Diagram for Logic Component
-image::UploadCommandSequenceDiagram.png[width="800"]
+.Upload Command Sequence Diagram for Model and Storage Component
+image::ModelStorageComponentUploadSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -627,22 +646,6 @@ image::UploadCommandSequenceDiagram.png[width="800"]
 * **Alternative 2:** Uses CSV file format
 ** Pros: CSV file format is widely used and is able to transfer between different applications (eg. Microsoft Excel).
 ** Cons: Different file format as saved StardyTogether, implementation of converting file type from XML to CSV is needed.
-
-===== Aspect: How upload command executes
-
-* **Alternative 1 (current choice):** Uploads all `Person` in `filteredPersons`, `Tag`, and `Alias` from StardyTogether.
-** Pros: User is able to select which `Person` to be uploaded by using `find` command, user is not able to indicate which `Tag` or `Alias` to be uploaded. User can uploads all `Person` by using `list` command too, storing backups in Google Drive easily.
-** Cons: User is not able to select which `Tag` or `Alias` to be uploaded.
-* **Alternative 2:** Uploads all `Person`,`Tag`, and `Alias` from StardyTogether.
-** Pros: User does not need to indicate which `Person`, `Tag` or `Alias` to be uploaded.
-** Cons: User is not able to select which `Person`, `Tag` or `Alias` to be uploaded.
-
-==== Why Download StardyTogether file feature is not implemented?
-
-===== Justification
-Downloading a file from Google Drive requires the File ID, as there can be two or more files with the same filename in the user's Google Drive. Hence, the user has to go to his/her Google Drive to get the uploaded StardyTogether File ID.
-
-Since the user is already on his/her Google Drive, he/she may download the file onto his/her computer and perform an `import` function. Steps are not reduced by implementing `download` feature. Therefore, we decided not to implement `download` feature.
 // end::datatransfer[]
 
 // tag::birthdays[]
@@ -714,21 +717,19 @@ To avoid reading the data from Venue Information JSON file whenever the `vacant`
 
 The following sequence diagram shows how the vacant command is parsed:
 
-
 `ModelManager` will checks if the building is in the list of NUS Buildings, and will throw `BuildingNotFoundException` if the building is not in the list of NUS Buildings.
 
 We have created `Building`, `Room`, `Week`, and `WeekDay` in `Model` to read and store all weekday schedule of all NUS Rooms.
 
-The following architecture diagram shows the model and storage component:
+The following architecture diagram shows the model component:
 
-.Model Componenet
+.Model Component
 image::ModelClassDiagram.png[width="800"]
-
-.Storage Component
-image::StorageClassDiagram.png[width="800"]
 
 The following sequence diagram shows how the logic component of Vacant Room Finder works:
 
+.Vacant Command Sequence Diagram for Model Component
+image::ModelComponentVacantSequenceDiagram.png[width="800"]
 
 As shown in diagram above, all Rooms weekday schedule will be return in an `ArrayList<ArrayList<String>>` data structure. This result will be shown to the UI on the `InfoPanel`
 

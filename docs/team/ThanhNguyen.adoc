@@ -29,7 +29,7 @@ include::../UserGuide.adoc[tag=applicationDescription]
 
 === Enhancement: Input with multiple lines support
 ==== Why?
-A recipe book needs to have instructions and instructions usually consist of long body of text which contains multiple lines. Therefore, a `_CommandBox_` that supports input with multiple lines is essential for this product.
+A recipe book needs to have instructions, and instructions usually consist of long body of text which contains multiple lines. Therefore, a `_CommandBox_` that supports input with multiple lines is essential for this product.
 
 This feature has been implemented in version 1.1, in PR link:https://github.com/CS2103JAN2018-F09-B2/main/pull/12[#12].
 

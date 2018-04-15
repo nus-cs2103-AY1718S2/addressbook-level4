@@ -48,9 +48,8 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX_OR_FORMAT = "Wrong format or index is not a positive integer.";
     public static final String MESSAGE_INVALID_TASK_FILTER = "Filter keyword is not an integer 1~13 "
             + "or * or \"submission\" or \"sub\" or \"compulsory\" or \"com\".";
-    public static final String MESSAGE_INVALID_TAB_TYPE = "Given type must be 'profile', 'task', or 'exercise'";
-    public static final String MESSAGE_INVALID_WEEK_NUMBER = "Given week number must be between the range 2 to 12"
-            + " (boundary numbers inclusive).";
+    public static final String MESSAGE_INVALID_TAB_TYPE = "Invalid command format!";
+    public static final String MESSAGE_INVALID_WEEK_NUMBER = "Invalid command format!";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
     /**
@@ -557,7 +556,6 @@ public class ParserUtil {
         return new QuestionIndex(trimmedQuestionIndex);
     }
 
-    //@@author iNekox3
     /**
      * Parses a {@code String studentAnswer} into a {@code StudentAnswer}.
      * Leading and trailing whitespaces will be trimmed.

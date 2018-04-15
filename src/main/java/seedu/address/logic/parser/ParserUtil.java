@@ -10,8 +10,6 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
-import seedu.address.model.ModelManager;
-import seedu.address.model.account.Account;
 import seedu.address.model.account.MatricNumber;
 import seedu.address.model.account.Name;
 import seedu.address.model.account.Password;
@@ -132,7 +130,7 @@ public class ParserUtil {
      *
      * @throws AccountNotFoundException if the given {@code password} is invalid.
      */
-    public static Password parseAccountPassword(String password) throws AccountNotFoundException{
+    public static Password parseAccountPassword(String password) throws AccountNotFoundException {
         requireNonNull(password);
         String trimmedPassword = password.trim();
         if (!Password.isValidPassword(trimmedPassword)) {
@@ -145,7 +143,7 @@ public class ParserUtil {
      * Parses a {@code Optional<String> password} into an {@code Optional<Password>} if {@code password} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
-    public static Optional<Password> parseAccountPassword(Optional<String> password) throws AccountNotFoundException{
+    public static Optional<Password> parseAccountPassword(Optional<String> password) throws AccountNotFoundException {
         requireNonNull(password);
         return password.isPresent() ? Optional.of(parseAccountPassword(password.get())) : Optional.empty();
     }

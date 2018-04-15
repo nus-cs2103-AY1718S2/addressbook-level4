@@ -24,6 +24,8 @@ import seedu.address.model.book.exceptions.BookNotFoundException;
 import seedu.address.model.book.exceptions.DuplicateBookException;
 
 
+
+
 /**
  * Represents the in-memory model of the catalogue data.
  * All changes to any model should be synchronized.
@@ -116,6 +118,24 @@ public class ModelManager extends ComponentManager implements Model {
         throws DuplicateAccountException, AccountNotFoundException {
         accountList.setAccount(account, account);
         indicateAccountListChanged();
+    }
+
+    @Override
+    public synchronized void returnBook(Book target, Book returnedBook) throws BookNotFoundException {
+        catalogue.returnBook(target, returnedBook);
+        indicateCatalogueChanged();
+    }
+    @Override
+    public synchronized void borrowBook(Book target, Book borrowedBook) throws BookNotFoundException {
+        catalogue.borrowBook(target, borrowedBook);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateCatalogueChanged();
+    }
+    @Override
+    public synchronized void reserveBook(Book target, Book reservedBook) throws BookNotFoundException {
+        catalogue.reserveBook(target, reservedBook);
+        updateFilteredBookList(PREDICATE_SHOW_ALL_BOOKS);
+        indicateCatalogueChanged();
     }
 
     /**

@@ -535,7 +535,7 @@ Format: `deleteGroup GROUP`
 Examples:
 
 * `deleteGroup CS2101 Oral Presentation`  +
-Deletes group `CS` from Fastis. +
+Deletes group `CS2101 Oral Presentation` from Fastis. +
 //end::addGroup[]
 
 === Scheduling a suitable meetup time : `scheduleGroup`

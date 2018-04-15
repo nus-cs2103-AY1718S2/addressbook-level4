@@ -14,17 +14,17 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 image::eldon-chung.png[width="150", align="left"]
 {empty}[https://github.com/Eldon-Chung[github]] [<<eldon-chung#, portfolio>>]
 
-Role: Developer +
+Role: Developer, Algorithms +
 Responsibilities: Documentation, Logic, Testing
 
 '''
 
-=== Ewald Hew
+=== Hew Yih Shiuan Ewald
 image::ewaldhew.png[width="150", align="left"]
 {empty}[http://github.com/ewaldhew[github]] [<<ewaldhew#, portfolio>>]
 
 Role: Developer, Scheduling and tracking +
-Responsibilities: UI
+Responsibilities: UI, Notifications
 
 '''
 

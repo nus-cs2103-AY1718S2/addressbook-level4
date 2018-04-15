@@ -1482,3 +1482,20 @@ Expected: The notification list window should open, and any added notification r
 .. Test case: `notify p/>1`, `sync` +
 Click on any notification. +
 Expected: The coin stated on the notification is opened in the detail window, and its price history chart and subreddit page can be seen.
+
+=== Syncing Coin Data
+
+. Running the sync
+
+.. Test case: `sync` +
+Expected: The latest prices are fetched, as mentioned in the previous section F.5.
+
+=== Sorting Coin List
+
+. Sorting in Lexicographical Order
+
+.. Prerequisites: Multiple coins in the list
+.. Test case: `order` +
+Expected: The coins should be sorted by their trading codes alphabetically.
+.. Test case: `order z` +
+Expected: The coins should be sorted in reverse order, again by trading codes.

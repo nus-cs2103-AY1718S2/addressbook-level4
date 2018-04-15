@@ -116,9 +116,7 @@ public class InfoPanel extends UiPart<Region> {
     @Subscribe
     private void handleInfoPanelEvent(InfoPanelEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        Platform.runLater(() -> {
-        	hideAllPanel();
-        });
+        Platform.runLater(() -> { hideAllPanel(); });
     }
     //@@author
 
@@ -140,12 +138,12 @@ public class InfoPanel extends UiPart<Region> {
      * Hides all the panels
      */
     private void hideAllPanel() {
-    	userDetailsPlaceholder.toBack();
-    	venuePlaceholder.toBack();
-    	mapsPlaceholder.toBack();
-    	birthdayPlaceholder.toBack();
-    	timetableUnionPlaceholder.toBack();
-    	aliasListPlaceholder.toBack();
+        userDetailsPlaceholder.toBack();
+        venuePlaceholder.toBack();
+        mapsPlaceholder.toBack();
+        birthdayPlaceholder.toBack();
+        timetableUnionPlaceholder.toBack();
+        aliasListPlaceholder.toBack();
     }
     //@@author
 

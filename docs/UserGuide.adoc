@@ -253,6 +253,14 @@ Shows a list of tasks that remain uncompleted after their respective due dates.
 
 *Format:* `overdue`
 
+=== Selecting a task or event: `select task` or `select event` `[As of  v1.5]`
+
+Select the task or event at the specified `INDEX` based on the most recent listing.
+
+*Format:* `select task INDEX` or `select event INDEX`
+
+
+
 === Listing entered commands : `history` `[Coming Soon in  v1.5]`
 
 Lists all the commands that you have entered in reverse chronological order.

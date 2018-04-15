@@ -9,11 +9,28 @@ CLIndar is a desktop application that helps university computing students to man
 == Summary of contributions
 *Major enhancement*: Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
 
-*Minor enhancement*: Creating 'complete' command. This command marks a Task object as completed.
+** What it does: Alter the model component to store the information related to `task` and `event` instead of orginal personal information
+** Justification: This feature is crucial as it stores the records in the memory. APIs should be create so that other component can operate on the storage component.
+** Highlights: This enhancement required in-depth understanding of the architecture of the program.
+As other components relies heavily on `model` component, hence when making changes to the `model` component, relavant changes need to be done to other component and relevant tests.
+** Credit: In writing new classes, the code in the original `addressbook` application is reused as a template.
 
+*Minor enhancement*: Creating 'complete' command. This command marks a Task object as completed.
+ Modified existing `edit` command, `find` command and `select` command to work in the CLIndar. Related testing is also reconstructed.
 * *Code contributed*: [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/functional/YuanQLLer.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/test/YuanQLLer.md[Test code]]
 
 * *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` and `For Acceptance Test` version on GitHub.
+
+** Enhancements to existing features:
+*** Modify `NameContainsKeywordPredicate` allows the keyword to match part of the `Name` of records.
+
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B3/main/pull/107[#107]
+https://github.com/CS2103JAN2018-W13-B3/main/pull/98[#98]
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-T09-B2/main/issues/176[#176], https://github.com/CS2103JAN2018-T09-B2/main/issues/172[#172])
 
 
 == Contributions to the User Guide

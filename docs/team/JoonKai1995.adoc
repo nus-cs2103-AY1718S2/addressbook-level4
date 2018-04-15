@@ -79,7 +79,7 @@ Current date: 15-04-2018 +
 The application initially starts with no tasks:
 
 .Initial application view. +
-image::UiFromDelete.png[width="800"]
+image::UIFromDelete.png[width="800"]
 
 Command entered: `addTask title/Grade Exams desc/Grade mid-terms by/20-04-2018 priority/2` +
 This will add a task, 'Grade mid-terms' into the list with his respective details into the application (Figure 30).

@@ -38,7 +38,7 @@ This document provides detailed information pertaining to Medeina's set-up and u
 Do take note of the following colours and their representation, as they will be used in this guide to better illustrate Medeina's commands.
 
 .Colour representation
-image::colours.png[width="200"]
+image::colours.png[width="400"]
 
 {empty} +
 If you have already set up Medeina, head on to <<CLI>>. +

@@ -54,6 +54,7 @@ public class AddressBookParserTest {
 
     private final AddressBookParser parser = new AddressBookParser();
 
+    //@@author shadow2496
     @Test
     public void parseCommand_login() throws Exception {
         Account account = new AccountBuilder().build();
@@ -61,6 +62,8 @@ public class AddressBookParserTest {
                 LoginCommand.COMMAND_WORD + " " + AccountUtil.getAccountDetails(account));
         assertEquals(new LoginCommand(account), command);
     }
+
+    //@@author
 
     @Test
     public void parseCommand_add() throws Exception {

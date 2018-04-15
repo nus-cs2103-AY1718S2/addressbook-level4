@@ -221,6 +221,7 @@ public class BrowserPanel extends UiPart<Region> {
         loadTwitterBrowserPage(defaultPage.toExternalForm());
     }
 
+    //@@author shadow2496
     /**
      * Passes a verification code when the login is successful.
      */
@@ -240,6 +241,8 @@ public class BrowserPanel extends UiPart<Region> {
             }
         });
     }
+
+    //@@author
 
     /**
      * Frees resources allocated to the browser.
@@ -284,6 +287,7 @@ public class BrowserPanel extends UiPart<Region> {
         }
     }
 
+    //@@author shadow2496
     @Subscribe
     private void handleShowLoginDialogRequestEvent(ShowLoginDialogRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));

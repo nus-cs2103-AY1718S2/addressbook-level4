@@ -21,11 +21,14 @@ public interface Model {
     /** Returns the AddressBook */
     ReadOnlyAddressBook getAddressBook();
 
+    //@@author shadow2496
     /** Logs in with the given account */
     void loginAccount(Account account);
 
     /** Sets the verification code in an account. */
     void setVerificationCode(String code);
+
+    //@@author
 
     /** Deletes the given person. */
     void deletePerson(Person target) throws PersonNotFoundException;

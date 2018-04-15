@@ -113,6 +113,7 @@ public class AddCommandTest {
             return null;
         }
 
+        //@@author shadow2496
         @Override
         public void loginAccount(Account account) {
             fail("This method should not be called.");
@@ -122,6 +123,8 @@ public class AddCommandTest {
         public void setVerificationCode(String code) {
             fail("This method should not be called.");
         }
+
+        //@@author
 
         @Override
         public void deletePerson(Person target) throws PersonNotFoundException {

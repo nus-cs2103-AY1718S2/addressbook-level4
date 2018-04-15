@@ -9,6 +9,7 @@ import com.restfb.FacebookClient;
 import com.restfb.Version;
 import com.restfb.scope.ScopeBuilder;
 
+//@@author shadow2496
 /**
  * Represents an Account in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.

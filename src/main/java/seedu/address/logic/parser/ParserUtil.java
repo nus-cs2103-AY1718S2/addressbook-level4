@@ -36,6 +36,7 @@ public class ParserUtil {
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
+    //@@author shadow2496
     /**
      * Parses a {@code String username} into an {@code Username}.
      * Leading and trailing whitespaces will be trimmed.
@@ -83,6 +84,8 @@ public class ParserUtil {
         requireNonNull(password);
         return password.isPresent() ? Optional.of(parsePassword(password.get())) : Optional.empty();
     }
+
+    //@@author
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be

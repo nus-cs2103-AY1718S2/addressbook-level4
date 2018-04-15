@@ -599,6 +599,7 @@ There is no need to save manually.
 === View tutee fees `[coming in v2.0]`
 Views the amount that has to be paid by a tutee.
 
+// tag::encryption[]
 === Encrypting data files
 Address book data are automatically encrypted after any command that
 changes the data.

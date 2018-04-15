@@ -1,0 +1,39 @@
+= Raymond Zheng - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Tuition Connect (TC)
+
+---
+
+== Overview
+
+TuitionConnect is a desktop address book application used by private tuition teacher. +
+
+TuitionConnect aims to help the tutors to manage their busy schedule more efficiently and effectively. +
+
+TuitionConnect has many functionality catered to the tutors - adding and deleting a tutee, creating a schedule, rescheduling and many more. +
+
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 20 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Encryption
+** What it does: The addressbook application is now able to automatically encrypt any changes made to the address book.
+* *Minor enhancement*: The addressbook application is now able to automatically backup and saves any changes made.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T11-B1/main/blob/master/collated/functional/raymond511.md[Functional code]] [https://github.com/CS2103JAN2018-T11-B1/main/blob/master/collated/test/raymond511.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` - `v1.4` (3 releases) on GitHub
+** Enhancements to existing features:
+** Documentation:
+*** Updated existing contents of the User Guide to explain encryption.
+
+
+
+== Contributions to the User Guide
+
+include::../UserGuide.adoc[tag=encryption]

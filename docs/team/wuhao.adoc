@@ -52,7 +52,9 @@ Delivery is for those who *prefer to use a desktop app for managing orders*. Mor
 |===
 
 include::../UserGuide.adoc[tag=count]
+
 include::../UserGuide.adoc[tag=querycount]
+
 include::../UserGuide.adoc[tag=identify]
 
 == Contributions to the Developer Guide
@@ -62,3 +64,5 @@ include::../UserGuide.adoc[tag=identify]
 |===
 
 include::../DeveloperGuide.adoc[tag=count]
+
+include::../DeveloperGuide.adoc[tag=testcounting]

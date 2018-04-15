@@ -156,7 +156,7 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram.jpeg[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -566,7 +566,7 @@ When the Export functionality is called on the `AddressBookParser`, it parses th
 The `ModelManager` then invokes methods involving `Storage` under the `Model` instance in order to store the data into a user-defined location. If such a location was not well-defined, then the XML file exported will be directly saved in your local repository's main folder.
 The 'StorageManager' will then call the `exportAddressBook` method under `XmlAddressBookStorage` to store the data as an XML file into a user-defined location.
 
-image::ExportCommandSequenceDiagram.png[width="800"]
+image::ExportCommandSequenceDiagram.png[width="590"]
 
 ==== Design Considerations
 
@@ -597,7 +597,7 @@ All of the fields are compulsory, and the user can simply fill in a dummy value 
 
 The following sequence diagram shows how the add event command works under LogicManager.
 
-image::AddEventCommandSequenceDiagram.png[width="800"]
+image::AddEventCommandSequenceDiagram.png[width="590"]
 
 . User executes `addevent` command with the required arguments.
 . `AddressBookParser` class creates a new `AddEventCommandParser` object to parse the command arguments.
@@ -607,7 +607,7 @@ image::AddEventCommandSequenceDiagram.png[width="800"]
 
 The next sequence diagram illustrates how the event is added under ModelManager.
 
-image::AddEventSequenceDiagram.png[width="800"]
+image::AddEventSequenceDiagram.png[width="590"]
 
 // end::addevent[]
 
@@ -620,7 +620,7 @@ Allows easy deletion of an event according to the event index listed in the Even
 
 This sequence diagram shows how the delete event command works under LogicManager.
 
-image::DeleteEventCommandSequenceDiagram.png[width="800"]
+image::DeleteEventCommandSequenceDiagram.png[width="590"]
 
 . User executes `deleteevent` command with the required arguments.
 . `AddressBookParser` class creates a new `DeleteEventCommandParser` object to parse the command arguments.
@@ -630,11 +630,10 @@ image::DeleteEventCommandSequenceDiagram.png[width="800"]
 
 The following sequence diagram illustrates how the event is removed under ModelManager.
 
-image::DeleteEventSequenceDiagram.png[width="800"]
+image::DeleteEventSequenceDiagram.png[width="590"]
 
 // end::deleteevent[]
 
-@@@
 // tag::findevent[]
 === Find Event feature
 ==== Current Implementation
@@ -650,6 +649,21 @@ The user specifies the field to search under (Title, Location, Datetime) and the
 
 // end::findevent[]
 
+// tag::sortevent[]
+=== Find Event feature
+==== Current Implementation
+
+The sort event feature allows user to sort event list according to one specified parameter.
+Parameters: Title, Location, Datetime.
+
+. User executes `sortevent` command with the required arguments.
+. `AddressBookParser` class creates a new `SortEventCommandParser` object to parse the command arguments.
+. This `SortEventCommandParser` object parses the arguments and create a new `SortEventCommand` object.
+. The `sortevent` command is then executed and handled by the `ModelManager` class.
+. Events in event list will be sorted accordingly, and updated list will be shown to the user.
+
+// end::sortevent[]
+
 // tag::clearevents[]
 === Clear Events feature
 ==== Current Implementation
@@ -663,7 +677,6 @@ It extends UndoableCommand in case the command was unintentionally called.
 . The new (empty) Event list is then updated in the app and displayed to the user.
 
 // end::clearevents[]
-@@@
 
 // tag::jumpto[]
 
@@ -692,7 +705,7 @@ This provides additional support for users who prefer CLI to mouse controls.
 
 Format: `switchtab`
 
-image::SwitchTab.PNG[width="200"]
+image::SwitchTab.PNG[width="490"]
 
 And this is how SwitchTab works!
 
@@ -901,7 +914,7 @@ Allows easy editing of an event just by using the event index given in the Event
 
 This is how the edit event command will work under LogicManager.
 
-image::EditEventCommandSequenceDiagram.png[width="800"]
+image::EditEventCommandSequenceDiagram.png[width="590"]
 
 . User executes `editevent` command with the required arguments.
 . `AddressBookParser` class creates a new `EditEventCommandParser` object to parse the command arguments.
@@ -1417,10 +1430,13 @@ It is more convenient to delete the contacts by name when there are a lot of con
 * Tan Yong He
 
 Major: Implemented Event features to aid event managements
+
 Major: Calendar view that provides visuals to users, as well as work hand-in-hand with Event features when clicked on
 
 Minor: Export functionality for address book portability to Google Contacts or other address books
+
 Minor: Google Search function for users to know more about a particular person in the contacts list
+
 Minor: Addition of LinkedIn and Google Chrome pages for easier accessibility to social networking sites.
 
 
@@ -1973,14 +1989,75 @@ _{ more test cases ... }_
 .. Other correct sort commands: Adding any character or number after the command separated with a whitespace +
    Expected: All contacts in the list are sorted alphabetically by name in ascending order.
 
+=== Adding an event
+
+. Adds a new event
+
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-04-22 1630` +
+   Expected: The new event is added to the list. Details of the added event shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `addevent et/Christmas Party ed/Christmas Event 2018 el/Samantha's House edt/2017-12-24 1830` +
+   Expected: The new event is added to the list. Details of the added event shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-04-22-1630` +
+   Expected: No event is added due to incorrect DATETIME format. Error details shown in the status message. Status bar remains the same.
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-02-31 1630` +
+   Expected: No event is added due to invalid date in DATETIME. Error details shown in the status message. Status bar remains the same.
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-04-22 16300` +
+   Expected: No event is added due to invalid time in DATETIME. Error details shown in the status message. Status bar remains the same.
+
+.. Other incorrect addevent commands to try: `addevent` +
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV` +
+   Expected: No event is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther edt/2018-04-22 1630` +
+   Expected: Similar to previous
+.. Test case: `addevent et/Movie Outing el/Suntec City GV edt/2018-04-22 1630` +
+   Expected: Similar to previous
+.. Test case: `addevent ed/Watching Black Panther el/Suntec City GV edt/2018-04-22 1630` +
+   Expected: Similar to previous
+.. Test case: `addevent et/Movie Outing` +
+   Expected: Similar to previous
+.. Test case: `addevent ed/Watching Black Panther edt/2018-04-22 1630` +
+   Expected: Similar to previous
+
+=== Deleting an event
+
+. Deleting an event while all events are listed
+
+.. Prerequisites: List all tasks using the `listevents` or `listallevents` command with multiple events in the list.
+.. Test case: `deleteevent 1` +
+   Expected: First event is deleted from the list. Details of the deleted event is shown in the status message. Timestamp in the status bar is updated.
+
+.. Other incorrect deleteevent commands to try: `deleteevent`, `deleteevent x` (where x is larger than the list size) +
+   Expected: No event is deleted. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-delete 0` +
+   Expected: Similar to previous.
+.. Test case: `task-delete -3` +
+   Expected: Similar to previous.
+.. Test case: `task-delete 3.0` +
+   Expected: Similar to previous.
+
+=== Listing all events
+
+. List all events
+
+.. Test case: `listallevents` or `listevents` +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+.. Test case: `listallevents randomstring` or `listevents randomstring` +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+.. Test case: `listallevents 123` or `listevents 123` +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+
+.. Other correct `listallevents` or `listevents` commands: Adding any character or number after the command separated with a whitespace +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+
 === Adding a task
 
 . Adds a new task
 
 .. Test case: `task-add n/Agenda for meeting p/high d/Discuss proposal details dd/2018-04-29 s/undone c/meeting` +
-   Expected: The new task is added to the list. Details of the added contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: The new task is added to the list. Details of the added task shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/undone` +
-   Expected: The new task is added to the list. Details of the added contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: The new task is added to the list. Details of the added task shown in the status message. Timestamp in the status bar is updated.
 
 .. Test case: `task-add n/ p/medium d/Description for task 1 dd/2018-05-10 s/undone` +
    Expected: No task is added. Error details shown in the status message. Status bar remains the same.

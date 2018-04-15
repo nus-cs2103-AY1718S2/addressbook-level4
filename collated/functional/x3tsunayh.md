@@ -2658,7 +2658,6 @@ public class LinkedInWindow extends UiPart<Stage> {
 ```
 ###### \resources\view\EventListCard.fxml
 ``` fxml
-<?import javafx.scene.image.ImageView?>
 <HBox xmlns:fx="http://javafx.com/fxml/1" id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8">
   <GridPane HBox.hgrow="ALWAYS">
     <columnConstraints>

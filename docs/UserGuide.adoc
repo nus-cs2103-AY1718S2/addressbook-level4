@@ -27,7 +27,7 @@ BizConnect Journal is catered towards businessmen and travelers who *prefer to u
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `[T15-B4][BizConnect Journal].jar` link:https://github.com/CS2103JAN2018-T15-B4/main/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -472,7 +472,9 @@ Format: Press `F3` hotkey on keyboard
 === Adding an event: `addevent` `[since v1.3]`
 
 Adds an event into event book. +
-Format: `addevent et/NAME ed/DESCRIPTION el/LOCATION edt/DATETIME`
+Format: `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME`
+If arguments like TITLE or DESCRIPTION are too long, it may be cut off in the event list.
+Event details should not be too wordy!
 
 ****
 * Adds an event if all fields have correct inputs.
@@ -501,6 +503,7 @@ Examples:
 
 * `deleteevent 2` +
 Deletes the second event on the displayed event list.
+
 // end::deleteevent[]
 
 // tag::findevent[]
@@ -508,6 +511,13 @@ Deletes the second event on the displayed event list.
 
 Shows a list of all events matching the given keywords. +
 Format: `findevent et/KEYWORD [MORE_KEYWORDS]... for title OR ed/KEYWORD [MORE_KEYWORDS]... for description`
+For DATETIME, it will try to match datetimes containing the input argument, so try to be as accurate as possible!
+
+Example:
+* `findevent edt/01` +
+Returns all events with the argument '01' inside the datetime field.
+This includes dates like 2018-XX-XX, 2017-XX-XX since '01' is inside '2018' and '2017'.
+
 // end::findevent[]
 
 // tag::listallevents[]

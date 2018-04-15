@@ -14,7 +14,7 @@ endif::[]
 
 * This is a desktop Address Book application called BizConnect Journal. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
 * BizConnect Journal is a powerful Address Book that allows for easy and efficient handling of business contacts.
-* BizConnect Journal is catered towards businessmen users and travelers who spend most of their time on computers and prefer CLI.
+* BizConnect Journal is catered towards businessmen and travelers who spend most of their time managing information on computers and prefer CLI.
 * Some useful features include:
 ** Fast and easy searches in large contact lists.
 ** Export functionality enables easy portability of addressbook data in XML or CSV (Google contacts) format.

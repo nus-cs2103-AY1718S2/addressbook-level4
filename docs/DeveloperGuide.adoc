@@ -18,7 +18,7 @@ By: `Team W15-B3`      Since: `February 2018`      Licence: `MIT`
 image:FASTIS.png[width="500"] +
 Fastis is a desktop application which functions as an address book that aims to help students who are studying at National University of Singapore (NUS) manage their group projects effectively. The application enables students to keep track of group members’ timetables, information, meetups agendas, to-dos, and schedule suitable meetup time.
 
-This Developer Guide is meant to provides the necessary information for developers who are interested in contributing to this application. The guide consists of the set-up steps to develop the application and the detailed descriptions and implementations of the application’s current features.
+This Developer Guide is meant to provide the necessary information for developers who are interested in contributing to this application. The guide consists of the set-up steps to develop the application and the detailed descriptions and implementations of the application’s current features.
 
 This can help developers understand the implementation of the features and able to modify any feature for further improvements.
 
@@ -1593,59 +1593,59 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*: Computing Students
+*Target user profile*: NUS students with group projects that:
 
-* Have a number of events to keep track of:
-** Talks
-** Career Fairs
-** Interviewws
-** Consultations
-** etc.
+* Have a number of events to keep track of. For example:
+** Group meetings,
+** Career Fair,
+** Interviews,
+** Consultations,
++
+etc.
 
-* Prefer desktop apps over other types
-* Can type fast
-* (Many) prefers typing over mouse input
-* Are reasonably comfortable using CLI apps
+* Prefer desktop apps over other types.
+* Can type fast.
+* Prefer typing over mouse input.
+* Are reasonably comfortable using CLI apps.
 
-*Value proposition*: Help students manage the humongous amount of events that they might have
+*Value proposition*: Help students manage the humongous amount of events that they might have.
 
-*Feature contribution*
+*Feature contribution:*
 
-* Detail field for person (minor):
-** Detail for person is additional information such as remark, hobbies, comments, etc
-** Detail allows user to add information that does not fall unser categories such as phone, email, etc
-** Detail allows storing person information to become more flexible
+* Personal To-do list (MAJOR):
+** User can add to-dos, notes, upcoming tasks and organize them in a to-do list.
+** To-do list serves to remind the user of important tasks, events in group projects.
 
-* Timetable link field for person (minor):
-** Timetable link for person is an NUSMods website link
-** Timetable link displays the actual link of NUSMods website shown when person is selected
-** Timetable link allows user to manage NUSMods link of person
+* Meetup Time Generator (MAJOR):
+** Generator parses information from persons' NUSMods timetables and generate a suitable project meetup time.
+** Meetup Time Generator allows user to quickly decide meetup time without manually checking timetables.
 
-* Customizable tags color (minor):
-** User can set color of specific tags
-** Customizable tags color allows user to better personalise the application
+* Meetup Calendar (MAJOR):
+** User can add meetups with specific start, end time and display meetups on the calendar.
+** Meetup Calendar allows user to visualise and remember upcoming group events/meetups.
 
-* Dark color theme for application bar and background (minor):
-** Application bar and background are changed to dark grey color
-** Dark color theme makes the application comfortable to use in different light conditions
+* Organize persons in groups (MAJOR):
+** User can store specific persons in project groups.
+** User can have a group list and display persons in each group.
+** Groups allows user to manage persons based on the project groups they belongs to.
 
-* Personal To-do list (major):
-** User can add to-dos, notes, upcomming tasks and organize them in the to-do list
-** To-do list serves to remind user of important tasks, events in group projects
+* Detail field for a person (Minor):
+** Details for a person are additional information such as remark, hobbies, comments, etc.
+** Detail allows user to add information that does not fall under categories such as phone, email, etc.
+** Detail allows storing person information to become more flexible.
 
-* Meetup Time Generator (major):
-** Generator parses information from persons' NUSMods timetables and generate a suitable project meetup time
-** Meetup Time Generator allows user to quickly decide meetup time without manually checcking timetables
+* Timetable link field for a person (Minor):
+** Timetable link for person is an NUSMods website link.
+** Timetable link displays the actual link of NUSMods website shown when a person is selected.
+** Timetable link allows the user to manage NUSMods link of a person.
 
-* Meetup Calendar (major):
-** User can add meetups with specific start, end time and display meetups on the calendar
-** Meetup Calendar allows user to visualise and remember upcomming group events/meetups
+* Customizable tags' color (Minor):
+** User can set color of specific tags.
+** Customizable tags' color allows user to better personalise the application.
 
-* Organize persons in groups (major):
-** User can store specific persons in project groups
-** User can have a group list and display persons in each group
-** Groups allows user to manage persons based on the project groups they belongs to
-
+* Dark color theme for application bar and background (Minor):
+** Application bar and background are changed to dark grey color.
+** Dark color theme makes the application comfortable to use in different light conditions.
 
 [appendix]
 == User Stories
@@ -1675,8 +1675,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student who wants to arrange meet-ups |Search meet-ups by its title|I can get details such as time and place of a particular meet-up
 
-|`* *` |Student who wants to know the location of teammates |Find the location of teammates’ address via google maps |Decide on a appropriate meeting location for all teammates considering their home address
-
 |`* * *` |Student adding teammates’ information |Add the link to teammates’ timetable |I can see teammates’ timetables to arrange meet-ups
 
 |`* * *` |Student working with new teammates |Add their contact information |I can contact them if the need arises
@@ -1685,15 +1683,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student first time using the application |See the usage instructions |Learn how to use the application
 
-|`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
-
 |`* * *` |Student who have unused contacts |Delete a teammate from the application |I can free up storage for my application
 
 |`* * *` |Busy student with busy schedule |Have a reminder of the upcoming project meeting |I can be reminded of impending project with the details of group members printed on it
-
-|`* *` |Student who would like different colours tag for different projects |Have customizable coloured tags for different groups |Easily differentiate the groups via colour tags
-
-|`*` |Student who is too lazy to eyeball through the timetables |Have an appropriate meet-up time generated for a group |I do not have to manually come up with time for meetup
 
 |`* * *` |Student who created a group |Show teammates from a group |I can see the information of the teammates from the group
 
@@ -1703,13 +1695,21 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* * *` |Student who is too lazy to type |Use a shorter version of a command |Use the app faster
 
-|`*` |Student who uses NUSMODS |Use my nusmods link to add my schedule into Fastis |I don’t have to manually input my timetable
+|`* *` |Student who wants to know the location of teammates |Find the location of teammates’ address via google maps |Decide on a appropriate meeting location for all teammates considering their home address
+
+|`* *` |Student that does not leave applications open |See an overview of the week’s meetup right away when the application opens |Do not have to type in any commands when I first open the application
+
+|`* *` |Student who would like different colours tag for different projects |Have customizable coloured tags for different groups |Easily differentiate the groups via colour tags
 
 |`* *` |User with accessibility problems |Increase the font size of the application |I can read and see more easily
 
+|`*` |Student who is too lazy to eyeball through the timetables |Have an appropriate meet-up time generated for a group |I do not have to manually come up with time for meetup
+
+|`*` |Student who uses NUSMods |Use my NUSMods link to add my schedule into Fastis |I don’t have to manually input my timetable
+
 |`*` |Students who likes other colours on the interface |Change color scheme |Personalise the app
 
-|`*` |Student who wants to call an absent teammate |Open teammates’ WHATSAPP page within the application e |I can alert teammates of the meeting
+|`*` |Student who wants to call an absent teammate |Open teammates’ Whatsapp page within the application e |I can alert teammates of the meeting
 
 |`*` |Student who do not how to reach the destination of the meet-up |Have the venue of the meet-up shown on google map |I can know the direction to the meetup
 
@@ -1717,10 +1717,9 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |user |link an event with another |So that events that are related can be linked together so that i know which events are related
 
-|`*` |user |play music fromn address book |So that I can listen to music i want
+|`*` |user |play music from address book |So that I can listen to music i want
 
 |`*` |user |play videos from youtube |So that I can watch videos i want
-=======
 
 |=======================================================================
 
@@ -1730,12 +1729,12 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 (For all use cases below, the *System* is the `Fastis` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Add Meet up
+=== Use case: Add an event
 
 *MSS*
 
-1.  User requests to add a meet up by entering information
-2.  Fastis adds the meet up to the calendar
+1.  User requests to add an event by entering information.
+2.  Fastis adds the event to the calendar.
 +
 Use case ends.
 
@@ -1745,67 +1744,45 @@ Use case ends.
 * 2a. Meet up clashes with an existing event.
 +
 [none]
-** 2a1. Fastis notifies user and asks for confirmation.
-** 2a2. User enters confirmation.
-+
-Use case resumes from 2.
-
-[discrete]
-=== Use case: Delete Meet up
-
-*MSS*
-
-1.  User requests to lists all meet ups.
-2.  Fastis shows all event, listed with indexes.
-3.  User requests to delete a specific meet up in the list.
-4.  Fastis deletes the meet up.
+** 2a1. Fastis still adds the event, but it's not shown in the calendar.
 +
 Use case ends.
 
-*Extensions*
-
-[none]
-* 2a. Calendar is empty.
-+
-[none]
-** 2a1. Fastis notifies user that the calendar is empty.
-+
-Use case ends.
-
-* 3a. Index given is invalid.
-+
-[none]
-** 3a1. Fastis notifies user that the index was invalid.
-+
-Use case resumes from 3.
-
 [discrete]
-=== Use case: Group multiple persons into a group
+=== Use case: Add a person into a group
 
 *MSS*
 
 1. User requests to list all persons.
 2. Fastis shows all persons, listed with an index.
-3. User requests to add a group tag to a few specified persons on the list.
-4. Fastis adds the new group to the group list.
+3. User requests to add a person, specified by an index, to a group, specified by name.
+4. Fastis adds the specified person to the specified group.
 +
 Use case ends.
 
 *Extensions*
 [none]
-* 2.a Index given is invalid.
+* 2a. Index given is invalid.
 [none]
 ** 2a1. Fastis notifies user that the index given was invalid.
 +
-Use case resumes from 1.
+Use case ends.
+
+[none]
+* 3a. There is no such group in Fastis.
++
+[none]
+** 3a1. Fastis notifies the user that no group was found.
++
+Use case ends.
 
 [discrete]
-=== Use case: List all persons/groups
+=== Use case: List all persons
 
 *MSS*
 
-1.  User requests to list all persons or all groups in Fastis.
-2.  Fastis lists all persons or all groups.
+1.  User requests to list all persons in Fastis.
+2.  Fastis lists all persons.
 +
 Use case ends.
 
@@ -1815,72 +1792,19 @@ Use case ends.
 * 2a. The persons list is empty.
 +
 [none]
-** 2a1. Fastis notifies user that the persons list is empty.
-+
-Use case ends.
-
-* 2b. No group tags were found.
-+
-[none]
-** 2b1. Fastis notifies user that no groups were found.
+** 2a1. Fastis shows an empty list.
 +
 Use case ends.
 
 [discrete]
-=== Use case: Delete all persons in a group
+=== Use case: Delete a person from a group
 
 *MSS*
 
-1.  User requests list all groups.
-2.  Fastis shows a list of all groups.
-3. User requests to delete all persons in a specific group in the list
-4. Fastis deletes all persons in the group, and deletes the group tag
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The list is empty.
-+
-[none]
-** 2a1. Fastis notifies user that no groups were found.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
-+
-[none]
-** 3a1. Fastis shows an error message.
-+
-Use case resumes from 2.
-
-[discrete]
-=== Use case: Show a person's timetable
-
-*MSS*
-
-1.  User requests to show the timetable of the specified person.
-2.  Fastis show the timetable for the person.
-+
-Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. The specified person has no timetable
-[none]
-** 2a1. Fastis notifies the user that the person has no timetable
-+
-Use case ends.
-
-[discrete]
-=== Use case: Print out all teammates under the same group
-
-*MSS*
-
-1.  User requests to list the teammates for a particular group
-2.  Fastis shows the table with group heading and lists all members in it.
+1. User requests to list all persons.
+2. Fastis shows all persons, listed with an index.
+1. User requests to delete a person, specified by an index, from a group, specified by name.
+2. Fastis deletes the specified person from the specified group, and notifies the user.
 +
 Use case ends.
 
@@ -1890,7 +1814,62 @@ Use case ends.
 * 2a. There is no such group in Fastis.
 +
 [none]
-** 2a1. Fastis notifies user that no group was found.
+** 2a1. Fastis notifies the user that no group was found.
++
+Use case ends.
+
+[none]
+* 3a. The specified person is not in that group.
++
+[none]
+** 3a1. Fastis notifies the user that there is no such person in the group specified.
++
+Use case ends.
+
+[discrete]
+=== Use case: Show a person's timetable
+
+*MSS*
+
+1.  User selects a person, either by `select` command or by clicking on the person in the person list panel.
+2.  Fastis shows the timetable for the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The specified person has no timetable
+[none]
+** 2a1. Fastis shows an empty timetable
++
+Use case ends.
+
+[discrete]
+=== Use case: Print out all groupmates in the same group
+
+*MSS*
+
+1.  User requests to list the groupmates for a group, specified by name.
+2.  Fastis lists all members in that group in the person list panel.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. There is no such group in Fastis.
++
+[none]
+** 2a1. Fastis notifies the user that no group was found.
++
+Use case ends.
+
+[none]
+* 3a. There are no people in that group.
++
+[none]
+** 3a1. Fastis shows an empty list.
 +
 Use case ends.
 
@@ -1899,30 +1878,18 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to see all commands
-2.  Fastis shows all commands, sorted by name
-3.  User types in which command they want to view
-4.  Fastis shows the manual of that command
+1.  User requests to see the help panel.
+2.  Fastis shows the help panel in a separate window.
 +
 Use case ends.
-
-*Extensions*
-
-[none]
-* 2a. Command name given is invalid.
-+
-[none]
-** 2a1. Fastis notifies user that the command was invalid.
-+
-Use case resumes from 3.
 
 [discrete]
 === Use case: Copy Previous Command
 
 *MSS*
 
-1.  User enters keystroke to navigate to previously entered command
-2.  Fastis copies the previous command into the input field
+1.  User enters keystroke to navigate to previously entered command.
+2.  Fastis copies the previous command into the input field.
 +
 Use case ends.
 
@@ -1931,26 +1898,24 @@ Use case ends.
 
 *MSS*
 
-1. User enter command to change a specific tag color
-2. Fastis changes the color accordingly and display it
+1. User enters a command to change a specific tag color.
+2. Fastis changes the color accordingly and displays it.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The tag specified doesn't exist within the address book
+* 2a. The tag specified doesn't exist within the address book.
 ** 2a1. Fastis notifies the user.
 +
-Use case ends
+Use case ends.
 
 [none]
-* 3a. The color specified is not supported by Fastis
+* 3a. The color specified is not supported by Fastis.
 ** 3a1. Fastis notifies the user.
 +
-Use case ends
-
-_{More to be added}_
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -1958,7 +1923,7 @@ _{More to be added}_
 .  Fastis should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Fastis should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-.  Fastis should usable without the need of a mouse.
+.  Fastis should be usable without the need of a mouse.
 .  Fastis should be usable solely via a command line interface.
 .  Fastis should respond within 2 seconds.
 .  Fastis should have an easy to follow user guide.
@@ -1974,21 +1939,27 @@ _{More to be added}_
 In Object-oriented Programming, abstraction is the mechanism by which users are provided with only the functionality, and not the implementation details.
 So, abstraction provides users with information on what an object does, rather than how it does it.
 
+[[gui]] GUI::
+Acronym for Graphical User Interface. It is an interface (through which humans to interact with computers) that uses windows, icons and menus and which can be manipulated by a mouse and a keyboard. +
+GUI is used predominantly in Windows and iOS applications, including Fastis.
+
 [[cli]] CLI::
 Acronym for Command Line Interface. It is a purely text-based interface for software.
 User respond to visual prompts by typing single commands into the interface and receive results as text as well.
 An example of CLI would be MS-DOS.
 
-[[event]] Event::
-a set of scheduled activity that user needs to attend at a specific time
-E.g.: Interviews, parties, CCAs, talks, coding challenges, assignments, etc
+[[todo]] To-do::
+An objective that must be met by the user. May or may not have deadlines.
 
+[[event]] Event::
+A set of scheduled activity that user needs to attend at a specific time +
+E.g. Interviews, parties, CCAs, talks, coding challenges, assignments, etc.
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
 [[member]] Member::
-Person in address book.
+A person in the address book.
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
@@ -2026,116 +1997,137 @@ These instructions only provide a starting point for testers to work on; testers
 
 . Initial launch
 
-.. Download the jar file and copy into an empty folder
-.. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+.. Download the .jar file and copy into an empty folder
+.. Double-click the .jar file +
+   Expected: Fastis shows the GUI with a set of sample contacts. The window size may not be optimum.
 
 . Saving window preferences
 
-.. Resize the window to an optimum size. Move the window to a different location. Close the window.
-.. Re-launch the app by double-clicking the jar file. +
-   Expected: The most recent window size and location is retained.
+.. Resize the window to an optimum size, preferably to maximum size. Move the window to a different location. Close the window.
+.. Re-launch the app by double-clicking the .jar file. +
+   Expected: The most recent window size and location are retained.
 
 _{ more test cases ... }_
 
 === Deleting a person
 
-. Deleting a person while all persons are listed
+Deleting a person while all persons are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+. Prerequisites: All persons are listed using the `list` command. Multiple persons exist in the list.
+. Test case: `delete 1` +
+   Expected: First contact is deleted from the list. Details of the deleted contact are shown in the result display box. Timestamp of the last update in the status bar is updated.
+. Test case: `delete 0` +
+   Expected: No person is deleted. Error details are shown in the result display box. Status bar remains the same.
+. Other incorrect delete commands to try: `delete John`, `delete x` (where `x` is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
 === Adding a person
 
-. Adding a person specified by command line input with required person prefixes.
+Adding a person specified by the command line input with required person prefixes.
 
-.. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/http://modsn.us/MYwiD d/Likes tennis t/friends t/owesMoney` +
-   Expected: New person John Doe is added to Fastis. Details of person added is shown in the status message.
-.. Test case: `add p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/http://modsn.us/MYwiD d/Likes tennis t/friends t/owesMoney` +
-   Expected: No person is added. Essential Name field is missing. Error details is displayed in status message.
-.. Other incorrect add commands to try: `add`, `add x` (where any input) +
+. Test case: `add n/John Doe p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/http://modsn.us/MYwiD d/Likes tennis t/friends t/owesMoney` +
+   Expected: A new person named John Doe is added to Fastis. Details of person added are shown in the result display box.
+. Test case: `add p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 l/http://modsn.us/MYwiD d/Likes tennis t/friends t/owesMoney` +
+   Expected: No person is added. Essential `NAME` field is missing. Error details are displayed in result display box.
+. Other incorrect add commands to try: `add`, `add x` (where x is any input) +
    Expected: Similar to previous.
 
 === Adding a group
 
-. Adding a group with information specified by command line input.
+Adding a group with information specified by the command line input.
 
-.. Prerequisites: Group with the information specified by user must not be in Fastis.
-.. Test case: `addGroup CS1010` +
-   Expected: New group with information `CS1010` will be added to Fastis. Successful adding of group `CS1010` will be reflected in status message.
-.. Test case: `addGroup CS1-1-` +
-   Expected: No group is added. Group information must be alphanumeric. Error details is displayed in s status message.
-.. Other incorrect commands: `addGroup CS!` +
+. Prerequisites: Group with the information specified by user must not already be in Fastis.
+. Test case: `addGroup CS1010` +
+   Expected: New group with information `CS1010` will be added to Fastis. Successful adding of group `CS1010` will be reflected in the result display box.
+. Test case: `addGroup CS1-1-` +
+   Expected: No group is added. Group information must be alphanumeric. Error details are displayed in the result display box.
+. Other incorrect commands: `addGroup CS!` +
    Expected: Similar to previous.
-.. Group `CS1010` already existed. +
-   Test case:`addGroup CS1010` +
-   Expected: Error details is displayed in status bar that group already existed.
+. Group `CS1010` already existed. +
+   Test case: `addGroup CS1010` +
+   Expected: Error details are displayed in status bar that group already exists.
 
 === Adding a member to group
 
-. Adding a member identified by `Index` to group identified by `Information`.
+Adding a member identified by `INDEX` to the group identified by `INFORMATION`.
 
-.. Prerequisites: Group and Person both exist in Fastis. Person must exist on current Person List.
-.. Test case: `addGroupMember 1 g/CS1010` +
-   Expected: Member that is first on Person List will be added to group with information `CS10101. Successful addding of person will be displayed on status bar.
-.. Test case: `addGroupMember 1 CS1010` +
-   Expected: No member is added as invalid command input since group field `g/` is missing. Error details is disp;ayed in status bar.
-.. Other incorrect commands to try: `addGroupMember`, `addGroupMember 1 t/` +
+. Prerequisites: Group and Person both exist in Fastis. Person must exist on the current Person List.
+. Test case: `addGroupMember 1 g/CS1010` +
+   Expected: Member that is first on Person List will be added to the group with information `CS1010`. Successful adding of the person will be displayed on the result display box.
+. Test case: `addGroupMember 1 CS1010` +
+   Expected: No member is added as command input is invalid since group field `g/` is missing. Error details are displayed in the result display box.
+. Other incorrect commands to try: `addGroupMember`, `addGroupMember 1 t/` +
    Expected: Same as previous.
 
 === Deleting a member from group
 
-. Deleting a person from a group specified by user. Often use after `listGroupMembers` command to see which members are in the group.
+Deleting a person from a group specified by the user. Often used after `listGroupMembers` command to see which members are in the group.
 
-.. Prerequisites: Group and Person both exist in Fastis. Person must exist on current Person List.
-.. Test case: `deleteGroupMember 1 g/CS1010` +
-   Expected: Member is successfully deleted from the group `CS1010`. Successful deletion is displayed on the status bar.
-.. Test case: `deleteGroupMember 1 CS1010` +
-   Expected: No member is deleted due to missing field in command. Error details is displayed in the status bar.
-.. Other incorrect commands to try: `deleteGroupMember`, `deleteGroupMember 1 t/` +
+. Prerequisites: Group and Person both exist in Fastis. Person must exist on the current Person List.
+. Test case: `deleteGroupMember 1 g/CS1010` +
+   Expected: Member is successfully deleted from the group `CS1010`. Successful deletion is displayed in the result display box.
+. Test case: `deleteGroupMember 1 CS1010` +
+   Expected: No member is deleted due to missing field `g/` in command. Error details are displayed in the result display box.
+. Other incorrect commands to try: `deleteGroupMember`, `deleteGroupMember 1 t/` +
    Expected: Same as previous.
 
 === Listing group members from a group
 
-. Listing all persons from a group specified by user.
+Listing all persons from a group specified by the user.
 
-.. Prerequisites: Group must exist in Fastis.
-.. Test case: `listGroupMembers CS1010` +
-   Expected: All members in group with information `CS1010` is listed on Person List. Successful listing is displayed on the status bar.
-.. Test case: `listGroupMembers !` +
-   Expected: No person is listed. Error details is displayed in the status bar.
+. Prerequisites: Group must exist in Fastis.
+. Test case: `listGroupMembers CS1010` +
+   Expected: All members in group with information `CS1010` are listed on Person List. Successful listing is displayed in the result display box.
+. Test case: `listGroupMembers !` +
+   Expected: No person is listed. Error details are displayed in the result display box.
 
 === Deleting a group
 
-. Deleting a group with information specified by user from Fastis.
+Deleting a group with information specified by the user from Fastis.
 
-.. Prerequisites: Group must exist in Fastis.
-.. Test case: `deleteGroup CS1010` +
-   Expected: Group with information `CS1010` is deleted. Successful deletion is displayed in status bar.
-.. Test case: `deleteGroup @` +
-   Expected: No group is deleted. Error details is displayed in the status bar.
+. Prerequisites: Group must exist in Fastis.
+. Test case: `deleteGroup CS1010` +
+   Expected: Group with information `CS1010` is deleted. Successful deletion is displayed in the result display box.
+. Test case: `deleteGroup @` +
+   Expected: No group is deleted. Error details are displayed in the the result display box.
 
-=== Listing members with same tag
+=== Adding an event
 
-. Listing members with same tag
+Adding an event specified by command line input with required event prefixes.
 
-.. Prerequisites: Tags must exist in Fastis.
-.. Test case: `listTagMembers friends` +
+. Test case: `addEvent n/CS2101 meeting v/COM1 Hackerspace d/15/04/2018 st/1600 et/1800` +
+   Expected: New event "CS2101 meeting" is added to Fastis. Details of the event added are shown in the result display box.
+. Test case: `addEvent v/COM1 Hackerspace d/15/04/2018 st/1600 et/1800` +
+   Expected: No event is added. Essential `NAME` field is missing. Error details are displayed in the result display box.
+. Other incorrect addEvent commands to try: `addEvent d/18/04/15`, `addEvent d/30/02/2018`, `addEvent st/1900 et/1700`, etc. +
+   Expected: Similar to previous.
+
+=== Listing persons with specified tags
+
+Listing all persons that have any of the specified tag(s).
+
+. Prerequisites: Tag(s) must exist in Fastis.
+. Test case: `listTagMembers friends` +
    Expected: All members with tag `friends` will be listed on Person List. Number of person listed will be shown in status bar.
-.. Test case: `listTagMembers 2131` (Tag 2131 does not exist in Fastis) +
+. Test case: `listTagMembers 2131` (Tag 2131 does not exist in Fastis) +
    Expected: 0 persons listed.
 
 _{ more test cases ... }_
 
+=== Changing a tag's color
+
+ Changing a tag identified by `TAG` to have the color identified by `COLOR`.
+
+. Prerequisites: `TAG` already exists in Fastis. `COLOR` must be supported by Fastis.
+. Test case: `changeTagColor friends pink` +
+   Expected: Color of all tags named "friends" changes to "pink". Successful message of the change will be displayed in the result display box.
+. Test case: `changeTagColor friends rainbow` +
+   Expected: No tag is changed as an unsupported color "rainbow" was input. Error details are displayed in the result display box.
+. Other incorrect commands to try: `changeTagColor`, `changeTagColor pink friends` +
+   Expected: Same as previous.
+
 === Saving data
 
-. Dealing with missing/corrupted data files
+Dealing with missing/corrupted data files
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+. _{explain how to simulate a missing/corrupted file and the expected behavior}_

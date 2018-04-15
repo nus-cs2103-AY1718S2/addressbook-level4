@@ -369,7 +369,7 @@ This results in the execution of the following method in `SearchCommand`:
     }
 ----
 
-Note that this method is run on the JavaFX thread (using `Platform#runLater`) because it will result in updates to the book list panel.
+NOTE: The above method is run on the JavaFX thread (using `Platform#runLater`) because it will result in updates to the book list panel.
 If such updates are not done on the JavaFX thread, JavaFX will throw an `IllegalStateException`.
 
 ==== Design Considerations
@@ -715,8 +715,94 @@ The loaded page is post-processed using a script to show only the relevant secti
 ** Cons: User will be able to see the navigation between pages.
 // end::library[]
 
+// tag::alias[]
+=== Command aliasing
+
+The command aliasing system allows the user to specify short command aliases to use in place of the original commands.
+This improves the user experience by reducing the amount of typing the user needs to do.
+
+==== Current Implementation
+
+The user can customize their command aliases using the `addalias` and `deletealias` commands.
+These commands allow the user to add and delete aliases respectively.
+
+===== Adding command aliases
+
+When the user attempts to add a new command alias using `addalias ALIAS_NAME cmd/COMMAND`, the user input will first be
+validated and pre-processed by `AddAliasCommandParser`.
+
+`AddAliasCommandParser` verifies that both the `ALIAS_NAME` and `COMMAND` are non-empty, before
+searching the `COMMAND` for the first occurrence of an empty space that is followed by a named command parameter.
+Using this point, the parser will split the `COMMAND` into two parts - the prefix, and the named arguments.
+The figure below shows an example for the `edit 12 s/reading p/high` command.
+
+image::AliasSampleCommand.png[width="300"]
+
+The searching and splitting is accomplished using the following regular expression.
+
+[source,java]
+----
+    private static final Pattern COMMAND_FORMAT = Pattern.compile("(?<prefix>((?! \\w+\\/.*)[\\S ])+)(?<namedArgs>.*)");
+----
+
+Following this pre-processing step, a new `Alias` will be created using the alias name, command prefix, and named arguments.
+
+[source,java]
+----
+    private static Alias createAlias(String aliasName, Matcher commandMatcher) {
+        return new Alias(aliasName, commandMatcher.group("prefix"), commandMatcher.group("namedArgs"));
+    }
+----
+
+The `Alias` is then added to the `UniqueAliasList` in `ModelManager`, and this update will cause an `AliasListChangedEvent` to be posted.
+The event is handled by `StorageManager`, which saves the updated alias list to `data/aliaslist.xml`.
+
+NOTE: There are currently no checks in place to prevent the user from adding a command alias that refers to an invalid or non-existent built-in command.
+
+===== Using command aliases
+
+The user can use command aliases in the same way they use normal commands. In this section, we assume that the user added `rd` as an alias for `edit s/reading`.
+
+Whenever a command is entered into the command box, the command will be passed by `LogicManager` into `BookShelfParser#applyCommandAlias`,
+where an attempt will be made to apply a matching command alias.
+
+The application of a command alias begins by splitting the input into three parts - the alias name (first word in the input), unnamed arguments, and named arguments.
+The figure below shows an example for the `rd 12 p/high` command.
+
+image::AliasSampleCommand2.png[width="300"]
+
+This splitting is accomplished using the following regular expression.
+
+[source,java]
+----
+    private static final Pattern ALIASED_COMMAND_FORMAT =
+            Pattern.compile(" *(?<aliasName>\\S+)(?<unnamedArgs>((?! [\\w]+\\/.*)[\\S ])*)(?<namedArgs>.*)");
+----
+
+If the alias name matches that of an existing alias, then the alias will be applied.
+Otherwise, the input will be returned unchanged. In this case, the alias named `rd` will be applied.
+
+The result of the application of the alias is a new command that is formed by splicing parts of the user input into the aliased command.
+Using `rd 12 p/high` as the user input, this process is demonstrated in the figure below.
+
+image::AliasApplication.png[width="560"]
+
+The resulting command, `edit 12 s/reading p/high`, will then be parsed and executed, instead of the original user input.
+
+==== Design Considerations
+
+===== Aspect: Inclusion of command parameters in aliases
+
+* **Alternative 1 (current choice):** Allow aliasing of command parameters, together with the command word.
+** Pros: Increases the usefulness of the command aliasing system.
+** Cons: Less straightforward to implement, especially considering that some commands may require an index that comes before the named parameters.
+* **Alternative 2:** Only allow command words to be aliased.
+** Pros: More straightforward to implement.
+** Cons: Limits the usefulness of the command aliasing system, especially for users who may need to use certain commands that contain parameters regularly, e.g. `list s/high by/status`.
+// end::alias[]
+
 // tag::encrypt[]
-=== Data Encryption
+=== Data encryption
 
 ==== Current implementation
 

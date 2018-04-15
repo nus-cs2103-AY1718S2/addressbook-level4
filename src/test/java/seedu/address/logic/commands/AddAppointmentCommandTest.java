@@ -42,7 +42,7 @@ public class AddAppointmentCommandTest {
     @Test
     public void execute_unfilteredList_addSuccessful() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         CommandResult commandResult = command.execute();
         assertEquals(AddAppointmentCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
@@ -52,7 +52,7 @@ public class AddAppointmentCommandTest {
     public void execute_filteredList_addSuccessful() throws Exception {
         showPersonAtIndex(model, INDEX_SECOND_PERSON);
         Index testIndex = INDEX_FIRST_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         CommandResult commandResult = command.execute();
         assertEquals(AddAppointmentCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
@@ -61,7 +61,7 @@ public class AddAppointmentCommandTest {
     @Test
     public void execute_unfilteredListDuplicateAppointment_throwsCommandException() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         model.addPatientAppointment(model.getPatientFromListByIndex(testIndex), testDateTime);
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         thrown.expect(CommandException.class);
@@ -72,7 +72,7 @@ public class AddAppointmentCommandTest {
     @Test
     public void execute_unfilteredListDuplicateAppointmentMadeByOtherPatient_throwsCommandException() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         model.addPatientAppointment(model.getPatientFromListByIndex(INDEX_SECOND_PERSON), testDateTime);
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         thrown.expect(CommandException.class);
@@ -84,7 +84,7 @@ public class AddAppointmentCommandTest {
     public void execute_filteredListDuplicateAppointment_throwsCommandException() throws Exception {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index testIndex = INDEX_FIRST_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         model.addPatientAppointment(model.getPatientFromListByIndex(testIndex), testDateTime);
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         thrown.expect(CommandException.class);
@@ -95,7 +95,7 @@ public class AddAppointmentCommandTest {
     @Test
     public void execute_filteredListDuplicateAppointmentMadeByOtherPatient_throwsCommandException() throws Exception {
         Index testIndex = INDEX_FIRST_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         model.addPatientAppointment(model.getPatientFromListByIndex(INDEX_SECOND_PERSON), testDateTime);
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
@@ -107,7 +107,7 @@ public class AddAppointmentCommandTest {
     @Test
     public void execute_unfilteredListInvalidIndex_throwsCommandException() throws Exception {
         Index testIndex = ParserUtil.parseIndex(model.getFilteredPersonList().size() + 1 + "");
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         thrown.expect(CommandException.class);
         thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -118,7 +118,7 @@ public class AddAppointmentCommandTest {
     public void execute_filteredListInvalidIndex_throwsCommandException() throws Exception {
         showPersonAtIndex(model, INDEX_FIRST_PERSON);
         Index testIndex = INDEX_SECOND_PERSON;
-        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2018 1400");
+        DateTime testDateTime = ParserUtil.parseDateTime("8/8/2108 1400");
         AddAppointmentCommand command = prepareCommand(testIndex, testDateTime);
         thrown.expect(CommandException.class);
         thrown.expectMessage(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -130,8 +130,8 @@ public class AddAppointmentCommandTest {
         Index firstIndex = ParserUtil.parseIndex("1");
         Index secondIndex = ParserUtil.parseIndex("2");
 
-        DateTime firstDateTime = ParserUtil.parseDateTime("1/1/2018 1100");
-        DateTime secondDateTime = ParserUtil.parseDateTime("2/1/2018 1100");
+        DateTime firstDateTime = ParserUtil.parseDateTime("1/1/2108 1100");
+        DateTime secondDateTime = ParserUtil.parseDateTime("2/1/2108 1100");
 
         AddAppointmentCommand addAppointmentFirstIndexFirstDateTimeCommand =
                 new AddAppointmentCommand(firstIndex, firstDateTime);

@@ -1,3 +1,4 @@
+//@@author victortardieu
 package seedu.address.testutil;
 
 import seedu.address.model.account.Account;
@@ -6,7 +7,6 @@ import seedu.address.model.account.MatricNumber;
 import seedu.address.model.account.Name;
 import seedu.address.model.account.PrivilegeLevel;
 
-//@@author victortardieu
 /**
  * A utility class to help with building Account objects.
  */

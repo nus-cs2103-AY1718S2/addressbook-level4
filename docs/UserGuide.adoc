@@ -450,8 +450,8 @@ Privilege Level: 2(Librarian)
 
 Examples:
 
-* `addAccount n/Jack Morgan u/jack p/jack123 m/A0123456J I/1`
-* `addAccount n/Tom Madison u/tom p/tom123 m/A1234567T  I/2`
+* `addAccount n/Jack Morgan u/jacky p/jack123 m/A0123456J I/1`
+* `addAccount n/Tom Madison u/tommy p/tom123 m/A1234567T  I/2`
 
 [TIP]
 Press TAB after writing `addAccount` to use the auto-complete function.
@@ -468,10 +468,10 @@ Deletes the specified account from the list of accounts. +
 Format: `delete USERNAME` +
 Privilege Level: 2(Librarian)
 
-**
+****
 * Deletes the account with the specified `USERNAME`.
 * The USERNAME must be a from a created account in the list of accounts
-**
+****
 
 Examples:
 
@@ -529,7 +529,7 @@ _{explain how the user can enable/disable data encryption}_
   e.g. `reserve 2`
 |Librarian |*Clear Catalogue* |`clear`
 |Librarian |*Add Account* |`addAccount n/NAME u/USERNAME p/PASSWORD m/MATRICNUMBER l/PRIVILEGE LEVEL` +
- e.g. `addAccount n/Jack Morgan u/jack p/jack123 m/A0123456J l/1`
+ e.g. `addAccount n/Jack Morgan u/jacky p/jack123 m/A0123456J l/1`
 |Librarian |*Delete Account* |`deleteAccount USERNAME` +
  e.g. `deleteAccount tiongley`
 |Librarian |*Clear Account List* |`cleara`

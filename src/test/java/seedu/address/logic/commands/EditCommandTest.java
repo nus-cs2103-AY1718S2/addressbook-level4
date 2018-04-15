@@ -5,20 +5,21 @@
 //import static org.junit.Assert.assertTrue;
 //import static seedu.address.logic.commands.CommandTestUtil.DESC_CS2010_QUIZ;
 //import static seedu.address.logic.commands.CommandTestUtil.DESC_MA2108_HOMEWORK;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_DATE_TIME_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_CS2010_QUIZ;
+//import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_MA2108;
 //import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 //import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 //import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 //import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 //import static seedu.address.logic.commands.CommandTestUtil.showActivityAtIndex;
-//import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_DATE_TIME_CS2010_QUIZ;
-//import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_NAME_CS2010_QUIZ;
-//import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_MA2108;
 //import static seedu.address.testutil.TypicalActivities.getTypicalDeskBoard;
 //import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 //import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_ACTIVITY;
 //
 ////import org.junit.Test;
 //
+//import org.junit.Test;
 //import seedu.address.commons.core.Messages;
 //import seedu.address.commons.core.index.Index;
 //import seedu.address.logic.CommandHistory;
@@ -29,49 +30,42 @@
 //import seedu.address.model.ModelManager;
 //import seedu.address.model.UserPrefs;
 //import seedu.address.model.activity.Activity;
-//import seedu.address.testutil.EditActivityDescriptorBuilder;
+//import seedu.address.testutil.EditTaskDescriptorBuilder;
 //import seedu.address.testutil.TaskBuilder;
 //
 ///**
-// * Contains integration tests (interaction with the Model,
-// UndoCommand and RedoCommand) and unit tests for EditCommand.
+//* Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
 // */
 //public class EditCommandTest {
 //
 //    private Model model = new ModelManager(getTypicalDeskBoard(), new UserPrefs());
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
 //        Activity editedActivity = new TaskBuilder().build();
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
 //        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
 //
 //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 //
 //        Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
-//        expectedModel.updateActivity(model.getFilteredActivityList().get(0), editedActivity);
+//        expectedModel.updateActivity(model.getFilteredTaskList().get(0), editedActivity);
 //
 //        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
 //    }
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-//        Index indexLastPerson = Index.fromOneBased(model.getFilteredActivityList().size());
-//        Activity lastActivity = model.getFilteredActivityList().get(indexLastPerson.getZeroBased());
+//        Index indexLastPerson = Index.fromOneBased(model.getFilteredTaskList().size());
+//        Activity lastActivity = model.getFilteredTaskList().get(indexLastPerson.getZeroBased());
 //
 //        TaskBuilder personInList = new TaskBuilder(lastActivity);
 //        Activity editedActivity = personInList.withName(VALID_NAME_CS2010_QUIZ)
 //                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ)
 //                .withTags(VALID_TAG_MA2108).build();
 //
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
-//                .withPhone(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ)
+//                .withDateTime(VALID_DATE_TIME_CS2010_QUIZ).withTags(VALID_TAG_MA2108).build();
 //        EditCommand editCommand = prepareCommand(indexLastPerson, descriptor);
 //
 //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
@@ -82,13 +76,10 @@
 //        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
 //    }
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void execute_noFieldSpecifiedUnfilteredList_success() {
-//        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, new EditActivityDescriptor());
-//        Activity editedActivity = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+//        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, new EditCommand.EditTaskDescriptor());
+//        Activity editedActivity = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 //
 //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 //
@@ -107,7 +98,7 @@
 //        Activity activityInFilteredList = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
 //        Activity editedActivity = new TaskBuilder(activityInFilteredList).withName(VALID_NAME_CS2010_QUIZ).build();
 //        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
-//                new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
+//                new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 //
 //        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity);
 //
@@ -123,7 +114,7 @@
 //     */
 //    public void execute_duplicatePersonUnfilteredList_failure() {
 //        Activity firstActivity = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(firstActivity).build();
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(firstActivity).build();
 //        EditCommand editCommand = prepareCommand(INDEX_SECOND_ACTIVITY, descriptor);
 //
 //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
@@ -139,29 +130,22 @@
 //        // edit activity in filtered list into a duplicate in address book
 //        Activity activityInList = model.getDeskBoard().getActivityList().get(INDEX_SECOND_ACTIVITY.getZeroBased());
 //        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY,
-//                new EditActivityDescriptorBuilder(activityInList).build());
+//                new EditTaskDescriptorBuilder(activityInList).build());
 //
 //        assertCommandFailure(editCommand, model, EditCommand.MESSAGE_DUPLICATE_ACTIVITY);
 //    }
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void execute_invalidPersonIndexUnfilteredList_failure() {
 //        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
 //                .withName(VALID_NAME_CS2010_QUIZ).build();
 //        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 //
 //        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 //    }
-//    //TODO: TEST
-//    /**
-//     * Edit filtered list where index is larger than size of filtered list,
-//     * but smaller than size of address book
-//     */
 //
+//    @Test
 //    public void execute_invalidPersonIndexFilteredList_failure() {
 //        showActivityAtIndex(model, INDEX_FIRST_ACTIVITY);
 //        Index outOfBoundIndex = INDEX_SECOND_ACTIVITY;
@@ -169,22 +153,19 @@
 //        assertTrue(outOfBoundIndex.getZeroBased() < model.getDeskBoard().getActivityList().size());
 //
 //        EditCommand editCommand = prepareCommand(outOfBoundIndex,
-//                new EditActivityDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
+//                new EditTaskDescriptorBuilder().withName(VALID_NAME_CS2010_QUIZ).build());
 //
 //        assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
 //    }
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
 //        UndoRedoStack undoRedoStack = new UndoRedoStack();
 //        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
 //        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
 //        Activity editedActivity = new TaskBuilder().build();
-//        Activity activityToEdit = model.getFilteredActivityList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
+//        Activity activityToEdit = model.getFilteredTaskList().get(INDEX_FIRST_ACTIVITY.getZeroBased());
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
 //        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
 //        Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
 //
@@ -200,16 +181,13 @@
 //        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 //    }
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
 //        UndoRedoStack undoRedoStack = new UndoRedoStack();
 //        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
 //        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
 //        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredActivityList().size() + 1);
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder()
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder()
 //                .withName(VALID_NAME_CS2010_QUIZ).build();
 //        EditCommand editCommand = prepareCommand(outOfBoundIndex, descriptor);
 //
@@ -234,7 +212,7 @@
 //        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
 //        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
 //        Activity editedActivity = new TaskBuilder().build();
-//        EditActivityDescriptor descriptor = new EditActivityDescriptorBuilder(editedActivity).build();
+//        EditActivityDescriptor descriptor = new EditTaskDescriptorBuilder(editedActivity).build();
 //        EditCommand editCommand = prepareCommand(INDEX_FIRST_ACTIVITY, descriptor);
 //        Model expectedModel = new ModelManager(new DeskBoard(model.getDeskBoard()), new UserPrefs());
 //
@@ -253,15 +231,12 @@
 //        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
 //    }
 //
-//    //TODO: TEST
-//    /**
-//     * Test
-//     */
+//    @Test
 //    public void equals() throws Exception {
 //        final EditCommand standardCommand = prepareCommand(INDEX_FIRST_ACTIVITY, DESC_MA2108_HOMEWORK);
 //
 //        // same values -> returns true
-//        EditCommand.EditActivityDescriptor copyDescriptor = new EditActivityDescriptor(DESC_MA2108_HOMEWORK);
+//        EditCommand.EditActivityDescriptor copyDescriptor = new EditCommand.EditTaskDescriptor(DESC_MA2108_HOMEWORK);
 //        EditCommand commandWithSameValues = prepareCommand(INDEX_FIRST_ACTIVITY, copyDescriptor);
 //        assertTrue(standardCommand.equals(commandWithSameValues));
 //

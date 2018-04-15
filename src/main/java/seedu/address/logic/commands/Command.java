@@ -48,7 +48,7 @@ public abstract class Command {
      * Provides any needed dependencies to the command.
      */
     public void setData(Model model, Storage storage, CommandHistory history, UndoRedoStack undoRedoStack) {
-        this.model = model;
+        this.setData(model, history, undoRedoStack);
         this.storage = storage;
     }
 }

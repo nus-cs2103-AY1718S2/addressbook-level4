@@ -59,11 +59,26 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 The figures below show the various interfaces of SLAP. This section will help you understand
 the different sections of SLAP.
 
-.Main UI of SLAP program.
-TODO: ADD IMAGE
+*Before beginning:*
 
-*Sections of the interface:* +
+Before you can see all the features of SLAP, you are required to log into your account.
 
+You can either use `login u/user p/pass` for the default account as a trial or create your own account using
+`create-user user/USERNAME pass/PASSWORD`.
+
+.Before logging-in to SLAP.
+image::before-login.png[width="790"]
+
+.After logging-in to SLAP.
+image::after-login.png[width="790"]
+
+*Sections of the Main User Interface:* +
+
+.Guidelines to Main UI
+image::ui-sections.png[width="790"]
+
+. *Login Status Bar:* +
+Displays username and indicates if user is logged in.
 . *Beneficiary List Panel:* +
 Displays all beneficiaries existing in the program.
 . *Command Box:* +
@@ -72,16 +87,52 @@ Takes in the input by the user.
 Notifies the command feedback to the user.
 . *Features Tab:* +
 Indicates current feature being viewed scheduled in the program.
-. *Details Panel:* +
-TODO: ADD IMAGE
-Displays all information of a specified beneficiary including map location and previously logged session reports.
-. *Calendar Panel:* +
-TODO: ADD IMAGE
-In-app view of Google Calendar paired. Must be logged in and given permission for calendar functions to work.
-. *Daily Scheduler Panel:* +
-TODO: ADD IMAGE
-Displays all event information of a specified date including map proposed navigation routes between events.
-// end::userInterfaceWalkthrough[]
+. *Features Panel:* +
+Executing `switch FEATURE` and/or clicking on respective tab on `Features Tab` will trigger this region to display the
+respective feature panel.
+
+*Sections of the Person Details Feature:* +
+
+.Guidelines to Details Panel
+image::ui-section-details.png[width="790"]
+
+. *Table of Particulars:* +
+Displays the particulars of the selected beneficiary.
+. *Address Location Panel:* +
+Marks  and displays the address of the beneficiary on a map component.
+. *Session Reports Panel:* +
+Displays the existing session logs of the selected beneficiary.
+
+*Sections of the Calendar Feature:* +
+
+.Guidelines to Calendar Panel (Before)
+image::ui-section-calendar-before.png[width="790"]
+
+.Guidelines to Calendar Panel (After)
+image::ui-section-calendar-after.png[width="790"]
+
+. *Log in for Display of Calendar:* +
+Requires user to log in to Google Calendar account within the app to display the calendar.
+Note that this log in is separate from the permissions request that authorises SLAP to run Calendar functions. (For more information check out `Calendar Tools` section)
+
+. *Display of Calendar:* +
+After logging in, the user will be able to see the calendar paired with SLAP.
+
+*Sections of the Daily Scheduler Feature:* +
+
+.Guidelines to Daily Scheduler Panel
+image::ui-section-scheduler.png[width="790"]
+
+. *Scheduled Sessions List Panel:* +
+Displays the scheduled events here after calling `show-schedule d/DATE`.
+
+. *Direction Between Events Map Panel:* +
+Displays a suggested navigation route between events after calling `navigate INDEX` where, for example `navigate 1` will display the direction between events number 1 and 2 of the day.
+
+. *Scheduled Sessions List Panel:* +
+Displays the scheduled events here after calling `show-schedule d/DATE`.
+
+// tag::userInterfaceWalkthrough[]
 
 [[Features]]
 == Features

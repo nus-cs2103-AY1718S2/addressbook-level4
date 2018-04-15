@@ -152,6 +152,38 @@ is specified when adding a customer.
 
 |===
 // end::commandsummary[]
+
+// tag::navigationshortcuts[]
+== Navigation shortcuts [since v1.5]
+[NOTE]
+====
+* These keyboard shortcuts may be used to traverse or delete text from the CommandBox.
+* These keyboard shortcuts are best used with the keyboard shortcuts that populate command templates
+(eg. <<add, add: kbd:[Ctrl+I]>>, <<edit, edit: kbd:[Ctrl+E]>>, <<locate, locate: kbd:[Ctrl+L]>>, etc). This integrated
+functionality will allow you to quickly and efficiently manage your data with minimal typing.
+* Try them out to see how they work!
+====
+
+[%header,cols="1,4"]
+|===
+|Keyboard shortcut
+|Function
+
+|kbd:[Tab]
+|Positions the cursor after the next prefix. +
+If no prefixes are present, positions the cursor after the last character in the CommandBox.
+
+|kbd:[Shift+Tab]
+|Positions the cursor after the previous prefix.
+If no prefixes are present, brings the cursor before the first character in the CommandBox.
+
+|kbd:[Shift+Backspace]
+|Deletes the text in between the cursor and the previous prefix. +
+If the cursor is on a prefix, deletes the prefix. +
+If no prefixes, deletes all text before the cursor.
+|===
+// end::navigationshortcuts[]
+
 == Feature details
 
 === Displaying the home view : kbd:[F1] [since v1.5] [[home]]

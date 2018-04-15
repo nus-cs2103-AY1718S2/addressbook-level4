@@ -510,6 +510,12 @@ image::InsuranceClassInModel.png[width="790"]
 ** Pros: Individual insurance plan can now be edited.
 ** Cons: User need to know another set of command and may prove to be confusing since it share the same nature as a current command(edit).
 
+===== Aspect: Storing Insurance
+
+* **Alternative 1(current choice):** An XML file is created for insurance plan to be stored
+** Pros: Easily managed as the behavior is similar to tag
+** Cons: Unsure of usage apart from storing the data and checking duplicate.
+
 
 // end::insurance2[]
 

@@ -1127,8 +1127,14 @@ These instructions only provide a starting point for testers to work on; testers
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
    Expected: Shows the login screen GUI, and after successful login, it shows GUI with a set of sample contacts. The window size may not be optimum.
-.. Key in the username and password. Create a new account if you don't have one +
+.. Key in the username and password. Create a new account if you don't have one. +
    Expected after logging in: The system speaks out "Welcome user" (for Window and Mac only) and the Pigeon application is now ready to be used.
+
+. Login settings
+.. Create an account for the same username more than once (not case-sensitive). +
+    Expected: Creation of a profile for the same username as one that exists already should not be allowed.
+.. Try a different password than the one used for creating the account (not case-sensitive). +
+    Expected: It should deny you entry into the application until the correct password is keyed in.
 
 . Saving window preferences
 

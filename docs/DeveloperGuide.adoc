@@ -1844,7 +1844,7 @@ _{ more test cases ... }_
 
 === Calendar Tools
 .  Displaying the calendar within a WebView
-.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Test case: `calendar-launch` and not logged in +
    Expected: Error log command states that you must be logged in to use the command.
 .. Test case: `View > Open Calendar` and not logged in +
@@ -1861,7 +1861,7 @@ _{ more test cases ... }_
    Expected: All calendar windows close and user is logged out from signed-in calendar sessions (verify by logging as any user).
 
 .  Displaying the calendar within the scene switcher
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Test case: `switch calendar` and not logged in +
    Expected: Switch case states that you must be logged in to use the command.
 .. Test case: `switch calendar` and logged in +
@@ -1870,15 +1870,15 @@ _{ more test cases ... }_
    Expected: User is signed out from the calendar scene session (verify by logging in as any user).
 
 .  Reauthenticating Oauth certificate for calendar use
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Test case: `reauthenticate` and not logged in +
    Expected: Reauthenticate command states that you must be logged in to use the command.
 .. Test case: `reauthenticate` and logged in +
    Expected: System default browser is launched and user is asked to select an account to authenticate the SLAP app to manage. Failure to do so will freeze the application. Once permission has been granted, a test event will be added and deleted.
 
 .  Adding a calendar event
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Test case: `calendar-add` and not logged in +
    Expected: calendar-add command states that you must be logged in to use the feature.
 .. Test case: `calendar-add` and logged in +
@@ -1893,17 +1893,17 @@ _{ more test cases ... }_
    Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will freeze the application. calendar-add command will add event to authorized Google Calendar and show the user the event details with a link to the event.
 
 .  Listing upcoming calendar events in the command results box
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
-.. Test case: `calendar-list` and not logged in +
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Test case: `calendar-list` and not logged in + h
    Expected: calendar-list command states that you must be logged in to use the feature.
 .. Test case: `calendar-list` and logged in +
    Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will free the application. Assuming a valid certificate is obtained, if the user has any upcoming events, they will be displayed (up to 250). Otherwise, the command will state that no upcoming events were found.
 
 .  Deleting a calendar event
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Prerequisites: List all upcoming events using the `calendar-list` command or list events for a particular say using `show-schedule d/DATE`. A non-zero amount of events is required in either case.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Test case: `calendar-delete 1` and not logged in +
    Expected: calendar-list command states that you must be logged in to use the feature.
 .. Test case: `calendar-delete 1` and logged in and neither `calendar-list` nor `show-schedule` has been run +
@@ -1918,8 +1918,8 @@ _{ more test cases ... }_
 
 // tag::showScheduleTesting[]
 .  Display the user's events for a particular day in the command results box
-.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
-.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuide#, UserGuide.adoc>> for more information.
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the https://cs2103jan2018-t15-b3.github.io/main/UserGuide.html[UserGuide.adoc] for more information.
 .. Test case: `show-schedule d/May 5` +
    Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
 .. Test case: `show-schedule d/On Tuesday` +

@@ -44,16 +44,17 @@ The implementation of this enhancement mainly required changes to Ui, Model, and
 
 ** Project management:
 *** Managed releases `v1.2`, `v1.4`, `v1.4.1`, `v1.5rc` and `v1.5` on GitHub
+*** Populated application with sample data for demo purposes. https://github.com/CS2103JAN2018-W14-B2/main/pull/227[#227]
 ** Enhancements to existing features:
-*** Updated the GUI theme. https://github.com/CS2103JAN2018-W14-B2/main/pull/150[#150], https://github.com/CS2103JAN2018-W14-B2/main/pull/166[#166]
-*** Add an `Admin Mode` label when user enters admin mode. https://github.com/CS2103JAN2018-W14-B2/main/pull/125[#125]
+*** Revamped the GUI theme. https://github.com/CS2103JAN2018-W14-B2/main/pull/150[#150], https://github.com/CS2103JAN2018-W14-B2/main/pull/166[#166]
+*** Add the `Admin Mode` label that appears when user enters admin mode. https://github.com/CS2103JAN2018-W14-B2/main/pull/125[#125]
 ** Documentation:
-*** Added screenshots and examples to the User Guide.
+*** Rephrased, reformatted and updated screenshots in the User Guide. https://github.com/CS2103JAN2018-W14-B2/main/pull/228[#228], https://github.com/CS2103JAN2018-W14-B2/main/pull/238[#238]
 *** Added user stories and use cases for the Developer Guide. https://github.com/CS2103JAN2018-W14-B2/main/pull/9[#9]
 ** Community:
-*** Reported bugs and suggestions for other teams in the class.
+*** Reported bugs and suggestions for other teams in the module.
 https://github.com/CS2103JAN2018-F09-B3/main/issues/148[#148],
-https://github.com/CS2103JAN2018-F09-B3/main/issues/178[#178]
+https://github.com/CS2103JAN2018-F09-B3/main/issues/178[#178],
 https://github.com/CS2103JAN2018-F09-B3/main/issues/153[#153],
 https://github.com/CS2103JAN2018-F09-B3/main/issues/164[#164]
 ** Tools:

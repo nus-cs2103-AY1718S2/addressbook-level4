@@ -41,6 +41,7 @@ import seedu.ptman.commons.events.model.PartTimeManagerChangedEvent;
 import seedu.ptman.commons.events.ui.EmployeePanelSelectionChangedEvent;
 import seedu.ptman.commons.events.ui.ExportTimetableAsImageAndEmailRequestEvent;
 import seedu.ptman.commons.events.ui.ExportTimetableAsImageRequestEvent;
+import seedu.ptman.commons.events.ui.OutletInformationChangedEvent;
 import seedu.ptman.commons.events.ui.TimetableWeekChangeRequestEvent;
 import seedu.ptman.commons.events.ui.TimetableWeekChangeRequestEvent.WeekChangeRequest;
 import seedu.ptman.commons.services.EmailService;
@@ -427,6 +428,12 @@ public class TimetablePanel extends UiPart<Region> {
     @Subscribe
     private void handlePartTimeManagerChangedEvent(PartTimeManagerChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event) + ": Updating timetable view....");
+        Platform.runLater(() -> updateTimetableView());
+    }
+
+    @Subscribe
+    private void handleOutletInformationChangedEvent(OutletInformationChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event) + ": Rescaling timetable view....");
         Platform.runLater(() -> updateTimetableView());
     }
 

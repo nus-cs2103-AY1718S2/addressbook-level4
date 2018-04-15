@@ -25,21 +25,25 @@ the internship or they may restart the process and filter the internships differ
 * *Minor enhancement*: Added another data structure to model manager to allow for filtering and sorting
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-F11-B3/main/blob/master/collated/functional/niloc94.md[Functional code]]
+  [https://github.com/CS2103JAN2018-F11-B3/main/blob/master/collated/test/niloc94.md[Test Code]]
 
 * *Other contributions*:
 
 ** Project management:
 *** Suggested and designed the implementation of various features for the team (Example using addressbook tag feature to implement save and unsave, and find tag features)
-*** Updated test cases (under TypicalInternships class) to fit the JobbiBot types https://github.com/CS2103JAN2018-F11-B3/main/pull/169[#169]
+*** Managed releases `v1.5rc` on GitHub
 
 ** Enhancements to existing features:
 *** Fix bug for InternshipBook Parser https://github.com/CS2103JAN2018-F11-B3/main/pull/161[#161]
+*** Updated test cases (under TypicalInternships class) to fit the JobbiBot types https://github.com/CS2103JAN2018-F11-B3/main/pull/169[#169]
 
 ** Documentation:
-*** Documented the Major and Minor Components for the team
+*** Documented the Major and Minor Components for the team https://github.com/CS2103JAN2018-F11-B3/main/pull/50[#50]
+*** Documented User Stories https://github.com/CS2103JAN2018-F11-B3/main/pull/4[#4]
 
 ** Community:
-*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-T16-B2/main/issues/139 , https://github.com/CS2103JAN2018-T16-B2/main/issues/141 , https://github.com/CS2103JAN2018-T16-B2/main/issues/152 )
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-T16-B2/main/issues/139[#139] , https://github.com/CS2103JAN2018-T16-B2/main/issues/141[#141] , https://github.com/CS2103JAN2018-T16-B2/main/issues/152[#152] )
+*** Help teammates refactor codes https://github.com/CS2103JAN2018-F11-B3/main/pull/194[#194]
 
 == Contributions to the User Guide
 
@@ -56,4 +60,9 @@ include::../UserGuide.adoc[tag=filterSort]
 |===
 
 include::../DeveloperGuide.adoc[tag=filter]
+
+
+=== Some Instructions for Manual Testing
+
+include::../DeveloperGuide.adoc[tag=manualtestcolin]
 

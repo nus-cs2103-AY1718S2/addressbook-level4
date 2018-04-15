@@ -1283,7 +1283,9 @@ Restarting a conversation with JobbiBot after typing more than 4 commands in the
 
 // end::manualtestcikang[]
 
-// tag:: manualtestcolin[]
+
+// tag::manualtestcolin[]
+
 === Filtering the JobbiBot Internship List
 
 . Should only apply filter to the current searched(find command) list. Use `list command` before the start of each test case

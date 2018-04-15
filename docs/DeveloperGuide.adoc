@@ -369,21 +369,15 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-=== Manipulate the Rating field
-
-If a `Person` is instantiated without specifying `Rating` value, he will be assigned a `null rating` (indicated by -1 currently) by default. This will be displayed as `-` to user, indicating that this Person is yet to be rated.
-
-The `Rating` field can be manipulated by user through `edit` or `rate` command. However, the valid inputs for rating are `1, 2, 3, 4, or 5`. That said, the current implementation does not allow a user to assign `null rating` to an existing person.
-
+// tag::rate[]
 === Edit and rate a person
+This section presents the implmentation of `edit` command and `rate` command, which are implemented in a similar manner. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
 
 ==== Current Implementation
 
-`Edit` command and `rate` command are implemented in a similar manner. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
+There are 4 classes that play a vital role in the current implementation:
 
-4 objects will be created during the execution of `rate` and `edit` command, and they play a vital role in the execution. They are:
-
-* Person edited
+* Person
 * EditCommandParser or RateCommandParser
 * EditPersonDescriptor
 * EditCommand
@@ -434,6 +428,7 @@ There are 2 ways to update information regarding a `Person` object. +
 * Alternative 2: Uses setter methods on the `Person` object
 ** Pros: implementation is simple
 ** Cons: data integrity is compromised (the `Person` object can be modified by any entity), more coupling
+// end::rate[]
 
 // tag::emer7[]
 === Review system
@@ -820,7 +815,7 @@ Here is the code snippet of the execution of `export` command:
 ----
 // end::exportcom[]
 
-
+// tag::ns[]
 === Notification System
 This section discusses about the implementation of the notification feature of Employees Tracker.
 
@@ -980,6 +975,7 @@ There are a couple of aspects with regards to `Notification` that can be impleme
 * **Alternative4** : does not store `Event` locally (relies on Google calendar service).
 ** Pros: has the simplest implementation (only need to pull data from Google, does not need to create local class), saves storage space as nothing is stored locally.
 ** Cons: compromises notification feature if there's no internet access, requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, compromises performance if internet speed is slow).
+// end::ns[]
 
 // tag::sort[]
 === Sort existing employees

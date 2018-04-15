@@ -26,6 +26,7 @@ Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still 
 
 Without further ado, let's see what ET can do!  Jump to the <<Quick Start>> to get started.
 
+// tag::quickStart[]
 == Quick Start
 This section contains essential information and instructions to help you to start using Employees Tracker quickly.
 
@@ -128,6 +129,8 @@ Also, if you minimizes ET to use other software, ET is capable of showing notifi
 
 .ET shows notification card about event expiry even if you are using other programs.
 image::card_windows.png[width=""]
+
+// end::quickStart[]
 
 [[Commands]]
 == Commands
@@ -271,6 +274,7 @@ Examples:
 Current employees in ET will be exported.
 // end::export[]
 
+// tag::rate[]
 === Rating an employee : `rate`
 
 Updates the rating of an existing employee in Employees Tracker. +
@@ -286,8 +290,7 @@ Format: `rate INDEX RATING`
 
 [NOTE]
 ====
-* An employee will have a null rating by default upon added. This implies that the employee is yet to be rated.
-* Null rating is shown as `-`.
+* An employee will have a null rating (shown as `-`) by default upon added. This implies that the employee is yet to be rated.
 * You cannot assign null rating to an employee.
 ====
 
@@ -299,6 +302,7 @@ Gives the 1^st^ employee in the last employees listing a 5-stars rating.
 * `find Alex` +
 `rate 2 2` +
 Gives the 2^nd^ employee in the list of Alex(s) a 2-stars rating.
+// end::rate[]
 
 // tag::emer7[]
 === Reviewing an employee : `review`
@@ -635,6 +639,7 @@ Format: `exit`
 [NOTE]
 ET saves data automatically in the hard disk after any command that changes the data. There is no need to save manually before exit.
 
+// tag::ns[]
 === Toggling the notification center : `noti`
 
 Shows the notification panel if it is hidden; hides the notification center if it is shown. +
@@ -669,20 +674,21 @@ Format: `email INDEX`
 * You will be brought straight to the email composing interface of your email app.
 * The recipient of the email will be set to the email address of all employees who has task(s) ended.
 =====
+// end::ns[]
 
 === Upcoming features
 
 Features yet to be implemented. Coming in `v2.0`.
 
 * Editing an event. +
-You will be able to edit an event at any time.
+You will be able to edit an event.
 * Adding an event in mass to many employees' timetable at once. +
 You will be able to add an event to many employee's timetable at once for maximum convenience.
-* Jumping to email composing with a command. +
-You will be able to jump to email with a command
 // tag::dataencryption[]
 * Encrypting data files. +
 Employees Tracker will ensure data security by encrypting data files.
+* Grouping employees. +
+You will be able to group employees according to the projects that they are working on and address the whole team with the group name.
 
 
 == Frequently Asked Questions (FAQ)

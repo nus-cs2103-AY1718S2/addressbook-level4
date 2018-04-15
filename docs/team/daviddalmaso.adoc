@@ -49,7 +49,7 @@ reInsurance is the premier organizational tool for insurance agents around the w
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
-include::../UserGuide.adoc[tag=export]
+include::../UserGuide.adoc[tag=exportData]
 
 include::../UserGuide.adoc[tag=count]
 

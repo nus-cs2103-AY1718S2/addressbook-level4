@@ -1525,9 +1525,14 @@ These instructions only provide a starting point for testers to work on; testers
 . Exporting the data in the portfolio to a portfolio.csv file
 .. Prerequisites: Ensure that there are entries in reInsurance
 .. Test case: `export portfolio` +
-   Expected: export the data in the portfolio to a portfolio.csv file in the root directory
+   Expected: export the data in the portfolio to a portfolio.csv file in the directory where the application is being run.
 
 . Exporting the data in the portfolio with a specified file name
 .. Prerequisites: Ensure that there are entries in reInsurance
-.. Test case: `export mydata` +
+.. Test case: `export portfolio mydata` +
    Expected: export the data in the portfolio to a mydata.csv file in the root directory
+
+. Exporting the birthdays and appointments of the clients stored
+.. Prerequisites: Ensure that there are entries in reInsurance
+.. Test case: `export calendar` +
+   Expected: exports the birthdays and appointments to the Google account's calendar after granting authorization

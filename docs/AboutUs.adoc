@@ -8,9 +8,9 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 == Project Team
 
-=== David Dalmaso
+=== David John Dalmaso
 image::daviddalmaso.jpg[width="150", align="left"]
-{empty}[http://daviddalmaso.github.io/[homepage]] [https://github.com/daviddalmaso[github]]
+{empty}[http://daviddalmaso.github.io/[homepage]] [https://github.com/CS2103JAN2018-T11-B3/main/blob/master/docs/team/daviddalmaso.adoc[Portfolio]]
 
 Role: Software Engineer +
 Responsibilities: Storage

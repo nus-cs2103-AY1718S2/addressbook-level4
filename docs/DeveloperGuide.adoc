@@ -539,34 +539,64 @@ image::OauthModelDiagram.png[width="800"]
 ** Pros: Simple adgenda view with relatively simple API to understand.
 ** Cons: Not as feature rich as the other options and would require a custom local storage layer to have persistant data.
 
+* **Alternative 4: ** Pure CLI Interface
+** Pros: Simple adgenda view with relatively simple API to understand.
+** Cons: Not as feature rich as the other options and would require a custom local storage layer to have persistant data.
+
 ===== Aspect: Data Access
 * **Alternative 1 (current choice):** Use OAuth
 ** Pros: Can take advantage of Google's first-party Calendar APIs for seamless CLI data manipulation.
-** Cons: Extremely complicated to configure and set up.
+** Cons: Extremely complicated to configure and set up in a testable way.
 
 * **Alternative 2: ** Require the user to export their existing Google Calendar and import it into the application. New events added to the SLAP calendar would not appear in their Google Calendar.
 ** Pros: Does not require complex authentication and is thus easier to implement. Solution works offline.
 ** Cons: Requires additional local storage implementations and calendar events are no longer synced to the cloud.
+** Cons: Less secure due to the requirement of local storage; more prone to file loss.
 
-===== Aspect: Implementation of `AddEventCommand` -> `calendar-add`
+===== Aspect: Implementation of `AddEventCommand` -> `calendar-add  [args..]`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
+** Cons: Requires a complex parser to make the input format more friendly for a wider range of users.
 
 * **Alternative 2: ** Use URL Params
 ** Pros: Does not require Oauth and is therefore easier to implement.
 ** Cons: Requires the user to confirm the event addition through a GUI action, thus not allowing for a true CLI-only experience.
 
-===== Aspect: Implementation of `ViewEventsCommand` -> `calendar-launch`
+===== Aspect: Implementation of `ViewCalendarCommand` -> `calendar-launch` and `switch calendar`
 * **Alternative 1 (current choice):** Open a Webview (either as a new window or within the main application gui)
 ** Pros: Low development cost as the webview exists already.
+** Pros: Visually clear to the user how their calendar (and events) is organized.
 ** Cons: Requires an internet connection. Has no CLI-friendly output.
 
-* **Alternative 2: ** List events in the CLI
+* **Alternative 2: ** List events in the CLI (see next consideration)
 ** Pros: CLI-only friendly. Does not require a webview and thus makes the application less resource intensive.
 ** Cons: Higher development cost as it becomes necessary to format the response from Google's APIs (and write a new set of logic to parse and format the data.)
 
-===== Aspect: Implementation of `EditEventCommand` -> `calendar-edit`
+===== Aspect: Implementation of `ViewCalendarEventsCommand` -> `calendar-list`
+* **Alternative 1 (current choice):** CLI Output
+** Pros: Provides a command-line friendly way to view upcoming calendar events.
+** Cons: Much higher development cost as it was necessary to parse and format the response from Google's APIs.
+** Cons: Requires OAuth.
+** Cons: Less visually clear to the user how their events are spaced out temporally.
+
+* **Alternative 2:** Create a new calendar interface similar to the Contacts Pane
+** Pros: Pros: Visually easy to parse and thematically in line with the overall design language of the application.
+** Cons: Requires a significant implementation change to adapt the UI due to the non-locally stored nature of the data from Google.
+
+===== Aspect: Implementation of `ViewCalendarEventsForParticularDayCommand` -> `show-schedule [args..]`
+* **Alternative 1 (current choice):** CLI Output
+** Pros: Can adapt `calendar-list` command but increase specificity.
+** Pros: Can pass this data to the daily scheduler feature to minimize duplicate code generation.
+** Cons: Less visually clear to the user how their events are spaced out temporally.
+** Cons: Requires OAuth.
+
+* **Alternative 2:** Create a new calendar interface similar to the Contacts Pane
+** Pros: Visually easy to parse and thematically in line with the overall design language of the application.
+** Pros: Can reuse the `calendar-list` alternative 2 code if that route is decided upon.
+** Cons: Requires a significant implementation change to adapt the UI due to the non-locally stored nature of the data from Google.
+
+===== Aspect: Implementation of `EditEventCommand` -> `calendar-edit` [Coming in v2.0]
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
@@ -575,14 +605,16 @@ image::OauthModelDiagram.png[width="800"]
 ** Pros: No implementation required as everything happens through the spawned webview.
 ** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
 
-===== Aspect: Implementation of `DeleteEventCommand` -> `calendar-delete`
+===== Aspect: Implementation of `DeleteEventCommand` -> `calendar-delete [args..]`
 * **Alternative 1 (current choice):** Use Google's Calendar API
 ** Pros: First-party direct access to Google Calendar data.
+** Pros: Scales well with multiple users (sandboxed credential authorization).
 ** Cons: Requires the user to authenticate our application before this feature works correctly.
 
 * **Alternative 2: ** Only allow for graphical deleting
-** Pros: No implementation required as everything happens through the spawned webview.
+** Pros: No implementation required as everything happens through the spawned WebView.
 ** Cons: No CLI-friendly output. More resource intensive on the end-user's system.
+** Cons: Does not scale well with multiple users.
 
 // end::calendarview[]
 
@@ -1090,7 +1122,7 @@ up in the morning to take her to the lawyer’s office to file for a divorce fro
 
 *Feature contribution:*
 
-**Jason Manson-Hing**
+**Jason Jerome Manson-Hing**
 
 `Major Feature:` Calendar Integration
 * Functional calendar within the application with add/view/delete functionality.
@@ -1099,6 +1131,8 @@ This calendar will be seperate from their personal calendar so as to keep busine
 Additionally, this calendar will integrate with the daily scheduler function to help optimize their time in a day.
 
 `Minor Feature:` Daily Scheduler (Events)
+* Allows the user to view their events for a particular day.
+* Supplies the data for the daily scheduler routing (navigation)
 
 
 `Minor Feature:` View Error Log in App
@@ -1176,29 +1210,31 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+//@@author ifalluphill
+|`* * *` |social worker |add calendar events |keep track of my interactions with my contacts
 
-|`* * *` |user |add calendar events |keep track of my interactions with my contacts
+|`* * *` |social worker |view upcoming calendar events |quickly check my schedule
 
-|`* * *` |user |view calendar events |quickly check my schedule
+|`* * *` |social worker |view calendar events on a particular day |quickly check my daily schedule
 
-|`* * *` |user |edit/delete calendar events |keep my schedule up to date
+|`* * *` |social worker |delete calendar events |keep my schedule up to date
 
 |`*` |advanced user |view error logs in app |help the developer resolve the issues that I encountered
 
 |`* *` |novice user |get a command correction suggestion |easily fix my mistakes
 
-|`*` |user |have command autocomplete |enter commands faster
+|`*` |social worker |have command autocomplete |enter commands faster
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`*` |social worker with many persons in the address book |sort persons by name |locate a person easily
 
-|`* * *` |user |edit the details of an existing contact |update a contact's information to the most current information
+|`* * *` |social worker |edit the details of an existing contact |update a contact's information to the most current information
 
-|`* *` |user with many persons in the address book |filter contacts by tags |quickly view a subset of my contacts list
+|`* *` |social worker with many persons in the address book |filter contacts by tags |quickly view a subset of my contacts list
 
-|`* *` |user |sort contacts by tags |view contacts listed in decreasing level of urgency (in terms of their case)/priority
+|`* *` |social worker |sort contacts by tags |view contacts listed in decreasing level of urgency (in terms of their case)/priority
 
-|`*` |user |get the number of contacts that I have added |see how many contacts I have
+|`* *` |social worker sharing my computer with others |automatically log out of my calendar session |other users cannot view or edit my private details
+//@@author
 
 |`*` |advanced user |change the location of my address book |more easily back it up
 
@@ -1617,3 +1653,95 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+// tag::calendarTesting[]
+.  Displaying the calendar within a WebView
+.. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-launch` and not logged in +
+   Expected: Error log command states that you must be logged in to use the command.
+.. Test case: `View > Open Calendar` and not logged in +
+   Expected: Calendar WebView opens and states that you must be logged in to use the feature.
+.. Test case: Press `F8` and not logged in +
+   Expected: Calendar WebView opens and states that you must be logged in to use the feature.
+.. Test case: `calendar-launch` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: `View > Open Calendar` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: Press `F8` and logged in +
+   Expected: Calendar WebView opens and the calendar is displayed (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: `logout` with open calendar WebViews open (one or many) +
+   Expected: All calendar windows close and user is logged out from signed-in calendar sessions (verify by logging as any user).
+
+.  Displaying the calendar within the scene switcher
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `switch calendar` and not logged in +
+   Expected: Switch case states that you must be logged in to use the command.
+.. Test case: `switch calendar` and logged in +
+   Expected: Scene is switched to display the calendar (if not signed in to a Google Calendar account, the user will be prompted to sign in).
+.. Test case: `logout` and logged in +
+   Expected: User is signed out from the calendar scene session (verify by logging in as any user).
+
+.  Reauthenticating Oauth certificate for calendar use
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `reauthenticate` and not logged in +
+   Expected: Reauthenticate command states that you must be logged in to use the command.
+.. Test case: `reauthenticate` and logged in +
+   Expected: System default browser is launched and user is asked to select an account to authenticate the SLAP app to manage. Failure to do so will freeze the application. Once permission has been granted, a test event will be added and deleted.
+
+.  Adding a calendar event
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+
+.  Listing upcoming calendar events in the command results box
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-list` and not logged in +
+   Expected: calendar-list command states that you must be logged in to use the feature.
+.. Test case: `calendar-list` and logged in +
+   Expected: If user does not have a valid Oauth certificate, the system default browser is launched and asks the user to select an account to authorize the SLAP app to manage. Failure to do so will free the application. Assuming a valid certificate is obtained, if the user has any upcoming events, they will be displayed (up to 250). Otherwise, the command will state that no upcoming events were found.
+
+.  Deleting a calendar event
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: List all upcoming events using the `calendar-list` command or list events for a particular say using `show-schedule d/DATE`. A non-zero amount of events is required in either case.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `calendar-delete 1` and not logged in +
+   Expected: calendar-list command states that you must be logged in to use the feature.
+.. Test case: `calendar-delete 1` and logged in and neither `calendar-list` nor `show-schedule` has been run +
+   Expected: Nothing will happen.
+.. Test case: `calendar-delete 1` and logged in and `calendar-list` nor `show-schedule` has been run but no events are displayed+
+   Expected: calendar-delete command will throw an invalid index exception and inform the user of the proper command usage.
+.. Test case: `calendar-delete 1` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero number of events are displayed+
+   Expected: calendar-delete command will delete the event at index 1 and inform the user of the deleted event.
+.. Test case: `calendar-delete 5` and logged in and `calendar-list` nor `show-schedule` has been run and a non-zero, but less than 5, number of events are displayed+
+   Expected: calendar-delete command will delete an invalid index exception and inform the user of the proper command usage.
+
+// end::calendarTesting[]
+
+// tag::showScheduleTesting[]
+.  Display the user's events for a particular day in the command results box
+.. Notes: The signed in user within the Calendar scene is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
+.. Test case: `show-schedule d/May 5` +
+   Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+.. Test case: `show-schedule d/On Tuesday` +
+   Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+.. Test case: `show-schedule` +
+   Expected: Display invalid command format and display correct command usage.
+.. Test case: `show-schedule d/May 5 after 2PM`
+   Expected: Ignores the time; If there are calendar events for this date at any time, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+
+// end::showScheduleTesting[]
+
+// tag::errorLogTesting[]
+.  Displaying the error log within a WebView
+.. Test case: `errorlog` and not logged in +
+   Expected: Error log command states that you must be logged in to use the command.
+.. Test case: `View > Show Error Log` and not logged in +
+   Expected: Error log WebView opens and states that you must be logged in to use the feature.
+.. Test case: `errorlog` and logged in +
+   Expected: Error log WebView opens and the error log is displayed.
+.. Test case: `View > Show Error Log` and logged in +
+   Expected: Error log WebView opens and the error log is displayed.
+.. Test case: `logout` with open error logs WebViews open (one or many) +
+   Expected: All error log windows close.
+// end::errorLogTesting[]
+

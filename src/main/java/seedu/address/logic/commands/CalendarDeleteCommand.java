@@ -20,25 +20,29 @@ public class CalendarDeleteCommand extends Command {
     public static final String COMMAND_WORD = "calendar-delete";
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Deletes the event identified by the index number used in the last event listing.\n"
+            + "This list can be created by either using the `calendar-list` or `show-schedule` command.\n"
             + "This command CANNOT be undone once executed.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
     public static final String MESSAGE_SUCCESS = "Successfully deleted event:\n%s, ";
-    public static final String MESSAGE_ERROR = "Unable to delete selected event. Please try again later.";
+    public static final String MESSAGE_ERROR = "Unable to find/delete selected event. "
+            + "Please ensure that the selected event exists.";
     private final Event event;
 
     public CalendarDeleteCommand(Event event) {
-        requireNonNull(event);
         this.event = event;
     };
 
     @Override
     public CommandResult execute() throws CommandException {
-        requireNonNull(event);
         requireNonNull(model);
 
         User user = model.getLoggedInUser();
+
+        if (event == null) {
+            return new CommandResult(MESSAGE_ERROR);
+        }
 
         try {
             String eventAsString = OAuthManager.formatEventDetailsAsString(event);

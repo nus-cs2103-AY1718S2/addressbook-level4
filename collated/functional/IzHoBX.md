@@ -571,10 +571,10 @@ public class RateCommand extends UndoableCommand {
             @Override
             public void run() {
                 if (timetableEntriesStatus.get(this)) {
-                    System.out.println("An event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
+                    logger.info("An event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss")).format
                             (Calendar.getInstance().getTimeInMillis()));
                 } else {
-                    System.out.println("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
+                    logger.info("A cancelled event ended at: " + (new SimpleDateFormat("yyyy-MM-dd HH:mm:ss"))
                             .format(Calendar.getInstance().getTimeInMillis()));
                 }
                 Notification notification = timerTaskToTimetableEntryMap.get(this);
@@ -921,7 +921,6 @@ public class RateCommandParser implements Parser<RateCommand> {
 
         //schedule all notification
         for (Notification n: getAddressBook().getNotificationsList()) {
-            System.out.println("Scheduling all notification");
             indicateNotificationAdded(n);
         }
     }

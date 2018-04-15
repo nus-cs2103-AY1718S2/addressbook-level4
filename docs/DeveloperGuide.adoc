@@ -290,6 +290,10 @@ format:
 While this can be argued to be bad as there is strong coupling between the user and the addressbook data file, such is
 fixed as in the absence of the addressbook data file, a sample data file will be created.
 
+Also, there may be a security concern that a side channel information leak because an external party can figure
+ out the number of active users from the number of addressbook files. However, such information is not very useful to conduct
+an attack on the application.
+
 *Other Alternative Designs*
 
 Other alternative designs involves external third-party database systems such as SQL or no-SQL databases such as MongoDB.
@@ -1269,7 +1273,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`*` |social worker |send reminder email from address book |be efficient with reminding beneficies of scheduled visits
 
 
-
 |`* * *` |social worker |add new session reports | be able to have a consolidated record of all my reports for easy reference.
 
 |`* * *` |social worker |edit my session reports | be able to have a make edit mistakes in my reports
@@ -1279,7 +1282,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |`* * *` |secure user |login |gain access to my address book
 
 |`* * *` |social worker |login into my account with any instance of application| so that I can easily access my SLAP information anywhere
-
 
 |`* * *` |secure user |logout |prevent others from having authorised access to my SLAP
 
@@ -1505,47 +1507,83 @@ Use case ends.
 === Use case: User Login
 
 *MSS*
-1.  User enters username
-2.  AddressBook requests for password
-3.  User enters password
-4.  AddressBook allows access to UI
+1.  User enters username and password
+2.  SLAP allows access to UI
 
 *Extensions*
 
 [none]
-* 1a. AddressBook detects invalid username
-+
+* 1a. SLAP detects invalid username +
 [none]
-** 1a1. AddressBook displays “invalid username” and request for username followed by Step 1
-+
+** 1a1. SLAP displays “invalid username” and request for username followed by Step 1 +
 Use case resumes at step 1.
 
-*3a. AddressBook detects invalid password
-+
+* 3a. SLAP detects invalid password +
 [none]
-** 3a1. AddressBook displays “invalid password” and request for username followed by Step 1
-+
+** 3a1. SLAP displays “invalid password” and request for username followed by Step 1 +
 Use case resumes at step 1.
 
 [discrete]
 === Use case: User Logout
 
 *MSS*
-1.  User attempts to logout
-2.  AddressBook prompts for confirmation to logout
-3.  User confirms
-4.  AddressBook logs the user out
+1.  User attempts to logout +
+2.  SLAP prompts for confirmation to logout +
+3.  User confirms +
+4.  AddressBook logs the user out +
+
+[discrete]
+=== Use case: Create User
+
+*MSS*
+1.  User enters desired username and password to create user
+2.  SLAP creates a user with the input username and password
+
+*Extensions*
+
+[none]
+* 1a. SLAP detects invalid characters used in username and/or password +
+[none]
+** 1a1. SLAP displays “invalid username and/or password” and request for username and password followed by Step 1 +
+Use case resumes at step 1.
+
+* 1b. SLAP detects that the username is taken +
+[none]
+** 1b1. SLAP displays “username has been taken” and request for a new username and password followed by Step 1 +
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Delete User
+
+*MSS*
+1.  User enters desired username and password to delete user
+2.  SLAP deletes the user with the input username and password
+
+*Extensions*
+
+[none]
+* 1a. SLAP detects no such username exists +
+[none]
+** 1a1. SLAP displays “invalid username and/or password” and request for username and password followed by Step 1 +
+Use case resumes at step 1.
+
+* 1b. SLAP detects username exists but incorrect password +
+[none]
+** 1b1. SLAP displays “invalid username and/or password” and request for username and password followed by Step 1 +
+Use case resumes at step 1.
+
+
 
 [discrete]
 === Use case: Export AddressBook
 
 *MSS*
-1.  User attempts to export AddressBook
-2.  AddressBook prompts for directory to export the file
-3.  User enters directory
-4.  Address prompts for confirmation
-5.  User confirms
-6.  AddressBook exports storage file into specified directory
+1.  User attempts to export AddressBook +
+2.  AddressBook prompts for directory to export the file +
+3.  User enters directory +
+4.  Address prompts for confirmation +
+5.  User confirms +
+6.  AddressBook exports storage file into specified directory +
 
 
 // end::kaiserUseCases[]
@@ -1630,7 +1668,140 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+// tag::kaiserManualTests[]
+=== Authentication process
+
+==== Login and Logout
+
+. Login as a specific user.
+
+.. Prerequisites: An existing user (with username: "test" and password: "pass") created.
+.. Test Case: `login u/test p/pass` +
+   Expected: Login successful and GUI displays UI panels. Login successful in status message. Login status bar changes to green and displays
+   login details.
+.. Test Case: `login u/test p/password` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged.
+.. Test Case: `login u/testsss p/pass` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged.
+
+. Logout from an account.
+
+.. Prerequisites: Application is logged in as a user.
+.. Test Case: `logout` +
+   Expected: Logout is successful.
+
+. Login when user is already logged in.
+
+.. Prerequisites: Application is logged in as a user "test".
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message showing that user has already in is displayed. Login status bar unchanged.
+
+. Logout when user is already logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message showing that user has already in is displayed. Login status bar unchanged.
+
+==== Command restrictions when not logged in
+
+. Executing available commands when logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: `help` +
+   Expected: Command is executed. Help guide window opens.
+.. Other available commands to try: `create-user`, `delete-user`, `change-user-password`, `login`, `exit` +
+   Expected: Command is executed as intented
+
+. Executing unavailable commands when logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: `list` +
+   Expected: Command is not executed. Error message shown.
+.. Other unavailable commands to try: `edit`, `add`, `switch`, `calendar-launch`, ... +
+   Expected: Command is not executed and error message is shown.
+
+==== Security concern with history feature
+
+. Unable to access history when logged out.
+
+.. Prerequisites: Application has not been logged into.
+.. Test Case: +
+   `help` +
+   Press "Up" arrow key +
+   Expected: User is unable to view history.
+
+. History is cleared when logout.
+
+.. Prerequisites: An existing user (with username: "test" and password: "pass") is created.
+.. Test Case: +
+   `login u/test p/pass` +
+   `help` +
+   `list` +
+   `logout` +
+   `login u/test p/pass` +
+   Press "Up" arrow key +
+   Expected: Should only be able to access history up to the 2nd `login u/test p/pass`. ie. user cant see `help` and `list`.
+.. Other test cases: Any other combinations of commands entered after login. Check history after a logout and login. +
+   Expected: Should not be able to access history from the previous login session.
+
+=== Multi-user feature
+
+==== Creating a user
+
+. Creating a user.
+.. Prerequisites: No such user with username "test" exists. +
+.. Test Case: `create-user u/TeSt p/pass` +
+   Expected: User with username "test" and password "pass" is created. Success message shown. +
+.. Test Case: `create-user u/test p/pass` +
+   Expected: No user created. Error message that username already exists is shown. +
+.. Test Case (Username contains spaces) : `create-user u/test test p/pass` +
+   Expected: No user created. Error message that username format is wrong. +
+.. Test Case (Password contains spaces) : `create-user u/test p/pass pass` +
+   Expected: No user created. Error message that username format is wrong. +
+.. Test case: `login u/test p/pass` +
+   Expected: Login is successful with a sample patient address book loaded.
+
+==== Deleting a user
+
+. Deleting a user.
+.. Prerequisites: An existing user (with username: "test" and password: "pass") created. User is logged out from the application.
+.. Test Case: `delete-user u/TeSt p/pass` +
+   Expected: User is deleted. Success message shown. +
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged. +
+.. Test Case (No double deletion) : `delete-user u/test p/pass` +
+   Expected: No user is deleted. Error message that username and password may be wrong. +
+.. Test case (User not existent) : `login u/hello p/pass` +
+   Expected: No user is deleted. Error message that username and password may be wrong.
+
+==== Changing a user's password
+
+. Changing a user.
+.. Prerequisites: An existing user (with username: "test" and password: "pass") created. User is logged out from the application.
+.. Test Case: `change-user-password u/TeSt p/pass newp/password` +
+   Expected: User password is changed. Success message shown. +
+.. Test Case: `login u/test p/pass` +
+   Expected: Login unsuccessful. Error message shown in status message. Login status bar unchanged. +
+.. Test Case: `login u/test p/password` +
+   Expected: Login successful and GUI displays UI panels. Login successful in status message. Login status bar changes to green and displays
+   login details.
+.. Test Case (Wrong password input): `change-user-password u/test p/wrongpassword newp/password` +
+   Expected: No user password is changed. Error message that username and password may be wrong. +
+
+==== Dissociation of User's Address Book
+
+. Checking different users have different address books.
+.. Prerequisites: Two existing user (User 1: u: "test" and p: "pass", User 2: u :"test2" and p: "pass2") created.
+.. Test Case: +
+   `login u/test p/pass` +
+   `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+   `logout` +
+   `login u/test2 p/pass2` +
+   Expected: In user `test2` account, the person list panel does not contain `John Doe`.
+   In file path `data/`, one should observe that each user have their own addressbook data file too. (If data file missing, it means
+   no edits have been done to the user's AddressBook yet.)
+
+// end::kaiserManualTests[]
 
 === Deleting a person
 
@@ -1655,6 +1826,8 @@ _{ more test cases ... }_
 _{ more test cases ... }_
 
 // tag::calendarTesting[]
+
+=== Calendar Tools
 .  Displaying the calendar within a WebView
 .. Notes: The signed in user within the WebView is not linked to the Oauth certificate. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>> for more information.
 .. Test case: `calendar-launch` and not logged in +

@@ -437,18 +437,28 @@ public class GoogleCalendarClient {
      */
     private String portfolioToString() {
         StringBuilder sb = new StringBuilder();
-        sb.append("Name,Phone,Email,Address,Birthday,Appointment,Group,Total Commission,Insurances,Tags\n");
+        sb.append("Name,Phone,Email,Address,Group,Total Commission,Insurances,Tags\n");
         for (Person person : persons) {
+            String group = "";
+            String insurance = "";
+            String tags = "";
+            if (person.getGroup() != null) {
+                group = person.getGroup().toString();
+            }
+            if (person.getInsurance() != null) {
+                insurance = person.getInsurance().toString();
+            }
+            if (person.getTags() != null) {
+                tags = person.getTags().toString();
+            }
             sb.append("\"" + person.getName().toString() + "\",");
             sb.append("\"" + person.getPhone().toString() + "\",");
             sb.append("\"" + person.getEmail().toString() + "\",");
             sb.append("\"" + person.getAddress().toString() + "\",");
-            sb.append("\"" + person.getBirthday().toString() + "\",");
-            sb.append("\"" + person.getAppointment().toString() + "\",");
-            sb.append("\"" + person.getGroup().toString() + "\",");
+            sb.append("\"" + group + "\",");
             sb.append("\"" + person.getTotalCommission() + "\",");
-            sb.append("\"" + person.getInsurance().toString() + "\",");
-            sb.append("\"" + person.getTags().toString() + "\",");
+            sb.append("\"" + insurance + "\",");
+            sb.append("\"" + tags + "\",");
             sb.append("\n");
         }
         return sb.toString();

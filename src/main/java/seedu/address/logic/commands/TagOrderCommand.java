@@ -87,7 +87,8 @@ public class TagOrderCommand extends Command {
     public boolean equals(Object other) {
         return other == this // short circuit if same object
                 || (other instanceof TagOrderCommand // instanceof handles nulls
-                && tagWord.equals(((TagOrderCommand) other).tagWord));
+                && tagWord.equals(((TagOrderCommand) other).tagWord))
+                && targetIndex.equals(((TagOrderCommand) other).targetIndex);
     }
 
     /**

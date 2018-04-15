@@ -447,6 +447,7 @@ image::UG_Process_3.png[width="790"]
 
 image::UG_Process_4.png[width="790"]
 
+// end::ProcessingQueue[]
 === Process the next unprocessed order(add to the processing queue): `processNext` (Since v1.5)
 
 To save time, you can process an existing unprocessed order from the order book to the processing queue, without
@@ -636,7 +637,7 @@ unprocessed and processing orders to remind the user to send out delivery man.
 
 image::UG_Complete_3.png[width="790"]
 
-// end::ProcessingQueue[]
+
 
 
 

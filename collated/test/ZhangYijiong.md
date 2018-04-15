@@ -1,56 +1,28 @@
 # ZhangYijiong
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### \java\seedu\address\logic\commands\AddCommandTest.java
 ``` java
-    @Test
-    public void parseCommand_path() throws Exception {
-        PathCommand command = (PathCommand) parser.parseCommand(
-                PathCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased());
-        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
-    }
+        @Override
+        public void addTask(Task task) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
 
+        @Override
+        public void deleteTask(Task task) throws TaskNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Task> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
+            fail("This method should not be called");
+        }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_pathAlias() throws Exception {
-        PathCommand command = (PathCommand) parser.parseCommand(
-                PathCommand.COMMAND_ALIAS + " " + INDEX_SECOND_PERSON.getOneBased());
-        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
-    }
-
-```
-###### /java/seedu/address/logic/parser/PathCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.PathCommand;
-
-/**
- * Test scope: similar to {@code DeleteCommandParserTest} and to{@code SelectCommandParserTest}}.
- * @see DeleteCommandParserTest
- */
-public class PathCommandParserTest {
-    private PathCommandParser parser = new PathCommandParser();
-
-    @Test
-    public void parse_validArgs_returnsPathCommand() {
-        assertParseSuccess(parser, "3", new PathCommand(INDEX_THIRD_PERSON));
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, "ABC", String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### /java/seedu/address/logic/commands/PathCommandTest.java
+###### \java\seedu\address\logic\commands\PathCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -210,30 +182,193 @@ public class PathCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
 ``` java
-        @Override
-        public void addTask(Task task) throws DuplicateTaskException {
-            fail("This method should not be called.");
-        }
+    @Test
+    public void parseCommand_path() throws Exception {
+        PathCommand command = (PathCommand) parser.parseCommand(
+                PathCommand.COMMAND_WORD + " " + INDEX_SECOND_PERSON.getOneBased());
+        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
+    }
 
-        @Override
-        public void deleteTask(Task task) throws TaskNotFoundException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Task> getFilteredTaskList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredTaskList(Predicate<Task> predicate) {
-            fail("This method should not be called");
-        }
 ```
-###### /java/seedu/address/testutil/TaskBuilder.java
+###### \java\seedu\address\logic\parser\AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_pathAlias() throws Exception {
+        PathCommand command = (PathCommand) parser.parseCommand(
+                PathCommand.COMMAND_ALIAS + " " + INDEX_SECOND_PERSON.getOneBased());
+        assertEquals(new PathCommand(INDEX_SECOND_PERSON), command);
+    }
+
+```
+###### \java\seedu\address\logic\parser\CompleteOneOrderCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.CompleteOneOrderCommand;
+
+public class CompleteOneOrderCommandParserTest {
+
+    private CompleteOneOrderCommandParser parser = new CompleteOneOrderCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteCommand() {
+        assertParseSuccess(parser, "1", new CompleteOneOrderCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgsSecond_throwsParseException() {
+        assertParseFailure(parser, "#",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOneOrderCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, CompleteOneOrderCommand.MESSAGE_USAGE));
+    }
+}
+
+
+```
+###### \java\seedu\address\logic\parser\LoadCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.LoadCommand;
+
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest} and to{@code SelectCommandParserTest}}.
+ * @see DeleteCommandParserTest
+ */
+public class LoadCommandParserTest {
+    private LoadCommandParser parser = new LoadCommandParser();
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoadCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\PathCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_THIRD_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.PathCommand;
+
+/**
+ * Test scope: similar to {@code DeleteCommandParserTest} and to{@code SelectCommandParserTest}}.
+ * @see DeleteCommandParserTest
+ */
+public class PathCommandParserTest {
+    private PathCommandParser parser = new PathCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsPathCommand() {
+        assertParseSuccess(parser, "3", new PathCommand(INDEX_THIRD_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "ABC", String.format(MESSAGE_INVALID_COMMAND_FORMAT, PathCommand.MESSAGE_USAGE));
+    }
+}
+```
+###### \java\seedu\address\logic\parser\ProcessOrderCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.ProcessOrderCommand;
+
+public class ProcessOrderCommandParserTest {
+
+    private ProcessOrderCommandParser parser = new ProcessOrderCommandParser();
+
+    @Test
+    public void parse_validArgs_returnsDeleteCommand() {
+        assertParseSuccess(parser, "1", new ProcessOrderCommand(INDEX_FIRST_PERSON));
+    }
+
+    @Test
+    public void parse_invalidArgsSecond_throwsParseException() {
+        assertParseFailure(parser, "#",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProcessOrderCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidArgs_throwsParseException() {
+        assertParseFailure(parser, "a",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, ProcessOrderCommand.MESSAGE_USAGE));
+    }
+}
+
+```
+###### \java\seedu\address\logic\parser\TagOrderCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_FRIEND;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.TagOrderCommand;
+
+public class TagOrderCommandParserTest {
+
+    private TagOrderCommandParser parser = new TagOrderCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        assertParseSuccess(parser, "1 friend",
+                new TagOrderCommand(INDEX_FIRST_PERSON,VALID_TAG_FRIEND));
+    }
+
+    @Test
+    public void parse_compulsoryFieldMissing_failure() {
+        assertParseFailure(parser, "1",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagOrderCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_invalidValue_failure() {
+        assertParseFailure(parser, "djfal;kjafld;",
+                String.format(MESSAGE_INVALID_COMMAND_FORMAT, TagOrderCommand.MESSAGE_USAGE));
+    }
+
+}
+```
+###### \java\seedu\address\testutil\TaskBuilder.java
 ``` java
 package seedu.address.testutil;
 
@@ -343,7 +478,7 @@ public class TaskBuilder {
 }
 
 ```
-###### /java/seedu/address/testutil/TaskUtil.java
+###### \java\seedu\address\testutil\TaskUtil.java
 ``` java
 package seedu.address.testutil;
 

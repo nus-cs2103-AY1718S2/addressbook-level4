@@ -63,7 +63,7 @@ dependencies {
 }
 
 shadowJar {
-    archiveName = "ptman.jar"
+    archiveName = "[W14-B2][ptman].jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

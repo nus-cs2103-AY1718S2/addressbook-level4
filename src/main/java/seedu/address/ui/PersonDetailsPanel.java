@@ -13,6 +13,7 @@ import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.LoadMapPanelEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
+import seedu.address.commons.events.ui.RefreshDetailsPanelEvent;
 import seedu.address.commons.events.ui.RemoveMapPanelEvent;
 import seedu.address.commons.events.ui.ShowInvalidAddressOverlayEvent;
 import seedu.address.commons.events.ui.ShowUpdatedSessionLogEvent;
@@ -141,6 +142,12 @@ public class PersonDetailsPanel extends UiPart<Region> {
             mapPanel.loadAddress(event.getNewSelection().person.getAddress().toString());
         }
         showSelectedPersonDetails(event.getNewSelection().person);
+    }
+
+    @Subscribe
+    private void handleRefreshDetailsPanelEvent(RefreshDetailsPanelEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showSelectedPersonDetails(null);
     }
 
     @Subscribe

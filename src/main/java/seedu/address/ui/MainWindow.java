@@ -196,7 +196,7 @@ public class MainWindow extends UiPart<Stage> {
         commandBox.setMainWindow(this);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
 
-        disableSelection();
+        enableSelection();
         hideBeforeLogin();
 
     }
@@ -263,10 +263,10 @@ public class MainWindow extends UiPart<Stage> {
 
     //@@author jaronchan
     /**
-     * Disables the selection of tabs and persons cards by mouse click.
+     * Enables the selection and switching of tabs by mouse click.
      */
 
-    private void disableSelection() {
+    private void enableSelection() {
         featuresTabPane.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Tab>() {
             @Override
             public void changed(ObservableValue<? extends Tab> observable, Tab oldValue, Tab newValue) {

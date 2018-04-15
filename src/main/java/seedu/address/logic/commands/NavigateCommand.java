@@ -20,16 +20,18 @@ public class NavigateCommand extends Command {
             + "Parameters: INDEX\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_SUCCESS = "Displaying directions between...";
+    public static final String MESSAGE_SUCCESS = "Displaying directions between Event Num: %1$s and Event Num: %2$s";
     public static final String MESSAGE_INVALID_RANGE = "The INDEX provided is invalid.\n"
             + "INDEX must more than ZERO and less than the number of planned events for the day.";
     public static final String MESSAGE_NO_EVENT = "There is either zero or one event planned for the day.\n"
             + "No directions will be listed.";
     private final List<Event> eventPair;
+    private final int targetIndex;
 
     //@@author ifalluphill
-    public NavigateCommand(List<Event> eventPair) {
+    public NavigateCommand(List<Event> eventPair, int targetIndex) {
         this.eventPair = eventPair;
+        this.targetIndex = targetIndex;
     }
 
     //@@author jaronchan
@@ -42,6 +44,6 @@ public class NavigateCommand extends Command {
                 this.eventPair.get(1).getLocation()
             )
         );
-        return new CommandResult(String.format(MESSAGE_SUCCESS));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, targetIndex, targetIndex + 1));
     }
 }

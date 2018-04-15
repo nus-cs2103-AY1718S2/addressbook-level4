@@ -332,27 +332,27 @@ public class ImdbParserTest {
         assertEquals(new ViewAppointmentCommand(INDEX_FIRST_PERSON), command);
     }
 
-//    @Test
-//    public void parseCommand_deleteAppointment() throws Exception {
-//        LoginManager.authenticate("bob", "password456");
-//        List<String> keywords = Arrays.asList("foo", "bar", "baz", "1");
-//        DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
-//                DeleteAppointmentCommand.COMMAND_WORD + " " + keywords.stream()
-//                        .collect(Collectors.joining(" ")));
-//        assertEquals(new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(keywords),
-//                ParserUtil.parseIndex("1")), command);
-//    }
-//
-//    @Test
-//    public void parseCommand_deleteAppointmentCommandAlias() throws Exception {
-//        LoginManager.authenticate("bob", "password456");
-//        List<String> keywords = Arrays.asList("foo", "bar", "baz", "1");
-//        DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
-//                DeleteAppointmentCommand.COMMAND_ALIAS + " " + keywords.stream()
-//                        .collect(Collectors.joining(" ")));
-//        assertEquals(new DeleteAppointmentCommand(new NameContainsKeywordsPredicate(keywords),
-//                ParserUtil.parseIndex("1")), command);
-//    }
+    @Test
+    public void parseCommand_deleteAppointment() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        String indexString = "1";
+        String dateTimeString = "16/4/2018 1400";
+        DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
+                DeleteAppointmentCommand.COMMAND_WORD + " " + indexString + " " + dateTimeString);
+        assertEquals(new DeleteAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
+    }
+
+    @Test
+    public void parseCommand_deleteAppointmentCommandAlias() throws Exception {
+        LoginManager.authenticate("bob", "password456");
+        String indexString = "1";
+        String dateTimeString = "16/4/2018 1400";
+        DeleteAppointmentCommand command = (DeleteAppointmentCommand) parser.parseCommand(
+                DeleteAppointmentCommand.COMMAND_ALIAS + " " + indexString + " " + dateTimeString);
+        assertEquals(new DeleteAppointmentCommand(ParserUtil.parseIndex("1"),
+                ParserUtil.parseDateTime(dateTimeString)), command);
+    }
 
     @Test
     public void parseCommand_addPatientQueue() throws Exception {

@@ -1,7 +1,5 @@
 package seedu.address.model.util;
 
-import static java.util.Calendar.MARCH;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.GregorianCalendar;

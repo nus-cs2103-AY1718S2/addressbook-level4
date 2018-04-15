@@ -254,6 +254,13 @@ To change the password, simply type 'setPassword OLD_PASSWORD NEW_PASSWORD' or t
 An example of the change password command would be: setPassword 123456 123
 
 An example of the sort command alias would be: sp 123456 123
+
+* **Alternative 1 (current choice):** After unlocking, the content at contact and appointment panel remain unshown, list/listall/listappointment comand are needed.
+** Pros: User can only list the content they want with flexibility.
+** Cons: One more command is needed, it might be a little bit complex.
+* **Alternative 2:** After unlocking, the content at contact and appointment panel show automatically.
+** Pros: Less action and command are needed.
+** Cons: User can not hide the content they don't want to show
 //end::Login/Logout[]
 
 //tag::SortCommand[]

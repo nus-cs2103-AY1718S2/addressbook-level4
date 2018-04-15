@@ -1,5 +1,41 @@
 # QiuHaohao
-###### \java\seedu\address\logic\commands\LoginCommandTest.java
+###### /java/systemtests/FindCommandSystemTest.java
+``` java
+        executeCommand("login admin admin");
+```
+###### /java/seedu/address/logic/parser/LoginCommandParserTest.java
+``` java
+package seedu.address.logic.parser;
+
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
+import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
+
+import org.junit.Test;
+
+import seedu.address.logic.commands.LoginCommand;
+
+public class LoginCommandParserTest {
+    private LoginCommandParser parser = new LoginCommandParser();
+
+    @Test
+    public void parse_emptyArg_throwsParseException() {
+        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
+    }
+
+    @Test
+    public void parse_validArgs_returnsFindCommand() {
+        // no leading and trailing whitespaces
+        LoginCommand expectedFindCommand =
+            new LoginCommand("admin", "admin");
+        assertParseSuccess(parser, "admin admin", expectedFindCommand);
+
+        // multiple whitespaces between keywords
+        assertParseSuccess(parser, " \n admin \n \t admin  \t", expectedFindCommand);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/LoginCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -79,7 +115,7 @@ public class LoginCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\LogoutCommandTest.java
+###### /java/seedu/address/logic/commands/LogoutCommandTest.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -115,39 +151,7 @@ public class LogoutCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\LoginCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.LoginCommand;
-
-public class LoginCommandParserTest {
-    private LoginCommandParser parser = new LoginCommandParser();
-
-    @Test
-    public void parse_emptyArg_throwsParseException() {
-        assertParseFailure(parser, "     ", String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
-    }
-
-    @Test
-    public void parse_validArgs_returnsFindCommand() {
-        // no leading and trailing whitespaces
-        LoginCommand expectedFindCommand =
-            new LoginCommand("admin", "admin");
-        assertParseSuccess(parser, "admin admin", expectedFindCommand);
-
-        // multiple whitespaces between keywords
-        assertParseSuccess(parser, " \n admin \n \t admin  \t", expectedFindCommand);
-    }
-}
-```
-###### \java\seedu\address\model\account\AccountTest.java
+###### /java/seedu/address/model/account/AccountTest.java
 ``` java
 package seedu.address.model.account;
 
@@ -213,7 +217,71 @@ public class AccountTest {
     }
 }
 ```
-###### \java\seedu\address\model\account\CredentialTest.java
+###### /java/seedu/address/model/account/MatricNumberTest.java
+``` java
+package seedu.address.model.account;
+
+import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertFalse;
+import static org.junit.Assert.assertTrue;
+
+import org.junit.Test;
+
+import seedu.address.testutil.Assert;
+
+public class MatricNumberTest {
+
+    @Test
+    public void isValidMatricNumber() {
+        // null pointer
+        Assert.assertThrows(NullPointerException.class, () -> MatricNumber.isValidMatricNumber(null));
+
+        //invalid
+        assertFalse(MatricNumber.isValidMatricNumber("")); // empty string
+        assertFalse(MatricNumber.isValidMatricNumber("123"));
+        assertFalse(MatricNumber.isValidMatricNumber("abc"));
+        assertFalse(MatricNumber.isValidMatricNumber("!!!"));
+        assertFalse(MatricNumber.isValidMatricNumber("!!!!!!"));
+        assertFalse(MatricNumber.isValidMatricNumber("A1234567XX!"));
+        assertFalse(MatricNumber.isValidMatricNumber("A123456723X!"));
+        assertFalse(MatricNumber.isValidMatricNumber("1234567XX!"));
+
+        //valid
+        assertTrue(MatricNumber.isValidMatricNumber("A1234567Z"));
+        assertTrue(MatricNumber.isValidMatricNumber("A9992567B"));
+    }
+
+    @Test
+    public void getMatricNumber() {
+        String matricNumberString = "A1234567Z";
+        MatricNumber m = new MatricNumber(matricNumberString);
+        assertEquals(matricNumberString, m.getMatricNumber());
+    }
+
+    @Test
+    public void equals() {
+        MatricNumber p1 = new MatricNumber("A1234567Z");
+        MatricNumber p1copy = new MatricNumber("A1234567Z");
+        MatricNumber p2 = new MatricNumber("A9992567B");
+
+        //equal with itself
+        assertTrue(p1.equals(p1));
+
+        //equal with an other object with same state
+        assertTrue(p1.equals(p1copy));
+
+        //not equal with null
+        assertFalse(p1.equals(null));
+
+        //not equal with other type
+        assertFalse(p1.equals(1));
+
+        //not equal with same type with different state
+        assertFalse(p1.equals(p2));
+    }
+}
+```
+###### /java/seedu/address/model/account/CredentialTest.java
 ``` java
 package seedu.address.model.account;
 
@@ -293,145 +361,52 @@ public class CredentialTest {
     }
 }
 ```
-###### \java\seedu\address\model\account\MatricNumberTest.java
+###### /java/seedu/address/model/account/UniqueAccountListTest.java
 ``` java
 package seedu.address.model.account;
 
 import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
+import seedu.address.model.account.exceptions.DuplicateAccountException;
 import seedu.address.testutil.Assert;
 
-public class MatricNumberTest {
-
+public class UniqueAccountListTest {
     @Test
-    public void isValidMatricNumber() {
-        // null pointer
-        Assert.assertThrows(NullPointerException.class, () -> MatricNumber.isValidMatricNumber(null));
+    public void add() throws DuplicateAccountException {
+        UniqueAccountList accountList = new UniqueAccountList();
 
-        //invalid
-        assertFalse(MatricNumber.isValidMatricNumber("")); // empty string
-        assertFalse(MatricNumber.isValidMatricNumber("123"));
-        assertFalse(MatricNumber.isValidMatricNumber("abc"));
-        assertFalse(MatricNumber.isValidMatricNumber("!!!"));
-        assertFalse(MatricNumber.isValidMatricNumber("!!!!!!"));
-        assertFalse(MatricNumber.isValidMatricNumber("A1234567XX!"));
-        assertFalse(MatricNumber.isValidMatricNumber("A123456723X!"));
-        assertFalse(MatricNumber.isValidMatricNumber("1234567XX!"));
+        Name name = new Name("Ryan");
+        Credential credential = new Credential("student", "student2");
+        MatricNumber matricNumber = new MatricNumber("A0123256X");
+        PrivilegeLevel privilegeLevel = new PrivilegeLevel(1);
 
-        //valid
-        assertTrue(MatricNumber.isValidMatricNumber("A1234567Z"));
-        assertTrue(MatricNumber.isValidMatricNumber("A9992567B"));
+        Account student2 = new Account(name, credential, matricNumber, privilegeLevel);
+        Account student = Account.createDefaultStudentAccount();
+        Account admin = Account.createDefaultAdminAccount();
+
+        accountList.add(student);
+        accountList.add(admin);
+
+        Assert.assertThrows(DuplicateAccountException.class, ()
+            -> accountList.add(student2));
     }
 
     @Test
-    public void getMatricNumber() {
-        String matricNumberString = "A1234567Z";
-        MatricNumber m = new MatricNumber(matricNumberString);
-        assertEquals(matricNumberString, m.getMatricNumber());
-    }
+    public void searchByUsername() throws DuplicateAccountException {
+        UniqueAccountList accountList = new UniqueAccountList();
+        Account student = Account.createDefaultStudentAccount();
+        Account admin = Account.createDefaultAdminAccount();
 
-    @Test
-    public void equals() {
-        MatricNumber p1 = new MatricNumber("A1234567Z");
-        MatricNumber p1copy = new MatricNumber("A1234567Z");
-        MatricNumber p2 = new MatricNumber("A9992567B");
+        accountList.add(student);
+        accountList.add(admin);
 
-        //equal with itself
-        assertTrue(p1.equals(p1));
-
-        //equal with an other object with same state
-        assertTrue(p1.equals(p1copy));
-
-        //not equal with null
-        assertFalse(p1.equals(null));
-
-        //not equal with other type
-        assertFalse(p1.equals(1));
-
-        //not equal with same type with different state
-        assertFalse(p1.equals(p2));
+        assertEquals(accountList.searchByUsername(new Username("student")), student);
     }
 }
 ```
-###### \java\seedu\address\model\account\PasswordTest.java
-``` java
-package seedu.address.model.account;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.Assert;
-
-public class PasswordTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Password(null));
-    }
-
-    @Test
-    public void isValidPassword() {
-        // null pointer
-        Assert.assertThrows(NullPointerException.class, () -> Password.isValidPassword(null));
-
-        //invalid
-        assertFalse(Password.isValidPassword("")); // empty string
-        assertFalse(Password.isValidPassword("123")); // too short
-        assertFalse(Password.isValidPassword("abc")); // too short
-        assertFalse(Password.isValidPassword("!!!")); // too short and non-word characters
-        assertFalse(Password.isValidPassword("!!!!!!")); // non-word characters
-        assertFalse(Password.isValidPassword("abcasj!")); // too short and non-word characters
-        assertFalse(Password.isValidPassword(""));
-
-        //valid
-        assertTrue(Password.isValidPassword("abcde"));
-        assertTrue(Password.isValidPassword("banana"));
-        assertTrue(Password.isValidPassword("addressbook"));
-        assertTrue(Password.isValidPassword("abcde123"));
-        assertTrue(Password.isValidPassword("FHAIgasjd123987514"));
-        assertTrue(Password.isValidPassword("123123123123"));
-
-
-    }
-
-    @Test
-    public void getPassword() {
-        String passwordString = "password";
-        Password p = new Password(passwordString);
-        assertEquals(passwordString, p.getPassword());
-    }
-
-    @Test
-    public void equals() {
-        Password p1 = new Password("password1");
-        Password p1copy = new Password("password1");
-        Password p2 = new Password("password2");
-
-        //equal with itself
-        assertTrue(p1.equals(p1));
-
-        //equal with an other object with same state
-        assertTrue(p1.equals(p1copy));
-
-        //not equal with null
-        assertFalse(p1.equals(null));
-
-        //not equal with other type
-        assertFalse(p1.equals(1));
-
-        //not equal with same type with different state
-        assertFalse(p1.equals(p2));
-    }
-}
-```
-###### \java\seedu\address\model\account\PrivilegeLevelTest.java
+###### /java/seedu/address/model/account/PrivilegeLevelTest.java
 ``` java
 package seedu.address.model.account;
 
@@ -497,127 +472,4 @@ public class PrivilegeLevelTest {
         assertTrue(p1.compareTo(p1) == 0);
     }
 }
-```
-###### \java\seedu\address\model\account\UniqueAccountListTest.java
-``` java
-package seedu.address.model.account;
-
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import seedu.address.model.account.exceptions.DuplicateAccountException;
-import seedu.address.testutil.Assert;
-
-public class UniqueAccountListTest {
-    @Test
-    public void add() throws DuplicateAccountException {
-        UniqueAccountList accountList = new UniqueAccountList();
-
-        Name name = new Name("Ryan");
-        Credential credential = new Credential("student", "student2");
-        MatricNumber matricNumber = new MatricNumber("A0123256X");
-        PrivilegeLevel privilegeLevel = new PrivilegeLevel(1);
-
-        Account student2 = new Account(name, credential, matricNumber, privilegeLevel);
-        Account student = Account.createDefaultStudentAccount();
-        Account admin = Account.createDefaultAdminAccount();
-
-        accountList.add(student);
-        accountList.add(admin);
-
-        Assert.assertThrows(DuplicateAccountException.class, ()
-            -> accountList.add(student2));
-    }
-
-    @Test
-    public void searchByUsername() throws DuplicateAccountException {
-        UniqueAccountList accountList = new UniqueAccountList();
-        Account student = Account.createDefaultStudentAccount();
-        Account admin = Account.createDefaultAdminAccount();
-
-        accountList.add(student);
-        accountList.add(admin);
-
-        assertEquals(accountList.searchByUsername(new Username("student")), student);
-    }
-}
-```
-###### \java\seedu\address\model\account\UsernameTest.java
-``` java
-package seedu.address.model.account;
-
-import static org.junit.Assert.assertEquals;
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.Assert;
-
-public class UsernameTest {
-
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Username(null));
-    }
-
-    @Test
-    public void isValidUsername() {
-        // null pointer
-        Assert.assertThrows(NullPointerException.class, () -> Username.isValidUsername(null));
-
-        //invalid
-        assertFalse(Username.isValidUsername("")); // empty string
-        assertFalse(Username.isValidUsername("123")); // too short
-        assertFalse(Username.isValidUsername("abc")); // too short
-        assertFalse(Username.isValidUsername("!!!")); // too short and non-word characters
-        assertFalse(Username.isValidUsername("!!!!!!")); // non-word characters
-        assertFalse(Username.isValidUsername("abcasj!")); // too short and non-word characters
-        assertFalse(Username.isValidUsername(""));
-
-        //valid
-        assertTrue(Username.isValidUsername("abcde"));
-        assertTrue(Username.isValidUsername("banana"));
-        assertTrue(Username.isValidUsername("addressbook"));
-        assertTrue(Username.isValidUsername("abcde123"));
-        assertTrue(Username.isValidUsername("FHAIgasjd123987514"));
-        assertTrue(Username.isValidUsername("123123123123"));
-
-    }
-
-    @Test
-    public void getUsername() {
-        String usernameString = "username";
-        Username p = new Username(usernameString);
-        assertEquals(usernameString, p.getUsername());
-    }
-
-    @Test
-    public void equals() {
-        Username p1 = new Username("username1");
-        Username p1copy = new Username("username1");
-        Username p2 = new Username("username2");
-
-        //equal with itself
-        assertTrue(p1.equals(p1));
-
-        //equal with an other object with same state
-        assertTrue(p1.equals(p1copy));
-
-        //not equal with null
-        assertFalse(p1.equals(null));
-
-        //not equal with other type
-        assertFalse(p1.equals(1));
-
-        //not equal with same type with different state
-        assertFalse(p1.equals(p2));
-    }
-}
-```
-###### \java\systemtests\FindCommandSystemTest.java
-``` java
-        executeCommand("login admin admin");
 ```

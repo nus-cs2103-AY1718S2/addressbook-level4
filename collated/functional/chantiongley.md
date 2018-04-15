@@ -1,145 +1,38 @@
 # chantiongley
-###### \java\seedu\address\logic\commands\AddAccountCommand.java
+###### /java/seedu/address/logic/parser/DeleteAccountCommandParser.java
 ``` java
-package seedu.address.logic.commands;
+package seedu.address.logic.parser;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_MATRICNUMBER;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIVILEGE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.account.Account;
-import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.account.exceptions.DuplicateAccountException;
+import seedu.address.logic.commands.DeleteAccountCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
- * Adds an account
+ * Parses input arguments and creates a new DeleteAccountCommand object
  */
-public class AddAccountCommand extends UndoableCommand {
-    public static final String COMMAND_WORD = "addAccount";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an account to the system. "
-        + "Parameters: "
-        + PREFIX_NAME + "NAME "
-        + PREFIX_USERNAME + "USERNAME "
-        + PREFIX_PASSWORD + "PASSWORD "
-        + PREFIX_MATRICNUMBER + "MATRICULATION NUMBER "
-        + PREFIX_PRIVILEGE + "PRIVILEGE LEVEL \n"
-        + "Example: " + COMMAND_WORD + " "
-        + PREFIX_NAME + "John Doe "
-        + PREFIX_USERNAME + "johndoe "
-        + PREFIX_PASSWORD + "johndoe123 "
-        + PREFIX_MATRICNUMBER + "A0123456B "
-        + PREFIX_PRIVILEGE + "1";
-
-    public static final String MESSAGE_SUCCESS = "New account added: %1$s";
-    public static final String MESSAGE_DUPLICATE_ACCOUNT = "This account already exists in the system";
-
-    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
-
-    private final Account toAdd;
-
+public class DeleteAccountCommandParser implements Parser<DeleteAccountCommand> {
     /**
-     * Creates an AddCommand to add the specified {@code Book}
+     * Parses input arguments and creates a new DeleteAccountCommand object
+     * <p>
+     * /**
+     * Parses the given {@code String} of arguments in the context of the DeleteAccountCommand
+     * and returns an DeleteAccountCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public AddAccountCommand(Account account) {
-        requireNonNull(account);
-        toAdd = account;
-    }
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        requireNonNull(model);
-        try {
-            model.addAccount(toAdd);
-            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
-        } catch (DuplicateAccountException e) {
-            throw new CommandException(MESSAGE_DUPLICATE_ACCOUNT);
+    public DeleteAccountCommand parse(String args) throws ParseException {
+        String trimmedArgs = args.trim();
+        if (trimmedArgs.isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAccountCommand.MESSAGE_USAGE));
+        } else {
+            return new DeleteAccountCommand(trimmedArgs);
         }
     }
-
-    @Override
-    public boolean equals(Object obj) {
-        return super.equals(obj);
-    }
-
-    @Override
-    public PrivilegeLevel getPrivilegeLevel() {
-        return PRIVILEGE_LEVEL;
-    }
-
 }
 ```
-###### \java\seedu\address\logic\commands\DeleteAccountCommand.java
-``` java
-package seedu.address.logic.commands;
-
-import static java.util.Objects.requireNonNull;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.account.Account;
-import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.account.Username;
-import seedu.address.model.account.exceptions.AccountNotFoundException;
-
-/**
- * Deletes a account using it's last displayed index from the account list
- */
-public class DeleteAccountCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "deleteAccount";
-    public static final String MESSAGE_USAGE = COMMAND_WORD
-        + ": Deletes the account identified by the name of the user stored in account list.\n"
-        + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
-        + "Example: " + COMMAND_WORD + " John";
-    public static final String MESSAGE_DELETE_ACCOUNT_SUCCESS = "Deleted Account: %1$s";
-
-    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
-
-    private String username;
-    private Account accountToDelete;
-
-    public DeleteAccountCommand(String username) {
-        requireNonNull(username);
-        this.username = username;
-    }
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        try {
-            model.deleteAccount(accountToDelete);
-        } catch (AccountNotFoundException anfe) {
-            throw new CommandException("Account does not exist");
-        }
-
-        return new CommandResult(String.format(MESSAGE_DELETE_ACCOUNT_SUCCESS, accountToDelete));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        accountToDelete = model.getAccountList().searchByUsername(new Username(username));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this // short circuit if same object
-            || (other instanceof DeleteAccountCommand // instanceof handles nulls
-            && accountToDelete.equals(((DeleteAccountCommand) other).accountToDelete));
-    }
-
-    @Override
-    public PrivilegeLevel getPrivilegeLevel() {
-        return PRIVILEGE_LEVEL;
-    }
-}
-
-```
-###### \java\seedu\address\logic\parser\AddAccountCommandParser.java
+###### /java/seedu/address/logic/parser/AddAccountCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -211,40 +104,7 @@ public class AddAccountCommandParser implements Parser<AddAccountCommand> {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\DeleteAccountCommandParser.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import seedu.address.logic.commands.DeleteAccountCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-
-/**
- * Parses input arguments and creates a new DeleteAccountCommand object
- */
-public class DeleteAccountCommandParser implements Parser<DeleteAccountCommand> {
-    /**
-     * Parses input arguments and creates a new DeleteAccountCommand object
-     * <p>
-     * /**
-     * Parses the given {@code String} of arguments in the context of the DeleteAccountCommand
-     * and returns an DeleteAccountCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-
-    public DeleteAccountCommand parse(String args) throws ParseException {
-        String trimmedArgs = args.trim();
-        if (trimmedArgs.isEmpty()) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, DeleteAccountCommand.MESSAGE_USAGE));
-        } else {
-            return new DeleteAccountCommand(trimmedArgs);
-        }
-    }
-}
-```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
 ``` java
     /**
      * Parses a {@code String name} into a {@code Name}.
@@ -484,4 +344,144 @@ public class DeleteAccountCommandParser implements Parser<DeleteAccountCommand> 
         return tagSet;
     }
 }
+```
+###### /java/seedu/address/logic/commands/AddAccountCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_MATRICNUMBER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PASSWORD;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIVILEGE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_USERNAME;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
+
+/**
+ * Adds an account
+ */
+public class AddAccountCommand extends UndoableCommand {
+    public static final String COMMAND_WORD = "addAccount";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an account to the system. "
+        + "Parameters: "
+        + PREFIX_NAME + "NAME "
+        + PREFIX_USERNAME + "USERNAME "
+        + PREFIX_PASSWORD + "PASSWORD "
+        + PREFIX_MATRICNUMBER + "MATRICULATION NUMBER "
+        + PREFIX_PRIVILEGE + "PRIVILEGE LEVEL \n"
+        + "Example: " + COMMAND_WORD + " "
+        + PREFIX_NAME + "John Doe "
+        + PREFIX_USERNAME + "johndoe "
+        + PREFIX_PASSWORD + "johndoe123 "
+        + PREFIX_MATRICNUMBER + "A0123456B "
+        + PREFIX_PRIVILEGE + "1";
+
+    public static final String MESSAGE_SUCCESS = "New account added: %1$s";
+    public static final String MESSAGE_DUPLICATE_ACCOUNT = "This account already exists in the system";
+
+    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
+
+    private final Account toAdd;
+
+    /**
+     * Creates an AddCommand to add the specified {@code Book}
+     */
+    public AddAccountCommand(Account account) {
+        requireNonNull(account);
+        toAdd = account;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addAccount(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateAccountException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_ACCOUNT);
+        }
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        return super.equals(obj);
+    }
+
+    @Override
+    public PrivilegeLevel getPrivilegeLevel() {
+        return PRIVILEGE_LEVEL;
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/DeleteAccountCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.Username;
+import seedu.address.model.account.exceptions.AccountNotFoundException;
+
+/**
+ * Deletes a account using it's last displayed index from the account list
+ */
+public class DeleteAccountCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "deleteAccount";
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+        + ": Deletes the account identified by the name of the user stored in account list.\n"
+        + "Parameters: KEYWORD [MORE_KEYWORDS]...\n"
+        + "Example: " + COMMAND_WORD + " John";
+    public static final String MESSAGE_DELETE_ACCOUNT_SUCCESS = "Deleted Account: %1$s";
+
+    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
+
+    private String username;
+    private Account accountToDelete;
+
+    public DeleteAccountCommand(String username) {
+        requireNonNull(username);
+        this.username = username;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.deleteAccount(accountToDelete);
+        } catch (AccountNotFoundException anfe) {
+            throw new CommandException("Account does not exist");
+        }
+
+        return new CommandResult(String.format(MESSAGE_DELETE_ACCOUNT_SUCCESS, accountToDelete));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        accountToDelete = model.getAccountList().searchByUsername(new Username(username));
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+            || (other instanceof DeleteAccountCommand // instanceof handles nulls
+            && accountToDelete.equals(((DeleteAccountCommand) other).accountToDelete));
+    }
+
+    @Override
+    public PrivilegeLevel getPrivilegeLevel() {
+        return PRIVILEGE_LEVEL;
+    }
+}
+
 ```

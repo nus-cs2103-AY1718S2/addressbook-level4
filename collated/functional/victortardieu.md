@@ -1,114 +1,12 @@
 # victortardieu
-###### \java\seedu\address\logic\commands\ClearAccountCommand.java
+###### /java/seedu/address/ui/CommandBox.java
 ``` java
-package seedu.address.logic.commands;
-
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.Model;
-import seedu.address.model.account.Account;
-import seedu.address.model.account.PrivilegeLevel;
-import seedu.address.model.account.UniqueAccountList;
-import seedu.address.model.account.exceptions.DuplicateAccountException;
-
-
-/**
- * Checks if user is a librarian. If yes, it clears the list of accounts and logs out the current account.
- */
-public class ClearAccountCommand extends UndoableCommand {
-
-    /**
-     *
-     */
-    public static final String COMMAND_WORD = "cleara";
-    public static final String MESSAGE_SUCCESS = "AccountList has been cleared, and you are logged out!";
-    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
-
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
-        UniqueAccountList blankList = new UniqueAccountList();
-        try {
-            blankList.add(Account.createDefaultAdminAccount());
-        } catch (DuplicateAccountException e) {
-            e.printStackTrace();
-        }
-        model.resetAccount(blankList);
-        model.logout();
-        return new CommandResult(MESSAGE_SUCCESS);
-    }
-
-    public PrivilegeLevel getPrivilegeLevel() {
-
-        return PRIVILEGE_LEVEL;
-    }
-}
+        case TAB:
+            keyEvent.consume();
+            replaceText(LogicManager.autoComplete(commandTextField.getText()));
+            break;
 ```
-###### \java\seedu\address\logic\LogicManager.java
-``` java
-    /**
-     * @param myString
-     * @return auto, the string that holds the autocomplete string of the chosen command
-     */
-    public static String autoComplete(String myString) {
-        /**
-         *  The auto string will hold the autocomplete string of the chosen command
-         */
-        String auto = "";
-        switch (myString) {
-        case AddCommand.COMMAND_WORD:
-            auto = "add t/ a/ i/ av/ tag/ ";
-            break;
-        case AddAccountCommand.COMMAND_WORD:
-            auto = "addAccount n/ m/ u/ p/ l/ ";
-            break;
-        case EditCommand.COMMAND_WORD:
-            auto = "edit 1 t/ a/ i/ av/ tag/ ";
-            break;
-        case DeleteCommand.COMMAND_WORD:
-            auto = "delete 1";
-            break;
-        case BorrowCommand.COMMAND_WORD:
-            auto = "borrow 1";
-            break;
-        case ReturnCommand.COMMAND_WORD:
-            auto = "return 1";
-            break;
-        case ReserveCommand.COMMAND_WORD:
-            auto = "reserve 1";
-            break;
-        default:
-            auto = myString;
-        }
-        return auto;
-    }
-
-    @Override
-    public CommandResult execute(String commandText) throws CommandException, ParseException {
-        logger.info("----------------[USER COMMAND][" + commandText + "]");
-        try {
-            Command command = catalogueParser.parseCommand(commandText);
-            if (!isPrivileged(command)) {
-                return new CommandResult(Command.MESSAGE_UNPRIVILEGED);
-            }
-            command.setData(model, history, undoRedoStack);
-            CommandResult result = command.execute();
-            undoRedoStack.push(command);
-            return result;
-        } finally {
-            history.add(commandText);
-        }
-    }
-
-    @Override
-    public ObservableList<Book> getFilteredBookList() {
-        return model.getFilteredBookList();
-    }
-
-    @Override
-    public ListElementPointer getHistorySnapshot() {
-        return new ListElementPointer(history.getHistory());
-    }
-```
-###### \java\seedu\address\ui\BookCard.java
+###### /java/seedu/address/ui/BookCard.java
 ``` java
 package seedu.address.ui;
 
@@ -229,10 +127,244 @@ public class BookCard extends UiPart<Region> {
     }
 }
 ```
-###### \java\seedu\address\ui\CommandBox.java
+###### /java/seedu/address/logic/commands/ClearAccountCommand.java
 ``` java
-        case TAB:
-            keyEvent.consume();
-            replaceText(LogicManager.autoComplete(commandTextField.getText()));
+package seedu.address.logic.commands;
+
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.Model;
+import seedu.address.model.account.Account;
+import seedu.address.model.account.PrivilegeLevel;
+import seedu.address.model.account.UniqueAccountList;
+import seedu.address.model.account.exceptions.DuplicateAccountException;
+
+
+/**
+ * Checks if user is a librarian. If yes, it clears the list of accounts and logs out the current account.
+ */
+public class ClearAccountCommand extends UndoableCommand {
+
+    /**
+     *
+     */
+    public static final String COMMAND_WORD = "cleara";
+    public static final String MESSAGE_SUCCESS = "AccountList has been cleared, and you are logged out!";
+    public static final PrivilegeLevel PRIVILEGE_LEVEL = Model.PRIVILEGE_LEVEL_LIBRARIAN;
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        UniqueAccountList blankList = new UniqueAccountList();
+        try {
+            blankList.add(Account.createDefaultAdminAccount());
+        } catch (DuplicateAccountException e) {
+            e.printStackTrace();
+        }
+        model.resetAccount(blankList);
+        model.logout();
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+
+    public PrivilegeLevel getPrivilegeLevel() {
+
+        return PRIVILEGE_LEVEL;
+    }
+}
+```
+###### /java/seedu/address/logic/LogicManager.java
+``` java
+    /**
+     * @param myString
+     * @return auto, the string that holds the autocomplete string of the chosen command
+     */
+    public static String autoComplete(String myString) {
+        /**
+         *  The auto string will hold the autocomplete string of the chosen command
+         */
+        String auto = "";
+        switch (myString) {
+        case AddCommand.COMMAND_WORD:
+            auto = "add t/ a/ i/ av/ tag/ ";
             break;
+        case AddAccountCommand.COMMAND_WORD:
+            auto = "addAccount n/ m/ u/ p/ l/ ";
+            break;
+        case EditCommand.COMMAND_WORD:
+            auto = "edit 1 t/ a/ i/ av/ tag/ ";
+            break;
+        case DeleteCommand.COMMAND_WORD:
+            auto = "delete 1";
+            break;
+        case BorrowCommand.COMMAND_WORD:
+            auto = "borrow 1";
+            break;
+        case ReturnCommand.COMMAND_WORD:
+            auto = "return 1";
+            break;
+        case ReserveCommand.COMMAND_WORD:
+            auto = "reserve 1";
+            break;
+        default:
+            auto = myString;
+        }
+        return auto;
+    }
+
+    @Override
+    public CommandResult execute(String commandText) throws CommandException, ParseException {
+        logger.info("----------------[USER COMMAND][" + commandText + "]");
+        try {
+            Command command = catalogueParser.parseCommand(commandText);
+            if (!isPrivileged(command)) {
+                return new CommandResult(Command.MESSAGE_UNPRIVILEGED);
+            }
+            command.setData(model, history, undoRedoStack);
+            CommandResult result = command.execute();
+            undoRedoStack.push(command);
+            return result;
+        } finally {
+            history.add(commandText);
+        }
+    }
+
+    @Override
+    public ObservableList<Book> getFilteredBookList() {
+        return model.getFilteredBookList();
+    }
+
+    @Override
+    public ListElementPointer getHistorySnapshot() {
+        return new ListElementPointer(history.getHistory());
+    }
+```
+###### /java/seedu/address/model/account/Username.java
+``` java
+package seedu.address.model.account;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.io.Serializable;
+
+/**
+ * Represents the username of an account
+ */
+public class Username implements Serializable {
+
+    public static final String MESSAGE_USERNAME_CONSTRAINTS =
+        "Username should be at least 5 characters long.";
+    public static final String USERNAME_VALIDATION_REGEX = "\\w{5,}";
+
+    private final String username;
+
+    /**
+     * Constructs a Username
+     *
+     * @param username
+     */
+    public Username(String username) {
+        requireNonNull(username);
+        checkArgument(isValidUsername(username), MESSAGE_USERNAME_CONSTRAINTS);
+
+        this.username = username;
+    }
+
+    /**
+     * Returns true if a given string is a valid Username.
+     */
+    public static boolean isValidUsername(String test) {
+        return test.matches(USERNAME_VALIDATION_REGEX);
+    }
+
+
+    /**
+     * Returns username.
+     */
+    public String getUsername() {
+        return username;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+            || (other instanceof Username // short circuit if same obj
+            && this.username.equals(((Username) other).username) // check username
+            );
+    }
+
+    @Override
+    public int hashCode() {
+        return username.hashCode();
+    }
+
+    @Override
+    public String toString() {
+        return username;
+    }
+}
+```
+###### /java/seedu/address/model/account/Password.java
+``` java
+package seedu.address.model.account;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+import java.io.Serializable;
+
+/**
+ * Represents a password
+ */
+public class Password implements Serializable {
+    public static final String MESSAGE_PASSWORD_CONSTRAINTS =
+        "Password should be at least 5 characters long.";
+    public static final String PASSWORD_VALIDATION_REGEX = "\\w{5,}";
+
+    private final String password;
+
+
+    /**
+     * Construct a password
+     *
+     * @param password
+     */
+    public Password(String password) {
+        requireNonNull(password);
+        checkArgument(isValidPassword(password), MESSAGE_PASSWORD_CONSTRAINTS);
+
+        this.password = password;
+    }
+
+    /**
+     * Returns true if a given string is a valid password.
+     */
+    public static boolean isValidPassword(String test) {
+        return test.matches(PASSWORD_VALIDATION_REGEX);
+    }
+
+    @Override
+    public String toString() {
+        return "Password{"
+            + "password='" + password + '\''
+            + '}';
+    }
+
+    /**
+     * Returns password.
+     */
+    public String getPassword() {
+        return password;
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+            || (other instanceof Password // short circuit if same obj
+            && this.password.equals(((Password) other).password)); //check password
+    }
+
+    @Override
+    public int hashCode() {
+        return password.hashCode();
+    }
+}
 ```

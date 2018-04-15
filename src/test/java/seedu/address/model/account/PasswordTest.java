@@ -1,4 +1,4 @@
-//@@author QiuHaohao
+//@@author victortardieu
 package seedu.address.model.account;
 
 import static org.junit.Assert.assertEquals;

@@ -2,6 +2,9 @@ package seedu.address.logic.parser;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.logictestutil.TaskTestConstants.DATE_TIME_DESC_CS2010_QUIZ;
+import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_DATE_TIME_DESC;
+import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_NAME_DESC;
+import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_REMARK_DESC;
 import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_TAG_DESC;
 import static seedu.address.logic.logictestutil.TaskTestConstants.NAME_DESC_MA2108_HOMEWORK;
 import static seedu.address.logic.logictestutil.TaskTestConstants.REMARK_DESC_CS2010_QUIZ;
@@ -12,9 +15,6 @@ import static seedu.address.logic.logictestutil.TaskTestConstants.TAG_DESC_URGEN
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_DATE_TIME_CS2010_QUIZ;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_DATE_TIME_MA2108_HOMEWORK;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_NAME_MA2108_HOMEWORK;
-import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_DATE_TIME_DESC;
-import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_NAME_DESC;
-import static seedu.address.logic.logictestutil.TaskTestConstants.INVALID_TASK_REMARK_DESC;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_CS2010_QUIZ;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_REMARK_MA2108_HOMEWORK;
 import static seedu.address.logic.logictestutil.TaskTestConstants.VALID_TAG_CS2010;
@@ -78,14 +78,18 @@ public class EditCommandParserTest {
 
     @Test
     public void parse_invalidValue_failure() {
-        assertParseFailure(parser, "task 1" + INVALID_TASK_NAME_DESC, Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
-        assertParseFailure(parser, "task 1" + INVALID_TASK_DATE_TIME_DESC, DateTime.MESSAGE_DATETIME_CONSTRAINTS); // invalid phone
-        assertParseFailure(parser, "task 1" + INVALID_TASK_REMARK_DESC, Remark.MESSAGE_REMARK_CONSTRAINTS); // invalid address
-        assertParseFailure(parser, "task 1" + INVALID_TASK_TAG_DESC, Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
+        assertParseFailure(parser, "task 1" + INVALID_TASK_NAME_DESC,
+                Name.MESSAGE_NAME_CONSTRAINTS); // invalid name
+        assertParseFailure(parser, "task 1" + INVALID_TASK_DATE_TIME_DESC,
+                DateTime.MESSAGE_DATETIME_CONSTRAINTS); // invalid phone
+        assertParseFailure(parser, "task 1" + INVALID_TASK_REMARK_DESC,
+                Remark.MESSAGE_REMARK_CONSTRAINTS); // invalid address
+        assertParseFailure(parser, "task 1" + INVALID_TASK_TAG_DESC,
+                Tag.MESSAGE_TAG_CONSTRAINTS); // invalid tag
 
         // invalid phone followed by valid email
-        assertParseFailure(parser, "task 1" + INVALID_TASK_DATE_TIME_DESC + REMARK_DESC_CS2010_QUIZ, DateTime
-                .MESSAGE_DATETIME_CONSTRAINTS);
+        assertParseFailure(parser, "task 1" + INVALID_TASK_DATE_TIME_DESC
+                + REMARK_DESC_CS2010_QUIZ, DateTime.MESSAGE_DATETIME_CONSTRAINTS);
 
         // valid phone followed by invalid phone. The test case for invalid phone followed by valid phone
         // is tested at {@code parse_invalidValueFollowedByValidValue_success()}
@@ -94,12 +98,16 @@ public class EditCommandParserTest {
 
         // while parsing {@code PREFIX_TAG} alone will reset the tags of the {@code Activity} being edited,
         // parsing it together with a valid tag results in error
-        assertParseFailure(parser, "task 1" + TAG_DESC_URGENT + TAG_DESC_MA2108 + TAG_EMPTY, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "task 1" + TAG_DESC_MA2108 + TAG_EMPTY + TAG_DESC_URGENT, Tag.MESSAGE_TAG_CONSTRAINTS);
-        assertParseFailure(parser, "task 1" + TAG_EMPTY + TAG_DESC_CS2010 + TAG_DESC_URGENT, Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "task 1" + TAG_DESC_URGENT + TAG_DESC_MA2108 + TAG_EMPTY,
+                Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "task 1" + TAG_DESC_MA2108 + TAG_EMPTY + TAG_DESC_URGENT,
+                Tag.MESSAGE_TAG_CONSTRAINTS);
+        assertParseFailure(parser, "task 1" + TAG_EMPTY + TAG_DESC_CS2010 + TAG_DESC_URGENT,
+                Tag.MESSAGE_TAG_CONSTRAINTS);
 
         // multiple invalid values, but only the first invalid value is captured
-        assertParseFailure(parser, "task 1" + INVALID_TASK_NAME_DESC + INVALID_TASK_DATE_TIME_DESC + VALID_REMARK_MA2108_HOMEWORK
+        assertParseFailure(parser, "task 1" + INVALID_TASK_NAME_DESC
+                + INVALID_TASK_DATE_TIME_DESC + VALID_REMARK_MA2108_HOMEWORK
                 + VALID_DATE_TIME_MA2108_HOMEWORK,
                 Name.MESSAGE_NAME_CONSTRAINTS);
     }

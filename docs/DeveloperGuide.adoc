@@ -482,10 +482,12 @@ private void checkPasswordChanged() {
 ----
 This change would cause the `PasswordWindow` to display instead of the `MainWindow`, requesting for a password input by the user.
 
+.Passard Box UI
 image::passwordBox.png[width="800"]
 
 If the password the user input is unable to decrypt `addressbook.xml`, a `WrongPasswordEvent` is raised which will cause the `PasswordUiManager` to display the following dialog to the user:
 
+.Wrong Password Popup
 image::wrongPasswordDialog.png[width="800"]
 
 If the password the user input successfully decrypts `addressbook.xml`, a `CorrectPasswordEvent` is raised. This event is handled by the `PasswordUiManager` which will start the `UiManager`.

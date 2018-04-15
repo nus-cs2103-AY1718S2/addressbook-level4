@@ -59,8 +59,6 @@ include::../DeveloperGuide.adoc[tag=findbytag]
 
 include::../DeveloperGuide.adoc[tag=scheduling]
 
-include::../DeveloperGuide.adoc[tag=NFR]
-
 include::../DeveloperGuide.adoc[tag=philostest]
 
 

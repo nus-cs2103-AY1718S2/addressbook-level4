@@ -63,14 +63,21 @@ public class UnlockCommandTest {
     }
 
     @Test
-    public void sameKeyTest() {
+    public void samePasswordTest() {
         CommandResult commandResult = prepareUnlockCommand(DEFAULT_PW).execute();
 
         assertEquals(UnlockCommand.MESSAGE_SUCCESS, commandResult.feedbackToUser);
     }
 
     @Test
-    public void differentKeyTest() {
+    public void wrongPasswordTest() {
+        CommandResult commandResult = prepareUnlockCommand("").execute();
+
+        assertEquals(UnlockCommand.MESSAGE_WRONG_PASSWORD, commandResult.feedbackToUser);
+    }
+
+    @Test
+    public void differentPasswordTest() {
         CommandResult commandResult = prepareUnlockCommand(DEFAULT_PW + "x").execute();
 
         assertEquals(UnlockCommand.MESSAGE_WRONG_PASSWORD, commandResult.feedbackToUser);

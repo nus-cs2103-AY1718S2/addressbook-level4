@@ -1659,10 +1659,30 @@ JASON
 // end::calendarTesting[]
 
 // tag::showScheduleTesting[]
-JASON
+.  Display the user's events for a particular day in the command results box
+.. Prerequisites: User is logged in and has authenticated SLAP via Oauth. See the Calendar Quick Start in the <<UserGuidet#, UserGuide.adoc>>
+.. Test case: `show-schedule d/May 5` +
+   Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+.. Test case: `show-schedule d/On Tuesday` +
+   Expected: If there are calendar events for this date, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+.. Test case: `show-schedule` +
+   Expected: Display invalid command format and display correct command usage.
+.. Test case: `show-schedule d/May 5 after 2PM`
+   Expected: Ignores the time; If there are calendar events for this date at any time, they will be displayed. Otherwise, a message will inform the user that there are no events for this day.
+
 // end::showScheduleTesting[]
 
 // tag::errorLogTesting[]
-JASON
+.  Displaying the error log within the application
+.. Test case: `errorlog` and not logged in +
+   Expected: Error log command states that you must be logged in to use the command.
+.. Test case: `View > Show Error Log` and not logged in +
+   Expected: Error log WebView opens and states that you must be logged in to use the feature.
+.. Test case: `errorlog` and logged in +
+   Expected: Error log WebView opens and the error log is displayed.
+.. Test case: `View > Show Error Log` not logged in +
+   Expected: Error log WebView opens and the error log is displayed.
+.. Test case: `logout` with open error logs WebViews open (one or many) +
+   Expected: All error log windows close.
 // end::errorLogTesting[]
 

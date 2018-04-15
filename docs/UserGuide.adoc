@@ -95,6 +95,8 @@ Displays all event information of a specified date including map proposed naviga
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+== Calendar Quick Start
+
 === Help Guide
 
 ==== Viewing help : `help`

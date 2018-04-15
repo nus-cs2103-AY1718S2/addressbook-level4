@@ -49,7 +49,7 @@ public class EventCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "event";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to the desk board. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds an event to desk board. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_START_DATETIME + " START DATETIME "
@@ -101,23 +101,23 @@ public class EventCommand extends UndoableCommand {
 ###### \java\seedu\address\logic\commands\OverdueCommand.java
 ``` java
 /**
- * Lists all overdue tasks
+ * Lists all overdue tasks.
  */
 public class OverdueCommand extends Command {
 
     public static final String COMMAND_WORD = "overdue";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Shows a list of tasks that remain uncompleted after their respective due dates.";
+            + ": Shows a list of overdue tasks.";
 
     public static final String SHOWN_OVERDUE_MESSAGE = "Number of overdue tasks: %d";
 
     @Override
     public CommandResult execute() {
         int numOverdueTasks = OverdueChecker.getNumOverdueTasks();
+        model.updateFilteredActivityList(new OverdueTagPredicate());
         return new CommandResult(String.format(SHOWN_OVERDUE_MESSAGE, numOverdueTasks));
     }
-
 
 }
 ```
@@ -201,7 +201,7 @@ public class TaskCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "task";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to the desk board. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a task to desk board. "
             + "Parameters: "
             + PREFIX_NAME + "NAME "
             + PREFIX_DATE_TIME + "DATETIME "
@@ -301,6 +301,21 @@ public class OverdueCheckerUtil {
         tags.add(new Tag("Finished"));
 
         return new Event(name, startDateTime, endDateTime, location, remark, tags, isCompleted);
+    }
+}
+```
+###### \java\seedu\address\logic\commands\util\OverdueTagPredicate.java
+``` java
+/**
+ * Tests if an {@code Activity}'s {@code Tags} contains "Overdue".
+ */
+public class OverdueTagPredicate implements Predicate<Activity> {
+
+    private final Tag overdueTag = new Tag("Overdue");
+
+    @Override
+    public boolean test(Activity activity) {
+        return activity.getTags().contains(overdueTag);
     }
 }
 ```

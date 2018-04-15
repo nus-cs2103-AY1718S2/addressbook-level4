@@ -838,7 +838,7 @@ e.g.`addc 2 c/CONDITION` or `ac 1 c/CONDITION`
 e.g.`addq 2` or `aq 1`
 
 * *Add new appointment* : `addappt` or `aa` +
-e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
+e.g.`addappt 1 19/6/2018 1200` or `aa 1 19/6/2018 1200`
 
 * *Clear* : `clear` or `c`
 
@@ -846,7 +846,7 @@ e.g.`addappt betsy 19/3/2018 1300` or `aa betsy 19/3/2018 1300`
 e.g. `delete` or `d` or `rm 3`
 
 * *Delete appointment* : `delappt` or `da` +
-e.g.`delappt betsy 2` or `da betsy 2`
+e.g.`delappt 1 19/6/2018 1200` or `da 1 19/6/2018 1200`
 
 * *History* : `history` or `hi`
 
@@ -889,6 +889,6 @@ e.g.`remover` or `rr 1 in/2`
 e.g.`select` or `s 2`
 
 * *View appointments in calendar* : `viewappt` or `va` +
-e.g.`viewappt john` or `viewappt john`
 
-* *View appointments by patient name* : `viewappt` or `va`
+* *View appointments by index* : `viewappt` or `va`
+e.g.`viewappt 1` or `va 1`

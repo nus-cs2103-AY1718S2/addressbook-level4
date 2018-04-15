@@ -21,6 +21,8 @@ public class AppointmentCard extends UiPart<Region> {
     @FXML
     private Label id;
     @FXML
+    private Label name;
+    @FXML
     private Label info;
     @FXML
     private Label date;
@@ -34,6 +36,7 @@ public class AppointmentCard extends UiPart<Region> {
         this.appointment = appointment;
         id.setText(displayedIndex + ". ");
         info.setText(appointment.getInfo());
+        name.setText("Name: " + appointment.getName());
         date.setText("Date: " + appointment.getDate());
         startTime.setText("Start Time: " + appointment.getStartTime());
         endTime.setText("End Time:  " + appointment.getEndTime());

@@ -6,23 +6,26 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Optional;
-import java.util.Set;
+import static seedu.address.model.person.Name.MESSAGE_NAME_CONSTRAINTS;
+import static seedu.address.model.person.NextOfKin.MESSAGE_EMAIL_CONSTRAINTS;
+import static seedu.address.model.person.NextOfKin.MESSAGE_PHONE_CONSTRAINTS;
+import static seedu.address.model.person.NextOfKin.MESSAGE_REMARK_CONSTRAINTS;
+import static seedu.address.model.person.NextOfKin.isValidEmail;
+import static seedu.address.model.person.NextOfKin.isValidName;
+import static seedu.address.model.person.NextOfKin.isValidPhone;
+import static seedu.address.model.person.NextOfKin.isValidRemark;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.logic.commands.NextOfKinCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.subject.Subject;
-import seedu.address.model.tag.Tag;
+
 
 /**
  * Parses input arguments and creates a new EditCommand object
  */
+//@@author chuakunhong
 public class NextOfKinCommandParser implements Parser<NextOfKinCommand> {
 
     /**
@@ -44,57 +47,44 @@ public class NextOfKinCommandParser implements Parser<NextOfKinCommand> {
         }
 
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
-        if (!(argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_REMARK))) {
+        if (!(argMultimap.arePrefixesPresent(PREFIX_NAME, PREFIX_PHONE, PREFIX_REMARK))) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, NextOfKinCommand.MESSAGE_USAGE));
         }
         try {
             ParserUtil.parseNextOfKin(argMultimap.getValue(PREFIX_NAME),
-                    argMultimap.getValue(PREFIX_PHONE),
-                    argMultimap.getValue(PREFIX_EMAIL),
-                    argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setNextOfKin);
+                        argMultimap.getValue(PREFIX_PHONE),
+                        argMultimap.getValue(PREFIX_EMAIL),
+                        argMultimap.getValue(PREFIX_REMARK)).ifPresent(editPersonDescriptor::setNextOfKin);
+
         } catch (IllegalValueException ive) {
             throw new ParseException(ive.getMessage(), ive);
         }
 
         if (argMultimap.getValue(PREFIX_NAME).get().isEmpty() && argMultimap.getValue(PREFIX_PHONE).get().isEmpty()
-            && argMultimap.getValue(PREFIX_EMAIL).get().isEmpty()
                 && argMultimap.getValue(PREFIX_NAME).get().isEmpty()) {
             throw new ParseException(NextOfKinCommand.MESSAGE_NOT_EDITED);
         }
 
+        if (!isValidName(argMultimap.getValue(PREFIX_NAME).get())) {
+            throw new ParseException(MESSAGE_NAME_CONSTRAINTS);
+        }
+
+        if (!isValidPhone(argMultimap.getValue(PREFIX_PHONE).get())) {
+            throw new ParseException(MESSAGE_PHONE_CONSTRAINTS);
+        }
+
+        if (argMultimap.getValue(PREFIX_EMAIL).isPresent()) {
+            if (!isValidEmail(argMultimap.getValue(PREFIX_EMAIL).get())) {
+                throw new ParseException(MESSAGE_EMAIL_CONSTRAINTS);
+            }
+        }
+
+        if (!isValidRemark(argMultimap.getValue(PREFIX_REMARK).get())) {
+            throw new ParseException(MESSAGE_REMARK_CONSTRAINTS);
+        }
+
+
         return new NextOfKinCommand(index, editPersonDescriptor);
-    }
-
-    /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>} if {@code tags} is non-empty.
-     * If {@code tags} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Tag>} containing zero tags.
-     */
-    private Optional<Set<Tag>> parseTagsForEdit(Collection<String> tags) throws IllegalValueException {
-        assert tags != null;
-
-        if (tags.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> tagSet = tags.size() == 1 && tags.contains("") ? Collections.emptySet() : tags;
-        return Optional.of(ParserUtil.parseTags(tagSet));
-    }
-
-    //@@author TeyXinHui
-    /**
-     * Parses {@code Collection<String> subjects} into a {@code Set<Subject>} if {@code subjects} is non-empty.
-     * If {@code subjects} contain only one element which is an empty string, it will be parsed into a
-     * {@code Set<Subject>} containing zero subjects.
-     */
-    private Optional<Set<Subject>> parseSubjectsForEdit(Collection<String> subjects) throws IllegalValueException {
-        assert subjects != null;
-
-        if (subjects.isEmpty()) {
-            return Optional.empty();
-        }
-        Collection<String> subjectSet = subjects.size() == 1 && subjects.contains("")
-                ? Collections.emptySet() : subjects;
-        return Optional.of(ParserUtil.parseSubjects(subjectSet));
     }
     //@@author
 }

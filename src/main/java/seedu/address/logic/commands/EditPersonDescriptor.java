@@ -152,13 +152,24 @@ public class EditPersonDescriptor {
     }
 
     /**
-     * Returns an unmodifiable remark set, which throws {@code UnsupportedOperationException}
+     * Returns an unmodifiable subject set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      * Returns {@code Optional#empty()} if {@code subjects} is null.
      */
     public Optional<Set<Subject>> getSubjects() {
         return (subjects != null) ? Optional.of(Collections.unmodifiableSet(subjects)) : Optional.empty();
     }
+
+    //@@author TeyXinHui
+    /**
+     * Returns an unmodifiable subject set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     * Returns {@code Optional#empty()} if {@code subjects} is null.
+     */
+    public Set<Subject> getSubjectsAsSet() {
+        return (subjects != null) ? Collections.unmodifiableSet(subjects) : Collections.emptySet();
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {

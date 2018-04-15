@@ -159,7 +159,7 @@ add -o n/Jacqueline p/65123456 e/jacq@gmail.com a/96 Computing Drive, #02-03 nr/
 // tag::listcommand[]
 === Listing all contacts : `list` or `ls`
 
-If you want to list out all Contacts and PetPatients stored in Medeina for a better overview, enter `list` or `ls` in the command box.
+If you want to list all contacts and pet patients stored in Medeina for a better overview, enter `list` or `ls` in the command box.
 
 .`list` command
 image::List_Command.PNG[width="500"]

@@ -45,8 +45,8 @@ public class AddressTest {
     public void testHashcode_symmetric() {
         Address addressA = new Address();
         Address addressB = new Address();
-        Address addressC = new Address(" ");
-        Address addressD = new Address(" ");
+        Address addressC = new Address("NUS");
+        Address addressD = new Address("NUS");
 
         assertEquals(addressA.hashCode(), addressB.hashCode());
         assertEquals(addressC.hashCode(), addressD.hashCode());

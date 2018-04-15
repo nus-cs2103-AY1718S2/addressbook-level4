@@ -656,20 +656,35 @@ This is a limitation of the BrowserPanel UI element.
 //@@author
 
 //@@author Der-Erlkonig
+// tag::BrowserPanel[]
 === BrowserPanel Enhancement
 In the original AddressBook, the BrowserPanel displayed a dummy page when a Person was selected. A more useful implementation shows some more important details of the `Runner` or `Customer`.
 These are important fields for a loan shark manager to get a quick grasp of a customer's details, as well as who the runners are in charge of.
 
 ==== Enhancement
-Depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
-Upon selection of the PersonCard, or select command from the CommandBox,
+`SelectCommand` manages the displaying of a Person's details.
+The `loadPersonPage` method in `BrowserPanel` has been modified to show the details of a Person, rather than a dummy page, as outlined below:
 
 ----
     @Override
-    
+    private void loadPersonPage(Person person) {
+            String personfilepath;
+            if (person instanceof Customer) {
+                htmlWriter = new HtmlWriter((Customer) person);
+                personfilepath = htmlWriter.writeCustomer();
+            } else if (person instanceof Runner) {
+                htmlWriter = new HtmlWriter((Runner) person);
+                personfilepath = htmlWriter.writeRunner();
+            } else {
+                personfilepath = "";
+            }
+            loadPage("file:///" + personfilepath);
+    }
 ----
 
-a HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
+A `Person` will be passed into a `HtmlWriter` and
+depending on whether the selected `Person` is a `Runner` or `Customer`, the respective HTML file with the desired fields are generated.
+A HtmlWriter gathers data on the particular Person using the getter methods available in the Customer and Runner classes.
 Both `Customer` and `Runner` will have the fields: name, phone, email, address.
 Fields exclusively for the `Customer` are: amount borrowed, amount owed, due date, and runner assigned.
 
@@ -686,6 +701,21 @@ The background and font colors are matched to the HuatAh! application.
 A customer's amount owed and due dates are very important variables which directly affect the PnL of the loan shark boss' enterprise.
 Being able to view a runner's list of assigned customers is important for managing human resource.
 Therefore, this feature is suitable, and definitely desirable from the perspective of a loan shark boss.
+
+==== Design Considerations
+The following methods of implementations were considered.
+
+===== Aspect: Data structure to support the undo/redo commands
+
+* **Alternative 1 (current choice):** Write the data to a .html file and use the current implementation of `loadPersonPage`.
+** Pros: Simple, easy to understand, and does not interfere with the implementation of `LocateCommand`.
+** Cons: May not be the most native.
+* **Alternative 2:** Use `HistoryManager` for undo/redo
+** Pros: More secure as details are kept within the app.
+** Cons: Will require a new implementation of the whole BrowserPanel,
+will not be compatible with the above implementation `LocateCommand`.
+
+// end::BrowserPanel[]
 //@@author
 
 == Documentation

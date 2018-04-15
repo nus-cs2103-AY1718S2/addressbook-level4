@@ -154,7 +154,7 @@ public class BrowserPanel extends UiPart<Region> {
     @Subscribe
     private void handleShowLoginDialogRequestEvent(ShowLoginDialogRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPage(event.loadUrl);
+        loadBrowserPage(event.loadUrl);
         passVerificationCode();
     }
 }

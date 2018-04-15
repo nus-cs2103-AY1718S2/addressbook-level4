@@ -99,9 +99,7 @@ public class RemoveRecordCommand extends UndoableCommand {
         } catch (IndexOutOfBoundsException ie) {
             throw new CommandException(MESSAGE_REMOVE_RECORD_FAILURE);
         }
-        if (temp.size() == 0) {
-            temp.add(new Record());
-        }
+
         RecordList recordlist = new RecordList(temp);
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),

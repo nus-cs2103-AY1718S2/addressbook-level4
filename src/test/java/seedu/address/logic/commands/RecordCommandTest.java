@@ -53,7 +53,7 @@ public class RecordCommandTest {
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
                 new Record("01/04/2018", "", "", ""));
 
-        String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
+        String expectedMessage = String.format(RecordCommand.MESSAGE_ADD_RECORD_SUCCESS, editedPatient);
 
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
@@ -67,7 +67,7 @@ public class RecordCommandTest {
         Patient editedPatient = new PatientBuilder(toEdit).withRecordList("01/04/2018 s/ i/ t/").build();
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "", "", ""));
 
-        String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
+        String expectedMessage = String.format(RecordCommand.MESSAGE_ADD_RECORD_SUCCESS, editedPatient);
 
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
@@ -85,7 +85,7 @@ public class RecordCommandTest {
         RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
                 new Record("01/04/2018", "test", "test", "test"));
 
-        String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
+        String expectedMessage = String.format(RecordCommand.MESSAGE_ADD_RECORD_SUCCESS, editedPatient);
 
         Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
         expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);

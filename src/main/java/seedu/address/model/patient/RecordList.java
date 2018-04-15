@@ -19,8 +19,7 @@ public class RecordList {
 
     public RecordList() {
         this.recordList = new ArrayList<Record>();
-        recordList.add(new Record());
-        this.numRecord = 1;
+        this.numRecord = 0;
     }
 
     /**
@@ -35,8 +34,7 @@ public class RecordList {
     public RecordList(String string) throws ParseException {
         if (string.isEmpty()) {
             this.recordList = new ArrayList<Record>();
-            recordList.add(new Record());
-            this.numRecord = 1;
+            this.numRecord = 0;
         } else {
             this.recordList = new ArrayList<Record>();
             String[] lines = string.split("\\r?\\n");

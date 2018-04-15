@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- @@author Caijun7 -->
+<addressbook>
+    <aliases>
+        <command>li!st</command>
+        <aliasName>l</aliasName>
+    </aliases>
+    <password/>
+</addressbook>

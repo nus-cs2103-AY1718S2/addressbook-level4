@@ -21,8 +21,14 @@ import seedu.address.model.tag.Tag;
 public class SampleDataUtil {
     public static Person[] getSamplePersons() {
         return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"),
+            new Person(new Name("The True Leader"), new Phone("13371337"), new Email("OverpoweringAura@example.com"),
+                new Address("123 EZLeader Street 29, #13-37"),
+                    new Birthday("01011995"), new Timetable("http://modsn.us/RY8zU"), getTagSet("supremeLeader")),
+            new Person(new Name("Johnny"), new Phone("87438807"), new Email("Johnny@example.com"),
+                    new Address("123 Johnny Street 29, #14-32"),
+                    new Birthday("01011995"), new Timetable("http://modsn.us/RY8zU"), getTagSet("friends")),
+            new Person(new Name("Alan"), new Phone("31313131"), new Email("Alen@example.com"),
+                    new Address("123 Ale Street 29, #04-20"),
                     new Birthday("01011995"), new Timetable("http://modsn.us/RY8zU"), getTagSet("friends")),
             new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
                 new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
@@ -39,7 +45,10 @@ public class SampleDataUtil {
                     new Birthday("26031996"), new Timetable("http://modsn.us/phiZF"), getTagSet("classmates")),
             new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
                 new Address("Blk 45 Aljunied Street 85, #11-31"),
-                    new Birthday("26032010"), new Timetable("http://modsn.us/phiZF"), getTagSet("colleagues"))
+                    new Birthday("26032010"), new Timetable("http://modsn.us/phiZF"), getTagSet("colleagues")),
+            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
+                    new Address("Blk 30 Geylang Street 29, #06-40"),
+                    new Birthday("01011995"), new Timetable("http://modsn.us/RY8zU"), getTagSet("friends")),
         };
     }
 

@@ -9,11 +9,9 @@ import seedu.address.commons.util.SecurityUtil;
 //@@author yeggasd
 /**
  * Represents the password of the address book
- * Guarantees: current and previous password are present and not null.
+ * Guarantees: current and previous password are present.
  */
 public class Password {
-    private static final String DEFAULT_PASSWORD = "test";
-
     private byte[] currentPassword;
     private byte[] prevPassword;
 
@@ -35,8 +33,8 @@ public class Password {
     }
 
     /**
-     * Getter for previous password
-     * @return previousPassword
+     * Getter for previous password.
+     * @return prevPassword.
      */
     public byte[] getPrevPassword() {
         return prevPassword;
@@ -44,7 +42,7 @@ public class Password {
 
     /**
      * Updates the password.
-     * @param password is the password to be used. Cannot be null
+     * @param password is the password to be used. Cannot be null.
      */
     public void updatePassword(Password password) {
         requireNonNull(password);
@@ -54,8 +52,8 @@ public class Password {
     }
 
     /**
-     * Similar to {@link #updatePassword(Password)}
-     * @param password is the password to be used. Cannot be null
+     * Similar to {@link #updatePassword(Password)}.
+     * @param password is the password to be used.
      */
     public void updatePassword(byte[] password) {
         prevPassword = currentPassword;

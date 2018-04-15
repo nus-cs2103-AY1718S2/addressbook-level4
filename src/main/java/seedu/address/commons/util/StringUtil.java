@@ -85,14 +85,18 @@ public class StringUtil {
 
     /**
      * @param s The string to be checked
-     * @return 0 is string is even else 1.
+     * @return 0 if string is even
+     *         1 if string is odd
+     *         null otherwise.
      */
     public static Index getOddEven(String s) {
         requireNonNull(s);
         if (s.equalsIgnoreCase("even")) {
             return Index.fromZeroBased(0);
-        } else {
+        } else if (s.equalsIgnoreCase("odd")) {
             return Index.fromZeroBased(1);
+        } else {
+            return null;
         }
     }
 
@@ -119,7 +123,7 @@ public class StringUtil {
      */
     public static String capitalize(String s) {
         requireNonNull(s);
-        return s.substring(0, 1).toUpperCase() + s.substring(1);
+        return s.substring(0, 1).toUpperCase() + s.substring(1).toLowerCase();
     }
     //@@author
 }

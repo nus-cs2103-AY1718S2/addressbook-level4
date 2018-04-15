@@ -18,6 +18,7 @@ import java.util.Arrays;
 import java.util.List;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.util.SecurityUtil;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -186,13 +187,39 @@ public class CommandTestUtil {
 
     public static final String VALID_THREE_LOCATIONS = VALID_LOCATION_ADDRESS_1 + "/"
             + VALID_LOCATION_BUILDING_LOWERCASE + "/" + VALID_LOCATION_POSTAL_2;
+    //@@author
 
+    //@@author yeggasd
+    public static final String VALID_PASSWORD = "test";
+    public static final byte[] VALID_PASSWORD_HASH;
+    public static final String MIXED_CASE_PASSWORD_COMMAND_WORD = "EnCrYpT";
+    public static final String MIXED_CASE_REMOVEPASSWORD_COMMAND_WORD = "DeCrYpT";
+    //@@author
+
+    //@@author Caijun7
+    public static final String VALID_IMPORT_FILEPATH = "src/test/data/ImportCommandTest/aliceAddressBook.xml";
+    public static final String ENCRYPTED_IMPORT_FILEPATH =
+            "src/test/data/ImportCommandTest/encryptedAliceBensonAddressBook.xml";
+    public static final String TEST_PASSWORD = "test";
+    public static final String WRONG_PASSWORD = "wrong";
+    public static final String MIXED_CASE_IMPORT_COMMAND_WORD = "ImPoRt";
+    public static final String INVALID_IMPORT_FILEPATH = "src/";
+    public static final String INVALID_FILE_FORMAT = "src/test/data/ImportCommandTest/invalidFileFormatAddressBook.xml";
+
+    public static final String VALID_EXPORT_FILEPATH = "src/test/data/sandbox/temp.xml";
+    public static final String MIXED_CASE_EXPORT_COMMAND_WORD = "ExPoRt";
+    public static final String INVALID_EXPORT_FILEPATH = "src/";
+
+    public static final String VALID_UPLOAD_FILEPATH = "src/test/data/sandbox/temp.xml";
+    public static final String MIXED_CASE_UPLOAD_COMMAND_WORD = "UpLoAd";
+    public static final String INVALID_UPLOAD_FILEPATH = "src/";
     //@@author
 
     public static final EditCommand.EditPersonDescriptor DESC_AMY;
     public static final EditCommand.EditPersonDescriptor DESC_BOB;
 
     static {
+        VALID_PASSWORD_HASH = SecurityUtil.hashPassword(VALID_PASSWORD);
         DESC_AMY = new EditPersonDescriptorBuilder().withName(VALID_NAME_AMY)
                 .withPhone(VALID_PHONE_AMY).withEmail(VALID_EMAIL_AMY).withAddress(VALID_ADDRESS_AMY)
                 .withBirthday(VALID_BIRTHDAY_AMY).withTimetable(VALID_TIMETABLE_AMY)

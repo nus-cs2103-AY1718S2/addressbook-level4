@@ -81,6 +81,6 @@ public class NextOfKinCommandParserTest {
 
         assertParseSuccess(parser, userInput, expectedCommand);
     }
-    //@@author TeyXinHui
+    //@@author
 
 }

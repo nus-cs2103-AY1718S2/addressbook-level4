@@ -309,17 +309,17 @@ You can use `find` or `f` to do the following :
 
 .^a|Contact
 | `find **-o** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
-a| * Currently accepted individual `PREFIX` finding are `n/NAME`, `nr/NRIC`, `t/TAGS`.
+a| * Currently accepted individual `PREFIX` are `n/NAME`, `nr/NRIC`, `t/TAGS`.
 * The above `PREFIX` can be used in any combination to find more specific contacts.
 * Pets of displayed contacts will also be displayed.
-* The input in brackets `[MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]` are optional, and can be added if more specific information is required.
+* The input in brackets are optional, and can be added if more specific information is required.
 
 .^| Pet patient
 | `find **-p** PREFIX/KEYWORD [MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]`
-a| * Currently accepted individual `PREFIX` finding are `n/PET_NAME`, `s/SPECIES`, `b/BREED`, `c/COLOR`, `bt/BLOOD_TYPE`, `t/PET_TAGS`.
+a| * Currently accepted individual `PREFIX` are `n/PET_NAME`, `s/SPECIES`, `b/BREED`, `c/COLOR`, `bt/BLOOD_TYPE`, `t/PET_TAGS`.
 * The above `PREFIX` can be used in any combination to find more specific pet patients.
 * Contacts of displayed pets will also be displayed.
-* The input in brackets `[MORE KEYWORDS] [MORE PREFIX/MORE KEYWORDS]` are optional, and can be added if more specific information is required.
+* The input in brackets are optional, and can be added if more specific information is required.
 
 |=====
 {empty} +

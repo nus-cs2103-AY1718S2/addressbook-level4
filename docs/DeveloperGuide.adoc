@@ -1627,19 +1627,79 @@ These instructions only provide a starting point for testers to work on; testers
 
 === Adding contact, pet patient, appointment
 
-=== Deleting a person
+=== Finding contacts or pet patients
+. Finding contacts
 
-. Deleting a person while all persons are listed
+.. Prerequisites: List all contacts and pet patients using the `list` command. Multiple contacts in the list.
+.. Test case: `find -o n/Alex Yeoh` +
+   Expected: All contacts with `Alex` or `Yeoh` in their names are listed, pet patients of contacts listed are also listed.
+.. Test case: `find -o t/Owner` +
+   Expected: All contacts with an `Owner` tag are listed, pet patients of contacts listed are also listed.
+.. Test case: `find -o n/Alex Yeoh t/Owner` +
+   Expected: All contacts with `Alex` or `Yeoh` in their names **and** have an `Owner` tag are listed, pet patients of contacts listed are also listed.
+.. Incorrect find commands: `find yay`, `find` +
+   Expected: Listing does not change. Error details shown in the status message.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+. Finding pet patients
+
+.. Prerequisites: List all contacts and pet patients using the `list` command. Multiple pet patients in the list.
+.. Test case: `find -p n/Ane` +
+   Expected: All pet patients with `Ane` in their names are listed, contacts who are owners of listed pet patients are also listed.
+.. Test case: `find -p s/Cat c/Black` +
+   Expected: All `Cat` pet patients who are `Black` in colour are listed, contacts who are owners of listed pet patients are also listed.
+.. Incorrect find commands not following the command syntax: `find`, `find yay` +
+   Expected: Listing does not change. Error details shown in the status message.
+
+=== Listing appointments
+. Switching views in the Calendar
+
+.. Prerequisites: There are appointments in the Calendar in the year 2018, there are no appointments in the Calendar in the year 2000.
+.. Test case: `listappt -y` +
+   Expected: The calendar is changed from current view to year view of the current year.
+.. Test case: `listappt -m 2018-01` +
+   Expected: The calendar is changed from current view to month view of January in 2018.
+.. Test case: `listappt -d 2018-12-31` +
+   Expected: The calendar is changed from current view to day view of 31st December 2018.
+.. Test case: `listappt -y 2000` +
+   Expected: The calendar is not changed. Error details shown in the status message.
+.. Other incorrect listappt commands not following the command syntax: `listappt`, `listappt -y 2018-12-31` etc. +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Deleting a person
+
+. Forcefully deleting a contact while all contacts are listed
+
+.. Prerequisites: List all contacts using the `list` command. Multiple contacts in the list.
+.. Test case: `delete -fo 1` +
+   Expected: First contact is deleted from the list. Details of the deleted contact and its deleted dependencies is shown in the status message.
+.. Test case: `delete -fo 0` +
+   Expected: No contact is deleted. Error details shown in the status message.
+.. Other incorrect delete commands not following the command syntax: `delete`, `delete yay` etc. +
+   Expected: Similar to previous.
+
+. Deleting a contact with pet patients
+
+.. Prerequisites: The current listing is not empty. The contact at index `1` should have pet patients tied to it.
+.. Test case: `delete -o 1` +
+   Expected: No contacts deleted. Error details shown in the status message.
+
+. Deleting a pet patient with appointments
+
+.. Prerequisites: The current listing is not empty. The pet patient at index `1` should have appointments tied to it.
+.. Test case: `delete -p 1` +
+   Expected: No pet patients deleted. Error details shown in the status message.
+
+. Forcefully deleting a pet patient while all pet patients are listed
+
+.. Prerequisites: List all pet patients using the `list` command. Multiple pet patients in the list.
+.. Test case: `delete -fp 1` +
+   Expected: First pet patient is deleted from the list. Details of the deleted pet patient and its deleted dependencies shown in the status message.
+
+. Deleting an appointment
+
+.. Prerequisites: There is an appointment at index `1`.
+.. Test case: `delete -a 1` +
+   Expected: The appointment at index `1` is deleted from the Calendar. Details of the deleted appointment shown in the status message.
 
 === Listing owners and petPatients
 . Listing out all owners and petPatients

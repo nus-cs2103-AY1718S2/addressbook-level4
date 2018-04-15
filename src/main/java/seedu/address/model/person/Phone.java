@@ -54,5 +54,4 @@ public class Phone {
     public int hashCode() {
         return value.hashCode();
     }
-
 }

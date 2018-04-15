@@ -41,7 +41,7 @@ public class PhonePredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.phonePredicate = PredicateUtil.formOrPredicate(phoneContainsKeywordsPredicate,
+            this.phonePredicate = new PredicateUtil().formOrPredicate(phoneContainsKeywordsPredicate,
                     phoneContainsSubstringsPredicate, phoneContainsPrefixesPredicate,
                     phoneContainsSuffixesPredicate);
         }

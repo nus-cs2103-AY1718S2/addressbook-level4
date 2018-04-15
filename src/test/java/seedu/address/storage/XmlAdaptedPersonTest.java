@@ -242,6 +242,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
+    //@@author tanhengyeow
     @Test
     public void toModelType_invalidMajor_throwsIllegalValueException() {
         XmlAdaptedPerson person =
@@ -307,7 +308,7 @@ public class XmlAdaptedPersonTest {
         Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
     }
 
-    //@@author
+    //@@author tanhengyeow
     @Test
     public void toModelType_nullGradePointAverage_throwsIllegalValueException() {
         XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,

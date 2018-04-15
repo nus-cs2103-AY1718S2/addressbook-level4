@@ -43,7 +43,7 @@ public class CommentPredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.commentPredicate = PredicateUtil.formOrPredicate(commentContainsKeywordsPredicate,
+            this.commentPredicate = new PredicateUtil().formOrPredicate(commentContainsKeywordsPredicate,
                     commentContainsSubstringsPredicate, commentContainsPrefixesPredicate,
                     commentContainsSuffixesPredicate);
         }

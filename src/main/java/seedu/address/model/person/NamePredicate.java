@@ -42,7 +42,7 @@ public class NamePredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.namePredicate = PredicateUtil.formOrPredicate(nameContainsKeywordsPredicate,
+            this.namePredicate = new PredicateUtil().formOrPredicate(nameContainsKeywordsPredicate,
                     nameContainsSubstringsPredicate, nameContainsPrefixesPredicate,
                     nameContainsSuffixesPredicate);
         }

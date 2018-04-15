@@ -41,7 +41,7 @@ public class MajorPredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.majorPredicate = PredicateUtil.formOrPredicate(majorContainsKeywordsPredicate,
+            this.majorPredicate = new PredicateUtil().formOrPredicate(majorContainsKeywordsPredicate,
                     majorContainsSubstringsPredicate, majorContainsPrefixesPredicate,
                     majorContainsSuffixesPredicate);
         }

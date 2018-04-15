@@ -43,7 +43,7 @@ public class JobAppliedPredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.jobAppliedPredicate = PredicateUtil.formOrPredicate(jobAppliedContainsKeywordsPredicate,
+            this.jobAppliedPredicate = new PredicateUtil().formOrPredicate(jobAppliedContainsKeywordsPredicate,
                     jobAppliedContainsSubstringsPredicate, jobAppliedContainsPrefixesPredicate,
                     jobAppliedContainsSuffixesPredicate);
         }

@@ -43,7 +43,7 @@ public class UniversityPredicate implements FieldPredicate {
         }
         if (!exactKeywords.isEmpty() || !substringKeywords.isEmpty()
                 || !prefixKeywords.isEmpty() || !suffixKeywords.isEmpty()) {
-            this.universityPredicate = PredicateUtil.formOrPredicate(universityContainsKeywordsPredicate,
+            this.universityPredicate = new PredicateUtil().formOrPredicate(universityContainsKeywordsPredicate,
                     universityContainsSubstringsPredicate, universityContainsPrefixesPredicate,
                     universityContainsSuffixesPredicate);
         }

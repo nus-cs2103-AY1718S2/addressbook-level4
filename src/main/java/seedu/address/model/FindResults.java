@@ -96,7 +96,7 @@ public class FindResults {
     public boolean containsWordIgnoreCase(String sentence, String word, String commandPrefix) {
         //requireNonNull(sentence);
         if (sentence == null) {
-            sentence = ""; //quick fix for test first, fix later
+            sentence = "";
         }
         requireNonNull(word);
 
@@ -135,7 +135,7 @@ public class FindResults {
                                                 int threshold) {
         //requireNonNull(sentence);
         if (sentence == null) {
-            sentence = ""; //quick fix for test first, fix later
+            sentence = "";
         }
         requireNonNull(word);
         requireNonNull(threshold);
@@ -176,7 +176,7 @@ public class FindResults {
     public boolean containsSubstringIgnoreCase(String sentence, String substring, String commandPrefix) {
         //requireNonNull(sentence);
         if (sentence == null) {
-            sentence = ""; //quick fix for test first, fix later
+            sentence = "";
         }
         requireNonNull(substring);
 
@@ -208,14 +208,14 @@ public class FindResults {
     public boolean containsPrefixIgnoreCase(String sentence, String prefix, String commandPrefix) {
         //requireNonNull(sentence);
         if (sentence == null) {
-            sentence = ""; //quick fix for test first, fix later
+            sentence = "";
         }
         requireNonNull(prefix);
 
         String preppedPrefix = prefix.trim();
         checkArgument(!preppedPrefix.isEmpty(), "Prefix parameter cannot be empty");
 
-        boolean isPrefixPresent = StringUtils.startsWithIgnoreCase(sentence, prefix);
+        boolean isPrefixPresent = StringUtils.startsWithIgnoreCase(sentence, preppedPrefix);
         String currKey = prefix + "*";
         if (isPrefixPresent) {
             String value = "(" + commandPrefix + ")" + sentence;
@@ -240,14 +240,14 @@ public class FindResults {
     public boolean containsSuffixIgnoreCase(String sentence, String suffix, String commandPrefix) {
         //requireNonNull(sentence);
         if (sentence == null) {
-            sentence = ""; //quick fix for test first, fix later
+            sentence = "";
         }
         requireNonNull(suffix);
 
         String preppedSuffix = suffix.trim();
         checkArgument(!preppedSuffix.isEmpty(), "Suffix parameter cannot be empty");
 
-        boolean isSuffixPresent = StringUtils.endsWithIgnoreCase(sentence, suffix);
+        boolean isSuffixPresent = StringUtils.endsWithIgnoreCase(sentence, preppedSuffix);
         String currKey =  "*" + suffix;
         if (isSuffixPresent) {
             String value = "(" + commandPrefix + ")" + sentence;

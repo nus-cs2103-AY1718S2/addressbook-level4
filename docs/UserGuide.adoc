@@ -123,22 +123,34 @@ image::help_window.PNG[width="990"]
 // tag::login[]
 ==== Logging into the system: `login` [since v1.2]
 
-Opens a window for the user to log into the IMDB with a matching username and password. +
+Opens a window for the user to log into the IMDB with a matching username and password as shown in Figure 4 below. +
 There are two placeholder accounts currently in the IMDB. There is alice, who is a doctor, and bob, who is a medical staff member. Some commands are restricted based on which role the user is logged into. +
 Format: `login` or `lg`
+
+.Login Window
+[caption="Figure 4: "]
+image::login_window.PNG[width="990"]
 
 Examples:
 
 * `login` +
 Username: alice +
 Password: password123 +
-Logs the user in as alice, who is a doctor.
+Logs the user in as alice, who is a doctor as shown in Figure 5 below.
+
+.IMDB Main Interface (Logged in as Alice)
+[caption="Figure 5: "]
+image::login_window_doctor.PNG[width="990"]
 
 * `login` +
 Username: bob +
 Password: password456 +
-Logs the user in as bob, who is a medical staff.
+Logs the user in as bob, who is a medical staff as shown in Figure 6 below.
 // end::login[]
+
+.IMDB Main Interface (Logged in as Bob)
+[caption="Figure 6: "]
+image::login_window_staff.PNG[width="990"]
 
 ==== Listing entered commands : `history`
 

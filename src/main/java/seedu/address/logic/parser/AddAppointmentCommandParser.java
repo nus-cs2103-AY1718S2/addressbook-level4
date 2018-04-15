@@ -15,6 +15,8 @@ import seedu.address.model.patient.NameContainsKeywordsPredicate;
  */
 public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand> {
 
+    private static final int NO_OF_ARGUMENTS = 3;
+
     /**
      * Parses the given {@code String} of arguments in the context of the AddAppointmentCommandParser
      * and returns an AddAppointmentCommandParser object for execution.
@@ -32,7 +34,7 @@ public class AddAppointmentCommandParser implements Parser<AddAppointmentCommand
 
         String[] argsArray = trimmedArgs.split("\\s");
 
-        if (argsArray.length < 3) {
+        if (argsArray.length < NO_OF_ARGUMENTS) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     AddAppointmentCommand.MESSAGE_USAGE));
         }

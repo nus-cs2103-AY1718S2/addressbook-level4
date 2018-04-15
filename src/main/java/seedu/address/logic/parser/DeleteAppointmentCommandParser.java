@@ -14,6 +14,9 @@ import seedu.address.model.appointment.DateTime;
  * Parses input arguments and creates a new DeleteAppointmentCommand object
  */
 public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentCommand> {
+
+    private static final int NO_OF_ARGUMENTS = 3;
+
     /**
      * Parses the given {@code String} of arguments in the context of the DeleteAppointmentCommand
      * and returns an DeleteAppointmentCommand object for execution.
@@ -30,7 +33,7 @@ public class DeleteAppointmentCommandParser implements Parser<DeleteAppointmentC
 
         String[] argsArray = trimmedArgs.split("\\s");
 
-        if (argsArray.length < 3) {
+        if (argsArray.length < NO_OF_ARGUMENTS) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
                     DeleteAppointmentCommand.MESSAGE_USAGE));
         }

@@ -17,18 +17,19 @@ By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
 [[Introduction]]
 == Introduction
-
 CLIndar is a desktop application that helps university computing students to manage their tasks and events.
-The application deals with 2 types of entries:
+With CLIndar, you can:
 
-* *tasks*: things that need to be done by a certain deadline; and
-* *events*: things that occur at a specific time and place.
+* keep track of your tasks and events and be reminded of their due dates; and
+* record all completed tasks and events, so that you know what you have done.
+
 
 CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
-Thus, compared to traditional Graphical User Interface (GUI) applications, CLIndar is faster and provides more convenience for computing students.
+Thus, compared to traditional Graphical User Interface (GUI) applications, this application is faster and provides more convenience for computing students.
 
 We are looking for developers who are savvy, keen to learn about developing Java applications using JavaFx UI
 framework and most importantly keen on developing CLIndar further. If you are interested, send us an email at CLIndar@gmail.com.
+CLIndar is *Common-Line Interface (CLI)-based and uses Linux-style commands*, which computing students are familiar with.
 
 This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
 get started customizing and contributing to the application.
@@ -685,7 +686,7 @@ If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed
 //end:complete[]
 
 //tag::activitydesign[]
-==== Design considerations
+==== Design Considerations
 
 ===== Aspect: Implementation of `Activity`, `Task` and `Event` class
 There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
@@ -716,7 +717,7 @@ We will need to write codes for classes and methods related to `Task` and `Event
 
 This section describes implementation of features related to the GUI.
 
-==== Current implementation
+==== Current Implementation
 
 There are 3 views for the GUI of CLIndar - `MainView`, `TaskView` and `EventView`.
 
@@ -859,9 +860,9 @@ If `ListCommand` is successful:
 {empty} +
 {empty} +
 
-==== Design considerations
+==== Design Considerations
 
-This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+This section describes various Design Considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
 // tag::listcommandaspect[]
 [discrete]
@@ -890,7 +891,7 @@ definitely the preferred approach here.
 
 This section describes the implementation and design considerations for the storage of `Task` and `Event` objects.
 
-==== Current implementation
+==== Current Implementation
 
 The management of Desk Board storage in CLIndar includes automatic saving and loading of data, as well as export and import operations.
 The following describes how each feature is implemented.
@@ -1008,7 +1009,7 @@ image::AddActivitiesSequenceDiagram.png[width="800"]
 
 {empty} +
 
-==== Design considerations
+==== Design Considerations
 
 This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
@@ -1044,7 +1045,7 @@ This section describes various design considerations related to the implementati
 
 The current implementation and design considerations for the undo/redo feature are explained in this section.
 
-==== Current implementation
+==== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of Desk Board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -1141,7 +1142,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 .Activity diagram for undo and redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design considerations
+==== Design Considerations
 
 This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
 
@@ -1192,7 +1193,7 @@ This section describes various design considerations related to the implementati
 The overdue feature will automatically tag tasks as "overdue" once their due date times have passed and tag events as "finished" once their end date times have passed.
 The current implementation and design considerations for this feature are explained in this section.
 
-==== Current implementation
+==== Current Implementation
 The overdue feature is implemented using the `ScheduledExecutorService` class, provided by the `java.util.concurrent` package. This class creates another thread in the system and that thread is scheduled to run a checker every 30 seconds.
 
 It is implemented in `DateTimeScheduler` as shown below.
@@ -1235,7 +1236,7 @@ The `checker` traverses the list of tasks and compares the due date time of each
 it traverses the list of events and compares the end date time of each event to the `currentDateTime`.
 Note that `Platform.runLater()` must wrap around the codes as https://stackoverflow.com/questions/21083945/how-to-avoid-not-on-fx-application-thread-currentthread-javafx-application-th[you cannot update the GUI from a thread other than the JavaFx Application thread.]
 
-==== Design considerations
+==== Design Considerations
 This section describes various design considerations related to the overdue feature.
 
 [discrete]

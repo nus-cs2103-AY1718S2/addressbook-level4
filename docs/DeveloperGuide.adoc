@@ -463,7 +463,7 @@ The `Storage` component then converts the JSON file into a hashMap of modules to
 // end::ModuleDatabase[]
 
 //tag::Calendar[]
-=== Calendar Feature
+=== Calendar feature
 Fastis uses a stand-alone `Calendar` class, adapted from https://github.com/SirGoose3432/javafx-calendar[javafx-calendar] by SirGoose3432.
 It is used to view the user's upcoming events, e.g. interviews, meetings, etc.
 
@@ -604,7 +604,7 @@ As the weekly equivalent of `Calendar`, `Timetable` has the same aspect to consi
 
 //tag::showingTimetable[]
 [[showingTimetable]]
-=== Showing the Timetable feature
+=== Showing the timetable
 
 This feature allows users to see a person's timetable by selecting him/her.
 
@@ -656,7 +656,7 @@ The method then takes the `query` and parses them into modules and lessons, whic
 
 //tag::Scheduling[]
 [[Scheduling]]
-=== Scheduling meetings feature
+=== Schedule meetings feature
 Fastis supports showing all the common free time slots for all members in based on their timetable.
 
 ==== Current implementation
@@ -714,7 +714,7 @@ private void generateFreeTimeSlots() {
 // end::Scheduling[]
 
 // tag::listTagMembers[]
-=== List Tag Members Feature
+=== List Tag Members feature
 
 Fastis lists all persons in Fastis that have tags similar to input.
 
@@ -994,7 +994,7 @@ image::lGMSequenceDiagram.png[width="800"]
 ** Pros: This implementation makes it easy to edit `ListGroupMembersCommand()` easily to suit our needs
 ** Cons: This implementation makes it hard for new developers to understand the template pattern.
 
-=== Delete Group Feature
+=== Delete Group feature
 
 Fastis deletes a group named by the user from input.
 
@@ -1165,7 +1165,7 @@ image::AddToDoSequenceDiagram.png[width="800"]
 // end::addToDo[]
 
 // tag::checkToDo[]
-=== Check/UnCheck ToDo feature
+=== Check/Uncheck ToDo feature
 ==== Current implementation
 
 The check/uncheck to-dos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
@@ -1240,7 +1240,7 @@ Listed below are the different logging levels:
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
 
 // tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== [Proposed] Data encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
@@ -1256,16 +1256,16 @@ Fastis uses asciidoc for documentation.
 [NOTE]
 Asciidoc is chosen over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 The project uses https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -1284,7 +1284,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 This section documents how to run the tests on Fastis.
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -1333,7 +1333,7 @@ e.g. `seedu.address.storage.StorageManagerTest`
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -1341,22 +1341,22 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
+=== Coverage reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
-=== Documentation Previews
+=== Documentation previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -1365,7 +1365,7 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +

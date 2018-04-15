@@ -43,7 +43,8 @@ public class AddCommandIntegrationTest {
     @Test
     public void execute_duplicateNric_throwsCommandException() throws IOException {
         Person personInList = model.getAddressBook().getPersonList().get(0);
-        assertCommandFailure(prepareCommand(personInList, model), model, "This NRIC already exists in the address book");
+        assertCommandFailure(prepareCommand(personInList, model), model,
+                "This NRIC already exists in the address book");
     }
 
     /**

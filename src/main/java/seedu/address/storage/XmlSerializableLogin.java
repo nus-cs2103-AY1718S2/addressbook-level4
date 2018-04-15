@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.LoginManager;
 
+//@@author Pearlissa
 /**
  * An Immutable AddressBook that is serializable to XML format
  */

@@ -9,6 +9,7 @@ import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.model.LoginManager;
 
+//@@author Pearlissa
 /**
  * Manages storage of AddressBook data in local storage.
  */

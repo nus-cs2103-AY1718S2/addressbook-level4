@@ -8,6 +8,7 @@ import seedu.address.model.LoginManager;
 import seedu.address.model.user.User;
 import seedu.address.model.user.exceptions.DuplicateUserException;
 
+//@@author Pearlissa
 /**
  * A utility class containing a list of {@code User} objects to be used in tests.
  */

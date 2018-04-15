@@ -16,6 +16,7 @@ import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.LoginManager;
 
+//@@author Pearlissa
 /**
  * The manager of the UI component.
  */

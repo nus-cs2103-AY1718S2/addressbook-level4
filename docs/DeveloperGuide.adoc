@@ -1132,21 +1132,26 @@ public abstract class UndoableCommand extends Command {
 public class AddToDoCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() {
-        // ... delete logic ...
+        // ... add to-do logic ...
     }
 }
 ----
 
-The to-dos in the to-do list are facilitated by `ToDo` class. Each `ToDo` object have a `Content` object, representing the content of the to-do.
+The to-dos in the to-do list are facilitated by `ToDo` class. Each `ToDo` object have a `Content` object and a `Status` object, representing the content and status of the to-do.
 Address book stores all to-dos in `UniqueToDoList`.
-`ToDo`,`Content` and `UniqueToDoList` class reside inside `Model` component. The following is the class diagram showing the relationship between `ToDo` and `Content`:
+`ToDo`,`Content` and `UniqueToDoList` class reside inside `AddressBook`. The following is the class diagram showing the relationship between `ToDo`,`Content`, `Status`, `UniqueToDoList` and `AddressBook`:
 
-image::ToDoContentClassDiagram.png[width="800"]
+image::AddressBookUniqueToDoListToDoClassDiagram.png[width="800"]
+
+On a smaller scale, the following is a class diagram showing the relationship between `ToDo`,`Content` and `Status`:
+
+image::ToDoStatusContentClassDiagram.png[width="800"]
 
 Suppose that the user has just launched the application. The `UniqueToDoList` in the address book will be empty if no to-dos have been added previously.
 
 The user executes a new `AddToDoCommand` with `Content`, to add a new to-do to the address book.
-The new to-do is added to the `UniqueToDoList` and the current state of the address book is saved.
+The `Status` of the to-do is "undone" by default.
+The new to-do with content and status is added to the `UniqueToDoList` and the current state of the address book is saved.
 The following sequence diagram shows how the addToDo operation works:
 
 image::AddToDoSequenceDiagram.png[width="800"]
@@ -1155,68 +1160,83 @@ image::AddToDoSequenceDiagram.png[width="800"]
 
 ===== Aspect: Implementation of `AddToDoCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeAddToDoCommand()`
-** Pros: We will not lose any addToDo functionality as it is now part of the default behaviour. Classes that deal with `AddToDoCommand` do not have to know that `executeAddToDoCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
-** Cons: Classes that inherit from `AddToDoCommand` must remember to call `super.execute()`, or lose the ability to addToDo.
-
+* **Alternative 1 (current choice):** Restrict the constructor of ToDo to be ToDo(Content content, Status status)`
+** Pros: ToDo class can be easier to maintain and debug.
+** Cons: Extensive refactor of existing tests is requirred.
 // end::addToDo[]
 
 // tag::checkToDo[]
-=== Check/Uncheck ToDo feature
+=== Check/UnCheck ToDo feature
 ==== Current implementation
 
 The check/uncheck to-dos mechanism is facilitated by `CheckToDoCommand` and `UnCheckToDoCommand`, which resides inside `Logic` component. It supports modifying Status objects within ToDo objects. CheckToDoCommand and UnCheckToDoCommand inherit from `UndoableCommand`.
 
 Hence, CheckToDoCommand and UnCheckToDoCommand can be undone using `UndoRedoStack`.
-With the extra layer, the CheckToDoCommand and UnCheckToDoCommand that are undoable are implemented this way:
-[source,java]
-----
-public abstract class UndoableCommand extends Command {
-    @Override
-    public CommandResult execute() {
-        // ... undo logic ...
-
-        executeUndoableCommand();
-    }
-}
-
-public class CheckToDoCommand extends UndoableCommand {
-    @Override
-    public CommandResult executeUndoableCommand() {
-        // ... check to-do logic ...
-    }
-}
-
-public class UnCheckToDoCommand extends UndoableCommand {
-    @Override
-    public CommandResult executeUndoableCommand() {
-        // ... uncheck to-do logic ...
-    }
-}
-----
 
 Similar to `Content` object, each `ToDo` object have a `Status` object, representing the status of the to-do.
 The status of a to-do can be either `done` or `undone`.
-`Status` class resides inside `Model` component. The following is the class diagram showing the relationship between `ToDo` and `Status`:
 
-image::ToDoStatusClassDiagram.png[width="800"]
-
-When user check/uncheck an existing to-do if specific `Index`, a new `ToDo` is created, with the existing `ToDo`'s `Content` and appropriate new `Status`.
+When user check/uncheck an existing to-do of specific `Index`, a new `ToDo` is created, with the existing `ToDo`'s `Content` and appropriate new `Status`.
 
 The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the current state of the address book is saved.
+The following sequence diagram shows how the checkToDo operation works:
+
+image::CheckToDoSequenceDiagram.png[width="800"]
+
+The following sequence diagram shows how the unCheckToDo operation works:
+
+image::UnCheckToDoSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
-===== Aspect: Implementation of `AddToDoCommand`
+===== Aspect: Implementation of `CheckToDoCommand` and `UnCheckToDoCommand`
 
 * **Alternative 1 (current choice):** Add a new method `setStatus(Status newStatus)` in `ToDo`
 ** Pros: We do not need to create a new `ToDo` object to replace the existing to-do.
 ** Cons: The implementation does not follow the Single Responsibility Principle.
 
 // end::checkToDo[]
+
+// tag::editToDo[]
+=== Edit ToDo feature
+==== Current implementation
+
+The edit to-dos mechanism is facilitated by `EditToDoCommand`, which resides inside `Logic` component. It supports modifying Content objects within ToDo objects. EditToDoCommand inherit from `UndoableCommand`.
+
+Hence, EditToDoCommand can be undone using `UndoRedoStack`.
+
+When user edit an existing to-do of specific `Index`, a new `ToDo` is created, with the new `Content` and a new `Status` of "undone" value.
+
+The existing to-do is replaced by the new to-do in the `UniqueToDoList` and the current state of the address book is saved.
+The following sequence diagram shows how the editToDo operation works:
+
+image::EditToDoSequenceDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `EditToDoCommand`
+
+* **Alternative 1 (current choice):** Add a new method `setContentAndStatus(Content content, Status newStatus)` in `ToDo`
+** Pros: We do not need to create a new `ToDo` object to replace the existing to-do.
+** Cons: The implementation does not follow the Single Responsibility Principle.
+
+// end::editToDo[]
+
+// tag::deleteToDo[]
+=== Delete ToDo feature
+==== Current implementation
+
+The delete to-dos mechanism is facilitated by `DeleteToDoCommand`, which resides inside `Logic` component. It supports deleting ToDo objects. DeleteToDoCommand inherit from `UndoableCommand`.
+
+Hence, DeleteToDoCommand can be undone using `UndoRedoStack`.
+
+When user delete an existing to-do of specific `Index`, the `UniqueToDoList` within `AddressBook` is updated and stored in the `StorageManager`.
+
+The following sequence diagram shows how the deleteToDo operation works:
+
+image::DeleteToDoSequenceDiagram.png[width="800"]
+
+// end::deleteToDo[]
 
 
 === Logging

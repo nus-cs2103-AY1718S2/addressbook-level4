@@ -1383,8 +1383,6 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
 . Deleting a person while all persons are listed
@@ -1402,12 +1400,20 @@ _{ more test cases ... }_
 .. Test Case: `delete 1`, where 1 is a RUNNER, and CUSTOMERS 2, 3, 4 are assigned to the RUNNER +
     Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated. The associated Customers at INDEX 2, 3, 4 should no longer have that Runner assigned to them.
 
-_{ fill in more test cases as development continues }_
+//@@author Der-Erlkonic
+=== Select Command
 
-=== Saving data
+. Checking if the fields of a selected `Person` are displayed correctly correct.
 
-. Dealing with missing/corrupted data files
-
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
-
-_{ more test cases ... }_
+.. Prerequisites: Clear the list, add a `Customer` to index 1, add a `Runner` to index 2, add a (non-duplicate) `Customer` to index 3. Assign both the customers to the runner.
+.. Test case: `select 1` +
+     Expected: First contact is selected from the list. The `Person` should be a `Customer`.
+     Details of the `Customer` shown in the BrowserPanel.
+     Fields should be the same as what was entered in the Prerequisite step.
+     "Runner assigned" should be the name of `Runner` in index 2.
+.. Test case: `select 2` +
+     Expected: First contact is selected from the list. The `Person` should be a `Runner`.
+     Details of the `Runner` shown in the BrowserPanel.
+     Fields should be the same as what was entered in the Prerequisite step.
+     "Customers assigned" should indicate number two beside it, and name of `Customer` in index 1 and index 3 listed below.
+//@@author

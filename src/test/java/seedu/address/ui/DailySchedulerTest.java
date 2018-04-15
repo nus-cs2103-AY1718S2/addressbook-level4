@@ -48,10 +48,7 @@ public class DailySchedulerTest extends GuiUnitTest {
 
     @Test
     public void display() {
-        List<Event> emptyList = new ArrayList<>();
-        assertChangedEventsShown(dailySchedulerPanelHandle, emptyList);
-        assertNumberOfButtonsAdded(dailySchedulerPanelHandle, emptyList);
-        // associated table of a person
+        
         postNow(dailyScheduleShownChangedEventStub);
         postNow(updateNumberOfButtonsEventStub);
 

@@ -1152,7 +1152,7 @@ image::UnCheckToDoSequenceDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Add a new method `setStatus(Status newStatus)` in `ToDo`
 ** Pros: This implementation do not require a new `ToDo` object to be created to replace the existing to-do.
-** Cons: The implementation does not follow the Single Responsibility Principle.
+** Cons: This implementation does not follow the Single Responsibility Principle.
 
 // end::checkToDo[]
 
@@ -1178,7 +1178,7 @@ image::EditToDoSequenceDiagram.png[width="800"]
 
 * **Alternative 1 (current choice):** Add a new method `setContentAndStatus(Content content, Status newStatus)` in `ToDo`
 ** Pros: This implementation do not require a new `ToDo` object to be created to replace the existing to-do.
-** Cons: The implementation does not follow the Single Responsibility Principle.
+** Cons: This implementation does not follow the Single Responsibility Principle.
 
 // end::editToDo[]
 

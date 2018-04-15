@@ -498,7 +498,6 @@ This command is only accessible to doctors.
 
 ****
 * Deleting a medical record will shift all other medical records up the medical record list.
-* If the deletion of the medical record would leave the list of records empty, an empty medical record will be generated.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****

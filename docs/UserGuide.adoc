@@ -1086,10 +1086,9 @@ image::moreInfoCommand.png[width:400]
 . You will then be able to view the profile page of the student. Enter the same command with a different number for viewing the profile page of other students (e.g. `moreInfo 2`).
 
 .Executing the command `moreInfo 1` displays the 1st student (Alex Yeoh's) profile page
-image::moreInfoResult.png[width:800]
+image::moreInfoResult.png[width:400]
 
-{empty} +
-{empty} +
+
 [TIP]
 You will be able to attain the profile page style in `Figure 5` if your OS zoom scale is set to `125%`. The profile photo may seem of a different size for other configurations. Search you computer settings should you wish to change this.
 
@@ -1115,7 +1114,7 @@ The file path you entered can be relative to the current folder of the `jar` fil
 
 Suppose you wish to have this picture, with the file name of `animal.jpg`  as a new profile picture as your student:
 
-image::animal.jpg[width:200]
+image::animal.jpg[width:100]
 
 . Enter the command as shown below:
 
@@ -1132,10 +1131,7 @@ image::editPictureSuccess.png[width:400]
 . By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated picture as shown below:
 
 .The profile page of the selected student is shown with the new profile picture!
-image::editedPicture.png[width:800]
-
-{empty} +
-{empty} +
+image::editedPicture.png[width:600]
 
 [TIP]
 The ideal aspect ratio of the picture is 1.25 from height to width.
@@ -1171,7 +1167,7 @@ image::editPictureSuccess.png[][width:400]
 . By calling the `moreInfo` command (found in the section above), you will be able to view the student's profile page with the updated allergies information as shown below:
 
 .The profile page of the selected student is shown with the newly updated allergies information!
-image::editMiscSuccess.png[width:800]
+image::editMiscSuccess.png[width:600]
 
 
 ****
@@ -1194,14 +1190,14 @@ image::editMiscSuccess.png[width:800]
 CodEducator also allows you to use features of the applications using everyday english sentences, without the need to remember specific command words.
 
 [WARNING]
-An active internet connection is required for this to work!
+An active internet connection is required for this to work.
 
 === How do i use this?
 
 You can refer to the table below to see which are the features that you are able to invoke using conversational English.
 
 [TIP]
-The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear!
+The examples below are just for your reference. Any phrase or sentence can be used, so long as your *intention* is precise and clear.
 [width="100%", cols=",^2m,^2e",options="header",]
 |=======================================================================
 | Command 2+| Examples
@@ -1220,14 +1216,19 @@ The examples below are just for your reference. Any phrase or sentence can be us
 [IMPORTANT]
 Currently, the commands `Delete` and `Select` only detects English names!
 
+.selecting one of your student, Jason
 image::Select(before).png[width="500"]
+
+{empty} +
+
+.You should see this after execution of the `select` command is successful
 image::Select(after).png[width="500"]
 
 === Guidelines for using this feature
 * Be sure to check for spelling errors in your sentences.
 
 [WARNING]
-Spelling errors can be mis-interpreted and the wrong command might be invoked!
+Spelling errors can be mis-interpreted and the wrong command might be invoked.
 
 * Be as precise as possible in specifying your intentions in the sentences, to prevent mis-interpretation of commands.
 * If the wrong feature is invoked, you can always use the `undo` command revert any undesired changes.

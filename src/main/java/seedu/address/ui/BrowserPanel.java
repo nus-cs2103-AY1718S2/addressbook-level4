@@ -47,7 +47,8 @@ public class BrowserPanel extends UiPart<Region> {
     * To load person page according to person name
     */
     public void loadPersonPage(Person person) throws IOException {
-        URL personPage = MainApp.class.getResource(File.separator + "StudentPage" + File.separator + "template.html");
+        URL personPage = MainApp.class.getResource(File.separator + "StudentPage" + File.separator
+                + "template.html");
         loadPage("file:" + System.getProperty("user.home") + File.separator + "StudentPage"
                 + File.separator + person.getName() + ".html");
     }

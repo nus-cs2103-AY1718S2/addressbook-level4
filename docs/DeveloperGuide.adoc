@@ -464,29 +464,38 @@ image::TagReplaceCommand.png[width="650"]
 // tag::subject[]
 === Subject streaming calculation feature
 ==== Current Implementation
-The subject streaming calculation features will be supported by calculation algorithms, `calculateL1R5` and `calculateL1B4` , which will be located in `Person.java`. The calculation algorithm will be called by the `SelectCommand`.
-It will help to analyse the subjects that are assigned to the student, and determine which combination of subjects will produce the lowest `L1R5` or `L1B4` score. The score will then be projected in the `Command Box`.
+The subject streaming calculation features will be supported by calculation algorithms, `calculateL1R5`, `calculateL1B4A`, `calculateL1B4B, `calculateL1B4C` and `calculateL1B4D, which will be located in `Person.java`. The calculation algorithm will be called by the `SelectCommand`.
+It will help to analyse the subjects that are assigned to the student, and determine which combination of subjects will produce the lowest `L1R5`, `L1B4A`, `L1B4B`, `L1B4C` or `L1B4D` score respectively. The score will then be projected in the `Command Box`.
 
 .Sequence Diagram of implementation of Subject streaming calculation
-image::EditSelectCommandMarks.png[width="800"]
+image::StreamCommand.png[width="700"]
 
-. When the `SelectCommand` is executing, it retrieves the `Student` object that the user was referencing to and calls the `calculateL1R5/L1B4` method.
-. In the calculation method, it will store the subject list of the student in `List<Subject> subjects` and loop through the list according to the `L1` subject category.
+** In `StreamCommandParser`
+. The user will key in the necessary command, `stream INDEX STREAM_TYPE` to call the `StreamCommand`.
+. The Logic uses the AddressBookParser to parse the command to `StreamCommandParser`.
+. The `StreamCommandParser` will take in the values and return a new `StreamCommand` object, with the parameters, `index` and `type`.
+** In `StreamCommand`
+. When the `StreamCommand` is executing, it retrieves the `Person` object that the user was referencing to using the `index` parameter
+ and pass in the `Person` object and `type` parameter into a `scoreCalculation()` method.
+. In the `scoreCalculation` method, the method will determine what type of streaming score the user wants to get using the `type` paramter.
+. Then the necessary calculation algorithm in the `Person.java` will be called.
+** In `Person.java`
+. In the calculation algorithm, it will store the subject list of the student in `List<Subject> subjects` and loop through the list according to the `L1` subject category.
 . The relevant subjects of the subject category will be saved in a temporary `List<Subject> subjectsToCheck` and the list will be passed into a `checkLowest()` method.
 . In `checkLowest()`, the subject grades will be compared and the best subject will be removed from the list `subjects`.
 . The best grade will be returned back to `calculateL1R5/L1B4` and stored in a temporary `int` variable, `score`. The function will then move on to check the other subject categories.
 . After the calculation, `score` will be returned to the `SelectCommand` which will project the result in the `Command Box`.
 
 [NOTE]
-The subjects and their respective grades can be assigned to the students by the `AddCommand`, with a subject prefix `sub/` followed by the `Subject Name` and `Subject Grade`.
+The subjects and their respective grades can be assigned to the students by the `AddCommand`, `EditCommand` or `AddSubjectCommand`, with a subject prefix `sub/` followed by the `Subject Name` and `Subject Grade`.
 As the students are required to take at least 6 subjects, the subjects will be stored in as a parameter of each individual student as a `List<Subject>`.
 
 ===== Aspect: Implementation of command to call `calculateL1R5` and `calculateL1B4`
 
-* **Alternative 1:** Add new command classes `L1R5Command` and `L1B4Command`
+* **Alternative 1 (current choice):** Add new command class `StreamCommand`
 ** Pros: It would be easy to implement as there is no need to worry about affecting other classes.
 ** Cons: More commands for the user to remember.
-* **Alternative 2 (current choice):** Just override `execute()` of `SelectCommand`
+* **Alternative 2 :** Just override `execute()` of `SelectCommand`
 ** Pros: Easier to update the `Display Panel` later on when the user wants to access the `Student's` details.
 ** Cons: Need to update the test cases accordingly due to the change in the `execute()` function.
 
@@ -496,7 +505,7 @@ As the students are required to take at least 6 subjects, the subjects will be s
 ** Pros: Easier to understand as the function needs to access the subject list of the student for calculation.
 ** Cons:
 * **Alternative 2 :** Implement the calculation function in `execute()` of `SelectCommand`
-** Pros: Reduce the amount of coupling between `SelectCommand` and `Person`.
+** Pros: Reduce the amount of coupling between `SelectCommand` and `Model`.
 ** Cons: Makes the `SelectCommand` more complicated as it is performing more than it should.
 // end::subject[]
 
@@ -506,7 +515,7 @@ As the students are required to take at least 6 subjects, the subjects will be s
 === Mass Tag Removal feature
 ==== Current Implementation
 
-The Mass Tag Removal feature is supported through the suggested Tag Removal feature for the Model Component in <<GetStartedProgramming-EachComponent>>.
+The Mass Tag Removal feature is supported through the suggested Tag Removal feature in the Model Component.
 The command `TagDeleteCommand` is implemented to call the `deleteTag()` function in the `Model` interface.
 The `deleteTag()` function will loop through the students in the `AddressBook` and will remove the specified Tag from every student that has the specified Tag and the students' `Tag List` will be updated.
 
@@ -517,14 +526,15 @@ The `deleteTag()` function will be called and loops through the students in the 
 * Else, the `Tag List` of each student will be loaded and stored in a temporary `List` variable and the specified tag will be removed from it.
 Then a new student object with the updated `Tag List` will be replace the original student object. Thus the `AddressBook` will eventually have the updated list of students where the specified tag have been removed.
 
-. Logic uses the AddressBookParser class to parse the command.
-. This results in a TagDeleteCommand object which is executed by the LogicManager.
-. The command execution calls the deleteTag method which then affects the Model.
-. The tag is then deleted and the result of the command execution is encapsulated as a CommandResult object which is passed back to the Ui.
-The user will see a message on the `Command Box` in the format: `Deleted Tag: [TAG_NAME]` and the `Tag` will be removed.
+** `Parser`
+. Logic uses the AddressBookParser class to parse the command into `TagDeleteCommandParser`.
+. The parser will then return a new TagDeleteCommand object with the parameter `tagName` which is executed by the LogicManager.
+. The command execution calls the deleteTag method which then cycle through the list of students in the _EduBuddy_ and removes the tags containing the `tagName` from the students.
+. The tag is then deleted and the result of the command execution will be returned as a CommandResult object which is passed back to the Ui.
+. The user will see a message on the `Command Box` in the format: `Deleted Tag: [TAG_NAME]` and the `Tag` will be removed.
 
 .Sequence Diagram of TagDeleteCommand if the specified tag exists.
-image::TagDeleteSequenceDiagram.png[width="800"]
+image::TagDeleteCommandSequenceDiagram.png[width="800"]
 
 ==== Design Considerations
 
@@ -538,6 +548,57 @@ image::TagDeleteSequenceDiagram.png[width="800"]
 ** Cons: Increases coupling between `Model` and `TagDeleteCommand`.
 
 // end::masstagremoval[]
+
+*_return to <<toc,Table of Contents>>_*
+
+// tag::addsubjects[]
+=== AddSubjectCommand feature
+==== Current Implementation
+
+The AddSubjectCommand feature is located in the `Logic` component.
+The `AddSubjectCommand` can be used when the user inputs `addsub INDEX sub/[SUBJECT_NAME SUBJECT_GRADE...]` in the `Command Box`. When the user input fulfils the criteria of the expected input format, the command will execute.
+The command will then find the student located at the specified `INDEX` and creates a new student with the previous details of the selected student.
+The new student will have the updated `Set<Subject>` and will replace the selected student in the _EduBuddy_.
+
+* If the student already possess the subject that was keyed in, the subject will not be added to the subject list of the student. This is to prevent the student having duplicate subjects assigned to him/her.
+* If the user typed in duplicate subjects in the input, for example: `addsub 1 sub/English A1 English A1`, an `IllegalValueException` will be thrown and an error message, "There should not be duplicate subject(s) assigned to student."
+
+** `Parser`
+. Logic uses the `AddressBookParser` class to parse the command into `AddSubjectCommandParser`.
+. The parser will first parse the `INDEX` and `subjects` using the `parseIndex` and `parseSubjects` in the `ParserUtil` class, to check if they are valid inputs.
+. The parser will then creates a new `AddSubjectCommand` object with the attributes `index` and `editPersonDescriptor`, which is executed by the LogicManager.
+** In `AddSubjectCommand`
+. The command execution of `AddSubjectCommand` will create a new student object using a `createEditedPerson()` method, which will call `checkIfSubjectExists()` method.
+. The method will check if the subjects to be added exist in the original list of subjects assigned to the student. A boolean variable `isPresent` will keep be used to indicate if the subjects exist.
+. If `isPresent` is false, the subjects will be added to a new `Set<Subject>` object which contains the both the new and old subjects of the student.
+. A new student containing the previous details and the updated subject list will be created and replace the selected student in the _EduBuddy_.
+. The result of the command execution will be returned as a CommandResult object which is passed back to the Ui.
+. The user will see a message on the `Command Box` in the format: `Edited Person: [NAME]. Updated Subjects: [SUBJECT_NAME SUBJECT_GRADE]...` will be removed.
+
+.Sequence Diagram of AddSubjectCommand
+image::AddSubjectCommandActivityDiagram.png[width="800"]
+
+==== Design Considerations
+
+===== Aspect: Implementation of `AddSubjectCommand`
+
+* **Alternative 1:** The user continues to use the `AddCommand` to add all the subjects at one time or use `EditCommand` to change the subjects details.
+** Pros: More intuitive for the user as the commands do what the user expects from their names.
+** Cons: The user have to key in a long command line as each student has to be assigned to at least 6 subjects.
+* **Alternative 2 (current choice):** Create a new `AddSubjectCommand`
+** Pros: The user just needs to type in the subjects that he/she did not add earlier.
+** Cons: More commands for the user to remember.
+
+===== Aspect: The number of people that the user can add subjects to using the command
+
+* **Alternative 1:** The command can be implemented as a mass adding command, where the subjects keyed in can be added to all the students in _EduBuddy_.
+** Pros: It would be convenient as the teacher do not need to key in similar subjects for everyone.
+** Cons: The students may have different subject combination and different grades for different subjects, and this consideration neglects this fact.
+* **Alternative 2 (current choice):** The command can only add to one specified student at a time.
+** Pros: The algorithm will be slightly less complicated and easier to implement.
+** Cons: Depending on the situation, the user may want a mass adding feature implemented as it would be more convenient.
+
+// end::addsubjects[]
 
 *_return to <<toc,Table of Contents>>_*
 
@@ -830,8 +891,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |teacher |sort students' results |know who are the ones that need more academic help easily
-
 |`* * *` |teacher |update students' classes |know which classes they are in easily
 
 |`* * *` |teacher |update students' academic results |view and obtain students' streaming score (eg.L1R5)
@@ -862,7 +921,6 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 |`*` |teacher |view the student's injuries history |to know the need of my students.
 
-|`*` |teacher |know which subjects that I have taught them before |customize my teaching methods for different students
 |=======================================================================
 
 *_return to <<toc,Table of Contents>>_*
@@ -991,13 +1049,13 @@ Use case resumes at step 2.
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Update students' academic results
+=== Use case: Add students' academic results
 
 *Main Success Scenario*
 
 1.  User requests to list or find persons
 2.  AddressBook shows a list of persons
-3.  User requests to update students' academic results
+3.  User requests to update students' academic results using `AddCommand`
 4.  AddressBook shows updated details of academic results
 +
 Use case ends.
@@ -1014,17 +1072,22 @@ Use case ends.
 [none]
 ** 3a1. AddressBook shows an error message.
 +
+* 3b. The given subject(s) is/are invalid, for example, the name or the grade.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
 Use case resumes at step 2.
 
 [discrete]
-=== Use case: Sort students by the students' academic streaming results
+=== Use case: View students' academic results
 
 *Main Success Scenario*
 
 1.  User requests to list or find persons
 2.  AddressBook shows a list of persons
-3.  User requests to sort students by students' academic results
-4.  AddressBook shows sorted list of students
+3.  User requests to view students' academic results using `SelectCommand`
+4.  AddressBook shows updated details of academic results
 +
 Use case ends.
 
@@ -1035,10 +1098,87 @@ Use case ends.
 +
 Use case ends.
 
-* 3a. Students do not have subjects assigned to them.
+* 3a. The given index is invalid.
 +
 [none]
 ** 3a1. AddressBook shows an error message.
++
+* 3b. No subjects are assigned to the student.
++
+[none]
+** 3b1. UI shows an empty list of subjects.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: View students' streaming results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to view students' streaming results using `SelectCommand` or `StreamCommand`
+4.  AddressBook shows updated details of streaming results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index or parameter is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+* 3b. No subjects are assigned to the student.
++
+[none]
+** 3b1. Streaming results will be shown as zero.
++
+* 3c. Not enough subjects are assigned to the student.
++
+[none]
+** 3c1. Streaming results will be shown as zero.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Update students' academic results
+
+*Main Success Scenario*
+
+1.  User requests to list or find persons
+2.  AddressBook shows a list of persons
+3.  User requests to update students' academic results using `EditCommand` or `AddSubjectCommand`
+4.  AddressBook shows updated details of academic results
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+* 3b. The given subject(s) is/are invalid, for example, the name or the grade.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+* 3c. There are duplicate subjects in the user input.
++
+[none]
+** 3c1. AddressBook shows an error message.
 +
 Use case resumes at step 2.
 
@@ -1056,6 +1196,9 @@ Use case resumes at step 2.
 
 [appendix]
 == Glossary
+
+[[CCA}} CCA::
+CCA stands for Co-Curricular Activities. It functions as a non-academic activity where students can have a more enriching experience in school. Find out more by clicking https://www.moe.gov.sg/education/programmes/co-curricular-activities[here].
 
 [[Grade]] Grade::
 The grading of the subjects by the level of competence the students show during the "O-Level examination".
@@ -1077,12 +1220,21 @@ The level of achievement in each subject is indicated by the grade obtained, wit
 A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
 The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Polytechnic.
 `L1` represents the First language subject and `B4` represents 2 relevant subjects, according to the polytechnic course applied, and 2 other best subjects.
+The category the relevant subject is under(for example: L1B4-A, L1B4-B, L1B4-C, L1B4D), will determine which subjects are the relevant subjects.
 The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
 
+If you want to find out more about the subject categories (L1B4-A, L1B4-B, L1B4-C, L1B4D),
+please visit:
+
+* https://www.sp.edu.sg/wps/portal/vp-spws/!ut/p/a0/04_Sj9CPykssy0xPLMnMz0vMAfGjzOJDPUxdjdxMTQws3J1cDDwt_MJMXZxDDE3cDfQLsh0VAYY7oWE!/?PC_Z7_UH5E2F540G6P00IO8K5AU61JM5027774_WCM_CONTEXT=/wps/wcm/connect/lib-spws/site-spwebsite/future+students/admissions/selection+criteria+for+gce+o+level+holders+-+aggregate+computation++%28admissions+-+course+intakes+and+cut-off+points%29[Singapore Polytechnic]
+* http://www.tp.edu.sg/admissions/gce-o-level-aggregate-scores-computation[Temasek Polytechnic]
+* https://www.moe.gov.sg/education/post-secondary#polytechnics[Other Polytechnics]
+
 [[L1R5]] L1R5::
-A grading system for Secondary School students taking "O-Level Examination" at the end of their four years of studies in Secondary School.
-The score obtained from the grading system will be used to determine the eligibility of the students to enter the next level of education, Junior College.
-`L1` represents the First language subject and `R5` represents 5 relevant subjects. The score will be calculated by considering the subjects' grades. Each subject can only be considered once.
+1R5 is a grading system used in Singapore to determine the secondary school students' proficiency in the subjects taken for "O-Level Examination".
+The score is used for the students to enroll into Junior Colleges, which is the next higher level of education. "L1" refers to the first language subject taken by the student, while "R5" refers to the 5 relevant subjects that are examinable by the students.
+The grade of L1R5 is then determined by taking the best grades of each category and summing them up, for example, if a student scores A1 for all 6 subjects are from each category, the score will be 6. Each subject can only be considered once.
+For more information, please click https://www.moe.gov.sg/admissions/direct-admissions/dsa-jc/eligibility[here]
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
@@ -1093,7 +1245,8 @@ A contact detail that is not meant to be shared with others
 [[Subject]] Subject::
 These are the following subjects that are examinable in O-level Examinations in Singapore (as of Year 2018).
 [NOTE]
-The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing.
+The subjects in the brackets are not to be used as input. The subjects not in brackets are preferred for better efficiency in typing. +
+For example, type in: `Hist A1` *not* `History A1`
 [width="85%",cols="22%,<23%",options="header",]
 |=======================================================================
 |Subject Category|Subjects
@@ -1109,7 +1262,7 @@ The subjects in the brackets are not to be used as input. The subjects not in br
 |R5| Consist of R4 subjects
 |=======================================================================
 
-* The following subjects can be assigned to students but are not considered as O-Level subjects: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
+* The following subjects can be assigned to students but cannot be contributed to the results: ChiB (Chinese B), MalayB (Malay B), TamilB(Tamil B).
 
 *_return to <<toc,Table of Contents>>_*
 

@@ -8,6 +8,7 @@ import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.model.person.Cca;
 import seedu.address.model.person.InjuriesHistory;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.NextOfKin;
 import seedu.address.model.person.Nric;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Remark;
@@ -41,6 +42,7 @@ public class EditPersonDescriptorBuilder {
         descriptor.setRemark(person.getRemark());
         descriptor.setCca(person.getCca());
         descriptor.setInjuriesHistory(person.getInjuriesHistory());
+        descriptor.setNextOfKin(person.getNextOfKin());
     }
 
     /**
@@ -100,6 +102,15 @@ public class EditPersonDescriptorBuilder {
      */
     public EditPersonDescriptorBuilder withInjuriesHistory(String injuriesHistory) {
         descriptor.setInjuriesHistory(new InjuriesHistory(injuriesHistory));
+        return this;
+    }
+
+    /**
+     * Sets the {@code NextOfKin} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withNextOfKin(String nok) {
+        String[] details = nok.split("\\s+");
+        descriptor.setNextOfKin(new NextOfKin(details[0], details[1], details[2], details[3]));
         return this;
     }
 

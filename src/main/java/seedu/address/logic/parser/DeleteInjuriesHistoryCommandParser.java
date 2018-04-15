@@ -7,7 +7,6 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_INJURIES_HISTORY;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.DeleteInjuriesHistoryCommand;
-import seedu.address.logic.commands.DeleteRemarkCommand;
 import seedu.address.logic.commands.EditPersonDescriptor;
 import seedu.address.logic.parser.exceptions.ParseException;
 
@@ -43,7 +42,7 @@ public class DeleteInjuriesHistoryCommandParser implements Parser<DeleteInjuries
         EditPersonDescriptor editPersonDescriptor = new EditPersonDescriptor();
         if (ParserUtil.parseInjuriesHistory(argMultimap.getValue(PREFIX_INJURIES_HISTORY)).get().toString().isEmpty()) {
             throw new ParseException((String.format(MESSAGE_INVALID_COMMAND_FORMAT,
-                                                    DeleteRemarkCommand.MESSAGE_USAGE)));
+                                                    DeleteInjuriesHistoryCommand.MESSAGE_USAGE)));
         } else {
             ParserUtil.parseInjuriesHistory(argMultimap.getValue(PREFIX_INJURIES_HISTORY))
                     .ifPresent(editPersonDescriptor::setInjuriesHistory);

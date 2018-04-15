@@ -6,10 +6,12 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddAppointmentCommand;
 import seedu.address.logic.commands.AddCcaCommand;
 import seedu.address.logic.commands.AddCommand;
 import seedu.address.logic.commands.AddInjuriesHistoryCommand;
 import seedu.address.logic.commands.AddRemarkCommand;
+import seedu.address.logic.commands.AddSubjectCommand;
 import seedu.address.logic.commands.AppointmentCommand;
 import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
@@ -19,7 +21,6 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.DeleteInjuriesHistoryCommand;
 import seedu.address.logic.commands.DeleteRemarkCommand;
 import seedu.address.logic.commands.EditCommand;
-import seedu.address.logic.commands.EditSubjectCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
@@ -85,8 +86,8 @@ public class AddressBookParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-        case EditSubjectCommand.COMMAND_WORD:
-            return new EditSubjectCommandParser().parse(arguments);
+        case AddSubjectCommand.COMMAND_WORD:
+            return new AddSubjectCommandParser().parse(arguments);
 
         case SelectCommand.COMMAND_WORD:
         case SelectCommand.COMMAND_ALIAS:
@@ -112,9 +113,9 @@ public class AddressBookParser {
         case TagReplaceCommand.COMMAND_ALIAS:
             return new TagReplaceCommandParser().parse(arguments);
 
-        case AppointmentCommand.COMMAND_WORD:
-        case AppointmentCommand.COMMAND_ALIAS:
-            return new AppointmentCommandParser().parse(arguments);
+        case AddAppointmentCommand.COMMAND_WORD:
+        case AddAppointmentCommand.COMMAND_ALIAS:
+            return new AddAppointmentCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
         case ListCommand.COMMAND_ALIAS:

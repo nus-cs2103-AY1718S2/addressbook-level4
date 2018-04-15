@@ -78,4 +78,5 @@ include::../UserGuide.adoc[tag=Path]
 
 include::../DeveloperGuide.adoc[tag=ProcessingQueue]
 include::../DeveloperGuide.adoc[tag=Path]
+include::../DeveloperGuide.adoc[tag=Test]
 

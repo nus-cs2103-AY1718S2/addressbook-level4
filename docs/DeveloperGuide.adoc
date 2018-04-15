@@ -1068,7 +1068,7 @@ Users are able to back up the address book in a different location.
 - Minor enhancement: Add find location feature +
 When clicking one particular person in the addressbook, the browser on the right will automatically show that person's
 address using google map.
-- Major enhancement: Implement a priority queue structure to process orders from add method + Create new GUI for add command
+- Major enhancement: Implement a processing queue structure to process orders from add method
 
 [appendix]
 == User Stories
@@ -1361,27 +1361,90 @@ These instructions only provide a starting point for testers to work on; testers
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
+// tag::Test[]
+=== Adding an order
 
-_{ more test cases ... }_
+. Adding an order while there is no order currently
 
-=== Deleting a person
-
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Prerequisites: No order in the list.
+.. Test case: `add n/Tom p/98765432 f/Chicken Rice a/1A Kent Ridge Road` +
+   Expected: First order in the list is the order added. Details of the added order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `add n/Tom p/98765432 f/Hamburger a/1A Kent Ridge Road` +
+   Expected: Not added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `add n/Tom p/98765432 f/Double Cheeseburger a/1A Kent Ridge Road``, +
+     `add`   +
+     `add n/Tom p/98765432 f/Chicken Rice` +
+    `add n/Tom p/98765432 f/Chicken Rice`  +
+   `add p/98765432 f/Chicken Rice a/1A Kent Ridge Road` +
+   `add n/Tom f/Chicken Rice a/1A Kent Ridge Road` +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Deleting an order
 
+. Deleting an order while all orders are listed
+
+.. Prerequisites: List all orders using the `list` command. Multiple orders in the list.
+.. Test case: `delete 1` +
+   Expected: First order is deleted from the list. Details of the deleted order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `delete 0` +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) `delete -1`,
+ `delete dfaf`, `delete !@#`  +
+   Expected: Similar to previous.
+
+
+=== Processing an order
+
+. Process an existing order at index i, add it to the processing queue on the right and label the
+original order as "Processed"
+
+.. Prerequisites: There exist orders in the order book.
+.. Test case: `process 1` +
+   Expected: First order is added to the processing queue on the right. Original order is tagged as "Processed".
+   Details of the added order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `process 0` +
+   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `process`, `process x` (where x is larger than the list size) `process -1`,
+ `process dfaf`, `process !@#`  +
+   Expected: Similar to previous.
+
+=== Completing an order
+
+. Complete a processed order at index i
+
+.. Prerequisites: There exist orders in the processing queue on the right.
+.. Test case: `completeOne 1` +
+   Expected: First order is removed from processing queue on the right. Details of the added order shown in the status message.
+   Timestamp in the status bar is updated.
+.. Test case: `completeOne 0` +
+   Expected: No order is removed from the processing queue. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `completeOne `, `completeOne x` (where x is larger than the list size) `completeOne -1`,
+ `completeOne dfaf`, `completeOne !@#`  +
+   Expected: Similar to previous.
+
+
+=== Showing path to an order
+
+. Show path to an unprocessed order at index i of the order book, on the browser panel using google map
+
+.. Prerequisites: There exist orders in the processing queue on the right.
+.. Test case: `path 1` +
+   Expected: Window in the middle shows path from own address to order one's address using google map.
+   Command success message shown in the status message.
+.. Test case: `path 0` +
+   Expected: No google map page shown. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `path `, `path x` (where x is larger than the list size) `path -1`,
+ `path dfaf`, `path !@#`  +
+   Expected: Similar to previous.
+
+// end::Test[]
 === Saving data
 
 . Dealing with missing/corrupted data files
 
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
-_{ more test cases ... }_
+

@@ -193,6 +193,7 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeleteBookSdForLogic.png[width="800"]
 
+//tag::model
 [[Design-Model]]
 === Model component
 
@@ -210,6 +211,7 @@ The `Model`,
 * maintains the privilege level
 * handles authentication
 * does not depend on any of the other three components.
+//end::model
 
 [[Design-Storage]]
 // tag::storagepic[]
@@ -984,7 +986,7 @@ Use case ends.
 
 *MSS*
 
-1.  User requests to add book with TITLE, AUTHOR, ISBN, AVAILABILITY, [TAGS]
+1.  User requests to add book with TITLE, AUTHOR, ISBN, AVAIL, [TAGS]
 2.  Catalogue adds book
 3.  Catalogue list books
 +
@@ -993,7 +995,7 @@ Use case ends.
 *Extensions*
 
 [none]
-* 1a. The TITLE or AUTHOR or ISBN or AVAILABILITY is not valid or ISBN is not unique.
+* 1a. The TITLE or AUTHOR or ISBN or AVAIL is not valid or ISBN is not unique.
 +
 [none]
 ** 1a1. Catalogue shows an error message.
@@ -1008,7 +1010,7 @@ Use case ends.
 
 1.  User requests to list books
 2.  Catalogue shows a list of books
-3.  User requests to edit a specific book in the list with [TITLE], [AUTHOR], [ISBN], [AVAILABILITY], [TAGS]
+3.  User requests to edit a specific book in the list with [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS]
 2.  Catalogue edit book
 3.  Catalogue list books
 +
@@ -1021,7 +1023,7 @@ Use case ends.
 +
 Use case ends.
 [none]
-* 3a. The given index is invalid or the [TITLE], [AUTHOR], [ISBN], [AVAILABILITY], [TAGS] is invalid
+* 3a. The given index is invalid or the [TITLE], [AUTHOR], [ISBN], [AVAIL], [TAGS] is invalid
 +
 ** 3a1. Catalogue shows an error message.
 +

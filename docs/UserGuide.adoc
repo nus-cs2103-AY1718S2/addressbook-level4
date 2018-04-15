@@ -121,6 +121,7 @@ Now that you have understood the command format, let's explore the features.
 
 This section describes the commands which enable you to use the login system to secure your data stored in contactHeRo.
 
+// tag::login[]
 ==== Logging in : `login`
 You can login via the command line using the following format. +
 Format: `login u/USERNAME pw/PASSWORD`
@@ -171,6 +172,7 @@ Examples:
 +
 On running the above command, you should see the following success message: +
   `You have successfully updated your password!`
+// end::intro[]
 
 === Managing Persons
 

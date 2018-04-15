@@ -17,6 +17,7 @@ import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.commons.events.model.UserDatabaseChangedEvent;
 import seedu.address.commons.events.model.UserDeletedEvent;
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.logic.OAuthManager;
 import seedu.address.model.login.Password;
 import seedu.address.model.login.UniqueUserList;
 import seedu.address.model.login.User;
@@ -155,9 +156,19 @@ public class ModelManager extends ComponentManager implements Model {
         raise(new UserDeletedEvent(user));
     }
 
+    /** Clears the user's Oauth cert if it exists */
+    private void clearOauthCert(User user) {
+        try {
+            OAuthManager.deleteOauthCert(user);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
     @Override
     public synchronized void deleteUser(User target) throws UserNotFoundException {
         userDatabase.removeUser(target);
+        clearOauthCert(target);
         indicateUserDatabaseChanged();
         indicateUserDeleted(target);
     }

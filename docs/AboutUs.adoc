@@ -19,31 +19,21 @@ Responsibilities: Main UI, Map and Daily Scheduler
 
 '''
 
-=== Kaiser Tan
+=== Tan Quan Rong Kaiser
 image::Profilepic_Kaiser.jpg[width="150", align="left"]
-{empty}[https://github.com/kaisertanqr[github]] [https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/kaisertan.adoc[Project Portfolio Page]]
+{empty}[https://github.com/kaisertanqr[github]] [https://cs2103jan2018-t15-b3.github.io/main/teams/TanQuanRongKaiser.html[Project Portfolio Page]]
 
 Role: Project Developer +
-Responsibilities: Authentication/Security, Multi-user features and User Storage
+Responsibilities: Authentication/Security and Multi-user features
 
 '''
 
-=== Jason Mason-Hing
+=== Jason Jerome Manson-Hing
 image::ifalluphill.jpg[width="150", align="left"]
-{empty}[https://github.com/ifalluphill[github]] [https://github.com[Project Portfolio Page]]
+{empty}[https://github.com/ifalluphill[GitHub]] [https://cs2103jan2018-t15-b3.github.io/main/team/jasonmansonhing.html[Project Portfolio Page] | https://github.com/CS2103JAN2018-T15-B3/main/blob/master/docs/team/jasonmansonhing.adoc[Project Portfolio Page (on GitHub)]]
 
 Role: Project Developer +
-Responsibilities: Calendar and Todolist
+Responsibilities: Calendar, Daily Scheduler, and Error Log
 
-'''
-
-=== Clarissa Yong
-image::Clarissa_profilepic.jpg[width="150", align="left"]
-{empty}[https://github.com/clarissayong[github]] [https://github.com[Project Portfolio Page]]
-
-Role: Project Developer +
-Responsibilities: Session Reports and Logging
-
-'''
 
 

@@ -243,6 +243,7 @@ public class OAuthManager {
 
         dailyEventsListDate = localDate;
         dailyEventsList = dailyEvents;
+        mostRecentEventList = dailyEvents;
 
         return dailyEvents;
     }
@@ -272,6 +273,7 @@ public class OAuthManager {
 
         dailyEventsListDate = localDate;
         dailyEventsList = dailyEvents;
+        mostRecentEventList = dailyEvents;
 
         return eventListAsString;
     }
@@ -492,7 +494,13 @@ public class OAuthManager {
      * @return Event
      */
     public static Event getEventByIndexFromLastList(int index) {
-        return mostRecentEventList.get(index - 1);
+        Event eventToReturn = null;
+
+        if (index >= 0 && index < mostRecentEventList.size()) {
+            eventToReturn = mostRecentEventList.get(index - 1);
+        }
+
+        return eventToReturn;
     }
 
 

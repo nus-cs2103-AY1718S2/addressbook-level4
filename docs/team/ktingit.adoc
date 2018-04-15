@@ -27,16 +27,18 @@ Integrated Medical DataBase(IMDB) is an application for the management of health
 ** Project management:
 *** Managed release `v1.3` on GitHub
 ** Enhancements to existing features:
-*** Updated the GUI to better make use of spacing after patient list was decluttered (Pull requests https://github.com/CS2103JAN2018-W15-B2/main/pull/199[#199])
+*** Updated the GUI to better make use of spacing after patient list was decluttered(Pull requests https://github.com/CS2103JAN2018-W15-B2/main/pull/199[#199])
+** Community:
+*** Reported bugs and suggestions for other teams during the testing session
 ** Documentation:
-*** Did cosmetic tweaks to existing contents of the User Guide
+*** Did extensive changes, both language and content wise, to the User Guide and Development Guide
 
 
 == Contributions to the User Guide
 
 
 |===
-|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users. In addition to these, I also made many minor changes to language and content that are not listed._
 |===
 
 include::../UserGuide.adoc[tag=introduction]
@@ -45,7 +47,7 @@ include::../UserGuide.adoc[tag=quickstart]
 
 include::../UserGuide.adoc[tag=add]
 
-include::../UserGuide.adoc[tag=del]
+include::../UserGuide.adoc[tag=edit]
 
 include::../UserGuide.adoc[tag=select]
 
@@ -56,9 +58,11 @@ include::../UserGuide.adoc[tag=delc]
 == Contributions to the Developer Guide
 
 |===
-|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project. In addition to these, I also made many minor changes to language and content that are not listed._
 |===
 
-include::../DeveloperGuide.adoc[tag=morefields]
+include::../DeveloperGuide.adoc[tag=introduction]
 
 include::../DeveloperGuide.adoc[tag=addconditions]
+
+include::../DeveloperGuide.adoc[tag=displaydetails]

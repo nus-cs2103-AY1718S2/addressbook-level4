@@ -14,11 +14,13 @@ endif::[]
 
 By: `Team W15-B2`      Since: `March 2018`      Licence: `MIT`
 
+// tag::introduction[]
 == Introduction
 Integrated Medical DataBase (IMDB) is a desktop records management application targeted at private clinics that may have multiple branches.
 It aims to replace how private clinics handle the management of patient records, making the process much more easier and efficient.
 It provides features that are essential for a clinic to manage patient records effectively and securely such as user authentication, managing patient records, managing pateint appointments, maintaining of a visting queue, and the printing of medical records.
 This guide provides the necessary information for developers who are interested in contributing to the application - from the steps required to set-up, to detailed descriptions of the current features that the application features.
+// end::introduction[]
 
 == Setting Up
 This section details how you can go about setting up IMDB.

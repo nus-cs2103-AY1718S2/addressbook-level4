@@ -494,12 +494,23 @@ image::InsuranceClassInModel.png[width="790"]
 
 ===== Aspect: Calculating the total commission per client
 
- * **Alternative 1(current choice):** Commission is tagged to person, everytime a insurance is added it will add to existing commission
+ * **Alternative 1(current choice):** Commission is tagged to person, when a insurance is added it will add to existing commission
  ** Pros: Easier to calculate client based commission
  ** Cons: May be difficult to get overall total commission
  * **Alternative 2:**Create a storage to keep all commission
  ** Pros: Easy to calculate overall total commission
  ** Cons: Difficult to allocate commission to their respective client.
+
+===== Aspect: Editing and Removing of Insurance
+
+* **Alternative 1(current choice):** Use current edit command and add on the capability to replace the new set of insurance
+** Pros: Increase usability as user do not need to learn how to use a new function and just make use of existing commands
+** Cons: User lose the ability to edit individual insurance plan as the current edit implementation simply remove old insurance and add in the new set
+* **Alternative 2:** Add in another command specifically just for editing of insurance
+** Pros: Individual insurance plan can now be edited.
+** Cons: User need to know another set of command and may prove to be confusing since it share the same nature as a current command(edit).
+
+
 // end::insurance2[]
 
 // tag::encryption[]

@@ -60,7 +60,7 @@ public class AliasCommandSystemTest extends AddressBookSystemTest {
         /* Case: add another alias of MapCommand -> added */
         Alias toAdd_map2 = MAP_2;
         command = "   " + AliasCommand.COMMAND_WORD + "  " + ALIAS_DESC_MAP2;
-        expectedAliases = new Alias[][] {{toAdd_map2, toAdd_history}, {toAdd_map1}};
+        expectedAliases = new Alias[][] {{toAdd_map1, toAdd_history}, {toAdd_map2}};
         assertCommandSuccess(command, toAdd_map2, expectedAliases);
 
         /* Case: add to empty address book -> added */

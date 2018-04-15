@@ -26,9 +26,11 @@ public class WorthChangeCondition extends AmountChangeCondition  {
     public boolean test(Coin coin) {
         switch (compareMode) {
         case RISE:
-            return amountComparator.test(coin.getChangeFromPrev().getDollarsWorth(), amount);
+            return amountComparator.test(Amount.getDiff(
+                    coin.getDollarsWorth(), coin.getPrevState().getDollarsWorth()), amount);
         case FALL:
-            return amountComparator.test(coin.getChangeToPrev().getDollarsWorth(), amount);
+            return amountComparator.test(Amount.getDiff(
+                    coin.getPrevState().getDollarsWorth(), coin.getDollarsWorth()), amount);
         default:
             LogsCenter.getLogger(this.getClass()).warning("Invalid compare mode!");
             return false;

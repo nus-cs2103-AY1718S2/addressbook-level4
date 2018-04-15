@@ -20,20 +20,12 @@ public enum TokenType {
     /* Numerical values */
     PREFIX_AMOUNT("a/", "APREFIX", "a prefix"),
     // Below used for find/notify conditions
-    PREFIX_BOUGHT_RISE("b/\\+", "BRPREFIX", "a prefix"),
-    PREFIX_BOUGHT_FALL("b/\\-", "BFPREFIX", "a prefix"),
     PREFIX_BOUGHT("b/", "BPREFIX", "a prefix"),
-    PREFIX_HELD_RISE("h/\\+", "HRPREFIX", "a prefix"),
-    PREFIX_HELD_FALL("h/\\-", "HFPREFIX", "a prefix"),
     PREFIX_HELD("h/", "HPREFIX", "a prefix"),
-    PREFIX_MADE_RISE("m/\\+", "MRPREFIX", "a prefix"),
-    PREFIX_MADE_FALL("m/\\-", "MFPREFIX", "a prefix"),
     PREFIX_MADE("m/", "MPREFIX", "a prefix"),
     PREFIX_PRICE_RISE("p/\\+", "PRPREFIX", "a prefix"),
     PREFIX_PRICE_FALL("p/\\-", "PFPREFIX", "a prefix"),
     PREFIX_PRICE("p/", "PPREFIX", "a prefix"),
-    PREFIX_SOLD_RISE("s/\\+", "SRPREFIX", "a prefix"),
-    PREFIX_SOLD_FALL("s/\\-", "SFPREFIX", "a prefix"),
     PREFIX_SOLD("s/", "SPREFIX", "a prefix"),
     PREFIX_WORTH_RISE("w/\\+", "WRPREFIX", "a prefix"),
     PREFIX_WORTH_FALL("w/\\-", "WFPREFIX", "a prefix"),
@@ -69,22 +61,14 @@ public enum TokenType {
      */
     public static boolean isPrefixType(TokenType type) {
         return type == PREFIX_AMOUNT
-                || type == PREFIX_BOUGHT_RISE
-                || type == PREFIX_BOUGHT_FALL
                 || type == PREFIX_BOUGHT
                 || type == PREFIX_CODE
-                || type == PREFIX_HELD_RISE
-                || type == PREFIX_HELD_FALL
                 || type == PREFIX_HELD
-                || type == PREFIX_MADE_RISE
-                || type == PREFIX_MADE_FALL
                 || type == PREFIX_MADE
                 || type == PREFIX_NAME
                 || type == PREFIX_PRICE_RISE
                 || type == PREFIX_PRICE_FALL
                 || type == PREFIX_PRICE
-                || type == PREFIX_SOLD_RISE
-                || type == PREFIX_SOLD_FALL
                 || type == PREFIX_SOLD
                 || type == PREFIX_TAG
                 || type == PREFIX_WORTH_RISE

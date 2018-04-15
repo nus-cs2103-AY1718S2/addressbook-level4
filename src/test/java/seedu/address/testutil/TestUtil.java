@@ -45,27 +45,15 @@ public class TestUtil {
 
     public static final String PREFIX_BOUGHT_STRING = "b/";
     public static final Token PREFIX_BOUGHT_TOKEN = new Token(TokenType.PREFIX_BOUGHT, PREFIX_BOUGHT_STRING);
-    public static final String PREFIX_BOUGHT_RISE_STRING = "b/+";
-    public static final Token PREFIX_BOUGHT_RISE_TOKEN = new Token(TokenType.PREFIX_BOUGHT, PREFIX_BOUGHT_RISE_STRING);
-    public static final String PREFIX_BOUGHT_FALL_STRING = "b/-";
-    public static final Token PREFIX_BOUGHT_FALL_TOKEN = new Token(TokenType.PREFIX_BOUGHT, PREFIX_BOUGHT_FALL_STRING);
 
     public static final String PREFIX_CODE_STRING = "c/";
     public static final Token PREFIX_CODE_TOKEN = new Token(TokenType.PREFIX_CODE, PREFIX_CODE_STRING);
 
     public static final String PREFIX_HELD_STRING = "h/";
     public static final Token PREFIX_HELD_TOKEN = new Token(TokenType.PREFIX_HELD, PREFIX_HELD_STRING);
-    public static final String PREFIX_HELD_RISE_STRING = "h/+";
-    public static final Token PREFIX_HELD_RISE_TOKEN = new Token(TokenType.PREFIX_HELD, PREFIX_HELD_RISE_STRING);
-    public static final String PREFIX_HELD_FALL_STRING = "h/-";
-    public static final Token PREFIX_HELD_FALL_TOKEN = new Token(TokenType.PREFIX_HELD, PREFIX_HELD_FALL_STRING);
 
     public static final String PREFIX_MADE_STRING = "m/";
     public static final Token PREFIX_MADE_TOKEN = new Token(TokenType.PREFIX_MADE, PREFIX_MADE_STRING);
-    public static final String PREFIX_MADE_RISE_STRING = "m/+";
-    public static final Token PREFIX_MADE_RISE_TOKEN = new Token(TokenType.PREFIX_MADE, PREFIX_MADE_RISE_STRING);
-    public static final String PREFIX_MADE_FALL_STRING = "m/-";
-    public static final Token PREFIX_MADE_FALL_TOKEN = new Token(TokenType.PREFIX_MADE, PREFIX_MADE_FALL_STRING);
 
     public static final String PREFIX_NAME_STRING = "n/";
     public static final Token PREFIX_NAME_TOKEN = new Token(TokenType.PREFIX_NAME, PREFIX_NAME_STRING);
@@ -73,16 +61,14 @@ public class TestUtil {
     public static final String PREFIX_PRICE_STRING = "p/";
     public static final Token PREFIX_PRICE_TOKEN = new Token(TokenType.PREFIX_PRICE, PREFIX_PRICE_STRING);
     public static final String PREFIX_PRICE_RISE_STRING = "p/+";
-    public static final Token PREFIX_PRICE_RISE_TOKEN = new Token(TokenType.PREFIX_PRICE, PREFIX_PRICE_RISE_STRING);
+    public static final Token PREFIX_PRICE_RISE_TOKEN =
+            new Token(TokenType.PREFIX_PRICE_RISE, PREFIX_PRICE_RISE_STRING);
     public static final String PREFIX_PRICE_FALL_STRING = "p/-";
-    public static final Token PREFIX_PRICE_FALL_TOKEN = new Token(TokenType.PREFIX_PRICE, PREFIX_PRICE_STRING);
+    public static final Token PREFIX_PRICE_FALL_TOKEN =
+            new Token(TokenType.PREFIX_PRICE_FALL, PREFIX_PRICE_FALL_STRING);
 
     public static final String PREFIX_SOLD_STRING = "s/";
     public static final Token PREFIX_SOLD_TOKEN = new Token(TokenType.PREFIX_SOLD, PREFIX_SOLD_STRING);
-    public static final String PREFIX_SOLD_RISE_STRING = "s/+";
-    public static final Token PREFIX_SOLD_RISE_TOKEN = new Token(TokenType.PREFIX_SOLD, PREFIX_SOLD_RISE_STRING);
-    public static final String PREFIX_SOLD_FALL_STRING = "s/-";
-    public static final Token PREFIX_SOLD_FALL_TOKEN = new Token(TokenType.PREFIX_SOLD, PREFIX_SOLD_FALL_STRING);
 
     public static final String PREFIX_TAG_STRING = "t/";
     public static final Token PREFIX_TAG_TOKEN = new Token(TokenType.PREFIX_TAG, PREFIX_TAG_STRING);
@@ -90,9 +76,11 @@ public class TestUtil {
     public static final String PREFIX_WORTH_STRING = "w/";
     public static final Token PREFIX_WORTH_TOKEN = new Token(TokenType.PREFIX_WORTH, PREFIX_WORTH_STRING);
     public static final String PREFIX_WORTH_RISE_STRING = "w/+";
-    public static final Token PREFIX_WORTH_RISE_TOKEN = new Token(TokenType.PREFIX_WORTH, PREFIX_WORTH_RISE_STRING);
+    public static final Token PREFIX_WORTH_RISE_TOKEN =
+            new Token(TokenType.PREFIX_WORTH_RISE, PREFIX_WORTH_RISE_STRING);
     public static final String PREFIX_WORTH_FALL_STRING = "w/-";
-    public static final Token PREFIX_WORTH_FALL_TOKEN = new Token(TokenType.PREFIX_WORTH, PREFIX_WORTH_FALL_STRING);
+    public static final Token PREFIX_WORTH_FALL_TOKEN =
+            new Token(TokenType.PREFIX_WORTH_FALL, PREFIX_WORTH_FALL_STRING);
 
     public static final String NUM_STRING = "999";
     public static final Token NUM_TOKEN = new Token(TokenType.NUM, NUM_STRING);

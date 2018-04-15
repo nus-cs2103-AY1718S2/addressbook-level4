@@ -5,16 +5,12 @@ import java.util.function.Predicate;
 
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.conditions.AmountChangeCondition.CompareMode;
-import seedu.address.logic.conditions.AmountHeldChangeCondition;
 import seedu.address.logic.conditions.AmountHeldCondition;
 import seedu.address.logic.conditions.CodeCondition;
 import seedu.address.logic.conditions.CurrentPriceChangeCondition;
 import seedu.address.logic.conditions.CurrentPriceCondition;
-import seedu.address.logic.conditions.DollarsBoughtChangeCondition;
 import seedu.address.logic.conditions.DollarsBoughtCondition;
-import seedu.address.logic.conditions.DollarsSoldChangeCondition;
 import seedu.address.logic.conditions.DollarsSoldCondition;
-import seedu.address.logic.conditions.MadeChangeCondition;
 import seedu.address.logic.conditions.MadeCondition;
 import seedu.address.logic.conditions.TagCondition;
 import seedu.address.logic.conditions.WorthChangeCondition;
@@ -102,48 +98,24 @@ public class ConditionGenerator {
         CompareMode compareMode = getCompareModeFromType(type);
         switch (type) {
         case PREFIX_HELD:
-        case PREFIX_HELD_RISE:
-        case PREFIX_HELD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new AmountHeldCondition(specifiedAmount, amountComparator);
-            } else {
-                return new AmountHeldChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new AmountHeldCondition(specifiedAmount, amountComparator);
 
         case PREFIX_SOLD:
-        case PREFIX_SOLD_RISE:
-        case PREFIX_SOLD_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new DollarsSoldCondition(specifiedAmount, amountComparator);
-            } else {
-                return new DollarsSoldChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new DollarsSoldCondition(specifiedAmount, amountComparator);
 
         case PREFIX_BOUGHT:
-        case PREFIX_BOUGHT_RISE:
-        case PREFIX_BOUGHT_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new DollarsBoughtCondition(specifiedAmount, amountComparator);
-            } else {
-                return new DollarsBoughtChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new DollarsBoughtCondition(specifiedAmount, amountComparator);
 
         case PREFIX_MADE:
-        case PREFIX_MADE_RISE:
-        case PREFIX_MADE_FALL:
             amountComparator = getAmountComparatorFromToken(tokenStack.popToken());
             specifiedAmount = ParserUtil.parseAmount(tokenStack.popToken().getPattern());
-            if (compareMode == null) {
-                return new MadeCondition(specifiedAmount, amountComparator);
-            } else {
-                return new MadeChangeCondition(specifiedAmount, amountComparator, compareMode);
-            }
+            return new MadeCondition(specifiedAmount, amountComparator);
 
         case PREFIX_PRICE:
         case PREFIX_PRICE_RISE:
@@ -182,18 +154,10 @@ public class ConditionGenerator {
 
     private CompareMode getCompareModeFromType(TokenType type) {
         switch (type) {
-        case PREFIX_HELD_RISE:
-        case PREFIX_SOLD_RISE:
-        case PREFIX_BOUGHT_RISE:
-        case PREFIX_MADE_RISE:
         case PREFIX_PRICE_RISE:
         case PREFIX_WORTH_RISE:
             return CompareMode.RISE;
 
-        case PREFIX_HELD_FALL:
-        case PREFIX_SOLD_FALL:
-        case PREFIX_BOUGHT_FALL:
-        case PREFIX_MADE_FALL:
         case PREFIX_PRICE_FALL:
         case PREFIX_WORTH_FALL:
             return CompareMode.FALL;

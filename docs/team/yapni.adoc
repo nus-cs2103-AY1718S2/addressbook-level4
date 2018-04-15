@@ -35,7 +35,7 @@ and tracking their students' learning development.
 
 ** What it does: Allows users to add students to favourites and view the list of students in favourites.
 
-** Justification: Tutors may have some students that they wish to take note of. This feature helps tutors highlight these students.
+** Justification: Tutors may have some students that they wish to take note of. This feature helps tutors highlight these students and access them easily.
 
 * *Code contributed*: [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/functional/yapni.md[Functional code]] [https://github.com/CS2103JAN2018-W09-B3/main/blob/master/collated/test/yapni.md[Test code]]
 
@@ -43,8 +43,13 @@ and tracking their students' learning development.
 
 ** Project management:
 *** Managed release `v1.4` on GitHub
-** Modification to original AddressBook-Level4 code base:
-*** Refactored the name of some classes in the context of Codeducator (e.g. changed the name of `Person` to `Student` and `Subject` to `ProgrammingLanguage`.
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the Developer Guide: https://github.com/CS2103JAN2018-W09-B3/main/pull/167[#167]
+** Community:
+*** PR reviewed: https://github.com/CS2103JAN2018-W09-B3/main/pull/174[#174]
+*** Reported bugs for another team: https://github.com/CS2103JAN2018-F09-B1/main/issues/77[1], https://github.com/CS2103JAN2018-F09-B1/main/issues/70[2], https://github.com/CS2103JAN2018-F09-B1/main/issues/81[3], https://github.com/CS2103JAN2018-F09-B1/main/issues/89[4]
+** Others:
+*** Refactored the name of some classes in the context of Codeducator (changed the name of `Person` to `Student` and `Subject` to `ProgrammingLanguage`): http://github.com/CS2103JAN2018-W09-B3/main/pull/27[#27]
 
 == Contributions to the User Guide
 
@@ -65,3 +70,7 @@ include::../UserGuide.adoc[tag=dashboard]
 include::../DeveloperGuide.adoc[tag=favourites]
 
 include::../DeveloperGuide.adoc[tag=dashboard]
+
+include::../DeveloperGuide.adoc[tag=favTest]
+
+include::../DeveloperGuide.adoc[tag=dashboardTest]

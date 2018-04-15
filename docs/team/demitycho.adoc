@@ -36,8 +36,6 @@ Codeducator is a desktop address book application used for teaching Software Eng
 *** Integrated a third party library (Natty) to the project (https://github.com[#42])
 *** Integrated a new Github plugin (CircleCI) to the team repo
 
-_{you can add/remove categories in the list above}_
-
 == Contributions to the User Guide
 
 
@@ -45,7 +43,10 @@ _{you can add/remove categories in the list above}_
 |_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
 |===
 
+== Scheduling component
 include::../UserGuide.adoc[tag=schedule]
+
+== Integration with Google Accounts.
 
 include::../UserGuide.adoc[tag=sync]
 
@@ -56,9 +57,6 @@ include::../UserGuide.adoc[tag=sync]
 |===
 
 include::../DeveloperGuide.adoc[tag=schedule]
-
-include::../DeveloperGuide.adoc[tag=sync]
-
 
 == PROJECT: PowerPointLabs
 

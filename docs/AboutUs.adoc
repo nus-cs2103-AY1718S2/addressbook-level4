@@ -3,7 +3,7 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-Codeducator was developed by the https://github.com/nus-cs2103-AY1718S2/[W09-B3] team. +
+Codeducator was developed by the https://github.com/CS2103JAN2018-W09-B3/[W09-B3] team. +
 
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
 
@@ -11,7 +11,7 @@ We are a team based in the http://www.comp.nus.edu.sg[School of Computing, Natio
 
 === Samuel Loh Jie Wei
 image::samuelloh.jpeg[width="150", align="left"]
-{empty}[https://github.com/samuelloh[github]]
+{empty}[https://github.com/samuelloh[github]] [https://cs2103jan2018-w09-b3.github.io/main/team/samuelloh[portfolio]]
 
 Role: Deliverables and deadlines, In charge of UI
 
@@ -19,7 +19,7 @@ Role: Deliverables and deadlines, In charge of UI
 
 === Tan Chee Wee
 image::chweeee.jpeg[width="150", align="left"]
-{empty}[https://github.com/chweeee[github]]
+{empty}[https://github.com/chweeee[github]] [https://cs2103jan2018-w09-b3.github.io/main/team/TanCheeWee[portfolio]]
 
 Role: Integration, In charge of Logic
 
@@ -27,7 +27,7 @@ Role: Integration, In charge of Logic
 
 === Tan Wei Hao
 image::demitycho.jpg[width="150", align="left"]
-{empty}[https://github.com/demitycho[github]]
+{empty}[https://github.com/demitycho[github]] [https://cs2103jan2018-w09-b3.github.io/main/team/demitycho[portfolio]]
 
 Role: Scheduling and tracking, In charge of Model
 
@@ -35,7 +35,7 @@ Role: Scheduling and tracking, In charge of Model
 
 === Yap Ni
 image::yapni.jpg[width="150", align="left"]
-{empty}[http://github.com/yapni[github]]
+{empty}[http://github.com/yapni[github]] [https://cs2103jan2018-w09-b3.github.io/main/team/yapni[portfolio]]
 
 Role: Documentation, In charge of Storage
 

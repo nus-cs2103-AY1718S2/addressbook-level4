@@ -74,7 +74,7 @@ public interface Model {
     void updateProfilePicture(Student target, Student editedStudent, Student finalEditedStudent)
         throws DuplicateStudentException, StudentNotFoundException;
 
-    void loginGoogleAccount() throws CredentialsException;
+    void loginGoogleAccount() throws CredentialsException, IOException;
 
     void logoutGoogleAccount() throws CredentialsException;
 

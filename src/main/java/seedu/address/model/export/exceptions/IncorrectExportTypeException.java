@@ -1,6 +1,6 @@
 package seedu.address.model.export.exceptions;
 
-//@@author daviddalmaso
+//@@author daviddalmaso-unused
 /**
  * Exception to handle when the given export type is not valid
  */

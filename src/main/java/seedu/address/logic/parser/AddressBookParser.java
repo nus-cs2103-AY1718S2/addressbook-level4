@@ -101,10 +101,12 @@ public class AddressBookParser {
         case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
+        //@@author Pearlissa
         case SortCommand.COMMAND_WORD:
         case SortCommand.COMMAND_ALIAS:
             return new SortCommand();
 
+        //@@author
         case FindCommand.COMMAND_WORD:
         case FindCommand.COMMAND_ALIAS:
             return new FindCommandParser().parse(arguments);
@@ -151,10 +153,12 @@ public class AddressBookParser {
         case ListCurrentTaskCommand.COMMAND_ALIAS:
             return new ListCurrentTaskCommand();
 
+        //@@author Pearlissa
         case SortTaskCommand.COMMAND_WORD:
         case SortTaskCommand.COMMAND_ALIAS:
             return new SortTaskCommand();
 
+        //@@author
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);
         }

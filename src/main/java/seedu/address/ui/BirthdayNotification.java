@@ -13,7 +13,7 @@ import seedu.address.commons.events.ui.BirthdayNotificationEvent;
 
 //@@author AzuraAiR
 /**
- * A ui for the notification dialog that is displayed at the start of the application and
+ * A ui for the notification dialog that is displayed at the start of the application or
  * after `birthdays today` is called.
  */
 public class BirthdayNotification extends UiPart<Region> {

@@ -6,7 +6,7 @@ import seedu.address.commons.events.BaseEvent;
 
 //@@author AzuraAiR
 /**
- * Represents a call for the Birthday Notification
+ * Represents a call for the Birthday Notification to be displayed
  */
 public class BirthdayNotificationEvent extends BaseEvent {
 

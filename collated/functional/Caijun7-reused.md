@@ -72,73 +72,22 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
     private static final String LOCALHOST = "localhost";
     private static final String CALLBACK_PATH = "/Callback";
 
-    /**
-     * Server or {@code null} before {@link #getRedirectUri()}.
-     */
     private Server server;
-
-    /**
-     * Verification code or {@code null} for none.
-     */
     private String code;
-
-    /**
-     * Error code or {@code null} for none.
-     */
     private String error;
-
-    /**
-     * Lock on the code and error.
-     */
     private final Lock lock = new ReentrantLock();
-
-    /**
-     * Condition for receiving an authorization response.
-     */
     private final Condition gotAuthorizationResponse = lock.newCondition();
-
-    /**
-     * Port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}.
-     */
     private int port;
-
-    /**
-     * Host name to use.
-     */
     private final String host;
-
-    /**
-     * Callback path of redirect_uri
-     */
     private final String callbackPath;
-
-    /**
-     * URL to an HTML page to be shown (via redirect) after successful login. If null, a canned
-     * default landing page will be shown (via direct response).
-     */
     private String successLandingPageUrl;
-
-    /**
-     * URL to an HTML page to be shown (via redirect) after failed login. If null, a canned
-     * default landing page will be shown (via direct response).
-     */
     private String failureLandingPageUrl;
 
     /**
      * Constructor that starts the server on {@link #LOCALHOST} and an unused port.
-     * Use {@link Builder} if you need to specify any of the optional parameters.
      */
     public CancellableServerReceiver() {
         this(LOCALHOST, -1, CALLBACK_PATH, null, null);
-    }
-
-    /**
-     * Constructor that starts the server on {@code "localhost"} selects an unused port.
-     * Use {@link Builder} if you need to specify any of the optional parameters.
-     */
-    public CancellableServerReceiver(String host, int port,
-                                     String successLandingPageUrl, String failureLandingPageUrl) {
-        this(host, port, CALLBACK_PATH, successLandingPageUrl, failureLandingPageUrl);
     }
 
     /**
@@ -224,20 +173,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
         }
     }
 
-    /**
-     * Returns the host name to use.
-     */
-    public String getHost() {
-        return host;
-    }
-
-    /**
-     * Returns the port to use or {@code -1} to select an unused port in {@link #getRedirectUri()}.
-     */
-    public int getPort() {
-        return port;
-    }
-
     private static int getUnusedPort() throws IOException {
         Socket socket = new Socket();
         socket.bind(null);
@@ -245,83 +180,6 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
             return socket.getLocalPort();
         } finally {
             socket.close();
-        }
-    }
-
-    /**
-     * Builder class for CancellableServerReceiver. Implementation is not thread-safe.
-     */
-    public static final class Builder {
-
-        /**
-         * Host name to use.
-         */
-        private String host = LOCALHOST;
-
-        /**
-         * Port to use or {@code -1} to select an unused port.
-         */
-        private int port = -1;
-
-        private String successLandingPageUrl;
-        private String failureLandingPageUrl;
-
-        private String callbackPath = CALLBACK_PATH;
-
-        /**
-         * Builds the {@code CancellableServerReceiver}.
-         */
-        public CancellableServerReceiver build() {
-            return new CancellableServerReceiver(host, port, callbackPath,
-                    successLandingPageUrl, failureLandingPageUrl);
-        }
-
-        public String getHost() {
-            return host;
-        }
-
-        /**
-         * Sets the host name to use.
-         */
-        public Builder setHost(String host) {
-            this.host = host;
-            return this;
-        }
-
-        /**
-         * Returns the port to use or {@code -1} to select an unused port.
-         */
-        public int getPort() {
-            return port;
-        }
-
-        /**
-         * Sets the port to use or {@code -1} to select an unused port.
-         */
-        public Builder setPort(int port) {
-            this.port = port;
-            return this;
-        }
-
-        /**
-         * Returns the callback path of redirect_uri
-         */
-        public String getCallbackPath() {
-            return callbackPath;
-        }
-
-        /**
-         * Sets the callback path of redirect_uri
-         */
-        public Builder setCallbackPath(String callbackPath) {
-            this.callbackPath = callbackPath;
-            return this;
-        }
-
-        public Builder setLandingPages(String successLandingPageUrl, String failureLandingPageUrl) {
-            this.successLandingPageUrl = successLandingPageUrl;
-            this.failureLandingPageUrl = failureLandingPageUrl;
-            return this;
         }
     }
 
@@ -388,17 +246,18 @@ class CancellableServerReceiver implements VerificationCodeReceiver {
 public class GoogleDriveStorage {
 
     private static final String APPLICATION_NAME = "StardyTogether";
-    private static final String DIR_FOR_DOWNLOADS = "googledrive/";
 
     /**
      * Directory to store user credentials.
      */
-    private static final java.io.File DATA_STORE_DIR =
+    private static java.io.File dataStoreDir =
             new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
-
+    private static String uploadFileFolder = "./googledrive/";
+    private static String user = "user";
     private static FileDataStoreFactory dataStoreFactory;
     private static HttpTransport httpTransport;
     private static final JsonFactory JSON_FACTORY = JacksonFactory.getDefaultInstance();
+    private static Credential credential;
 
     /**
      * Google Drive API client.
@@ -411,27 +270,48 @@ public class GoogleDriveStorage {
     private final java.io.File uploadFile;
 
     public GoogleDriveStorage(String uploadFilePath) throws GoogleAuthorizationException, RequestTimeoutException {
-        this.uploadFilePath = uploadFilePath;
-        uploadFile = new java.io.File(uploadFilePath);
+        this.uploadFilePath = uploadFileFolder + uploadFilePath;
+        uploadFile = new java.io.File(this.uploadFilePath);
         userAuthorize();
+    }
+
+    public String getUploadFilePath() {
+        return uploadFilePath;
+    }
+
+    /**
+     * Sets the variables for test environment
+     */
+    public static void setTestEnvironment() {
+        uploadFileFolder = "";
+        user = "test";
+        dataStoreDir = new java.io.File("./src/test/resources/GoogleCredentials/");
+    }
+
+    /**
+     * Resets the variables for user environment
+     */
+    public static void resetTestEnvironment() {
+        uploadFileFolder = "./googledrive/";
+        user = "user";
+        dataStoreDir = new java.io.File(System.getProperty("user.home"), ".google-credentials/google-drive-storage");
     }
 
     /**
      * Opens Google authentication link in user's default browser and request for authorization.
      * Sets up an instance of Google Drive API client after user authorized the application.
      *
-     * @throws GoogleAuthorizationException     When application is unable to gain user's authorization
+     * @throws GoogleAuthorizationException When application is unable to gain user's authorization
+     * @throws RequestTimeoutException      When authorization request timed out
      */
     private void userAuthorize() throws GoogleAuthorizationException, RequestTimeoutException {
         Preconditions.checkArgument(
-                !uploadFilePath.startsWith("Enter ") && !DIR_FOR_DOWNLOADS.startsWith("Enter "),
-                "Please enter the upload file path and download directory in %s", GoogleDriveStorage.class);
+                !uploadFilePath.startsWith("Enter "),
+                "Please enter the upload file path in %s", GoogleDriveStorage.class);
         try {
             httpTransport = GoogleNetHttpTransport.newTrustedTransport();
-            dataStoreFactory = new FileDataStoreFactory(DATA_STORE_DIR);
-
-            Credential credential = authorize();
-
+            dataStoreFactory = new FileDataStoreFactory(dataStoreDir);
+            credential = authorizationRequest();
             drive = new Drive.Builder(httpTransport, JSON_FACTORY, credential).setApplicationName(
                     APPLICATION_NAME).build();
             return;
@@ -449,7 +329,21 @@ public class GoogleDriveStorage {
     /**
      * Authorizes the installed application to access user's protected data.
      */
-    private Credential authorize() throws IOException {
+    private Credential authorizationRequest() throws IOException {
+        GoogleClientSecrets clientSecrets = retrieveClientSecrets();
+        GoogleAuthorizationCodeFlow flow = buildFlow(clientSecrets);
+        CancellableServerReceiver receiver = new CancellableServerReceiver();
+
+        Credential credential = getUserCredential(flow, receiver);
+        return credential;
+    }
+
+    /**
+     * Retrieves application's client secrets in resource file folder
+     *
+     * @throws IOException When client secrets is not found
+     */
+    private GoogleClientSecrets retrieveClientSecrets() throws IOException {
         GoogleClientSecrets clientSecrets = GoogleClientSecrets.load(JSON_FACTORY,
                 new InputStreamReader(GoogleDriveStorage.class.getResourceAsStream("/json/client_secret.json")));
         if (clientSecrets.getDetails().getClientId().startsWith("Enter")
@@ -458,17 +352,36 @@ public class GoogleDriveStorage {
                     "Enter Client ID and Secret from https://code.google.com/apis/console/?api=drive "
                             + "into /src/main/resources/json/client_secret.json");
         }
+        return clientSecrets;
+    }
+
+    /**
+     * Builds {@code GoogleAuthorizationCodeFlow} object from client secrets
+     *
+     * @param clientSecrets Application's client secrets
+     * @throws IOException
+     */
+    private GoogleAuthorizationCodeFlow buildFlow(GoogleClientSecrets clientSecrets) throws IOException {
         GoogleAuthorizationCodeFlow flow = new GoogleAuthorizationCodeFlow.Builder(
                 httpTransport, JSON_FACTORY, clientSecrets,
                 Collections.singleton(DriveScopes.DRIVE_FILE)).setDataStoreFactory(dataStoreFactory)
                 .setAccessType("offline")
                 .setApprovalPrompt("force")
                 .build();
+        return flow;
+    }
 
-
-        CancellableServerReceiver receiver = new CancellableServerReceiver();
+    /**
+     * Creates user's {@code Credential} by redirecting user to authorization request url and get access token
+     *
+     * @param flow          Authorization request flow
+     * @param receiver      Server receiver to receive access token
+     * @throws IOException  If user rejects access to his/her Google Drive
+     */
+    private Credential getUserCredential(GoogleAuthorizationCodeFlow flow, CancellableServerReceiver receiver)
+            throws IOException {
         try {
-            Credential credential = flow.loadCredential("user");
+            Credential credential = flow.loadCredential(user);
             if (credential != null
                     && (credential.getRefreshToken() != null
                     || credential.getExpiresInSeconds() == null
@@ -484,7 +397,7 @@ public class GoogleDriveStorage {
             String code = receiver.waitForCode();
             TokenResponse response = flow.newTokenRequest(code).setRedirectUri(redirectUri).execute();
             // store credential and return it
-            return flow.createAndStoreCredential(response, "user");
+            return flow.createAndStoreCredential(response, user);
         } finally {
             receiver.stop();
         }
@@ -504,6 +417,5 @@ public class GoogleDriveStorage {
         uploader.setDirectUploadEnabled(true);
         return insert.execute();
     }
-
 }
 ```

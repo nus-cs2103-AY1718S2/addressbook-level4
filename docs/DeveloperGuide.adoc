@@ -567,7 +567,7 @@ This allows the user to easily look back for a particular book, and to add it in
 ==== Current implementation
 
 Recently selected books are stored in a `UniqueBookCircularList` which resides in `ModelManager`.
-`Model` exposes a method `addRecentBook(Book)` to add new book selections. Whenever a new book is selected, `LogicManager` handles the `BookListSelectionChangedEvent` and adds the book into the list.
+`Model` exposes a method `addRecentBook(Book)` to add new book selections. Whenever a new book is selected, `LogicManager` handles the `BookListSelectionChangedEvent` and adds the book into the list using `addRecentBook(Book)`.
 
 When `recent` is entered, it will be parsed into a `RecentCommand`, which when executed, sets the `ActiveListType` to `RECENT_BOOKS`.
 It then posts `ActiveListChangedEvent` to the `EventCenter` to signal this change. The interaction between components is shown in the diagram below.
@@ -677,8 +677,7 @@ Once the necessary result is obtained, the following method in `LibraryCommand` 
 ----
     private void onSuccessfulRequest(String result, Book book) {
         EventsCenter.getInstance().post(new ShowLibraryResultRequestEvent(result));
-        EventsCenter.getInstance().post(new NewResultAvailableEvent(
-                String.format(MESSAGE_SUCCESS, book)));
+        EventsCenter.getInstance().post(new NewResultAvailableEvent(String.format(MESSAGE_SUCCESS, book)));
     }
 ----
 
@@ -687,7 +686,7 @@ The loaded page is post-processed using a script to show only the relevant secti
 
 ==== Design considerations
 
-===== Aspect: How to show the book availability
+===== Aspect: How to show availability of the book
 
 * **Alternative 1 (current choice):** Load the webpage using a `WebView`.
 ** Pros: Immune to changes in structure of that webpage.
@@ -698,18 +697,18 @@ The loaded page is post-processed using a script to show only the relevant secti
 
 ===== Aspect: Using advanced search versus basic search
 
-* **Alternative 1 (current choice):** Perform basic search, using a HTTP GET request.
+* **Alternative 1 (current choice):** Perform basic search, which uses a HTTP GET request.
 ** Pros: Faster response time.
-** Cons: Searched keyword seem to only be matched to title or authors.
-* **Alternative 2:** Perform advanced search, using a HTTP POST request.
-** Pros: Can limit the search results using more parameters such as year or ISBN.
+** Cons: Searched keyword seems to be matched to title or authors only.
+* **Alternative 2:** Perform advanced search, which uses a HTTP POST request.
+** Pros: Able to limit the search results using more parameters such as publication year or ISBN.
 ** Cons: Slower response time.
 
 ===== Aspect: Whether to load in `WebView` directly or pre-process through `Network` component
 
-* **Alternative 1 (current choice):** Pre-process HTTP request response in `Network` component, then send intended URL to `WebView`.
-** Pros: Processing happens behind the scene, and does not distract user.
-** Cons: User is subject to waiting times without feedback on progress. Furthermore the control flow becomes more complicated since an URL still needs to be passed to and loaded on the `WebView` eventually.
+* **Alternative 1 (current choice):** Pre-process HTTP response in `Network` component, then send intended URL to `WebView`.
+** Pros: Processing happens behind the scene, and does not distract the user.
+** Cons: User is subject to waiting times without feedback on progress. Furthermore, the control flow becomes more complicated since a URL still needs to be passed to and loaded on the `WebView` eventually.
 * **Alternative 2:** Load search URL in `WebView` and navigate to intended page using script.
 ** Pros: Easier to implement. Eliminate the need to modify `Network` component.
 ** Cons: User will be able to see the navigation between pages.

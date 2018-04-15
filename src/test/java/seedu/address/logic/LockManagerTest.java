@@ -50,6 +50,10 @@ public class LockManagerTest {
 
         // Cannot unlock if not locked
         assertFalse(LockManager.getInstance().unlock("testing"));
+
+        // Cannot unlock if initialized with invalid hash
+        LockManager.getInstance().initialize("invalid$11$11$invalid$invalid");
+        assertFalse(LockManager.getInstance().unlock(""));
     }
 
     @Test

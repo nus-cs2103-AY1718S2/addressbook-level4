@@ -8,7 +8,6 @@ import seedu.address.model.login.Password;
 import seedu.address.model.login.Username;
 import seedu.address.model.login.exceptions.AlreadyLoggedInException;
 
-
 //@@author kaisertanqr
 /**
  * Authenticates login credentials.

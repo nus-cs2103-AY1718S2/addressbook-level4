@@ -29,7 +29,8 @@ public class MainWindowHandle extends StageHandle {
         personDetailsPanel =
                 new PersonDetailsPanelHandle(getChildNode(PersonDetailsPanelHandle.PERSON_DETAILS_PANEL_PLACEHOLDER));
         calendarPanel = new CalendarPanelHandle(getChildNode(CalendarPanelHandle.BROWSER_ID));
-        dailySchedulerPanel = new DailySchedulerPanelHandle(getChildNode(DailySchedulerPanelHandle.BROWSER_ID));
+        dailySchedulerPanel =
+                new DailySchedulerPanelHandle(getChildNode(DailySchedulerPanelHandle.DAILY_SCHEDULER_PLACEHOLDER));
     }
 
     public PersonListPanelHandle getPersonListPanel() {

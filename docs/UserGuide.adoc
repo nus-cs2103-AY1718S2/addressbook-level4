@@ -147,6 +147,8 @@ This will correspond to the valid indexes for `navigate INDEX`.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+== Calendar Quick Start
+
 === Help Guide
 
 ==== Viewing help : `help`
@@ -184,6 +186,8 @@ Format: `delete-user u/USERNAME p/PASSWORD`
 [NOTE]
 ====
 You will need to be logged out to use this Command.
+
+This command will also delete the user's Oauth token.
 ====
 
 ****
@@ -208,6 +212,12 @@ Format: `login u/USERNAME p/PASSWORD`
 
 Logs the user out of the application.
 Format: `logout`
+
+[NOTE]
+====
+Logging out will close all open calendar and errorlog windows, log out of any Google Calendar sessions, and clear
+the Daily Scheduler view.
+====
 
 ==== Change user password: `change-user-password`
 
@@ -245,10 +255,12 @@ All `switch` commands of valid input will be valid on current feature tabs even 
 
 Examples:
 
-* `switch calendar` +
-Switches to `calendar` tab and displays contents
 * `switch details` +
 Switches to `details` tab and displays contents
+* `switch calendar` +
+Switches to `calendar` tab and displays contents
+* `switch scheduler` +
+Switches to `scheduler` tab and displays contents
 // end::switchCommand[]
 
 === Contacts Manipulation
@@ -313,7 +325,7 @@ Returns any person having names `Betsy`, `Tim`, or `John`
 
 ==== Filtering contacts by tag: `filter`
 
-Filters persons whose contact contains the given tag. +
+Filters persons to only display those whose contact contains the given tag. +
 Format: `filter TAG`
 
 ****
@@ -392,7 +404,7 @@ Example: `add-log 2 log\Today the patient reported he was feeling unwell ... ...
 ==== Delete a existing session report: `delete-log` [Coming in v2.0]
 Deletes a particular report/log from a person.
 
-==== Edit a new session report: `delete-log` [Coming in v2.0]
+==== Edit a new session report: `edit-log` [Coming in v2.0]
 Edits particular report/log entries from a person.
 
 // end::sessionlog[]
@@ -407,8 +419,8 @@ Format: `navigate INDEX`
 
 [WARNING]
 ====
-Must be on `scheduler` view first for command to work, else nothing happens.
-`show-schedule DATE` has to be called BEFORE `navigate` can work properly.
+Must be on `scheduler` view first for command to work, else nothing happens (i.e. run `switch schedule`).
+`show-schedule d/DATE` has to be called BEFORE `navigate` can work properly.
 To test function it is recommended to add sufficient number of events, i.e. 2 or more, to the particular date.
 It is assumed that every event location used is valid.
 ====
@@ -436,13 +448,6 @@ Displays directions between the first and the second event of the day.
 
 // tag::calendar[]
 === Calendar Tools
-
-==== Opening a calendar : `calendar-launch`
-[NOTE]
-====
-Calling new `show-schedule DATE` will return different set of events which will update available navigation options.
-====
-
 ==== Opening a calendar : `calendar-launch`
 
 Opens a calendar in a webview.
@@ -458,11 +463,16 @@ the calendar in the build-in scene switcher.
 Logging in to the calendar interface DOES NOT perform the Oauth authentication process.
 ====
 
+Examples:
+* `calendar-launch`
+
+Opens the Google Calendar web app in a new WebView.
+
 ==== Adding and event to the calendar : `calendar-add`
 
 Allows a user to add an event directly to their calendar.
 
-Format: `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location>`
+Format: `calendar-add title/EVENTNAME start/STARTDATETIME end/ENDDATETIME [loc/LOCATION]`
 
 [NOTE]
 ====
@@ -476,39 +486,66 @@ Similarly, if no date is provided with the time, the program will assume that th
 For example, if the current time is 4am, and the start date is 12am and the end date is 6am, the created event will
 start on the current day at 12am and end at 6am on the same day.
 
-`calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
+The location parameter is optional.
+
+`calendar-` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
 ====
+
+Examples:
+* `calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday loc/NUS School of Computing, COM1, 13 Computing Drive, Singapore 117417`
+
+Adds an event named CS2103 tutorial that starts on the upcoming Thursday at 3pm and ends at 4pm, at the NUS School of Computing, COM1
+
+* `calendar-add title/CS2103 Tutorial start/May 2 3PM end/4PM on May 2`
+
+Adds an event named CS2103 tutorial that starts on May 2 at 3pm and ends at 4pm with no location
 
 ==== List upcoming events in the command line: `calendar-list`
 
-Allows a user to view their upcoming calendar events.
+Allows a user to view their upcoming calendar events (limited to 250 events).
 
 Format: `calendar-list`
 
 [NOTE]
 ====
-`calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
+`calendar-` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
 ====
+
+Examples:
+* `calendar-list`
+
+Shows the user a list of their upcoming events (limited to 250 events).
 
 ==== Deleting an event from the calendar : `calendar-delete`
 
-Allows the user to delete an event based on the index listed from the `calendar-list` command.
+Allows the user to delete an event based on the index listed from the `calendar-list` or `show-schedule d/DATE` command.
 
 Format: `calendar-delete INDEX`
 
 [NOTE]
 ====
-`calendar-*` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-*` command is executed, the
+`calendar-` commands rely on Google Oauth to modify the calendar. Whenever a `calendar-` command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
+
+If neither the `calendar-list` nor `show-schedule d/DATE` have been called previously, the command will do nothing.
 ====
+
+Examples:
+* `calendar-list`
+
+Shows the user a list of their upcoming events (limited to 250 events) with indexes next to each event.
+
+* `calendar-delete 1*
+
+Deletes the first event on that list.
 
 ==== Editing an event in the calendar : `calendar-edit` [coming in v2.0]
 
@@ -527,14 +564,19 @@ Format: `reauthenticate`
 ====
 This command is used to manually reauthenticate the Oauth certificate. The SLAP app will launch the system default
 browser (i.e. not a WebView) and ask them to select the account that they wish to grant the SLAP app permission to
-edit. Failure to authenticate will cause the program to freeze and crash.
+edit. *Failure to authenticate will cause the program to freeze and crash.*
 ====
 
-==== List upcoming events in the command line: `show-schedule`
+Examples:
+* `reauthenticate`
 
-Allows a user to view their calendar events for the current day.
+Deletes the user's existing Oauth certificate and attempts to regain authorization.
 
-Format: `show-schdeule d/<date>`
+==== List upcoming events on a particular day in the command line: `show-schedule`
+
+Allows a user to view their calendar events for a particular day.
+
+Format: `show-schdeule d/DATE`
 
 [NOTE]
 ====
@@ -543,8 +585,18 @@ Date can be written in natural language (e.g. Today, This Friday, May 4, etc.)
 This command relies on Google Oauth to access the calendar. Whenever a Google Calendar-related command is executed, the
 Oauth certificate will be checked. If the user has not authorized the SLAP app to manage their calendar, the SLAP
 app will launch their system default browser (i.e. not a WebView) and ask them to select the account that they wish
-to grant the SLAP app permission to edit. Failure to authenticate will cause the program to freeze and crash.
+to grant the SLAP app permission to edit. *Failure to authenticate will cause the program to freeze and crash.*
 ====
+
+Examples
+* show-schedule d/This Thursday
+
+Shows a list of events that occur on this coming Thursday.
+
+* show-schedule d/May 5
+
+Shows a list of events that occur on May 5.
+
 // end::calendar[]
 
 === Other Tools
@@ -560,6 +612,11 @@ Format: `errorlog`
 ====
 The user can also open the error log by pressing `View > Show Error Log`
 ====
+
+Examples:
+* `errorlog`
+
+Opens the user log in a new WebView.
 // end::errorlog[]
 
 // tag::undoredo[]
@@ -669,10 +726,14 @@ e.g. `find James Jake`
 * *Add Session Reports/Logs* : `add-log INDEX log/LOGCONTENT`
 * *Calendar Launch* : `calendar-launch` `[Since v1.1] [Updated v1.4]`
 * *Calendar List* : `calendar-list` `[Since v1.2]`
-* *Calendar Add* : `calendar-add title/<eventname> start/<startdatetime> end/<enddatetime> loc/<location> lp/<linkedperson>(optional)` `[Since v1.3] [Updated v1.4]`
-* *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]`
-* *Show Schedule* : `show-schedule d/<date>` `[Since v1.4]`
+* *Calendar Add* : `calendar-add title/EVENTNAME start/STARTDATETIME end/ENDDATETIME [loc/LOCATION] `[Since v1.3] [Updated v1.4]` +
+e.g. calendar-add title/CS2103 Tutorial start/This Thursday at 3PM end/4PM on Thursday loc/NUS School of Computing, COM1, 13 Computing Drive, Singapore 117417
+* *Calendar Delete* : `calendar-delete INDEX` `[Since v1.4]` +
+e.g. `calendar-delete 1`
+* *Show Schedule* : `show-schedule d/DATE `[Since v1.4]` +
+e.g. `show-schedule d/May 5`
 * *Error* : `errorlog` `[Since v1.2]`
+* *Reauthenticate* : `reauthenticate` `[Since v1.2]`
 * *Select* : `select INDEX` +
 e.g.`select 2`
 * *History* : `history`

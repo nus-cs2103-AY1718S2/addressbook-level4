@@ -22,13 +22,17 @@ public class ChangeUserPasswordCommand extends Command {
 
     public static final String MESSAGE_SUCCESS = "Password updated for %1$s";
     public static final String MESSAGE_UPDATE_FAILURE = "Password update failed. Username or password is incorrect.";
-    public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out.Please logout to execute this command.";
+    public static final String MESSAGE_NOT_LOGGED_OUT = "You are not logged out. "
+            + "Please logout to execute this command.";
 
     private final Username username;
     private final Password password;
     private final Password newPassword;
 
     public ChangeUserPasswordCommand(Username username, Password password, Password newPassword) {
+        requireNonNull(username);
+        requireNonNull(password);
+        requireNonNull(newPassword);
         this.username = username;
         this.password = password;
         this.newPassword = newPassword;

@@ -111,4 +111,10 @@ include::../UserGuide.adoc[tag=errorlog]
 
 include::../DeveloperGuide.adoc[tag=calendarview]
 
+include::../DeveloperGuide.adoc[tag=calendarTesting]
+
+include::../DeveloperGuide.adoc[tag=showScheduleTesting]
+
+include::../DeveloperGuide.adoc[tag=errorLogTesting]
+
 //@@author

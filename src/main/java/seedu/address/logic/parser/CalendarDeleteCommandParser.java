@@ -25,6 +25,11 @@ public class CalendarDeleteCommandParser implements Parser<CalendarDeleteCommand
         try {
             int index = ParserUtil.parseCalendarDeleteIndex(args);
 
+            if (index < 0 || index > OAuthManager.getMostRecentEventList().size() - 1) {
+                throw new ParseException(
+                        String.format(MESSAGE_INVALID_EVENT_DISPLAYED_INDEX, CalendarDeleteCommand.MESSAGE_USAGE));
+            }
+
             Event eventToDelete = OAuthManager.getEventByIndexFromLastList(index);
 
             return new CalendarDeleteCommand(eventToDelete);

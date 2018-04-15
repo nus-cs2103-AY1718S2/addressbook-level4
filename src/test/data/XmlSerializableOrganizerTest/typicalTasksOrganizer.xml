@@ -17,8 +17,27 @@
             <password>admin</password>
         </user>
         <recurrence>
-            <isRecurring>false</isRecurring>
-            <recurrenceGroup>0</recurrenceGroup>
+            <isRecurring>true</isRecurring>
+            <recurrenceGroup>12345</recurrenceGroup>
+        </recurrence>
+    </tasks>
+    <tasks>
+        <name>Grocery</name>
+        <updatedPriority>0</updatedPriority>
+        <basePriority>0</basePriority>
+        <deadline>2019-03-18</deadline>
+        <dateadded>current_date</dateadded>
+        <datecompleted>not completed</datecompleted>
+        <description isPrivate="false">Go to NTUC</description>
+        <status>false</status>
+        <tagged>friends</tagged>
+        <user>
+            <username>admin</username>
+            <password>admin</password>
+        </user>
+        <recurrence>
+            <isRecurring>true</isRecurring>
+            <recurrenceGroup>12345</recurrenceGroup>
         </recurrence>
     </tasks>
     <tasks>

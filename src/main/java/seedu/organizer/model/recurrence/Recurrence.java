@@ -12,7 +12,7 @@ import seedu.organizer.model.recurrence.exceptions.TaskAlreadyRecurredException;
 public class Recurrence {
 
     public final boolean isRecurring;
-    public final int recurrenceGroup;
+    public final int recurrenceGroup; // original task and its recurred versions have the same group
 
     /**
      * Constructs a default {@code Recurrence} with task not recurring.

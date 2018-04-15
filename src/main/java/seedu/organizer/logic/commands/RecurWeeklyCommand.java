@@ -3,25 +3,13 @@ package seedu.organizer.logic.commands;
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_TIMES;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;
-import static seedu.organizer.model.ModelManager.getCurrentlyLoggedInUser;
 
 import java.util.List;
-import java.util.Set;
 
 import seedu.organizer.commons.core.Messages;
 import seedu.organizer.commons.core.index.Index;
 import seedu.organizer.logic.commands.exceptions.CommandException;
-import seedu.organizer.model.recurrence.Recurrence;
 import seedu.organizer.model.recurrence.exceptions.TaskAlreadyRecurredException;
-import seedu.organizer.model.subtask.Subtask;
-import seedu.organizer.model.tag.Tag;
-import seedu.organizer.model.task.DateAdded;
-import seedu.organizer.model.task.DateCompleted;
-import seedu.organizer.model.task.Deadline;
-import seedu.organizer.model.task.Description;
-import seedu.organizer.model.task.Name;
-import seedu.organizer.model.task.Priority;
-import seedu.organizer.model.task.Status;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
@@ -49,7 +37,6 @@ public class RecurWeeklyCommand extends UndoableCommand {
     private final int times;
 
     private Task taskToRecur;
-    private Task recurredTask;
 
     /**
      * @param index of the task in the filtered task list to edit
@@ -65,9 +52,7 @@ public class RecurWeeklyCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            recurredTask = createRecurredTask(taskToRecur);
-            model.updateTask(taskToRecur, recurredTask);
-            model.recurTask(recurredTask, this.times);
+            model.recurTask(taskToRecur, this.times);
         } catch (DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException pnfe) {
@@ -76,7 +61,7 @@ public class RecurWeeklyCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_RECURRED_TASK);
         }
         model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
-        return new CommandResult(String.format(MESSAGE_SUCCESS, recurredTask));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, taskToRecur));
     }
 
     @Override
@@ -88,30 +73,6 @@ public class RecurWeeklyCommand extends UndoableCommand {
         }
 
         taskToRecur = lastShownList.get(index.getZeroBased());
-    }
-
-    /**
-     * Creates and returns a {@code Task} with the details of {@code taskToRecur}
-     */
-    private static Task createRecurredTask(Task taskToRecur) throws TaskAlreadyRecurredException {
-        assert taskToRecur != null;
-
-        Name updatedName = taskToRecur.getName();
-        Priority updatedPriority = taskToRecur.getUpdatedPriority();
-        Priority basePriority = taskToRecur.getBasePriority();
-        Deadline updatedDeadline = taskToRecur.getDeadline();
-        DateAdded oldDateAdded = taskToRecur.getDateAdded();
-        DateCompleted oldDateCompleted = taskToRecur.getDateCompleted();
-        Description updatedDescription = taskToRecur.getDescription();
-        Set<Tag> updatedTags = taskToRecur.getTags();
-        List<Subtask> updatedSubtasks = taskToRecur.getSubtasks();
-        Status updatedStatus = taskToRecur.getStatus();
-        Recurrence updatedRecurrence = new Recurrence(taskToRecur.getRecurrence().getIsRecurring(),
-                taskToRecur.hashCode(), true);
-
-        return new Task(updatedName, updatedPriority, basePriority, updatedDeadline, oldDateAdded, oldDateCompleted,
-                updatedDescription, updatedStatus, updatedTags, updatedSubtasks, getCurrentlyLoggedInUser(),
-                updatedRecurrence);
     }
 
     @Override

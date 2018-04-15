@@ -16,6 +16,7 @@ import seedu.organizer.logic.commands.ClearCommand;
 import seedu.organizer.logic.commands.Command;
 import seedu.organizer.logic.commands.CurrentMonthCommand;
 import seedu.organizer.logic.commands.DeleteCommand;
+import seedu.organizer.logic.commands.DeleteRecurredTasksCommand;
 import seedu.organizer.logic.commands.DeleteSubtaskCommand;
 import seedu.organizer.logic.commands.EditCommand;
 import seedu.organizer.logic.commands.EditSubtaskCommand;
@@ -148,6 +149,13 @@ public class OrganizerParser {
 
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
+
+        //@@author natania
+        case DeleteRecurredTasksCommand.COMMAND_WORD:
+            return new DeleteRecurredTasksCommandParser().parse(arguments);
+
+        case DeleteRecurredTasksCommand.COMMAND_ALIAS:
+            return new DeleteRecurredTasksCommandParser().parse(arguments);
 
         //@@author agus
         case DeleteSubtaskCommand.COMMAND_WORD:

@@ -137,7 +137,7 @@ public class TaskBuilder {
     /**
      * Sets the base {@code Priority} of the {@code Task} that we are building.
      */
-    public TaskBuilder withbasePriority(String basePriority) {
+    public TaskBuilder withBasePriority(String basePriority) {
         this.basePriority = new Priority(basePriority);
         return this;
     }
@@ -163,6 +163,14 @@ public class TaskBuilder {
      */
     public TaskBuilder withDateCompleted(String dateCompleted) {
         this.dateCompleted = new DateCompleted(dateCompleted);
+        return this;
+    }
+
+    /**
+     * Sets the {@code DateCompleted} of the {@code Task} that we are building.
+     */
+    public TaskBuilder withRecurrence(boolean isRecurring, int recurrenceGroup) {
+        this.recurrence = new Recurrence(isRecurring, recurrenceGroup);
         return this;
     }
 

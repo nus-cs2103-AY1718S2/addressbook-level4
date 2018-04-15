@@ -33,7 +33,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 /* ----------------- Performing delete operation while an unfiltered list is being shown -------------------- *//*
 
 
-        */
+ */
 /* Case: delete the first task in the list, command with leading spaces and trailing spaces -> deleted *//*
 
         Model expectedModel = getModel();
@@ -74,7 +74,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 /* ------------------ Performing delete operation while a filtered list is being shown ---------------------- *//*
 
 
-        */
+ */
 /* Case: filtered task list, delete index within bounds of organizer and task list -> deleted *//*
 
         showTasksWithName(KEYWORD_MATCHING_REVISION);
@@ -84,8 +84,8 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
         */
 /* Case: filtered task list, delete index within bounds of organizer but out of bounds of task list
-         * -> rejected
-         *//*
+ * -> rejected
+ *//*
 
         showTasksWithName(KEYWORD_MATCHING_REVISION);
         int invalidIndex = getModel().getOrganizer().getTaskList().size();
@@ -96,7 +96,7 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 /* --------------------------------- Performing invalid delete operation ------------------------------------ *//*
 
 
-        */
+ */
 /* Case: invalid index (0) -> rejected *//*
 
         command = DeleteCommand.COMMAND_WORD + " 0";
@@ -134,10 +134,10 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     */
 /**
-     * Removes the {@code Task} at the specified {@code index} in {@code model}'s organizer.
-     *
-     * @return the removed task
-     *//*
+ * Removes the {@code Task} at the specified {@code index} in {@code model}'s organizer.
+ *
+ * @return the removed task
+ *//*
 
     private Task removeTask(Model model, Index index) {
         Task targetTask = getTask(model, index);
@@ -151,11 +151,11 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     */
 /**
-     * Deletes the task at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
-     * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
-     *
-     * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     *//*
+ * Deletes the task at {@code toDelete} by creating a default {@code DeleteCommand} using {@code toDelete} and
+ * performs the same verification as {@code assertCommandSuccess(String, Model, String)}.
+ *
+ * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
+ *//*
 
     private void assertCommandSuccess(Index toDelete) {
         Model expectedModel = getModel();
@@ -168,18 +168,18 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     */
 /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays an empty string.<br>
-     * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
-     * 4. Asserts that the browser url and selected card remains unchanged.<br>
-     * 5. Asserts that the status bar's sync status changes.<br>
-     * 6. Asserts that the command box has the default style class.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
-     *
-     * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     *//*
+ * Executes {@code command} and in addition,<br>
+ * 1. Asserts that the command box displays an empty string.<br>
+ * 2. Asserts that the result display box displays {@code expectedResultMessage}.<br>
+ * 3. Asserts that the model related components equal to {@code expectedModel}.<br>
+ * 4. Asserts that the browser url and selected card remains unchanged.<br>
+ * 5. Asserts that the status bar's sync status changes.<br>
+ * 6. Asserts that the command box has the default style class.<br>
+ * Verifications 1 to 3 are performed by
+ * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.
+ *
+ * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+ *//*
 
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage) {
         assertCommandSuccess(command, expectedModel, expectedResultMessage, null);
@@ -187,11 +187,11 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     */
 /**
-     * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
-     * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
-     *
-     * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
-     *//*
+ * Performs the same verification as {@code assertCommandSuccess(String, Model, String)} except that the browser url
+ * and selected card are expected to update accordingly depending on the card at {@code expectedSelectedCardIndex}.
+ *
+ * @see DeleteCommandSystemTest#assertCommandSuccess(String, Model, String)
+ *//*
 
     private void assertCommandSuccess(String command, Model expectedModel, String expectedResultMessage,
                                       Index expectedSelectedCardIndex) {
@@ -203,17 +203,17 @@ public class DeleteCommandSystemTest extends OrganizerSystemTest {
 
     */
 /**
-     * Executes {@code command} and in addition,<br>
-     * 1. Asserts that the command box displays {@code command}.<br>
-     * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
-     * 3. Asserts that the model related components equal to the current model.<br>
-     * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
-     * 5. Asserts that the command box has the error style.<br>
-     * Verifications 1 to 3 are performed by
-     * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     *
-     * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     *//*
+ * Executes {@code command} and in addition,<br>
+ * 1. Asserts that the command box displays {@code command}.<br>
+ * 2. Asserts that result display box displays {@code expectedResultMessage}.<br>
+ * 3. Asserts that the model related components equal to the current model.<br>
+ * 4. Asserts that the browser url, selected card and status bar remain unchanged.<br>
+ * 5. Asserts that the command box has the error style.<br>
+ * Verifications 1 to 3 are performed by
+ * {@code OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+ *
+ * @see OrganizerSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+ *//*
 
     private void assertCommandFailure(String command, String expectedResultMessage) {
         Model expectedModel = getModel();

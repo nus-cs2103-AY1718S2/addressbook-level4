@@ -254,7 +254,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Priority basePriority = task.getBasePriority();
         Deadline updatedDeadline = new Deadline(newDeadline);
         DateAdded oldDateAdded = new DateAdded();
-        DateCompleted updatedDateCompleted = new DateCompleted();
+        DateCompleted updatedDateCompleted = new DateCompleted(false);
         Description updatedDescription = task.getDescription();
         Status updatedStatus = new Status(false);
         Set<Tag> updatedTags = task.getTags();

@@ -116,7 +116,7 @@ public class FindNameCommandSystemTest extends OrganizerSystemTest {
         assertCommandSuccess(command, expectedModel);
 
         /* Case: find priority number of task in organizer -> 0 tasks found */
-        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getPriority().value;
+        command = FindNameCommand.COMMAND_WORD + " " + HOMEWORK.getUpdatedPriority().value;
         assertCommandSuccess(command, expectedModel);
 
         /* Case: find organizer of task in organizer -> 0 tasks found */

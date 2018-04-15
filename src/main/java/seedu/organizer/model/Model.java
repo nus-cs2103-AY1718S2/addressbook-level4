@@ -4,6 +4,7 @@ import java.util.function.Predicate;
 
 import javafx.collections.ObservableList;
 import seedu.organizer.model.recurrence.exceptions.TaskAlreadyRecurredException;
+import seedu.organizer.model.recurrence.exceptions.TaskNotRecurringException;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
@@ -74,10 +75,15 @@ public interface Model {
      */
     void updateFilteredTaskList(Predicate<Task> predicate);
 
-    //@@author natania
+    //@@author natania-reused
     /** Removes the given {@code tag} from all {@code Task}s. */
     void deleteTag(Tag tag);
 
+    //@@author natania
     /** Recurs the given task for the given number of times */
-    void recurTask(Task task, int times) throws DuplicateTaskException, TaskAlreadyRecurredException;
+    void recurTask(Task task, int times)
+            throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException;
+
+    /** Deletes the given task and all its recurred versions. */
+    void deleteRecurredTasks(Task target) throws DuplicateTaskException, TaskNotRecurringException;
 }

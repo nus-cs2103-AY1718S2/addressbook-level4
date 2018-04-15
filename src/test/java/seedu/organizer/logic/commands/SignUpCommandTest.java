@@ -21,6 +21,7 @@ import seedu.organizer.logic.commands.exceptions.CommandException;
 import seedu.organizer.model.Model;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.ReadOnlyOrganizer;
+import seedu.organizer.model.recurrence.exceptions.TaskNotRecurringException;
 import seedu.organizer.model.tag.Tag;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
@@ -178,6 +179,11 @@ public class SignUpCommandTest {
 
         @Override
         public void recurTask(Task task, int times) throws DuplicateTaskException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteRecurredTasks(Task task) throws DuplicateTaskException, TaskNotRecurringException {
             fail("This method should not be called.");
         }
     }

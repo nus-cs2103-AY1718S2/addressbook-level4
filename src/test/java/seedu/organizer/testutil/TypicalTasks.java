@@ -38,7 +38,7 @@ public class TypicalTasks {
     public static final Task GROCERY = new TaskBuilder().withName("Grocery")
             .withDescription("Go to NTUC").withDeadline("2019-03-11")
             .withDateAdded(currentDate).withPriority("0")
-            .withTags("friends").build();
+            .withTags("friends").withRecurrence(true, 12345).build();
     public static final Task SPRINGCLEAN = new TaskBuilder().withName("Spring cleaning")
             .withDescription("Clean the entire house except the study room")
             .withDeadline("2019-09-08").withDateAdded(currentDate).withPriority("1")
@@ -59,6 +59,10 @@ public class TypicalTasks {
     public static final Task MOCKEXAM = new TaskBuilder().withName("Mock exam").withPriority("6")
             .withDeadline("2019-05-23").withDateAdded(currentDate)
             .withDescription("Mock exam for CS1101S - Revise!").addSubtask("Study").build();
+    public static final Task GROCERY2 = new TaskBuilder().withName("Grocery")
+            .withDescription("Go to NTUC").withDeadline("2019-03-18")
+            .withDateAdded(currentDate).withPriority("0")
+            .withTags("friends").withRecurrence(true, 12345).build();
 
     // Manually added
     public static final Task MAKEPRESENT = new TaskBuilder().withName("Make present").withPriority("7")
@@ -103,6 +107,6 @@ public class TypicalTasks {
 
     public static List<Task> getTypicalTasks() {
         return new ArrayList<>(Arrays.asList(GROCERY, SPRINGCLEAN,
-                PREPAREBREAKFAST, HOMEWORK, PROJECT, REVISION, MOCKEXAM));
+                PREPAREBREAKFAST, HOMEWORK, PROJECT, REVISION, MOCKEXAM, GROCERY2));
     }
 }

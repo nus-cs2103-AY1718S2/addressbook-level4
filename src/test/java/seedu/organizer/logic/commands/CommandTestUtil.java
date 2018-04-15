@@ -147,8 +147,8 @@ public class CommandTestUtil {
     }
 
     /**
-     * Updates {@code model}'s filtered list to show only the task at the given {@code targetIndex} in the
-     * {@code model}'s organizer.
+     * Updates {@code model}'s filtered list to show only the task at the given
+     * {@code targetIndex} in the {@code model}'s organizer.
      */
     public static void showTaskAtIndex(Model model, Index targetIndex) {
         assertTrue(targetIndex.getZeroBased() < model.getFilteredTaskList().size());
@@ -158,6 +158,18 @@ public class CommandTestUtil {
         model.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
 
         assertEquals(1, model.getFilteredTaskList().size());
+    }
+
+    /**
+     * Updates {@code model}'s filtered list to show only the task and its iterations at the given
+     * {@code targetIndex} in the {@code model}'s organizer.
+     */
+    public static void showRecurredTasksAtIndex(Model model, Index targetIndex) {
+        assertTrue(targetIndex.getZeroBased() < model.getFilteredTaskList().size());
+
+        Task task = model.getFilteredTaskList().get(targetIndex.getZeroBased());
+        final String[] splitName = task.getName().fullName.split("\\s+");
+        model.updateFilteredTaskList(new NameContainsKeywordsPredicate(Arrays.asList(splitName[0])));
     }
 
     /**

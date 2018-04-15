@@ -45,7 +45,7 @@ image::Login.png[width="500"]
 
 .The main Application GUI upon login.
 //update this image also
-image::UiInitial.png[width="800"]
+image::Ui.png[width="800"]
 
 Tips on using the command box:
 
@@ -88,7 +88,7 @@ Password: Iamanewuser
 Upon typing in the credentials, a new instance of `Your TA` will start up as seen in figure 3 below.
 
 .The main Application GUI upon login.
-image::UiInitial.png[width="800"]
+image::Ui.png[width="800"]
 
 If you log out and then log back in using the same username but a wrong password, say "Iamnotanewuser".
 The error message will be displayed indicating a wrong password as seen in Figure 4 below.

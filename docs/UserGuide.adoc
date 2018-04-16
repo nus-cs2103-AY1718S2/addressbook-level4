@@ -600,6 +600,14 @@ There is no need to save manually.
 === View tutee fees `[coming in v2.0]`
 Views the amount that has to be paid by a tutee.
 
+// tag::encryption[]
+=== Encrypting data files
+Address book data are automatically encrypted after any command that
+changes the data.
+
+=== View tutee fees `[coming in v2.0]
+View the current amount that has to be paid by a tutee.
+
 === View tuition progress `[coming in v2.0]`
 Shows the details of tuition provided within several months in the form of a graph.
 // end::proposedfeatures[]
@@ -617,9 +625,11 @@ Edits date, time, duration or description of an existing task and reflects the c
 === View contact address on Google map `[coming in v2.0]`
 Views the location of a specific contact's address on google map and the shortest route from the current location will be displayed.
 
+
 === Select a contact or a task `[coming in v2.0]`
 Selects either a contact or a task and a pop up page containing all the relevant information will appear.
 // end::ChoChihTunV2.0[]
+
 
 == FAQ
 

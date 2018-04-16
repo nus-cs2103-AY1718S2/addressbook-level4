@@ -8,6 +8,9 @@ import java.util.stream.Collectors;
 import guitests.guihandles.PersonCardHandle;
 import guitests.guihandles.PersonListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
+import guitests.guihandles.TaskCardHandle;
+import guitests.guihandles.TaskListPanelHandle;
+import seedu.address.model.Task;
 import seedu.address.model.person.Person;
 
 /**
@@ -27,6 +30,15 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertCardEquals(TaskCardHandle expectedCard, TaskCardHandle actualCard) {
+        assertEquals(expectedCard.getDescription(), actualCard.getDescription());
+        assertEquals(expectedCard.getDuration(), actualCard.getDuration());
+        assertEquals(expectedCard.getDateAndTime(), actualCard.getDateAndTime());
+    }
+
+    /**
      * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
      */
     public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
@@ -39,12 +51,32 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     */
+    public static void assertCardDisplaysTask(Task expectedTask, TaskCardHandle actualCard) {
+        assertEquals(expectedTask.getDescription(), actualCard.getDescription());
+        assertEquals(expectedTask.getDuration(), actualCard.getDuration());
+        assertEquals(expectedTask.getTaskDateTime().toString(), actualCard.getDateAndTime().toString());
+    }
+
+
+    /**
      * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
      * in the correct order.
      */
     public static void assertListMatching(PersonListPanelHandle personListPanelHandle, Person... persons) {
         for (int i = 0; i < persons.length; i++) {
             assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+        }
+    }
+
+    /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, Task... tasks) {
+        for (int i = 0; i < tasks.length; i++) {
+            assertCardDisplaysTask(tasks[i], taskListPanelHandle.getTaskCardHandle(i));
         }
     }
 
@@ -57,11 +89,27 @@ public class GuiTestAssert {
     }
 
     /**
+     * Asserts that the list in {@code taskListPanelHandle} displays the details of {@code tasks} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(TaskListPanelHandle taskListPanelHandle, List<Task> tasks) {
+        assertListMatching(taskListPanelHandle, tasks.toArray(new Task[0]));
+    }
+
+    /**
      * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
      */
     public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
         int numberOfPeople = personListPanelHandle.getListSize();
         assertEquals(size, numberOfPeople);
+    }
+
+    /**
+     * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
+     */
+    public static void assertListSize(TaskListPanelHandle taskListPanelHandle, int size) {
+        int numberOfTasks = taskListPanelHandle.getListSize();
+        assertEquals(size, numberOfTasks);
     }
 
     /**
@@ -71,3 +119,4 @@ public class GuiTestAssert {
         assertEquals(expected, resultDisplayHandle.getText());
     }
 }
+

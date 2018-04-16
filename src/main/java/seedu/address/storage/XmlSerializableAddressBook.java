@@ -14,6 +14,7 @@ import seedu.address.model.ReadOnlyAddressBook;
 /**
  * An Immutable AddressBook that is serializable to XML format
  */
+//@@author a-shakra
 @XmlRootElement(name = "addressbook")
 public class XmlSerializableAddressBook {
 
@@ -21,6 +22,8 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedTask> tasks;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -29,6 +32,7 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        tasks = new ArrayList<>();
     }
 
     /**
@@ -38,6 +42,7 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        tasks.addAll(src.getTaskList().stream().map(XmlAdaptedTask::new).collect(Collectors.toList()));
     }
 
     /**
@@ -54,6 +59,9 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedTask t: tasks) {
+            addressBook.addTask(t.toModelType());
+        }
         return addressBook;
     }
 
@@ -68,6 +76,7 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        // The tasks condition might be a problem because of the design of tasks
+        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags) && tasks.equals(otherAb.tasks);
     }
 }

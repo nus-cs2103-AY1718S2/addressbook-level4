@@ -5,17 +5,24 @@ import static org.junit.Assert.assertNotEquals;
 import static org.junit.Assert.assertTrue;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.TUTEE_TAG;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_EDUCATION_LEVEL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_GRADE_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SCHOOL_AMY;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_SUBJECT_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
 import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
+import static seedu.address.logic.commands.EditCommand.MESSAGE_INVALID_PERSON_TO_EDIT;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.typicaladdressbook.TypicalAddressBookCompiler.getTypicalAddressBook1;
+import static seedu.address.testutil.typicaladdressbook.TypicalAddressBookCompiler.getTypicalAddressBook2;
 
 import org.junit.Test;
 
@@ -29,15 +36,17 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
+import seedu.address.model.tutee.Tutee;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.testutil.TuteeBuilder;
 
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for EditCommand.
  */
 public class EditCommandTest {
 
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model model = new ModelManager(getTypicalAddressBook1(), new UserPrefs());
 
     @Test
     public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
@@ -149,6 +158,54 @@ public class EditCommandTest {
 
         assertCommandFailure(editCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
     }
+
+    //@@author ChoChihTun
+    @Test
+    public void execute_editTuteeFields_success() {
+        // Address book with typical tutee inside
+        model = new ModelManager(getTypicalAddressBook2(), new UserPrefs());
+
+        Tutee tuteeToEdit = new TuteeBuilder().build();
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder(tuteeToEdit).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+
+        String expectedMessage = String.format(EditCommand.MESSAGE_EDIT_PERSON_SUCCESS, tuteeToEdit);
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+
+        assertCommandSuccess(editCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_invalidTagForPerson_failure() {
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withTags(TUTEE_TAG).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        assertCommandFailure(editCommand, model, MESSAGE_INVALID_PERSON_TO_EDIT);
+    }
+
+    @Test
+    public void execute_invalidFieldsEditedForPerson_failure() {
+        // Edit subject
+        EditPersonDescriptor descriptor = new EditPersonDescriptorBuilder().withSubject(VALID_SUBJECT_AMY).build();
+        EditCommand editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        assertCommandFailure(editCommand, model, MESSAGE_INVALID_PERSON_TO_EDIT);
+
+        // Edit grade
+        descriptor = new EditPersonDescriptorBuilder().withGrade(VALID_GRADE_AMY).build();
+        editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        assertCommandFailure(editCommand, model, MESSAGE_INVALID_PERSON_TO_EDIT);
+
+        // Edit education level
+        descriptor = new EditPersonDescriptorBuilder().withEducationLevel(VALID_EDUCATION_LEVEL_AMY).build();
+        editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        assertCommandFailure(editCommand, model, MESSAGE_INVALID_PERSON_TO_EDIT);
+
+        // Edit school
+        descriptor = new EditPersonDescriptorBuilder().withSchool(VALID_SCHOOL_AMY).build();
+        editCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        assertCommandFailure(editCommand, model, MESSAGE_INVALID_PERSON_TO_EDIT);
+    }
+    //@@author
 
     @Test
     public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {

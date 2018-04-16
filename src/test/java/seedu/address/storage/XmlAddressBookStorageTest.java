@@ -2,10 +2,12 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.HOON;
-import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.testutil.TypicalTasks.EXAMPLE2;
+import static seedu.address.testutil.TypicalTasks.EXAMPLE4;
+import static seedu.address.testutil.typicaladdressbook.TypicalAddressBookCompiler.getTypicalAddressBook1;
+import static seedu.address.testutil.typicaladdressbook.TypicalPersons.ALICE;
+import static seedu.address.testutil.typicaladdressbook.TypicalPersons.HOON;
+import static seedu.address.testutil.typicaladdressbook.TypicalPersons.IDA;
 
 import java.io.IOException;
 
@@ -18,6 +20,7 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.testutil.TypicalTasks;
 
 public class XmlAddressBookStorageTest {
     private static final String TEST_DATA_FOLDER = FileUtil.getPath("./src/test/data/XmlAddressBookStorageTest/");
@@ -72,10 +75,11 @@ public class XmlAddressBookStorageTest {
         readAddressBook("invalidAndValidPersonAddressBook.xml");
     }
 
+
     @Test
-    public void readAndSaveAddressBook_allInOrder_success() throws Exception {
+    public void readAndSaveAddressBook_allInOrder_personSuccess() throws Exception {
         String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
-        AddressBook original = getTypicalAddressBook();
+        AddressBook original = getTypicalAddressBook1();
         XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
 
         //Save in new file and read back
@@ -92,6 +96,32 @@ public class XmlAddressBookStorageTest {
 
         //Save and read without specifying file path
         original.addPerson(IDA);
+        xmlAddressBookStorage.saveAddressBook(original); //file path not specified
+        readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
+        assertEquals(original, new AddressBook(readBack));
+
+    }
+    //@@author a-shakra
+    @Test
+    public void readAndSaveAddressBook_allInOrder_taskSuccess() throws Exception {
+        String filePath = testFolder.getRoot().getPath() + "TempAddressBook.xml";
+        AddressBook original = TypicalTasks.getTypicalAddressBook();
+        XmlAddressBookStorage xmlAddressBookStorage = new XmlAddressBookStorage(filePath);
+
+        //Save in new file and read back
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+        ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
+        assertEquals(original, new AddressBook(readBack));
+
+        //Modify data, overwrite exiting file, and read back
+        original.removeTask(EXAMPLE2);
+        original.addTask(EXAMPLE2);
+        xmlAddressBookStorage.saveAddressBook(original, filePath);
+        readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
+        assertEquals(original, new AddressBook(readBack));
+
+        //Save and read without specifying file path
+        original.addTask(EXAMPLE4);
         xmlAddressBookStorage.saveAddressBook(original); //file path not specified
         readBack = xmlAddressBookStorage.readAddressBook().get(); //file path not specified
         assertEquals(original, new AddressBook(readBack));
@@ -120,6 +150,5 @@ public class XmlAddressBookStorageTest {
         thrown.expect(NullPointerException.class);
         saveAddressBook(new AddressBook(), null);
     }
-
 
 }

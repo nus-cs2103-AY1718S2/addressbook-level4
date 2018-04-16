@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= TuitionConnect (TC) - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,26 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T11-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team MarvelousBook`      Since: `Feb 2018`      Licence: `MIT`
 
+// tag::introduction[]
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+TuitionConnect (TC) is an integration of a personalised address book, task manager and income tracker for private home tutors. +
+
+Stems from our strong passion in simplifying the life of tutors, TuitionConnect introduces features
+to aid management of tutee contacts, tuition schedule and income tracking. Moreover, we believe that a thorough connectivity is the
+root of simplicity. Hence, there are also features which support the management of your personal contacts and tasks. +
+
+TuitionConnect is primarily for tutors who *prefer to use a desktop app for managing contacts and tasks*.
+More importantly, TuitionConnect is *optimized for those who prefer to work with a Command Line Interface*
+(CLI) while still having the benefits of a Graphical User Interface (GUI). +
+
+With TuitionConnect's keyboard shortcuts and productive features, TuitionConnect can get your contact and task management done faster than traditional GUI apps. Interested?
+Jump to the <<Quick Start>> to get started. Enjoy!
+// end::introduction[]
 
 == Quick Start
 
@@ -27,22 +40,41 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `TuitionConnect.jar` link:{https://github.com/CS2103JAN2018-T11-B1/main/releases}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for TuitionConnect.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+// tag::ui_overview[]
+image::Ui_with_overview.jpg[width="650"]
+// end::ui_overview[]
+[NOTE]
+If "license check has failed" message pops up, simply click "OK".
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the address book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
 .  Refer to <<Features>> for details of each command.
+
+// tag::conceptintro[]
+== Concepts Introduction
+* Contact : This refers to both the tutee and person.
+* Tutee  : This refers to the students you are teaching. Adding a student as tutee requires specific *tutee details* to be provided.
+         By doing so, it will be easier to organize your contacts using our special features. +
+* Person : Other contacts which are not tutee. +
+* Tutee Details : These are details that are only owned by tutees, which include tutee's education level, grade, subject and school. +
+* Task : This refers to the activities you want to add into your 'to-do-list'. +
+Type of Task: +
+. Tuition task: Teaching a specified tutee in contact list. +
+. Personal task: Non-tuition activity.
+* Address Book : This refers to the list of contacts located on the most left side of the app.
+* Task List / Schedule : these terms are used interchangeably to refer to the list of tasks located in the middle of the app.
+// end::conceptintro[]
 
 [[Features]]
 == Features
@@ -63,7 +95,10 @@ Format: `help`
 === Adding a person: `add`
 
 Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Using Command Word: +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+Using Command Alias: +
+Format: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 
 [TIP]
 A person can have any number of tags (including 0)
@@ -72,59 +107,181 @@ Examples:
 
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `a n/Dickson ee p/91234567 e/dickson@exmaple.com a/Dickson street, block 456, #02-02`
 
-=== Listing all persons : `list`
+// tag::addtutee[]
+=== Adding a tutee: `addtutee`
+Adds a tutee to the address book +
+Using Command Word: +
+Format: `addtutee n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SUBJECT g/GRADE edu/EDUCATION_LEVEL sch/SCHOOL [t/TAG]...`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+[TIP]
+====
+* A tutee can have any number of tags (including 0)
+* Special character in grade can be anything since different institution may use different grading system. +
+i.e. B+, B3, B$, B# etc are all valid
+====
 
-=== Editing a person : `edit`
+[WARNING]
+====
+* Education level can only be either primary, secondary or junior college (NOT case sensitive) +
+* All details except tag MUST be added
+====
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Examples:
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+* `addtutee n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 s/Economics g/B+ edu/junior college sch/Victoria Junior College`
+* `addtutee n/Betsy Crowe s/Mathematics g/C e/betsycrowe@example.com a/Newgate Town p/1234567 t/owesMoney sch/Victoria Institution edu/secondary`
+* `addtutee n/Dickson ee p/91234567 e/dickson@exmaple.com a/Dickson street, block 456, #02-02 s/english g/f9 edu/primary sch/Newgate Primary School`
+// end::addtutee[]
+
+=== Listing all contacts : `list`
+
+Shows a list of all contacts in the address book. +
+Using Command Word: +
+Format: `list` +
+Using Command Alias: +
+Format: `l`
+
+// tag::listtutee[]
+=== Listing all tutees : `listtutee`
+
+Shows a list of all tutees in the address book. +
+Using Command Word: +
+Format: `listtutee` +
+// end::listtutee[]
+
+// tag::edit[]
+=== Editing a contact : `edit`
+
+Edits existing contact's details in the address book. +
+Using Command Word: +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [s/SUBJECT] [g/GRADE] [edu/EDUCATION_LEVEL] [sch/SCHOOL] [t/TAG]...` +
+Using Comamnd Alias: +
+Format: `e INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [s/SUBJECT] [g/GRADE] [edu/EDUCATION_LEVEL] [sch/SCHOOL] [t/TAG]...` +
+
+[width="80%",cols="20%, 60%",options="header",]
+|=======================================================================
+|Keyword |Description
+|edit |To call the edit command
+|INDEX |Index number shown in the last person listing. It *must be a positive integer* 1, 2, 3, ...
+|INDEX |The contact at the specified `INDEX` will be edited
+|=======================================================================
+
+[NOTE]
+====
+* "Tutee" tag is specific to tutee only and will never be removed.
+* Remove all the person's tags: type `t/` without specifying any tags after it.
+* Remove all the tutee's tags except "Tutee" tag: type `t/` without specifying any tags after it OR type `t/tutee` (this includes other variation of case letters for tutee such as "TUTEE", "TuteE" etc).
+====
+
+[underline]#*Valid Details to edit for each type of contact:*#
+[width="80%",cols="40%, 40%",options="header",]
+|=======================================================================
+|Person |Tutee
+|NAME |NAME
+|PHONE |PHONE
+|EMAIL |EMAIL
+|ADDRESS |ADDRESS
+| --- |SUBJECT
+| --- |GRADE
+| --- |EDUCATION_LEVEL
+| --- |SCHOOL
+|TAG |TAG
+|=======================================================================
+
+[WARNING]
+====
+* At least one of the valid optional fields must be provided.
+* Existing information will be updated to the new information.
+* When editing tags, the existing tags of the contact will be removed (Except "Tutee" tag) i.e adding of tags is not cumulative.
+* Manual adding of "Tutee" tag to a person is not allowed (this includes other variation of case letters for tutee such as "tutee", "TuTeE" etc)
+* Editing of subject, grade, education level and school is not allowed for person
+====
 
 Examples:
 
 * `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Edits the phone number and email address of the 1st contact to be `91234567` and `johndoe@example.com` respectively.
+* `e 2 n/Betsy Crower sch/JohnDoe Secondary t/` +
+Edits the name of the 2nd contact (a tutee) to be `Betsy Crower`, her school to `JohnDoe Secondary` and clears all existing tags (except "Tutee" tag).
+// end::edit[]
 
-=== Locating persons by name: `find`
+// tag::findperson[]
+=== Locating contacts by category: `findpersonby`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Finds contacts whose specified category contain any of the given keywords. +
+Using Command Word: +
+Format: `findpersonby CATEGORY KEYWORD [MORE_KEYWORDS]` +
+Using Command Alias: +
+Format: `f CATEGORY KEYWORD [MORE_KEYWORDS]` +
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
+* There are 5 categories to pick:
+** 1. name
+** 2. edu* (for education level)
+** 3. grade*
+** 4. school*
+** 5. subject*
+* Categories marked with * are only owned by tutees (tutee details).
 * Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Contacts matching at least one keyword will be returned (i.e. `OR` search).
+ e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `findpersonby Name John` +
+Lists `john` and `John Doe`
+* `findpersonby name Betsy Tim John` +
+Lists any contact having names `Betsy`, `Tim`, or `John`
+* `f grade B B+` +
+Lists all tutee with grade `B` and `B+`
+// end::findperson[]
 
-=== Deleting a person : `delete`
+// tag::sortperson[]
+=== Sorting persons by category: `sortpersonby`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Sorts your displayed contact list according to a specified category in ascending order (lexicographically). +
+Using Command Word: +
+Format: `sortpersonby CATEGORY` +
+Using Command Alias: +
+Format: `spb CATEGORY` +
 
 ****
-* Deletes the person at the specified `INDEX`.
+* There are 5 categories to pick:
+** 1. name
+** 2. edu*
+** 3. grade*
+** 4. school*
+** 5. subject*
+* Categories marked with * are only owned by tutees. If one of these is selected, all non-tutees will be displayed
+ last after their names are sorted lexicographically.
+* Sorting category types is case insensitive.
+ e.g both `sort name` and `sort Name` works fine.
+* The sorting is case insensitive.
+ e.g In a case where `sort name` is writen, `angel' is diplayed before 'Ben'.
+* The displayed contact list will be sorted; not the entire contact list.
+****
+
+Example: +
+
+* `sortpersonby Name` +
+sorts by name lexicographically.
+// end::sortperson[]
+
+=== Deleting a contact : `delete`
+
+Deletes the specified contact from the address book. +
+Using Command Word: +
+Format: `delete INDEX` +
+Using Command Alias: +
+Format: `d INDEX`
+
+****
+* Deletes the contact at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -133,35 +290,237 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 2nd contact in the address book.
+* `f Betsy` +
+`d 1` +
+Deletes the 1st contact in the results of the `f` command.
 
-=== Selecting a person : `select`
+// tag::addtuition[]
+=== Adding a tuition task: `addtuition`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Adds a task to TuitionConnect's schedule +
+Using Command Word: +
+Format: `addtuition TUTEE_INDEX DATE TIME DURATION [DESCRIPTION] +
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+*PARAMETERS*
+
+* TUTEE_INDEX
+** The associated tutee is chosen by specifying a `TUTEE_INDEX`. The index refers to the index number shown in
+the left side of person listing. The index *must be a positive integer* 1, 2, 3, ...
+** The chosen index must be the index of a Tutee (persons who have 'Tutee' tag). Refer to the *addtutee* command guide
+for more information about Tutee.
+
+* DATE
+** Date refers to the date of the tuition.
+** Date must be written in the format of dd/mm/yyyy
+*** valid example   : 08/03/2018
+*** invalid example : 8/3/2018
+
+* TIME
+** Time refers to the starting time of the tuition.
+** Time must be written in the format of hh:mm (24-hr format).
+*** valid example   : 12:00
+*** invalid example : 25:00
+
+* DURATION
+** Duration refers to the duration of the tuition.
+** Duration must be written in the format of XXhXXm
+*** valid example : 1h30m
+**** this means that the tuition lasts for 1 *hour* and 30 *minute*.
+*** invalid example : 1h30m
+**** the duration in hour cannot have leading zero
+*** invalid example : 1h60m
+**** the duration in minute must be a number between 0 and 59.
+*** invalid example : 30m
+**** a correct duration for a 30 minute tuition is *0h30m*.
+
+* DESCRIPTION
+** Description can be of any format.
+** Leading and trailing whitespaces will be removed.
+** Description is optional. It can be empty.
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `addtuition 1 10/05/2018 09:00 1h30m Calculus homework page 24`
+* `addtuition 1 31/12/2018 16:00 0h30m`
+// end::addtuition[]
+
+// tag::addtask[]
+=== Adding a personal task: `addtask`
+
+Adds a personal task to the TuitionConnect schedule +
+Using Command Word: +
+Format: `addtask DATE TIME DURATION [DESCRIPTION]+
+
+****
+The parameters (DATE, TIME, DURATION AND DESCRIPTION) have the same structure and limitations as explained in *addtask* command guide.
+****
+
+Examples:
+
+* `addtask 10/05/2018 09:00 1h30m Outing with friend`
+* `addtask 31/12/2018 16:00 0h30m`
+// end::addtask[]
+
+// tag::listTask[]
+=== Listing all tasks : `listtask`
+Shows a list of all tasks in the task list. +
+Using Command Word: +
+Format: `listtask` +
+Using Command Alias: +
+Format: `lt` +
+The purpose of the listtask command is to regenerate +
+the complete list of tasks for a user in the event that +
+only a specific set of tasks were displayed.
+// end::listTask[]
+
+// tag::deletetask[]
+=== Deleting a task: `deletetask`
+
+Deletes a task from the TuitionConnect schedule +
+Using Command Word: +
+Format: `deletetask TASK_INDEX`
+
+** The task is chosen by specifying a `TASK_INDEX`. The index refers to the index number shown on
+the left side of the schedule list. The index *must be a positive integer* 1, 2, 3, ...
+
+Examples:
+
+* `deletetask 1`
+// end::deletetask[]
+
+// tag::findtask[]
+=== Locating tasks by category: `findtaskby`
+
+Finds tasks which specified category has value within 2 given boundaries (inclusive) or contain any of the given keywords. +
+The functionality is determined according to the specified FIND_TYPE. +
+
+Using Command Word: +
+Format: `findtaskby CATEGORY FIND_TYPE KEYWORD [MORE_KEYWORDS]` +
+
+****
+* *PARAMETERS*
+
+* CATEGORY
+** There are 3 categories available:
+*** 1. month
+*** 2. year `(coming in v2.0)`
+*** 3. duration `(coming in v2.0)`
+
+* FIND_TYPE
+** Choice of Find Type determines the behaviour of this command and the subsequent parameters.
+** There are 2 choices of Find Type:
+*** 1. 'between' : returns tasks within the 2 given boundaries (inclusive).
+*** 2. 'namely' : returns tasks that match the keywords.
+
+* KEYWORDS
+** Keywords given depend on the specified category:
+*** 1. *month*
+**** months in either M, MM, MMM or MMMM format. +
+e.g. '1', '01', 'jan' and 'january' are all acceptable.
+**** several common terms such as 'now', 'today', 'this month', 'current month', 'last month' and 'next month'.
+*** 2. *year* to be implemented in v2.0
+*** 3. *duration* to be implemented in v2.0
+** The amount of keywords depend on the specified Find Type:
+*** 1. *between* +
+Exactly *2 different* keywords must be provided as the boundary values. +
+[NOTE]
+common terms that refer to a same time are considered as same keywords. +
+e.g. `findtaskby month between today this month` is an invalid command.
+*** 2. *namely* +
+Any amount can be provided. If *0* keyword is given, the displayed schedule will be empty.
+****
+
+Examples:
+
+* `findtaskby month between january current month` +
+Lists all tasks scheduled from January until the current month.
+* `findtaskby month between November February` +
+Lists all tasks scheduled on November, December, January and February.
+* `findtaskby month between now last month` +
+Lists all tasks.
+* `f month namely 2 06 oct
+Lists all tasks scheduled on February, June and October.
+// end::findtask[]
+
+// tag::sorttask[]
+=== Sorting tasks by category: `sorttaskby`
+
+Sorts your displayed task list according to a specified category in ascending order. +
+Using Command Word: +
+Format: `sorttaskby CATEGORY` +
+Using Command Alias: +
+Format: `stb CATEGORY` +
+
+****
+* There are 3 categories to pick:
+** 1. datetime
+** 2. month
+** 3. duration [coming in V 2.0]
+* Sorting category types is case insensitive.
+* Sorting is in increasing order. This means later is placed below the earlier.
+ e.g both `sort month` and `sort Month` works fine.
+****
+
+Example: +
+
+* `sorttaskby Month` +
+sorts tasks by month in increasing order.
+// end::sorttask[]
+
+// tag::change[]
+=== Changing calendar view page time unit: `change`
+
+Changes the calendar's view page into the time unit specified by you.
+Using Command Word: +
+Format: `change TIME_UNIT`
+
+[width="59%",cols="22%,<23%, 50%",options="header",]
+|=======================================================================
+|Time Unit |User input |Description
+|Day |d |View the calendar in day
+|Week |w |View the calendar in week
+|Month |m |View the calendar in month
+|Year |y |View the calendar in year
+|=======================================================================
+
+[NOTE]
+====
+* Default view page time unit is d.
+* Command fails if current view page time unit is same as the user input time unit or user input an unrecognised time unit.
+====
+
+Examples:
+
+* `change d` (command fails as current calendar view is already in day)
++
+image::change-d.png[width="600" height="400"]
++
+* `change w` (changes calendar view to week)
++
+image::change-w.png[width="600" height="400"]
++
+* `change m` (changes calendar view to month)
++
+image::change-m.png[width="600" height="400"]
++
+* `change y` (changes calendar view to year)
++
+image::change-y.png[width="600" height="400"]
++
+[NOTE]
+Year view is unable to display all the months due to third party software constraint.
+// end::change[]
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Using Command Word: +
+Format: `history` +
+Using Command Alias: +
+Format: `h`
 
 [NOTE]
 ====
@@ -171,12 +530,15 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores the address book and the task list to the state before the previous _undoable_ command was executed. +
+Using Command Word: +
 Format: `undo`
+Using Command Alias: +
+Format: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify the address book's and task list's content (`add`, `addtutee`, `addtask`, `addtuition`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -185,20 +547,18 @@ Examples:
 `list` +
 `undo` (reverses the `delete 1` command) +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `clear` command) +
+`u` (reverses the `delete 1` command) +
 
 === Redoing the previously undone command : `redo`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Using Command Word: +
+Format: `redo` +
+Using Command Alias: +
+Format: `r`
 
 Examples:
 
@@ -213,15 +573,18 @@ The `redo` command fails as there are no `undo` commands executed previously.
 * `delete 1` +
 `clear` +
 `undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `delete 1` command) +
 `redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`r` (reapplies the `clear` command) +
 // end::undoredo[]
 
 === Clearing all entries : `clear`
 
-Clears all entries from the address book. +
-Format: `clear`
+Clears all entries in TuitionConnect. +
+Using Command Word: +
+Format: `clear` +
+Using Command Alias: +
+Format: `c`
 
 === Exiting the program : `exit`
 
@@ -230,35 +593,103 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+TuitionConnect data are saved in the hard disk automatically after any command that
+ changes the data. +
 There is no need to save manually.
+// tag::proposedfeatures[]
+=== View tutee fees `[coming in v2.0]`
+Views the amount that has to be paid by a tutee.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+// tag::encryption[]
+=== Encrypting data files
+Address book data are automatically encrypted after any command that
+changes the data.
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+=== View tutee fees `[coming in v2.0]
+View the current amount that has to be paid by a tutee.
+
+=== View tuition progress `[coming in v2.0]`
+Shows the details of tuition provided within several months in the form of a graph.
+// end::proposedfeatures[]
+
+// tag::ChoChihTunV2.0[]
+=== Update tutee fees `[coming in v2.0]`
+Updates the remaining balance of the tuition fees of a specific tutee after he or she has paid.
+
+=== Complete task `[coming in v2.0]`
+Marks a task as completed. If the task is tuition, fees will automatically be added to the tutee's fee balance.
+
+=== Edit task `[coming in v2.0]`
+Edits date, time, duration or description of an existing task and reflects the changes on the calendar.
+
+=== View contact address on Google map `[coming in v2.0]`
+Views the location of a specific contact's address on google map and the shortest route from the current location will be displayed.
+
+
+=== Select a contact or a task `[coming in v2.0]`
+Selects either a contact or a task and a pop up page containing all the relevant information will appear.
+// end::ChoChihTunV2.0[]
+
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous TuitionConnect folder.
 
 == Command Summary
 
+Using Command Word: +
 * *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+* *Add Tutee* `addtutee n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS s/SUBJECT g/GRADE edu/EDUCATION_LEVEL sch/SCHOOL [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 s/Mathematics g/A edu/junior college sch/National Junior College t/priority` +
+* *Clear* : `clear` +
+* *Delete* : `delete PERSON_INDEX` +
+e.g. `delete 3` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [s/SUBJECT] [g/GRADE] [edu/EDUCATION_LEVEL] [sch/SCHOOL] [t/TAG]...` +
+e.g. `edit 2 n/James Lee e/jameslee@example.com` +
+* *Find Person By* : findpersonby CATEGORY KEYWORD [MORE_KEYWORDS]` +
+e.g. `findpersonby name Jake Doe` +
+* *Sort Person By* : sortpersonby CATEGORY +
+e.g. `sort grade`
+* *List* : `list` +
+* *List Tutee* : 'listtutee' +
+* *Help* : `help` +
+* *Add Tuition* : addtuition TUTEE_INDEX DATE TIME DURATION [DESCRIPTION] +
+e.g. `addtuition 1 10/05/2018 12:00 1h30m Calculus homework page 24` +
+* *Add Task* : 'add DATE TIME DURATION [DESCRIPTION] +
+e.g. `addtask 10/05/2018 12:00 1h30m Going out with friends` +
+* *List Task* : 'listtask` +
+* *Delete Task* : 'delete TASK_INDEX` +
+e.g. `delete 1` +
+* *Find Task By* : findtaskby CATEGORY FIND_TYPE KEYWORD [MORE_KEYWORDS]` +
+e.g. `findtaskby month between April October` +
+* *Sort Task By* : sorttaskby CATEGORY +
+e.g. `sorttaskby datetime` +
+* *Change* : `change TIME_UNIT` +
+e.g. `change w` +
+* *History* : `history` +
+* *Undo* : `undo` +
+* *Redo* : `redo` +
+
+Using Command Alias: +
+* *Add* `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+e.g. `a n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague` +
+* *Clear* : `c` +
+* *Delete* : `d INDEX` +
+e.g. `d 3` +
+* *Edit* : `e INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [s/SUBJECT] [s/SUBJECT] [g/GRADE] [edu/EDUCATION_LEVEL] [sch/SCHOOL] [t/TAG]...` +
+e.g. `e 2 n/James Lee e/jameslee@example.com` +
+* *Find Person By* : f CATEGORY KEYWORD [MORE_KEYWORDS]` +
+e.g. `f name Jake Doe` +
+* *List* : `l` +
+* *Sort Person By* : `spb CATEGORY` +
+e.g. `spb grade` +
+* *ListTask* : `lt` +
+* *Sort Task By* : `stb CATEGORY` +
+e.g. `stb datetime` +
+* *Help* : `help` +
+* *History* : `h` +
+* *Undo* : `u` +
+* *Redo* : `r`
+

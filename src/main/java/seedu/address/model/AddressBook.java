@@ -17,6 +17,9 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.model.task.exceptions.TimingClashException;
+import seedu.address.model.tutee.Tutee;
 
 /**
  * Wraps all data at the address-book level
@@ -26,6 +29,7 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     private final UniquePersonList persons;
     private final UniqueTagList tags;
+    private final UniqueTaskList tasks;
 
     /*
      * The 'unusual' code block below is an non-static initialization block, sometimes used to avoid duplication
@@ -37,6 +41,7 @@ public class AddressBook implements ReadOnlyAddressBook {
     {
         persons = new UniquePersonList();
         tags = new UniqueTagList();
+        tasks = new UniqueTaskList();
     }
 
     public AddressBook() {}
@@ -59,20 +64,34 @@ public class AddressBook implements ReadOnlyAddressBook {
         this.tags.setTags(tags);
     }
 
+    //@@author a-shakra
+    public void setTasks(List<Task> tasks) throws TimingClashException {
+        this.tasks.setTasks(tasks);
+    }
+    //@@author
     /**
      * Resets the existing data of this {@code AddressBook} with {@code newData}.
+     * ---Not modified for tasks yet!!!!!!
      */
     public void resetData(ReadOnlyAddressBook newData) {
         requireNonNull(newData);
         setTags(new HashSet<>(newData.getTagList()));
+        List<Task> taskList = newData.getTaskList().stream().collect(Collectors.toList());
         List<Person> syncedPersonList = newData.getPersonList().stream()
                 .map(this::syncWithMasterTagList)
                 .collect(Collectors.toList());
-
+        try {
+            setTasks(taskList);
+        } catch (TimingClashException e) {
+            throw new AssertionError("Timing Clash");
+        }
         try {
             setPersons(syncedPersonList);
+            setTasks(taskList);
         } catch (DuplicatePersonException e) {
             throw new AssertionError("AddressBooks should not have duplicate persons");
+        } catch (TimingClashException e) {
+            throw new AssertionError("AddressBooks should not have clashed tasks");
         }
     }
 
@@ -114,6 +133,16 @@ public class AddressBook implements ReadOnlyAddressBook {
         persons.setPerson(target, syncedEditedPerson);
     }
 
+    //@@author a-shakra
+    /**
+     * Adds a task to the address book.
+     *
+     */
+    public void addTask(Task t) throws TimingClashException {
+        tasks.add(t);
+    }
+
+    //@@author
     /**
      *  Updates the master tag list to include tags in {@code person} that are not in the list.
      *  @return a copy of this {@code person} such that every tag in this person points to a Tag object in the master
@@ -131,10 +160,46 @@ public class AddressBook implements ReadOnlyAddressBook {
         // Rebuild the list of person tags to point to the relevant tags in the master tag list.
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
-        return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+
+        if (person instanceof Tutee) {
+            return new Tutee(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), (
+                    (Tutee) person).getSubject(), ((Tutee) person).getGrade(), (
+                    (Tutee) person).getEducationLevel(), (
+                    (Tutee) person).getSchool(), correctTagReferences);
+        } else {
+            return new Person(
+                    person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+        }
     }
 
+    //@@author yungyung04
+    /**
+     * Removes {@code Tag} from a particular {@code Person}.
+     * @throws PersonNotFoundException if {@code Person} does not exist.
+     */
+    public void removeTagFromPerson(Tag tag, Person person) {
+        Set<Tag> newTags = new HashSet<>(person.getTags());
+
+        if (!newTags.remove(tag)) {
+            return;
+        }
+
+        if (tag.tagName.equals("Tutee")) {
+            return;
+        }
+
+        Person newPerson =
+                new Person(person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), newTags);
+
+        try {
+            updatePerson(person, newPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new AssertionError("tag modification should not cause duplicate person");
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("target person does not exist.");
+        }
+    }
+    //author
     /**
      * Removes {@code key} from this {@code AddressBook}.
      * @throws PersonNotFoundException if the {@code key} is not in this {@code AddressBook}.
@@ -147,6 +212,20 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author a-shakra
+    /**
+     * Removes a task from the address book.
+     *
+     */
+    public boolean removeTask(Task key) throws TaskNotFoundException {
+        if (tasks.remove(key))        {
+            return true;
+        } else {
+            System.out.println("Didn't work");
+            return false;
+        }
+    }
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -157,8 +236,14 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     @Override
     public String toString() {
-        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags";
+        return persons.asObservableList().size() + " persons, " + tags.asObservableList().size() +  " tags, "
+                + tasks.asObservableList().size() + " tasks";
         // TODO: refine later
+    }
+
+    @Override
+    public ObservableList<Task> getTaskList() {
+        return tasks.asObservableList();
     }
 
     @Override
@@ -176,6 +261,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return other == this // short circuit if same object
                 || (other instanceof AddressBook // instanceof handles nulls
                 && this.persons.equals(((AddressBook) other).persons)
+                && this.tasks.equals(((AddressBook) other).tasks)
                 && this.tags.equalsOrderInsensitive(((AddressBook) other).tags));
     }
 

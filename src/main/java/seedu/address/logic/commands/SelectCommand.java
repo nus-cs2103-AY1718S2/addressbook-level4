@@ -9,12 +9,14 @@ import seedu.address.commons.events.ui.JumpToListRequestEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 
+
 /**
  * Selects a person identified using it's last displayed index from the address book.
  */
 public class SelectCommand extends Command {
 
     public static final String COMMAND_WORD = "select";
+    public static final String COMMAND_ALIAS = "s";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
             + ": Selects the person identified by the index number used in the last person listing.\n"
@@ -37,8 +39,8 @@ public class SelectCommand extends Command {
         if (targetIndex.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
-
-        EventsCenter.getInstance().post(new JumpToListRequestEvent(targetIndex));
+        JumpToListRequestEvent jumpToListRequestEvent = new JumpToListRequestEvent(targetIndex);
+        EventsCenter.getInstance().post(jumpToListRequestEvent);
         return new CommandResult(String.format(MESSAGE_SELECT_PERSON_SUCCESS, targetIndex.getOneBased()));
 
     }

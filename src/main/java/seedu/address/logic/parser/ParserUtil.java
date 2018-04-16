@@ -1,7 +1,12 @@
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_DURATION;
 
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+import java.time.format.ResolverStyle;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.Optional;
@@ -10,11 +15,18 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.ChangeCommand;
+import seedu.address.logic.parser.exceptions.DurationParseException;
+import seedu.address.logic.parser.exceptions.SameTimeUnitException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.tutee.EducationLevel;
+import seedu.address.model.tutee.Grade;
+import seedu.address.model.tutee.School;
+import seedu.address.model.tutee.Subject;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -28,7 +40,12 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_TAG = "%1$s tag is only for tutee.";
+
+    private static final String EMPTY_STRING = "";
+    private static final String TUTEE_TAG_NAME = "Tutee";
+    private static final String ZERO_DURATION_FIRST_FORMAT = "0h0m";
+    private static final String ZERO_DURATION_SECOND_FORMAT = "0h00m";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -155,14 +172,240 @@ public class ParserUtil {
     }
 
     /**
-     * Parses {@code Collection<String> tags} into a {@code Set<Tag>}.
+     * Parses a {@code Collection<String> tags} into a {@code Set<Tag>}.
      */
     public static Set<Tag> parseTags(Collection<String> tags) throws IllegalValueException {
         requireNonNull(tags);
         final Set<Tag> tagSet = new HashSet<>();
         for (String tagName : tags) {
+            if (isTuteeTag(tagName)) {
+                tagName = TUTEE_TAG_NAME;
+            }
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    //@@author ChoChihTun
+    /**
+     * Parses a person's {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parsePersonTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            // a person should not have tutee tag
+            if (isTuteeTag(tagName)) {
+                throw new IllegalValueException(String.format(MESSAGE_INVALID_TAG, tagName));
+            }
+            tagSet.add(parseTag(tagName));
+        }
+        return tagSet;
+    }
+
+    /**
+     * Parses a tutee's {@code Collection<String> tags} into a {@code Set<Tag>}.
+     */
+    public static Set<Tag> parseTuteeTags(Collection<String> tags) throws IllegalValueException {
+        requireNonNull(tags);
+        final Set<Tag> tagSet = new HashSet<>();
+        for (String tagName : tags) {
+            // Tutee tag is added automatically by the Tutee constructor
+            if (!isTuteeTag(tagName)) {
+                tagSet.add(parseTag(tagName));
+            }
+        }
+        return tagSet;
+    }
+
+    /**
+     * Checks if {@code String tagName} is tutee tag name
+     *
+     * @param tagName to be checked
+     * @return true if tagName is tutee tag name
+     *         false if tagName is not tutee tag name
+     */
+    private static boolean isTuteeTag(String tagName) {
+        return tagName.toLowerCase().equals(TUTEE_TAG_NAME.toLowerCase());
+    }
+
+    /**
+     * Parses a {@code String subject} into an {@code Subject}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code subject} is invalid.
+     */
+    public static Subject parseSubject(String subject) throws IllegalValueException {
+        requireNonNull(subject);
+        String trimmedSubject = subject.trim();
+        if (!Subject.isValidSubject(trimmedSubject)) {
+            throw new IllegalValueException(Subject.MESSAGE_SUBJECT_CONSTRAINTS);
+        }
+        return new Subject(trimmedSubject);
+    }
+
+    /**
+     * Parses a {@code Optional<String> subject} into an {@code Optional<Subject>} if {@code subject} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Subject> parseSubject(Optional<String> subject) throws IllegalValueException {
+        requireNonNull(subject);
+        return subject.isPresent() ? Optional.of(parseSubject(subject.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String educationLevel} into an {@code EducationLevel}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code educationLevel} is invalid.
+     */
+    public static EducationLevel parseEducationLevel(String educationLevel) throws IllegalValueException {
+        requireNonNull(educationLevel);
+        String trimmedEducationLevel = educationLevel.trim();
+        if (!EducationLevel.isValidEducationLevel(trimmedEducationLevel)) {
+            throw new IllegalValueException(EducationLevel.MESSAGE_EDUCATION_LEVEL_CONSTRAINTS);
+        }
+        return new EducationLevel(trimmedEducationLevel);
+    }
+
+    /**
+     * Parses a {@code Optional<String> educationLevel} into an {@code Optional<EducationLevel>}
+     * if {@code educationLevel} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<EducationLevel> parseEducationLevel(Optional<String> educationLevel)
+            throws IllegalValueException {
+        requireNonNull(educationLevel);
+        return educationLevel.isPresent() ? Optional.of(parseEducationLevel(educationLevel.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String school} into an {@code School}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code school} is invalid.
+     */
+    public static School parseSchool(String school) throws IllegalValueException {
+        requireNonNull(school);
+        String trimmedSchool = school.trim();
+        if (!School.isValidSchool(trimmedSchool)) {
+            throw new IllegalValueException(School.MESSAGE_SCHOOL_CONSTRAINTS);
+        }
+        return new School(trimmedSchool);
+    }
+
+    /**
+     * Parses a {@code Optional<String> school} into an {@code Optional<School>} if {@code school} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<School> parseSchool(Optional<String> school) throws IllegalValueException {
+        requireNonNull(school);
+        return school.isPresent() ? Optional.of(parseSchool(school.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String grade} into an {@code Grade}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code grade} is invalid.
+     */
+    public static Grade parseGrade(String grade) throws IllegalValueException {
+        requireNonNull(grade);
+        String trimmedGrade = grade.trim();
+        if (!Grade.isValidGrade(trimmedGrade)) {
+            throw new IllegalValueException(Grade.MESSAGE_GRADE_CONSTRAINTS);
+        }
+        return new Grade(trimmedGrade);
+    }
+
+    /**
+     * Parses a {@code Optional<String> grade} into an {@code Optional<Grade>} if {@code grade} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Grade> parseGrade(Optional<String> grade) throws IllegalValueException {
+        requireNonNull(grade);
+        return grade.isPresent() ? Optional.of(parseGrade(grade.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String timeUnit} into an {@code String} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code timeUnit} is invalid.
+     */
+    public static String parseTimeUnit(String timeUnit) throws IllegalValueException, SameTimeUnitException {
+        requireNonNull(timeUnit);
+        String trimmedTimeUnit = timeUnit.trim();
+        if (!ChangeCommandParser.isValidTimeUnit(trimmedTimeUnit)) {
+            throw new IllegalValueException(ChangeCommand.MESSAGE_CONSTRAINT);
+        }
+        if (ChangeCommandParser.isTimeUnitClash(trimmedTimeUnit)) {
+            throw new SameTimeUnitException(ChangeCommand.MESSAGE_SAME_VIEW);
+        }
+        return trimmedTimeUnit;
+    }
+
+    //@@author yungyung04
+    /**
+     * Parses a {@code String dateTime} into an {@code LocalDateTime}.
+     *
+     * @throws DateTimeParseException if the given {@code stringDateTime} is invalid.
+     */
+    public static LocalDateTime parseDateTime(String stringDateTime) throws DateTimeParseException {
+        requireNonNull(stringDateTime);
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("dd/MM/uuuu HH:mm")
+                .withResolverStyle(ResolverStyle.STRICT);
+        return LocalDateTime.parse(stringDateTime, formatter);
+    }
+
+    /**
+     * Returns a valid duration
+     *
+     * @throws DurationParseException if the given {@code duration} is invalid.
+     */
+    public static String parseDuration(String duration) throws DurationParseException {
+        requireNonNull(duration);
+        if (!isValidDuration(duration)) {
+            throw new DurationParseException(MESSAGE_INVALID_DURATION);
+        }
+        return duration;
+    }
+
+    /**
+     * Returns true if the given duration is valid.
+     */
+    private static boolean isValidDuration(String duration) {
+        String durationValidationRegex = "([0-9]|1[0-9]|2[0-3])h([0-5][0-9]|[0-9])m";
+        return duration.matches(durationValidationRegex) && !duration.equals(ZERO_DURATION_FIRST_FORMAT)
+                && !duration.equals(ZERO_DURATION_SECOND_FORMAT);
+    }
+
+    /**
+     * Returns a valid task description.
+     * If description does not exist, returns an empty String.
+     */
+    public static String parseDescription(String[] userInputs, int numberOfParametersWhenDescriptionExist) {
+        requireNonNull(userInputs);
+        requireNonNull(numberOfParametersWhenDescriptionExist);
+        if (isEmptyDescription(userInputs, numberOfParametersWhenDescriptionExist)) {
+            return EMPTY_STRING;
+        } else {
+            String description = getLastElement(userInputs);
+            return description;
+        }
+    }
+
+    /**
+     * Returns the last element of an array of Strings.
+     */
+    private static String getLastElement(String[] userInputs) {
+        return userInputs[userInputs.length - 1];
+    }
+
+    /**
+     * Returns true if the given task arguments contain a task description.
+     */
+    private static boolean isEmptyDescription(String[] arguments, int numberOfParametersWhenDescriptionExist) {
+        return arguments.length < numberOfParametersWhenDescriptionExist;
     }
 }

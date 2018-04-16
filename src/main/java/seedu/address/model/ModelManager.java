@@ -3,18 +3,22 @@ package seedu.address.model;
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import java.util.Comparator;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
+import seedu.address.model.task.exceptions.TimingClashException;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -24,7 +28,10 @@ public class ModelManager extends ComponentManager implements Model {
     private static final Logger logger = LogsCenter.getLogger(ModelManager.class);
 
     private final AddressBook addressBook;
-    private final FilteredList<Person> filteredPersons;
+    private FilteredList<Person> filteredPersons;
+    private FilteredList<Task> filteredTasks;
+    private SortedList<Person> sortedPersons;
+    private SortedList<Task> sortedTasks;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +44,9 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredTasks = new FilteredList<>(this.addressBook.getTaskList());
+        sortedPersons = new SortedList<>(filteredPersons);
+        sortedTasks = new SortedList<>(filteredTasks);
     }
 
     public ModelManager() {
@@ -80,8 +90,31 @@ public class ModelManager extends ComponentManager implements Model {
         addressBook.updatePerson(target, editedPerson);
         indicateAddressBookChanged();
     }
+    //@@author a-shakra
+    @Override
+    public synchronized void addTask(Task aTask) throws TimingClashException {
+        addressBook.addTask(aTask);
+        updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS); //Change to new predicate?
+        indicateAddressBookChanged();
+    }
 
-    //=========== Filtered Person List Accessors =============================================================
+    @Override
+    public synchronized void deleteTask(Task target) throws TaskNotFoundException {
+        addressBook.removeTask(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Task> getFilteredTaskList() {
+        return FXCollections.unmodifiableObservableList(sortedTasks);
+    }
+
+    @Override
+    public void updateFilteredTaskList(Predicate<Task> predicate) {
+        requireNonNull(predicate);
+        filteredTasks.setPredicate(predicate);
+    }
+    //@@author
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
@@ -89,7 +122,7 @@ public class ModelManager extends ComponentManager implements Model {
      */
     @Override
     public ObservableList<Person> getFilteredPersonList() {
-        return FXCollections.unmodifiableObservableList(filteredPersons);
+        return FXCollections.unmodifiableObservableList(sortedPersons);
     }
 
     @Override
@@ -98,6 +131,18 @@ public class ModelManager extends ComponentManager implements Model {
         filteredPersons.setPredicate(predicate);
     }
 
+    //@@author yungyung04
+    @Override
+    public void sortFilteredPersonList(Comparator<Person> comparator) {
+        sortedPersons.setComparator(comparator);
+    }
+
+    @Override
+    public void sortFilteredTaskList(Comparator<Task> comparator) {
+        sortedTasks.setComparator(comparator);
+    }
+
+    //@@author
     @Override
     public boolean equals(Object obj) {
         // short circuit if same object
@@ -110,10 +155,13 @@ public class ModelManager extends ComponentManager implements Model {
             return false;
         }
 
+
         // state check
         ModelManager other = (ModelManager) obj;
         return addressBook.equals(other.addressBook)
-                && filteredPersons.equals(other.filteredPersons);
+                && filteredPersons.equals(other.filteredPersons)
+                && filteredTasks.equals(other.filteredTasks)
+                && sortedPersons.equals(other.sortedPersons)
+                && sortedTasks.equals(other.sortedTasks);
     }
-
 }

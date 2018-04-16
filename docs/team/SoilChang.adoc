@@ -1,0 +1,307 @@
+= Chang HoHuan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Smart Insurance Collection
+
+---
+
+== Overview
+
+Smart Insurance Collection(SIC) is for insurance agents who *prefer to use a desktop app for managing contacts and appointments*. More importantly, SIC is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI).
+
+== Summary of contributions
+
+* *Major enhancement*: added *Predict Command*
+** What it does: It predicts the potential spending of a new customer based on the information from the
+existing customers
+** Justification: A insurance agents can have hundreds of potential customers. It would be very handy and essential for
+them to have a heuristics to rank the customers by priority. One obvious factor is how much the customer would spend on
+the insurance. Based on this, a "predict" command would be very useful to predict how much a potential customers
+will spend. Therefore the insurance agents can prioritise visiting those customers who are likely to spend more.
+** Highlights: This features requires a lot of foundational enhancements from other parts of the application. The original
+Smart Insurance Collection does not come with the features to encode the information needed for the calculation. Hence I need to
+add in more features in order to develop this feature. In the process, I have made enhancements to every components from
+storage to the UI.
+
+* *Minor enhancement*: Income field, actual spending field and expected spending field.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/SoilChang.md] [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/SoilChang.md]}_
+
+* *Other contributions*:
+1. Created and Integrated Travis into the repository
+2. Created and released production builds in version 1.4 and 1.5
+3. Created and Managed the main and side branches in the repository to manage the team project
+4. Created the team organisation and instantiated the organisation repository
+5. Helped and advised teammates on technical challenges in the whatsapp channel
+6. Managed and safeguard the main release branch to ensure everyone has a working build
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Predict: `predict`
+Predict the potential spending of the of a new customer. Some of the customers have
+their "actual spending" recorded down while some don't have because they have
+not spent anything yet on the insurance policy. Hence this command is to
+predict how much they will spend based on the information from the existing customers
+
+Examples:
+
+* `Initially` +
+two customers with `actualSpending` > 0 while the other with
+`actualSpending` == 0(actual spending will actually not be shown
+if it is zero).
+
+* `After` +
+The customer with `actualSpending` == 0 now has `expectedSpending` shown.
+
+Other Specification:
+
+* The solution is persistent. Hence when new users are added and old users are deleted,
+the new solutions are calculated incrementally from the old solution.
+
+*  When adding an new `Person`, the `/as`(Actual Spending) is optional.
+if the actual spending is specified, the person is considered as existing
+customer. Otherwise potential customer. The prediction is to predict
+the potential customer's spending based on the information on the
+existing customers.
+
+* The solution is calculated through numerical methods. And numerical methods,
+unlike Jesus, can't solve everything. There are certain inputs that will lead
+to divergent solution. Also, certain value might be too large to be captured
+even with double. Hence in situations like this, an message of "Divergent solution"
+would be presented with no prediction.
+
+* Like "help" command, the design is fault-tolerant. If you type extra text such
+as `predict abcde` or `predict nothing please`, those are not valid command since
+`predict` takes no other argument. But they will still be accepted as `predict`
+
+Test input: +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1500 age/20` +
+    2. `add n/John Two p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    3. `add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/10000  age/20` +
+    4. `predict` +
+
+    ==>  John Three now shows expected spending of 500
+
+Test Input 2: +
+    0. `clear` +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/30000 as/1000 age/20` +
+    2. `add n/John Two  p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/9000 as/300 age/20` +
+    3. `add n/John Three p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/20000  age/20` +
+    4. `predict` +
+
+    ==>  John Three should have 666.67 expected spending
+
+Test Input 3: +
+    0. `clear` +
+    1. `add n/John One p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/12345678000 as/150 age/20` +
+    2. `add n/John Two  p/98765432 e/johnd@example.com a/311, Clementi Ave 2, #02-25 t/friends t/owesMoney i/15000 as/750 age/20` +
+    3. `predict`
+
+    ==>  divergent solution
+
+this is to illustrate unrealistic extreme values might lead to divergent solution.
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+=== Prediction Function
+
+A command by the keyword of "predict" is added. It takes no argument.
+
+* `Overview` : Customers in the list may or may not have
+"actual spending" entered. Because at the point,
+the customer may not have purchased any policy at all. Those
+customers without actual spending would be those customers who
+have not spent anything. Predict function would use gradient descent
+method to reach the least square regression line. And the value produced
+by the least square regression line would be used as the prediction value.
+
+
+* `Implementation` :
+
+** The `GradientDescent` is designed to be a singleton class. The reason for that is
+the weights from the previous calculation should be retained and used for the subsequent
+calculation. Therefore only one instantiation of this class is allowed.
+
+[source,java]
+----
+private GradientDescent(PredictionModel model) {
+        this.model = model;
+    }
+
+    public static GradientDescent getInstance(PredictionModel model) {
+        if (instance == null) {
+            instance = new GradientDescent(model);
+            instance.resetWeights();
+        }
+        return instance;
+    }
+----
+
+
+The constructor takes a `PredictionModel`.
+
+PredictionModel is a interface that extends Model interface. The reason for this implementation is
+that `GradientDescent` requires some specific methods from the `Model` interface. And those methods are
+not useful to any other part of the app. Hence a new interface is created for `ModelManager` to implement
+specifically for gradient descent purpose. This to ensure the proper separation of concern and encapsulation.
+Those components that does not interact with predict command will not need to know the existence of those
+methods.
+
+
+[source,java]
+----
+public interface PredictionModel extends Model {
+    void preparePredictionData(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets,
+                               ArrayList<Double> normalizationConstant);
+
+    void updatePredictionResult(ArrayList<Double> weights)
+            throws CommandException;
+}
+----
+
+** `GradientDescent` class is a simply a solver. The driver class is a public method called `solve()`.
+It does not take any arguments. All the parameters required to run the solver is generated automatically
+within the class.
+
+[source,java]
+----
+public CommandResult solve() throws CommandException {
+
+}
+----
+
+
+The solver consists of 5 Steps:
+
+. Instantiation
+. Data Preparation
+. Solving
+. Validating
+. Update Results
+
+`Instantiation`: +
+
+The solver basically follows the equation of Aw=x, where
+A is a matrix, w is the weights and x is the target output.
+
+[source,java]
+----
+ArrayList<ArrayList<Double>> matrix = new ArrayList<>(new ArrayList<>());
+ArrayList<Double> targets = new ArrayList<>();
+----
+
+`Data Preparation`: +
+
+A method from `PredictionModel` interface is invoked to to extract the relevant values from the
+`ModelManager` to the function. This implementation is to ensure proper encapsulation. `GradientDescent`
+does not need to know what data is available or what formats are those data stored in the
+`ModelManager`. It only needs to know a consistent matrix A and vector x are passed back.
+[source,java]
+----
+this.model.preparePredictionData(matrix, targets, normalizationConstant);
+----
+
+`Solving`: +
+
+A function call to descent().
+[source,java]
+----
+descent(matrix, targets);
+----
+
+The implementation of descent():
+The idea is simply looping through each epoch and calculate the outcome and error. use their difference
+and learning rate to generate an update for the weights.
+[source,java]
+----
+private void descent(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+    for (int itt = 0; itt < epoch; itt++) {
+
+        //check data validity
+        if (this.hasNaN(this.weights)) {
+            this.logger.warning("The solution is not convergent");
+            break;
+        }
+
+        // fixed amount of training iteration
+        for (int r = 0; r < matrix.size(); r++) { //going through each training data
+
+            ArrayList<Double> row = matrix.get(r);
+            Double outcome = predict(row);
+            Double error = targets.get(r) - outcome;
+            for (int i = 0; i < row.size(); i++) {
+                Double deltaW = this.learningRate * error * row.get(i);
+                this.weights.set(i, this.weights.get(i) + deltaW);
+            }
+        }
+    }
+}
+----
+
+`Validating`: +
+Here a simple method is used to validate the accuracy of the results. After the weights are
+obtained, we validate it against the existing data. See how far off they are as compared to
+the existing data. By right the training set and validation set should be separated. But since
+for the current use case, the data entries are usually very little. Hence this simplified method
+is used instead.
+
+[source,java]
+----
+private Double validate(ArrayList<ArrayList<Double>> matrix, ArrayList<Double> targets) {
+    Double average = 0.0;
+    for (int i = 0; i < matrix.size(); i++) {
+
+        //loop through each row
+
+        Double outcome = this.predict(matrix.get(i));
+        Double error = Math.abs((outcome - targets.get(i)) / targets.get(i));
+        average += (1 - error);
+    }
+
+    Double confidence = average / targets.size() * 100;
+    if (confidence < 0) {
+        confidence = 0.0;
+    } else if (confidence > 100) {
+        confidence = 100.0;
+    }
+    return confidence;
+}
+----
+
+`Update Results`: +
+The implementation of updating follows closed to that of Edit command. The actual updating
+takes place in the model itself instead of `GradientDescent` class. Again, `GradientDescent`
+does not need to be concerned with how the model is updated.
+
+[source,java]
+----
+try {
+    this.model.updatePredictionResult(this.getWeights());
+    return new CommandResult(String.format(MESSAGE_PREDICTION_SUCCESS)
+            + ", with Confidence Rate "
+            + String.format("%.2f", confidence)
+            + "%"
+    );
+} catch (CommandException e) {
+    return new CommandResult(String.format(MESSAGE_PREDICTION_FAIL));
+}
+----
+
+* `Future Work`:
+1. The regression line is currently 2 dimensional at the moment, with only
+the contribution from "actual spending" and "income". In the future, the parameters
+should be extended to multi-dimension with other fields included.
+2. Auto separate training set and validation set once data gets large enough.
+
+image::ModelClassDiagramUpdated.png[width="800"]

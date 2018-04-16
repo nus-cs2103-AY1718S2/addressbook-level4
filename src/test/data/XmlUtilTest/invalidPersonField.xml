@@ -5,5 +5,8 @@
     <phone>9482asf424</phone>
     <email>hans@example</email>
     <address>4th street</address>
+    <income>-300</income>
     <tagged>friends</tagged>
+    <actualSpending>-2</actualSpending>
+    <expectedSpending>-2</expectedSpending>
 </person>

@@ -1,0 +1,155 @@
+= Valerian Rey - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+AddressBook - Level 4 is a desktop address book application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability create/edit/remove insurance policies, and to display and store them*
+** What it does: allows the user to create policies using `add_policy`, edit them using `edit_policy` and remove them using `remove_policy`.
+** Justification: This feature is important because it is a key tool to any insurance agent to keep track of which "product" each client has applied to.
+** Highlights: This enhancement adds 3 new commands. It required me to understand the parsing operations. Parsing a Policy-related command can be quite complicated,
+because it needs understanding of required fields, optional fields and optional multiple fields parsing. This results in a lot of code in the parser files. Since the Policy is an optional attribute of each person,
+the implementation of the storage of the policies was quite tricky too, but the resulting code is actually pretty short, so I did not include it in the collated folder.
+** Credits: I want to give credit to the structure of some commands, that inspired me to make the `add_policy` and `edit_policy` commands. For example, `edit_policy` takes the
+idea of `EditPersonDescriptor` from `EditCommand`. I had to name this class as `EditPolicyDescriptor` and modify it to make it fit the `EditPolicyCommand`, so I claimed it as my own in the end.
+
+* *Minor enhancement*: added the `policy` package to the model. It contains the enumerations `Issue` and `Month`, and the classes `Policy`, `Date`, `Coverage` and `Price`.
+This strongly linked to my major enhancement, as it is a requirement to make the latter possible. But since it could be developed independently from the rest, I chose this as my minor enhancement.
+The implementation was also a bit easier, even if I had to come up with some good algorithms to check the correctness of each parameters.
+
+* *Code contributed*:
+** Functional : [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/ValerianRey.md]
+** Test : [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/ValerianRey.md]
+
+* *Other contributions*:
+** Documentation:
+*** Added my classes to the Model class diagram (all the bottom part following and including the "Policy" Rectangle)
+in docs/diagrams/ModelComponentClassDiagram.pptx and in docs/images/ModelClassDiagramUpdated.png
+*** Added a sequence diagram for the remove_policy command
+in docs/diagrams/RemovePolicySequenceDiagram.pptx and in docs/images/RemovePolicySequenceDiagram.png
+
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W14-B1/main/issues/138, https://github.com/CS2103JAN2018-W14-B1/main/issues/136)
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Add a policy : `add_policy`
+Add a policy to a person in the address book.
+
+Format: `add_policy INDEX beg/BEGINNING DATE exp/EXPIRATION DATE pr/PRICE [is/ISSUE]...`
+
+[TIP]
+A person can have any number of issues covered (including 0)
+These can be added later with `edit_policy`
+
+Examples:
+
+* `add_policy 1 beg/01/04/2018 exp/02/04/2020 pr/140 is/car_damage is/theft`
+* `add_policy 3 beg/01/02/2018 exp/28/02/2018 pr/120`
+
+=== Edit a policy : `edit_policy`
+Edit the policy of a person in the address book.
+
+Format: `edit_policy INDEX [beg/BEGINNING DATE] [exp/EXPIRATION DATE] [pr/PRICE] [is/ISSUE]...`
+
+****
+* Edits the policy of the person at the specified `INDEX`. The index refers to the index number shown
+ in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing issues, the existing issues of the policy will be removed i.e adding of issues is not cumulative.
+* You can remove all the policy's issues by typing `is/` without specifying any issue after it.
+****
+
+Examples:
+
+* `edit_policy 2 beg/01/07/2018 exp/02/04/2019`
+* `edit_policy 1 pr/100`
+* `edit_policy 4 pr/150 is/theft is/house_damage`
+
+=== Remove a policy : `remove_policy`
+Remove the policy of a person in the address book.
+
+Format: `remove_policy INDEX`
+
+Examples:
+
+* `remove_policy 1`
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+=== Policy Feature
+
+The `Policy` field is an optional field attached to a person. It contains all the data
+about an insurance contract that a person applied to (if any).
+A policy is defined by 4 fields : a beginning date, an expiration date, a price and a list of issues
+covered. Each of these fields must be individually valid during the creation of a Policy, and the beginning
+date needs to be prior to the expiration date.
+
+==== Policy Date
+A `Date` inside of the Policy contains 3 fields : the day, the month and the year.
+The month is represented using the `Month` enumeration. The day and the year are just Integers.
+Each time a Date is created, its correctness is checked.
+The Policy that a Person applied to (if any) is displayed at the end of the card of a Person
+(see `PersonListCard.fxml`).
+
+==== Policy Price
+A `Price` inside of the Policy is just a positive or zero Integer. Each time a Price is created,
+its correctness is checked.
+
+==== Policy Coverage
+The list of issues covered by a Policy comes in the form of the `Coverage` object. It contains a `List<Issue>`.
+`Issue` is an enumeration that tries to cover the main issues that an insurance could possibly cover. This enumeration
+should be frequently updated to make sure that the insurance agent working with our app does not face a case where
+the desired issue does not exist.
+A Coverage can be empty, meaning that the Policy won't cover any issue. This possibility should be used with the
+intention to edit the policy later, and add some issues to its Coverage.
+
+==== Implementation in Person
+Since it is optional for a person in the address book to apply to a contract, the Policy field comes in the form
+of `Optional<Policy>`. This is technically breaking a java convention, because Optional
+should not be used for class fields, but it was a very easy and logical way to implement
+this. Optional fields should be avoided in the first place, but when it is too cumbersome
+to do so, the `Optional<T>` type is very handy. The Policy field is persistent. It is stored via `XmlElement` in
+`XmlAdaptedPerson`.
+
+==== Adding a Policy
+In order to add a Policy to a Person in the address book, it is required to use the `add_policy` command. This command
+asks the user to specify the index of the target user, the dates, the price and the issues covered by the Policy.
+The command is detected in the `AddressBookParser`, then its arguments are sent to the `AddPolicyCommandParser`,
+which detects them using some parsing methods from `ParseUtil` that can retrieve the Dates, the Price and the potential
+Issues. An `AddPolicyCommand` is then created and executed to add the policy to the person in the address book.
+
+==== Editing a Policy
+If the user wants to edit a Policy, he must use the `edit_policy` command. He has to enter the index of the target user,
+and at least one field to edit.
+The parsing of this command works the same as for `add_policy`, but using `EditPolicyCommandParser` and creating an
+`EditPolicyCommand`. Also inside of the `EditPolicyCommand` there is a nested class `EditPolicyDescriptor` which was
+inspired from the `EditPersonDescriptor` of the `EditCommand`. It works in the same manner, but with fields adapted to
+`Policy` and not to `Person`. To summarize, it describes what fields should be edited in the `Policy`, and how.
+
+==== Removing a Policy
+To remove a Policy, the user should use the `remove_policy` command. He then only has to enter the index of the target
+user. The parsing of this command is pretty straightforward since it only has the index parameter, and it is done in
+`RemovePolicyCommandParser`. The command created is of type `RemovePolicyCommand`.
+
+---

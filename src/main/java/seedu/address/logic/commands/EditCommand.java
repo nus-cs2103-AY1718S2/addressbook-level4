@@ -1,8 +1,11 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ACTUALSPENDING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_AGE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_INCOME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
@@ -20,13 +23,18 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Age;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.Expenditure;
+import seedu.address.model.person.Income;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+
+
 
 /**
  * Edits the details of an existing person in the address book.
@@ -43,6 +51,11 @@ public class EditCommand extends UndoableCommand {
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            //@@author SoilChang
+            + "[" + PREFIX_INCOME + "INCOME] "
+            //@@author
+            + "[" + PREFIX_ACTUALSPENDING + "ACTUALSPENDING] "
+            + "[" + PREFIX_AGE + "AGE] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
@@ -59,7 +72,7 @@ public class EditCommand extends UndoableCommand {
     private Person editedPerson;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -107,8 +120,19 @@ public class EditCommand extends UndoableCommand {
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+        //@@author SoilChang
+        Income updatedIncome = editPersonDescriptor.getIncome().orElse(personToEdit.getIncome());
+        Expenditure updatedActualSpending = editPersonDescriptor.getActualSpending()
+                .orElse((personToEdit.getActualSpending()));
+        Expenditure updatedExpectedSpending = editPersonDescriptor.getExpectedSpending()
+                .orElse((personToEdit.getExpectedSpending()));
+        //@@author
+        Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        //@@author SoilChang
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                updatedIncome, updatedActualSpending, updatedExpectedSpending, updatedAge, personToEdit.getPolicy());
+        //@@author
     }
 
     @Override
@@ -140,8 +164,14 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        //@@author SoilChang
+        private Income income;
+        private Expenditure actualSpending;
+        private Expenditure expectedSpending;
+        private Age age;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
@@ -153,14 +183,23 @@ public class EditCommand extends UndoableCommand {
             setEmail(toCopy.email);
             setAddress(toCopy.address);
             setTags(toCopy.tags);
+            //@@author SoilChang
+            setIncome(toCopy.income);
+            setActualSpending(toCopy.actualSpending);
+            setExpectedSpending(toCopy.expectedSpending);
+            //@@author
+            setAge(toCopy.age);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
+        //@@author SoilChang
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
+                    this.income, this.actualSpending, this.expectedSpending, this.age);
         }
+        //@@author
 
         public void setName(Name name) {
             this.name = name;
@@ -193,6 +232,42 @@ public class EditCommand extends UndoableCommand {
         public Optional<Address> getAddress() {
             return Optional.ofNullable(address);
         }
+
+        //@@author SoilChang
+        public void setIncome(Income income) {
+            this.income = income;
+        }
+
+        public Optional<Income> getIncome() {
+            return Optional.ofNullable(income);
+        }
+
+        public void setActualSpending(Expenditure actualSpending) {
+            this.actualSpending = actualSpending;
+        }
+
+        public Optional<Expenditure> getActualSpending() {
+            return Optional.ofNullable(actualSpending);
+        }
+
+        public void setExpectedSpending(Expenditure expectedSpending) {
+            this.expectedSpending = expectedSpending;
+        }
+
+        public Optional<Expenditure> getExpectedSpending() {
+            return Optional.ofNullable(expectedSpending);
+        }
+
+        //@@author jstarw
+        public void setAge(Age age) {
+            this.age = age;
+        }
+
+        //@@author jstarw
+        public Optional<Age> getAge() {
+            return Optional.ofNullable(age);
+        }
+        //@@author
 
         /**
          * Sets {@code tags} to this object's {@code tags}.
@@ -232,5 +307,7 @@ public class EditCommand extends UndoableCommand {
                     && getAddress().equals(e.getAddress())
                     && getTags().equals(e.getTags());
         }
+
+
     }
 }

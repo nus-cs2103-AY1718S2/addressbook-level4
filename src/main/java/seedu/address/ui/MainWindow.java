@@ -16,8 +16,12 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.PersonEditEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.parser.EditCommandParser;
+import seedu.address.model.Model;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -26,18 +30,21 @@ import seedu.address.model.UserPrefs;
  */
 public class MainWindow extends UiPart<Stage> {
 
-    private static final String FXML = "MainWindow.fxml";
+    private static final String FXML = "NewMainWindow.fxml";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
+    private Model model;
 
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private CalendarPanel calendarPanel;
+    private AgendaPanel agendaPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -57,19 +64,22 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
-    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
+    @FXML
+    private StackPane agendaPanelPlaceholer;
+
+    public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic, Model model) {
         super(FXML, primaryStage);
 
         // Set dependencies
         this.primaryStage = primaryStage;
         this.logic = logic;
+        this.model = model;
         this.config = config;
         this.prefs = prefs;
 
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
-
         setAccelerators();
         registerAsAnEventHandler(this);
     }
@@ -130,6 +140,14 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        calendarPanel = new CalendarPanel(logic.getCalendar());
+        browserPlaceholder.getChildren().add(calendarPanel.getCalendarPage());
+
+        agendaPanel = new AgendaPanel(logic.getCalendar());
+        agendaPanelPlaceholer.getChildren().add(agendaPanel.getAgendaView());
+
+
     }
 
     void hide() {
@@ -193,5 +211,21 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author jstarw
+    @Subscribe
+    private void handleSubmitEvent(PersonEditEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        try {
+
+            EditCommandParser editCommandParser = new EditCommandParser();
+            EditCommand editCommand = editCommandParser.parse(event.getArgs());
+            editCommand.setData(model, null, null);
+            editCommand.execute();
+        } catch (Exception exc) {
+            exc.printStackTrace();
+
+        }
     }
 }

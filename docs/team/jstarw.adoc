@@ -1,0 +1,106 @@
+= Jonathan Wen - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: AddressBook - Level 4
+
+---
+
+== Overview
+
+AddressBook - Level 4 is a desktop Smart Insurance Collection application used for teaching Software Engineering principles. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added the ability to open a *detailed description page* of a person in the addressbook
+** What it does: When the user double clicks on the person card, a new window appears, allowing the user to see a detailed description of the person and allow them to edit certain details.
+** Justification: This feature improves the product significantly because it makes it easier to keep track of multiple persons at a time. For example, one can open multiple customer pages and compare them side by side.
+** Highlights: There were various parts of the app that required changed due to this enhancement. New FXML files needed to be created, as well as new event listeners. A description field was also added, which required changes in all parts of the application.
+** Credits: Took parts from the PersonCard.java file as a base, but heavily expanded on it.
+
+* *Minor enhancement*: Added an Age field to help identify users more clearly. The user is able to add a new customer with an age by specifying /age to the argument.
+
+* *Code contributed*:
+** Functional: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/functional/jstarw.md]
+** Test: [https://github.com/CS2103JAN2018-T15-B2/main/blob/master/collated/test/jstarw.md]
+
+* *Other contributions*:
+
+** Project management:
+*** Released tag version `1.3` on Github
+** Enhancements to existing features:
+*** Changed most functional tests to pass Travis tests when adding Age field.
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+=== Opening Person Detail Window: `show`
+
+This is a feature that allows users to open a new window with the person's details.
+Format: `show NAME_OF_THE_PERSON`
+
+[TIP]
+The full name should be specified, since the command will scan for all contacts in order and show the first person it
+finds which matches the fields
+
+Examples:
+
+* `show John Doe`
+* `show Jonathan Wen`
+
+Another option is to open the window up using the GUI. In order to do this:
+
+1. Ensure that at least 1 contact exists in the addressbook.
+2. Navigate to the PersonCard on the left side of the application.
+3. Double click on the card to bring up the popup window.
+4. When done viewing the details, close the window.
+
+Multiple of these windows can be open at a time, allowing the user to compare contacts side by side.
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+=== New Person Detail Popup Window
+
+A new window will pop up that will show a detailed page of a customer when the user double clicks the person card. This
+is demonstrated as such:
+
+image::persondetail.png[]
+
+This window will show various aspects of the customer, including a description that the user can add. Additionally, the
+use can change certain details by simply double clicking on each field and edit them.
+
+==== Current Implementation
+
+A new `.fxml` file is created that will display the persons attributes on a new window. A new event called
+`PersonCardDoubleClick` is created. This will listen to anytime a person card is double clicked. Subscribed listeners
+(eg. BrowserPanel) will be alerted and the new window will open.
+
+It can also be opened using the `show` command. This takes in a name and scans the entire addressbook. Once the first
+person is found which matches the name, the window pops up. The matching is the same logic as the `find` command.
+
+=== Age Field feature (V1.2)
+==== Current implementation
+
+One of the features that was added is the age field. When adding a new person to the addressbook now, the user must
+specify the age of the new person. This will allow the user to have a more accurate description of the client, and
+come up with a better insurance policy.
+
+image::NewPersonListCard.png[width="800"]
+
+To add a person with an age field, one must specify the age prefixed with the indicator `/age`:
+
+
+==== Future Improvements
+* Include the age field when performing predictions
+* Filter clients by their age
+
+---

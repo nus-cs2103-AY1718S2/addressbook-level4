@@ -12,6 +12,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
 import seedu.address.MainApp;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.PersonCardDoubleClick;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
@@ -41,6 +42,11 @@ public class BrowserPanel extends UiPart<Region> {
         registerAsAnEventHandler(this);
     }
 
+    //@@author jstarw
+    private void loadPersonDetail(Person person, Integer index) {
+        PersonDetail personDetail = new PersonDetail(person, index);
+        personDetail.show();
+    }
     private void loadPersonPage(Person person) {
         loadPage(SEARCH_PAGE_URL + person.getName().fullName);
     }
@@ -68,5 +74,12 @@ public class BrowserPanel extends UiPart<Region> {
     private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         loadPersonPage(event.getNewSelection().person);
+    }
+
+    //@@author jstarw
+    @Subscribe
+    private void handlePersonCardDoubleClick(PersonCardDoubleClick event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        loadPersonDetail(event.getNewSelection(), event.getIndex());
     }
 }

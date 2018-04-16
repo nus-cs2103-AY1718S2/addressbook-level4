@@ -59,4 +59,12 @@ public class EmailTest {
         assertTrue(Email.isValidEmail("peter_jack@very-very-very-long-example.com"));   // long domain name
         assertTrue(Email.isValidEmail("if.you.dream.it_you.can.do.it@example.com"));    // long local part
     }
+
+    @Test
+    public void isEqualEmail() {
+        Email x  = new Email("PeterJack_1190@example.com");
+        Email y = new Email("PeterJack_1190@example.com");
+        assertTrue(x.equals(y) && y.equals(x));
+        assertTrue(x.hashCode() == y.hashCode());
+    }
 }

@@ -1,0 +1,61 @@
+= Ahmad Syafiq - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: My Team Manager
+---
+== Overview
+My Team Manager is a desktop address book application developed as part of a Software Engineering module requirement. The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 6 kLoC.
+
+
+== Summary of contributions
+
+* *Major enhancement*: added *replaced person object with player object*
+** What it does: allows the user to add and edit players that contain more attributes/information such as jersey, position, rating and avatar
+** Justification: This feature improves the product significantly because a user can fill the address book with more important information which can be used for other utility functions such as sort.
+It is accompanied with improved GUI to increase usability. Eg. the user can see player's avatar for better identification.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands.
+
+* *Minor enhancement*: added a *tab - autocomplete function*
+** What it does: allows the user to enter command lines more quickly by helping them complete commands by pressing the tab key. It also allows them to view suggested command and command parameters in case
+the forget.
+** Credits: To make the search optimal, I used Tries as suggested on geek-for-geeks.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B1/main/blob/master/collated/functional/lithiumlkid.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B1/main/blob/master/collated/test/lithiumlkid.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Enhanced the help function to only allow one help window at a time. (Pull request https://github.com/CS2103JAN2018-F14-B1/main/pull/169[#169])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide: https://github.com/CS2103JAN2018-F14-B1/main/pull/53[#53]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-F14-B1/main/pull/172[#172]
+*** Contributed to forum discussions (examples:  https://github.com/nus-cs2103-AY1718S2/forum/issues/39[39], https://github.com/nus-cs2103-AY1718S2/forum/issues/47[#47])
+*** Reported bugs and suggestions for other teams in the class (example:  https://github.com/CS2103JAN2018-F14-B3/main/issues/228[#228])
+** Tools:
+*** Integrated a new Github plugin (CircleCI) to the team repo
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=addplayer]
+
+include::../UserGuide.adoc[tag=autocomplete]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=player]
+
+include::../DeveloperGuide.adoc[tag=autocomplete]
+

@@ -6,10 +6,14 @@ import java.util.stream.Stream;
 
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.JerseyNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Rating;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -37,6 +41,9 @@ public class EditPersonDescriptorBuilder {
         descriptor.setEmail(person.getEmail());
         descriptor.setAddress(person.getAddress());
         descriptor.setTags(person.getTags());
+        descriptor.setRating(person.getRating());
+        descriptor.setPosition(person.getPosition());
+        descriptor.setJerseyNumber(person.getJerseyNumber());
     }
 
     /**
@@ -78,6 +85,38 @@ public class EditPersonDescriptorBuilder {
     public EditPersonDescriptorBuilder withTags(String... tags) {
         Set<Tag> tagSet = Stream.of(tags).map(Tag::new).collect(Collectors.toSet());
         descriptor.setTags(tagSet);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Rating} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withRating(String rating) {
+        descriptor.setRating(new Rating(rating));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Position} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withPosition(String position) {
+        descriptor.setPosition(new Position(position));
+        return this;
+    }
+
+    /**
+     * Sets the {@code JerseyNumber} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withJerseyNumber(String jerseyNumber) {
+        descriptor.setJerseyNumber(new JerseyNumber(jerseyNumber));
+        return this;
+    }
+
+    /**
+     * Sets the {@code Avatar} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withAvatar(String avatar) {
+        descriptor.setAvatar(new Avatar(avatar));
         return this;
     }
 

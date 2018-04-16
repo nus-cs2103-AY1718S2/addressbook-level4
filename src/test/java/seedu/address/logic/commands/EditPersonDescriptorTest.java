@@ -6,8 +6,11 @@ import static seedu.address.logic.commands.CommandTestUtil.DESC_AMY;
 import static seedu.address.logic.commands.CommandTestUtil.DESC_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_ADDRESS_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_EMAIL_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_JERSEY_NUMBER_17;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_BOB;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_PHONE_BOB;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_POSITION_MIDFIELD;
+import static seedu.address.logic.commands.CommandTestUtil.VALID_RATING_1;
 import static seedu.address.logic.commands.CommandTestUtil.VALID_TAG_HUSBAND;
 
 import org.junit.Test;
@@ -53,6 +56,18 @@ public class EditPersonDescriptorTest {
 
         // different tags -> returns false
         editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withTags(VALID_TAG_HUSBAND).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different rating -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withRating(VALID_RATING_1).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different position -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withPosition(VALID_POSITION_MIDFIELD).build();
+        assertFalse(DESC_AMY.equals(editedAmy));
+
+        // different jersey number -> returns false
+        editedAmy = new EditPersonDescriptorBuilder(DESC_AMY).withJerseyNumber(VALID_JERSEY_NUMBER_17).build();
         assertFalse(DESC_AMY.equals(editedAmy));
     }
 }

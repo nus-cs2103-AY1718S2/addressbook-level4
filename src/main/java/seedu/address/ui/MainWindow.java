@@ -6,18 +6,24 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.control.Menu;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
+import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.UserPrefs;
 
 /**
@@ -27,6 +33,7 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static String currentTheme = "view/DarkTheme.css";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -34,13 +41,13 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+    private HelpWindow helpWindow;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private Menu mtmLogo;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -55,7 +62,13 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane resultDisplayPlaceholder;
 
     @FXML
+    private StackPane teamDisplayPlaceholder;
+
+    @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private VBox mainWindow;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -116,14 +129,24 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //@@author Codee
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+        mainWindow.getStylesheets().add("view/Extensions.css");
 
+        final Image image = new Image("images/MyTeamManagerLogo.png", true);
+        mtmLogo.setGraphic(new ImageView(image));
+        mtmLogo.setDisable(true);
+
+        //@@author
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        TeamDisplay teamDisplay = new TeamDisplay(logic.getInitTeamList());
+        teamDisplayPlaceholder.getChildren().add(teamDisplay.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -152,6 +175,24 @@ public class MainWindow extends UiPart<Stage> {
         }
     }
 
+    /** @@author Codee */
+    /**
+     * @returns the {@code currentTheme}.
+     */
+    public static String getCurrentTheme() {
+        return currentTheme;
+    }
+
+    @Subscribe
+    public void handleChangeThemeRequestEvent(ChangeThemeEvent event) throws CommandException {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        mainWindow.getStylesheets().remove(currentTheme);
+        prefs.setAddressBookTheme(event.theme + "Theme.css");
+        currentTheme = "view/" + prefs.getAddressBookTheme();
+        mainWindow.getStylesheets().add(currentTheme);
+    }
+    //@@author
+
     /**
      * Returns the current size and the position of the main Window.
      */
@@ -165,7 +206,9 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        if (helpWindow == null) {
+            helpWindow = new HelpWindow();
+        }
         helpWindow.show();
     }
 
@@ -183,10 +226,6 @@ public class MainWindow extends UiPart<Stage> {
 
     public PersonListPanel getPersonListPanel() {
         return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
     }
 
     @Subscribe

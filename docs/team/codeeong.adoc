@@ -1,0 +1,72 @@
+= Codee Ong - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: My Team Manager (MTM)
+
+---
+
+== Overview
+
+My Team Manager (MTM) is a desktop application for *football team managers* to organise the information of players they are in charge of.
+The primary usage of this application is to add and assign players to teams, and then edit and remove information related to
+the players as and when it is required. MTM is value added with usability features that help the team manager manage his/her
+teams and players efficiently.
+The user interacts with MTM using a *Command Line Interface*, and it has a GUI created with JavaFX.
+
+
+== Summary of contributions
+
+* *Major enhancement*: Revamped the original user interface to one that suits the usage of an application for *team managers*.
+** What it does: The change in  UI allows the user to *keep track* of which team he/she is looking at, to *view his/her players' details*,
+and even perform some *customisation* of the application theme.
+** Justification: The overhaul of the UI is absolutely necessary to ensure the *best user experience* for users of My Team Manager. Previously,
+the existing UI components were neither sufficient nor suitable for management of sports teams.
+** Highlights: Addition of the *team display bar*, the *player details pane* when a player is selected, addition of *MTM logo*,
+and *changeTheme* command.
+
+* *Minor enhancement*: addition of a *setTagCommand* that allows the user to change existing tags to a colour of their choice.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B1/main/blob/master/collated/functional/Codee.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B1/main/blob/master/collated/test/Codee.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Generated release files (.jar) in `v1.4` and `v1.5rc` (2 releases), and contributed release descriptions on GitHub.
+** Enhancements to existing features:
+*** changed the original GUI colour scheme [https://github.com/CS2103JAN2018-F14-B1/main/pull/89[PR #89]]
+
+** Documentation:
+*** changed the project name in all the relevant files so that it will be "My Team Manager" and not "Address Book App", including the data files. [https://github.com/CS2103JAN2018-F14-B1/main/pull/120[PR #120]]
+*** Constantly updated the README and UserGuide's application preview image. [https://github.com/CS2103JAN2018-F14-B1/main/pull/99[PR #99]][https://github.com/CS2103JAN2018-F14-B1/main/pull/160[PR #160]]
+
+** Community:
+*** PRs Reviewed (with non trivial comments) [https://github.com/CS2103JAN2018-F14-B1/main/pull/95[PR #95]][https://github.com/CS2103JAN2018-F14-B1/main/pull/169[PR #169]][https://github.com/CS2103JAN2018-F14-B1/main/pull/175[PR #175]]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting the users of MTM._
+|===
+
+include::../UserGuide.adoc[tag=changeTheme]
+
+include::../UserGuide.adoc[tag=setTagColour]
+
+include::../UserGuide.adoc[tag=showlineup]
+
+
+== Contributions to the Developer Guide
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=settagcolour]
+
+include::../DeveloperGuide.adoc[tag=teamDisplay]
+
+include::../DeveloperGuide.adoc[tag=PlayerDetails]
+
+include::../DeveloperGuide.adoc[tag=changeThemeCommand]
+
+

@@ -1,8 +1,27 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.ListView?>
+<?import javafx.scene.control.SplitPane?>
+<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
-  <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
-</VBox>
+<StackPane>
+  <SplitPane id="splitPane" fx:id="personListContainer" dividerPositions="0.4" VBox.vgrow="ALWAYS" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <VBox minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+    <padding>
+      <Insets top="10" right="10" bottom="10" left="10" />
+    </padding>
+      <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS">
+      <ListView fx:id="personListView" VBox.vgrow="ALWAYS" />
+      </StackPane>
+
+    </VBox>
+
+    <StackPane fx:id="playerDetailsPlaceholder" prefWidth="340" >
+      <padding>
+        <Insets top="10" right="10" bottom="10" left="10" />
+      </padding>
+    </StackPane>
+  </SplitPane>
+</StackPane>

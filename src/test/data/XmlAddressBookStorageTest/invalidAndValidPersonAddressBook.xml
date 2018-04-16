@@ -6,6 +6,11 @@
         <phone isPrivate="false">9482424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <remark isPrivate="false">Definitely a good one</remark>
+        <teamName isPrivate="false">Arsenal</teamName>
+        <rating isPrivate="false">0</rating>
+        <position isPrivate="false">1</position>
+        <jerseyNumber isPrivate="false">1</jerseyNumber>
     </persons>
     <!-- Person with invalid phone field -->
     <persons>
@@ -13,5 +18,10 @@
         <phone isPrivate="false">948asdf2424</phone>
         <email isPrivate="false">hans@example.com</email>
         <address isPrivate="false">4th street</address>
+        <remark isPrivate="false">Could go SOLO</remark>
+        <teamName isPrivate="false">&lt;UNSPECIFIED&gt;</teamName>
+        <rating isPrivate="false">0</rating>
+        <position isPrivate="false">1</position>
+        <jerseyNumber isPrivate="false">1</jerseyNumber>
     </persons>
 </addressbook>

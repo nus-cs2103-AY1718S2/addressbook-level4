@@ -8,6 +8,7 @@ import java.util.Set;
 
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.team.TeamName;
 
 /**
  * Represents a Person in the address book.
@@ -19,20 +20,33 @@ public class Person {
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private final Remark remark;
+    private final TeamName teamName;
+    private final JerseyNumber jerseyNumber;
+    private final Rating rating;
+    private final Position position;
+    private final Avatar avatar;
 
     private final UniqueTagList tags;
 
     /**
      * Every field must be present and not null.
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark, TeamName teamName,
+                  Set<Tag> tags, Rating rating, Position position, JerseyNumber jerseyNumber, Avatar avatar) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
+        this.remark = remark;
+        this.teamName = teamName;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.rating = rating;
+        this.position = position;
+        this.jerseyNumber = jerseyNumber;
+        this.avatar = avatar;
     }
 
     public Name getName() {
@@ -49,6 +63,30 @@ public class Person {
 
     public Address getAddress() {
         return address;
+    }
+
+    public Remark getRemark() {
+        return remark;
+    }
+
+    public TeamName getTeamName() {
+        return teamName;
+    }
+
+    public JerseyNumber getJerseyNumber() {
+        return jerseyNumber;
+    }
+
+    public Rating getRating() {
+        return rating;
+    }
+
+    public Position getPosition() {
+        return position;
+    }
+
+    public Avatar getAvatar() {
+        return avatar;
     }
 
     /**
@@ -73,27 +111,40 @@ public class Person {
         return otherPerson.getName().equals(this.getName())
                 && otherPerson.getPhone().equals(this.getPhone())
                 && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
+                && otherPerson.getAddress().equals(this.getAddress())
+                && otherPerson.getTeamName().equals(this.getTeamName());
     }
 
     @Override
     public int hashCode() {
         // use this method for custom fields hashing instead of implementing your own
-        return Objects.hash(name, phone, email, address, tags);
+        return Objects.hash(name, phone, email, address, remark, teamName, tags, rating, position, jerseyNumber,
+                avatar);
     }
 
     @Override
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Team: ")
+                .append(getTeamName())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
+                .append(" Jersey Number: ")
+                .append(getJerseyNumber())
+                .append(" Rating: ")
+                .append(getRating())
+                .append(" Position: ")
+                .append(getPosition())
+                .append(" Avatar File Path: ")
+                .append(getAvatar())
                 .append(" Tags: ");
         getTags().forEach(builder::append);
+        builder.append("\n");
         return builder.toString();
     }
 

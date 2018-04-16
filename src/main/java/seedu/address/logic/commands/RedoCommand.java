@@ -2,6 +2,9 @@ package seedu.address.logic.commands;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.PersonDetailsChangedNoParamEvent;
+import seedu.address.commons.events.ui.UndoTeamsEvent;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
@@ -13,6 +16,7 @@ import seedu.address.model.Model;
 public class RedoCommand extends Command {
 
     public static final String COMMAND_WORD = "redo";
+    public static final String COMMAND_ALIAS = "r";
     public static final String MESSAGE_SUCCESS = "Redo success!";
     public static final String MESSAGE_FAILURE = "No more commands to redo!";
 
@@ -25,6 +29,10 @@ public class RedoCommand extends Command {
         }
 
         undoRedoStack.popRedo().redo();
+        // @@author Codee
+        EventsCenter.getInstance().post(new UndoTeamsEvent());
+        EventsCenter.getInstance().post(new PersonDetailsChangedNoParamEvent());
+        // @@author
         return new CommandResult(MESSAGE_SUCCESS);
     }
 

@@ -1,6 +1,7 @@
-= AddressBook Level 4 - Developer Guide
+= My Team Manager - Developer Guide
 :toc:
 :toc-title:
+:toclevels: 3
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -10,31 +11,61 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F14-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `F14-B1`      Since: `Mar 2018`      Licence: `MIT`
+
+// tag::overview[]
+== Overview
+
+My Team Manager (MTM) is a team managing application for football coaches. MTM is designed to be quick and easy for you to manage a team of players without the need of a mouse.
+
+This developer's guide provides information that will not only show the design principles of the project, but allow you to understand the different implementations, and give you the opportunity to get started with being a contributor or as a reference for experienced developer.
+
+This developer's guide consist of the following sections:
+
+* <<Setting up, Setting up>>
+* <<Design, Design>>
+* <<Implementation, Implementation>>
+* <<Documentation, Documentation>>
+* <<Testing, Testing>>
+* <<Dev Ops, Dev Ops>>
+// end::overview[]
 
 == Setting up
 
+The following pointers teach you how to get started with developing on our application. You’ll learn how to prepare yourself with the project on IntelliJ and run it. Then, you’ll update configurations in IntelliJ to easily match the coding standards and you’ll be ready to start coding.
+
+But before you start, there are two fundamental prerequisites you should know about MTM:
+
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+MTM is written in Java 8 and with the use of an integrated development environment (IDE) such as IntelliJ, it provides you as a developer with a better environment suited for developing MTM to maintain coding standards and provide continuous integration.
+
+. You are required to have *JDK `1.8.0_60`* or later,
 +
 [NOTE]
 Having any Java 8 version is not enough. +
-This app will not work with earlier versions of Java 8.
+This app will not work with earlier versions of Java 8. +
+You can download Java 8 from link:http://www.oracle.com/technetwork/java/javase/downloads/jdk8-downloads-2133151[here].
 +
 
-. *IntelliJ* IDE
+. and *IntelliJ* IDE.
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
-Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them. +
+You can download IntelliJ from link:https://www.jetbrains.com/idea/download/#section=windows[here].
 
 
-=== Setting up the project in your computer
+=== Setting up the project on your computer
+
+Before you begin setting up the project, please ensure that you’ve done the following on our GitHub repository (repo).
 
 . Fork this repo, and clone the fork to your computer
+
+Upon completion of forking from our GitHub repo, you can proceed to set up your project on IntelliJ.
+
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
 .. Click `Configure` > `Project Defaults` > `Project Structure`
@@ -43,15 +74,18 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
-This will generate all resources required by the application and tests.
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message which will generate all resources required by the application and tests.
 
 === Verifying the setup
+
+Now that you’ve properly setup your project, you can verify that you have done everything properly.
 
 . Run the `seedu.address.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
+
+You have verified the setup and you’re all ready to dive into the code, but before you do, check out the following configurations that will help you make your coding more integrated and accurate.
 
 ==== Configuring the coding style
 
@@ -84,22 +118,26 @@ Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingA
 [NOTE]
 Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
 
-==== Getting started with coding
+=== Getting started with coding
 
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
+2. Dive right in and get started with programming.
 
 == Design
 
+After you have successfully configured MTM, you are encouraged to read through the following section to understand the design of the software. The design section covers a high level overview the architecture and components of the software, as well as how common classes, configuration and logging throughout development are being used.
+
 [[Design-Architecture]]
-=== Architecture
+=== Software Architecture
+
+The *_Architecture Diagram_* given below (Figure 1) explains the high-level design of the App.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+Given below is a quick overview of each component.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
@@ -155,12 +193,16 @@ The sections below give more details of each component.
 [[Design-Ui]]
 === UI component
 
+The UI Component contains a MainWindow that consists of various parts e.g. CommandBox, ResultDisplayer, TeamDetails, PersonListPanel, PlayerDetails etc. The UI classes are all child classes of the abstract UiPart class.
+
+The structure of the UI component is shown in the figure below:
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `PlayerDetails` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
@@ -172,6 +214,8 @@ The `UI` component,
 
 [[Design-Logic]]
 === Logic component
+
+The Logic Component handles how each command would be parsed and executed. The class diagrams below illustrates the structure of the Logic Component and the structure of each individual commands.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
@@ -196,6 +240,8 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
+The Model Component handles the players and teams data structures in My Team Manager.  These structures also provide APIs to create, read, update and delete the details of these objects. The class diagram below shows the structure of the Model Component.
+
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
@@ -211,6 +257,8 @@ The `Model`,
 [[Design-Storage]]
 === Storage component
 
+Any changes made to the data is retained and handled by the Storage Component. The structure of this component is shown in Figure 10 below.
+
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
@@ -224,20 +272,46 @@ The `Storage` component,
 [[Design-Commons]]
 === Common classes
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+All classes used by the different components can be found in the `seedu.addressbook.commons` package.
+
+=== Configuration
+
+Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+// tag::logging[]
+=== Logging
+
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Configuration,Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* Currently log messages are output through: `Console` and to a `.log` file.
+
+*Logging Levels*
+
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
+* `WARNING` : Can continue, but with caution
+* `INFO` : Information showing the noteworthy actions by the App
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+
+[[Implementation-Configuration]]
+// end::logging[]
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
+=== Pre-existing
+
 // tag::undoredo[]
-=== Undo/Redo feature
-==== Current Implementation
+==== Undo/Redo feature
+===== Current Implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
+.Logic Class Diagram
 image::LogicCommandClassDiagram.png[width="800"]
 
 As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
@@ -277,10 +351,12 @@ Suppose that the user has just launched the application. The `UndoRedoStack` wil
 
 The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
+.Undo/Redo Stack Diagram (Part 1)
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
 As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
 
+.Undo/Redo New Command Stack Diagram (Part 1)
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
@@ -290,6 +366,7 @@ The user now decides that adding the person was a mistake, and decides to undo t
 
 We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
 
+.Undo/Redo Stack Diagram (Part 2)
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -297,6 +374,7 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Undo/Redo Sequence Diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
 The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
@@ -306,28 +384,31 @@ If the `redoStack` is empty, then there are no other commands left to be redone,
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Undo/Redo New Command Stack Diagram (Part 2)
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.Undo/Redo New Command Stack Diagram (Part 3)
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Undo/Redo Activity Diagram
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design Considerations
+===== Design Considerations
 
-===== Aspect: Implementation of `UndoableCommand`
+====== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
+* **Alternative 2:** Just override `execute()`.
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+====== Aspect: How undo & redo executes
 
 * **Alternative 1 (current choice):** Saves the entire address book.
 ** Pros: Easy to implement.
@@ -337,7 +418,7 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
 
-===== Aspect: Type of commands that can be undone/redone
+====== Aspect: Type of commands that can be undone/redone
 
 * **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
 ** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
@@ -350,44 +431,1157 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
+* **Alternative 1 (current choice):** Use separate stack for undo and redo.
 ** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
 ** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
+* **Alternative 2:** Use `HistoryManager` for undo/redo.
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+=== Player-Related Enhancements
 
-_{Explain here how the data encryption feature will be implemented}_
+// tag::player[]
+==== Player Component `[since v1.3]`
 
-// end::dataencryption[]
+`Player` is one of the core components of MTM. To implement it, we used the same `Person` object and added additional attributes to it. Shown below is the
+new constructor for the Person object followed by the class diagram.
 
-=== Logging
+[source, java]
+----
+public Person(Name name, Phone phone, Email email, Address address, Remark remark, TeamName teamName,
+                  Set<Tag> tags, Rating rating, Position position, JerseyNumber jerseyNumber, Avatar avatar) {
+        ...
+        this.remark = remark;
+        this.teamName = teamName;
+        this.rating = rating;
+        this.position = position;
+        this.jerseyNumber = jerseyNumber;
+        this.avatar = avatar;
+    }
+----
+.Person Class Diagram
+image::PlayerClassDiagram.png[width="300"]
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+The additional attributes are: <<team,teamName>>, <<remark,Remark>>, <<rating,Rating>>, <<position,Position>>, <<jersey,Jersey Number>> and <<avatar,Avatar>>.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
-* Currently log messages are output through: `Console` and to a `.log` file.
+The add and edit command has also been updated to include <<team,teamName>>,<<rating,Rating>>, <<position,Position>>, <<jersey,Jersey Number>> and <<avatar,Avatar>>.
+One thing to note is that in `executeUndoableCommand()`
+in both add and edit commands now does two additional things, setting the file path for players avatar, and assigning a player to a team
+and adding person to current filtered list. Shown below is the code snippet of the new `executeUndoableCommand()` and sequence diagram
+of the new add command as an example.
 
-*Logging Levels*
+[[AddSequence]]
+[source, java]
+----
+ @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            if (!toAdd.getAvatar().toString().equals(UNSPECIFIED_FIELD)) {
+                toAdd.getAvatar().setFilePath(toAdd.getName().fullName);
+            }
+            model.addPerson(toAdd);
+            if (!toAdd.getTeamName().toString().equals(UNSPECIFIED_FIELD)) {
+                model.assignPersonToTeam(toAdd, toAdd.getTeamName());
+                model.updateFilteredPersonList(toAdd.getTeamName());
+                EventsCenter.getInstance().post(new HighlightSelectedTeamEvent(toAdd.getTeamName().toString()));
+            } else { ...
+----
+.Add Sequence Diagram
+image::AddSequenceDiagram.png[width="800"]
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
-[[Implementation-Configuration]]
-=== Configuration
+[[rating]]
+===== Rating Class
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+The `Rating` class contains a `String value`. `value` holds the players rating, an integer from 0 to 5. It uses a validation regex `[0-5]`
+to ensure valid input.
+
+The prefix for `Rating` is `ra/`
+
+[[position]]
+===== Position Class
+
+The`Position` class contains a `String value`. `value` here holds the players position, an integer from 1 to 4. It uses a validation regex `[1-4]` to ensure valid input.
+
+The prefix for `Position` is `po/`.
+
+
+A static hashmap is used to store and retrieve the corresponding position names of the position values. The position name can be called using the method `getPositionName()` which returns `myMap.get(value)`.
+The code snippet for the `hashmap` and `getPositionName()` is shown below.
+
+[source, java]
+----
+private static final Map<String, String> myMap;
+static {
+    Map<String, String> aMap = new HashMap<>();
+    aMap.put("1", "Striker");
+    aMap.put("2", "Midfielder");
+    aMap.put("3", "Defender");
+    aMap.put("4", "Goalkeeper");
+    myMap = Collections.unmodifiableMap(aMap);
+}
+
+public String getPositionName() {
+    return myMap.get(value);
+}
+
+----
+
+[[jersey]]
+===== JerseyNumber Class
+
+The`JerseyNumber` class contains a `String value`. `value` here holds the players jersey number, an integer from 0 to 99. It uses a validation regex `[0-9]|[1-8][0-9]|9[0-9]` to ensure valid input.
+
+The prefix for `Position` is `j/`.
+
+[[avatar]]
+===== Avatar Class
+
+The`Avatar` class contains a `String value`. `value` here holds the absolute filepath to the players avatar image file, a png of jpeg file. It uses a validation regex `([^\s]+(\.(?i)(jpg|png))$)` to ensure valid input.
+
+The prefix for `Avatar` is `av/`.
+
+When the class is created, the `value` stores the original location of the players avatar image file eg. `C:\image.png` or if not specified, stores "<UNSPECIFIED>".
+Thereafter, if the avatar is specified when <<AddSequence,adding>> or editing a player, `setFilePath()` is called which will attempt to copy the image file to a `/image` folder that is in the same directory as the `MTM.jar` file.
+`value` is then updated to the new file path.
+
+The code snippet for setFilePath() is shown below.
+
+[source, java]
+----
+public void setFilePath(String player) throws IOException {
+        if (value.equals("<UNSPECIFIED>")) {
+            return;
+        }
+        final File file = new File(value);
+
+        Path dest = new File("images/" + player.replaceAll("\\s+", "") + ".png").toPath();
+        Files.createDirectories(Paths.get("images")); // Creates missing directories if any
+        Files.copy(file.toPath(), dest, StandardCopyOption.REPLACE_EXISTING);
+        this.value = dest.toString();
+    }
+----
+
+// end::player[]
+
+// tag::remark[]
+==== Remark a Player `[since v1.1]`
+
+Leaving a remark would be ideal for the user to note down any important detail of a player that is useful in the future.
+Remarks given can be in any format and therefore would not look good if it was done using tags instead, as tags are used with minimal words.
+
+===== Current Implementation
+The remark mechanism is facilitated by `RemarkCommand` and it inherits from `UndoableCommand`, making it undoable. The mechanism allows user to perform the adding, editing, and deleting of a single remark to a specified `Person` via the `INDEX` from the list shown in the `UI`. The field `remark` is similar to the other fields of `Person`, hence some of its logic in `AddCommand.java` and `EditCommand.java` are updated.
+
+The mechanism uses the command `remark` and a `r/` prefix to add, edit, and delete a single remark of a `Person`. When the user leaves the remark as empty after the `r/` prefix, it is an indication to delete the remark, and when it is valid, it either create a new remark for that `Person` or overwrites the current existing remark. Only one `remark` is saved at a time. If the user `remark` on the same person, it will be overwritten.
+
+The field `remark` is found in `Person`, and it is not modified via `add` or `edit` commands. All functions related to `remark` is done strictly via the `remark` command.
+
+The sequence diagram below illustrates the operation of the `remark` command:
+
+.Remark Activity Diagram
+image::RemarkActivityDiagram.png[width="100%"]
+
+The `remark` field is not required when adding or editing a `Person`, and it will be initialized to an empty string or retrieved to fit the implementation of the other fields.
+
+Code snippet from `AddCommandParser.java` that shows how remark is initialized as empty.
+
+[source, java]
+----
+public AddCommand parse(String args) throws ParseException {
+    //...AddCommandParser code...
+    Remark remark = new Remark("");
+
+    Person person = new Person(name, phone, email, address, remark, teamName, tagList, rating,
+        position, jerseyNumber, avatar);
+    //...AddCommandParser code...
+}
+----
+
+Code snippet from `EditCommand.java` that shows how remark is being retrieved.
+
+[source, java]
+----
+private static Person createEditedPerson(Person personToEdit,
+    EditPersonDescriptor editPersonDescriptor) {
+    //...EditCommand code...
+    Remark updatedRemark = (personToEdit.getRemark().isPrivate()) ? personToEdit.getRemark()
+                                                                  : personToEdit.getRemark();
+
+    return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+        updatedTeamName, updatedTags, updatedRating, updatedPosition, updatedJerseyNumber,
+        updatedAvatar);
+}
+----
+
+===== Design Considerations
+====== Aspect: Implementation of `Remark` field
+
+* **Alternative 1 (current choice):** Creates an additional `remark` field in `Person`.
+** Pros: Follows the existing style of similar fields, making implementation easier.
+** Cons: Could only have 1 remark per person, unless `remark` mechanism follows the `tag` mechanism to have multiple remarks.
+* **Alternative 2:** Have a list of remarks that associates with the specified `Person`.
+** Pros: Can have multiple remarks associating with a specific `Person`.
+** Cons: Harder to maintain, more complicated.
+
+====== Aspect: Implementation of `Remark` command
+
+* **Alternative 1 (current choice):** Create a specific command for remarking `Person`.
+** Pros: Optional for user to enter remark during add, and have an isolated command to give remarks to a player that works as an add and edit command for remark.
+** Cons: Increases the number of commands available for the user, and could mistaken that remark can be done using add/edit command.
+* **Alternative 2:** Make it similar to how other fields are implemented in `Person`.
+** Pros: Quick and easy implementation as it uses the same format as other fields, and can be added and modified through `add` and `edit` commands.
+** Cons: An additional field that can be input when adding a player, making the process longer to execute the command.
+// end::remark[]
+
+// tag::privatefield[]
+==== Setting various player fields to private `[since v1.4]`
+===== Current Implementation
+
+`Phone`, `Email`, `Remark`, `Rating` and `Address` of a player has an additional boolean attribute
+`isPrivate` which tracks the privacy of the particular field. When a player is added into MTM, `isPrivate` of these
+fields are set to 'false' by default.
+
+Each of these fields have a different `toString` method which would return `<Private 'FIELD'>` if privacy of
+the field is set to 'true', as shown in the following code snippet:
+[source, java]
+----
+@Override
+    public String toString() {
+        if (isPrivate) {
+            return "<Private Address>";
+        }
+        return value;
+    }
+----
+
+`XmlAdaptedPerson` under the storage portion has been edited to save the `isPrivate` value for the fields:
+[source, java]
+----
+@XmlElement(required = true)
+    private Boolean phonePrivacy;
+----
+
+Toggling of privacy works in a similar way to `Edit`. New fields will be created with privacy settings of `EditPersonPrivacy`
+ based on user input. This is done by first detecting if a particular prefix is present when command is
+entered in `TogglePrivacyCommandParser`:
+[source, java]
+----
+if (argMultimap.getValue(PREFIX_PHONE).isPresent()) {
+            epp.setPrivatePhone(false);
+        }
+----
+If prefix of a field is not present, the privacy setting of that particular field in `EditPersonPrivacy` would be null.
+
+In `TogglePrivacyCommand`, the new fields are created with this:
+[source, java]
+----
+private static Phone createPhonePrivacy(Person person, EditPersonPrivacy epp) {
+        Phone phone;
+        try {
+            if (person.getPhone().isPrivate()) {
+                person.getPhone().togglePrivacy();
+                phone = new Phone(person.getPhone().toString());
+                person.getPhone().togglePrivacy();
+            } else {
+                phone = new Phone(person.getPhone().toString());
+            }
+        } catch (Exception e) {
+            throw new AssertionError("Invalid Phone");
+        }
+        if (epp.getPrivatePhone() != null) {
+            phone.setPrivate(person.getPhone().isPrivate());
+            phone.togglePrivacy();
+        } else {
+            phone.setPrivate(person.getPhone().isPrivate());
+        }
+
+        return phone;
+    }
+----
+Note that in the second portion of the code, if `epp.getPrivatePhone()` is null, this would mean that it's privacy
+setting was not toggled and thus is set to the same as it was before. Else, it would be toggled:
+[source, java]
+----
+public void togglePrivacy() {
+        this.isPrivate = isPrivate ? false : true;
+    }
+----
+
+A new person object is then created:
+[source, java]
+----
+private static Person createEditedPrivacyPerson(Person personToEdit, EditPersonPrivacy epp)
+            throws IllegalValueException {
+        assert personToEdit != null;
+
+        Name updatedName = personToEdit.getName();
+        Phone updatedPhone = createPhonePrivacy(personToEdit, epp);
+        Email updatedEmail = createEmailPrivacy(personToEdit, epp);
+        Address updatedAddress = createAddressPrivacy(personToEdit, epp);
+        Remark updatedRemark = createRemarkPrivacy(personToEdit, epp);
+        TeamName updatedTeamName = personToEdit.getTeamName();
+        Set<Tag> updatedTags = personToEdit.getTags();
+        Rating updatedRating = createRatingPrivacy(personToEdit, epp);
+        Position updatedPosition = personToEdit.getPosition();
+        JerseyNumber updatedJerseyNumber = personToEdit.getJerseyNumber();
+        Avatar updatedAvatar = personToEdit.getAvatar();
+
+        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedRemark,
+                updatedTeamName, updatedTags, updatedRating, updatedPosition, updatedJerseyNumber, updatedAvatar);
+    }
+----
+and is used to update current person:
+[source, java]
+----
+model.updatePerson(personToEdit, editedPerson);
+----
+
+===== Design Consideration
+====== Aspect: How field privacy is implemented
+
+* **Alternative 1 (current choice):** Boolean `isPrivate` added to field classes.
+** Pros: Privacy settings can be obtained straight from class by calling getter method.
+** Cons: Adddtional methods are needed to set and get value of `isPrivate`.
+* **Alternative 2:** Field privacy settings stored in `Person` in a HashMap.
+** Pros: Field privacy can be accessed and modified easily
+** Cons: `Person` has to be accessed every time field privacy needs to be checked
+
+====== Aspect: Privacy of fields upon adding of player
+
+* **Alternative 1 (current choice):** All newly added players' fields are not private by default.
+** Pros: `Add` command does not need to be tweaked to allow adding player with private fields.
+** Cons: After adding players, user has to do additional command to toggle privacy of fields.
+* **Alternative 2:** Include implementation of prefixes that denotes private field during `Add`.
+** Pros: Newly added players can have private fields right away.
+** Cons: Addtional changes has to be made to `Add` command.
+// end::privatefield[]
+
+// tag::sort[]
+==== Sorting players by fields `[since v1.2]`
+===== Current Implementation
+
+The `sort` command is currently able to sort players by name, email, address, rating, jersey and postition in either ascending or descending order. Support for more fields will be added in subsequent updates.
+
+* The `sort` command is parsed through `SortCommandParser` which hands control to the `SortCommand` class.
+
+* Java Collections Sort API is used together with a custom `Comparator` in this implementation
+
+Sorting is facilitated by the `SortCommand` which uses method `sortPlayers` to ultimately call method `sortBy` in UniquePersonList for the actual sorting as shown in this code snippet:
+[source, java]
+----
+        switch (field) {
+                case "name":
+                    comparator = nameComparator;
+                    break;
+
+                //... code for other switch cases...
+
+                default:
+                    throw new AssertionError("Invalid field parameter entered...\n");
+                }
+
+        switch (order) {
+        case "asc":
+            Collections.sort(internalList, comparator);
+            break;
+
+        case "desc":
+            Collections.sort(internalList, Collections.reverseOrder(comparator));
+            break;
+
+        default:
+            throw new AssertionError("Invalid field parameter entered...\n");
+        }
+    }
+----
+
+The code above utilises a custom `Comparator` defined in the sample code below:
+[source, java]
+----
+        Comparator<Person> nameComparator = new Comparator<Person>() {
+                    @Override
+                    public int compare(Person p1, Person p2) {
+                        return p1.getName().fullName.compareTo(p2.getName().fullName);
+                    }
+                };
+----
+
+The following sequence diagram shows the program flow when `sort` is used:
+
+.Sort Sequence Diagram
+image::sortSeq.png[width="900"]
+
+[NOTE]
+If address book is empty, a `NoPlayerException` will be thrown by `sortBy` method in UniquePlayerList.
+
+===== Design Consideration
+====== Aspect: Implementation of `sort`
+
+* **Alternative 1 (current choice):** Sorting is done in `UniquePersonList`.
+** Pros: Sorting methods resides in class that handles most operations done to list. Future changes to implementation would be easier.
+** Cons: Complicated flow of control passed between classes.
+* **Alternative 2:** Sorting is done in `SortCommand`.
+** Pros: Easier to trace flow of control as lesser passing between classes.
+** Cons: Unnecessary coupling if `UniquePersonList` has to rely on `SortCommand`.
+
+====== Aspect: Sort by multiple fields
+
+* **Alternative 1 (current choice):** Sort can only be done by 1 field.
+** Pros: Easy to implement and input is straightforward.
+** Cons: Unable to fine tune to great detail how teams are sorted and displayed.
+* **Alternative 2:** Sort can be done by multiple fields.
+** Pros:  Able to fine tune to great detail how teams are sorted and displayed.
+** Cons: Unnecessary as team managers would not need to sort players by multiple fields.
+
+====== Aspect: Sort Persistence
+
+* **Alternative 1 (current choice):** Address book is saved after sorting.
+** Pros: Easy to implement. Allows team managers to use preferred sort pattern in every session.
+** Cons: Previous order of players will be lost.
+* **Alternative 2:** Address book is not saved after sorting.
+** Pros: Good if team manager wants to sort players for current session only.
+** Cons: Sort order is lost when program exits. More memory is used to sort a list and reverse it after.
+// end::sort[]
+
+=== Team-Related Enhancements
+
+// tag::team[]
+[[team]]
+==== Team Component `[since v1.2]`
+
+One of the core components to MTM is `Team`, and it is the base to creating more commands for the user to access capability on team management. The `Team` component provides user with better organizational methods for organizing their players and interact with multiple teams to manage them effectively.
+
+===== Current Implementation
+
+We achieved the implementation of `Team` component by introducing a `UniqueTeamList` into the application which consists of a list of `Team` objects. `UniqueTeamList` is similar in context to `UniquePersonList` in which it keeps a unique list of all the `Team` objects. `Team` objects consist of `TeamName` object, which is used to uniquely identify the team. `Team` inherits `UniquePersonList` object which stores the a list of unique `Person` objects, containing information of the player.
+
+The class diagrams below shoes the relationship between the related classes. The Team Class Diagrams are an extension to the current existing Designs of <<Design-Model, `Model`>>, <<Design-Storage, `Storage`>>, and <<Design-Ui, `UI`>>.
+
+.Model Component: Team Class Diagram
+image::TeamModelClassDiagram.png[width="800"]
+
+.Storage Component: Team Class Diagram
+image::TeamStorageClassDiagram.png[width="400"]
+
+.UI Component: Team Class Diagram
+image::TeamUiClassDiagram.png[width="400"]
+
+Code snippet from `Team.java` that shows the constructor for `Team`.
+
+[source, java]
+----
+public class Team {
+    private final TeamName teamName;
+
+    public Team(TeamName teamName) {
+        this.teamName = teamName;
+    }
+}
+----
+
+For the application to store the information of `Team` into a list, we will need to introduce a new `UniqueTeamList` variable into the `AddressBook.java`, so that it will have a container for all the new `Team` objects that is going to be created in MTM.
+
+Code snippet from `AddressBook.java` that shows the declaration and initialization of `UniqueTeamList`.
+
+[source, java]
+----
+public class AddressBook implements ReadOnlyAddressBook {
+    //...AddressBook code...
+    private final UniqueTeamList teams;
+
+    {
+        teams = new UniqueTeamList;
+    }
+
+    public void setTeams(List<Team> teams) throws DuplicateTeamException {
+        this.teams.setTeams(teams);
+    }
+
+    @Override
+    public ObservableList<Team> getTeamList() {
+        return teams.asObservableList();
+    }
+    //...AddressBook code...
+}
+----
+
+Since `Team` inherits the `UniquePersonList` class, we are able to store `Person` object into `Team` by using the super class method `add` in `UniquePersonList`. By storing a list of players inside `Team` object, future enhancements can easily make use of the data to perform functions that requires quick access to all players in a team. However, this have created a coupling in which data made to the `changes made to `AddressBook.persons` needs to be updated in `Team` to maintain synchronicity.
+
+Code snippet from `AddressBook.java` that shows the propagation of details updated in `Person` from the full player list to the `Person` objects in `Team`.
+
+[source, java]
+----
+public void updatePerson(Person target, Person editedPerson)
+    throws DuplicatePersonException, PersonNotFoundException {
+    requireNonNull(editedPerson);
+    //...syncEditedPerson initialisation...
+
+    if (!editedPerson.getTeamName().toString().equals(UNSPECIFIED_FIELD)) {
+        teams.getTeam(editedPerson.getTeamName()).setPerson(target, editedPerson);
+    }
+    persons.setPerson(target, syncedEditedPerson);
+}
+----
+
+An additional `TeamName` field is also added to `Person` so that the user can quickly determine the team the player is in through the use of `PREDICATE`.
+
+Code snippet from `Person.java` that shows the `TeamName` field.
+
+[source, java]
+----
+public class Person {
+
+    private final TeamName teamName;
+
+    public Person(Name name, Phone phone, Email email, Address address, Remark remark,
+        TeamName teamName, Set<Tag> tags, Rating rating, Position position,
+        JerseyNumber jerseyNumber, Avatar avatar) {
+        //...attributes initialisation...
+        this.teamName = teamName;
+    }
+
+    public TeamName getTeamName() {
+        return teamName;
+    }
+}
+----
+
+Code snippet from `ModelManager.java` that shows the use of filtering the person list using the `TeamName` field in `Person`.
+
+[source, java]
+----
+@Override
+public void updateFilteredPersonList(TeamName targetTeam) throws TeamNotFoundException {
+    requireNonNull(targetTeam);
+
+    List<Team> teamList = addressBook.getTeamList();
+
+    if (teamList.stream().anyMatch(target -> target.getTeamName().equals(targetTeam))) {
+        filteredPersons.setPredicate(t -> t.getTeamName().equals(targetTeam));
+    } else {
+        throw new TeamNotFoundException();
+    }
+}
+----
+
+Additional exception classes are also created so that these new exceptions can be thrown during the program, such that when these exceptions are thrown, the code is easily comprehensible.
+
+.`TeamNotFoundException.java`
+[source, java]
+----
+public class TeamNotFoundException extends Exception {
+    //...TeamNotFoundException...
+}
+----
+
+.`DupliecateTeamException.java`
+[source, java]
+----
+public class DuplicateTeamException extends DuplicateDataException {
+    //...DuplicateTeamException...
+}
+----
+
+Implementing a new component into MTM, the data consisting of `Team` is also stored into storage using `XmlAdaptedTeam.java` to format the output.
+
+Code snippet from `XmlAdaptedTeam.java` that shows the elements that will be stored into storage.
+
+[source, java]
+----
+public class XmlAdaptedTeam {
+    @XmlElement(required = true)
+    private String teamName;
+    @XmlElement
+    private List<XmlAdaptedPerson> players = new ArrayList<>();
+}
+----
+
+===== Design Considerations
+====== Aspect: Implementation of `Team`
+
+* **Alternative 1 (current choice):** `Team` object stores a `Person` object that is also in `UniquePersonList` and `TeamName` is also an attribute of `Person`.
+** Pros: Provides an easier lookup of person belonging in which team without the need of iterating through the `UniqueTeamList` for a specific `Person`, and provide ease of access to data for future enhancements.
+** Cons: Checks to ensure synchronicity need to be done thoroughly to ensure that player information is in sync between Team and full player list
+* **Alternative 2:** `Team` object is stored in `Person` object as an attribute.
+** Pros: Logical thought process to include `Team` as an attribute.
+** Cons: Excess storage wasted due to duplicated data of `Team` in every `Person`.
+// end::team[]
+
+// tag::teamfunction[]
+==== Team Functions `[since v1.4]`
+
+To assist the user with manging teams, we have decided to use the design concept of Create-Read-Update-Delete (CRUD) to implement commands related to `Team`.
+This set of commands provide the basic necessities for the user to efficiently use our application.
+
+===== Current Implementation
+
+Based on the principles of CRUD, we have created the commands that corresponds to each principles, namely, `create`, `view`, `rename` and `assign`, `remove`.
+With these commands, the application is ready to support the features that the application is designed to be used.
+
+Team-related commands that modifies the data in the application, such as `create`, `rename`, `assign`, and `remove`, inherits from `UndoableCommand` class which makes all these commands undoable. Each command has its own `Parser` to uniquely parse user input arguments for the commands, so that it is validated and the command understand what it should be doing.
+
+For each feature, new functions are created in `AddressBook.java` and `ModelManager.java` so that the commands executed are able to manipulate the data accordingly.
+
+====== `create`: Creates a `Team`, so that other team-related commands can be executed.
+After the creation of a new team, the user will then be able to perform a new set of commands that performs team management functionality. Moreover, the `add` command can be used with the prefix `tm/` to immediately add the user into MTM and into the team specified.
+
+The sequence diagram below illustrates the operation of the `create` command:
+
+.Logic Component: Create Sequence Diagram
+image::TeamCreateSequenceDiagram1.png[width="100%"]
+
+.Model Component: Create Sequence Diagram
+image::TeamCreateSequenceDiagram2.png[width="70%"]
+
+====== `view`: Views a `Team`, which shows all players in the team.
+The command uses the `filteredPersons` list, and an overloaded `updateFilteredPersonList` method that sets a predicate that filters the list based on a `TeamName`, in `ModelManager.java` so that it can be displayed via the UI.
+
+The sequence diagram below illustrates the operation of the `view` command:
+
+.View Sequence Diagram
+image::TeamViewSequenceDiagram.png[width="100%"]
+
+====== `rename`: Renames a given `Team`.
+The user can rename a specified team to a new team name only if the current team name does not existing in MTM. On a side note, it prevents the user from renaming the team to the same name that it currently have.
+
+This command will update the name of the teams that are in `teams` in `AddressBook.java` and will update all the players `TeamName` field in `persons` and `Team` with the new team name.
+
+The sequence diagram below illustrates the operation of the `rename` command:
+
+.Logic Component: Rename Sequence Diagram
+image::TeamRenameSequenceDiagram1.png[width="100%"]
+
+.Model Component: Rename Sequence Diagram
+image::TeamRenameSequenceDiagram2.png[width="70%"]
+
+====== `assign`: Assign a set of `Person` to a specified `Team`.
+The core feature that organizes the player into teams so that the user can easily view the desired team players quickly. The command have 2 functions, firstly it is able to assign an individual or a set of players to a specified team, and secondly, it is able to unassign an individual or a set of players from any team.
+
+The command takes in a set of indexes that corresponds to the player in the current list, and will perform the assign operation in ascending index order. If the command is unable to process an index given, it will process all the valid index until the index that causes an issue.
+
+[NOTE]
+====
+Typical issues that the command handles are,
+
+* Assigning a player to the same team that it is currently in.
+* Assigning a player to team that does not exist.
+* Unassigning a player that does not exist in any team.
+* Process index starting from 1.
+* Removes all index that exceeds the current number of player listed.
+====
+
+This command will update and synchronise all affected players in `persons` and in the specified `Team` object, such that their `TeamName` field in `Person` are updated with the new assigned or unassigned team. At the same time, the list of players in `Team` gets update if new player are assigned or unassigned.
+
+The sequence diagram below illustrates the operation of the `assign` command:
+
+.Assign Sequence Diagram
+image::TeamAssignSequenceDiagram.png[width="100%"]
+
+====== `remove`: Removes the given `Team`.
+The final step in completing the CRUD design is the removal of team. It will delete the `Team` from `teams` list in `AddressBook.java` and will update all affected players in the team to be unassigned from the team by having their `TeamName` field updated with an unspecifed field.
+
+The sequence diagram below illustrates the operation of the `remove` command:
+
+.Logic Component: Remove Sequence Diagram
+image::TeamRemoveSequenceDiagram1.png[width="100%"]
+
+.Model Component: Remove Sequence Diagram
+image::TeamRemoveSequenceDiagram2.png[width="70%"]
+
+===== Design Consideration
+====== Aspect: Implementation of Team Functions
+* **Alternative 1 (current choice):** Uses CRUD design concept to create new commands.
+** Pros: Systematic approach in dealing with what functions should be created to ensure that the product has the features required to perform team management, and provides a platform to work on ideal features that target the needs of the audience.
+** Cons: Simple and only captures the basic requirements of the product.
+* **Alternative 2:** Implement commands based on suggested features.
+** Pros: End product will have features that targets the need of the audiences.
+** Cons: Possible to miss out basic and core features of a team management application.
+
+====== Aspect: Undoable commands for Team Functions
+* **Alternative 1 (current choice):** Make all functions that modifies data to be undoable.
+** Pros: Follows the current implementation of `undo` such that if data are modified in MTM, it will be an undoable command.
+** Cons: Need to ensure that regression bugs are squashed when the new commands are executed, and time consuming in identifying regression.
+* **Alternative 2:** Make all functions not undoable.
+** Pros: Easy to implement and will produce lesser regression bugs.
+** Cons: Does not align with the current implementation of `undo` & `redo`, and the user would require more steps to revert any changes made.
+// end::teamfunction[]
+
+// tag::showbestxi[]
+==== Show Best XI `[coming in v2.0]`
+===== Current Implementation
+
+The `showBest` command is able to show the current team's best 11 players. There is however no functional implementation for this feature yet. Coming soon!
+// end::showbestxi[]
+
+=== Usability Enhancements
+
+// tag::key[]
+==== Toggle lock on MTM `[since v1.5]`
+===== Current Implementation
+Locking mechanism of MTM can be toggled on and off using the `Key` command. It utilises the Model to access
+user preferences of MTM. Current lock state and password is stored in `UserPrefs` in the Storage component.
+
+This activity diagram shows the logic behind the `Key` command:
+
+.Key Activity Diagram
+image::Keyactdiag.png[width="900"]
+
+Password checking done in `Key` command:
+[source, java]
+----
+private boolean correctPassword() {
+        UserPrefs up = model.getUserPrefs();
+        String hash = Hashing.sha256().hashString(password, StandardCharsets.UTF_8).toString();
+        return hash.equals(up.getAddressBookHashedPass());
+    }
+----
+When password check is done, the lock on MTM is toggled to the state opposite of the current:
+[source, java]
+----
+if (correctPassword()) {
+            if (model.getLockState()) {
+                model.unlockAddressBookModel();
+            } else {
+                model.lockAddressBookModel();
+            }
+
+            logger.info("Lock state is now: " + Boolean.toString(model.getLockState()));
+            return new CommandResult(MESSAGE_SUCCESS);
+        }
+----
+
+In a locked state, only certain functions of MTM can be used. This is to prevent unauthorised tampering with the details
+stored on MTM.
+
+This is done in `AddressBookParser`. Commands are split into low level or not. When a command is
+being executed, it is checked if it falls under the low level category. If so, it would execute. When adding new features,
+add them to this list should you feel it is 'low level':
+[source, java]
+----
+private Command lowLevelCommand(String commandWord, String arguments) throws ParseException {
+        switch(commandWord) {
+        case ChangeThemeCommand.COMMAND_WORD:
+        case ChangeThemeCommand.COMMAND_ALIAS:
+            return new ChangeThemeCommandParser().parse(arguments);
+
+        case FindCommand.COMMAND_WORD:
+        case FindCommand.COMMAND_ALIAS:
+            return new FindCommandParser().parse(arguments);
+
+        case ListCommand.COMMAND_WORD:
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommand();
+
+        case KeyCommand.COMMAND_WORD:
+        case KeyCommand.COMMAND_ALIAS:
+            return new KeyCommandParser().parse(arguments);
+
+        case ViewCommand.COMMAND_WORD:
+        case ViewCommand.COMMAND_ALIAS:
+            return new ViewCommandParser().parse(arguments);
+
+        case ExitCommand.COMMAND_WORD:
+            return new ExitCommand();
+
+        case HelpCommand.COMMAND_WORD:
+            return new HelpCommand();
+
+        case SortCommand.COMMAND_WORD:
+        case SortCommand.COMMAND_ALIAS:
+            return new SortCommandParser().parse(arguments);
+
+        default:
+            return null;
+        }
+    }
+----
+If command being executed does not fall into the category of 'low level', a check on the lock state of MTM is done
+before allowing or restricting access:
+[source, java]
+----
+if (lockState) {
+            throw new ParseException(MESSAGE_RESTRICTED);
+        }
+----
+
+===== Design Considerations
+====== Aspect: Implementation of locking MTM
+* **Alternative 1 (current choice):** Lock is toggled with only a single command `Key`.
+** Pros: Easy to implement, just check current lock state and switch it.
+** Cons: With a toggle, user might unlock MTM thinking he/she is locking it.
+* **Alternative 2:** Locking and unlocking of MTM is done with two separate commands.
+** Pros: Ensures that when a lock is done, MTM is truly locked.
+** Cons: Addtional command needs to be created, along with its command parser and implementations.
+// end::key[]
+
+// tag::changepass[]
+==== Change Password `[coming in v2.0]`
+
+===== Current Implementation
+Default password used for toggling lock on MTM is currently 'ilikesports'. In an upcoming update, user would be able
+to change this password to one of his choosing. There is currently no functional implementation for this feature yet.
+Coming soon!
+// end::changepass[]
+
+=== User Experience Enhancements
+
+// tag::autocomplete[]
+==== Tab Autocomplete
+===== Current Implementation
+
+The tab autocomplete feature works by handling the Tab key pressed event, searching for any commands with matching prefix and returns one if found.
+The command strings are stored in a Trie data structure, named `CommandTrie`, for optimal search.
+
+[source, java]
+----
+public class CommandTrie {
+    String attemptAutoComplete (String input);
+    void insert (String input);
+    Set<String> getCommandSet();
+}
+----
+
+The trie is made up of `TrieNode` objects which contains three objects. The `TrieNode sibling` represents a character on the same level as the current one. The `TrieNode child` represents a next possible letter.
+For example in the words `edit` and `exit`, the node for `d` would have a child `i` and a sibling `x`. `x` would have a child `i`.
+
+[source, java]
+----
+public class TrieNode {
+
+    private TrieNode sibling;
+    private TrieNode child;
+    private char key;
+    ...
+}
+
+----
+Upon the pressing of the tab key, the command box calls `attemptAutoComplete`, in the `commandTrie` class. With the content of the command box as the query, attemptAutoComplete searches for the query using the standard Trie search algortihm.
+If the query prefix itself is not present in the trie, then the attempt fails. If the query reaches a `TrieNode` with a `sibling` or `child` `TrieNode`,
+it will provide the user with possible commands for a given input. In this case, a dropdown box will appear in the UI that lists the possible commands for the user.
+
+Upon finding a matching command, `attemptAutoComplete` returns it and replaces the text in the Command Line. If the no matching command is found, the text is turned red.
+// end::autocomplete[]
+
+// tag::enhancedadd[]
+==== Optional Field Add Command `[since v1.1]`
+
+MTM is designed to manage a multitude of players and the main function that would be used repetitively is the `add` command, hence it would alleviate the cumbersomeness of entering every detail of the players when you want the command to be executed quickly.
+Having the option to only entering the mandatory fields and leaving the optional ones empty will make the process of adding players more efficient.
+
+===== Current Implementation
+This mechanism enhances the original implementation of the `add` command.
+The required fields that are mandatory to be filled by the user are `n/NAME` and `e/EMAIL`.
+This implementation of making fields optional for `AddCommand` allows user to add players without their full information, and can be updated accordingly when the user retrieves their full information.
+
+Code snippet from `ParserUtil.java` that shows the implementation of when a field is left empty.
+"<UNSPECIFIED>" string will be return when the value passed in is empty.
+
+[source, java]
+----
+public class ParserUtil {
+    public static final String UNSPECIFIED_FIELD = "<UNSPECIFIED>";
+    //...ParserUtil code...
+
+    public static Optional<String> parseValue(Optional<String> value, String messageConstraints)
+        throws IllegalValueException {
+    if (value.isPresent() && value.get().equals(UNSPECIFIED_FIELD)) {
+        throw new IllegalValueException(messageConstraints);
+    } else {
+        return Optional.of(value.orElse(UNSPECIFIED_FIELD));
+    }
+    //...ParserUtil code ...
+}
+----
+
+Code snippet from `AddCommandParser.java` that shows the usage of parsing fields that are set as optional.
+
+[source,java]
+----
+public AddCommand parse(String args) throws ParseException {
+        //...tokenize arguments...
+        if (!arePrefixesPresent(argMultimap, PREFIX_NAME, PREFIX_EMAIL)
+            || !argMultimap.getPreamble().isEmpty()) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT,
+                AddCommand.MESSAGE_USAGE));
+        }
+
+        //...get person details from arguments...
+        Address address = ParserUtil.parseAddress(ParserUtil.parseValue(argMultimap
+            .getValue(PREFIX_ADDRESS), Address.MESSAGE_ADDRESS_CONSTRAINTS)).get();
+
+        return new AddCommand(person);
+        //...AddCommandParser code...
+}
+----
+
+Code snippet from `Address.java` that shows an example of an optional field being valid when not specified.
+
+[source, java]
+----
+public class Address {
+    //...Address code...
+    public static boolean isValidAddress(String test) {
+        return test.matches(ADDRESS_VALIDATION_REGEX) || test.equals(UNSPECIFIED_FIELD);
+    }
+}
+----
+
+===== Design Consideration
+====== Aspect: Implementation of Optional fields
+
+* **Alternative 1 (current choice):** Set a default value for unspecified fields and parse fields that are mandatory.
+** Pros: Easy to implement as fields are still filled with information even though user did not specify.
+** Cons: Unattractive display of fields when it is unspecified.
+* **Alternative 2:** Require users to input all fields.
+** Pros: The current implementation is used, hence there is no additional code to ensure validity of unspecified input.
+** Cons: Less flexibility is given to the user when adding a player into the application.
+// end::enhancedadd[]
+
+=== UI Enhancements
+
+// tag::teamDisplay[]
+==== Team Display Bar `[since v1.3]`
+===== Current Implementation
+
+The Team Display Bar is implemented as `TeamDisplay` in the UI Component and renders `TeamDisplay.fxml`.
+It is called from `MainWindow` and highlights
+the current team that has been selected in the Command Line Interface by the user. +
+
+It calls the `Team` model and displays the `Player` cards associated with that `Team`.
+It contains event handler methods such as handleShowNewTeamEvent(), handleHighlightSelectedTeamEvent(),
+and handleDeselectTeamEvent(), which update the UI accordingly. +
+
+The component interactions can be seen in the high level sequence diagram for `TeamDisplay` below, using the example of a `create` command:
+
+.Component interactions for `create Team` command
+image::ShowNewTeamDiagram.png[width="800"]
+
+
+Code snippet from 'TeamDisplay' to show initialisation of UI component and event handlers:
+
+[source, java]
+----
+public class TeamDisplay extends UiPart<Region> {
+
+    private static final String FXML = "TeamDisplay.fxml";
+
+    public TeamDisplay() {
+        super(FXML);
+        //...initialise Teams code...
+        registerAsAnEventHandler(this);
+    }
+
+    @Subscribe
+    private void handleShowNewTeamEvent(ShowNewTeamNameEvent event) {
+        //...handleShowNewTeamEvent code...
+    }
+
+    @Subscribe
+    private void handleHighlightSelectedTeamEvent(HighlightSelectedTeamEvent event) {
+        //...handleHighlightSelectedTeamEvent code...
+    }
+
+    @Subscribe
+    private void handleDeselectTeamEvent(DeselectTeamEvent event) {
+        //...handleDeselectTeamEvent code...
+    }
+}
+----
+
+===== Design Considerations
+====== Aspect: User Experience
+
+* **Alternative 1 (current choice):** `TeamDisplay` is placed underneath the `ResultDisplay` and above the `PersonListPanel`.
+** Pros: Located at an obvious location for the user to view the team currently selected.
+** Cons: There will be less space for the `ResultDisplay` and `CommandBox`.
+* **Alternative 2:** `TeamDisplay` is placed on the left of the `PersonListPanel` as a vertical bar.
+** Pros: There will be more space for the `ResultDisplay` and `CommandBox`.
+** Cons: It is less obvious to the user as it is at the side.
+// end::teamDisplay[]
+
+// tag::PlayerDetails[]
+==== Player Details Pane `[since v1.4]`
+===== Current Implementation
+
+The `Player Details` pane is implemented as `PlayerDetails` in the UI Component.
+It is called from `PlayerListPanel`. It renders `PlayerDetails.fxml` and displays the selected `PersonCard`.
+It calls the `Person` model and displays the fields in the `Person` model that are not displayed in the left panel.
+It contains the event handler method handlePersonDetailsChangedEvent(), which updates the UI component when the `edit `
+or `remark` commands are entered. +
+
+The component interactions can be seen in the high level sequence diagram for `PlayerDetails` below, using the example of a `remark` command:
+
+.Component interactions for `remark 1 r/test` command
+image::PlayerDetailsDiagram.png[width="800"]
+
+Code snippet from 'PlayerDetails' to show initialisation of UI component:
+
+[source, java]
+----
+public class PlayerDetails extends UiPart<Region> {
+
+    private static final String FXML = "PlayerDetails.fxml";
+    public final Person person;
+
+    public PlayerDetails(Person person) {
+        super(FXML);
+        this.person = person;
+        //....player details code...
+    }
+
+    @Subscribe
+    private void handlePersonDetailsChangedEvent(PersonDetailsChangedEvent event) {
+        ...handlePersonDetailsChangedEvent code...
+    }
+
+}
+----
+
+===== Design Considerations
+====== Aspect: User Experience
+
+* **Alternative 1 (current choice):** `PlayerDetails` is placed on the right of `Person List Panel`, replacing the `BrowserPanel`.
+** Pros: It is the only large unused space in the software left and is right beside the `Person List Panel`, thus is the logical
+place to look at after selection of a person card.
+** Cons: This is a lot of whitespace in the pane as are not many fields.
+* **Alternative 2:** `PlayerDetails` pane size is reduced and the extra space is repurposed.
+** Pros: There will be more space for another new feature e.g. calendar.
+** Cons: It can only be implemented in v2.0 due to time constraints in development.
+
+// end::PlayerDetails[]
+
+// tag::changeThemeCommand[]
+==== Change Theme Command `[since v1.5]`
+===== Current Implementation
+
+The `ChangeThemeCommand` is a new feature that allows user to change the current theme to another theme. A new css class is implemented to accommodate the new theme, LightTheme.
+The `MainWindow` class is also changed to contain a handleChangeThemeRequestEvent() method which is an event handler to `setAddressBookTheme`,
+which is a method in `UserPrefs`. +
+
+Below is the sequence diagram for how the `ChangeThemeCommand` works:
+
+.Interactions of the Logic Component with the UI and Model Components for the `changeTheme` Command
+image::ChangeThemeDiagram.png[width="800"]
+
+
+Code snippet from 'ChangeThemeCommand':
+
+[source, java]
+----
+public class ChangeThemeCommand extends Command {
+
+    public ChangeThemeCommand(String theme) {
+            this.theme = theme.trim();
+    }
+
+   @Override
+    public CommandResult execute() throws CommandException {
+        //...check for valid theme code...
+        EventsCenter.getInstance().post(new ChangeThemeEvent(this.theme));
+        return new CommandResult(String.format(MESSAGE_THEME_SUCCESS, this.theme));
+    }
+}
+----
+
+===== Design Considerations
+====== Aspect: Command Syntax
+
+* **Alternative 1 (current choice):** The command syntax is in the form "changeTheme Dark" or "changeTheme Light".
+** Pros: This supports future implementation of more themes, so that the developer can easily add the new themes without
+having to change the execution.
+** Cons: The command is longer than it could be. (see alternative 2)
+* **Alternative 2:** The command syntax in the form "changeTheme", which would automatically toggle the theme.
+** Pros: User does not have to type anything to change the theme, so it might be more user friendly.
+** Cons: Future implementation of more themes would be harder for the developer as the toggle function would have to be
+changed quite drastically to become a command for selecting a theme out of multiple themes.
+
+====== Aspect: User Experience
+
+* **Alternative 1 (current choice):** `ChangeThemeCommand` is implemented as a CLI command.
+** Pros: Consistent with the rest of the application, of which all changes are made by the CLI.
+** Cons: User has yet another command to remember the syntax of.
+* **Alternative 2:** Change of theme is implemented as a button to change onClick.
+** Pros: User does not have to type anything to change the theme, so it might be more user friendly.
+** Cons: Inconsistent with the rest of the application, which is CLI-based.
+// end::changeThemeCommand[]
+
+
+// tag::settagcolour[]
+==== Set Tag Colour feature `[since v1.1]`
+===== Current Implementation
+
+The `Set` Command is an entirely new command that allows the user to assign a colour to a specific tag.
+This mechanism is facilitated by the `SetCommandParser`, which creates and returns a new `SetCommand`.
+In `SetCommandParser`, which implements the `Parser` interface, it parses the arguments inputted into the CLI, and checks whether the arguments are valid.
+
+`SetCommandParser` is implemented as such:
+
+[source, java]
+----
+public class SetCommandParser implements Parser<SetCommand> {
+
+    public SetCommand parse(String args) throws ParseException {
+
+    // ...parse arguments and check for invalid arguments...
+  }
+}
+----
+
+`SetCommand` inherits the abstract `Command` class. After `execute()` is called in `SetCommand`, the tag colour is set through the logic portions of `ModelManager` and `AddressBook`, then
+lastly changes `tagColour` attribute within the `Tag` object itself. It also posts an event in `SetCommand`, to which
+its handler in `PersonCard` responds and performs the UI update. +
+
+
+`SetCommand` is implemented in this way:
+
+[source, java]
+----
+public class SetCommand extends Command {
+
+    private final Tag tagToSet;
+    private final String tagColour;
+
+    public SetCommand(Tag tag, String colour) {
+        requireNonNull(tag);
+        tagToSet = tag;
+        tagColour = colour;
+    }
+
+    @Override
+    public CommandResult execute() {
+    requireNonNull(model);
+        boolean isTagValid = model.setTagColour(tagToSet, tagColour);
+        //...check for valid tagName code....
+        EventsCenter.getInstance().post(new ChangeTagColourEvent(tagToSet.getTagName(), tagColour));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, tagToSet.toString(), tagColour));
+    }
+}
+----
+
+The following sequence diagram shows how the set command operation works:
+
+.Interactions of the Logic Component with the UI and Model Components for the `setTagColour` Command
+image::SetTagCommandDiagram.png[width="800"]
+
+===== Design Considerations
+====== Aspect: Implementation of `Command` vs  `UndoableCommand`
+
+* **Alternative 1 (current choice):** Inherit from `Command`.
+** Pros: Does not involve complicated undo/redo tests, simple and quicker implementation,
+lessen chances of mistakes made in implementation.
+** Cons: User cannot use the `undo/redo` command.
+* **Alternative 2 :** Inherit from `UndoableCommand`.
+** Pros: User can utilise the `undo/redo` command.
+** Cons: Hard for developers to implement extra tests, not very necessary as users can just as easily type
+out the colour they would like to change their tag to; it is a short command, especially with the `stc` alias.
+// end::settagcolour[]
 
 == Documentation
 
-We use asciidoc for writing documentation.
+We use https://asciidoctor.org[asciidoc] for writing documentation.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
@@ -417,6 +1611,7 @@ image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
+If you are intending to develop our software further, it is highly recommended that you run tests in the ways listed below.
 
 === Running Tests
 
@@ -466,6 +1661,7 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Solution: Execute Gradle task `processResources`.
 
 == Dev Ops
+This section covers resources for you to develop this software with good practices and prepare it for release.
 
 === Build Automation
 
@@ -497,363 +1693,267 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+This section tells you more details of our software, our target users, the user stories, and gives you a sneak peak into our development process.
 
+=== Target user profile:
+
+* football team managers
 * has a need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+=== Value proposition:
+Exclusive application for management of footballers and football teams that provides an enhanced listing of footballers and convenient lookup on updated information of players.
+
+=== Feature Contribution
+* Codee +
+** Major - Revamp MTM’s whole GUI for ease of viewing teams and players’ details.
+*** e.g. remove browser panel, add player details panel, change person card.
+** Minor - Command to set the colour of tags to colour of choice.
+
+* Jordan
+** Major - Implementation of Team Component and Related Functions.
+*** e.g. creation of team, assignment of players, viewing of teams, removal of team, renaming of team.
+** Minor
+*** Introduce `remark` command and `remark` field.
+*** Enhanced add functionality to allow optional fields.
+
+* Syafiq
+** Major - Create a new player class that contains more information about the players.
+*** e.g. Position, Rating (0 - 5 Star),  Remarks
+*** Update add, edit ,list, sort to include these fields accordingly.
+** Minor - Autocomplete command
+
+* Tianwei
+** Major - privacy
+*** Set private field and passwords
+*** Make accounts
+** Minor - Sorting players by different fields
 
 [appendix]
 == User Stories
 
 Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
 
-[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+[width="75%",cols="^8%,^23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
+
+4.1+^s|First Time User Stories
+
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |new user |access the user guide |find out how to use fancy features of the application
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |new user |see a list of instructions available |navigate and use the application easily
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+4.1+^s|Player Related User Stories
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |team manager |add a new player|
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |team manager |add player’s address |mail him important documents
+
+|`* * *` |team manager |add player’s contact number |contact him when needed
+
+|`* * *` |team manager |add player’s email |email him when needed
+
+|`* * *` |team manager |add player’s jersey number |easily identify them during the game
+
+|`* * *` |team manager |add player’s position |easily pick my lineup for match
+
+|`* * *` |team manager |add player's ratings |easily identify the better players
+
+|`* * *` |team manager |delete a player |remove him if I kick him out from the team or he quits
+
+|`* * *` |team manager |find a player by name |locate details of players without having to go through the entire list
+
+|`* * *` |team manager |edit player’s contact number |
+
+|`* * *` |team manager |edit player’s email |
+
+|`* * *` |team manager |edit player’s jersey number |
+
+|`* *` |team manager |add player’s match stats (e.g. goals scored) |decide the lineup, give award
+
+|`* *` |team manager |add player remarks |for self note
+
+|`* *` |team manager |add player’s avatar |for facial recognition
+
+|`* *` |team manager |edit player’s position |easily pick my lineup for match
+
+|`* *` |team manager |edit player’s address |
+
+|`* *` |team manager |edit player’s avatar |
+
+|`* *` |team manager |edit player remarks |for self note
+
+|`* *` |team manager |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`*` |team manager |edit player’s name |
+
+|`*` |team manager with many players in the team managing application |sort by player name |locate a person easily
+
+4.1+^s|Team Related User Stories
+
+|`* * *` |team manager |create teams |organize and manage my players through their respective team
+
+|`* * *` |team manager |assign player to teams |identify the team that the player is playing for
+
+|`* * *` |team manager |view players in specified team |identify the lineup of the team and which player belongs to which team
+
+|`* * *` |team manager |remove teams |remove teams that I no longer managed
+
+|`* *` |team manager |set match with competing team |acknowledge and plan training session for the team
+
+|`* *` |team manager |view upcoming match |keep track of the upcoming matches with opponent teams
+
+|`* *` |team manager |edit player’s allocated team |move players between teams
+
+|`* *` |team manager |schedule training programs for team |I do not have any conflicting schedule between different teams
+
+|`* *` |team manager |send reminder to team of schedule |my players does not forget about training session
+
+|`*` |team manager |sort by team name |identify group lineup easily
+
+4.1+^s|Additional User Stories
+
+|`* *` |team manager who remembers better with visual |set colours to tags |easily identify the tag that I have set to players
+
+|`* *` |team manager |autofill command |perform task quickly
+
+|`* *` |team manager |password login |if team manager wants to protect certain information
+
+|`* *` |team manager |submit feedback to developers |developers can improve the application constantly
+
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `MTM` and the *Team Manager* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add player
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User enter command to add
+2.  MTM prompt user of format to enter player's name and details
+3.  User enter player's name and details in required format
+4.  User press enter to insert person into storage
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 4a. User did not enter any details.
++
+[none]
+** 4a1. MTM inform user that it is an invalid add command.
 +
 Use case ends.
 
-* 3a. The given index is invalid.
+[discrete]
+=== Use case: Edit player's team
+
+*MSS*
+
+1.  User enter command to find
+2.  User enter player's name
+3.  MTM display list of players found
+4.  User enter command to edit player's team using index of displayed list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Player name does not exist.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 2a1. MTM inform user that player does not exist.
 +
-Use case resumes at step 2.
+Use case ends.
+
+[discrete]
+=== Use case: Find player by team name
+
+*MSS*
+
+1.  User enter command to find team
+2.  User enter team name
+3.  MTM display list of players in team
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. Team name does not exist.
++
+[none]
+** 2a1. MTM informs user that team name does not exist
++
+Use case ends.
+
+[discrete]
+=== Use case: Remove player from team
+
+*MSS*
+
+1.  User enter command to find
+2.  User enter player's name
+3.  MTM display list of players found
+4.  User enter remove command and index associated with player
+5.  MTM displays player that is removed and updated list of players
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 4a. Invalid index entered.
++
+[none]
+** 4a1. MTM informs user that index is invalid.
+** 4a2. User enters valid index.
++
+Use case resumes at step 5.
++
+* 4b. User removes wrong index unintentionally.
++
+[none]
+** 4b1. User undo remove by entering command to undo.
++
+Use case ends.
 
 _{More to be added}_
 
 [appendix]
 == Non Functional Requirements
 
-.  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should work on any mainstream OS as long as it has Java 1.8.0_60 or higher installed.
+.  Should be able to hold up to 150 players without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Works on both 32-bit and 64-bit machines
+.  Should respond within 1 second of query
+.  Should be intuitive and easy to use for a first-time user.
+.  Should be able to handle any sort of input, i.e. should recover from invalid input.
+.  Should have audience-focused user guides and developer guides.
+.  Should have command names that concisely describe their function.
+.  Should be an open-source project.
+.  Development be cost effective or free.
+.  App should be able to work offline.
+.  Should save and backup the state of the team managing application regularly.
+.  Current versions must be backward compatible with older versions to support undo.
+.  The user interface should be simple and minimise distractions so that user can continue with their work in a focused manner.
 
-_{More to be added}_
 
 [appendix]
 == Glossary
@@ -864,22 +1964,11 @@ Windows, Linux, Unix, OS-X
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[appendix]
-== Product Survey
+[[lineuo]] Lineup::
+A list of players that are playing for a match, with their positions specified
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+[[user-guide]] User Guide::
+A documentation on the functionality and usability of MTM
 
 [appendix]
 == Instructions for Manual Testing
@@ -905,13 +1994,13 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a player
 
-. Deleting a person while all persons are listed
+. Deleting a player while all players are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all players using the `list` command. Multiple players in the list.
 .. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
+   Expected: First player is deleted from the list. Details of the deleted player shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
@@ -926,3 +2015,139 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Remarking a player
+
+. Remarking a player while all players are listed
+
+.. Prerequisites: List all players using the `list` command. Multiple players in the list.
+.. Test case: `remark 1 r/This is my remark to you.` +
+Expected: First player is remarked from the list. Details of the remarked player shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `remark 0` +
+Expected: No person is remarked. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `remark`, `remark x` (where x is larger than the list size), `remark -1`, `remark 2 x/` (where x is not the prefix for remark) +
+Expected: Similar to previous.
+.. Test case: `remark 1` +
+Expected: First player has its remark removed. Details of the remarked player shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `remark 1 r/I want to delete this.` -> `remark 1 r/` +
+Expected: Similar to previous.
+
+=== Adding a player without all fields
+
+. Adding a player where player is unique
+
+.. Prerequisites: Newly added player must not exist in MTM.
+.. Test case: `add n/Tumeric Turner e/tt@tuner.com` +
+Expected: Player added into MTM and will be on the list. Details of the newly added player shown in the status message. Fields that are not input during addition are replaced with `<UNSPECIFIED>` Timestamp in the status bar is updated.
+.. Test case: `add n/Guavi Hollae` +
+Expected: Player is not added into MTM. Errors details shown in status message. Name and email are compulsory fields that need to be entered for `add` to work.
+
+=== Team-Related Functions
+
+==== Creating a Team
+
+. Creating a Team with current existing data in MTM
+
+.. Prerequisites: Team currently does not exist in MTM.
+.. Test case: `create NUSTeam` +
+Expected: Team is created and displayed in Team Display Panel. Team name will be shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `create NUSTeam` +
+Expected: Team is not created due to team already existing in MTM. Team Display Panel remains the same. Error details shown in the status message. Status bar remains the same.
+.. Test case: `create &-Team-&` +
+Expected: Team does not allow names with special characters, only alphanumeric, can consist of all numbers and can contain space in name. Team Display Panel remains the same. Error details shown in the status message. Status bar remains the same.
+
+==== Viewing a Team
+
+. Viewing a Team with current existing data in MTM
+
+.. Prerequisites: Team currently exist in MTM.
+... Test case: `view Arsenal` +
+Expected: Team in Team Display Panel will be selected. Player list will be updated with list of players that are in the Team. Team name will be shown in the status message.
+... Test case: `view NonExistingTeam` +
+Expected: Team is not viewed as it does not exist in MTM. Error details shown in the status message.
+... Test case: `view chelsea` +
+Expected: Team is not viewed as it does not exist in MTM, as team names are case sensitive. Error details shown in the status message.
+.. Prerequisites: The command `create NUSTeam` was executed right before executing this test case.
+... Test case: `view NUSTeam` +
+Expected: Team in Team Display Panel will be selected. Player list will be empty as no players are in the team yet. Team name will be shown in the status message.
+
+==== Assigning Players to Team
+
+. Assigning players to a Team after executing `create NUSTeam`
+
+.. Test case: `list` -> `assign NUSTeam i/1 3 5` +
+Expected: Team in Team Display panel will be selected. Player list will be updated with list of players that are in the Team with the newly assigned players. Each individual player assign will be shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `list` -> `assign NUSTeam i/3` +
+Expected: No player is assigned as player already exist in the team. Error details shown in the status message. Status bar remains the same.
+.. Test case: `list` -> `assign NUSTeam i/2 3 4` +
+Expected: Only the player at index 2 is assigned. Assign command will stop once it detects that a player cannot be assigned. Team Display Panel will not be updated. Person Card of index 2 will be updated with assigned team. Timestamp in the status bar is updated.
+.. Test case: `list` -> `assign NUSTeam i/9 6 4` +
+Expected: All players will be assigned by ascending index order. Team in Team Display panel will be selected. Player list will be updated with list of players that are in the Team with the newly assigned players. Each individual player assign will be shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `list` -> `assign NUSTeam i/7 40` +
+Expected: Index exceeding the number of players listed in the Player List Panel will be ignored. Team in Team Display panel will be selected. Player list will be updated with list of players that are in the Team with the newly assigned players. Each individual player assign will be shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `list` -> `assign NUSTeam i/-1` +
+Expected: Invalid index will have error details shown in the status message. Team is not viewed.
+.. Test case: `list` -> `assign NUSTeam` +
+Expected: Error details shown in the status message. Invalid command format as no index is given. Team is not viewed.
+.. Test case: `assign NoTeam` +
+Expected: Error deatils shown in the status message. No such team found in MTM. Team is not viewed, player list not updated.
+.. Test case: `add n/Barry Putter e/bp@hotwot.com tm/NUSTeam` +
+Expected: New person is added into MTM. Team in Team Display Panel will be selected. Player list will be updated with the new added person. Timestamp in the status bar is updated.
+.. Test case: `add n/Himonie Branger e/hb@notwot.com tm/MissingTeam` +
+Expected: Person is not added into MTM. Team does not exist in MTM. Error details shown in the status message.
+
+. Unassigning players from a Team
+
+.. Prerequisites: Players are already existing in the team
+.. Test case: `view NUSTeam` -> `assign i/1 2 3` +
+Expected: Player list will be updated as the specified players to be unassigned will be removed from the team. Each individual player unassign will be shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `list` -> `assign i/10 11` +
+Expected: Player list will be updated with the specified players to be unassigned will have their team name updated to `<UNSPECIFIED>`. Each individual player unassign will be shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `assign i/NUS` +
+Expected: Invalid index will have error details shown in the status message.
+.. Test case: `list` -> `assign i/1` +
+Expected: Error details shown in the status message. Player already has no team and can't be unassigned.
+
+==== Renaming a Team
+
+. Renaming a Team after assigning players above
+
+.. Prerequisites: Ensure that the team to be renamed into does not exist
+.. Test case: `rename NUSTeam tm/SUNTeam` +
+Expected: Team in Team Display Panel will be renamed to the new team name. New team name will be selected in the Team Display Panel. Player list of all the players in the new team name will be displayed. All players in the team will have their team name updated to the new team name. Team rename will be shown in the result status message. Timestamp in the status bar is updated.
+.. Test case: `rename NewTeam tm/MooTeam` +
+Expected: Error details shown in the status message. Team to be rename does not exist in MTM.
+.. Test case: `rename SUNTeam tm/&-Team` +
+Expected: Error details shown in the status message. Team to be rename into is invalid and should only contains alphanumeric characters.
+.. Test case: `rename tm/SmoovTeam` +
+Expected: Error details shown in the status message. Did not specify which team to rename and will indicate invalid command format.
+
+==== Removing a Team
+
+. Removing a Team after renaming the team above
+
+.. Prerequisites: Team currently exist in MTM.
+.. Test case: `view SUNTeam` -> `remove SUNTeam` +
+Expected: Team is removed and Team Display Panel is updated to reflect that the team has been removed. Team name that is being removed will be shown in the status message. All players in the team will have their team name updated in the Player List Panel. Player List Panel will show the full list of players in MTM. Timestamp in the status bar is updated.
+.. Test case: `list` -> `remove Arsenal` +
+Expected: Similar to above, will be displaying full list of players before and after `remove` command.
+.. Test case: `remove SUNTeam` +
+Expected: Error details shown in the status message. Team does not exist in MTM.
+
+=== Appearance Related Functions
+
+==== Changing a Theme
+
+. Changing the theme that MTM is currently on
+.. Test case: `cte Dark` (if current theme is Light) or `cte Light` (if current theme is Dark) +
+Expected: MTM colour scheme will change to the respective themes as shown below:
+
+image::DarkTheme.png[width="300"]
+image::LightTheme.png[width="300"]
+
+
+==== Setting Tag Colours
+. Setting the tags to colour of choice
+.. Prerequisites: Player has tags
+.. Test case:  `setTagColour t/redCard tc/blue`
+Expected: All tags with the name `redCard` would become blue

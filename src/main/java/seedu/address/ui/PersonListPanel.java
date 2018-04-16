@@ -12,8 +12,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.StackPane;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonDetailsChangedNoParamEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
@@ -24,8 +26,14 @@ public class PersonListPanel extends UiPart<Region> {
     private static final String FXML = "PersonListPanel.fxml";
     private final Logger logger = LogsCenter.getLogger(PersonListPanel.class);
 
+    private PlayerDetails playerDetails;
+    private Integer selectedCardIndex;
+
     @FXML
     private ListView<PersonCard> personListView;
+
+    @FXML
+    private StackPane playerDetailsPlaceholder;
 
     public PersonListPanel(ObservableList<Person> personList) {
         super(FXML);
@@ -45,8 +53,11 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
+                        playerDetailsPlaceholder.getChildren().clear();
                         logger.fine("Selection in person list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
+                        playerDetails = new PlayerDetails(newValue.person);
+                        playerDetailsPlaceholder.getChildren().add(playerDetails.getRoot());
                     }
                 });
     }
@@ -58,6 +69,7 @@ public class PersonListPanel extends UiPart<Region> {
         Platform.runLater(() -> {
             personListView.scrollTo(index);
             personListView.getSelectionModel().clearAndSelect(index);
+            this.selectedCardIndex = index;
         });
     }
 
@@ -66,6 +78,17 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author Codee
+    @Subscribe
+    private void handlePersonDetailsChangedNoParamEvent(PersonDetailsChangedNoParamEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        PersonCard newPersonCard = personListView.getItems().get(selectedCardIndex);
+        playerDetailsPlaceholder.getChildren().clear();
+        playerDetails = new PlayerDetails(newPersonCard.person);
+        playerDetailsPlaceholder.getChildren().add(playerDetails.getRoot());
+    }
+    //@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.
@@ -84,5 +107,4 @@ public class PersonListPanel extends UiPart<Region> {
             }
         }
     }
-
 }

@@ -2,8 +2,11 @@ package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
 import java.util.Set;
 
@@ -11,10 +14,15 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Avatar;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.JerseyNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Position;
+import seedu.address.model.person.Rating;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.team.TeamName;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -29,6 +37,8 @@ public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_INPUT = "You have entered an invalid input.";
+    public static final String UNSPECIFIED_FIELD = "<UNSPECIFIED>";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
@@ -43,6 +53,28 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author jordancjq
+    /**
+     * Parses {@code String oneBasedIndexes} into a {@code List<Index>} and returns it. Leading and trailing
+     * whitespaces will be trimmed.
+     */
+    public static List<Index> parseIndexes(String oneBasedIndexes) throws IllegalValueException {
+        String trimmedIndexes = oneBasedIndexes.trim();
+
+        String[] splitOneBasedIndexes = trimmedIndexes.split("\\s+");
+
+        Set<String> uniqueIndexes = new HashSet<>(Arrays.asList(splitOneBasedIndexes));
+
+        List<Index> indexList = new ArrayList<>();
+
+        for (String index : uniqueIndexes) {
+            indexList.add(parseIndex(index));
+        }
+
+        return indexList;
+    }
+
+    //@@author
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -164,5 +196,156 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses {@code String teamName} into an {@code TeamName}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static TeamName parseTeamName(String teamName) throws IllegalValueException {
+        requireNonNull(teamName);
+        String trimmedTeamName = teamName.trim();
+        if (!TeamName.isValidName(trimmedTeamName)) {
+            throw new IllegalValueException(TeamName.MESSAGE_TEAM_NAME_CONSTRAINTS);
+        }
+
+        return new TeamName(trimmedTeamName);
+    }
+
+    /**
+     * Parses a {@code Optional<String> teamName} into an {@code Optional<TeamName>} if {@code teamName} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TeamName> parseTeamName(Optional<String> teamName) throws IllegalValueException {
+        requireNonNull(teamName);
+        return teamName.isPresent() ? Optional.of(parseTeamName(teamName.get())) : Optional.empty();
+    }
+
+    //@@author jordancjq
+    /**
+     * Parses a {@code Optional<String> value} into the specified value or {@code UNSPECIFIED_FIELD} if is empty
+     */
+    public static Optional<String> parseValue(Optional<String> value, String messageConstraints)
+            throws IllegalValueException {
+        if (value.isPresent() && value.get().equals(UNSPECIFIED_FIELD)) {
+            throw new IllegalValueException(messageConstraints);
+        } else {
+            return Optional.of(value.orElse(UNSPECIFIED_FIELD));
+        }
+    }
+
+    //@@author
+    /**
+     * Parses a {@code String tagColour} into a {@code String ta}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code tag} is invalid.
+     */
+    public static String parseTagColour(String tagColour) throws IllegalValueException {
+        requireNonNull(tagColour);
+        String trimmedTagColour = tagColour.trim();
+        if (!trimmedTagColour.getClass().equals(String.class) ||  (trimmedTagColour.contains(" "))) {
+            throw new IllegalValueException(Tag.MESSAGE_TAG_COLOUR_CONSTRAINTS);
+        }
+        return trimmedTagColour;
+    }
+
+    /**
+     * Parses a {@code String rating} into a {@code Phone}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code rating} is invalid.
+     */
+    public static Rating parseRating(String rating) throws IllegalValueException {
+        requireNonNull(rating);
+        String trimmedRating = rating.trim();
+        if (!Rating.isValidRating(trimmedRating)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return new Rating(trimmedRating);
+    }
+
+    /**
+     * Parses a {@code Optional<String> rating} into an {@code Optional<Rating>} if {@code rating} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Rating> parseRating(Optional<String> rating) throws IllegalValueException {
+        requireNonNull(rating);
+        return rating.isPresent() ? Optional.of(parseRating(rating.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String position} into a {@code Position}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code position} is invalid.
+     */
+    public static Position parsePosition(String position) throws IllegalValueException {
+        requireNonNull(position);
+        String trimmedPosition = position.trim();
+        if (!Position.isValidPosition(trimmedPosition)) {
+            throw new IllegalValueException(Position.MESSAGE_POSITION_CONSTRAINTS);
+        }
+        return new Position(trimmedPosition);
+    }
+
+    /**
+     * Parses a {@code Optional<String> position} into an {@code Optional<Position>} if {@code position} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Position> parsePosition(Optional<String> position) throws IllegalValueException {
+        requireNonNull(position);
+        return position.isPresent() ? Optional.of(parsePosition(position.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String jerseyNumber} into a {@code JerseyNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code jerseyNumber} is invalid.
+     */
+    public static JerseyNumber parseJerseyNumber(String jerseyNumber) throws IllegalValueException {
+        requireNonNull(jerseyNumber);
+        String trimmedJerseyNumber = jerseyNumber.trim();
+        if (!JerseyNumber.isValidJerseyNumber(trimmedJerseyNumber)) {
+            throw new IllegalValueException(JerseyNumber.MESSAGE_JERSEY_NUMBER_CONSTRAINTS);
+        }
+        return new JerseyNumber(trimmedJerseyNumber);
+    }
+
+    /**
+     * Parses a {@code Optional<String> jerseyNumber} into an {@code Optional<JerseyNumber>}
+     * if {@code jerseyNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<JerseyNumber> parseJerseyNumber(Optional<String> jerseyNumber) throws IllegalValueException {
+        requireNonNull(jerseyNumber);
+        return jerseyNumber.isPresent() ? Optional.of(parseJerseyNumber(jerseyNumber.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String jerseyNumber} into a {@code JerseyNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code jerseyNumber} is invalid.
+     */
+
+    public static Avatar parseAvatar(String avatar) throws IllegalValueException {
+        requireNonNull(avatar);
+        String trimmedAvatar = avatar.trim();
+        if (!Avatar.isValidAvatar(trimmedAvatar)) {
+            throw new IllegalValueException(Avatar.MESSAGE_AVATAR_CONSTRAINTS);
+        }
+        return new Avatar(trimmedAvatar);
+    }
+
+    /**
+     * Parses a {@code Optional<String> avatar} into an {@code Optional<Avatar>}
+     * if {@code avatar} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Avatar> parseAvatar(Optional<String> avatar) throws IllegalValueException {
+        requireNonNull(avatar);
+        return avatar.isPresent() ? Optional.of(parseAvatar(avatar.get())) : Optional.empty();
     }
 }

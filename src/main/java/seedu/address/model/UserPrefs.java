@@ -1,6 +1,9 @@
 package seedu.address.model;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Objects;
+
+import com.google.common.hash.Hashing;
 
 import seedu.address.commons.core.GuiSettings;
 
@@ -10,8 +13,13 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+
+    private String addressBookFilePath = "data/myteammanager.xml";
+    private String addressBookName = "MyTeamManager";
+    private String addressBookTheme = "DarkTheme.css";
+    private boolean addressBookLockState = false;
+    private String addressBookHashedPass = Hashing.sha256()
+            .hashString("ilikesports", StandardCharsets.UTF_8).toString();
 
     public UserPrefs() {
         this.setGuiSettings(500, 500, 0, 0);
@@ -41,8 +49,35 @@ public class UserPrefs {
         return addressBookName;
     }
 
+    //@@author lohtianwei
+    public void lockAddressBook() {
+        this.addressBookLockState = true;
+    }
+
+    public void unlockAddressBook() {
+        this.addressBookLockState = false;
+    }
+
+    public String getAddressBookHashedPass() {
+        return addressBookHashedPass;
+    }
+
+    public boolean getAddressBookLockState() {
+        return this.addressBookLockState;
+    }
+
+    //@@author Codee
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+    public String getAddressBookTheme() {
+        return addressBookTheme;
+    }
+    //@@author
+
+    public void setAddressBookTheme(String addressBookTheme) {
+        this.addressBookTheme = addressBookTheme;
     }
 
     @Override
@@ -58,7 +93,9 @@ public class UserPrefs {
 
         return Objects.equals(guiSettings, o.guiSettings)
                 && Objects.equals(addressBookFilePath, o.addressBookFilePath)
-                && Objects.equals(addressBookName, o.addressBookName);
+                && Objects.equals(addressBookName, o.addressBookName)
+                && Objects.equals(addressBookHashedPass, o.addressBookHashedPass)
+                && Objects.equals(addressBookLockState, o.addressBookLockState);
     }
 
     @Override
@@ -72,6 +109,8 @@ public class UserPrefs {
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
         sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nPassword: " + addressBookHashedPass);
+        sb.append("\nLock State: " + Boolean.toString(this.addressBookLockState));
         return sb.toString();
     }
 

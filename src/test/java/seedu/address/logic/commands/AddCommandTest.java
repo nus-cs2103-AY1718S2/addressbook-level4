@@ -21,9 +21,15 @@ import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.UserPrefs;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.NoPlayerException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.team.Team;
+import seedu.address.model.team.TeamName;
+import seedu.address.model.team.exceptions.TeamNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -102,6 +108,33 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortPlayers(String field, String order) throws NoPlayerException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void lockAddressBookModel() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unlockAddressBookModel() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean getLockState() {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public UserPrefs getUserPrefs() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -130,8 +163,55 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Team> getInitTeamList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredPersonList(TeamName targetTeam) throws TeamNotFoundException {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void deleteTag(Tag tag) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void createTeam(Team team) {
+            fail("This method should not be be called.");
+        }
+
+        @Override
+        public void assignPersonToTeam(Person person, TeamName teamName) throws DuplicatePersonException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void unassignPersonFromTeam(Person person) throws TeamNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void removeTeam(TeamName teamName) throws TeamNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void renameTeam(Team targetTeam, TeamName updatedTeamName) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public boolean setTagColour(Tag tag, String colour) {
+            fail("This method should not be called.");
+            return false;
         }
     }
 
@@ -160,6 +240,12 @@ public class AddCommandTest {
         public void addPerson(Person person) throws DuplicatePersonException {
             requireNonNull(person);
             personsAdded.add(person);
+        }
+
+        @Override
+        public void assignPersonToTeam(Person person, TeamName teamName)
+            throws DuplicatePersonException {
+            throw new DuplicatePersonException();
         }
 
         @Override

@@ -1,0 +1,69 @@
+= Loh Tian Wei - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: My Team Manager (MTM)
+
+---
+
+== Overview
+
+My Team Manager (MTM) is a dekstop address book application for *football team managers*.
+It can also be personalised to be used for other sports team management too such as basketball.
+With the features it provides, management of your players' contact details and team information is made easy. While
+interactions between user and application is mainly by a *Command Line Interface (CLI)*, it features a JavaFx GUI display.
+
+
+== Summary of contributions
+
+* *Major enhancement*: Added *security and privacy features*
+** *What it does*: Ensures the information stored in MTM is *secured and kept private* when needed
+** *Justification*: This feature is crucial for protecting the *confidentiality and integrity* of the details stored in MTM.
+It prevents unauthorised tampering of information while also maintaining confidentiality.
+** *Highlights*: Addition of a *locking mechanism* to limit functionality of MTM and changing *privacy of fields* that would maintain
+confidentiality of certain information
+
+* *Minor enhancement*:
+** Added a sort function that allows the list to be sorted by fields for quick viewing of relevant information
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B1/main/blob/master/collated/functional/lohtianwei.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B1/main/blob/master/collated/test/lohtianwei.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Documented issues of project using GitHub's Issue Tracker and address the issues accordingly.
+** Enhancements to existing features:
+*** Changes are mentioned in <<Minor Enhancement, Minor enhancement>>.
+
+** Documentation:
+
+
+** Community:
+*** PRs reviewed (with non-trivial review comments) [https://github.com/CS2103JAN2018-F14-B1/main/pull/169[PR#169]]
+*** Reported bugs and suggestions for other teams in the class (https://github.com/CS2103JAN2018-W09-B2/main/issues/198[1],
+https://github.com/CS2103JAN2018-W09-B2/main/issues/194[2],
+https://github.com/CS2103JAN2018-W09-B2/main/issues/182[3],
+https://github.com/CS2103JAN2018-W09-B2/main/issues/174[4])
+
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=togglePrivacy]
+
+include::../UserGuide.adoc[tag=key]
+
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+include::../DeveloperGuide.adoc[tag=key]

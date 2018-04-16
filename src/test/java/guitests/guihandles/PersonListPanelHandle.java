@@ -121,7 +121,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
             return lastRememberedSelectedPersonCard.isPresent();
         } else {
             return !lastRememberedSelectedPersonCard.isPresent()
-                    || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
+                     || !lastRememberedSelectedPersonCard.get().equals(selectedItems.get(0));
         }
     }
 

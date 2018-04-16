@@ -16,7 +16,7 @@ import org.junit.Test;
 import seedu.organizer.logic.commands.RemoveTagsCommand;
 import seedu.organizer.model.tag.Tag;
 
-//@@author natania
+//@@author natania-d
 public class RemoveTagsCommandParserTest {
 
     private static final String TAG_EMPTY = " " + PREFIX_TAG;

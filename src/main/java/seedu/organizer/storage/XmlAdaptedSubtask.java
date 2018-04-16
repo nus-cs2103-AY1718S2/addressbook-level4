@@ -1,6 +1,6 @@
 package seedu.organizer.storage;
 
-//@@author agus
+//@@author aguss787
 import java.util.Objects;
 
 import javax.xml.bind.annotation.XmlElement;

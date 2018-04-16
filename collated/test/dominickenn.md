@@ -1,5 +1,5 @@
 # dominickenn
-###### /java/seedu/organizer/logic/commands/AddQuestionAnswerCommandTest.java
+###### \java\seedu\organizer\logic\commands\AddQuestionAnswerCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
@@ -75,7 +75,7 @@ public class AddQuestionAnswerCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/AnswerCommandTest.java
+###### \java\seedu\organizer\logic\commands\AnswerCommandTest.java
 ``` java
 /**
  * Contains unit tests for AnswerCommand.
@@ -152,7 +152,7 @@ public class AnswerCommandTest {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/ForgotPasswordCommandTest.java
+###### \java\seedu\organizer\logic\commands\ForgotPasswordCommandTest.java
 ``` java
 /**
  * Contains unit tests for ForgotPasswordCommand.
@@ -226,7 +226,7 @@ public class ForgotPasswordCommandTest {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/ListCompletedTasksCommandTest.java
+###### \java\seedu\organizer\logic\commands\ListCompletedTasksCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCompletedTasksCommand.
@@ -273,7 +273,7 @@ public class ListCompletedTasksCommandTest {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/ListUncompletedTasksCommandTest.java
+###### \java\seedu\organizer\logic\commands\ListUncompletedTasksCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListUncompletedTasksCommand.
@@ -321,7 +321,7 @@ public class ListUncompletedTasksCommandTest {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/LoginCommandTest.java
+###### \java\seedu\organizer\logic\commands\LoginCommandTest.java
 ``` java
 public class LoginCommandTest {
 
@@ -479,7 +479,7 @@ public class LoginCommandTest {
         }
 
         @Override
-        public void recurTask(Task task, int times) throws DuplicateTaskException {
+        public void recurWeeklyTask(Task task, int times) throws DuplicateTaskException {
             fail("This method should not be called.");
         }
 
@@ -538,7 +538,7 @@ public class LoginCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/LogoutCommandTest.java
+###### \java\seedu\organizer\logic\commands\LogoutCommandTest.java
 ``` java
 public class LogoutCommandTest {
 
@@ -565,7 +565,7 @@ public class LogoutCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/SignUpCommandIntegrationTest.java
+###### \java\seedu\organizer\logic\commands\SignUpCommandIntegrationTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code SignUpCommand}.
@@ -607,7 +607,7 @@ public class SignUpCommandIntegrationTest {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/SignUpCommandTest.java
+###### \java\seedu\organizer\logic\commands\SignUpCommandTest.java
 ``` java
 public class SignUpCommandTest {
 
@@ -754,7 +754,7 @@ public class SignUpCommandTest {
         }
 
         @Override
-        public void recurTask(Task task, int times) throws DuplicateTaskException {
+        public void recurWeeklyTask(Task task, int times) throws DuplicateTaskException {
             fail("This method should not be called.");
         }
 
@@ -799,7 +799,7 @@ public class SignUpCommandTest {
 
 }
 ```
-###### /java/seedu/organizer/logic/parser/AddCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\AddCommandParserTest.java
 ``` java
         // no priority
         Task expectedNoPriorityTask = new TaskBuilder().withName(VALID_NAME_EXAM)
@@ -808,7 +808,7 @@ public class SignUpCommandTest {
         assertParseSuccess(parser, NAME_DESC_EXAM + DEADLINE_DESC_EXAM + DESCRIPTION_DESC_EXAM + TAG_DESC_HUSBAND,
                 new AddCommand(expectedNoPriorityTask));
 ```
-###### /java/seedu/organizer/logic/parser/AnswerCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\AnswerCommandParserTest.java
 ``` java
 public class AnswerCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AnswerCommand
@@ -850,7 +850,7 @@ public class AnswerCommandParserTest {
     }
 
 ```
-###### /java/seedu/organizer/logic/parser/ForgotPasswordCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\ForgotPasswordCommandParserTest.java
 ``` java
 public class ForgotPasswordCommandParserTest {
     private ForgotPasswordCommandParser parser = new ForgotPasswordCommandParser();
@@ -876,7 +876,7 @@ public class ForgotPasswordCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/LoginCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\LoginCommandParserTest.java
 ``` java
 public class LoginCommandParserTest {
     private static final String MESSAGE_MULTIPLE_SAME_PREFIXES =
@@ -937,7 +937,7 @@ public class LoginCommandParserTest {
     }
 
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_logout() throws Exception {
@@ -960,7 +960,7 @@ public class LoginCommandParserTest {
         assertEquals(new AddQuestionAnswerCommand(question, answer), command);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_listUncompletedTasks() throws Exception {
@@ -986,7 +986,7 @@ public class LoginCommandParserTest {
                 ListCompletedTasksCommand.COMMAND_ALIAS + " 3") instanceof ListCompletedTasksCommand);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserNotLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserNotLoggedInTest.java
 ``` java
 /**
  * Performs OrganizerParser tests when no user is logged in
@@ -1069,7 +1069,7 @@ public class OrganizerParserNotLoggedInTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/ParserUtilTest.java
+###### \java\seedu\organizer\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseUsermame_null_throwsNullPointerException() {
@@ -1115,7 +1115,7 @@ public class OrganizerParserNotLoggedInTest {
         assertEquals(expectedPassword, ParserUtil.parsePassword(VALID_PASSWORD));
     }
 ```
-###### /java/seedu/organizer/logic/parser/SignUpCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\SignUpCommandParserTest.java
 ``` java
 public class SignUpCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
@@ -1175,7 +1175,7 @@ public class SignUpCommandParserTest {
     }
 
 ```
-###### /java/seedu/organizer/logic/UndoRedoStackTest.java
+###### \java\seedu\organizer\logic\UndoRedoStackTest.java
 ``` java
     @Test
     public void push_nonUndoableLogoutCommand_redoStackClearedAndCommandNotAdded() {
@@ -1192,7 +1192,7 @@ public class SignUpCommandParserTest {
         assertStackStatus(Collections.emptyList(), Collections.emptyList());
     }
 ```
-###### /java/seedu/organizer/model/OrganizerTest.java
+###### \java\seedu\organizer\model\OrganizerTest.java
 ``` java
     @Test
     public void addTask_alwaysSorted() throws DuplicateTaskException {
@@ -1214,7 +1214,7 @@ public class SignUpCommandParserTest {
         assertEquals(expectedOrganizer, editExam);
     }
 ```
-###### /java/seedu/organizer/model/task/DateAddedTest.java
+###### \java\seedu\organizer\model\task\DateAddedTest.java
 ``` java
 public class DateAddedTest {
 
@@ -1270,7 +1270,7 @@ public class DateAddedTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/TaskByStatusPredicateTest.java
+###### \java\seedu\organizer\model\task\predicates\TaskByStatusPredicateTest.java
 ``` java
 public class TaskByStatusPredicateTest {
 
@@ -1312,7 +1312,7 @@ public class TaskByStatusPredicateTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/TaskByUserPredicateTest.java
+###### \java\seedu\organizer\model\task\predicates\TaskByUserPredicateTest.java
 ``` java
 public class TaskByUserPredicateTest {
 
@@ -1355,7 +1355,7 @@ public class TaskByUserPredicateTest {
 }
 
 ```
-###### /java/seedu/organizer/model/task/TaskCreatedContainsDateAddedTest.java
+###### \java\seedu\organizer\model\task\TaskCreatedContainsDateAddedTest.java
 ``` java
 /**\
  * Tests whether a DateAdded is automatically created upon Task creation
@@ -1371,7 +1371,7 @@ public class TaskCreatedContainsDateAddedTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/UniqueTaskListTest.java
+###### \java\seedu\organizer\model\UniqueTaskListTest.java
 ``` java
     @Test
     public void priorityAutoUpdateTest() throws DuplicateTaskException {
@@ -1418,7 +1418,7 @@ public class TaskCreatedContainsDateAddedTest {
         assertEquals(uniqueTaskList, expectedUniqueTaskList);
     }
 ```
-###### /java/seedu/organizer/model/UniqueUserListTest.java
+###### \java\seedu\organizer\model\UniqueUserListTest.java
 ``` java
 public class UniqueUserListTest {
     @Rule
@@ -1432,7 +1432,7 @@ public class UniqueUserListTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/UserTest.java
+###### \java\seedu\organizer\model\user\UserTest.java
 ``` java
 public class UserTest {
 
@@ -1482,7 +1482,7 @@ public class UserTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/UserWithQuestionAnswerTest.java
+###### \java\seedu\organizer\model\user\UserWithQuestionAnswerTest.java
 ``` java
 public class UserWithQuestionAnswerTest {
 
@@ -1535,7 +1535,7 @@ public class UserWithQuestionAnswerTest {
 }
 
 ```
-###### /java/seedu/organizer/storage/XmlAdaptedUserTest.java
+###### \java\seedu\organizer\storage\XmlAdaptedUserTest.java
 ``` java
 public class XmlAdaptedUserTest {
 
@@ -1610,7 +1610,7 @@ public class XmlAdaptedUserTest {
     }
 }
 ```
-###### /java/systemtests/ClearCommandSystemTest.java
+###### \java\systemtests\ClearCommandSystemTest.java
 ``` java
     */
 /**

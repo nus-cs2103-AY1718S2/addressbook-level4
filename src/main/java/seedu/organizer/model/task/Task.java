@@ -33,7 +33,7 @@ public class Task {
     private final User user;
     private final Recurrence recurrence;
 
-    //@@author agus
+    //@@author aguss787
     private final UniqueTagList tags;
     private final UniqueSubtaskList subtasks;
     //@@author
@@ -79,7 +79,7 @@ public class Task {
         this.recurrence = new Recurrence();
     }
 
-    //@@author agus
+    //@@author aguss787
     /**
      * Another constructor with custom status and subtask
      */
@@ -134,7 +134,7 @@ public class Task {
         return description;
     }
 
-    //@@author agus
+    //@@author aguss787
     public Status getStatus() {
         if (status == null) {
             return new Status(false);
@@ -159,7 +159,7 @@ public class Task {
         return Collections.unmodifiableSet(tags.toSet());
     }
 
-    //@@author agus
+    //@@author aguss787
     public List<Subtask> getSubtasks() {
         return Collections.unmodifiableList(subtasks.toList());
     }

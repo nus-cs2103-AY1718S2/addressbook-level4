@@ -1,5 +1,5 @@
-# natania
-###### /java/seedu/organizer/logic/commands/RemoveTagsCommandTest.java
+# natania-d
+###### \java\seedu\organizer\logic\commands\RemoveTagsCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
@@ -108,7 +108,7 @@ public class RemoveTagsCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_removeTags() throws Exception {
@@ -139,7 +139,7 @@ public class RemoveTagsCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/RemoveTagsCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\RemoveTagsCommandParserTest.java
 ``` java
 public class RemoveTagsCommandParserTest {
 

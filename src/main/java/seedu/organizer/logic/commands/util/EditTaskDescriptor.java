@@ -1,6 +1,6 @@
 package seedu.organizer.logic.commands.util;
 
-//@@author agus
+//@@author aguss787
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.HashSet;

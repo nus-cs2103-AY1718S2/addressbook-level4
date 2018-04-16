@@ -1,6 +1,6 @@
 package seedu.organizer.logic.commands;
 
-//@@author agus
+//@@author aguss787
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.organizer.model.Model.PREDICATE_SHOW_ALL_TASKS;

@@ -1,5 +1,5 @@
 # guekling
-###### /java/seedu/organizer/logic/commands/CurrentMonthCommand.java
+###### \java\seedu\organizer\logic\commands\CurrentMonthCommand.java
 ``` java
 /**
  * Shows the view of the current month.
@@ -18,7 +18,7 @@ public class CurrentMonthCommand extends Command {
 
 }
 ```
-###### /java/seedu/organizer/logic/commands/FindDeadlineCommand.java
+###### \java\seedu\organizer\logic\commands\FindDeadlineCommand.java
 ``` java
 /**
  * Finds and lists all tasks in PrioriTask whose deadline contains any of the argument keywords.
@@ -55,7 +55,7 @@ public class FindDeadlineCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/FindMultipleFieldsCommand.java
+###### \java\seedu\organizer\logic\commands\FindMultipleFieldsCommand.java
 ``` java
 /**
  * Finds and lists all tasks in organizer whose name, descriptions or deadline contains any of the argument
@@ -93,7 +93,7 @@ public class FindMultipleFieldsCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/NextMonthCommand.java
+###### \java\seedu\organizer\logic\commands\NextMonthCommand.java
 ``` java
 /**
  * Shows the view of the month after the currently viewed month.
@@ -111,7 +111,7 @@ public class NextMonthCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/PreviousMonthCommand.java
+###### \java\seedu\organizer\logic\commands\PreviousMonthCommand.java
 ``` java
 /**
  * Shows the view of the month before the currently viewed month.
@@ -130,7 +130,7 @@ public class PreviousMonthCommand extends Command {
 
 }
 ```
-###### /java/seedu/organizer/logic/LogicManager.java
+###### \java\seedu\organizer\logic\LogicManager.java
 ``` java
     @Override
     public ObservableList<String> getExecutedCommandsList() {
@@ -138,7 +138,7 @@ public class PreviousMonthCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/AddQuestionAnswerCommandParser.java
+###### \java\seedu\organizer\logic\parser\AddQuestionAnswerCommandParser.java
 ``` java
     /**
      * Returns true if any of the prefixes contains multiple values in the given {@code ArgumentMultimap}.
@@ -147,7 +147,7 @@ public class PreviousMonthCommand extends Command {
         return Stream.of(prefixes).anyMatch(prefix -> (argumentMultimap.getSize(prefix) > 1));
     }
 ```
-###### /java/seedu/organizer/logic/parser/AnswerCommandParser.java
+###### \java\seedu\organizer\logic\parser\AnswerCommandParser.java
 ``` java
     /**
      * Returns true if any of the prefixes contains multiple values in the given {@code ArgumentMultimap}.
@@ -156,7 +156,7 @@ public class PreviousMonthCommand extends Command {
         return Stream.of(prefixes).anyMatch(prefix -> (argumentMultimap.getSize(prefix) > 1));
     }
 ```
-###### /java/seedu/organizer/logic/parser/ArgumentMultimap.java
+###### \java\seedu\organizer\logic\parser\ArgumentMultimap.java
 ``` java
     /**
      * Returns the size of list holding all values of the {@code prefix}.
@@ -166,7 +166,7 @@ public class PreviousMonthCommand extends Command {
         return values.isEmpty() ? 0 : values.size();
     }
 ```
-###### /java/seedu/organizer/logic/parser/FindDeadlineCommandParser.java
+###### \java\seedu\organizer\logic\parser\FindDeadlineCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindDeadlineCommand object
@@ -191,7 +191,7 @@ public class FindDeadlineCommandParser implements Parser<FindDeadlineCommand> {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/FindMultipleFieldsCommandParser.java
+###### \java\seedu\organizer\logic\parser\FindMultipleFieldsCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new FindMultipleFieldsCommand object
@@ -216,7 +216,7 @@ public class FindMultipleFieldsCommandParser implements Parser<FindMultipleField
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/LoginCommandParser.java
+###### \java\seedu\organizer\logic\parser\LoginCommandParser.java
 ``` java
     /**
      * Returns true if any of the prefixes contains multiple values in the given {@code ArgumentMultimap}.
@@ -225,7 +225,7 @@ public class FindMultipleFieldsCommandParser implements Parser<FindMultipleField
         return Stream.of(prefixes).anyMatch(prefix -> (argumentMultimap.getSize(prefix) > 1));
     }
 ```
-###### /java/seedu/organizer/logic/parser/SignUpCommandParser.java
+###### \java\seedu\organizer\logic\parser\SignUpCommandParser.java
 ``` java
     /**
      * Returns true if any of the prefixes contains multiple values in the given {@code ArgumentMultimap}.
@@ -234,7 +234,7 @@ public class FindMultipleFieldsCommandParser implements Parser<FindMultipleField
         return Stream.of(prefixes).anyMatch(prefix -> (argumentMultimap.getSize(prefix) > 1));
     }
 ```
-###### /java/seedu/organizer/model/task/Deadline.java
+###### \java\seedu\organizer\model\task\Deadline.java
 ``` java
 /**
  * Represents a Task's deadline in the organizer.
@@ -311,7 +311,7 @@ public class Deadline {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/Description.java
+###### \java\seedu\organizer\model\task\Description.java
 ``` java
 /**
  * Represents a Task's description in the organizer.
@@ -365,7 +365,7 @@ public class Description {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/DeadlineContainsKeywordsPredicate.java
+###### \java\seedu\organizer\model\task\predicates\DeadlineContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code Task}'s {@code Deadline} matches any of the keywords given. Keywords given should in the
@@ -392,7 +392,7 @@ public class DeadlineContainsKeywordsPredicate implements Predicate<Task> {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/DescriptionContainsKeywordsPredicate.java
+###### \java\seedu\organizer\model\task\predicates\DescriptionContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code Task}'s {@code Description} matches any of the keywords given.
@@ -418,7 +418,7 @@ public class DescriptionContainsKeywordsPredicate implements Predicate<Task> {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/MultipleFieldsContainsKeywordsPredicate.java
+###### \java\seedu\organizer\model\task\predicates\MultipleFieldsContainsKeywordsPredicate.java
 ``` java
 /**
  * Tests that a {@code Task}'s {@code Name}, {@code Description} and {@code Deadline} matches any of the keywords given.
@@ -469,7 +469,7 @@ public class MultipleFieldsContainsKeywordsPredicate implements Predicate<Task> 
     }
 }
 ```
-###### /java/seedu/organizer/ui/calendar/EntryCard.java
+###### \java\seedu\organizer\ui\calendar\EntryCard.java
 ``` java
 /**
  * An UI component that displays the name of a {@code Task}.
@@ -512,7 +512,7 @@ public class EntryCard extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/organizer/ui/calendar/MonthView.java
+###### \java\seedu\organizer\ui\calendar\MonthView.java
 ``` java
 /**
  * Supports the display of the month view of the calendar.
@@ -1053,7 +1053,7 @@ public class MonthView extends UiPart<Region> {
     }
 }
 ```
-###### /java/seedu/organizer/ui/CalendarPanel.java
+###### \java\seedu\organizer\ui\CalendarPanel.java
 ``` java
 /**
  * The Calendar Panel of the App.
@@ -1090,7 +1090,7 @@ public class CalendarPanel extends UiPart<Region> {
     }
 }
 ```
-###### /resources/view/BlueTheme.css
+###### \resources\view\BlueTheme.css
 ``` css
 
 .background {
@@ -1586,7 +1586,7 @@ public class CalendarPanel extends UiPart<Region> {
 
 
 ```
-###### /resources/view/CalendarPanel.fxml
+###### \resources\view\CalendarPanel.fxml
 ``` fxml
 
 

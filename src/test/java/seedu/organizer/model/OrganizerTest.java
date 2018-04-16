@@ -84,7 +84,7 @@ public class OrganizerTest {
         organizer.getTagList().remove(0);
     }
 
-    //@@author natania-reused
+    //@@author natania-d-reused
     @Test
     public void updateTask_detailsChanged_tasksAndTagsListUpdated() throws Exception {
         Organizer organizerUpdatedToExam = new OrganizerBuilder().withTask(STUDY).build();

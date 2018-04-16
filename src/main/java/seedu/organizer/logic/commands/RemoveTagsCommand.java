@@ -8,7 +8,7 @@ import java.util.Set;
 
 import seedu.organizer.model.tag.Tag;
 
-//@@author natania
+//@@author natania-d
 /**
  * Removes a specified tag from all tasks in the organizer.
  */

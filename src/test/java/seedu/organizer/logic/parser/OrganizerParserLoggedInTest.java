@@ -146,7 +146,7 @@ public class OrganizerParserLoggedInTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_TASK), commandAlias);
     }
 
-    //@@author natania-reused
+    //@@author natania-d-reused
     @Test
     public void parseCommand_deleteRecurredTasks() throws Exception {
         DeleteRecurredTasksCommand command = (DeleteRecurredTasksCommand) parser.parseCommand(
@@ -181,7 +181,7 @@ public class OrganizerParserLoggedInTest {
         assertEquals(new EditCommand(INDEX_FIRST_TASK, descriptor), commandAlias);
     }
 
-    //@@author agus
+    //@@author aguss787
     @Test
     public void parseCommand_editSubtask() throws Exception {
         Task task = new TaskBuilder().build();
@@ -390,7 +390,7 @@ public class OrganizerParserLoggedInTest {
                 instanceof CurrentMonthCommand);
     }
 
-    //@@author natania
+    //@@author natania-d
     @Test
     public void parseCommand_removeTags() throws Exception {
         Set<Tag> tag = new HashSet<>();

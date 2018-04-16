@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import seedu.organizer.logic.commands.DeleteRecurredTasksCommand;
 
-//@@author natania-reused
+//@@author natania-d-reused
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
  * outside of the DeleteRecurredTasksCommand code. For example, inputs "1" and "1 abc" take the

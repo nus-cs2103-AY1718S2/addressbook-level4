@@ -1,6 +1,6 @@
 package seedu.organizer.model.subtask;
 
-//@@author agus
+//@@author aguss787
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 
@@ -168,7 +168,7 @@ public class UniqueSubtaskList implements Iterable<Subtask> {
         }
     }
 
-    //@@author natania
+    //@@author natania-d
     /**
      * Makes the {@code Status} of all the subtasks in list not done.
      */

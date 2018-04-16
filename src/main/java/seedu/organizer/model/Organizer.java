@@ -247,7 +247,7 @@ public class Organizer implements ReadOnlyOrganizer {
         tags.add(t);
     }
 
-    //@@author natania-reused
+    //@@author natania-d-reused
     /**
      * Removes all {@code Tag}s that are not used by any {@code Task} in this {@code Organizer}.
      */
@@ -296,7 +296,7 @@ public class Organizer implements ReadOnlyOrganizer {
         }
     }
 
-    //@@author natania
+    //@@author natania-d
     /**
      * Recurs a task weekly in the organizer for the given number of times, which is done
      * by adding new tasks with the same parameters as the task to be recurred,

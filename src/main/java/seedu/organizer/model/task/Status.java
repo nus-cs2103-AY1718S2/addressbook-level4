@@ -1,6 +1,6 @@
 package seedu.organizer.model.task;
 
-//@@author agus
+//@@author aguss787
 /**
  * Represents a Task's status in the organizer.
  */

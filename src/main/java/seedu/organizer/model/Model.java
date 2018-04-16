@@ -75,11 +75,11 @@ public interface Model {
      */
     void updateFilteredTaskList(Predicate<Task> predicate);
 
-    //@@author natania-reused
+    //@@author natania-d-reused
     /** Removes the given {@code tag} from all {@code Task}s. */
     void deleteTag(Tag tag);
 
-    //@@author natania
+    //@@author natania-d
     /** Recurs the given task for the given number of times */
     void recurWeeklyTask(Task task, int times)
             throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException;

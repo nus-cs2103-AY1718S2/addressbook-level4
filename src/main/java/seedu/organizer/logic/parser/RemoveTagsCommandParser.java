@@ -9,7 +9,7 @@ import seedu.organizer.logic.commands.RemoveTagsCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 import seedu.organizer.model.tag.Tag;
 
-//@@author natania
+//@@author natania-d
 /**
  * Parses input arguments and creates a new RemoveTagsCommand object
  */

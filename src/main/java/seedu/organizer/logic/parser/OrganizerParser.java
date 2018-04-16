@@ -125,7 +125,7 @@ public class OrganizerParser {
         case EditCommand.COMMAND_ALIAS:
             return new EditCommandParser().parse(arguments);
 
-        //@@author agus
+        //@@author aguss787
         case EditSubtaskCommand.COMMAND_WORD:
             return new EditSubtaskCommandParser().parse(arguments);
 
@@ -151,14 +151,14 @@ public class OrganizerParser {
         case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
-        //@@author natania
+        //@@author natania-d
         case DeleteRecurredTasksCommand.COMMAND_WORD:
             return new DeleteRecurredTasksCommandParser().parse(arguments);
 
         case DeleteRecurredTasksCommand.COMMAND_ALIAS:
             return new DeleteRecurredTasksCommandParser().parse(arguments);
 
-        //@@author agus
+        //@@author aguss787
         case DeleteSubtaskCommand.COMMAND_WORD:
             return new DeleteSubtaskCommandParser().parse(arguments);
 
@@ -256,7 +256,7 @@ public class OrganizerParser {
         case CurrentMonthCommand.COMMAND_ALIAS:
             return new CurrentMonthCommand();
 
-        //@@author natania
+        //@@author natania-d
         case RecurWeeklyCommand.COMMAND_WORD:
             return new RecurWeeklyCommandParser().parse(arguments);
 

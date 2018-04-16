@@ -1,6 +1,6 @@
 package seedu.organizer.model.task;
 
-//@@author agus
+//@@author aguss787
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;

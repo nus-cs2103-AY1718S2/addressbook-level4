@@ -86,7 +86,7 @@ public class TaskCard extends UiPart<Region> {
         });
     }
 
-    //@@author agus
+    //@@author aguss787
     /**
      * Creates the subtask for {@code task}.
      */

@@ -7,7 +7,7 @@ import seedu.organizer.commons.exceptions.IllegalValueException;
 import seedu.organizer.logic.commands.DeleteRecurredTasksCommand;
 import seedu.organizer.logic.parser.exceptions.ParseException;
 
-//@@author natania
+//@@author natania-d
 /**
  * Parses input arguments and creates a new DeleteRecurredTasksCommand object
  */

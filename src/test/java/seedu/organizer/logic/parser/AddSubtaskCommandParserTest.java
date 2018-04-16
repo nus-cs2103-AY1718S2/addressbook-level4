@@ -1,6 +1,6 @@
 package seedu.organizer.logic.parser;
 
-//@@author agus
+//@@author aguss787
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
 import static seedu.organizer.logic.commands.CommandTestUtil.VALID_NAME_EXAM;

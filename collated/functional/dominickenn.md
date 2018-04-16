@@ -1,5 +1,5 @@
 # dominickenn
-###### /java/seedu/organizer/logic/CommandHistory.java
+###### \java\seedu\organizer\logic\CommandHistory.java
 ``` java
     /**
      * Clears the command history
@@ -10,7 +10,7 @@
         userInputHistory.clear();
     }
 ```
-###### /java/seedu/organizer/logic/commands/AddQuestionAnswerCommand.java
+###### \java\seedu\organizer\logic\commands\AddQuestionAnswerCommand.java
 ``` java
 /**
  * Adds a question-answer set to the currently logged in user.
@@ -89,7 +89,7 @@ public class AddQuestionAnswerCommand extends UndoableCommand {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/AnswerCommand.java
+###### \java\seedu\organizer\logic\commands\AnswerCommand.java
 ``` java
 /**
  * Answer a question correctly to retrieve a user's password.
@@ -166,7 +166,7 @@ public class AnswerCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/ForgotPasswordCommand.java
+###### \java\seedu\organizer\logic\commands\ForgotPasswordCommand.java
 ``` java
 /**
  * Finds a user in PrioriTask with the given username, and returns the user's question.
@@ -223,7 +223,7 @@ public class ForgotPasswordCommand extends Command {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/ListCompletedTasksCommand.java
+###### \java\seedu\organizer\logic\commands\ListCompletedTasksCommand.java
 ``` java
 /**
  * Lists all completed tasks in the organizer to the user.
@@ -245,7 +245,7 @@ public class ListCompletedTasksCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/ListUncompletedTasksCommand.java
+###### \java\seedu\organizer\logic\commands\ListUncompletedTasksCommand.java
 ``` java
 /**
  * Lists all uncompleted tasks in the organizer to the user.
@@ -267,7 +267,7 @@ public class ListUncompletedTasksCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/LoginCommand.java
+###### \java\seedu\organizer\logic\commands\LoginCommand.java
 ``` java
 /**
  * Login a user to PrioriTask.
@@ -326,7 +326,7 @@ public class LoginCommand extends Command {
 }
 
 ```
-###### /java/seedu/organizer/logic/commands/LogoutCommand.java
+###### \java\seedu\organizer\logic\commands\LogoutCommand.java
 ``` java
 /**
  * Logout current user from PrioriTask.
@@ -348,7 +348,7 @@ public class LogoutCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/SignUpCommand.java
+###### \java\seedu\organizer\logic\commands\SignUpCommand.java
 ``` java
 /**
  * Adds a user to the organizer.
@@ -400,7 +400,7 @@ public class SignUpCommand extends Command {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/AddCommandParser.java
+###### \java\seedu\organizer\logic\parser\AddCommandParser.java
 ``` java
             Priority priority;
             if (arePrefixesPresent(argMultimap, PREFIX_PRIORITY)) {
@@ -409,7 +409,7 @@ public class SignUpCommand extends Command {
                 priority = ParserUtil.parsePriority(Priority.LOWEST_PRIORITY_LEVEL);
             }
 ```
-###### /java/seedu/organizer/logic/parser/AddQuestionAnswerCommandParser.java
+###### \java\seedu\organizer\logic\parser\AddQuestionAnswerCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AddQuestionAnswerCommand object
@@ -454,7 +454,7 @@ public class AddQuestionAnswerCommandParser implements Parser<AddQuestionAnswerC
     }
 
 ```
-###### /java/seedu/organizer/logic/parser/AnswerCommandParser.java
+###### \java\seedu\organizer\logic\parser\AnswerCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new AnswerCommand object
@@ -498,7 +498,7 @@ public class AnswerCommandParser implements Parser<AnswerCommand> {
     }
 
 ```
-###### /java/seedu/organizer/logic/parser/ForgotPasswordCommandParser.java
+###### \java\seedu\organizer\logic\parser\ForgotPasswordCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new ForgotPasswordCommand object
@@ -537,7 +537,7 @@ public class ForgotPasswordCommandParser implements Parser<ForgotPasswordCommand
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/LoginCommandParser.java
+###### \java\seedu\organizer\logic\parser\LoginCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new LoginCommand object
@@ -583,7 +583,7 @@ public class LoginCommandParser implements Parser<LoginCommand> {
     }
 
 ```
-###### /java/seedu/organizer/logic/parser/ParserUtil.java
+###### \java\seedu\organizer\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code username} into a {@code String}
@@ -705,7 +705,7 @@ public class LoginCommandParser implements Parser<LoginCommand> {
         return priority.isPresent() ? Optional.of(parsePriority(priority.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/organizer/logic/parser/SignUpCommandParser.java
+###### \java\seedu\organizer\logic\parser\SignUpCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new SignUpCommand object
@@ -751,13 +751,13 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
     }
 
 ```
-###### /java/seedu/organizer/logic/UndoRedoStack.java
+###### \java\seedu\organizer\logic\UndoRedoStack.java
 ``` java
             if (command instanceof LogoutCommand) {
                 this.reset();
             }
 ```
-###### /java/seedu/organizer/logic/UndoRedoStack.java
+###### \java\seedu\organizer\logic\UndoRedoStack.java
 ``` java
     /**
      * Resets undoRedoStack
@@ -767,7 +767,7 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
         redoStack = new Stack<>();
     }
 ```
-###### /java/seedu/organizer/model/ModelManager.java
+###### \java\seedu\organizer\model\ModelManager.java
 ``` java
 
     public static User getCurrentlyLoggedInUser() {
@@ -821,14 +821,14 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
         return organizer.getUserbyUsername(username);
     }
 ```
-###### /java/seedu/organizer/model/Organizer.java
+###### \java\seedu\organizer\model\Organizer.java
 ``` java
     public void setUsers(List<User> users) {
         requireNonNull(users);
         this.users.setUsers(users);
     }
 ```
-###### /java/seedu/organizer/model/Organizer.java
+###### \java\seedu\organizer\model\Organizer.java
 ``` java
     //// user-level operations
 
@@ -890,7 +890,7 @@ public class SignUpCommandParser implements Parser<SignUpCommand> {
         return users.getUserByUsername(username);
     }
 ```
-###### /java/seedu/organizer/model/task/DateAdded.java
+###### \java\seedu\organizer\model\task\DateAdded.java
 ``` java
 /**
  * Represents a Task's dateAdded in the organizer.
@@ -962,7 +962,7 @@ public class DateAdded {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/TaskByStatusPredicate.java
+###### \java\seedu\organizer\model\task\predicates\TaskByStatusPredicate.java
 ``` java
 /**
  * Tests that a {@code Task}'s {@code Status} matches the given status.
@@ -988,7 +988,7 @@ public class TaskByStatusPredicate implements Predicate<Task> {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/TaskByUserPredicate.java
+###### \java\seedu\organizer\model\task\predicates\TaskByUserPredicate.java
 ``` java
 /**
  * Tests that a {@code Task}'s {@code User} matches the given user.
@@ -1014,7 +1014,7 @@ public class TaskByUserPredicate implements Predicate<Task> {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/Priority.java
+###### \java\seedu\organizer\model\task\Priority.java
 ``` java
 /**
  * Represents a Task's priority level in the organizer.
@@ -1068,7 +1068,7 @@ public class Priority {
 
 }
 ```
-###### /java/seedu/organizer/model/task/Task.java
+###### \java\seedu\organizer\model\task\Task.java
 ``` java
     /**
      * Task's with higher priority are given preference
@@ -1085,7 +1085,7 @@ public class Priority {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/UniqueTaskList.java
+###### \java\seedu\organizer\model\task\UniqueTaskList.java
 ``` java
     /**
      * Adds a task to the list.
@@ -1103,7 +1103,7 @@ public class Priority {
         sortTasks();
     }
 ```
-###### /java/seedu/organizer/model/task/UniqueTaskList.java
+###### \java\seedu\organizer\model\task\UniqueTaskList.java
 ``` java
     /**
      * Deletes all tasks by {@code user} from internalList
@@ -1115,7 +1115,7 @@ public class Priority {
         internalList.removeAll(tasksToDelete);
     }
 ```
-###### /java/seedu/organizer/model/task/UniqueTaskList.java
+###### \java\seedu\organizer\model\task\UniqueTaskList.java
 ``` java
     /**
      * Returns a list of tasks by a user as an unmodifiable {@code ObservableList}
@@ -1126,7 +1126,7 @@ public class Priority {
         return FXCollections.unmodifiableObservableList(filteredList);
     }
 ```
-###### /java/seedu/organizer/model/task/UniqueTaskList.java
+###### \java\seedu\organizer\model\task\UniqueTaskList.java
 ``` java
     /**
      * Sorts all tasks in uniqueTaskList according to priority
@@ -1194,7 +1194,7 @@ public class Priority {
     }
 
 ```
-###### /java/seedu/organizer/model/user/exceptions/CurrentlyLoggedInException.java
+###### \java\seedu\organizer\model\user\exceptions\CurrentlyLoggedInException.java
 ``` java
 /**
  * Signals that a user is currently logged in
@@ -1205,7 +1205,7 @@ public class CurrentlyLoggedInException extends Exception {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/exceptions/DuplicateUserException.java
+###### \java\seedu\organizer\model\user\exceptions\DuplicateUserException.java
 ``` java
 /**
  * Signals that an operation would have violated the 'no duplicates' property of the user list.
@@ -1216,7 +1216,7 @@ public class DuplicateUserException extends DuplicateDataException {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/exceptions/UserNotFoundException.java
+###### \java\seedu\organizer\model\user\exceptions\UserNotFoundException.java
 ``` java
 /**
  * Signals that an operation could not find the user in the user list
@@ -1227,7 +1227,7 @@ public class UserNotFoundException extends Exception {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/exceptions/UserPasswordWrongException.java
+###### \java\seedu\organizer\model\user\exceptions\UserPasswordWrongException.java
 ``` java
 /**
  * Signals that the user's username matches but password does not
@@ -1238,7 +1238,7 @@ public class UserPasswordWrongException extends Exception {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/UniqueUserList.java
+###### \java\seedu\organizer\model\user\UniqueUserList.java
 ``` java
 /**
  * A list of users that enforces no nulls and uniqueness between its elements.
@@ -1429,7 +1429,7 @@ public class UniqueUserList implements Iterable<User> {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/User.java
+###### \java\seedu\organizer\model\user\User.java
 ``` java
 /**
  * Represents a User in the organizer.
@@ -1521,7 +1521,7 @@ public class User {
     }
 }
 ```
-###### /java/seedu/organizer/model/user/UserWithQuestionAnswer.java
+###### \java\seedu\organizer\model\user\UserWithQuestionAnswer.java
 ``` java
 /**
  * A user class with a question-answer set for password retrieval
@@ -1574,7 +1574,7 @@ public class UserWithQuestionAnswer extends User {
     }
 }
 ```
-###### /java/seedu/organizer/storage/XmlAdaptedUser.java
+###### \java\seedu\organizer\storage\XmlAdaptedUser.java
 ``` java
 /**
  * JAXB-friendly adapted version of the User.
@@ -1706,7 +1706,7 @@ public class XmlAdaptedUser {
     }
 }
 ```
-###### /java/seedu/organizer/storage/XmlSerializableOrganizer.java
+###### \java\seedu\organizer\storage\XmlSerializableOrganizer.java
 ``` java
         users.addAll(src.getUserList().stream().map(user -> {
             if (user instanceof UserWithQuestionAnswer) {
@@ -1716,7 +1716,7 @@ public class XmlAdaptedUser {
             }
         }).collect(Collectors.toList()));
 ```
-###### /java/seedu/organizer/ui/MainWindow.java
+###### \java\seedu\organizer\ui\MainWindow.java
 ``` java
     /**
      * Sets the default size based on user preferences.

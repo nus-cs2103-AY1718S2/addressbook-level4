@@ -1,5 +1,5 @@
 # guekling
-###### /java/guitests/guihandles/CalendarPanelHandle.java
+###### \java\guitests\guihandles\CalendarPanelHandle.java
 ``` java
 /**
  * A handler for the {@code CalendarPanel} of the UI.
@@ -17,7 +17,7 @@ public class CalendarPanelHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/guitests/guihandles/EntryCardHandle.java
+###### \java\guitests\guihandles\EntryCardHandle.java
 ``` java
 /**
  * Provides a handle to a {@code EntryCard} in the calendar.
@@ -38,7 +38,7 @@ public class EntryCardHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/guitests/guihandles/MonthViewHandle.java
+###### \java\guitests\guihandles\MonthViewHandle.java
 ``` java
 /**
  * Provides a handle for {@code MonthView}.
@@ -97,7 +97,7 @@ public class MonthViewHandle extends NodeHandle<Node> {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/CurrentMonthCommandTest.java
+###### \java\seedu\organizer\logic\commands\CurrentMonthCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the UI) and unit tests for CurrentMonthCommand.
@@ -149,7 +149,7 @@ public class CurrentMonthCommandTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/FindCommandTest.java
+###### \java\seedu\organizer\logic\commands\FindCommandTest.java
 ``` java
 /**
  * Represents a find command with hidden internal logic and the ability to be executed for a {@code Command} of
@@ -177,7 +177,7 @@ public abstract class FindCommandTest<T extends Command> {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/FindDeadlineCommandTest.java
+###### \java\seedu\organizer\logic\commands\FindDeadlineCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindDeadlineCommand}.
@@ -249,7 +249,7 @@ public class FindDeadlineCommandTest extends FindCommandTest<FindDeadlineCommand
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/FindDescriptionCommandTest.java
+###### \java\seedu\organizer\logic\commands\FindDescriptionCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindDescriptionCommand}.
@@ -329,7 +329,7 @@ public class FindDescriptionCommandTest extends FindCommandTest<FindDescriptionC
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/FindMultipleFieldsCommandTest.java
+###### \java\seedu\organizer\logic\commands\FindMultipleFieldsCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model) for {@code FindMultipleFieldsCommand}.
@@ -402,7 +402,7 @@ public class FindMultipleFieldsCommandTest extends FindCommandTest<FindMultipleF
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/NextMonthCommandTest.java
+###### \java\seedu\organizer\logic\commands\NextMonthCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the UI) and unit tests for NextMonthCommand.
@@ -455,7 +455,7 @@ public class NextMonthCommandTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/PreviousMonthCommandTest.java
+###### \java\seedu\organizer\logic\commands\PreviousMonthCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the UI) and unit tests for PreviousMonthCommand.
@@ -507,7 +507,7 @@ public class PreviousMonthCommandTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/AddCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\AddCommandParserTest.java
 ``` java
     @Test
     public void parse_multipleSamePrefixes_failure() {
@@ -533,7 +533,7 @@ public class PreviousMonthCommandTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/AddQuestionAnswerCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\AddQuestionAnswerCommandParserTest.java
 ``` java
     @Test
     public void parse_multipleSamePrefixes_failure() {
@@ -546,7 +546,7 @@ public class PreviousMonthCommandTest extends GuiUnitTest {
             MESSAGE_MULTIPLE_SAME_PREFIXES);
     }
 ```
-###### /java/seedu/organizer/logic/parser/AnswerCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\AnswerCommandParserTest.java
 ``` java
     @Test
     public void parse_multipleSamePrefixes_failure() {
@@ -559,7 +559,7 @@ public class PreviousMonthCommandTest extends GuiUnitTest {
             + VALID_ANSWER + " " + PREFIX_ANSWER + VALID_ANSWER, MESSAGE_MULTIPLE_SAME_PREFIXES);
     }
 ```
-###### /java/seedu/organizer/logic/parser/EditCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\EditCommandParserTest.java
 ``` java
     @Test
     public void parse_multipleSamePrefixes_failure() {
@@ -586,7 +586,7 @@ public class PreviousMonthCommandTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/FindDeadlineCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\FindDeadlineCommandParserTest.java
 ``` java
 public class FindDeadlineCommandParserTest {
 
@@ -611,7 +611,7 @@ public class FindDeadlineCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/FindDescriptionCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\FindDescriptionCommandParserTest.java
 ``` java
 public class FindDescriptionCommandParserTest {
 
@@ -635,7 +635,7 @@ public class FindDescriptionCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/FindMultipleFieldsCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\FindMultipleFieldsCommandParserTest.java
 ``` java
 public class FindMultipleFieldsCommandParserTest {
 
@@ -660,7 +660,7 @@ public class FindMultipleFieldsCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/LoginCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\LoginCommandParserTest.java
 ``` java
     @Test
     public void parse_multipleSamePrefixes_failure() {
@@ -673,7 +673,7 @@ public class FindMultipleFieldsCommandParserTest {
                 + VALID_PASSWORD_JOSHUA + " " + PREFIX_PASSWORD + VALID_PASSWORD_BOBBY, MESSAGE_MULTIPLE_SAME_PREFIXES);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_find() throws Exception {
@@ -687,7 +687,7 @@ public class FindMultipleFieldsCommandParserTest {
                 commandAlias);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_findDescription() throws Exception {
@@ -715,7 +715,7 @@ public class FindMultipleFieldsCommandParserTest {
         assertEquals(new FindDeadlineCommand(new DeadlineContainsKeywordsPredicate(keywords)), commandAlias);
     }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_previousMonthCommand() throws Exception {
@@ -748,7 +748,7 @@ public class FindMultipleFieldsCommandParserTest {
     }
 
 ```
-###### /java/seedu/organizer/logic/parser/SignUpCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\SignUpCommandParserTest.java
 ``` java
     @Test
     public void parse_multipleSamePrefixes_failure() {
@@ -762,7 +762,7 @@ public class FindMultipleFieldsCommandParserTest {
         assertParseFailure(parser, " u/steven p/12345 p/12345",  MESSAGE_MULTIPLE_SAME_PREFIXES);
     }
 ```
-###### /java/seedu/organizer/model/task/DeadlineTest.java
+###### \java\seedu\organizer\model\task\DeadlineTest.java
 ``` java
 public class DeadlineTest {
 
@@ -833,7 +833,7 @@ public class DeadlineTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/DescriptionTest.java
+###### \java\seedu\organizer\model\task\DescriptionTest.java
 ``` java
 public class DescriptionTest {
 
@@ -866,7 +866,7 @@ public class DescriptionTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/DeadlineContainsKeywordsPredicateTest.java
+###### \java\seedu\organizer\model\task\predicates\DeadlineContainsKeywordsPredicateTest.java
 ``` java
 public class DeadlineContainsKeywordsPredicateTest {
 
@@ -934,7 +934,7 @@ public class DeadlineContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/DescriptionContainsKeywordsPredicateTest.java
+###### \java\seedu\organizer\model\task\predicates\DescriptionContainsKeywordsPredicateTest.java
 ``` java
 public class DescriptionContainsKeywordsPredicateTest {
 
@@ -1004,7 +1004,7 @@ public class DescriptionContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/predicates/MultipleFieldsContainsKeywordsPredicateTest.java
+###### \java\seedu\organizer\model\task\predicates\MultipleFieldsContainsKeywordsPredicateTest.java
 ``` java
 public class MultipleFieldsContainsKeywordsPredicateTest {
     @Test
@@ -1147,7 +1147,7 @@ public class MultipleFieldsContainsKeywordsPredicateTest {
 
 }
 ```
-###### /java/seedu/organizer/storage/XmlAdaptedTaskTest.java
+###### \java\seedu\organizer\storage\XmlAdaptedTaskTest.java
 ``` java
     @Test
     public void equalsTrue_sameTask() {
@@ -1161,7 +1161,7 @@ public class MultipleFieldsContainsKeywordsPredicateTest {
         assertFalse(task.equals(new Integer(1)));
     }
 ```
-###### /java/seedu/organizer/ui/CalendarPanelTest.java
+###### \java\seedu\organizer\ui\CalendarPanelTest.java
 ``` java
 public class CalendarPanelTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
@@ -1250,7 +1250,7 @@ public class CalendarPanelTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/ui/EntryCardTest.java
+###### \java\seedu\organizer\ui\EntryCardTest.java
 ``` java
 public class EntryCardTest extends GuiUnitTest {
 
@@ -1316,7 +1316,7 @@ public class EntryCardTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/ui/MonthViewTest.java
+###### \java\seedu\organizer\ui\MonthViewTest.java
 ``` java
 public class MonthViewTest extends GuiUnitTest {
     private static final ObservableList<Task> TYPICAL_TASKS = FXCollections.observableList(getTypicalTasks());
@@ -1757,7 +1757,7 @@ public class MonthViewTest extends GuiUnitTest {
     }
 }
 ```
-###### /java/seedu/organizer/ui/testutil/GuiTestAssert.java
+###### \java\seedu\organizer\ui\testutil\GuiTestAssert.java
 ``` java
     /**
      * Asserts that {@code actualCard} displays the details of {@code expectedTask}.

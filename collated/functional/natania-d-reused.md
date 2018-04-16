@@ -1,11 +1,11 @@
-# natania-reused
-###### /java/seedu/organizer/model/Model.java
+# natania-d-reused
+###### \java\seedu\organizer\model\Model.java
 ``` java
     /** Removes the given {@code tag} from all {@code Task}s. */
     void deleteTag(Tag tag);
 
 ```
-###### /java/seedu/organizer/model/ModelManager.java
+###### \java\seedu\organizer\model\ModelManager.java
 ``` java
     @Override
     public void deleteTag(Tag tag) {
@@ -13,7 +13,7 @@
     }
 
 ```
-###### /java/seedu/organizer/model/Organizer.java
+###### \java\seedu\organizer\model\Organizer.java
 ``` java
     /**
      * Removes all {@code Tag}s that are not used by any {@code Task} in this {@code Organizer}.

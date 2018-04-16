@@ -150,13 +150,13 @@ public class ModelManager extends ComponentManager implements Model {
         indicateOrganizerChanged();
     }
 
-    //@@author natania-reused
+    //@@author natania-d-reused
     @Override
     public void deleteTag(Tag tag) {
         organizer.removeTag(tag);
     }
 
-    //@@author natania
+    //@@author natania-d
     @Override
     public synchronized void recurWeeklyTask(Task task, int times)
             throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException {

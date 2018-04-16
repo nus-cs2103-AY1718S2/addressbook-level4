@@ -1,5 +1,5 @@
-# natania-reused
-###### /java/seedu/organizer/logic/commands/DeleteRecurredTasksCommandTest.java
+# natania-d-reused
+###### \java\seedu\organizer\logic\commands\DeleteRecurredTasksCommandTest.java
 ``` java
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
@@ -13,7 +13,7 @@ public class DeleteRecurredTasksCommandTest {
     public void setUp() {
         try {
             model.loginUser(ADMIN_USER);
-            model.recurTask(model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()), 1);
+            model.recurWeeklyTask(model.getFilteredTaskList().get(INDEX_FIRST_TASK.getZeroBased()), 1);
         } catch (UserNotFoundException e) {
             e.printStackTrace();
         } catch (CurrentlyLoggedInException e) {
@@ -171,7 +171,7 @@ public class DeleteRecurredTasksCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/DeleteRecurredTasksCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\DeleteRecurredTasksCommandParserTest.java
 ``` java
 /**
  * As we are only doing white-box testing, our test cases do not cover path variations
@@ -196,7 +196,7 @@ public class DeleteRecurredTasksCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_deleteRecurredTasks() throws Exception {
@@ -233,7 +233,7 @@ public class DeleteRecurredTasksCommandParserTest {
     }
 
 ```
-###### /java/seedu/organizer/model/ModelManagerTest.java
+###### \java\seedu\organizer\model\ModelManagerTest.java
 ``` java
     @Test
     public void deleteTag_nonExistentTag_modelUnchanged() throws Exception {
@@ -262,7 +262,7 @@ public class DeleteRecurredTasksCommandParserTest {
         assertEquals(new ModelManager(expectedOrganizer, userPrefs), modelManager);
     }
 ```
-###### /java/seedu/organizer/model/OrganizerTest.java
+###### \java\seedu\organizer\model\OrganizerTest.java
 ``` java
     @Test
     public void updateTask_detailsChanged_tasksAndTagsListUpdated() throws Exception {
@@ -296,7 +296,7 @@ public class DeleteRecurredTasksCommandParserTest {
     }
 
 ```
-###### /java/seedu/organizer/model/task/DateCompletedTest.java
+###### \java\seedu\organizer\model\task\DateCompletedTest.java
 ``` java
 // Reused from team member guekling
 public class DateCompletedTest {

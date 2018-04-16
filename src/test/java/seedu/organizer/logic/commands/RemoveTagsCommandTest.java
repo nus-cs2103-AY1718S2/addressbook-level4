@@ -28,7 +28,7 @@ import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
 import seedu.organizer.model.user.exceptions.UserPasswordWrongException;
 
-//@@author natania
+//@@author natania-d
 /**
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
  * and unit tests for RemoveTagsCommand.

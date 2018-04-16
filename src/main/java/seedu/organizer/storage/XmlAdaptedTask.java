@@ -125,7 +125,7 @@ public class XmlAdaptedTask {
             taskTags.add(tag.toModelType());
         }
 
-        //@@author agus
+        //@@author aguss787
         final List<Subtask> taskSubtasks = new ArrayList<>();
         for (XmlAdaptedSubtask subtask : subtasks) {
             taskSubtasks.add(subtask.toModelType());

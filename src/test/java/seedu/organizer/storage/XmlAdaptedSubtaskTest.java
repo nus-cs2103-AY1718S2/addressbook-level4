@@ -1,6 +1,6 @@
 package seedu.organizer.storage;
 
-//@@author agus
+//@@author aguss787
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 

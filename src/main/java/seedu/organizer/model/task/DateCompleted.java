@@ -5,7 +5,7 @@ import static seedu.organizer.commons.util.AppUtil.checkArgument;
 
 import java.time.LocalDate;
 
-//@@author natania
+//@@author natania-d
 /**
  * Represents a Task's dateCompleted in the organizer.
  * Guarantees: immutable;

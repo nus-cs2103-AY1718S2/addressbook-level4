@@ -73,7 +73,7 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_TASK, ParserUtil.parseIndex("  1  "));
     }
 
-    //@@author agus
+    //@@author aguss787
     @Test
     public void parseMultipleIndex_invalidInput_throwsIllegalValueException() throws Exception {
         thrown.expect(IllegalValueException.class);

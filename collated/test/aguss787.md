@@ -1,5 +1,5 @@
-# agus
-###### /java/seedu/organizer/logic/commands/AddSubtaskCommandTest.java
+# aguss787
+###### \java\seedu\organizer\logic\commands\AddSubtaskCommandTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -191,7 +191,7 @@ public class AddSubtaskCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/DeleteSubtaskCommandTest.java
+###### \java\seedu\organizer\logic\commands\DeleteSubtaskCommandTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -353,7 +353,7 @@ public class DeleteSubtaskCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/EditSubtaskCommandTest.java
+###### \java\seedu\organizer\logic\commands\EditSubtaskCommandTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -536,7 +536,7 @@ public class EditSubtaskCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/ToggleCommandTest.java
+###### \java\seedu\organizer\logic\commands\ToggleCommandTest.java
 ``` java
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
@@ -558,6 +558,7 @@ import seedu.organizer.model.Model;
 import seedu.organizer.model.ModelManager;
 import seedu.organizer.model.Organizer;
 import seedu.organizer.model.UserPrefs;
+import seedu.organizer.model.task.DateCompleted;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.user.exceptions.CurrentlyLoggedInException;
 import seedu.organizer.model.user.exceptions.UserNotFoundException;
@@ -648,7 +649,7 @@ public class ToggleCommandTest {
                 task.getBasePriority(),
                 task.getDeadline(),
                 task.getDateAdded(),
-                task.getDateCompleted(), task.getDescription(),
+                new DateCompleted(true), task.getDescription(),
                 task.getStatus().getInverse(),
                 task.getTags(),
                 task.getSubtasks(),
@@ -666,7 +667,7 @@ public class ToggleCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/ToggleSubtaskCommandTest.java
+###### \java\seedu\organizer\logic\commands\ToggleSubtaskCommandTest.java
 ``` java
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -847,7 +848,7 @@ public class ToggleSubtaskCommandTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/AddSubtaskCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\AddSubtaskCommandParserTest.java
 ``` java
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -945,7 +946,7 @@ public class AddSubtaskCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/DeleteSubtaskCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\DeleteSubtaskCommandParserTest.java
 ``` java
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -984,7 +985,7 @@ public class DeleteSubtaskCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/EditSubtaskCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\EditSubtaskCommandParserTest.java
 ``` java
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.commands.CommandTestUtil.INVALID_NAME_DESC;
@@ -1084,7 +1085,7 @@ public class EditSubtaskCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParserLoggedInTest.java
+###### \java\seedu\organizer\logic\parser\OrganizerParserLoggedInTest.java
 ``` java
     @Test
     public void parseCommand_editSubtask() throws Exception {
@@ -1102,7 +1103,7 @@ public class EditSubtaskCommandParserTest {
         assertEquals(new EditSubtaskCommand(INDEX_FIRST_TASK, INDEX_FIRST_TASK, subtask), commandAlias);
     }
 ```
-###### /java/seedu/organizer/logic/parser/ParserUtilTest.java
+###### \java\seedu\organizer\logic\parser\ParserUtilTest.java
 ``` java
     @Test
     public void parseMultipleIndex_invalidInput_throwsIllegalValueException() throws Exception {
@@ -1180,7 +1181,7 @@ public class EditSubtaskCommandParserTest {
         assertArrayEquals(testCase, ParserUtil.parseSubtaskIndex("  1   2  "));
     }
 ```
-###### /java/seedu/organizer/logic/parser/ToggleCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\ToggleCommandParserTest.java
 ``` java
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -1211,7 +1212,7 @@ public class ToggleCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/ToggleSubtaskCommandParserTest.java
+###### \java\seedu\organizer\logic\parser\ToggleSubtaskCommandParserTest.java
 ``` java
 import static seedu.organizer.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.organizer.logic.parser.CommandParserTestUtil.assertParseFailure;
@@ -1250,7 +1251,7 @@ public class ToggleSubtaskCommandParserTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/subtask/SubtaskTest.java
+###### \java\seedu\organizer\model\subtask\SubtaskTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -1292,7 +1293,7 @@ public class SubtaskTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/subtask/UniqueSubtaskListTest.java
+###### \java\seedu\organizer\model\subtask\UniqueSubtaskListTest.java
 ``` java
 import static java.util.Collections.reverse;
 import static org.junit.Assert.assertEquals;
@@ -1433,7 +1434,7 @@ public class UniqueSubtaskListTest {
     }
 }
 ```
-###### /java/seedu/organizer/model/task/StatusTest.java
+###### \java\seedu\organizer\model\task\StatusTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
@@ -1468,7 +1469,7 @@ public class StatusTest {
     }
 }
 ```
-###### /java/seedu/organizer/storage/XmlAdaptedSubtaskTest.java
+###### \java\seedu\organizer\storage\XmlAdaptedSubtaskTest.java
 ``` java
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertNotEquals;
@@ -1522,7 +1523,7 @@ public class XmlAdaptedSubtaskTest {
 
 }
 ```
-###### /java/seedu/organizer/testutil/TaskBuilder.java
+###### \java\seedu\organizer\testutil\TaskBuilder.java
 ``` java
     /**
      * Parses the {@code subtask} into a {@code List<Subtask>} and set it to the {@code Task} that we are building.

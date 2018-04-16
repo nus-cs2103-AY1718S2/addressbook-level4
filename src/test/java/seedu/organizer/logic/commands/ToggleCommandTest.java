@@ -1,6 +1,6 @@
 package seedu.organizer.logic.commands;
 
-//@@author agus
+//@@author aguss787
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandSuccess;
 import static seedu.organizer.logic.commands.CommandTestUtil.prepareRedoCommand;

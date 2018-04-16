@@ -1,6 +1,6 @@
 package seedu.organizer.logic.commands;
 
-//@@author agus
+//@@author aguss787
 import static junit.framework.TestCase.assertEquals;
 import static org.junit.Assert.assertNotEquals;
 import static seedu.organizer.logic.commands.CommandTestUtil.assertCommandFailure;

@@ -46,7 +46,7 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
-    //@@author agus
+    //@@author aguss787
     /**
      * Parses {@code oneBasedIndex} into an array of {@code Index} and returns it. Leading and trailing whitespaces
      * will be trimmed.
@@ -229,7 +229,7 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
-    //@@author natania
+    //@@author natania-d
     /**
      * Parses a {@code String times} into an int.
      * Leading and trailing whitespaces will be trimmed.

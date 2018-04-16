@@ -40,7 +40,7 @@ public class ModelManagerTest {
         modelManager.getFilteredTaskList().remove(0);
     }
 
-    //@@author natania-reused
+    //@@author natania-d-reused
     @Test
     public void deleteTag_nonExistentTag_modelUnchanged() throws Exception {
         Organizer organizer = new OrganizerBuilder().withTask(EXAM).withTask(STUDY).build();

@@ -1,6 +1,6 @@
 package seedu.organizer.model.recurrence.exceptions;
 
-//@@author natania
+//@@author natania-d
 /**
  * Signals that the specified task is not recurred.
  */

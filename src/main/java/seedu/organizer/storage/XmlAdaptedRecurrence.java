@@ -4,7 +4,7 @@ import javax.xml.bind.annotation.XmlElement;
 
 import seedu.organizer.model.recurrence.Recurrence;
 
-//@@author natania
+//@@author natania-d
 /**
  * JAXB-friendly adapted version of the Recurrence.
  */

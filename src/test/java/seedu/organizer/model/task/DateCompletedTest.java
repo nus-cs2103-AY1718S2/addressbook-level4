@@ -10,7 +10,7 @@ import org.junit.Test;
 
 import seedu.organizer.testutil.Assert;
 
-//@@author natania-reused
+//@@author natania-d-reused
 // Reused from team member guekling
 public class DateCompletedTest {
 

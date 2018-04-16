@@ -14,7 +14,7 @@ import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 import seedu.organizer.model.task.exceptions.TaskNotFoundException;
 
-//@@author natania
+//@@author natania-d
 /**
  * Recurs a task weekly for the specified number of weeks.
  */

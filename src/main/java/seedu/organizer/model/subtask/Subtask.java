@@ -1,6 +1,6 @@
 package seedu.organizer.model.subtask;
 
-//@@author agus
+//@@author aguss787
 import static java.util.Objects.requireNonNull;
 
 import java.util.Objects;

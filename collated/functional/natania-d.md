@@ -1,5 +1,5 @@
-# natania
-###### /java/seedu/organizer/logic/commands/DeleteRecurredTasksCommand.java
+# natania-d
+###### \java\seedu\organizer\logic\commands\DeleteRecurredTasksCommand.java
 ``` java
 /**
  * Deletes a group of recurred tasks (both the original task and recurred versions of it)
@@ -62,7 +62,7 @@ public class DeleteRecurredTasksCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/RecurWeeklyCommand.java
+###### \java\seedu\organizer\logic\commands\RecurWeeklyCommand.java
 ``` java
 /**
  * Recurs a task weekly for the specified number of weeks.
@@ -101,7 +101,7 @@ public class RecurWeeklyCommand extends UndoableCommand {
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
-            model.recurTask(taskToRecur, this.times);
+            model.recurWeeklyTask(taskToRecur, this.times);
         } catch (DuplicateTaskException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_TASK);
         } catch (TaskNotFoundException pnfe) {
@@ -133,7 +133,7 @@ public class RecurWeeklyCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/organizer/logic/commands/RemoveTagsCommand.java
+###### \java\seedu\organizer\logic\commands\RemoveTagsCommand.java
 ``` java
 /**
  * Removes a specified tag from all tasks in the organizer.
@@ -175,7 +175,7 @@ public class RemoveTagsCommand extends UndoableCommand {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/DeleteRecurredTasksCommandParser.java
+###### \java\seedu\organizer\logic\parser\DeleteRecurredTasksCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new DeleteRecurredTasksCommand object
@@ -199,7 +199,7 @@ public class DeleteRecurredTasksCommandParser implements Parser<DeleteRecurredTa
 
 }
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParser.java
+###### \java\seedu\organizer\logic\parser\OrganizerParser.java
 ``` java
         case DeleteRecurredTasksCommand.COMMAND_WORD:
             return new DeleteRecurredTasksCommandParser().parse(arguments);
@@ -208,7 +208,7 @@ public class DeleteRecurredTasksCommandParser implements Parser<DeleteRecurredTa
             return new DeleteRecurredTasksCommandParser().parse(arguments);
 
 ```
-###### /java/seedu/organizer/logic/parser/OrganizerParser.java
+###### \java\seedu\organizer\logic\parser\OrganizerParser.java
 ``` java
         case RecurWeeklyCommand.COMMAND_WORD:
             return new RecurWeeklyCommandParser().parse(arguments);
@@ -222,7 +222,7 @@ public class DeleteRecurredTasksCommandParser implements Parser<DeleteRecurredTa
         case RemoveTagsCommand.COMMAND_ALIAS:
             return new RemoveTagsCommandParser().parse(arguments);
 ```
-###### /java/seedu/organizer/logic/parser/ParserUtil.java
+###### \java\seedu\organizer\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code String times} into an int.
@@ -249,7 +249,7 @@ public class DeleteRecurredTasksCommandParser implements Parser<DeleteRecurredTa
         return times.isPresent() ? Optional.of(parseTimes(times.get())) : Optional.empty();
     }
 ```
-###### /java/seedu/organizer/logic/parser/RecurWeeklyCommandParser.java
+###### \java\seedu\organizer\logic\parser\RecurWeeklyCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RecurWeeklyCommand object
@@ -289,7 +289,7 @@ public class RecurWeeklyCommandParser {
     }
 }
 ```
-###### /java/seedu/organizer/logic/parser/RemoveTagsCommandParser.java
+###### \java\seedu\organizer\logic\parser\RemoveTagsCommandParser.java
 ``` java
 /**
  * Parses input arguments and creates a new RemoveTagsCommand object
@@ -315,22 +315,22 @@ public class RemoveTagsCommandParser implements Parser<RemoveTagsCommand> {
     }
 }
 ```
-###### /java/seedu/organizer/model/Model.java
+###### \java\seedu\organizer\model\Model.java
 ``` java
     /** Recurs the given task for the given number of times */
-    void recurTask(Task task, int times)
+    void recurWeeklyTask(Task task, int times)
             throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException;
 
     /** Deletes the given task and all its recurred versions. */
     void deleteRecurredTasks(Task target) throws DuplicateTaskException, TaskNotRecurringException;
 }
 ```
-###### /java/seedu/organizer/model/ModelManager.java
+###### \java\seedu\organizer\model\ModelManager.java
 ``` java
     @Override
-    public synchronized void recurTask(Task task, int times)
+    public synchronized void recurWeeklyTask(Task task, int times)
             throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException {
-        organizer.recurTask(task, times);
+        organizer.recurWeeklyTask(task, times);
         updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
         indicateOrganizerChanged();
     }
@@ -341,7 +341,7 @@ public class RemoveTagsCommandParser implements Parser<RemoveTagsCommand> {
         indicateOrganizerChanged();
     }
 ```
-###### /java/seedu/organizer/model/Organizer.java
+###### \java\seedu\organizer\model\Organizer.java
 ``` java
     /**
      * Recurs a task weekly in the organizer for the given number of times, which is done
@@ -351,10 +351,17 @@ public class RemoveTagsCommandParser implements Parser<RemoveTagsCommand> {
      *
      * @throws DuplicateTaskException if an equivalent task already exists.
      */
-    public void recurTask(Task taskToRecur, int times)
+    public void recurWeeklyTask(Task taskToRecur, int times)
             throws DuplicateTaskException, TaskAlreadyRecurredException, TaskNotFoundException {
         Task task = createRecurredTask(taskToRecur);
         updateTask(taskToRecur, task);
+        addRecurringWeeklyTasks(task, times);
+    }
+
+    /**
+     * Adds versions of a {@code task} that are recurred weekly.
+     */
+    public void addRecurringWeeklyTasks(Task task, int times) throws DuplicateTaskException {
         LocalDate oldDeadline = task.getDeadline().date;
         for (int i = 1; i <= times; i++) {
             LocalDate newDeadline = oldDeadline.plusWeeks(i);
@@ -384,33 +391,41 @@ public class RemoveTagsCommandParser implements Parser<RemoveTagsCommand> {
         if (!key.getRecurrence().getIsRecurring()) {
             throw new TaskNotRecurringException();
         } else {
-            int recurrenceGroup = key.getRecurrence().getRecurrenceGroup();
-            List<Task> newTaskList = new ArrayList<>();
-            for (Task task : tasks) {
-                if (task.getRecurrence().getRecurrenceGroup() != recurrenceGroup) {
-                    newTaskList.add(task);
-                }
-            }
+            List<Task> newTaskList = makeNewTaskListWithoutTags(key);
             setTasks(newTaskList);
             removeUnusedTags();
         }
     }
+
+    /**
+     * Removes {@code tag} from all tasks in this {@code Organizer}.
+     */
+    public List<Task> makeNewTaskListWithoutTags(Task key) {
+        int recurrenceGroup = key.getRecurrence().getRecurrenceGroup();
+        List<Task> newTaskList = new ArrayList<>();
+        for (Task task : tasks) {
+            if (task.getRecurrence().getRecurrenceGroup() != recurrenceGroup) {
+                newTaskList.add(task);
+            }
+        }
+        return newTaskList;
+    }
 ```
-###### /java/seedu/organizer/model/recurrence/exceptions/TaskAlreadyRecurredException.java
+###### \java\seedu\organizer\model\recurrence\exceptions\TaskAlreadyRecurredException.java
 ``` java
 /**
  * Signals that the specified task is already recurred.
  */
 public class TaskAlreadyRecurredException extends Exception{}
 ```
-###### /java/seedu/organizer/model/recurrence/exceptions/TaskNotRecurringException.java
+###### \java\seedu\organizer\model\recurrence\exceptions\TaskNotRecurringException.java
 ``` java
 /**
  * Signals that the specified task is not recurred.
  */
 public class TaskNotRecurringException extends Exception {}
 ```
-###### /java/seedu/organizer/model/recurrence/Recurrence.java
+###### \java\seedu\organizer\model\recurrence\Recurrence.java
 ``` java
 /**
  * Represents a Task's recurrence in the organizer book.
@@ -485,7 +500,7 @@ public class Recurrence {
 
 
 ```
-###### /java/seedu/organizer/model/subtask/UniqueSubtaskList.java
+###### \java\seedu\organizer\model\subtask\UniqueSubtaskList.java
 ``` java
     /**
      * Makes the {@code Status} of all the subtasks in list not done.
@@ -498,7 +513,7 @@ public class Recurrence {
 
 }
 ```
-###### /java/seedu/organizer/model/task/DateCompleted.java
+###### \java\seedu\organizer\model\task\DateCompleted.java
 ``` java
 /**
  * Represents a Task's dateCompleted in the organizer.
@@ -595,7 +610,7 @@ public class DateCompleted {
     }
 }
 ```
-###### /java/seedu/organizer/storage/XmlAdaptedRecurrence.java
+###### \java\seedu\organizer\storage\XmlAdaptedRecurrence.java
 ``` java
 /**
  * JAXB-friendly adapted version of the Recurrence.

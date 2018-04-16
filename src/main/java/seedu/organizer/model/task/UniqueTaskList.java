@@ -1,6 +1,6 @@
 package seedu.organizer.model.task;
 
-//@@author agus
+//@@author aguss787
 import static java.util.Objects.requireNonNull;
 import static seedu.organizer.commons.util.CollectionUtil.requireAllNonNull;
 

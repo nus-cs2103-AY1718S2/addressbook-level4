@@ -12,7 +12,7 @@ import seedu.organizer.model.recurrence.exceptions.TaskNotRecurringException;
 import seedu.organizer.model.task.Task;
 import seedu.organizer.model.task.exceptions.DuplicateTaskException;
 
-//@@author natania
+//@@author natania-d
 /**
  * Deletes a group of recurred tasks (both the original task and recurred versions of it)
  * identified using it's last displayed index from the organizer.

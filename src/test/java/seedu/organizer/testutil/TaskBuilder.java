@@ -98,7 +98,7 @@ public class TaskBuilder {
         return this;
     }
 
-    //@@author agus
+    //@@author aguss787
     /**
      * Parses the {@code subtask} into a {@code List<Subtask>} and set it to the {@code Task} that we are building.
      */

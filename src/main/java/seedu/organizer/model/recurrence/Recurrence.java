@@ -4,7 +4,7 @@ import java.util.Objects;
 
 import seedu.organizer.model.recurrence.exceptions.TaskAlreadyRecurredException;
 
-//@@author natania
+//@@author natania-d
 /**
  * Represents a Task's recurrence in the organizer book.
  */

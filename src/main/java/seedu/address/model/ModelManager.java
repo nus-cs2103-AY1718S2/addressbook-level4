@@ -11,10 +11,19 @@ import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.index.Index;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.model.goal.Goal;
+import seedu.address.model.goal.exceptions.DuplicateGoalException;
+import seedu.address.model.goal.exceptions.EmptyGoalListException;
+import seedu.address.model.goal.exceptions.GoalNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.reminder.Reminder;
+import seedu.address.model.reminder.exceptions.DuplicateReminderException;
+import seedu.address.model.reminder.exceptions.ReminderNotFoundException;
+import seedu.address.model.tag.Tag;
 
 /**
  * Represents the in-memory model of the address book data.
@@ -25,6 +34,8 @@ public class ModelManager extends ComponentManager implements Model {
 
     private final AddressBook addressBook;
     private final FilteredList<Person> filteredPersons;
+    private final FilteredList<Goal> filteredGoals;
+    private final FilteredList<Reminder> filteredReminders;
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -37,6 +48,8 @@ public class ModelManager extends ComponentManager implements Model {
 
         this.addressBook = new AddressBook(addressBook);
         filteredPersons = new FilteredList<>(this.addressBook.getPersonList());
+        filteredGoals = new FilteredList<>(this.addressBook.getGoalList());
+        filteredReminders = new FilteredList<>(this.addressBook.getReminderList());
     }
 
     public ModelManager() {
@@ -81,12 +94,35 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
+
+    @Override
+    public void deleteTag (Tag t) {
+        addressBook.removeTag(t);
+    }
+
+
+    //@@author sham-sheer
+    @Override
+    public void deleteMeetDate (Person person) throws PersonNotFoundException {
+        addressBook.removeMeetFromPerson(person);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public synchronized void sortPersons(Index index) throws IndexOutOfBoundsException {
+        addressBook.sortPersons(index);
+        updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        indicateAddressBookChanged();
+    }
+
+
     //=========== Filtered Person List Accessors =============================================================
 
     /**
      * Returns an unmodifiable view of the list of {@code Person} backed by the internal list of
      * {@code addressBook}
      */
+    //@@author
     @Override
     public ObservableList<Person> getFilteredPersonList() {
         return FXCollections.unmodifiableObservableList(filteredPersons);
@@ -116,4 +152,88 @@ public class ModelManager extends ComponentManager implements Model {
                 && filteredPersons.equals(other.filteredPersons);
     }
 
+    //@@author deborahlow97
+    @Override
+    public void addGoal(Goal goal) throws DuplicateGoalException {
+        addressBook.addGoal(goal);
+        updateFilteredGoalList(PREDICATE_SHOW_ALL_GOALS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Goal> getFilteredGoalList() {
+        return FXCollections.unmodifiableObservableList(filteredGoals);
+    }
+
+    @Override
+    public void updateFilteredGoalList(Predicate<Goal> predicate) {
+        requireNonNull(predicate);
+        filteredGoals.setPredicate(predicate);
+    }
+
+    @Override
+    public synchronized void deleteGoal(Goal target) throws GoalNotFoundException {
+        addressBook.removeGoal(target);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateGoal(Goal target, Goal editedGoal)
+            throws DuplicateGoalException, GoalNotFoundException {
+        requireAllNonNull(target, editedGoal);
+
+        addressBook.updateGoal(target, editedGoal);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void updateGoalWithoutParameters(Goal target, Goal editedGoal)
+            throws GoalNotFoundException {
+        requireAllNonNull(target, editedGoal);
+
+        addressBook.updateGoalWithoutParameters(target, editedGoal);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public void sortGoal(String sortGoalType, String sortGoalOrder) throws EmptyGoalListException {
+        requireAllNonNull(sortGoalType, sortGoalOrder);
+        addressBook.sortGoal(sortGoalType, sortGoalOrder);
+        indicateAddressBookChanged();
+    }
+
+    //@@author fuadsahmawi
+    @Override
+    public void addReminder(Reminder reminder) throws DuplicateReminderException {
+        addressBook.addReminder(reminder);
+        updateFilteredReminderList(PREDICATE_SHOW_ALL_REMINDERS);
+        indicateAddressBookChanged();
+    }
+
+    @Override
+    public ObservableList<Reminder> getFilteredReminderList() {
+        return FXCollections.unmodifiableObservableList(filteredReminders);
+    }
+
+    @Override
+    public void updateFilteredReminderList(Predicate<Reminder> predicate) {
+        requireNonNull(predicate);
+        filteredReminders.setPredicate(predicate);
+    }
+
+    @Override
+    public synchronized void deleteReminder(Reminder reminder) throws ReminderNotFoundException {
+        addressBook.removeReminder(reminder);
+        indicateAddressBookChanged();
+    }
+    /*
+    @Override
+    public void updateReminder(Reminder target, Reminder editedReminder)
+            throws DuplicateReminderException, ReminderNotFoundException {
+        requireAllNonNull(target, editedReminder);
+
+        addressBook.updateReminder(target, editedReminder);
+        indicateAddressBookChanged();
+    }
+    */
 }

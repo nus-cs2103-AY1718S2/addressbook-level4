@@ -1,0 +1,63 @@
+= Fuad B Sahmawi - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+image::fuadsahmawi.jpg[width="150", align="left"]
+(https://github.com/fuadsahmawi[GitHub])
+
+Welcome to my project portfolio. This document summarises my contributions of every software-related project that I have
+been involved with. The link to my GitHub page can be found above. This is where you can find the repository of every
+project mentioned below.
+
+== PROJECT: CollegeZone
+
+---
+
+== Overview
+
+CollegeZone is a desktop application for NUS Residential College 4 (RC4) students. It has a Graphical User Interface (GUI)
+but most of the user interactions happen using a Command Line Interface (CLI).
+This application is catered for an RC4 student to manage their contacts with other RC4 students and to manage their tasks,
+just like a digital organiser.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *the ability to add & delete reminders in a Calendar interface*
+** What it does: allows the RC4 student to add and delete reminders in a calendar, which will be marked with different colours, depending on whether the specific reminder is due or not due.
+** Justification: This feature improves the product significantly because RC4 students, especially freshmen, will be new to University and College life and being able to note down tasks and reminders will greatly assist them in organising their day-to-day activities.
+** Highlights: This feature involves creating a new class with new attributes that were not in the original AddressBook. Interacting with the CalendarFX Application Programming Interface(API) to be able to display the reminders also posed challenges in terms of implementation.
+** Credits:(https://github.com/CS2103JAN2018-T09-B2/main/pull/116[CalendarFX API], http://natty.joestelmach.com/try.jsp[Natty API])
+
+* *Minor enhancement*: Added additional functionality to the find command, which allows RC4 students to find their contacts by tags.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B2/main/blob/master/collated/main/fuadsahmawi.md[Functional code]] [https://github.com/CS2103JAN2018-T09-B2/main/blob/master/collated/test/fuadsahmawi.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.5rc` & `v1.5` (2 releases) on (https://github.com/CS2103JAN2018-T09-B2/main/releases[GitHub])
+** Enhancements to existing features:
+*** Updated the GUI to include a Calendar Panel(Pull request https://github.com/CS2103JAN2018-T09-B2/main/pull/116[#116])
+*** Added command aliases for commands that were originally in addressbook (Pull request https://github.com/CS2103JAN2018-T09-B2/main/pull/9[#9])
+** Documentation:
+*** Did cosmetic tweaks to existing contents of the User Guide & Developer Guide (Pull requests https://github.com/CS2103JAN2018-T09-B2/main/pull/54[#54], https://github.com/CS2103JAN2018-T09-B2/main/pull/85[#85], https://github.com/CS2103JAN2018-T09-B2/main/pull/163[#163], https://github.com/CS2103JAN2018-T09-B2/main/pull/245[#245], https://github.com/CS2103JAN2018-T09-B2/main/pull/248[#248])
+** Tools:
+*** Integrated a third party library and API (CalendarFX) to the project (Pull request https://github.com/CS2103JAN2018-T09-B2/main/pull/116[#116])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=reminder]
+include::../UserGuide.adoc[tag=editreminder]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=reminder]

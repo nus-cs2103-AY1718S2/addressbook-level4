@@ -48,7 +48,7 @@ public class PersonCard extends UiPart<Region> {
     //@@author SoilChang
     @FXML
     private Label income;
-    //@@author 
+    //@@author
     @FXML
     private Label actualSpending;
     @FXML
@@ -98,7 +98,7 @@ public class PersonCard extends UiPart<Region> {
         }
 
 
-        //@@author 
+        //@@author
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         setDoubleClickEvent();

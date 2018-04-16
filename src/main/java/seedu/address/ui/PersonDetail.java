@@ -89,7 +89,7 @@ public class PersonDetail extends UiPart<Stage> {
             isNewClient.setVisible(true);
             expectedSpending.setVisible(true);
         }
-        //@@author 
+        //@@author
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         setSubmitListener();
     }

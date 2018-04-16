@@ -34,6 +34,8 @@ import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 
+
+
 /**
  * Edits the details of an existing person in the address book.
  */
@@ -124,13 +126,13 @@ public class EditCommand extends UndoableCommand {
                 .orElse((personToEdit.getActualSpending()));
         Expenditure updatedExpectedSpending = editPersonDescriptor.getExpectedSpending()
                 .orElse((personToEdit.getExpectedSpending()));
-        //@@author 
+        //@@author
         Age updatedAge = editPersonDescriptor.getAge().orElse(personToEdit.getAge());
 
         //@@author SoilChang
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 updatedIncome, updatedActualSpending, updatedExpectedSpending, updatedAge, personToEdit.getPolicy());
-        //@@author 
+        //@@author
     }
 
     @Override
@@ -185,7 +187,7 @@ public class EditCommand extends UndoableCommand {
             setIncome(toCopy.income);
             setActualSpending(toCopy.actualSpending);
             setExpectedSpending(toCopy.expectedSpending);
-            //@@author 
+            //@@author
             setAge(toCopy.age);
         }
 
@@ -197,7 +199,7 @@ public class EditCommand extends UndoableCommand {
             return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags,
                     this.income, this.actualSpending, this.expectedSpending, this.age);
         }
-        //@@author 
+        //@@author
 
         public void setName(Name name) {
             this.name = name;
@@ -255,15 +257,18 @@ public class EditCommand extends UndoableCommand {
         public Optional<Expenditure> getExpectedSpending() {
             return Optional.ofNullable(expectedSpending);
         }
+
         //@@author jstarw
         public void setAge(Age age) {
             this.age = age;
         }
+
         //@@author jstarw
         public Optional<Age> getAge() {
             return Optional.ofNullable(age);
         }
         //@@author
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.

@@ -26,6 +26,8 @@ import seedu.address.model.policy.Date;
 import seedu.address.model.policy.Policy;
 import seedu.address.model.policy.Price;
 
+
+
 /**
  * Edits an existing policy of a person in the address book.
  */
@@ -58,7 +60,7 @@ public class EditPolicyCommand extends UndoableCommand {
     private Person editedPerson;
 
     /**
-     * @param index  of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPolicyDescriptor details to edit the policy with
      */
     public EditPolicyCommand(Index index, EditPolicyDescriptor editPolicyDescriptor) {
@@ -111,7 +113,7 @@ public class EditPolicyCommand extends UndoableCommand {
      * edited with {@code editPolicyDescriptor}.
      */
     private static Policy createEditedPolicy(Policy policyToEdit, EditPolicyDescriptor editPolicyDescriptor)
-        throws IllegalValueException {
+            throws IllegalValueException {
         assert policyToEdit != null;
 
         Date updatedBeginning = editPolicyDescriptor.getBeginning().orElse(policyToEdit.getBeginning());
@@ -199,17 +201,29 @@ public class EditPolicyCommand extends UndoableCommand {
             return Optional.ofNullable(beginning);
         }
 
-        public void setExpiration(Date expiration) { this.expiration = expiration; }
+        public void setExpiration(Date expiration) {
+            this.expiration = expiration;
+        }
 
-        public Optional<Date> getExpiration() { return Optional.ofNullable(expiration); }
+        public Optional<Date> getExpiration() {
+            return Optional.ofNullable(expiration);
+        }
 
-        public void setPrice(Price price) { this.price = price; }
+        public void setPrice(Price price) {
+            this.price = price;
+        }
 
-        public Optional<Price> getPrice() { return Optional.ofNullable(price); }
+        public Optional<Price> getPrice() {
+            return Optional.ofNullable(price);
+        }
 
-        public void setCoverage(Coverage coverage) { this.coverage = coverage; }
+        public void setCoverage(Coverage coverage) {
+            this.coverage = coverage;
+        }
 
-        public Optional<Coverage> getCoverage() { return Optional.ofNullable(coverage); }
+        public Optional<Coverage> getCoverage() {
+            return Optional.ofNullable(coverage);
+        }
 
         @Override
         public boolean equals(Object other) {

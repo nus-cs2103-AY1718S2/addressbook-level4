@@ -33,7 +33,7 @@ public class SampleDataUtil {
                 new Income(2000.00),
                 new Expenditure(2000.0),
                 new Expenditure(2000.0),
-                //@@author 
+                //@@author
                 new Age(20),
                 Optional.empty()
             ),
@@ -47,7 +47,7 @@ public class SampleDataUtil {
                 new Income(2200.00),
                 new Expenditure(2000.0),
                 new Expenditure(2000.0),
-                //@@author 
+                //@@author
                 new Age(20),
                 Optional.empty()
             ),
@@ -57,14 +57,14 @@ public class SampleDataUtil {
                 new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
                 getTagSet("neighbours"), new Income(34550.00), new Expenditure(2000.0),
                 new Expenditure(2000.0), new Age(20), Optional.empty()),
-            //@@author 
+            //@@author
 
             //@@author SoilChang
             new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
                 new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
                 getTagSet("family"), new Income(202323.00), new Expenditure(2000.0),
                 new Expenditure(2000.0), new Age(20), Optional.empty()),
-            //@@author 
+            //@@author
 
             //@@author SoilChang
             new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),

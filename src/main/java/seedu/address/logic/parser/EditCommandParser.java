@@ -42,7 +42,7 @@ public class EditCommandParser implements Parser<EditCommand> {
         ArgumentMultimap argMultimap =
                 ArgumentTokenizer.tokenize(args, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL, PREFIX_ADDRESS,
                         PREFIX_TAG, PREFIX_INCOME, PREFIX_ACTUALSPENDING, PREFIX_AGE);
-        //@@author 
+        //@@author
 
         //2. do something I don't know what for yet
         Index index;
@@ -64,7 +64,7 @@ public class EditCommandParser implements Parser<EditCommand> {
             ParserUtil.parseActualSpending(argMultimap.getValue(PREFIX_ACTUALSPENDING))
                     .ifPresent(editPersonDescriptor::setActualSpending);
             ParserUtil.parseIncome(argMultimap.getValue(PREFIX_INCOME)).ifPresent(editPersonDescriptor::setIncome);
-            //@@author 
+            //@@author
             ParserUtil.parseAge(argMultimap.getValue(PREFIX_AGE)).ifPresent(editPersonDescriptor::setAge);
             parseTagsForEdit(argMultimap.getAllValues(PREFIX_TAG)).ifPresent(editPersonDescriptor::setTags);
         } catch (IllegalValueException ive) {

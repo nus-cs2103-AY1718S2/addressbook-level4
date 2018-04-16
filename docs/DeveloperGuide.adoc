@@ -1,6 +1,6 @@
-= AddressBook Level 4 - Developer Guide
+= NUSCouples - Developer Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -10,9 +10,18 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B4`      Since: `Feb 2018`      Licence: `MIT`
+
+Welcome to the developer guide for _NUSCouples_!
+
+_NUSCouples_ is a command-lineCommand Line Interface (CLI) desktop application specially targeted at couples studying
+in the National University of Singapore (NUS). It aims to help them create new memories during their busy school term
+time in NUS.
+
+This developer guide contains information that can help you to get started as a contributor to _NUSCouples_,
+as well as more about the software architecture and feature implementation of _NUSCouples_.
 
 == Setting up
 
@@ -30,7 +39,6 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
-
 
 === Setting up the project in your computer
 
@@ -89,7 +97,10 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 When you are ready to start coding,
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
-2. Take a look at <<GetStartedProgramming>>.
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 == Design
 
@@ -153,6 +164,11 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 The sections below give more details of each component.
 
 [[Design-Ui]]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 === UI component
 
 .Structure of the UI Component
@@ -171,6 +187,11 @@ The `UI` component,
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 === Logic component
 
 [[fig-LogicClassDiagram]]
@@ -194,6 +215,11 @@ Given below is the Sequence Diagram for interactions within the `Logic` componen
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 === Model component
 
 .Structure of the Model Component
@@ -209,6 +235,11 @@ The `Model`,
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 === Storage component
 
 .Structure of the Storage Component
@@ -222,6 +253,11 @@ The `Storage` component,
 * can save the Address Book data in xml format and read it back.
 
 [[Design-Commons]]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 === Common classes
 
 Classes used by multiple components are in the `seedu.addressbook.commons` package.
@@ -358,12 +394,21 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 // tag::dataencryption[]
+
 === [Proposed] Data Encryption
 
 _{Explain here how the data encryption feature will be implemented}_
 
 // end::dataencryption[]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 === Logging
 
@@ -381,9 +426,431 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 * `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
 
 [[Implementation-Configuration]]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 === Configuration
 
 Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+// tag::calendar[]
+=== [Proposed] Calendar Google API Feature
+==== Proposed Implementation (Appearing in V2.0)
+The Calendar Viewer mechanism is facilitated by `Google Calendar API` and reside in the `ModelManager`.
+It supports viewing/add/editing/deleting capability that modifies the state of _NUSCouples_.
+Firstly, it uses OAuth 2.0 endpoints to allow users to share specific data with the application while keeping their usernames, passwords, and other information private. For example, an application can use OAuth 2.0 to obtain permission from users to store files in their Google Drives which sync to the calendar.
+This implementation requires the user to connect to the internet because _NUSCouples_ needs to open the system browser and supply a local redirect URI to handle responses from Google's authorization server.
+
+*Basic steps*
+
+All applications follow a basic pattern when accessing a Google API using OAuth 2.0. At a high level, this are the four steps:
+
+
+|===
+|No. |Description
+
+|Step 1:
+|Obtain OAuth 2.0 credentials from the Google API Console.
+ Visit the Google API Console to obtain OAuth 2.0 credentials such as a client ID and client secret that are known to both Google and your application. The set of values varies based on what type of application you are building. For example, a JavaScript application does not require a secret, but a web server application does.
+
+
+|Step 2:
+|Obtain an access token from the Google Authorization Server.
+ Before your application can access private data using a Google API, it must obtain an access token that grants access to that API. A single access token can grant varying degrees of access to multiple APIs. A variable parameter called scope controls the set of resources and operations that an access token permits. During the access-token request, your application sends one or more values in the scope parameter.
+ There are several ways to make this request, and they vary based on the type of application you are building. For example, a JavaScript application might request an access token using a browser redirect to Google, while an application installed on a device that has no browser uses web service requests.
+ Some requests require an authentication step where the user logs in with their Google account. After logging in, the user is asked whether they are willing to grant the permissions that your application is requesting. This process is called user consent.
+ If the user grants the permission, the Google Authorization Server sends your application an access token (or an authorization code that your application can use to obtain an access token). If the user does not grant the permission, the server returns an error.
+ It is generally a best practice to request scopes incrementally, at the time access is required, rather than up front. For example, an app that wants to support purchases should not request Google Wallet access until the user presses the “buy” button; see Incremental authorization.
+
+|Step 3:
+|After an application obtains an access token, it sends the token to a Google API in an HTTP authorization header. It is possible to send tokens as URI query-string parameters, but we don't recommend it, because URI parameters can end up in log files that are not completely secure. Also, it is good REST practice to avoid creating unnecessary URI parameter names.
+ Access tokens are valid only for the set of operations and resources described in the scope of the token request. For example, if an access token is issued for the Google+ API, it does not grant access to the Google Contacts API. You can, however, send that access token to the Google+ API multiple times for similar operations.
+
+|Step 4:
+|Refresh the access token, if necessary.
+ Access tokens have limited lifetimes. If your application needs access to a Google API beyond the lifetime of a single access token, it can obtain a refresh token. A refresh token allows your application to obtain new access tokens
+|===
+
+
+The sequence diagram below shows interactions within the `Logic` Component for Outh 2.0 endpoints:
+
+image::GoogleCalendarSeqDiagram.png[width="850"]
+
+
+==== Design Considerations
+===== Aspect: Implementation of Google Calendar feature
+* **Alternative 1 (current choice):** Data are not save locally.
+** Pros: User does not worry about getting data lost
+** Cons: User unable to retrieve the Calendar if internet is not connected
+* **Alternative 2:** Save Data locally
+** Pros: User does not worry their Calendar is unable to connected to Google.
+** Cons: The latest Calendar events might not have been synchronized.
+
+===== Aspect: Using Open-source or proprietary Calendar API
+* **Alternative 1 (current choice):** Using Google API (open source)
+** Pros: I will learnt more even if I failed at the end of the project and Google API is more versatile
+** Cons: Tedious to implement it.
+* **Alternative 2:** Using Restful API (proprietary)
+** Pros: Easier to implement due to everything is assisted.
+** Cons: Restrictive, need more money for more features to add on.
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+// end::calendar[]
+
+//tag::viewCalendar[]
+
+=== Calendar Viewer feature
+==== Proposed Implementation
+
+The Calendar Viewer feature is implemented by 'BrowserPanel', which will reside in 'UI'.
+
+The idea of implementing this Calendar Viewer feature that sits ontop of Browser panel UI is to give the user a first look at the upcoming events first before going on to other features on the App.
+
+Users are able to select different views such as in Days, Weeks, Months or Years by adding a prefix 'c', 'w', 'm', 'y' after adding 'Cal' or 'Calendar' behind.
+
+This Calendar Interface is created and designed by CalendarFX. Through their GUI interface, i manipulate and massage the codes to allow user to enter commands to change the views since this is a CLI interface APP.
+
+The sequence diagram below shows interactions within the `Logic` Component for the `execute' API call.
+
+image::CalViewSeq.png[width="650"]
+
+==== Design Considerations
+===== Aspect: Implementation of Calendar View
+
+* **Alternative 1 (current choice):** Display only current month event.
+** Pros: Easier to implement and Neater rather than displaying more than 1 mth.
+** Cons: Need to input cmd to filter through other month.
+* **Alternative 2:** Don't display any month until user defines.
+** Pros: More interaction.
+** Cons: The UI will be blank at initial stage which is ugly.
+
+===== Aspect: Calendar View performance
+
+* **Alternative 1 (current choice):** Requires RAM of at least 6GB and above.
+** Pros: Faster retrieval and display the Calendar out
+** Cons: Need to buy more memory
+* **Alternative 2:** Don't display Year.
+** Pros: Reduce latency
+** Cons: User can't add event to next year
+
+// end::viewCalendar[]
+
+//tag::addCalendar[]
+
+=== Calendar Add Appointment feature
+==== Proposed Implementation
+
+The Calendar Add Appointment feature is implemented by 'Appointment', which will reside in 'Model'.
+
+The idea of implementing Add Appointment feature is to allow the user to add his/her event on the Calendar.
+
+The AppointmentList class holds an internal list that holds the Appointment class.
+Appointments are made up of 3 internal variables.
+
+image::AddAppointmentClass.png[width="300"]
+
+** Description: It Holds a string about the appointment. This String will be used to identify which Appointment.
+** Start Date: It Holds the starting time of the appointment. Used for sorting appointments and UI.
+** End Date: Holds the end time of the appointment. Used for UI.
+
+The sequence diagram below shows interactions within the `Model` Component for the `AddAppointment' API call.
+
+image::AddAppointmentSeq.png[width="650"]
+
+==== Design Considerations
+===== Aspect: Implementation of Add Event View
+
+* **Alternative 1 (current choice):** Display in Calendar UI.
+** Pros: Easier to implement and Neater.
+** Cons: Doesn't display all events listed on the partner.
+* **Alternative 2:** Create a List to display all events.
+** Pros: User can have an overview of all the events listed
+** Cons: The UI will be blank at initial stage which is ugly.
+
+===== Aspect: Allow duplicate events
+
+* **Alternative 1 (current choice):** On same time of the same day.
+** Pros: User can plan which one is more important to attend
+** Cons: Ambiguous as there are multiple similar events on the same time frame
+* **Alternative 2:** Restrict user to add same event on the same time frame.
+** Pros: More neat looking
+** Cons: User cant compare or manage well
+
+// end::addCalendar[]
+
+//tag::cancelCalendar[]
+
+=== Calendar Cancel Appointment feature
+==== Proposed Implementation
+
+The Calendar Cancel Appointment feature is implemented by 'Appointment', which will reside in 'Model'.
+
+The idea of implementing a Cancel Appointment feature is to allow the user to remove his/her event on the Calendar when needed.
+
+When the user calls to cancel an appointment in the Calendar, the model will ask AppointmentList to return a list of Appointments.
+However, the AppointmentList will only return a mutable copy of the AppointmentList back to the caller, as a practice of Defensive Programming.
+
+The sequence diagram below shows interactions within the `Model` Component for the `CancelAppointment' API call.
+
+image::CancelApptSeq.png[width="650"]
+
+==== Design Considerations
+===== Aspect: Implementation of Add Event View
+
+* **Alternative 1 (current choice):** Display in Calendar UI.
+** Pros: Easier to implement and Neater.
+** Cons: Have to cancel one by one and thus calendar will refresh over and over again.
+* **Alternative 2:** Create a List to display all events.
+** Pros: User can have an overview of all the events listed to cancel
+** Cons: The UI will be blank at initial stage which is ugly.
+
+// end::cancelCalendar[]
+
+//tag::timetable[]
+
+=== Timetable View and Compare feature
+==== Adding a Timetable
+
+The Timetable Viewer feature is implemented by `Timetable`, which will reside in `ModelManager`.
+
+Users are able to add a shortened https://nusmods.com/[NUSMods] timetable URL to their existing partner in _NUSCouples_. +
+
+ Sample shortened NUSMods URL: http://modsn.us/wNuIW
+
+We pass the shortened URL through a `HttpURLConnection` to get the expanded URL. +
+
+ Sample expanded NUSMods URL: https://nusmods.com/timetable/sem-2/share?CS2101=SEC:C01&CS2103T=TUT:C01&…
+
+The expanded NUSMods URL can be generalised and represented in the format
+`…/timetable/sem-[SEM_NUM]/share?[MODULE_CODE]=[LESSON_TYPE]:[CLASS_NUM]&[MODULE_CODE]=[LESSON_TYPE]:[CLASS_NUM]&…`
+
+We can parse this expanded NUSMods URL to get the `SEM_NUM`, as well as the
+`MODULE_CODE`, `LESSON_TYPE` and `CLASS_NUM` for each of the modules in the timetable.
+
+Using http://api.nusmods.com/[NUSMods API], we can get the `WEEK_TEXT`, `DAY_TEXT`, `START_TIME`, `END_TIME` and
+`VENUE` of each module.
+
+The following diagram shows how the Timetable class is represented.
+
+image::TimetableClass.png[width="500"]
+A TimetableModule represents one NUSMods module. +
+The TimetableModuleSlots represents a particular class session of a TimetableModule. (e.g. Tutorial, Lecture, etc)
+
+
+==== Design Considerations
+===== Aspect: Implementation of add NUSMods timetable URL
+* **Alternative 1 (current choice):** Accept short URLs only
+** Pros: Easier to implement.
+** Cons: Less user friendly as users can only add one type of URL.
+* **Alternative 2:** Accept both short URLs and expanded URLs
+** Pros: More user friendly as users have the choice to add either short or expanded URLs.
+** Cons: Difficult to check if given expanded NUSMods URL is a valid.
+
+===== Aspect: Data Structure to support implementation of Timetable
+* **Alternative 1 (current choice):** Store information by days of the week and by modules taken
+** Pros: Easy to add new functions on top of this implementation, more flexible.
+** Cons: May be a bit messy to implement due to the need to manage both structures.
+* **Alternative 2:** Store information by days of the week
+** Pros: Easy to add new functions on top of this implementation such as compare timetables by days.
+** Cons: Have to sort information by day during parsing which can be tedious.
+* **Alternative 3:** Store information by modules taken
+** Pros: Easier to implement due to how NUSMods API is structured.
+** Cons: Difficult to extract out information for a particular time slot on a particular day.
+
+==== Viewing a Timetable
+
+The following image shows how the tview Command works.
+
+image::ShowTimetableCommandHighLevelSequenceDiagram.png[width="820"]
+
+The `TimetableChangedEvent` is handled by `StorageManager` which will save the new timetable details into the relevant
+timetable display files.
+[source,java]
+----
+    @Subscribe
+    public void handleTimetableChangedEvent(TimetableChangedEvent event) {
+        setUpTimetableDisplayFiles(event.timetable.getTimetableDisplayInfo());
+        setUpTimetablePageHtmlFile();
+        raise(new ShowTimetableRequestEvent());
+    }
+----
+
+The `ShowTimetableRequestEvent` is handled by both `ListPanel` and `MainWindow`.
+The following code snippets show how they are handled.
+[source,java]
+----
+    @Subscribe
+    private void handleShowTimetableRequestEvent (ShowTimetableRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        scrollTo(PARTNER_INDEX); // selects Partner in ListPanel
+    }
+----
+[source,java]
+----
+    @Subscribe
+    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleHelp();
+    }
+
+    public void handleShowTimetable() {
+        browserPanel.loadTimetablePage(); // Loads Timetable Page in Browser Panel
+        if (!browserPlaceholder.getChildren().contains(browserPanel.getRoot())) {
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        }
+    }
+----
+
+==== Design Considerations
+===== Aspect: Implementation of storing Timetable Information
+* **Alternative 1 (current choice):** Stores Information in a HTML file. Edits the javascript array in the HTML file to
+change the contents of the tables.
+** Pros: Easy to implement.
+** Cons: GUI will be a static web page.
+* **Alternative 2:** Use JavaFX
+** Pros: Provides a friendlier GUI (able to drag and drop table view).
+** Cons: Takes longer to load and display.
+
+
+==== Comparing Timetables
+
+The sequence diagram below shows interactions within the `Logic` Component for the `execute(“tc tt/http://modsn.us/q7cLP”)`
+API call.
+
+image::CompareTimetableSequenceDiagram.png[width="820"]
+Similar to <<Viewing a Timetable, Viewing a Timetable>>, the CompareTimetableCommand raises two Events:
+`ShowTimetableRequestEvent` and `TimetableChangedEvent`. This updates the relevant files and refreshes the
+Timetable Page displayed.
+
+We use a boolean isComparing in each TimetableModuleSlot to differentiate between the text to display for the normal
+Timetable and compared Timetable. +
+
+In _setUpTimetableInfoCompare()_ in `TimetableUtil`: +
+We call a method _setUpUnsortedModuleSlotsForComparing()_ that contains the following loop:
+[source,java]
+----
+    for (TimetableModuleSlot t : allUnsortedModulesSlots) {
+        t.setComparing(true);
+    }
+----
+
+In `TimetableModuleSlot`: +
+We override the toString() method:
+[source,java]
+----
+    @Override
+    public String toString() {
+        if (isComparing) {
+            return isEmpty
+                    ? "\"\"" : "\"X\"";
+        } else {
+            return isEmpty
+                    ? "\"\"" : "\"" + moduleCode + "\"";
+        }
+    }
+----
+
+The list of TimetableModuleSlots are formatted to look like an array, and is subsequently stored in a String which is stored in a file called `timetableDisplayInfo`.
+
+`FileTimetableStorage` replaces the timetable array declared in `TimetablePage.html`, which replaces the contents in the table cells of the HTML file.
+
+==== Design Considerations
+===== Aspect: Implementation of displaying common breaks
+* **Alternative 1 (current choice):** Replace all busy slots with 'X'
+** Pros: Easy to implement.
+** Cons: Not visually pleasing.
+* **Alternative 2:** Shade the cells a different colour.
+** Pros: More intuitive for the user.
+** Cons: More tedious to implement.
+
+
+// end::timetable[]
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+//tag::journal[]
+=== Journal feature
+==== Current Implementation
+
+A JournalEntry contains only two variables, a String corresponding to the `date` the entry was created and a
+String containing its `text` contents. It is stored in the Journal, which consists of an `ObservableList <JournalEntry>`
+and a `HashMap <Date, JournalEntry>`, and resides inside `ModelManager`. The journal supports adding, editing of
+the current journal entry and saving journal entries. +
+
+The List data structure makes it easy to show an ordered list of items, and is ideal for adding and displaying my journal
+entries. However, searching for a particular entry will be tedious as there is a need to iterate through the entire list.
+A HashMap is used alongside the list in order to search and get journal entries easily. All search and get operations
+can be done in O(1), which makes it ideal for these specific operations. However, it does not allow for an ordered list
+easily. Due to the use of both a List and a HashMap, all operations on the journal must be synchronised
+ for both data structures. +
+
+Suppose that the user has just launched the application for the first time. The `Journal` hold a list of sample journal
+entries. On the `jnew` command, the app will check if the journal contains a `JournalEntry` corresponding to the
+current local date in the form (yyyymmdd). If it exists, its data (date and text) is read from the `JournalEntry` and a
+copy of it is opened in a new `JournalWindow`. This is done using a HashMap<Date, JournalEntry>.
+If it does not exist, a new `JournalWindow` is created. When the window
+is closed, a `handleJournalClose` method is called. If the `TextArea` is not empty, a `SaveEntryEvent` is raised. This
+event will pass the data from the `JournalWindow` in the form of a `JournalEntry` to the event handler.
+
+The `ModelManager` will raise the SaveEntryEvent` by adding the `JournalEntry` to the `Journal`. If a
+`JournalEntry` with the same date exits, it will update the previous entry. When the `ModelManager` makes a change to the
+journal, an `indicateJournalEvent` is raised. +
+
+The `StorageManager` handles the reading and writing of journal entries.  This event gets the current Journal and passes
+it to the event handler. The `StorageManager` handles the event by converting the journal into an xml file and saving it
+in the root/data folder. If there is no journal.xml file present, it will create a new one.
+
+[NOTE]
+The user cannot choose to save the `JournalEntry` under a different date. The user also cannot edit past
+journal entries.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `JournalWindow`
+
+* **Alternative 1:** Use javafx to directly make a new window.
+** Pros: Easy to implement. Only requires a few lines of code in one or two files.
+** Cons: Not consistent with the rest of the app. Needs more effort to maintain when changes are made.
+* **Alternative 2:** Make use of the UI framework.
+** Pros: Consistent with rest of app.
+** Cons: Harder to implement. Requires understanding of the UI component. Required minor edits in many files.
+
+===== Aspect: Data Structure of Journal
+
+* **Alternative 1:** Use HashMap to store journal entries.
+** Pros: Easy to search and get.
+** Cons: Difficult to show ordered list.
+* **Alternative 2:** Use List to store journal entries.
+** Pros: Can show ordered list easily.
+** Cons: When there are many items in the list, searching may take very long as it has to iterate through the entire list.
+* **Alternative 3 (current choice):** Use both.
+** Pros: All operations can be done easily.
+** Cons: Need to set data structures on initialisation and sync all operations between the two data structures.
+
+===== Aspect: Naming of journal entries
+
+* **Alternative 1 (current choice):** Automatically uses current date "YYYYMMDD" as file name.
+** Pros: No need to worry about duplicate names. Easy to implement filtering (can filter by value easily).
+** Cons: Lack of personalisation. Hard to distinguish between files.
+* **Alternative 2:** Allow user to name journal entries.
+** Pros: User can distinguish between files easily.
+** Cons: If duplicate names are allowed, we need to distinguish them with another method. If duplicate names are not allowed, user may struggle to find unique names for every entry.
+
+// end::journal[]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 == Documentation
 
@@ -414,6 +881,10 @@ Here are the steps to convert the project documentation files to PDF format.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 [[Testing]]
 == Testing
@@ -465,6 +936,10 @@ e.g. `seedu.address.logic.LogicManagerTest`
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
 * Solution: Execute Gradle task `processResources`.
 
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 == Dev Ops
 
 === Build Automation
@@ -497,298 +972,54 @@ A project often depends on third-party libraries. For example, Address Book depe
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-[[GetStartedProgramming]]
-[appendix]
-== Suggested Programming Tasks to Get Started
-
-Suggested path for new programmers:
-
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
-
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user profile:*
 
-* has a need to manage a significant number of contacts
+* is currently a student in a relationship with another student in NUS
+* needs to remember special dates and moments
+* needs to schedule meetings to find a good time to meet
 * prefer desktop apps over other types
 * can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* prefer typing over mouse input
+* are reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition:* all-in-one desktop app to help NUS couples make and remember memories with each other
+
+*Feature contribution:*
+
+
+|===
+|Assignee |Major|Minor
+
+// tag::Major-Minor[]
+
+|Chen Xing
+|Scheduler: This app allows user to schedule//delete/view planned meetings
+|Accessibility: Reduce the effort when user enters command on the command box through custom keystrokes. +
+Tracker: The system will update the time on the footer to show when the changes have been made.
+
+// end::Major-Minor[]
+
+|Marlene
+|Timetable viewer: To help you keep updated with your partner's school schedule
+|Timetable comparator: To help couples identify common breaks during school term so they can plan meetings during their free time
+
+|Samuel
+|Journal: Allow couples to record their thoughts and feelings to remember the time spent with their partner
+|Tag (emotions) : Add/delete tags to journal entries (happy, sad, angry, funny)
+
+|Daniel
+|Send motivational picture: Motivate partner by sending a motivational picture via the browser panel
+|Command aliases: Enable shortcut keywords for commands
+
+|===
+
 
 [appendix]
 == User Stories
@@ -800,51 +1031,213 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |pair of NUS students in a relationship |add/view my partner's NUS timetable for the week |keep track of my partner's free time
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |person in a relationship |View,Add and Delete special events/ meetings (e.g. Valentine's day) in the same month |better plan for these dates
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |person in a relationship |add/view Journal entries |remember special memories
+
+|`* * *` |pair of NUS students in a relationship |locate my partner from his NUS timetable |easily meet up with my partner on campus
+
+|`* *` |user who values their privacy |encrypt _NUSCouples_ save data |prevent strangers from reading personal information such as my journal entries
+
+|`* *` |As a part of a couple in NUS |encrypt _NUSCouples_ save data |prevent strangers from reading personal information such as my journal entries
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
+|`* *` |user |able to execute keystrokes to lighten their typing | keep their spirits up
+
 |`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*`|user who likes to customize things |change the theme or customize text color |
+
+|`*` |experienced user |have shortcut keys| do the same thing in a shorter time
+
+|`*` |user |gets updated upon the changed of event| so he can be verified that changes has been made
+
 |=======================================================================
 
-_{More to be added}_
+// tag::UseCase[]
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `NUSCouples` app and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Authenticate User with Google
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User are required to generate and download their credential from google API credentials: https://console.developers.google.com/apis/dashboard?[Google Dashboard] and import into project resource directory.
+2. NusCouples use the credential to authenticate with Google API using Auth2.0.
+
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
-+
-Use case ends.
-
-* 3a. The given index is invalid.
+* 1a. The partner already has an existing google calendar hosted in google.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 1a1. NUSCouples redirects to google calendar account to authenticate using the user credential.
+** 1a2. User confirms change.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+* 1b. The given credential is invalid.
++
+[none]
+** 1b1. NUSCouples shows an error message and close.
++
+Use case ends.
+
+[discrete]
+=== Use case: View Calendar of User
+
+*MSS*
+
+1.User inside browser panel enters the command to view calendar at different view(s).
+2.NUSCouples displays the Calendar
+
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is an existing user in NUSCouples.
++
+[none]
+** 1a1. _NUSCouples_ request to display Calendar of day/week/month/year from CalendarFX.
+** 1a2. _NUSCouples_ populate the calendar on the browser panel
+
++
+Use case resumes at step 2.
+
+Use case ends.
+
+[discrete]
+=== Use case: Add Event on Calendar
+
+*MSS*
+
+1.User inside browser panel enters the command to add appointment.
+2.NUSCouples update the appointment list.
+3.NUSCouples displays the Calendar of all the events in the appointment list and update the change of event on the footer.
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User didn't specify date of event
++
+[none]
+** 1a1. _NUSCouples_ shows an error
+
+[none]
+* 2a. NUSCouples add the new appointment into the list
+
+Use case ends.
+
+[discrete]
+=== Use case: Delete Event on Calendar
+
+*MSS*
+
+1.User inside browser panel enters the command to delete appointment.
+2.NUSCouples update the appointment list.
+3.NUSCouples displays the Calendar of all the events in the appointment list.
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User didn't specify date of event
++
+[none]
+** 1a1. _NUSCouples_ shows an error
+
+[none]
+* 2a. NUSCouples cannot find the appointment into the list
+[none]
+** 2a1. NUSCouples displays error message
+
+Use case ends.
+
+[discrete]
+=== Use case: Keyboard Accessibility
+
+*MSS*
+
+1.User enters a long command but want's to add something at the front or back
+2.User press Shift Ctrl (move cursor to the front) Shift Alt (move cursor to the back)
+
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. User is using MAC
++
+[none]
+** 1a1. enter `option` key instead of `Alt` key
+
+[none]
+* 2a. User doesn't have keystroke Shift/Alt/Ctrl.
++
+[none]
+** 2a1. This feature can't be used
+
+Use case ends.
+
+// end::UseCase[]
+
+[discrete]
+=== Use case: View Timetable of Partner
+
+*MSS*
+
+1.  User requests to view timetable of his/her partner.
+2.  _NUSCouples_ displays the timetable.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The specified person does not have a timetable.
+** 1a1. _NUSCouples_ shows an error message.
+[none]
+
+
++
+Use case ends.
+
+[discrete]
+=== Use case: Add New Journal Entry
+
+*MSS*
+
+1.  User requests to create new journal entry.
+2.  _NUSCouples_ opens new journal window.
+3.  User enters text and closes journal window.
+4.  _NUSCouples_ saves new journal entry in journal.
++
+Use case ends.
+
+*Extensions*
+
+* 1a. Journal entry with the current local date exists.
+** 1a.1 _NUSCouples_ reads data and a new copy of the journal entry is opened in a journal window. +
+      Use case resumes at step 3.
+
+* 3a. Journal entry with the current local date exists.
+** 3a.1 _NUSCouples_ overwrites journal entry in journal. +
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
@@ -852,14 +1245,22 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be usable by a novice after reading the <<UserGuide#, User Guide>>.
+.  Should be able to handle any invalid inputs.
+.  Should respond to user inputs within 2 seconds.
+.  Should be able to work on both 32-bit and 64-bit environments.
+.  Should have commands that are intuitive and easy to remember.
+.  Should be able to control almost everything from the CLI.
+.  The application should be connected to the internet.
+.  Should able to store <100 appointments
 
 [appendix]
 == Glossary
-
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
+
+[[Third-Party-API]] Third-Party API::
+NUSMods, CalendarFX
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others

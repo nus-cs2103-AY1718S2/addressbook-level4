@@ -1,48 +1,89 @@
 package seedu.address.model;
 
-import java.util.function.Predicate;
-
 import javafx.collections.ObservableList;
+import seedu.address.model.journalentry.Date;
+import seedu.address.model.journalentry.JournalEntry;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.appointment.Appointment;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.person.timetable.Timetable;
 
 /**
  * The API of the Model component.
  */
 public interface Model {
-    /** {@code Predicate} that always evaluate to true */
-    Predicate<Person> PREDICATE_SHOW_ALL_PERSONS = unused -> true;
 
-    /** Clears existing backing model and replaces with the provided new data. */
-    void resetData(ReadOnlyAddressBook newData);
+    /** Clears existing backing model for journal and replaces with the provided new data. */
+    void resetJournalData(ReadOnlyJournal newData);
 
-    /** Returns the AddressBook */
-    ReadOnlyAddressBook getAddressBook();
+    /** Clears existing backing model for person and replaces with the provided new data. */
+    void resetPersonData(ReadOnlyPerson newData);
 
-    /** Deletes the given person. */
-    void deletePerson(Person target) throws PersonNotFoundException;
+    /** Returns the Person */
+    ReadOnlyPerson getPartner();
+
+    //@@author traceurgan
+    /** Returns the Journal */
+    ReadOnlyJournal getJournal();
 
     /** Adds the given person */
-    void addPerson(Person person) throws DuplicatePersonException;
+    void addJournalEntry(JournalEntry journalEntry) throws Exception;
+
+    boolean contains(Date date);
+
+    /** Returns an unmodifiable view of the journal entry list */
+    ObservableList<JournalEntry> getJournalEntryList();
+
+    ObservableList <ReadOnlyPerson> getPersonAsList();
+
+    //@@author
+    void deletePerson() throws NullPointerException;
+
+    /** Adds the given person */
+    void addPerson(ReadOnlyPerson person) throws DuplicatePersonException;
+
+    /** Edits the given person */
+    void editPerson(ReadOnlyPerson editedPerson) throws NullPointerException;
+
+    /** Updates the given person */
+    Person updatePerson(ReadOnlyPerson editedPerson);
+
+    //@@author chenxing1992
+    /**
+     * Adds appointment to a person
+     */
+    void addAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
     /**
-     * Replaces the given person {@code target} with {@code editedPerson}.
-     *
-     * @throws DuplicatePersonException if updating the person's details causes the person to be equivalent to
-     *      another existing person in the list.
-     * @throws PersonNotFoundException if {@code target} could not be found in the list.
+     * Removes appointment from a person
      */
-    void updatePerson(Person target, Person editedPerson)
-            throws DuplicatePersonException, PersonNotFoundException;
+    void removeAppointment(ReadOnlyPerson target, Appointment appointment) throws PersonNotFoundException;
 
-    /** Returns an unmodifiable view of the filtered person list */
-    ObservableList<Person> getFilteredPersonList();
+    //@@author marlenekoh
+    /**
+     * Raises an event to indicate the timetable storage has changed.
+     */
+    void indicateTimetableChanged(Timetable timetable);
+    /**
+     * Raises an event to hide timetable.
+     */
+    void requestHideTimetable();
 
     /**
-     * Updates the filter of the filtered person list to filter by the given {@code predicate}.
-     * @throws NullPointerException if {@code predicate} is null.
+     * Raises an event to show timetable.
      */
-    void updateFilteredPersonList(Predicate<Person> predicate);
+    void requestShowTimetable();
 
+    //@@author
+    int getLast();
+
+    JournalEntry getJournalEntry(Date date);
+
+    /**
+     * Opens an existing journal entry
+     * @param date
+     */
+    void viewJournalEntry(Date date) throws Exception;
 }

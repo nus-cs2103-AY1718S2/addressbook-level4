@@ -1,7 +1,8 @@
-= AddressBook Level 4 - User Guide
+= _NUSCouples_ - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
+:toclevels: 3
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
@@ -11,15 +12,26 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T09-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team T09-B4`      Since: `Feb 2018`      Licence: `MIT`
 
-== Introduction
+Welcome to the User Guide for _NUSCouples_!
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+_NUSCouples_ is a desktop app *specially made for you*, couples from the National University of Singapore (NUS),
+to create memories easily amid our *hectic school term*. Imagine what it would be like to be able
+identify common breaks, schedule meetings and view important dates with your partner, and record your thoughts or
+feelings, *all in the same application* mere keystrokes away. Best of all, *everything* can be controlled from the
+handy Command Line Interface (CLI). Experience the *clarity* that comes with a Graphical User Interface (GUI), with
+none of the *pain* of searching for and remembering where each button is.
+
+Interested yet? Jump to <<Quick Start>> to
+get started. Enjoy!
 
 == Quick Start
+
+This section will guide you through setting up and using _NUSCouples_ for the first time. Follow this simple step-by-step
+guide to start using _NUSCouples_ today!
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -27,141 +39,158 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `NUSCouples.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for _NUSCouples_.
+  For example, if you want the app to be installed in your desktop, the folder should look like this:
+`C:\Users\[Username]\Desktop\NUSCouples`.
+.  Double-click the file to start the app. The app window as seen below, should appear in a few seconds.
 +
-image::Ui.png[width="790"]
-+
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+image:screenshots/0Labels.png[width="790"]
+[cols="1,3", options="header",]
+|===
+|1 | Partner details
+|2 | List of Journal entries
+|3 | Browser Panel: Calendar/Timetable display
+|4 | Result display
+|5 | Command box
+|===
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
+
+*Congratulations, you have successfully installed _NUSCouples_. Read on for some examples on commands you can try if
+you are using the app for the first time!*
+
+*  Type the command in the command box and press kbd:[Enter] to execute it. +
+e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
+
+* **`add`**`n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tt/http://modsn.us/wNuIW` :
+ adds a partner named `John Doe` to _NUSCouples_.
 * *`exit`* : exits the app
 
-.  Refer to <<Features>> for details of each command.
+Refer to <<Features>> for more details about each command. +
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 [[Features]]
 == Features
 
+Commands follow a command format. At any point in time, if you need a refresher on the commands, enter "help"
+into the command box for more information. If you only need help for a specific command, enter the command without any
+parameters for usage help. Typing "add" and pressing enter will display the correct format for using the
+command, and also show an example.
+
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
+* Commands have an alias, which you can also use to execute the command e.g. to create a new journal entry,
+you can type either `jnew` or `jn`. Read the respective sections learn about our easy to remember aliases.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a
+ parameter which can be used as `add n/John Doe`.
+* Items in square brackets are optional.
+* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`,
+`p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+=== General Features
 
-Format: `help`
+This section is for all commands that are not specific to our timetable feature, calendar feature or journal feature.
 
-=== Adding a person: `add`
+==== Viewing help : `help`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+If you are ever unsure of what to do, use this command to display this UserGuide whenever you need it.
 
-[TIP]
-A person can have any number of tags (including 0)
+Format: `help` +
+Alias: `hlp` +
+image:screenshots/23Help.png[width="790"]
+
+==== Adding your partner : `add`
+
+Looking to add your significant other to NUSCouples? Look no further. Use this command to add your partner's details
+to our amazing app. *All fields are necessary, but they can be in any order.*
+
+Adds your partner to _NUSCouples_. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tt/TIMETABLE_URL` +
+Alias: `a n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tt/TIMETABLE_URL` +
+
+Screenshot: Before +
+image:screenshots/addcmd.png[width="790"] +
+
+Screenshot: After +
+image:screenshots/2Add.png[width="790"]
+
+****
+* The timetable url provided has to be a valid https://nusmods.com[NUSMods] short URL.
+* You can only have one partner in _NUSCouples_ at any one time.
+****
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tt/http://modsn.us/IO4n5`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 tt/http://modsn.us/wNuIW`
 
-=== Listing all persons : `list`
+==== Editing your partner : `edit`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+If you ever need to update your partner's details, use this command. All fields are optional, *but* at least one valid
+field must be provided.
 
-=== Editing a person : `edit`
+Edits your existing partner in _NUSCouples_. +
+Format: `edit [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tt/TIMETABLE_URL]` +
+Alias: `ed [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tt/TIMETABLE_URL]` +
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Screenshot: Before +
+image:screenshots/14EditTT.png[width="790"] +
+
+Screenshot: After +
+image:screenshots/15EditTTAfter.png[width="790"] +
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* Your partner must exist in _NUSCouples_ before this command can be executed.
 ****
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `edit p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of your partner to be `91234567` and `johndoe@example.com` respectively.
+* `edit n/Betsy Crower` +
+Edits the name of your partner to be `Betsy Crower`.
 
-=== Locating persons by name: `find`
+==== Deleting your partner : `delete`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+If it would take too much effort to edit your partner, we got you covered. You can just delete their details and
+add them again.
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+Deletes your partner from _NUSCouples_. +
+Format: `delete` +
+Alias: `d` +
 
-Examples:
+Screenshot: Before +
+image:screenshots/10Delete.png[width="790"] +
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
-
-=== Deleting a person : `delete`
-
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Screenshot: After +
+image:screenshots/11DeleteAfter.png[width="790"] +
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* Deletes your partner.
+* Your partner must exist in _NUSCouples_ before this command can be executed.
 ****
 
-Examples:
+==== Listing entered commands : `history`
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
-
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
+Want to see the most recent commands used this session? Use this command. It can help you identify if you suspect you
+have entered the wrong command.
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Alias: `hist` +
+
+Screenshot: Before +
+image:screenshots/histcmd.png[width="790"] +
+
+Screenshot: After +
+image:screenshots/histcmdafter.png[width="790"] +
 
 [NOTE]
 ====
@@ -169,96 +198,397 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+==== Undoing previous command : `undo`
+
+Oh no! Did you accidentally delete your partner's details? Quick use this command. Only some commands can be undone
+right now. Read on for more details.
+
+Restores _NUSCouples_ to the state before the previous "undoable command" was executed. +
+Format: `undo` +
+Alias: `u` +
+
+Screenshot: Before +
+image:screenshots/16EditUndo.png[width="790"] +
+
+Screenshot: After +
+image:screenshots/17EditUndoAfter.png[width="790"] +
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify _NUSCouples_ content (`add`, `delete` and `edit`).
 ====
 
 Examples:
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* `delete` +
+`undo` (reverses the `delete` command) +
 
-* `select 1` +
-`list` +
+* `select` +
+`help` +
 `undo` +
 The `undo` command fails as there are no undoable commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+* `edit n/John Doe` +
+`delete` +
+`undo` (reverses the `delete` command) +
+`undo` (reverses the `edit n/John Doe` command) +
 
-=== Redoing the previously undone command : `redo`
+==== Redoing the previously undone command : `redo`
+
+Did you undo a command, only to change your mind? We have a command just for you. Note that similar restrictions that
+ apply for undo command are also applied to redo command.
 
 Reverses the most recent `undo` command. +
-Format: `redo`
+Format: `redo` +
+Alias: `r`
+
+Screenshot: Before +
+image:screenshots/18EditRedo.png[width="790"] +
+
+Screenshot: After +
+image:screenshots/19EditRedoAfter.png[width="790"] +
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `delete` +
+`undo` (reverses the `delete` command) +
+`redo` (reapplies the `delete` command) +
 
-* `delete 1` +
+* `delete` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+* `edit n/John Doe` +
+`delete` +
+`undo` (reverses the `delete` command) +
+`undo` (reverses the `edit n/John Doe` command) +
+`redo` (reapplies the `edit n/John Doe` command) +
+`redo` (reapplies the `delete` command) +
 
-=== Clearing all entries : `clear`
+==== Saving the data
 
-Clears all entries from the address book. +
-Format: `clear`
+_NUSCouples_ data is saved in the hard disk automatically after any command that changes the data. +
+There is no need to save manually. Data is stored in a data folder created in the same directory as _NUSCouples_.jar.
+For example, if the .jar file is in `C:\Program Files (x86)\NUSCouples`, _NUSCouples_ data will be stored in
+`C:\Program Files (x86)\NUSCouples\data`.
 
-=== Exiting the program : `exit`
+[NOTE]
+If the _NUSCouples_.jar file is moved to another location, you should move the data folder as well.  Refer to
+<<Data, FAQ Section 3.1, Questions about Data>> for more information.
+
+[WARNING]
+The data is stored as an editable xml file. If the user manually edits this file, _NUSCouples_ may not be able to read
+it properly. Refer to <<Data, FAQ Section 3.1, Questions about Data>>  for more information.
+
+==== Exiting the program : `exit`
 
 Exits the program. +
-Format: `exit`
+Format: `exit` +
+Alias: `ex` +
 
-=== Saving the data
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+// tag::timetable[]
+=== Timetable
 
+==== Adding your partner's timetable [Since v1.3]
+
+Refer to <<Adding your partner : `add`>>
+
+==== Editing your partner's timetable [Since v1.3]
+
+Refer to <<Editing your partner : `edit`>>
+
+==== Viewing your partner's timetable : `tview`[Since v1.4]
+
+Shows the current saved timetable of your partner. +
+Format: `tview` +
+Alias: `tv`
+
+[TIP]
+`Click` your partner's details in the list panel on the left to view your partner's timetable. +
+`Ctrl` + `Click` your partner's details to go back to calendar view.
+
+==== Comparing timetable : `tcompare` [Since v1.5]
+
+Displays the common breaks shared by the given timetable and your partner's timetable in a timetable format. +
+Format: `tcompare tt/TIMETABLE_URL` +
+Alias: `tc tt/TIMETABLE_URL`
+
+****
+* The timetable url provided has to be a valid https://nusmods.com[NUSMods] short URL.
+* Your partner must exist in _NUSCouples_ before this command can be executed.
+****
+
+Examples:
+
+* `tcompare tt/http://modsn.us/IO4n5` +
+* `tc tt/http://modsn.us/wNuIW` +
+// end::timetable[]
+
+// tag::CalendarCommands[]
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+=== Calendar
+==== When you want to check which are the available dates you are free: `Calendar`
+
+View calendar function. +
+Format: `cview` +
+Alias: `cv` +
+
+Selecting Different Views +
+Day: `cal d` +
+Week: `cal w` +
+Month: `cal m` +
+Year: `cal y` +
+
+The image below shows a calendar view in day after you have entered `cal d`
+in the command box. From the calendar, you can see if there is any events on that day.
+
+image::CalendarView.png[width="650"]
+==== When you have a date with your partner then you decides to add the event to the Calendar after making sure that there are no clashes with your timetable nor schedules: `Appointment`
+
+Adds new event to the calendar. +
+Format: `appointment` +
+Alias: `appt`
+
+Following the Format: +
+To add an event, Description and Time parameters are COMPULSORY fields that are required to enter. +
+To add Description and time - `d/ + Description, Time` +
+
+Example: `appointment d/Lunch, Next Monday 3pm` +
+
+The image below shows a calendar view in day after you have entered `appt 1 d/Checkup, tomorrow 10am to 12pm` event.
+As you can see, the event is nicely populated on the calendar after you have successfully created a new event!
+Moreover, this Calendar feature allows you to enter multiple events too!! And the footer will show the time when you make changes
+to the Calendar!! +
+
+image::CalendarAdd.png[width="650"]
+
+==== When your partner suddenly cannot make it on the scheduled event: `cancel`
+
+Delete specified event from the calendar. +
+Format: `cancel` +
+Alias: Nil
+
+Following the Format: +
+To Cancel specified event: `Description with Person name` +
+Example: `cancel Lunch with John Doe` +
+
+The images below shows the before and after calendar view after you have executed the cancel appointment commands. +
+As you can see, after the commands are executed the footer will display the updated time as well and result panel will
+display `appointment canceled`. When there is no events on that day, the calendar will also display `no entries` too.
+
+Screenshot: The Calendar View before you enter the Cancel Command  +
+
+
+image::beforeCancelCal.png[width="650"]
+
+Screenshot: The Calendar View after you enter the Cancel Command +
+
+
+image::afterCancelCal.png[width="650"]
+
+==== Accessibility
+
+Unique KeyStrokes in NUSCouples. +
+Move Cursor to front: `Shift Ctrl` +
+Move Cursor to behind: `Shift Alt` +
+Move Cursor to behind (MAC USERS): `Shift Option` +
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+// end::CalendarCommands[]
+
+// tag::journal[]
+=== Journal
+
+_NUSCouples_ provides you with a space to write, save and view journal entries. The list of saved journal entries will
+be shown in the main window. Read on for more details about how to use this feature.
+
+[NOTE]
+Saved journal entries can only be edited on the same day. Once saved, a journal entry cannot be deleted.
+
+==== Creating a new journal entry : `jnew` [Since v1.2]
+
+Creates a new window that allows the user to input text. The window title will reflect the date
+it was created on in the format `yyyymmdd - journal`. For example, a journal window opened on the 5th of March
+ 2018 will have a title of `20180305 - journal`. If an entry with that date already exists, it will open
+that entry in the window. Saving is not required as the journal entry will be automatically saved when the
+journal window is closed. +
+
+To protect you from accidentally entering commands while in the journal window, the journal window will always be in
+front of the main window.
+
+[NOTE]
+If saving fails, a new window will appear containing your last session data with a warning above your text. You should
+copy your text to your computer clipboard using kbd:[ctr] + kbd:[c] so you will not lose your data if you need to
+restart the app.
+
+Format: `jnew` +
+Alias: `jn` +
+
+Screenshot: Before +
+image:screenshots/20Jnew.png[width="790"] +
+
+Screenshot: After +
+image:screenshots/21JnewAfter1.png[width="395"]
+image:screenshots/22JnewAfter2.png[width="395"] +
+
+
+==== Viewing journal entries : `jview`
+
+Selects a journal entry from the list seen in the GUI. The contents of the journal entry will be shown in the main
+window. Opening a journal window while a journal entry is displayed will display the edited entry once the journal
+window is closed.+
+
+Format: `jview` +
+
+Alias: `jv`
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+// tag::motivate[]
+=== Motivational Picture
+==== Send motivational picture via app : `motivate`
+
+Shows the location (by building) of the entered classroom name. +
+Format: `motivate` +
+_There is no alias for this feature currently._
+// end::motivate[]
+=======
+Alias: `jv` +
+
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
+=== Future Features
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+==== Encrypting data files `[coming in v2.0]`
 
 _{explain how the user can enable/disable data encryption}_
 // end::dataencryption[]
 
+// tag::googleAPI[]
+==== Sync the calendar with Google API `[coming in v2.0]`
+
+_{explain how the user can authentic with google API and view and retrieve events from Google}_
+
+// end::googleAPI[]
+==== Archiving journal entries `[coming in v2.0]`
+
+_{explain how the user can export old journal entries to another storage location in their computer}_
+
+==== Send Google Maps location to phone `[coming in v2.0]`
+
+_{explain how the user can use their phones to navigate to a location in NUS by sending the location to the user's phone from the Google Maps API}_
+
+==== Filtering journal entries by date `[coming in v2.0]`
+
+Filters journal entries by the specified interval. +
+Format: `jfilter` +
+Alias: `jf` +
+
+==== Finding building location `[coming in v2.0]`
+
+Shows the location (by building) of the entered classroom name. +
+Format: `location` +
+Alias: `loc` +
+
+==== Send motivational picture via app `[coming in v2.90]`
+
+Shows the location (by building) of the entered classroom name. +
+Format: `motivate` +
+_There is no alias for this feature currently._
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
+
 == FAQ
 
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+=== Data
+This section is for questions related to _NUSCouples_ data. For more information, refer to <<Saving the data>> +
+
+*Q: How do I transfer my data to another Computer?* +
+
+*A:* Install the app in the other computer and overwrite the empty data folder it creates with the folder that contains
+the data of your previous NUSCouples folder. +
+
+*Q: Why is the app not showing my previous session data?* +
+
+*A:* Verify that the .jar file was not moved to a new directory recently. If you have done so, ensure that the data
+folder in the original directory was moved to the new directory. For example, if you have moved _NUSCouples_.jar from
+`C:\Program Files (x86)\NUSCouples` to `C:\Users\[Username]\Desktop\NUSCouples`, you should move the data folder
+`C:\Program Files (x86)\NUSCouples\data` to `C:\Users\[Username]\Desktop\NUSCouples\data` +
+
+*Q: Can this app run on mobile devices or tablets?* +
+
+*A:* No, this is a desktop app. To be more specific, you are not required to use cursor mouse to handle the App because it is CLI based
+If the files in the data folder have been manually edited, _NUSCouples_ may not be able to read the data properly.
+_NUSCouples_ takes no responsibility for data loss/ data corruption due to unintended user behavior affecting the data
+folder, such as deletion or editing of files manually. +
+
+If the solutions above are not related to your issue, it may be due to a bug. Please contact us at //CONTACT US
+and attach the log file that should be stored in the same location as the _NUSCouples_.jar file. The log file is named
+`_NUSCouples_.log.0`. The number at the end may be different. If there are multiple log files, you should attach the
+*latest* one or attach all of them to be safe. +
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[width="100%",cols="10%,<20%,<35%,<35%",options="header",]
+|=======================================================================
+|Command |Description |Format| Example
+|add, a |Add your partner |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS tt/TIMETABLE_URL` |
+`add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 tt/http://modsn.us/IO4n5`
+
+|edit, ed |Edit your partner | `edit [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [tt/TIMETABLE_URL]` |
+`edit n/John Doe e/johnd@example.com`
+
+|delete, d |Delete your partner |`delete` |
+
+|select, s |View your partner's timetable |`select` |
+
+|history, hist |View command history |`history` |
+
+|undo, u |Undo the previous undoable command |`undo` |
+
+|redo, r |Reverses the most recent undo command |`redo` |
+
+|jview, jv |View a journal entry |`jview` |
+
+|jnew, jn |Create/edit a journal entry |`jnew` |
+
+// tag::CommandSummary[]
+
+|calendar, cal |Viewing your current calendar |`calendar` | cal w
+
+|appointment, appt |Adding a new event to your current calendar |`appointment` | appt 1 d/Checkup, tomorrow 10am to 12pm
+
+|cancel |Deleting an event from your current calendar |`cancel` |
+
+|exit, ex |Exits _NUSCouples_ |`exit` |
+
+// end::CommandSummary[]
+
+|=======================================================================
+
+|===
+| [.small]#Return to <<toc,Table of Contents>># +
+|===

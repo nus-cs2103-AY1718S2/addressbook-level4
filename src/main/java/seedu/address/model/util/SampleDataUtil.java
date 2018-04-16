@@ -1,67 +1,85 @@
 package seedu.address.model.util;
 
-import java.util.HashSet;
-import java.util.Set;
+import java.io.IOException;
+import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
+import com.google.common.base.Charsets;
+import com.google.common.io.Resources;
+
+import seedu.address.MainApp;
+import seedu.address.logic.parser.AddAppointmentParser;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.Journal;
+import seedu.address.model.ReadOnlyJournal;
+import seedu.address.model.journalentry.Date;
+import seedu.address.model.journalentry.JournalEntry;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.appointment.Appointment;
+import seedu.address.model.person.timetable.Timetable;
 
 /**
  * Contains utility methods for populating {@code AddressBook} with sample data.
  */
 public class SampleDataUtil {
-    public static Person[] getSamplePersons() {
-        return new Person[] {
-            new Person(new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
-                new Address("Blk 30 Geylang Street 29, #06-40"),
-                getTagSet("friends")),
-            new Person(new Name("Bernice Yu"), new Phone("99272758"), new Email("berniceyu@example.com"),
-                new Address("Blk 30 Lorong 3 Serangoon Gardens, #07-18"),
-                getTagSet("colleagues", "friends")),
-            new Person(new Name("Charlotte Oliveiro"), new Phone("93210283"), new Email("charlotte@example.com"),
-                new Address("Blk 11 Ang Mo Kio Street 74, #11-04"),
-                getTagSet("neighbours")),
-            new Person(new Name("David Li"), new Phone("91031282"), new Email("lidavid@example.com"),
-                new Address("Blk 436 Serangoon Gardens Street 26, #16-43"),
-                getTagSet("family")),
-            new Person(new Name("Irfan Ibrahim"), new Phone("92492021"), new Email("irfan@example.com"),
-                new Address("Blk 47 Tampines Street 20, #17-35"),
-                getTagSet("classmates")),
-            new Person(new Name("Roy Balakrishnan"), new Phone("92624417"), new Email("royb@example.com"),
-                new Address("Blk 45 Aljunied Street 85, #11-31"),
-                getTagSet("colleagues"))
+    public static ReadOnlyPerson getSamplePerson() {
+        return new Person (new Name("Alex Yeoh"), new Phone("87438807"), new Email("alexyeoh@example.com"),
+                new Address("Blk 30 Geylang Street 29, #06-40"), new Timetable("http://modsn.us/56jUQ"),
+                new ArrayList<>(getAppointmentList("Lunch, tomorrow 5pm to 7pm")));
+    }
+
+    public static JournalEntry[] getSampleJournalEntries() {
+        return new JournalEntry[]{
+            new JournalEntry(new Date("20180205"), "Sample Text One"),
+
+            new JournalEntry(new Date("20180301"), "Sample Text Two"),
+
+            new JournalEntry(new Date("20180305"), "Sample Text Three")
         };
     }
 
-    public static ReadOnlyAddressBook getSampleAddressBook() {
+    public static ReadOnlyJournal getSampleJournal() {
         try {
-            AddressBook sampleAb = new AddressBook();
-            for (Person samplePerson : getSamplePersons()) {
-                sampleAb.addPerson(samplePerson);
+            Journal sampleJ = new Journal();
+            for (JournalEntry sampleJournalEntries : getSampleJournalEntries()) {
+                sampleJ.addJournalEntry(sampleJournalEntries);
             }
-            return sampleAb;
-        } catch (DuplicatePersonException e) {
-            throw new AssertionError("sample data cannot contain duplicate persons", e);
+            return sampleJ;
+        } catch (Exception e) {
+            throw new AssertionError("sample data cannot contain duplicate journal entries", e);
         }
     }
 
     /**
-     * Returns a tag set containing the list of strings given.
+     * Returns an appointment list containing the list of appointment given
      */
-    public static Set<Tag> getTagSet(String... strings) {
-        HashSet<Tag> tags = new HashSet<>();
+    public static List<Appointment> getAppointmentList(String... strings) {
+        List<Appointment> list = new ArrayList<>();
         for (String s : strings) {
-            tags.add(new Tag(s));
+            try {
+                list.add(AddAppointmentParser.getAppointmentFromString(s));
+            } catch (ParseException e) {
+                throw new AssertionError("sample data cannot contain invalid appointments");
+            }
         }
+        return list;
+    }
 
-        return tags;
+    //@@author marlenekoh
+    public static String getDefaultTimetablePageHtml() throws IOException {
+        URL url = MainApp.class.getResource("/view/TimetablePage.html");
+        return Resources.toString(url, Charsets.UTF_8);
+    }
+
+    public static String getDefaultTimetablePageCss() throws IOException {
+        URL url = MainApp.class.getResource("/view/TimetableStyle.css");
+        return Resources.toString(url, Charsets.UTF_8);
     }
 
 }

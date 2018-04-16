@@ -20,18 +20,22 @@ import seedu.address.commons.util.ConfigUtil;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Journal;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
-import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyJournal;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.ReadOnlyPerson;
 import seedu.address.model.util.SampleDataUtil;
-import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.FileTimetableStorage;
+import seedu.address.storage.JournalStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.PersonStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
 import seedu.address.storage.UserPrefsStorage;
-import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlJournalStorage;
+import seedu.address.storage.XmlPersonStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +44,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 4, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -61,8 +65,11 @@ public class MainApp extends Application {
 
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
-        AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        PersonStorage personStorage = new XmlPersonStorage(userPrefs.getPersonFilePath());
+        JournalStorage journalStorage = new XmlJournalStorage(userPrefs.getJournalFilePath());
+        FileTimetableStorage timetableStorage = new FileTimetableStorage(userPrefs.getTimetablePageHtmlPath(),
+                userPrefs.getTimetablePageCssPath(), userPrefs.getTimetableInfoFilePath());
+        storage = new StorageManager(personStorage, journalStorage, userPrefsStorage, timetableStorage);
 
         initLogging(config);
 
@@ -86,23 +93,45 @@ public class MainApp extends Application {
      * or an empty address book will be used instead if errors occur when reading {@code storage}'s address book.
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
-        Optional<ReadOnlyAddressBook> addressBookOptional;
-        ReadOnlyAddressBook initialData;
+        Optional<ReadOnlyPerson> personOptional;
+        Optional<ReadOnlyJournal> journalOptional;
+        ReadOnlyPerson personData;
+        ReadOnlyJournal journalData;
         try {
-            addressBookOptional = storage.readAddressBook();
-            if (!addressBookOptional.isPresent()) {
-                logger.info("Data file not found. Will be starting with a sample AddressBook");
+            personOptional = storage.readPerson();
+            if (personOptional.isPresent()) {
+                logger.info("Data file found. Will be starting with current Person");
             }
-            initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            if (!personOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a empty Person");
+            }
+            personData = personOptional.orElse(null);
         } catch (DataConversionException e) {
-            logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Data file not in the correct format. Will be starting with an empty Person");
+            personData = null;
         } catch (IOException e) {
-            logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
-            initialData = new AddressBook();
+            logger.warning("Problem while reading from the file. Will be starting with an empty Person");
+            personData = null;
         }
 
-        return new ModelManager(initialData, userPrefs);
+        try {
+            journalOptional = storage.readJournal();
+            if (journalOptional.isPresent()) {
+                logger.info("Data file found. Will be starting with current Journal");
+            }
+            if (!journalOptional.isPresent()) {
+                logger.info("Data file not found. Will be starting with a sample Journal");
+            }
+            journalData = journalOptional.orElseGet(SampleDataUtil::getSampleJournal);
+        } catch (DataConversionException e) {
+            logger.warning("Data file not in the correct format. Will be starting with an empty Journal");
+            journalData = new Journal();
+        } catch (IOException e) {
+            logger.warning("Problem while reading from the file. Will be starting with an empty Journal");
+            journalData = new Journal();
+        }
+
+        return new ModelManager(personData, journalData, userPrefs);
     }
 
     private void initLogging(Config config) {
@@ -206,6 +235,9 @@ public class MainApp extends Application {
         this.stop();
     }
 
+    /**
+     * Main
+     */
     public static void main(String[] args) {
         launch(args);
     }

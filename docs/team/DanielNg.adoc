@@ -1,0 +1,54 @@
+= Daniel Ng - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: NUSCouples
+
+---
+
+== Overview
+
+NUSCouples is a CLI-based desktop app targeted towards couples studying in the National University of Singapore (NUS).
+Written in Java and boasting a GUI client created with JavaFX, it has a total of about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *a motivate command*
+** What it does: allows the user to send a motivational picture to their partner with just one command/one click.
+** Justification: this feature allows the user to stay afloat and develop a positive mood amidst a hectic school schedule.
+
+* *Minor enhancement*: added aliases for commands.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T09-B4/main/blob/master/collated/functional/HEARTOFAL1ON.md[Functional code]]
+ [https://github.com/CS2103JAN2018-T09-B4/main/blob/master/collated/test/HEARTOFAL1ON.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features (including adding/modifying codes, tests and documentation):
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/9[#9]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/17[#17]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/19[#19]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/54[#54]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/60[#60]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/61[#61]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/109[#109]
+*** Pull request https://github.com/CS2103JAN2018-T09-B4/main/pull/124[#124]
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=motivate]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+//include::../DeveloperGuide.adoc[tag=]

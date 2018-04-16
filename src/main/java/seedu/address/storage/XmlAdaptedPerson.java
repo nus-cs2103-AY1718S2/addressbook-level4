@@ -1,10 +1,9 @@
 package seedu.address.storage;
 
+import java.text.ParseException;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Objects;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlElement;
 
@@ -14,7 +13,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.person.ReadOnlyPerson;
+import seedu.address.model.person.appointment.Appointment;
+import seedu.address.model.person.timetable.Timetable;
 
 /**
  * JAXB-friendly version of the Person.
@@ -31,9 +32,10 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
-
+    @XmlElement(required = true)
+    private String timetable;
     @XmlElement
-    private List<XmlAdaptedTag> tagged = new ArrayList<>();
+    private List<XmlAdaptedAppointment> appointments = new ArrayList<XmlAdaptedAppointment>();
 
     /**
      * Constructs an XmlAdaptedPerson.
@@ -44,14 +46,15 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, String timetable,
+                            List<XmlAdaptedAppointment> appointments) {
+
         this.name = name;
         this.phone = phone;
         this.email = email;
         this.address = address;
-        if (tagged != null) {
-            this.tagged = new ArrayList<>(tagged);
-        }
+        this.timetable = timetable;
+        this.appointments = appointments;
     }
 
     /**
@@ -59,15 +62,17 @@ public class XmlAdaptedPerson {
      *
      * @param source future changes to this will not affect the created XmlAdaptedPerson
      */
-    public XmlAdaptedPerson(Person source) {
+    public XmlAdaptedPerson(ReadOnlyPerson source) {
+
         name = source.getName().fullName;
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
-        tagged = new ArrayList<>();
-        for (Tag tag : source.getTags()) {
-            tagged.add(new XmlAdaptedTag(tag));
+        timetable = source.getTimetable().value;
+        for (Appointment appointment : source.getAppointments()) {
+            appointments.add(new XmlAdaptedAppointment(appointment));
         }
+
     }
 
     /**
@@ -75,11 +80,7 @@ public class XmlAdaptedPerson {
      *
      * @throws IllegalValueException if there were any data constraints violated in the adapted person
      */
-    public Person toModelType() throws IllegalValueException {
-        final List<Tag> personTags = new ArrayList<>();
-        for (XmlAdaptedTag tag : tagged) {
-            personTags.add(tag.toModelType());
-        }
+    public Person toModelType() throws IllegalValueException, ParseException {
 
         if (this.name == null) {
             throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT, Name.class.getSimpleName()));
@@ -113,8 +114,20 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
-        final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+        if (this.timetable == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    Timetable.class.getSimpleName()));
+        }
+        if (!Timetable.isValidTimetable(this.timetable)) {
+            throw new IllegalValueException(Timetable.MESSAGE_TIMETABLE_CONSTRAINTS);
+        }
+        final Timetable timetable = new Timetable(this.timetable);
+
+        final List<Appointment> personAppointmentList = new ArrayList<>();
+        for (XmlAdaptedAppointment appointment : appointments) {
+            personAppointmentList.add(appointment.toModelType());
+        }
+        return new Person(name, phone, email, address, timetable, personAppointmentList);
     }
 
     @Override
@@ -132,6 +145,7 @@ public class XmlAdaptedPerson {
                 && Objects.equals(phone, otherPerson.phone)
                 && Objects.equals(email, otherPerson.email)
                 && Objects.equals(address, otherPerson.address)
-                && tagged.equals(otherPerson.tagged);
+                && Objects.equals(timetable, otherPerson.timetable)
+                && appointments.equals(otherPerson.appointments);
     }
 }

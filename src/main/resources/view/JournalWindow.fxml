@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!-- @@author traceurgan -->
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.Scene?>
+<?import javafx.stage.Stage?>
+
+
+<fx:root onCloseRequest="#handleJournalClose" type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8.0.141"
+         xmlns:fx="http://javafx.com/fxml/1">
+    <scene>
+        <Scene>
+            <ScrollPane fitToHeight="true" fitToWidth="true">
+                <StackPane fx:id="journalTextPlaceholder"/>
+            </ScrollPane>
+        </Scene>
+    </scene>
+</fx:root>

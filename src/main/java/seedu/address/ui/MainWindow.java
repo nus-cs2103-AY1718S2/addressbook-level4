@@ -1,41 +1,56 @@
 package seedu.address.ui;
 
+import static javafx.scene.input.KeyCode.TAB;
+
 import java.util.logging.Logger;
 
+import com.calendarfx.view.CalendarView;
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.HideTimetableRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowJournalEntryRequestEvent;
+import seedu.address.commons.events.ui.ShowTimetableRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.journalentry.JournalEntry;
 
 /**
  * The Main Window. Provides the basic application layout containing
  * a menu bar and space where other JavaFX elements can be placed.
  */
-public class MainWindow extends UiPart<Stage> {
+public class MainWindow extends UiPart<Region> {
 
     private static final String FXML = "MainWindow.fxml";
-
+    private static final int MIN_HEIGHT = 600;
+    private static final int MIN_WIDTH = 450;
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
     private Stage primaryStage;
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
+    private CalendarView calendarView;
     private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ResultDisplay resultDisplay;
+    private ListPanel listPanel;
+    private CommandBox commandBox;
+    private StatusBarFooter statusBarFooter;
     private Config config;
     private UserPrefs prefs;
 
@@ -49,7 +64,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane listPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -58,7 +73,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane statusbarPlaceholder;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
-        super(FXML, primaryStage);
+        super(FXML);
 
         // Set dependencies
         this.primaryStage = primaryStage;
@@ -68,10 +83,13 @@ public class MainWindow extends UiPart<Stage> {
 
         // Configure the UI
         setTitle(config.getAppTitle());
+        setWindowMinSize();
         setWindowDefaultSize(prefs);
-
+        Scene scene = new Scene(getRoot());
+        primaryStage.setScene(scene);
         setAccelerators();
         registerAsAnEventHandler(this);
+
     }
 
     public Stage getPrimaryStage() {
@@ -116,20 +134,23 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        browserPlaceholder.getChildren().clear();
+        browserPanel = new BrowserPanel(logic.getPartner());
+        browserPlaceholder.getChildren().add(browserPanel.getCalendarRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        listPanel = new ListPanel(logic.getPersonAsList(), logic.getJournalEntryList());
+        listPanelPlaceholder.getChildren().add(listPanel.getRoot());
 
-        ResultDisplay resultDisplay = new ResultDisplay();
+        resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        statusBarFooter = new StatusBarFooter(prefs.getPersonFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
-        CommandBox commandBox = new CommandBox(logic);
+        commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        Platform.runLater(() -> commandBox.getCommandTextField().requestFocus());
     }
 
     void hide() {
@@ -151,6 +172,10 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
         }
     }
+    private void setWindowMinSize() {
+        primaryStage.setMinHeight(MIN_HEIGHT);
+        primaryStage.setMinWidth(MIN_WIDTH);
+    }
 
     /**
      * Returns the current size and the position of the main Window.
@@ -169,6 +194,36 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author marlenekoh
+    /**
+     * Replaces the Calendar with Timetable Page in Browser Panel
+     */
+    private void handleShowTimetable() {
+        browserPlaceholder.getChildren().clear();
+        browserPanel.loadTimetablePage();
+        if (!browserPlaceholder.getChildren().contains(browserPanel.getRoot())) {
+            browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        }
+    }
+
+    /**
+     * Replaces the Timetable Page with Calendar in Browser Panel
+     */
+    private void handleHideTimetable() {
+        browserPlaceholder.getChildren().clear();
+        browserPlaceholder.getChildren().add(browserPanel.getCalendarRoot());
+    }
+
+    /**
+     * Shows journal entry.
+     */
+    private void handleShowJournalEntry(JournalEntry journalEntry) {
+        browserPlaceholder.getChildren().clear();
+        JournalEntryView journalEntryView = new JournalEntryView(journalEntry);
+        browserPlaceholder.getChildren().add(journalEntryView.getRoot());
+    }
+
+    //@@author
     void show() {
         primaryStage.show();
     }
@@ -181,8 +236,24 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    /**
+     * Handles the key press event, {@code keyEvent}.
+     */
+    @FXML
+    private void handleKeyPress(KeyEvent keyEvent) {
+        if (keyEvent.getCode() == TAB) {
+            keyEvent.consume();
+            commandBoxRequestFocus();
+        }
+
+    }
+
+    private void commandBoxRequestFocus() {
+        this.commandBox.getCommandTextField().requestFocus();
+    }
+
+    public ListPanel getPersonListPanel() {
+        return this.listPanel;
     }
 
     void releaseResources() {
@@ -193,5 +264,25 @@ public class MainWindow extends UiPart<Stage> {
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author traceurgan
+    @Subscribe
+    private void handleShowJournalEntryRequestEvent(ShowJournalEntryRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleShowJournalEntry(event.journalEntry);
+    }
+
+    //@@author marlenekoh
+    @Subscribe
+    private void handleShowTimetableRequestEvent(ShowTimetableRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleShowTimetable();
+    }
+
+    @Subscribe
+    private void handleHideTimetableRequestEvent(HideTimetableRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleHideTimetable();
     }
 }

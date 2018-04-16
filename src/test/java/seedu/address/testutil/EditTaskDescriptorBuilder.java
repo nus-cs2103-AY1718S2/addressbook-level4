@@ -10,7 +10,7 @@ import seedu.address.model.task.Title;
 /**
  * A utility class to help with building EditTaskDescriptor objects.
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class EditTaskDescriptorBuilder {
     private EditTaskDescriptor descriptor;
 

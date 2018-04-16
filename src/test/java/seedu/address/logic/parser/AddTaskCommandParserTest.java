@@ -32,7 +32,7 @@ import seedu.address.model.task.TaskDescription;
 import seedu.address.model.task.Title;
 import seedu.address.testutil.TaskBuilder;
 
-//@@author Wu Di
+//@@author WoodySIN
 public class AddTaskCommandParserTest {
     private AddTaskCommandParser parser = new AddTaskCommandParser();
 

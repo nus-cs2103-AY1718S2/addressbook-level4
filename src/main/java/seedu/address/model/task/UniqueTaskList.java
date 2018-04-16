@@ -63,7 +63,7 @@ public class UniqueTaskList implements Iterable<Task> {
         Collections.sort(calendarList[diff][toAdd.getDeadlineDay()]);
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     /**
      * Replaces the task {@code target} in the list with {@code editedTask}.
      *
@@ -115,7 +115,7 @@ public class UniqueTaskList implements Iterable<Task> {
         }
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     //@@author JoonKai1995
     public void setTasks(List<Task> tasks) {
         requireAllNonNull(tasks);

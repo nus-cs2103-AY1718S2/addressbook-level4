@@ -12,7 +12,7 @@ import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
 
-//@@author Wu Di
+//@@author WoodySIN
 /**
  * Contains integration tests (interaction with the Model) and unit tests for ListCurrentTaskCommand.
  */

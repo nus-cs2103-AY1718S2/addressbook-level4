@@ -6,7 +6,7 @@ import javafx.scene.control.Label;
 /**
  * Provides a handle to a TodoCard in the TodoList panel.
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class TodoCardHandle extends NodeHandle<Node> {
     private static final String ID_FIELD_ID = "#id";
     private static final String TITLE_FIELD_ID = "#title";

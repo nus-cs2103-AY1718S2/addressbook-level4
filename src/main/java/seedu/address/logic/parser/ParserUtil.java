@@ -265,7 +265,7 @@ public class ParserUtil {
         return tagSet;
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     /**
      * Parses a {@code String taskTitle} into a {@code TaskTitle}.
      * Leading and trailing whitespaces will be trimmed.

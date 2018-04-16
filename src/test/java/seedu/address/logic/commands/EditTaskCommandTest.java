@@ -35,7 +35,7 @@ import seedu.address.testutil.TaskBuilder;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand)
  * and unit tests for EditTaskCommand.
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class EditTaskCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

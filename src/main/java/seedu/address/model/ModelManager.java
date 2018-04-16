@@ -100,7 +100,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Override
     public void deleteTask(Task target) throws TaskNotFoundException {
         addressBook.removeTask(target);
@@ -134,7 +134,7 @@ public class ModelManager extends ComponentManager implements Model {
         indicateAddressBookChanged();
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Override
     public void updateTask(Task target, Task editedTask)
             throws TaskNotFoundException {

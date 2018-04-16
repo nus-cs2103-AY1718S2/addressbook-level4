@@ -7,7 +7,7 @@ import javafx.scene.control.TabPane;
 /**
  * Switches between the tabs of Person List and TodoList
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class SwitchTabCommand extends Command {
 
     public static final String COMMAND_WORD = "switchTab";

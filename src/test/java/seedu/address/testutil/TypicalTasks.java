@@ -12,7 +12,7 @@ import seedu.address.model.task.Task;
 /**
  * A utility class containing a list of {@code Task} objects to be used in tests.
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class TypicalTasks {
 
     private static LocalDate now = LocalDate.now();

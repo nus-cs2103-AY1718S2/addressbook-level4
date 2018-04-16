@@ -2,7 +2,7 @@ package seedu.address.logic.commands;
 
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
-//@@author Wu Di
+//@@author WoodySIN
 /**
  * Lists all tasks stored in the address book.
  */

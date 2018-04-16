@@ -3,7 +3,7 @@ package seedu.address.commons.events.ui;
 import seedu.address.commons.events.BaseEvent;
 import seedu.address.ui.TodoCard;
 
-//@@author Wu Di
+//@@author WoodySIN
 /**
  * Represents a selection change in the TodoList Panel
  */

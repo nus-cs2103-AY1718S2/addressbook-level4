@@ -9,7 +9,7 @@ import org.junit.rules.TemporaryFolder;
 
 import seedu.address.logic.commands.ImportCommand;
 
-//@@author Wu Di
+//@@author WoodySIN
 public class ImportCommandParserTest {
     @Rule
     public TemporaryFolder testFolder = new TemporaryFolder();

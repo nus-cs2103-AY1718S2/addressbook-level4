@@ -25,7 +25,7 @@ import seedu.address.model.task.Task;
  * Contains integration tests (interaction with the Model, UndoCommand and RedoCommand) and unit tests for
  * {@code DeleteTaskCommand}.
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class DeleteTaskCommandTest {
     private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
 

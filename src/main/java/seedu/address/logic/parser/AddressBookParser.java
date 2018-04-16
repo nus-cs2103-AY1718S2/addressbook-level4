@@ -164,7 +164,7 @@ public class AddressBookParser {
         }
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     public void setTabPane(TabPane tabPane) {
         this.tabPane = tabPane;
     }

@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import seedu.address.logic.commands.DeleteTaskCommand;
 
-//@@author Wu Di
+//@@author WoodySIN
 public class DeleteTaskCommandParserTest {
     private DeleteTaskCommandParser parser = new DeleteTaskCommandParser();
 

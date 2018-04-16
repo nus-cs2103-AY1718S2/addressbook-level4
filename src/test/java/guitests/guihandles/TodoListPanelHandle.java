@@ -10,7 +10,7 @@ import seedu.address.ui.TodoCard;
 /**
  * Provides a handle to a TodoCard in the TodoList panel.
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class TodoListPanelHandle extends NodeHandle<ListView<TodoCard>> {
     public static final String TODO_LIST_VIEW_ID = "#todoListView";
 

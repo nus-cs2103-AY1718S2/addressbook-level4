@@ -1,4 +1,4 @@
-# Wu
+# WoodySIN
 ###### \java\seedu\address\commons\events\model\TaskBookChangedEvent.java
 ``` java
 /** Indicates the AddressBook in the model has changed*/
@@ -627,17 +627,6 @@ public class ImportCommandParser implements Parser<ImportCommand> {
         return compareDate(yearDiff, monthDiff, dayDiff);
     }
 
-```
-###### \java\seedu\address\model\task\Task.java
-``` java
-    @Override
-    public int compareTo(Task task) {
-        int yearDiff = this.getDeadlineYear() - task.getDeadlineYear();
-        int monthDiff = this.getDeadlineMonth() - task.getDeadlineMonth();
-        int dayDiff = this.getDeadlineDay() - task.getDeadlineDay();
-
-        return compareDate(yearDiff, monthDiff, dayDiff);
-    }
     /**
      * Compares the dates
      * @param yearDiff difference in year

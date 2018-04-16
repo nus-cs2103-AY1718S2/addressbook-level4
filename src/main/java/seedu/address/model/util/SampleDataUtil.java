@@ -70,7 +70,7 @@ public class SampleDataUtil {
         };
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     /**
      * Contains utility methods for populating {@code AddressBook} with sample data tasks.
      */

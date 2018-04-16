@@ -91,7 +91,7 @@ public class Task implements Comparable<Task> {
         return builder.toString();
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Override
     public int compareTo(Task task) {
         int yearDiff = this.getDeadlineYear() - task.getDeadlineYear();

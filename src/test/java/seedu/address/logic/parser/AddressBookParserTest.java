@@ -48,7 +48,7 @@ public class AddressBookParserTest {
         assertEquals(new AddCommand(person), command);
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Test
     public void parseCommand_add_alias() throws Exception {
         Person person = new PersonBuilder().build();
@@ -72,7 +72,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_WORD + " 3") instanceof ClearCommand);
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Test
     public void parseCommand_clear_alias() throws Exception {
         assertTrue(parser.parseCommand(ClearCommand.COMMAND_ALIAS) instanceof ClearCommand);
@@ -86,7 +86,7 @@ public class AddressBookParserTest {
         assertEquals(new DeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Test
     public void parseCommand_delete_alias() throws Exception {
         DeleteCommand command = (DeleteCommand) parser.parseCommand(
@@ -135,7 +135,7 @@ public class AddressBookParserTest {
         assertEquals(new FindCommand(new InfoContainsKeywordsPredicate(keywords)), command);
     }
 
-    //@@ author Wu Di
+    //@@ author WoodySIN
     @Test
     public void parseCommand_find_alias() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
@@ -151,7 +151,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_WORD + " 3") instanceof HelpCommand);
     }
 
-    //@@ author Wu Di
+    //@@ author WoodySIN
     @Test
     public void parseCommand_help_sign() throws Exception {
         assertTrue(parser.parseCommand(HelpCommand.COMMAND_SIGN) instanceof HelpCommand);
@@ -172,7 +172,7 @@ public class AddressBookParserTest {
         }
     }
 
-    //@@ author Wu Di
+    //@@ author WoodySIN
     @Test
     public void parseCommand_history_alias() throws Exception {
         assertTrue(parser.parseCommand(HistoryCommand.COMMAND_ALIAS) instanceof HistoryCommand);
@@ -186,7 +186,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_WORD + " 3") instanceof ListCommand);
     }
 
-    //@@ author Wu Di
+    //@@ author WoodySIN
     @Test
     public void parseCommand_list_alias() throws Exception {
         assertTrue(parser.parseCommand(ListCommand.COMMAND_ALIAS) instanceof ListCommand);
@@ -201,7 +201,7 @@ public class AddressBookParserTest {
         assertEquals(new SelectCommand(INDEX_FIRST_PERSON), command);
     }
 
-    //@@ author Wu Di
+    //@@ author WoodySIN
     @Test
     public void parseCommand_select_alias() throws Exception {
         SelectCommand command = (SelectCommand) parser.parseCommand(
@@ -216,7 +216,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("redo 1") instanceof RedoCommand);
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Test
     public void parseCommand_redoCommandAlias_returnsRedoCommand() throws Exception {
         assertTrue(parser.parseCommand(RedoCommand.COMMAND_ALIAS) instanceof RedoCommand);
@@ -230,7 +230,7 @@ public class AddressBookParserTest {
         assertTrue(parser.parseCommand("undo 3") instanceof UndoCommand);
     }
 
-    //@@author Wu Di
+    //@@author WoodySIN
     @Test
     public void parseCommand_undoCommandAlias_returnsUndoCommand() throws Exception {
         assertTrue(parser.parseCommand(UndoCommand.COMMAND_ALIAS) instanceof UndoCommand);

@@ -22,7 +22,7 @@ import seedu.address.testutil.EditTaskDescriptorBuilder;
 /**
  * Contains helper methods for testing Task Commands
  */
-//@@author Wu Di
+//@@author WoodySIN
 public class CommandTaskTestUtil {
 
     public static final String VALID_TITLE_EXAM = "Test Preparation";

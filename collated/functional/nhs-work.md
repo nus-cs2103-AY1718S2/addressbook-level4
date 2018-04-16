@@ -1,73 +1,5 @@
 # nhs-work
-###### \build\resources\main\view\RecordLayout.fxml
-``` fxml
-
-<!-- TODO: set a more appropriate initial size -->
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="1061.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.address.logic.record.RecordController">
-   <children>
-      <GridPane layoutX="16.0" layoutY="19.0" prefHeight="671.0" prefWidth="1010.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.3333740234375" minWidth="10.0" prefWidth="89.3333740234375" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="185.6666259765625" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
-            <TextArea fx:id="dateField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Symptoms:" GridPane.rowIndex="1" />
-            <TextArea fx:id="symptomField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Illness:" GridPane.rowIndex="2" />
-            <TextArea fx:id="illnessField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment:" GridPane.rowIndex="3" />
-            <TextArea fx:id="treatmentField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-         </children>
-      </GridPane>
-      <Button fx:id="saveButton" layoutX="973.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Save" textAlignment="CENTER" />
-      <Text fx:id="messageText" fill="#cc1919" layoutX="350.0" layoutY="722.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="361.0" />
-   </children>
-</AnchorPane>
-```
-###### \out\production\resources\view\RecordLayout.fxml
-``` fxml
-
-<!-- TODO: set a more appropriate initial size -->
-
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="1061.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.address.logic.record.RecordController">
-   <children>
-      <GridPane layoutX="16.0" layoutY="19.0" prefHeight="671.0" prefWidth="1010.0">
-        <columnConstraints>
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.3333740234375" minWidth="10.0" prefWidth="89.3333740234375" />
-          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="185.6666259765625" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
-            <TextArea fx:id="dateField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Symptoms:" GridPane.rowIndex="1" />
-            <TextArea fx:id="symptomField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Illness:" GridPane.rowIndex="2" />
-            <TextArea fx:id="illnessField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
-            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment:" GridPane.rowIndex="3" />
-            <TextArea fx:id="treatmentField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-         </children>
-      </GridPane>
-      <Button fx:id="saveButton" layoutX="973.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Save" textAlignment="CENTER" />
-      <Text fx:id="messageText" fill="#cc1919" layoutX="350.0" layoutY="722.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="361.0" />
-   </children>
-</AnchorPane>
-```
-###### \src\main\java\seedu\address\logic\commands\RecordCommand.java
+###### \java\seedu\address\logic\commands\RecordCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -244,15 +176,12 @@ public class RecordCommand extends UndoableCommand {
     public Index getRecordIndex() {
         return recordIndex;
     }
-    public Patient getToEdit() {
-        return patientToEdit;
-    }
     public Patient getEdited() {
         return editedPatient;
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\commands\RemarkCommand.java
+###### \java\seedu\address\logic\commands\RemarkCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -307,7 +236,6 @@ public class RemarkCommand extends UndoableCommand {
 
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
-        //throw new CommandException("Index: " + index.getOneBased() + " Remark: " + remark);
         requireNonNull(patientToEdit);
         requireNonNull(editedPatient);
 
@@ -385,15 +313,12 @@ public class RemarkCommand extends UndoableCommand {
     public Remark getRemark() {
         return remark;
     }
-    public Patient getToEdit() {
-        return patientToEdit;
-    }
     public Patient getEdited() {
         return editedPatient;
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\commands\RemoveRecordCommand.java
+###### \java\seedu\address\logic\commands\RemoveRecordCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -495,9 +420,7 @@ public class RemoveRecordCommand extends UndoableCommand {
         } catch (IndexOutOfBoundsException ie) {
             throw new CommandException(MESSAGE_REMOVE_RECORD_FAILURE);
         }
-        if (temp.size() == 0) {
-            temp.add(new Record());
-        }
+
         RecordList recordlist = new RecordList(temp);
 
         return new Patient(patientToEdit.getName(), patientToEdit.getNric(), patientToEdit.getPhone(),
@@ -531,15 +454,12 @@ public class RemoveRecordCommand extends UndoableCommand {
     public Index getRecordIndex() {
         return recordIndex;
     }
-    public Patient getToEdit() {
-        return patientToEdit;
-    }
     public Patient getEdited() {
         return editedPatient;
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\RecordCommandParser.java
+###### \java\seedu\address\logic\parser\RecordCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -600,15 +520,13 @@ public class RecordCommandParser implements Parser<RecordCommand> {
 
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\RemarkCommandParser.java
+###### \java\seedu\address\logic\parser\RemarkCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_REMARK;
-
-import java.util.stream.Stream;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
@@ -647,17 +565,9 @@ public class RemarkCommandParser implements Parser<RemarkCommand> {
         }
     }
 
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\RemoveRecordCommandParser.java
+###### \java\seedu\address\logic\parser\RemoveRecordCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -718,7 +628,7 @@ public class RemoveRecordCommandParser implements Parser<RemoveRecordCommand> {
 
 }
 ```
-###### \src\main\java\seedu\address\logic\record\RecordController.java
+###### \java\seedu\address\logic\record\RecordController.java
 ``` java
 package seedu.address.logic.record;
 
@@ -730,6 +640,7 @@ import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
+import seedu.address.model.patient.DateOfBirth;
 import seedu.address.model.patient.Record;
 
 /**
@@ -763,6 +674,13 @@ public class RecordController {
         String symptom = this.symptomField.getText();
         String illness = this.illnessField.getText();
         String treatment = this.treatmentField.getText();
+        closeWindow(date, symptom, illness, treatment);
+    }
+
+    /**
+     * Handles the events required when a close window event occurs.
+     */
+    private void closeWindow(String date, String symptom, String illness, String treatment) {
         if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
             messageText.setText("Please fill in all fields.");
         } else {
@@ -770,7 +688,13 @@ public class RecordController {
                 messageText.setText("Success! Please close this window.");
                 closeButtonAction();
             } else {
-                messageText.setText("Invalid entries!");
+                if (!DateOfBirth.isValidDob(date)) {
+                    messageText.setText("Date should only contain digits and"
+                            + "slashes, in the following format DD/MM/YYYY");
+                } else {
+                    messageText.setText("Text field should only contain"
+                            + "visible characters and spaces, and it should not be blank");
+                }
             }
         }
     }
@@ -799,16 +723,7 @@ public class RecordController {
         String symptom = this.symptomField.getText();
         String illness = this.illnessField.getText();
         String treatment = this.treatmentField.getText();
-        if (date.equals("") || symptom.equals("") || illness.equals("") || treatment.equals("")) {
-            messageText.setText("Please fill in all fields.");
-        } else {
-            if (RecordManager.authenticate(date, symptom, illness, treatment)) {
-                messageText.setText("Success! Please close this window.");
-                closeButtonAction();
-            } else {
-                messageText.setText("Invalid entries!");
-            }
-        }
+        closeWindow(date, symptom, illness, treatment);
         event.consume();
     }
 
@@ -856,17 +771,15 @@ public class RecordController {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\record\RecordWindow.java
+###### \java\seedu\address\logic\record\RecordWindow.java
 ``` java
 package seedu.address.logic.record;
 
 import java.io.IOException;
 
 import javafx.application.Application;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import seedu.address.MainApp;
@@ -876,18 +789,6 @@ import seedu.address.model.patient.Record;
  * Class for initializing login popup GUI
  */
 public class RecordWindow extends Application {
-
-    @FXML
-    private TextField dateField;
-
-    @FXML
-    private TextField symptomField;
-
-    @FXML
-    private TextField illnessField;
-
-    @FXML
-    private TextField treatmentField;
 
     private Stage primaryStage;
     private AnchorPane rootLayout;
@@ -971,13 +872,12 @@ public class RecordWindow extends Application {
 
 }
 ```
-###### \src\main\java\seedu\address\model\patient\Record.java
+###### \java\seedu\address\model\patient\Record.java
 ``` java
 package seedu.address.model.patient;
 
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ILLNESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_SYMPTOM;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TREATMENT;
@@ -998,9 +898,6 @@ import seedu.address.logic.parser.exceptions.ParseException;
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
 public class Record {
-
-    public static final String MESSAGE_RECORD_CONSTRAINTS =
-            "Patient record can take any values, but each field must be populated";
 
     private final DateOfBirth date;
     private final TextField symptom;
@@ -1052,7 +949,6 @@ public class Record {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE));
         }
 
-        //to nest following lines into try once the various classes are set up
         String date = argMultimap.getPreamble();
         String symptom = (argMultimap.getValue(PREFIX_SYMPTOM)).get();
         String illness = (argMultimap.getValue(PREFIX_ILLNESS)).get();
@@ -1120,34 +1016,7 @@ public class Record {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append("Date: ")
-                .append(getDate())
-                .append(" Symptoms: ")
-                .append(getSymptom())
-                .append(" Illness: ")
-                .append(getIllness())
-                .append(" Treatment: ")
-                .append(getTreatment());
-        return builder.toString();
-    }
-
-    /**
-     * The is an outdated method that was utilised when there was only 1 record per patient.
-     * It returns the string that is equivalent to the command that created this class.
-     */
-    public String toCommandString() {
-        final StringBuilder builder = new StringBuilder();
-        builder.append("1 ") //as the command will not be executed, we will be placing a dummy index
-                .append(PREFIX_DATE)
-                .append(getDate())
-                .append(" ")
-                .append(PREFIX_SYMPTOM)
-                .append(getSymptom())
-                .append(" ")
-                .append(PREFIX_ILLNESS)
-                .append(getIllness())
-                .append(" ")
-                .append(PREFIX_TREATMENT)
-                .append(getTreatment());
+                .append(getDate());
         return builder.toString();
     }
 
@@ -1171,7 +1040,7 @@ public class Record {
 
 }
 ```
-###### \src\main\java\seedu\address\model\patient\RecordList.java
+###### \java\seedu\address\model\patient\RecordList.java
 ``` java
 package seedu.address.model.patient;
 
@@ -1188,16 +1057,12 @@ import seedu.address.logic.parser.exceptions.ParseException;
  */
 public class RecordList {
 
-    public static final String MESSAGE_RECORDLIST_CONSTRAINTS =
-            "Patient record list can take any values, but each field must be populated";
-
     private ArrayList<Record> recordList;
     private int numRecord;
 
     public RecordList() {
         this.recordList = new ArrayList<Record>();
-        recordList.add(new Record());
-        this.numRecord = 1;
+        this.numRecord = 0;
     }
 
     /**
@@ -1212,8 +1077,7 @@ public class RecordList {
     public RecordList(String string) throws ParseException {
         if (string.isEmpty()) {
             this.recordList = new ArrayList<Record>();
-            recordList.add(new Record());
-            this.numRecord = 1;
+            this.numRecord = 0;
         } else {
             this.recordList = new ArrayList<Record>();
             String[] lines = string.split("\\r?\\n");
@@ -1230,7 +1094,7 @@ public class RecordList {
 
     public ArrayList<Record> getRecordList() {
         return recordList;
-    } //currently not very defensive
+    }
 
     @Override
     public boolean equals(Object other) {
@@ -1272,7 +1136,7 @@ public class RecordList {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         for (int i = 0; i < numRecord; i++) {
-            builder.append("Index: ")
+            builder.append("Record number: ")
                     .append((i + 1) + " ")
                     .append(recordList.get(i).toString())
                     .append("\n");
@@ -1309,7 +1173,7 @@ public class RecordList {
     }
 }
 ```
-###### \src\main\java\seedu\address\model\patient\Remark.java
+###### \java\seedu\address\model\patient\Remark.java
 ``` java
 package seedu.address.model.patient;
 
@@ -1366,7 +1230,7 @@ public class Remark {
 
 }
 ```
-###### \src\main\java\seedu\address\model\patient\TextField.java
+###### \java\seedu\address\model\patient\TextField.java
 ``` java
 package seedu.address.model.patient;
 
@@ -1381,7 +1245,7 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 public class TextField {
 
     public static final String MESSAGE_TEXTFIELD_CONSTRAINTS =
-            "Patient text field should only contain alphanumeric characters and spaces, and it should not be blank";
+            "Patient text field should only contain visible characters and spaces, and it should not be blank";
 
     /*
      * TextField must not be null and it can only contain alphanumeric characters and spaces.
@@ -1428,7 +1292,7 @@ public class TextField {
 
 }
 ```
-###### \src\main\resources\view\RecordLayout.fxml
+###### \resources\view\RecordLayout.fxml
 ``` fxml
 
 <!-- TODO: set a more appropriate initial size -->
@@ -1461,1011 +1325,4 @@ public class TextField {
       <Text fx:id="messageText" fill="#cc1919" layoutX="350.0" layoutY="722.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="361.0" />
    </children>
 </AnchorPane>
-```
-###### \src\test\java\seedu\address\logic\commands\RecordCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
-
-import java.text.SimpleDateFormat;
-import java.util.Date;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.logic.record.RecordManager;
-import seedu.address.model.Imdb;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.patient.Patient;
-import seedu.address.model.patient.Record;
-import seedu.address.testutil.PatientBuilder;
-
-public class RecordCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new RecordCommand(null, null);
-    }
-
-    @Test
-    public void execute_addRecordUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("01/04/2018 s/ i/ t/").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
-                new Record("01/04/2018", "", "", ""));
-
-        String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(recordCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_deleteRecordUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("01/04/2018 s/ i/ t/").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "", "", ""));
-
-        String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(recordCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList)
-                .withRecordList("01/04/2018 s/test i/test t/test").build();
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
-                new Record("01/04/2018", "test", "test", "test"));
-
-        String expectedMessage = String.format(RecordCommand.MESSAGE_EDIT_RECORD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(recordCommand, model, expectedMessage, expectedModel);
-        RecordCommand undoCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
-                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
-                "", "", ""));
-        undoCommand.execute();
-    }
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0);
-
-        assertCommandFailure(recordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Edit records of filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getImdb().getPersonList().size());
-
-        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0);
-
-        assertCommandFailure(recordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
-                new Record("01/04/2018", "test", "test", "test"));
-        RecordCommand toUndoCommand = prepareCommand(INDEX_FIRST_PERSON, 0,
-                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
-                "", "", ""));
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-
-        // edit -> first patient edited
-        recordCommand.execute();
-        Patient editedPatient = recordCommand.getEdited();
-        undoRedoStack.push(recordCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> same first patient edited again
-        expectedModel.updatePerson(patientToEdit, editedPatient);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        toUndoCommand.execute();
-    }
-
-    @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RecordCommand recordCommand = prepareCommand(outOfBoundIndex, 0);
-
-        // execution failed -> recordCommand not pushed into undoRedoStack
-        assertCommandFailure(recordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        // no commands in undoRedoStack -> undoCommand and redoCommand fail
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
-    }
-
-    /**
-     * 1. Edits a {@code Patient} from a filtered list.
-     * 2. Undo the edit.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited patient in the
-     * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the edit. This ensures {@code RedoCommand} edits the patient object regardless of indexing.
-     */
-    @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        RecordCommand recordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, new Record("01/04/2018", "b", "b", "b"));
-        RecordCommand toUndoCommand = prepareCommand(INDEX_SECOND_PERSON, 0,
-                new Record(new SimpleDateFormat("dd/MM/yyyy").format(new Date()),
-                "", "", ""));
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // record -> edits the records of the second patient in unfiltered patient list
-        // / first patient in filtered patient list
-        recordCommand.execute();
-        Patient editedPatient = recordCommand.getEdited();
-        undoRedoStack.push(recordCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        expectedModel.updatePerson(patientToEdit, editedPatient);
-        assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), patientToEdit);
-        // redo -> edits same second patient in unfiltered patient list
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-        toUndoCommand.execute();
-    }
-
-    @Test
-    public void equals() throws Exception {
-        final RecordCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, 1);
-
-        // same values -> returns true
-        RecordCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, 1);
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different patient index -> returns false
-        assertFalse(standardCommand.equals(new RecordCommand(INDEX_SECOND_PERSON, Index.fromOneBased(1))));
-
-        // different record index -> returns false
-        assertFalse(standardCommand.equals(new RecordCommand(INDEX_FIRST_PERSON, Index.fromOneBased(5))));
-    }
-
-    /**
-     * Returns an {@code RecordCommand} with parameters {@code index} and {@code descriptor}
-     */
-    private RecordCommand prepareCommand(Index patientIndex, int recordIndex) {
-        RecordCommand recordCommand = new RecordCommand(patientIndex, Index.fromZeroBased(recordIndex));
-        recordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return recordCommand;
-    }
-
-    /**
-     * Returns an {@code RecordCommand} with parameters {@code index} and {@code descriptor}
-     */
-    private RecordCommand prepareCommand(Index patientIndex, int recordIndex, Record record) {
-        RecordCommand recordCommand = new RecordCommand(patientIndex, Index.fromZeroBased(recordIndex), true);
-        RecordManager.authenticate(record.getDate(), record.getSymptom(), record.getIllness(), record.getTreatment());
-        recordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return recordCommand;
-    }
-
-}
-```
-###### \src\test\java\seedu\address\logic\commands\RemarkCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_REMARK_BOB;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Imdb;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.patient.Patient;
-import seedu.address.model.patient.Remark;
-import seedu.address.testutil.PatientBuilder;
-
-public class RemarkCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void constructor_nullIndexAndRemark_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new RemarkCommand(null, null);
-    }
-
-    @Test
-    public void execute_addRemarkUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRemark("test").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_deleteRemarkUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRemark("").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark(""));
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_REMOVE_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList).withRemark("test").build();
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
-
-        String expectedMessage = String.format(RemarkCommand.MESSAGE_ADD_SUCCESS, editedPatient);
-
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        expectedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        assertCommandSuccess(remarkCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, new Remark("test"));
-
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Edit remarks of filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getImdb().getPersonList().size());
-
-        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, new Remark("test"));
-
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-
-        // edit -> first patient edited
-        remarkCommand.execute();
-        Patient editedPatient = remarkCommand.getEdited();
-        undoRedoStack.push(remarkCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        // redo -> same first patient edited again
-        expectedModel.updatePerson(patientToEdit, editedPatient);
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-    @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemarkCommand remarkCommand = prepareCommand(outOfBoundIndex, new Remark("test"));
-
-        // execution failed -> remarkCommand not pushed into undoRedoStack
-        assertCommandFailure(remarkCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        // no commands in undoRedoStack -> undoCommand and redoCommand fail
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
-    }
-
-    /**
-     * 1. Edits a {@code Patient} from a filtered list.
-     * 2. Undo the edit.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited patient in the
-     * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the edit. This ensures {@code RedoCommand} edits the patient object regardless of indexing.
-     */
-    @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        RemarkCommand remarkCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark("test"));
-        Model expectedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-
-        showPersonAtIndex(model, INDEX_SECOND_PERSON);
-        Patient patientToEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // remark -> edits the remarks of the second patient in unfiltered patient list
-        // / first patient in filtered patient list
-        remarkCommand.execute();
-        Patient editedPatient = remarkCommand.getEdited();
-        undoRedoStack.push(remarkCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
-        assertCommandSuccess(undoCommand, model, UndoCommand.MESSAGE_SUCCESS, expectedModel);
-
-        expectedModel.updatePerson(patientToEdit, editedPatient);
-        assertNotEquals(model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), patientToEdit);
-        // redo -> edits same second patient in unfiltered patient list
-        assertCommandSuccess(redoCommand, model, RedoCommand.MESSAGE_SUCCESS, expectedModel);
-    }
-
-    @Test
-    public void equals() throws Exception {
-        final RemarkCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
-
-        // same values -> returns true
-        RemarkCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_AMY));
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different index -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_SECOND_PERSON, new Remark(VALID_REMARK_AMY))));
-
-        // different descriptor -> returns false
-        assertFalse(standardCommand.equals(new RemarkCommand(INDEX_FIRST_PERSON, new Remark(VALID_REMARK_BOB))));
-    }
-
-    /**
-     * Returns an {@code RemarkCommand} with parameters {@code index} and {@code descriptor}
-     */
-    private RemarkCommand prepareCommand(Index index, Remark remark) {
-        RemarkCommand remarkCommand = new RemarkCommand(index, remark);
-        remarkCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return remarkCommand;
-    }
-
-}
-```
-###### \src\test\java\seedu\address\logic\commands\RemoveRecordCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertNotEquals;
-import static org.junit.Assert.assertTrue;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandFailure;
-import static seedu.address.logic.commands.CommandTestUtil.assertCommandSuccess;
-import static seedu.address.logic.commands.CommandTestUtil.prepareRedoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.prepareUndoCommand;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-import static seedu.address.testutil.TypicalPatients.getTypicalAddressBook;
-
-import org.junit.Rule;
-import org.junit.Test;
-import org.junit.rules.ExpectedException;
-
-import seedu.address.commons.core.Messages;
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
-import seedu.address.model.Imdb;
-import seedu.address.model.Model;
-import seedu.address.model.ModelManager;
-import seedu.address.model.UserPrefs;
-import seedu.address.model.patient.Patient;
-import seedu.address.testutil.PatientBuilder;
-
-public class RemoveRecordCommandTest {
-
-    @Rule
-    public ExpectedException thrown = ExpectedException.none();
-
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void constructor_nullPerson_throwsNullPointerException() {
-        thrown.expect(NullPointerException.class);
-        new RemoveRecordCommand(null, null);
-    }
-
-    @Test
-    public void execute_deleteRecordUnfilteredList_success() throws Exception {
-        Patient toEdit = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(toEdit).withRecordList("01/04/2018 s/test i/test t/test").build();
-
-        String expectedMessage = String.format(RemoveRecordCommand.MESSAGE_REMOVE_RECORD_SUCCESS, toEdit);
-
-        Model updatedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        updatedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        RemoveRecordCommand removeRecordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, updatedModel);
-
-        assertCommandSuccess(removeRecordCommand, updatedModel, expectedMessage, model);
-    }
-
-    @Test
-    public void execute_filteredList_success() throws Exception {
-
-        Patient patientInFilteredList = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient editedPatient = new PatientBuilder(patientInFilteredList)
-                .withRecordList("01/04/2018 s/test i/test t/test").build();
-
-        String expectedMessage = String
-                .format(RemoveRecordCommand.MESSAGE_REMOVE_RECORD_SUCCESS, patientInFilteredList);
-
-        Model updatedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        updatedModel.updatePerson(model.getFilteredPersonList().get(0), editedPatient);
-
-        showPersonAtIndex(updatedModel, INDEX_FIRST_PERSON);
-
-        RemoveRecordCommand removeRecordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, updatedModel);
-
-        assertCommandSuccess(removeRecordCommand, updatedModel, expectedMessage, model);
-    }
-
-    @Test
-    public void execute_invalidPersonIndexUnfilteredList_failure() {
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemoveRecordCommand removeRecordCommand = prepareCommand(outOfBoundIndex, 0, model);
-
-        assertCommandFailure(removeRecordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    /**
-     * Edit records of filtered list where index is larger than size of filtered list,
-     * but smaller than size of address book
-     */
-    @Test
-    public void execute_invalidPersonIndexFilteredList_failure() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Index outOfBoundIndex = INDEX_SECOND_PERSON;
-        // ensures that outOfBoundIndex is still in bounds of address book list
-        assertTrue(outOfBoundIndex.getZeroBased() < model.getImdb().getPersonList().size());
-
-        RemoveRecordCommand removeRecordCommand = prepareCommand(outOfBoundIndex, 0, model);
-
-        assertCommandFailure(removeRecordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-    }
-
-    @Test
-    public void executeUndoRedo_validIndexUnfilteredList_success() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-
-        Patient oldPatient = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Patient currentPatient = new PatientBuilder(oldPatient)
-                .withRecordList("01/04/2018 s/test i/test t/test").build();
-
-        Model currentModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        currentModel.updatePerson(model.getFilteredPersonList().get(0), currentPatient);
-
-        Model updatedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        updatedModel.updatePerson(model.getFilteredPersonList().get(0), currentPatient);
-
-        RemoveRecordCommand removeRecordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, currentModel);
-
-        UndoCommand undoCommand = prepareUndoCommand(currentModel, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(currentModel, undoRedoStack);
-
-
-        // edit -> first patient edited
-        removeRecordCommand.execute();
-        undoRedoStack.push(removeRecordCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
-        assertCommandSuccess(undoCommand, currentModel, UndoCommand.MESSAGE_SUCCESS, updatedModel);
-
-        // redo -> same first patient edited again
-        assertCommandSuccess(redoCommand, currentModel, RedoCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
-    public void executeUndoRedo_invalidIndexUnfilteredList_failure() {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-        UndoCommand undoCommand = prepareUndoCommand(model, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(model, undoRedoStack);
-        Index outOfBoundIndex = Index.fromOneBased(model.getFilteredPersonList().size() + 1);
-        RemoveRecordCommand removeRecordCommand = prepareCommand(outOfBoundIndex, 0, model);
-
-        // execution failed -> removeRecordCommand not pushed into undoRedoStack
-        assertCommandFailure(removeRecordCommand, model, Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-
-        // no commands in undoRedoStack -> undoCommand and redoCommand fail
-        assertCommandFailure(undoCommand, model, UndoCommand.MESSAGE_FAILURE);
-        assertCommandFailure(redoCommand, model, RedoCommand.MESSAGE_FAILURE);
-    }
-
-    /**
-     * 1. Edits a {@code Patient} from a filtered list.
-     * 2. Undo the edit.
-     * 3. The unfiltered list should be shown now. Verify that the index of the previously edited patient in the
-     * unfiltered list is different from the index at the filtered list.
-     * 4. Redo the edit. This ensures {@code RedoCommand} edits the patient object regardless of indexing.
-     */
-    @Test
-    public void executeUndoRedo_validIndexFilteredList_samePersonEdited() throws Exception {
-        UndoRedoStack undoRedoStack = new UndoRedoStack();
-
-        Patient oldPatient = model.getFilteredPersonList().get(INDEX_SECOND_PERSON.getZeroBased());
-        Patient currentPatient = new PatientBuilder(oldPatient)
-                .withRecordList("01/04/2018 s/test i/test t/test").build();
-
-        Model currentModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        currentModel.updatePerson(model.getFilteredPersonList().get(1), currentPatient);
-
-        Model updatedModel = new ModelManager(new Imdb(model.getImdb()), new UserPrefs());
-        updatedModel.updatePerson(model.getFilteredPersonList().get(1), currentPatient);
-
-        UndoCommand undoCommand = prepareUndoCommand(currentModel, undoRedoStack);
-        RedoCommand redoCommand = prepareRedoCommand(currentModel, undoRedoStack);
-
-        RemoveRecordCommand removeRecordCommand = prepareCommand(INDEX_FIRST_PERSON, 0, currentModel);
-
-        showPersonAtIndex(currentModel, INDEX_SECOND_PERSON);
-        Patient patientToEdit = currentModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        // record -> edits the records of the second patient in unfiltered patient list
-        // / first patient in filtered patient list
-        removeRecordCommand.execute();
-        undoRedoStack.push(removeRecordCommand);
-
-        // undo -> reverts addressbook back to previous state and filtered patient list to show all persons
-        assertCommandSuccess(undoCommand, currentModel, UndoCommand.MESSAGE_SUCCESS, updatedModel);
-
-        assertNotEquals(currentModel.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased()), patientToEdit);
-        // redo -> edits same second patient in unfiltered patient list
-        assertCommandSuccess(redoCommand, currentModel, RedoCommand.MESSAGE_SUCCESS, model);
-    }
-
-    @Test
-    public void equals() throws Exception {
-        final RemoveRecordCommand standardCommand = prepareCommand(INDEX_FIRST_PERSON, 1, model);
-
-        // same values -> returns true
-        RemoveRecordCommand commandWithSameValues = prepareCommand(INDEX_FIRST_PERSON, 1, model);
-        assertTrue(standardCommand.equals(commandWithSameValues));
-
-        // same object -> returns true
-        assertTrue(standardCommand.equals(standardCommand));
-
-        // null -> returns false
-        assertFalse(standardCommand.equals(null));
-
-        // different types -> returns false
-        assertFalse(standardCommand.equals(new ClearCommand()));
-
-        // different patient index -> returns false
-        assertFalse(standardCommand.equals(new RemoveRecordCommand(INDEX_SECOND_PERSON, Index.fromOneBased(1))));
-
-        // different record index -> returns false
-        assertFalse(standardCommand.equals(new RemoveRecordCommand(INDEX_FIRST_PERSON, Index.fromOneBased(5))));
-    }
-
-
-    /**
-     * Returns an {@code RecordCommand} with parameters {@code index} and {@code descriptor}
-     */
-    private RemoveRecordCommand prepareCommand(Index patientIndex, int recordIndex, Model model) {
-        RemoveRecordCommand removeRecordCommand = new RemoveRecordCommand(
-                patientIndex, Index.fromZeroBased(recordIndex));
-        removeRecordCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return removeRecordCommand;
-    }
-
-}
-```
-###### \src\test\java\seedu\address\logic\parser\RecordCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RecordCommand;
-
-public class RecordCommandParserTest {
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RecordCommand.MESSAGE_USAGE);
-
-    private RecordCommandParser parser = new RecordCommandParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-        // no patient index specified
-        assertParseFailure(parser, PREFIX_INDEX + "1 ", MESSAGE_INVALID_FORMAT);
-
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
-
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + PREFIX_INDEX + "1 ", MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + PREFIX_INDEX + "1 ", MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 abc/ string", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        final StringBuilder builder = new StringBuilder();
-        builder.append(targetIndex.getOneBased())
-                .append(" " + PREFIX_INDEX + "1 ");
-
-        RecordCommand expectedCommand = new RecordCommand(targetIndex, Index.fromZeroBased(0));
-
-        assertParseSuccess(parser, builder.toString(), expectedCommand);
-    }
-}
-```
-###### \src\test\java\seedu\address\logic\parser\RemarkCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.commands.CommandTestUtil.NAME_DESC_AMY;
-import static seedu.address.logic.commands.CommandTestUtil.VALID_NAME_AMY;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RemarkCommand;
-import seedu.address.model.patient.Remark;
-
-public class RemarkCommandParserTest {
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemarkCommand.MESSAGE_USAGE);
-
-    private RemarkCommandParser parser = new RemarkCommandParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
-
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
-
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + NAME_DESC_AMY, MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 i/ string", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        String userInput = targetIndex.getOneBased() + " r/Is friendly";
-
-        RemarkCommand expectedCommand = new RemarkCommand(targetIndex, new Remark("Is friendly"));
-
-        assertParseSuccess(parser, userInput, expectedCommand);
-    }
-}
-```
-###### \src\test\java\seedu\address\logic\parser\RemoveRecordCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_INDEX;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-import static seedu.address.testutil.TypicalIndexes.INDEX_SECOND_PERSON;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.RemoveRecordCommand;
-
-public class RemoveRecordCommandParserTest {
-
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RemoveRecordCommand.MESSAGE_USAGE);
-
-    private RemoveRecordCommandParser parser = new RemoveRecordCommandParser();
-
-    @Test
-    public void parse_missingParts_failure() {
-        // no patient index specified
-        assertParseFailure(parser, PREFIX_INDEX + "1 ", MESSAGE_INVALID_FORMAT);
-
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
-
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_invalidPreamble_failure() {
-        // negative index
-        assertParseFailure(parser, "-5" + PREFIX_INDEX + "1 ", MESSAGE_INVALID_FORMAT);
-
-        // zero index
-        assertParseFailure(parser, "0" + PREFIX_INDEX + "1 ", MESSAGE_INVALID_FORMAT);
-
-        // invalid arguments being parsed as preamble
-        assertParseFailure(parser, "1 some random string", MESSAGE_INVALID_FORMAT);
-
-        // invalid prefix being parsed as preamble
-        assertParseFailure(parser, "1 abc/ string", MESSAGE_INVALID_FORMAT);
-    }
-
-    @Test
-    public void parse_allFieldsSpecified_success() {
-        Index targetIndex = INDEX_SECOND_PERSON;
-        final StringBuilder builder = new StringBuilder();
-        builder.append(targetIndex.getOneBased())
-                .append(" " + PREFIX_INDEX + "1 ");
-
-        RemoveRecordCommand expectedCommand = new RemoveRecordCommand(targetIndex, Index.fromZeroBased(0));
-
-        assertParseSuccess(parser, builder.toString(), expectedCommand);
-    }
-}
-```
-###### \src\test\java\seedu\address\model\patient\RecordListTest.java
-``` java
-package seedu.address.model.patient;
-
-import static org.junit.Assert.assertTrue;
-
-import java.util.ArrayList;
-
-import org.junit.Test;
-
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.testutil.Assert;
-
-public class RecordListTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Record(null, null, null, null));
-    }
-
-    @Test
-    public void isValidRecordList() throws ParseException {
-        // null address
-        Assert.assertThrows(NullPointerException.class, () -> RecordList.isValidRecordList(null));
-
-        ArrayList<Record> temp = new ArrayList<Record>();
-
-        // valid recordLists
-        temp.add(new Record("01/04/2018", "", "", ""));
-        assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // empty string
-        temp.remove(0);
-        temp.add(new Record("01/04/2018", " ", " ", " "));
-        assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // spaces only
-        temp.remove(0);
-        temp.add(new Record("01/04/2018", "b", "c", "d"));
-        assertTrue(RecordList.isValidRecordList(new RecordList(temp))); // one character
-        try {
-            assertTrue(RecordList.isValidRecordList(new RecordList("01/04/2018 s/a i/b t/c"))); // one character
-        } catch (ParseException pe) {
-            throw pe;
-        }
-
-        // invalid recordList
-        temp.remove(0);
-        Assert.assertThrows(IllegalArgumentException.class, () -> new RecordList("9th March 2017 s/ i/ t/"));
-    }
-}
-```
-###### \src\test\java\seedu\address\model\patient\RecordTest.java
-``` java
-package seedu.address.model.patient;
-
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.Assert;
-
-public class RecordTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Record(null, null, null, null));
-    }
-
-    @Test
-    public void isValidRecord() {
-        // null record
-        Assert.assertThrows(NullPointerException.class, () -> Record.isValidRecord(null));
-
-        // invalid records
-        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record("", "", "", "")));
-        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(new Record(" ", " ", " ", " ")));
-        Assert.assertThrows(IllegalArgumentException.class, () -> Record.isValidRecord(
-                new Record("5th March 2016", " ", " ", " ")));
-
-        // valid records
-        assertTrue(Record.isValidRecord(new Record("01/04/2018", "High temperature", "Fever", "Antibiotics")));
-        assertTrue(Record.isValidRecord(new Record("99/99/9999", "b", "c", "d"))); // one character
-    }
-}
-```
-###### \src\test\java\seedu\address\model\patient\RemarkTest.java
-``` java
-package seedu.address.model.patient;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-public class RemarkTest {
-
-    @Test
-    public void isValidRemark() {
-        // valid remarks
-        assertTrue(Remark.isValidRemark("test"));
-        assertTrue(Remark.isValidRemark("Shows up weekly for medication")); // long remark
-        assertTrue(Remark.isValidRemark("a")); // one character
-    }
-
-    @Test
-    public void equals() {
-        Remark remark = new Remark("test");
-
-        // same object -> returns true
-        assertTrue(remark.equals(remark));
-
-        // same value -> returns true
-        Remark remark2 = new Remark("test");
-        assertTrue(remark.equals(remark2));
-
-        // different value -> returns false
-        Remark remark3 = new Remark("not test");
-        assertFalse(remark.equals(remark3));
-
-        // different objects -> returns false
-        assertFalse(remark.equals(362));
-
-        // null -> returns false
-        assertFalse(remark.equals(null));
-    }
-}
 ```

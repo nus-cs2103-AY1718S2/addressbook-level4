@@ -1,9 +1,10 @@
 # cxingkai
-###### \src\main\java\seedu\address\logic\commands\LoginCommand.java
+###### \java\seedu\address\logic\commands\LoginCommand.java
 ``` java
 package seedu.address.logic.commands;
 
 import javafx.stage.Stage;
+import seedu.address.logic.login.LoginManager;
 import seedu.address.logic.login.LoginWindow;
 
 /**
@@ -14,8 +15,8 @@ public class LoginCommand extends Command {
     public static final String COMMAND_ALIAS = "lg";
 
     public static final String MESSAGE_ALREADY_LOGGED_IN = "Already logged in";
+    public static final String MESSAGE_LOGIN_CANCEL = "Login cancelled.";
     public static final String MESSAGE_LOGIN_SUCCESS = "Successfully logged in as ";
-    public static final String MESSAGE_LOGIN_FAIL = "Wrong username and password! Please try again.";
 
     public static final String MESSAGE_NOT_LOGGED_IN = "Not logged in!\n%1$s";
     public static final String MESSAGE_USAGE = COMMAND_WORD + ": Allows user to login to the system "
@@ -31,7 +32,8 @@ public class LoginCommand extends Command {
         LoginWindow loginWindow = new LoginWindow();
         Stage stage = new Stage();
         loginWindow.start(stage);
-        return new CommandResult("");
+
+        return new CommandResult(processResultString());
     }
 
     @Override
@@ -39,9 +41,51 @@ public class LoginCommand extends Command {
         return other == this // short circuit if same object
                 || (other instanceof LoginCommand); // instanceof handles nulls
     }
+
+    /**
+     * Creates output String for user feedback
+     */
+    public String processResultString() {
+        String userRole = null;
+        if (LoginManager.getUserState() == LoginManager.DOCTOR_LOGIN) {
+            userRole = "Doctor";
+        } else if (LoginManager.getUserState() == LoginManager.MEDICAL_STAFF_LOGIN) {
+            userRole = "Staff";
+        } else {
+            return MESSAGE_LOGIN_CANCEL;
+        }
+
+        return MESSAGE_LOGIN_SUCCESS + LoginManager.getUserName() + " (" + userRole + ")";
+    }
 }
 ```
-###### \src\main\java\seedu\address\logic\commands\PrintCommand.java
+###### \java\seedu\address\logic\commands\LogoutCommand.java
+``` java
+package seedu.address.logic.commands;
+
+import seedu.address.logic.login.LoginManager;
+
+/**
+ * Logs user out of the system
+ */
+public class LogoutCommand extends Command {
+    public static final String COMMAND_WORD = "logout";
+    public static final String SUCCESS_MESSAGE = "Successfully logged out of IMDB.";
+
+    @Override
+    public CommandResult execute() {
+        LoginManager.logout();
+        return new CommandResult(SUCCESS_MESSAGE);
+    }
+
+    @Override
+    public boolean equals (Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof LogoutCommand); // instanceof handles nulls
+    }
+}
+```
+###### \java\seedu\address\logic\commands\PrintCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -97,7 +141,7 @@ public class PrintCommand extends Command {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\login\LoginController.java
+###### \java\seedu\address\logic\login\LoginController.java
 ``` java
 package seedu.address.logic.login;
 
@@ -105,7 +149,10 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.input.KeyCode;
+import javafx.scene.input.KeyEvent;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 /**
  * Controller for LoginLayout. Handles button press.
@@ -131,7 +178,40 @@ public class LoginController {
             messageText.setText("Please fill in both fields.");
         } else {
             if (LoginManager.authenticate(username, password)) {
-                messageText.setText("Success! Please close this window.");
+                // success
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.close();
+            } else {
+                messageText.setText("Username and password do not match!");
+            }
+        }
+    }
+
+    /**
+     * Takes in input to the various record fields when enter button is clicked in any field.
+     */
+    @FXML
+    protected void handleKeyAction(KeyEvent event) {
+        KeyCode code = event.getCode();
+        if (code == KeyCode.ENTER) {
+            handleEnterKey(event);
+        }
+    }
+
+    /**
+     * Authenticates input username and password when enter button is pressed
+     */
+    @FXML
+    protected void handleEnterKey(KeyEvent event) {
+        String username = this.usernameField.getText();
+        String password = this.passwordField.getText();
+        if (username.equals("") || password.equals("")) {
+            messageText.setText("Please fill in both fields.");
+        } else {
+            if (LoginManager.authenticate(username, password)) {
+                // success
+                Stage stage = (Stage) usernameField.getScene().getWindow();
+                stage.close();
             } else {
                 messageText.setText("Username and password do not match!");
             }
@@ -139,12 +219,11 @@ public class LoginController {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\login\LoginManager.java
+###### \java\seedu\address\logic\login\LoginManager.java
 ``` java
 package seedu.address.logic.login;
 
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -155,26 +234,31 @@ import seedu.address.MainApp;
  * LoginManager class to store login state and handle login attempts
  */
 public final class LoginManager {
-    public static final int NO_USER = 0;
+    public static final int NO_USER_STATE = 0;
     public static final int DOCTOR_LOGIN = 1;
     public static final int MEDICAL_STAFF_LOGIN = 2;
+    public static final String NO_USER_STRING = null;
 
-    private static LoginState currLoginState = new LoginState(NO_USER);
+    private static LoginState currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
     private static String passwordPath = "/data/passwords.csv";
 
     private LoginManager() {
-        currLoginState = new LoginState(NO_USER);
+        currLoginState = new LoginState(NO_USER_STATE, NO_USER_STRING);
     }
 
     public static int getUserState() {
         return currLoginState.getState();
     }
 
+    public static String getUserName() {
+        return currLoginState.getUser();
+    }
+
     /**
      * Utility function for tests
      */
     public static void logout() {
-        currLoginState.updateState(NO_USER);
+        currLoginState.updateState(NO_USER_STATE, NO_USER_STRING);
     }
 
     /**
@@ -184,8 +268,6 @@ public final class LoginManager {
     public static boolean authenticate (String username, String password) {
         boolean match = false;
         int loginStateIndex = 0;
-
-        File file = new File(passwordPath);
 
         try {
             InputStreamReader isr = new InputStreamReader(MainApp.class.getResourceAsStream(passwordPath));
@@ -211,7 +293,7 @@ public final class LoginManager {
         }
 
         if (match) {
-            currLoginState.updateState(loginStateIndex);
+            currLoginState.updateState(loginStateIndex, username);
             return true;
         }
 
@@ -219,7 +301,7 @@ public final class LoginManager {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\login\LoginState.java
+###### \java\seedu\address\logic\login\LoginState.java
 ``` java
 package seedu.address.logic.login;
 
@@ -229,21 +311,31 @@ package seedu.address.logic.login;
 public class LoginState {
 
     private int state;
+    private String user;
 
-    LoginState(int state) {
+    LoginState(int state, String user) {
         this.state = state;
+        this.user = user;
     }
 
-    public void updateState(int newState) {
+    /**
+     * Sets the user and user role
+     */
+    public void updateState(int newState, String user) {
         this.state = newState;
+        this.user = user;
     }
 
     public int getState() {
         return state;
     }
+
+    public String getUser() {
+        return user;
+    }
 }
 ```
-###### \src\main\java\seedu\address\logic\login\LoginWindow.java
+###### \java\seedu\address\logic\login\LoginWindow.java
 ``` java
 package seedu.address.logic.login;
 
@@ -279,7 +371,7 @@ public class LoginWindow extends Application {
         // Prevent the window resizing
         this.primaryStage.setResizable(false);
 
-        initRootLayout();
+        // initRootLayout();
 
         showLoginForm();
     }
@@ -316,7 +408,7 @@ public class LoginWindow extends Application {
             // Show the scene containing the root layout.
             Scene scene = new Scene(rootLayout);
             primaryStage.setScene(scene);
-            primaryStage.show();
+            primaryStage.showAndWait();
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -332,7 +424,7 @@ public class LoginWindow extends Application {
 
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\LoginCommandParser.java
+###### \java\seedu\address\logic\parser\LoginCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -362,7 +454,7 @@ public class LoginCommandParser implements Parser<LoginCommand> {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\PrintCommandParser.java
+###### \java\seedu\address\logic\parser\PrintCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -393,12 +485,15 @@ public class PrintCommandParser implements Parser<PrintCommand> {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\PrintFormatter.java
+###### \java\seedu\address\logic\PrintFormatter.java
 ``` java
 package seedu.address.logic;
 
+import java.awt.Desktop;
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import com.itextpdf.text.Chunk;
 import com.itextpdf.text.Document;
@@ -420,7 +515,7 @@ import seedu.address.model.patient.RecordList;
 public class PrintFormatter {
     private static Document document;
     private static String filePath;
-    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 18,
+    private static Font catFont = new Font(Font.FontFamily.TIMES_ROMAN, 20,
             Font.BOLD);
     private static Font subFont = new Font(Font.FontFamily.TIMES_ROMAN, 16,
             Font.BOLD);
@@ -436,6 +531,7 @@ public class PrintFormatter {
         writePatientInfo(patient);
         writeRecords(patient);
         document.close();
+        openPdf();
     }
 
     /**
@@ -510,7 +606,10 @@ public class PrintFormatter {
             paragraph.add(Chunk.NEWLINE);
 
             Record record = recordList.getRecord(recordIndex);
-            paragraph.add(new Chunk("Record #" + (recordIndex + 1), subFont));
+            Chunk recordNumberChunk = new Chunk("Record #" + (recordIndex + 1));
+            recordNumberChunk.setUnderline(0.1f, -2f);
+            recordNumberChunk.setFont(subFont);
+            paragraph.add(recordNumberChunk);
             paragraph.add(Chunk.NEWLINE);
 
             paragraph.add(new Chunk("Date recorded: ", smallBold));
@@ -540,23 +639,25 @@ public class PrintFormatter {
             de.printStackTrace();
         }
     }
+
+    /**
+     * Opens Pdf that was created
+     */
+    private void openPdf() {
+        if (Desktop.isDesktopSupported()) {
+            try {
+                File myFile = new File(filePath);
+                Desktop.getDesktop().open(myFile);
+            } catch (IOException ex) {
+                // no application registered for PDFs
+                ex.printStackTrace();
+            }
+        }
+    }
 }
 ```
-###### \src\main\resources\view\LoginLayout.fxml
+###### \resources\view\LoginLayout.fxml
 ``` fxml
-<?xml version="1.0" encoding="UTF-8"?>
-
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.PasswordField?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.layout.ColumnConstraints?>
-<?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.text.Text?>
-
-<!-- TODO: set a more appropriate initial size -->
-
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.address.logic.login.LoginController">
    <children>
       <GridPane layoutX="16.0" layoutY="36.0" prefHeight="90.0" prefWidth="268.0">
@@ -571,159 +672,12 @@ public class PrintFormatter {
          <children>
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
             <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Password" GridPane.rowIndex="1" />
-            <TextField fx:id="usernameField" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" />
-            <PasswordField fx:id="passwordField" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <TextField fx:id="usernameField" onKeyPressed="#handleKeyAction" prefHeight="25.0" prefWidth="175.0" GridPane.columnIndex="1" />
+            <PasswordField fx:id="passwordField" onKeyPressed="#handleKeyAction" GridPane.columnIndex="1" GridPane.rowIndex="1" />
          </children>
       </GridPane>
       <Button layoutX="238.0" layoutY="140.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Login" textAlignment="CENTER" />
       <Text fx:id="messageText" fill="#cc1919" layoutX="16.0" layoutY="157.0" strokeType="OUTSIDE" strokeWidth="0.0" />
    </children>
 </AnchorPane>
-```
-###### \src\test\java\seedu\address\logic\commands\LoginCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-public class LoginCommandTest {
-
-    @Test
-    public void equals() {
-        LoginCommand loginCommand = new LoginCommand();
-        LoginCommand loginCommandCopy = new LoginCommand();
-
-        assertTrue(loginCommand.equals(loginCommandCopy));
-    }
-}
-```
-###### \src\test\java\seedu\address\logic\commands\PrintCommandTest.java
-``` java
-package seedu.address.logic.commands;
-
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-
-public class PrintCommandTest {
-    @Test
-    public void equals() {
-        Index testIndex = Index.fromOneBased(1);
-        PrintCommand printCommand = new PrintCommand(testIndex);
-        PrintCommand printCommandCopy = new PrintCommand(testIndex);
-
-        assertTrue(printCommand.equals(printCommandCopy));
-    }
-}
-```
-###### \src\test\java\seedu\address\logic\LoginManagerTest.java
-``` java
-package seedu.address.logic;
-
-import static org.junit.Assert.assertEquals;
-
-import static seedu.address.logic.commands.LoginCommand.FAKE_PASSWORD;
-import static seedu.address.logic.commands.LoginCommand.TEST_PASSWORD;
-import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
-
-import org.junit.Test;
-
-import seedu.address.logic.login.LoginManager;
-
-public class LoginManagerTest {
-
-    @Test
-    public void authenticate_correctPassword_returnTrue() {
-        LoginManager.logout();
-        boolean expectSuccess = LoginManager.authenticate(TEST_USERNAME, TEST_PASSWORD);
-        int loginState = LoginManager.getUserState();
-
-        assertEquals(expectSuccess, true);
-        assertEquals(loginState, LoginManager.DOCTOR_LOGIN);
-    }
-
-    @Test
-    public void authenticate_wrongPassword_returnFalse() {
-        LoginManager.logout();
-        boolean expectFail = LoginManager.authenticate(TEST_USERNAME, FAKE_PASSWORD);
-        int loginState = LoginManager.getUserState();
-
-        assertEquals(expectFail, false);
-        System.out.println(loginState);
-        assertEquals(loginState, LoginManager.NO_USER);
-    }
-}
-```
-###### \src\test\java\seedu\address\logic\parser\LoginCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import static seedu.address.logic.commands.LoginCommand.TEST_PASSWORD;
-import static seedu.address.logic.commands.LoginCommand.TEST_USERNAME;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.logic.commands.LoginCommand;
-
-public class LoginCommandParserTest {
-    private LoginCommandParser parser = new LoginCommandParser();
-
-    @Test
-    public void parse_emptyArg_returnsLoginCommand() {
-        LoginCommand expectedLoginCommand = new LoginCommand();
-        assertParseSuccess(parser, "", expectedLoginCommand);
-        assertParseSuccess(parser, "      ", expectedLoginCommand);
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, TEST_USERNAME, String.format(
-                MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, TEST_USERNAME + " " + TEST_PASSWORD + " " + TEST_USERNAME,
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, LoginCommand.MESSAGE_USAGE));
-    }
-}
-```
-###### \src\test\java\seedu\address\logic\parser\PrintCommandParserTest.java
-``` java
-package seedu.address.logic.parser;
-
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseFailure;
-import static seedu.address.logic.parser.CommandParserTestUtil.assertParseSuccess;
-
-import org.junit.Test;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.PrintCommand;
-
-public class PrintCommandParserTest {
-    private PrintCommandParser parser = new PrintCommandParser();
-
-    @Test
-    public void parse_emptyArg_returnsLoginCommand() {
-        int testInput = 1;
-        Index testIndex = Index.fromOneBased(testInput);
-        PrintCommand expectedPrintCommand = new PrintCommand(testIndex);
-
-        assertParseSuccess(parser, Integer.toString(testInput), expectedPrintCommand);
-    }
-
-    @Test
-    public void parse_invalidArgs_throwsParseException() {
-        assertParseFailure(parser, " ", String.format(
-                MESSAGE_INVALID_COMMAND_FORMAT, PrintCommand.MESSAGE_USAGE));
-        assertParseFailure(parser, "1 1",
-                String.format(MESSAGE_INVALID_COMMAND_FORMAT, PrintCommand.MESSAGE_USAGE));
-    }
-}
 ```

@@ -1,5 +1,5 @@
 # ktingit
-###### \src\main\java\seedu\address\logic\commands\AddConditionCommand.java
+###### \java\seedu\address\logic\commands\AddConditionCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -288,7 +288,7 @@ public class AddConditionCommand extends UndoableCommand {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\commands\DeleteConditionCommand.java
+###### \java\seedu\address\logic\commands\DeleteConditionCommand.java
 ``` java
 package seedu.address.logic.commands;
 
@@ -577,7 +577,7 @@ public class DeleteConditionCommand extends UndoableCommand {
     }
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\AddConditionCommandParser.java
+###### \java\seedu\address\logic\parser\AddConditionCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -651,7 +651,7 @@ public class AddConditionCommandParser implements Parser<AddConditionCommand> {
 
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\DeleteConditionCommandParser.java
+###### \java\seedu\address\logic\parser\DeleteConditionCommandParser.java
 ``` java
 package seedu.address.logic.parser;
 
@@ -726,7 +726,7 @@ public class DeleteConditionCommandParser implements Parser<DeleteConditionComma
 
 }
 ```
-###### \src\main\java\seedu\address\logic\parser\ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code String nric} into a {@code Nric}.
@@ -753,7 +753,7 @@ public class DeleteConditionCommandParser implements Parser<DeleteConditionComma
     }
 
 ```
-###### \src\main\java\seedu\address\logic\parser\ParserUtil.java
+###### \java\seedu\address\logic\parser\ParserUtil.java
 ``` java
     /**
      * Parses a {@code String dob} into an {@code Dob}.
@@ -803,121 +803,4 @@ public class DeleteConditionCommandParser implements Parser<DeleteConditionComma
         return bloodType.isPresent() ? Optional.of(parseBloodType(bloodType.get())) : Optional.empty();
     }
 
-```
-###### \src\test\java\seedu\address\model\patient\BloodTypeTest.java
-``` java
-package seedu.address.model.patient;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.Assert;
-
-public class BloodTypeTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new BloodType(null));
-    }
-
-    @Test
-    public void constructor_invalidBloodType_throwsIllegalArgumentException() {
-        String invalidBloodType = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new BloodType(invalidBloodType));
-    }
-
-    @Test
-    public void isValidBloodType() {
-        // null blood type
-        Assert.assertThrows(NullPointerException.class, () -> BloodType.isValidBloodType(null));
-
-        // invalid blood type
-        assertFalse(BloodType.isValidBloodType("")); // empty string
-        assertFalse(BloodType.isValidBloodType(" ")); // spaces only
-
-        // valid blood type
-        assertTrue(BloodType.isValidBloodType("A")); // only one alphabet
-        assertTrue(BloodType.isValidBloodType("AB")); // only two alphabets
-        assertTrue(BloodType.isValidBloodType("A+")); // one alphabet and one sign
-        assertTrue(BloodType.isValidBloodType("AB+")); // two alphabets and one sign
-    }
-}
-```
-###### \src\test\java\seedu\address\model\patient\DobTest.java
-``` java
-package seedu.address.model.patient;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.Assert;
-
-public class DobTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new DateOfBirth(null));
-    }
-
-    @Test
-    public void constructor_invalidDateOfBirth_throwsIllegalArgumentException() {
-        String invalidDob = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new DateOfBirth(invalidDob));
-    }
-
-    @Test
-    public void isValidDob() {
-        // null dob
-        Assert.assertThrows(NullPointerException.class, () -> DateOfBirth.isValidDob(null));
-
-        // invalid dob
-        assertFalse(DateOfBirth.isValidDob("")); // empty string
-        assertFalse(DateOfBirth.isValidDob(" ")); // spaces only
-
-        // valid dob
-        assertTrue(DateOfBirth.isValidDob("11/11/1991")); // standard format
-    }
-}
-```
-###### \src\test\java\seedu\address\model\patient\NricTest.java
-``` java
-package seedu.address.model.patient;
-
-import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
-import org.junit.Test;
-
-import seedu.address.testutil.Assert;
-
-public class NricTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Nric(null));
-    }
-
-    @Test
-    public void constructor_invalidNric_throwsIllegalArgumentException() {
-        String invalidNric = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Nric(invalidNric));
-    }
-
-    @Test
-    public void isValidNric() {
-        // null nric
-        Assert.assertThrows(NullPointerException.class, () -> Nric.isValidNric(null));
-
-        // invalid nric
-        assertFalse(Nric.isValidNric("")); // empty string
-        assertFalse(Nric.isValidNric(" ")); // spaces only
-
-        // valid nric
-        assertTrue(Nric.isValidNric("S1234567A")); // standard format
-    }
-}
 ```

@@ -3,12 +3,6 @@
 :stylesDir: ../stylesheets
 :collatedDir: ../../collated
 
-(https://github.com/deborahlow97[GitHub])
-
-Welcome to my project portfolio. This document summarises my contributions of every software-related project that I have
-been involved with. The link to my GitHub page can be found above. This is where you can find the repository of every
-project mentioned below.
-
 == Project: CollegeZone
 CollegeZone is a desktop address book application used by National University of Singapore Residential College 4 (RC4) students. We aim to make RC4 student’s school life much easier and more convenient. +
 The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 20 kLoC. +
@@ -39,8 +33,6 @@ include::../UserGuide.adoc[tag=theme]
 
 === Minor enhancement: added birthday, level of friendship, unit number and ccas field
 ** Justification: The addition of this field provides user with more comprehensive contact details to add into CollegeZone.
-** External behavior: +
-include::../UserGuide.adoc[tag=addandedit]
 
 === Proposed enhancements:
 include::../UserGuide.adoc[tag=debv2.0]
@@ -54,10 +46,7 @@ include::../UserGuide.adoc[tag=debv2.0]
 |_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
 |===
 
-include::../DeveloperGuide.adoc[tag=addandedit]
-include::../DeveloperGuide.adoc[tag=Goals]
 include::../DeveloperGuide.adoc[tag=addgoal]
-include::../DeveloperGuide.adoc[tag=deletegoal]
 include::../DeveloperGuide.adoc[tag=sortgoal]
 include::../DeveloperGuide.adoc[tag=theme]
 

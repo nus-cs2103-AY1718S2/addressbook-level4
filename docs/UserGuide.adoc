@@ -45,7 +45,7 @@ image::DownloadJar.JPG[width="550"]
 . To launch _CollegeZone_, double-click on `collegezone.jar` to launch _CollegeZone_.
 . You will be greeted with _CollegeZone's_ Graphic User Interface (GUI) as shown below. The GUI should appear in a few seconds.
 +
-image::UI.JPG[width="800"]
+image::Ui.png[width="800"]
 
 
 === Visual Introduction

@@ -8,11 +8,11 @@ https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_m
 https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
 
 ifdef::env-github[]
-image::docs/images/UI.JPG[width="650"]
+image::docs/images/Ui.png[width="800"]
 endif::[]
 
 ifndef::env-github[]
-image::images/UI.JPG[width="650"]
+image::images/Ui.png[width="800"]
 endif::[]
 
 Welcome to CollegeZone! CollegeZone is a custom application made for *National University of Singapore (NUS) Residential College 4 (RC4) students*. +

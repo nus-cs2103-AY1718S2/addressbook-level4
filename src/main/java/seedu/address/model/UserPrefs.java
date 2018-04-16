@@ -12,9 +12,13 @@ public class UserPrefs {
     private GuiSettings guiSettings;
     private String addressBookFilePath = "data/addressbook.xml";
     private String addressBookName = "MyAddressBook";
+    private String eventBookFilePath = "data/eventbook.xml";
+    private String eventBookName = "MyEventBook";
+    private String taskBookFilePath = "data/taskbook.xml";
+    private String taskBookName = "MyTaskBook";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(1750, 1000, 0, 0);
     }
 
     public GuiSettings getGuiSettings() {
@@ -43,6 +47,39 @@ public class UserPrefs {
 
     public void setAddressBookName(String addressBookName) {
         this.addressBookName = addressBookName;
+    }
+
+
+    public String getEventBookFilePath() {
+        return eventBookFilePath;
+    }
+
+    public void setEventBookFilePath(String eventBookFilePath) {
+        this.eventBookFilePath = eventBookFilePath;
+    }
+
+    public String getEventBookName() {
+        return eventBookName;
+    }
+
+    public void setEventBookName(String addressBookName) {
+        this.eventBookName = eventBookName;
+    }
+
+    public String getTaskBookFilePath() {
+        return taskBookFilePath;
+    }
+
+    public void setTaskBookFilePath(String taskBookFilePath) {
+        this.taskBookFilePath = taskBookFilePath;
+    }
+
+    public String getTaskBookName() {
+        return taskBookName;
+    }
+
+    public void setTaskBookName(String taskBookName) {
+        this.taskBookName = taskBookName;
     }
 
     @Override

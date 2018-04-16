@@ -21,6 +21,10 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedTask> tasks;
+    @XmlElement
+    private List<XmlAdaptedTaskCategory> taskCategories;
 
     /**
      * Creates an empty XmlSerializableAddressBook.

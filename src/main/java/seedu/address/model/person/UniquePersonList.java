@@ -8,7 +8,6 @@ import java.util.List;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 
@@ -18,7 +17,6 @@ import seedu.address.model.person.exceptions.PersonNotFoundException;
  * Supports a minimal set of list operations.
  *
  * @see Person#equals(Object)
- * @see CollectionUtil#elementsAreUnique(Collection)
  */
 public class UniquePersonList implements Iterable<Person> {
 
@@ -81,6 +79,16 @@ public class UniquePersonList implements Iterable<Person> {
         return personFoundAndDeleted;
     }
 
+    //@@author CYX28
+    /**
+     * Sorts all persons in list alphabetically by name
+     */
+    public void sort() {
+        internalList.sort((person1, person2) -> person1.getName().toString()
+                .compareToIgnoreCase(person2.getName().toString()));
+    }
+
+    //@@author
     public void setPersons(UniquePersonList replacement) {
         this.internalList.setAll(replacement.internalList);
     }

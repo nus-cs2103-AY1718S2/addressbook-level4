@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<taskbook>
+    <!-- Valid Task -->
+    <tasks>
+        <taskName>Agenda for meeting</taskName>
+        <taskPriority>high</taskPriority>
+        <taskDescription>(1) Proposal (2) Implementation details</taskDescription>
+        <taskDueDate>2018-04-25</taskDueDate>
+        <taskStatus>undone</taskStatus>
+        <categorised>work</categorised>
+    </tasks>
+    <!-- Task with invalid priority field -->
+    <tasks>
+        <taskName>Agenda for meeting</taskName>
+        <taskPriority>random</taskPriority>
+        <taskDescription>(1) Proposal (2) Implementation details</taskDescription>
+        <taskDueDate>2018-04-25</taskDueDate>
+        <taskStatus>undone</taskStatus>
+        <categorised>work</categorised>
+    </tasks>
+</taskbook>

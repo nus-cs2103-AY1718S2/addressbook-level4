@@ -1,28 +1,25 @@
 package seedu.address.ui;
 
-import java.net.URL;
 import java.util.logging.Logger;
 
-import com.google.common.eventbus.Subscribe;
-
-import javafx.application.Platform;
-import javafx.event.Event;
 import javafx.fxml.FXML;
-import javafx.scene.layout.Region;
 import javafx.scene.web.WebView;
-import seedu.address.MainApp;
+import javafx.stage.Stage;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
+
+//@@author x3tsunayh
 
 /**
  * The Browser Panel of the App.
+ * The default page is Google's home page, but can also be used to
+ * google for contacts selected by the Select Command.
  */
-public class BrowserPanel extends UiPart<Region> {
+public class BrowserPanel extends UiPart<Stage> {
 
-    public static final String DEFAULT_PAGE = "default.html";
+    public static final String GOOGLE_URL = "https://www.google.com.sg/";
     public static final String SEARCH_PAGE_URL =
-            "https://se-edu.github.io/addressbook-level4/DummySearchPage.html?name=";
+            "https://www.google.com.sg/search?q=";
 
     private static final String FXML = "BrowserPanel.fxml";
 
@@ -31,14 +28,23 @@ public class BrowserPanel extends UiPart<Region> {
     @FXML
     private WebView browser;
 
-    public BrowserPanel() {
-        super(FXML);
-
-        // To prevent triggering events for typing inside the loaded Web page.
-        getRoot().setOnKeyPressed(Event::consume);
-
-        loadDefaultPage();
+    /**
+     * Creates a new Google Search page.
+     *
+     * @param root Stage to use as the root of the GoogleSearch.
+     */
+    public BrowserPanel(Stage root, Person person) {
+        super(FXML, root);
+        if (person != null) {
+            this.loadPersonPage(person);
+        } else {
+            this.loadPage(GOOGLE_URL);
+        }
         registerAsAnEventHandler(this);
+    }
+
+    public BrowserPanel(Person person) {
+        this(new Stage(), person);
     }
 
     private void loadPersonPage(Person person) {
@@ -46,15 +52,7 @@ public class BrowserPanel extends UiPart<Region> {
     }
 
     public void loadPage(String url) {
-        Platform.runLater(() -> browser.getEngine().load(url));
-    }
-
-    /**
-     * Loads a default HTML file with a background that matches the general theme.
-     */
-    private void loadDefaultPage() {
-        URL defaultPage = MainApp.class.getResource(FXML_FILE_FOLDER + DEFAULT_PAGE);
-        loadPage(defaultPage.toExternalForm());
+        browser.getEngine().load(url);
     }
 
     /**
@@ -64,9 +62,26 @@ public class BrowserPanel extends UiPart<Region> {
         browser = null;
     }
 
-    @Subscribe
-    private void handlePersonPanelSelectionChangedEvent(PersonPanelSelectionChangedEvent event) {
-        logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        loadPersonPage(event.getNewSelection().person);
+    /**
+     * Shows the GoogleSearch window.
+     * @throws IllegalStateException
+     * <ul>
+     *     <li>
+     *         if this method is called on a thread other than the JavaFX Application Thread.
+     *     </li>
+     *     <li>
+     *         if this method is called during animation or layout processing.
+     *     </li>
+     *     <li>
+     *         if this method is called on the primary stage.
+     *     </li>
+     *     <li>
+     *         if {@code dialogStage} is already showing.
+     *     </li>
+     * </ul>
+     */
+    public void show() {
+        logger.fine("Showing Google Search page.");
+        getRoot().show();
     }
 }

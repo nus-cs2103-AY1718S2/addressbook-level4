@@ -7,6 +7,7 @@ import com.google.common.eventbus.Subscribe;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -16,9 +17,11 @@ import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.GoogleContactNameEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.person.Person;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -36,8 +39,12 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private EventListPanel eventListPanel;
+    private TaskListPanel taskListPanel;
+
     private Config config;
     private UserPrefs prefs;
+    private CalendarViewPanel calendarviewPanel;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -49,13 +56,31 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
+    private MenuItem linkedInItem;
+
+    @FXML
+    private MenuItem googleItem;
+
+    @FXML
+    private StackPane calendarViewPanelPlaceholder;
+
+    @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
 
     @FXML
     private StackPane statusbarPlaceholder;
+
+    @FXML
+    private StackPane taskListPanelPlaceholder;
+
+    @FXML
+    private TabPane tabPane;
 
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
@@ -65,6 +90,7 @@ public class MainWindow extends UiPart<Stage> {
         this.logic = logic;
         this.config = config;
         this.prefs = prefs;
+        this.logic.setTabPane(tabPane);
 
         // Configure the UI
         setTitle(config.getAppTitle());
@@ -80,6 +106,8 @@ public class MainWindow extends UiPart<Stage> {
 
     private void setAccelerators() {
         setAccelerator(helpMenuItem, KeyCombination.valueOf("F1"));
+        setAccelerator(linkedInItem, KeyCombination.valueOf("F2"));
+        setAccelerator(googleItem, KeyCombination.valueOf("F3"));
     }
 
     /**
@@ -116,14 +144,21 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
-
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        eventListPanel = new EventListPanel(logic.getFilteredEventList());
+        eventListPanelPlaceholder.getChildren().add(eventListPanel.getRoot());
+
+        taskListPanel = new TaskListPanel(logic.getFilteredTaskList());
+        taskListPanelPlaceholder.getChildren().add(taskListPanel.getRoot());
+
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
+
+        calendarviewPanel = new CalendarViewPanel(logic);
+        logic.setCalendarView(calendarviewPanel.getCalendarPane());
+        calendarViewPanelPlaceholder.getChildren().add(calendarviewPanel.getRoot());
 
         StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
@@ -161,12 +196,39 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     /**
-     * Opens the help window.
+     * Opens the Help window.
      */
     @FXML
     public void handleHelp() {
         HelpWindow helpWindow = new HelpWindow();
         helpWindow.show();
+    }
+
+    /**
+     * Opens the LinkedIn window.
+     */
+    @FXML
+    public void handleLinkedIn() {
+        LinkedInWindow linkedInWindow = new LinkedInWindow();
+        linkedInWindow.show();
+    }
+
+    /**
+     * Opens the Contact Google Search window.
+     */
+    @FXML
+    public void handleContactSearch(Person person) {
+        BrowserPanel contactSearchWindow = new BrowserPanel(person);
+        contactSearchWindow.show();
+    }
+
+    /**
+     * Opens the default Google Search window.
+     */
+    @FXML
+    public void handleGoogleSearch() {
+        BrowserPanel googleSearchWindow = new BrowserPanel(null);
+        googleSearchWindow.show();
     }
 
     void show() {
@@ -185,6 +247,10 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
+    public TaskListPanel getTaskListPanel() {
+        return this.taskListPanel;
+    }
+
     void releaseResources() {
         browserPanel.freeResources();
     }
@@ -194,4 +260,11 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    @Subscribe
+    private void handleContactSearchEvent(GoogleContactNameEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleContactSearch(event.getPerson());
+    }
+
 }

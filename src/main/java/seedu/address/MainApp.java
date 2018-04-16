@@ -21,17 +21,25 @@ import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
 import seedu.address.logic.LogicManager;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyTaskBook;
+import seedu.address.model.TaskBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.ReadOnlyEventBook;
 import seedu.address.model.util.SampleDataUtil;
 import seedu.address.storage.AddressBookStorage;
+import seedu.address.storage.EventBookStorage;
 import seedu.address.storage.JsonUserPrefsStorage;
 import seedu.address.storage.Storage;
 import seedu.address.storage.StorageManager;
+import seedu.address.storage.TaskBookStorage;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlEventBookStorage;
+import seedu.address.storage.XmlTaskBookStorage;
 import seedu.address.ui.Ui;
 import seedu.address.ui.UiManager;
 
@@ -40,7 +48,7 @@ import seedu.address.ui.UiManager;
  */
 public class MainApp extends Application {
 
-    public static final Version VERSION = new Version(0, 6, 0, true);
+    public static final Version VERSION = new Version(1, 5, 0, true);
 
     private static final Logger logger = LogsCenter.getLogger(MainApp.class);
 
@@ -62,13 +70,15 @@ public class MainApp extends Application {
         UserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(config.getUserPrefsFilePath());
         userPrefs = initPrefs(userPrefsStorage);
         AddressBookStorage addressBookStorage = new XmlAddressBookStorage(userPrefs.getAddressBookFilePath());
-        storage = new StorageManager(addressBookStorage, userPrefsStorage);
+        EventBookStorage eventBookStorage = new XmlEventBookStorage(userPrefs.getEventBookFilePath());
+        TaskBookStorage taskBookStorage = new XmlTaskBookStorage(userPrefs.getTaskBookFilePath());
+        storage = new StorageManager(addressBookStorage, eventBookStorage, taskBookStorage, userPrefsStorage);
 
         initLogging(config);
 
         model = initModelManager(storage, userPrefs);
 
-        logic = new LogicManager(model);
+        logic = new LogicManager(model, storage, userPrefs);
 
         ui = new UiManager(logic, config, userPrefs);
 
@@ -87,22 +97,41 @@ public class MainApp extends Application {
      */
     private Model initModelManager(Storage storage, UserPrefs userPrefs) {
         Optional<ReadOnlyAddressBook> addressBookOptional;
+        Optional<ReadOnlyEventBook> eventBookOptional;
+        Optional<ReadOnlyTaskBook> taskBookOptional;
         ReadOnlyAddressBook initialData;
+        ReadOnlyEventBook initialEventData;
+        ReadOnlyTaskBook initialTaskData;
+
         try {
             addressBookOptional = storage.readAddressBook();
+            eventBookOptional = storage.readEventBook();
+            taskBookOptional = storage.readTaskBook();
             if (!addressBookOptional.isPresent()) {
                 logger.info("Data file not found. Will be starting with a sample AddressBook");
             }
+            if (!eventBookOptional.isPresent()) {
+                logger.info("Event file not found. Will be starting with a sample AddressBook");
+            }
+            if (!taskBookOptional.isPresent()) {
+                logger.info("Task data file not found. Will be starting with a sample TaskBook");
+            }
             initialData = addressBookOptional.orElseGet(SampleDataUtil::getSampleAddressBook);
+            initialEventData = eventBookOptional.orElseGet(SampleDataUtil::getSampleEventBook);
+            initialTaskData = taskBookOptional.orElseGet(SampleDataUtil::getSampleTaskBook);
         } catch (DataConversionException e) {
             logger.warning("Data file not in the correct format. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialEventData = new EventBook();
+            initialTaskData = new TaskBook();
         } catch (IOException e) {
             logger.warning("Problem while reading from the file. Will be starting with an empty AddressBook");
             initialData = new AddressBook();
+            initialEventData = new EventBook();
+            initialTaskData = new TaskBook();
         }
 
-        return new ModelManager(initialData, userPrefs);
+        return new ModelManager(initialData, initialEventData, initialTaskData, userPrefs);
     }
 
     private void initLogging(Config config) {

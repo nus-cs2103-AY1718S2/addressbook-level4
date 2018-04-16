@@ -17,7 +17,11 @@ import org.junit.Test;
 
 import guitests.guihandles.StatusBarFooterHandle;
 import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.EventBookChangedEvent;
+import seedu.address.commons.events.model.TaskBookChangedEvent;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
+import seedu.address.model.TaskBook;
 
 public class StatusBarFooterTest extends GuiUnitTest {
 
@@ -25,6 +29,8 @@ public class StatusBarFooterTest extends GuiUnitTest {
     private static final String RELATIVE_PATH = "./";
 
     private static final AddressBookChangedEvent EVENT_STUB = new AddressBookChangedEvent(new AddressBook());
+    private static final EventBookChangedEvent EVENTBOOK_STUB = new EventBookChangedEvent(new EventBook());
+    private static final TaskBookChangedEvent TASKBOOK_STUB = new TaskBookChangedEvent(new TaskBook());
 
     private static final Clock originalClock = StatusBarFooter.getClock();
     private static final Clock injectedClock = Clock.fixed(Instant.now(), ZoneId.systemDefault());
@@ -58,6 +64,16 @@ public class StatusBarFooterTest extends GuiUnitTest {
 
         // after address book is updated
         postNow(EVENT_STUB);
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after event book is updated
+        postNow(EVENTBOOK_STUB);
+        assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
+                String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
+
+        // after task book is updated
+        postNow(TASKBOOK_STUB);
         assertStatusBarContent(RELATIVE_PATH + STUB_SAVE_LOCATION,
                 String.format(SYNC_STATUS_UPDATED, new Date(injectedClock.millis()).toString()));
     }

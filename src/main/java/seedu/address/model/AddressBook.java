@@ -103,15 +103,16 @@ public class AddressBook implements ReadOnlyAddressBook {
      *
      * @see #syncWithMasterTagList(Person)
      */
-    public void updatePerson(Person target, Person editedPerson)
+    public void updatePerson(Person target, Person editedReadOnlyPerson)
             throws DuplicatePersonException, PersonNotFoundException {
-        requireNonNull(editedPerson);
+        requireNonNull(editedReadOnlyPerson);
 
-        Person syncedEditedPerson = syncWithMasterTagList(editedPerson);
+        Person editedPerson = new Person(editedReadOnlyPerson);
+        syncWithMasterTagList(editedPerson);
         // TODO: the tags master list will be updated even though the below line fails.
         // This can cause the tags master list to have additional tags that are not tagged to any person
         // in the person list.
-        persons.setPerson(target, syncedEditedPerson);
+        persons.setPerson(target, editedPerson);
     }
 
     /**
@@ -132,7 +133,8 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(),
+                person.getPicture(), correctTagReferences);
     }
 
     /**
@@ -147,6 +149,15 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author CYX28
+    /**
+     * Sorts the person list alphabetically by name
+     */
+    public void sortPersons() {
+        persons.sort();
+    }
+
+    //@@author
     //// tag-level operations
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
@@ -171,6 +182,7 @@ public class AddressBook implements ReadOnlyAddressBook {
         return tags.asObservableList();
     }
 
+    //@@author
     @Override
     public boolean equals(Object other) {
         return other == this // short circuit if same object
@@ -184,4 +196,5 @@ public class AddressBook implements ReadOnlyAddressBook {
         // use this method for custom fields hashing instead of implementing your own
         return Objects.hash(persons, tags);
     }
+
 }

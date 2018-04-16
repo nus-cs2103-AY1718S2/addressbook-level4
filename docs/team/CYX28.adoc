@@ -1,0 +1,113 @@
+= Chan Yin Xin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: BizConnect Journal
+
+---
+
+== Overview
+
+BizConnect Journal is a dedicated application catered to busy businessmen, especially those who travel a lot.
+This app helps to manage their wide range of contacts, events and tasks. It also uses Command Line Interface (CLI)
+as the primary source of input.
+
+The contacts, events and tasks features are especially useful during exchanging of contacts during meetings
+and networking sessions, keeping track of upcoming major events for businessmen to know their current schedules and
+also to help them prioritise their tasks by keeping track of the pending tasks and their urgency respectively.
+Besides that, the currency converter aims to facilitate the fast and accurate knowledge of the amount to change
+without the need for a separate converter application.
+
+A simple day-to-day life of a businessman can be packed with many schedules and having a single tool to manage
+all their necessary work information makes things easier, and save them valuable time and effort.
+With all these goals in mind, BizConnect Journal is developed to ease the management of the busy schedules of businessmen.
+
+== Summary of contributions
+
+* *Major enhancement*: Task feature to facilitate *task management*
+
+** *What it does*:
+It allows the businessman to add, delete, edit, find tasks by name, list and clear tasks. Also, the task list is
+default sorted by status (i.e. undone to done), due date in ascending order and priority level (high > medium > low).
+
+** *Justification*:
+This feature allows the management of task conveniently. It is especially useful when the businessman needs to quickly
+note down any task, without the worry of missing out important details. Furthermore, edit and delete allows the
+businessman to update any task details and remove any completed task respectively. This helps to keep the task list
+up-to-date with the businessman's current schedule.
+
+** *Highlights*: This feature allows tasks to be managed together with contacts in the same application. Also,
+a more user-friendly task display enables the businessmen to quickly identify the incomplete tasks details,
+hence helping to save precious time in their busy schedule.
+
+* *Minor enhancement*: Added a sort contacts by name command. It allows the businessman to easily find and view
+multiple contacts spanning across different alphabets in sequential order.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/CYX28.md[Functional code]]
+ [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/CYX28.md[Test code]]
+
+* *Other contributions*:
+** Project management:
+*** Usage of issue tracker (issues, milestones) to manage project tasks
+** Documentation:
+*** Updated UI, model and storage component class diagrams
+*** Wrote use cases and Testing Manual for implemented features
+*** Wrote project description in Project Portfolio with team
+
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples: https://github.com/CS2103JAN2018-T09-B4/main/issues/140[1],
+https://github.com/CS2103JAN2018-T09-B4/main/issues/143[2], https://github.com/CS2103JAN2018-T09-B4/main/issues/153[3])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+////
+include::../UserGuide.adoc[tag=sort]
+////
+
+include::../UserGuide.adoc[tag=TaskDisplay]
+
+include::../UserGuide.adoc[tag=AddTask]
+
+include::../UserGuide.adoc[tag=DeleteTask]
+
+include::../UserGuide.adoc[tag=EditTask]
+
+include::../UserGuide.adoc[tag=FindTask]
+
+////
+include::../UserGuide.adoc[tag=ListTask]
+
+include::../UserGuide.adoc[tag=ClearTask]
+////
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=sort]
+
+include::../DeveloperGuide.adoc[tag=task-add]
+
+////
+include::../DeveloperGuide.adoc[tag=task-delete]
+////
+
+include::../DeveloperGuide.adoc[tag=task-edit]
+
+include::../DeveloperGuide.adoc[tag=task-find]
+
+////
+include::../DeveloperGuide.adoc[tag=task-list]
+////
+
+include::../DeveloperGuide.adoc[tag=task-sort]
+
+////
+include::../DeveloperGuide.adoc[tag=task-clear]
+////

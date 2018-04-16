@@ -336,16 +336,52 @@
     -fx-background-radius: 0;
 }
 
-#tags {
+
+#tags, #categories {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
+#tags .label, #categories .label {
     -fx-text-fill: white;
     -fx-background-color: #3e7b91;
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+
+<!-- @@author x3tsunayh -->
+#statusPane {
+    -fx-padding: 0 35 0 0;
+    -fx-spacing: 2;
+}
+
+#eventLabelPane {
+    -fx-padding: 0 10 0 0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 10 10 10 10;
+    -fx-spacing: 100;
+}
+
+<!-- @@author CYX28 -->
+#statusPane {
+    -fx-padding: 0 35 0 0;
+    -fx-spacing: 2;
+}
+
+#statusImage {
+    -fx-padding: 0 100 0 0;
+}
+
+#dueDatePane {
+    -fx-padding: 0 5 5 0;
+    -fx-spacing: 2;
+}
+
+#priorityPane {
+    -fx-padding: 0 8 0 0;
+    -fx-border-width: 1.5;
+    -fx-border-radius: 5 5 5 5;
+    -fx-spacing: 2;
 }

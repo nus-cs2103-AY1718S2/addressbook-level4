@@ -2,17 +2,25 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_EVENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TASKS;
 
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyTaskBook;
+import seedu.address.model.TaskBook;
+import seedu.address.model.event.ReadOnlyEventBook;
 
 /**
  * Represents a command which can be undone and redone.
  */
 public abstract class UndoableCommand extends Command {
     private ReadOnlyAddressBook previousAddressBook;
+    private ReadOnlyEventBook previousEventBook;
+    private ReadOnlyTaskBook previousTaskBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
@@ -22,6 +30,22 @@ public abstract class UndoableCommand extends Command {
     private void saveAddressBookSnapshot() {
         requireNonNull(model);
         this.previousAddressBook = new AddressBook(model.getAddressBook());
+    }
+
+    /**
+     * Stores the current state of {@code model#eventBook}.
+     */
+    private void saveEventBookSnapshot() {
+        requireNonNull(model);
+        this.previousEventBook = new EventBook(model.getEventBook());
+    }
+
+    /**
+     * Stores the current state of {@code model#taskBook}.
+     */
+    private void saveTaskBookSnapshot() {
+        requireNonNull(model);
+        this.previousTaskBook = new TaskBook(model.getTaskBook());
     }
 
     /**
@@ -36,9 +60,13 @@ public abstract class UndoableCommand extends Command {
      * show all persons.
      */
     protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
+        requireAllNonNull(model, previousAddressBook, previousEventBook, previousTaskBook);
         model.resetData(previousAddressBook);
+        model.resetData(previousEventBook);
+        model.resetData(previousTaskBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
     }
 
     /**
@@ -54,11 +82,15 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredEventList(PREDICATE_SHOW_ALL_EVENTS);
+        model.updateFilteredTaskList(PREDICATE_SHOW_ALL_TASKS);
     }
 
     @Override
     public final CommandResult execute() throws CommandException {
         saveAddressBookSnapshot();
+        saveEventBookSnapshot();
+        saveTaskBookSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

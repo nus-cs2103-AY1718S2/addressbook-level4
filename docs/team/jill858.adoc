@@ -1,0 +1,87 @@
+= Wee Lixin Jillian - BizConnect Journal
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: BizConnect Journal
+
+---
+
+== Overview
+
+BizConnect Journal is a dedicated application catered to busy businessmen, especially those who travel a lot.
+This app helps to manage their wide range of contacts, events and tasks. It also uses Command Line Interface (CLI) as the primary source of input.
+
+Businessmen tend to have a lot of meetings and networking sessions with new people which includes the exchange of contacts,
+thus the above features will be useful for them as they can access all of them in one application without the trouble
+of a separate application for each individual purpose.
+
+At any point in time, the businessman can refer to the calendar and its event list to keep track of upcoming major events, thereby allowing a clear idea on
+what his current schedule is like. In addition, the task list comes in handy to update the businessman of pending tasks and the tasks’ urgency.
+This helps them prioritise what needs to be done first.
+
+Besides that, traveling in foreign countries also involves the hassle of not knowing the appropriate amount of money to change.
+Hence, the currency converter aims to facilitate the fast and accurate knowledge of the amount to change without the need of a separate online converter application.
+
+A simple day-to-day life of a businessman can be packed with many schedules and having a single tool to manage
+all their necessary work information makes things easier, as well as save them valuable time and effort.
+With all these goals in mind, BizConnect Journal is developed to ease the management of the busy schedules of businessmen.
+
+image::Ui.png[width="790"]
+
+== Summary of contributions
+
+* *Major enhancement: Converting of currencies*
+** What it does: Allows the user to convert from one currency to another
+** Justification: User will be able to get the standard exchange rate or convert from one currency to another currency easily without
+having to leave the application. This provides convenience to the user. In addition, rates are live and are updated daily!
+** Highlights: Able to convert up to 16 different currencies!
+
+* *Minor enhancement*: Modify find function such that able to find partial words instead of keywords
+** Justification: Instead of finding keywords, finding by partial words able to help users to narrow down their search, providing flexibility in searching.
+* *Minor enhancement*: Modify find function such that able to find specifically by name, by tag, by address, or by phone
+** Justification: Search is being categorized. This helps to narrow down their search based on the category.
+
+* *Other contributions*:
+
+** Project management:
+*** Provide feedback and suggestions to team members
+** Documentation:
+*** Wrote user stories, project description in Project Portfolio with team
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W09-B4/main/issues/164, https://github.com/CS2103JAN2018-W09-B4/main/issues/159)
+** Tools:
+*** Integrated a third party library (https://fixer.io/[Fixer]) to the project
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/jill858.md[Functional code]] [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/jill858.md[Test code]]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=findByName]
+
+include::../UserGuide.adoc[tag=findByTag]
+
+include::../UserGuide.adoc[tag=findByAddress]
+
+include::../UserGuide.adoc[tag=findByPhone]
+
+include::../UserGuide.adoc[tag=convertCurrency]
+
+include::../UserGuide.adoc[tag=autoComplete]
+
+include::../UserGuide.adoc[tag=listOutPossibleCommand]
+
+include::../UserGuide.adoc[tag=hintPossibleCommand]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=FindFeature]
+
+include::../DeveloperGuide.adoc[tag=ConvertCurrency]

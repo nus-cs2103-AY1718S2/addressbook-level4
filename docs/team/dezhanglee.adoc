@@ -1,0 +1,89 @@
+= Lee De Zhang - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: BizConnect Journal
+
+---
+
+== Overview
+
+BizConnect Journal is a dedicated application catered to busy businessmen, especially those who travel a lot.
+This app helps to manage their wide range of contacts, events and tasks. It also uses Command Line Interface (CLI) as the primary source of input.
+
+Businessmen tend to have a lot of meetings and networking sessions with new people which includes the exchange of contacts,
+thus the above features will be useful for them as they can access all of them in one application without the trouble
+of a separate application for each individual purpose.
+
+At any point in time, the businessman can refer to the calendar and its event list to keep track of upcoming major events, thereby allowing a clear idea on
+what his current schedule is like. In addition, the task list comes in handy to update the businessman of pending tasks and the tasks’ urgency.
+This helps them prioritise what needs to be done first.
+
+Besides that, traveling in foreign countries also involves the hassle of not knowing the appropriate amount of money to change.
+Hence, the currency converter aims to facilitate the fast and accurate knowledge of the amount to change without the need of a separate online converter application.
+
+A simple day-to-day life of a businessman can be packed with many schedules and having a single tool to manage
+all their necessary work information makes things easier, as well as save them valuable time and effort.
+With all these goals in mind, BizConnect Journal is developed to ease the management of the busy schedules of businessmen.
+
+image::Ui.png[width="790"]
+
+== Summary of contributions
+
+* *Major enhancement*: Picture feature to facilitate *networking and contact management*
+
+** *What it does*:
+It allows a businessman to add or remove a profile picture for a contact.
+
+** *Justification*:
+By default, a contact has a default picture displayed. A user can then choose to display a picture alongside
+the contact.
+
+As a businessman is expected to meet a lot of people, chances are that he/she would not be able to recognize someone
+by name only. A picture would help with this.
+
+A user is then given the option to remove a picture by resetting it to the default picture again.
+
+** *Highlights*: This enhancement interacts with the system's file storage. Therefore, an in depth study of the related APIs
+was required to ensure the functionality of this feature
+
+* *Minor enhancement*: Added a delete by name command. This allows a user to delete a contact by name, other than by index.
+* *Minor enhancement*: Added a add tag command. This allows a user to add individual or multiple tags to a contact.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/dezhanglee.md[Functional code]] [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/dezhanglee.md[Test code]]
+
+* *Other contributions*:
+** Documentation:
+*** Wrote use cases, explainations and diagrams for implemented features.
+*** Wrote user stories, project description in Project Portfolio with team
+
+** Community:
+*** Reported bugs and suggestions for team T11-B4. Submitted 18 bug reports (examples:  https://github.com/CS2103JAN2018-T11-B4/main/issues/139, https://github.com/CS2103JAN2018-T11-B4/main/issues/131, https://github.com/CS2103JAN2018-T11-B4/main/issues/110)
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=deletebyname]
+
+include::../UserGuide.adoc[tag=addpicture]
+
+include::../UserGuide.adoc[tag=resetpicture]
+
+include::../UserGuide.adoc[tag=addtag]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=addTAG]
+
+include::../DeveloperGuide.adoc[tag=addpicture]
+
+include::../DeveloperGuide.adoc[tag=resetpicture]
+
+include::../DeveloperGuide.adoc[tag=deletebyname]

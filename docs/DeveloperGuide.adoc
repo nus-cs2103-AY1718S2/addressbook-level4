@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= BizConnect Journal - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,9 +10,9 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-T15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018 T15-B4`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
@@ -156,7 +156,7 @@ The sections below give more details of each component.
 === UI component
 
 .Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+image::UiClassDiagram.jpeg[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
@@ -205,7 +205,7 @@ The `Model`,
 
 * stores a `UserPref` object that represents the user's preferences.
 * stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* exposes an unmodifiable `ObservableList<Person>` and an unmodifiable `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
 * does not depend on any of the other three components.
 
 [[Design-Storage]]
@@ -358,12 +358,617 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
+// tag::sort[]
+=== Sort Persons feature
+==== Current Implementation
+
+The sort mechanism sorts the persons list alphabetically by name. It currently supports sorting in ascending order.
+The internal details of the sort mechanism is handled by the `sort` method in `UniquePersonList` class.
+The sort mechanism is implemented using a custom comparator in JavaFX ObservableList `sort` method.
+
+The following sequence diagram shows how the sort persons operation works.
+
+image::SortingSequenceDiagram.png[width="590"]
+
+. The user executes the `sort` command.
+. The `AddressBookParser` class parses the command and create a new `SortCommand` class.
+. The `sort` command is executed and handled by the `ModelManager` class.
+. The sorted list is returned and displayed to the user.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortCommand`
+
+* **Alternative 1 (current choice):** Sort persons by name
+** Pros: Easy to implement and does not need to make changes for every newly added field
+** Cons: Lack flexibility in sorting by other fields
+* **Alternative 2:** Sort persons by other fields of a person's contact such as email
+** Pros: Allows flexibility in sorting
+** Cons: Might be more difficult to implement as changes need to be made for every newly added field
+// end::sort[]
+
+// tag::addpicture[]
+=== Add Profile Picture feature
+
+==== Current Implementation
+Right now, a contact's Profile Picture can be viewed at the right side of the contact's profile card.
+
+The following sequence diagram shows how the `addpicture` command works
+
+image::AddPictureSequenceDiagram.png[width="800"]
+
+. The user executes the `addpicture INDEX f/FILENAME` command, with parameters `INDEX` and `FILENAME`
+. The `AddressBookParser` class parses the command and create a new `AddPictureCommand` class.
+. The `AddPicture` command is executed and handled by the `ModelManager` class.
+. A new `Picture` object is created, containing the image referenced by `FILENAME`.
+. The new `Picture` is attached to the `Person` at `INDEX`
+. The new picture is displayed
+
+==== Design Considerations
+
+**Aspect:** Storage of images of profile pictures +
+
+**Chosen Implementation:** +
+Store the images in a local folder. For Windows, it will be in the AppData folder, for Mac/Linux, in the home folder. +
+**Pros:** +
+After a profile picture is set, it will continue showing even if the image source is deleted +
+**Cons:** +
+Extra space to store the pictures, some images may be too large and use a lot of memory. +
+
+**Alternative:** +
+Not store the images +
+**Pros:** +
+No space requirement to store the images locally +
+**Cons:** +
+Need to ensure that the image is not deleted, or it won't display. +
+
+**Aspect:** Putting a limit on profile picture size +
+
+**Chosen Implementation:** +
+Set a limit of 5mb for each picture. +
+**Pros:** +
+Prevents a malicious user from trying to crash the app by putting a large image.
+**Cons:** +
+Some pictures may be larger than 5mb. But there are various image compression services available.
+
+**Alternative:** +
+Not put a limit +
+**Pros:** +
+User can upload any image. +
+**Cons:** +
+App may be unstable if too many large images.
+
+// end::addpicture[]
+
+// tag::resetpicture[]
+=== Reset Profile Picture feature
+
+==== Current Implementation
+We implemented a feature which allows a user to reset the profile picture back to default.
+
+The following sequence diagram shows how the `resetpicture` command works
+
+image::ResetPictureCommandSequenceDiagram.PNG[width="800"]
+
+. The user executes the `resetpicture INDEX` command, with parameters `INDEX`
+. The `AddressBookParser` class parses the command and create a new `ResetPictureCommand` class.
+. The `ResetPicture` command is executed and handled by the `ModelManager` class.
+. A new `Picture` object is created, containing the default image.
+. The new `Picture` is attached to the `Person` at `INDEX`
+. The new picture is displayed
+
+==== Design Considerations
+
+**Aspect:** Reset mechanism - Reset path of the existing Picture object
+or create a new Picture object altogether.
+
+**Chosen Implementation:** +
+Create a new picture object. +
+**Pros:** +
+Easier if developer decides to change the path of the default picture, or the properties of the Picture class +
+**Cons:** +
+Creating a new object each time may incur some overhead, but probably insignificant on a modern PC. +
+
+// end::resetpicture[]
+
+// tag::FindFeature[]
+=== Find feature
+
+==== Current Implementation
+Right now, find feature is limited to finding by name.
+
+It is modify such that able to find by name and tag by specifying the type to be search  after the command name `find`.
+
+==== Implementation - Search by Name
+
+. The user executes the `find n/KEYWORD [MORE_KEYWORDS]...`, given the search type `n/` and with parameters `KEYWORD`
+. The `AddressBookParser` class parses the command and create a new `FindCommandParse` class.
+. The `FindCommandParse` will compare the search type to check if search is by name and parse the keywords to `FindCommand`
+. The `FindCommand` object is created, and assisted by `NameContainsKeywordsPredicate` to obtain the result.
+. The  result is then return and displayed to the user.
+
+==== Implementation - Search by Tag
+
+. The user executes the `find t/KEYWORD [MORE_KEYWORDS]...`, given the search type `t/` and with parameters `KEYWORD`
+. The `AddressBookParser` class parses the command and create a new `FindCommandParse` class.
+. The `FindCommandParse` will compare the search type to check if search is by tag and parse the keywords to `FindCommand`
+. The `FindCommand` object is created, and assisted by `TagContainsKeywordsPredicate` to obtain the result.
+. The  result is then return and displayed to the user.
+
+==== Implementation - Search by Address
+
+. The user executes the `find a/KEYWORD [MORE_KEYWORDS]...`, given the search type `a/` and with parameters `KEYWORD`
+. The `AddressBookParser` class parses the command and create a new `FindCommandParse` class.
+. The `FindCommandParse` will compare the search type to check if search is by tag and parse the keywords to `FindCommand`
+. The `FindCommand` object is created, and assisted by `AddressContainsKeywordsPredicate` to obtain the result.
+. The  result is then return and displayed to the user.
+
+==== Implementation - Search by Phone
+
+. The user executes the `find p/KEYWORD [MORE_KEYWORDS]...`, given the search type `p/` and with parameters `KEYWORD`
+. The `AddressBookParser` class parses the command and create a new `FindCommandParse` class.
+. The `FindCommandParse` will compare the search type to check if search is by tag and parse the keywords to `FindCommand`
+. The `FindCommand` object is created, and assisted by `PhoneContainsKeywordsPredicate` to obtain the result.
+. The  result is then return and displayed to the user.
+
+// end::FindFeature[]
+
+// tag::addTAG[]
+
+=== Add Tag to Contact
+
+The add tag command inherits from `UndoableCommand`.
+
+The `logic` component parses user inputs, while the `model` component updates the person in the Address Book.
+
+The following sequence diagram illustrates how the Add Tag command works:
+
+image::AddTagSequenceDiagram.PNG[width="800"]
+
+
+. The user executes the `addtag INDEX t/TAG1 t/TAG2 ...` command, with parameters `INDEX` and TAG1, TAG2, ...
+. The `AddressBookParser` class parses the command and create a new `AddTagCommand` class.
+. The `AddTag` command is executed and handled by the `ModelManager` class.
+. New `Tag` object(s) (depending on the number of input tags) is created.
+. The new `Tag` is attached to the `Person` at `INDEX`.
+. `updatePerson` in `ModelManager` updates the person at `INDEX` with a new person with the added tags.
+
+// end::addTAG[]
+
+// tag::deletebyname[]
+
+=== Delete Contact by Name
+==== Current Implementation
+The Delete Contact by Name command inherits from `UndoableCommand`.
+
+The `logic` component parses user inputs, while the `model` component removes the person in the address book.
+
+The following sequence diagram illustrates how the Delete By Name command works:
+
+image::DeletePersonByNameSequenceDiagram.png[width="800"]
+
+
+. The user executes the `deletebyname name` command, with parameter `nane`
+. The `AddressBookParser` class parses the command and create a new `DeleteByNameCommand` class.
+. The `DeleteByNameCommand` command is executed and handled by the `ModelManager` class.
+. The person refered to by `name` is searched using the `searchForPersonByName()` method.
+. If the person is found, that person is deleted
+. `ModelManager` removes the person from the addressbook.
+
+// end::deletebyname[]
+
+// tag::export[]
+=== Export feature
+
+==== Current Implementation
+It makes use of `ExportCommand` which extends `UndoableCommand`.
+When the Export functionality is called on the `AddressBookParser`, it parses the given input as a FILEPATH using `ExportCommandParser` which eventually creates the `ExportCommand` instance.
+The `ModelManager` then invokes methods involving `Storage` under the `Model` instance in order to store the data into a user-defined location. If such a location was not well-defined, then the XML file exported will be directly saved in your local repository's main folder.
+The 'StorageManager' will then call the `exportAddressBook` method under `XmlAddressBookStorage` to store the data as an XML file into a user-defined location.
+
+image::ExportCommandSequenceDiagram.png[width="590"]
+
+==== Design Considerations
+
+===== Aspect: Usages of Exported Data
+
+* **Alternative 1(current choice):** Allows option of exporting data into either CSV or XML files.
+** Pros: Allows greater flexibility as CSV files can be catered to importing of contacts into Google Contacts.
+** Cons: Need to manually cater to popular file formats and this may require constant maintenance on the developers' end.
+* **Alternative 2:** Only allows exporting of data as XML files.
+** Pros: Simplified export into a file that is readable and understandable by users, is completely compatible with Java and 100% portable.
+** Cons: Users may not know the benefits or uses of an XML file.
+// end::export[]
+
+// tag::calendarview[]
+=== Calendar View feature
+
+==== Current Implementation
+Right now, the Calendar can be viewed on the homepage of BizConnect Journal as a summarized list of events on different days of a specified month.
+// end::calendarview[]
+
+// tag::addevent[]
+=== Add Event feature
+==== Current Implementation
+
+The add event feature allows the user to add a new event into the Event Book.
+The event details required: Title, Description, Location, Datetime.
+All of the fields are compulsory, and the user can simply fill in a dummy value for irrelevant fields.
+
+The following sequence diagram shows how the add event command works under LogicManager.
+
+image::AddEventCommandSequenceDiagram.png[width="590"]
+
+. User executes `addevent` command with the required arguments.
+. `AddressBookParser` class creates a new `AddEventCommandParser` object to parse the command arguments.
+. This `AddEventCommandParser` object parses the arguments and create a new `AddEventCommand` object.
+. The `addevent` command is then executed and handled by the `ModelManager` class.
+. The event is finally added to the Event list in Address Book and the updated list is then displayed to the user.
+
+The next sequence diagram illustrates how the event is added under ModelManager.
+
+image::AddEventSequenceDiagram.png[width="590"]
+
+// end::addevent[]
+
+// tag::deleteevent[]
+=== Delete Event feature
+==== Current Implementation
+
+The delete event feature allows the user to delete an event in the Event Book by specifying the index of the displayed Event List.
+Allows easy deletion of an event according to the event index listed in the Event list.
+
+This sequence diagram shows how the delete event command works under LogicManager.
+
+image::DeleteEventCommandSequenceDiagram.png[width="590"]
+
+. User executes `deleteevent` command with the required arguments.
+. `AddressBookParser` class creates a new `DeleteEventCommandParser` object to parse the command arguments.
+. This `DeleteEventCommandParser` object parses the arguments and create a new `DeleteEventCommand` object.
+. The `deleteevent` command is then executed and handled by the `ModelManager` class.
+. The specified event is removed from the Event list in Address Book and the updated list is then displayed to the user.
+
+The following sequence diagram illustrates how the event is removed under ModelManager.
+
+image::DeleteEventSequenceDiagram.png[width="590"]
+
+// end::deleteevent[]
+
+// tag::findevent[]
+=== Find Event feature
+==== Current Implementation
+
+The find event feature allows the user to search all events in the Event Book for a particular keyword.
+The user specifies the field to search under (Title, Location, Datetime) and the keyword argument(s).
+
+. User executes `findevent` command with the required arguments.
+. `AddressBookParser` class creates a new `FindEventCommandParser` object to parse the command arguments.
+. This `FindEventCommandParser` object parses the arguments and create a new `FindEventCommand` object.
+. The `findevent` command is then executed and handled by the `ModelManager` class.
+. Events with matching keywords under the specified field will be updated in the displayed event list and shown to the user.
+
+// end::findevent[]
+
+// tag::sortevent[]
+=== Find Event feature
+==== Current Implementation
+
+The sort event feature allows user to sort event list according to one specified parameter.
+Parameters: Title, Location, Datetime.
+
+. User executes `sortevent` command with the required arguments.
+. `AddressBookParser` class creates a new `SortEventCommandParser` object to parse the command arguments.
+. This `SortEventCommandParser` object parses the arguments and create a new `SortEventCommand` object.
+. The `sortevent` command is then executed and handled by the `ModelManager` class.
+. Events in event list will be sorted accordingly, and updated list will be shown to the user.
+
+// end::sortevent[]
+
+// tag::clearevents[]
+=== Clear Events feature
+==== Current Implementation
+
+The clear events feature allows the user to clear all events in the Event Book.
+It extends UndoableCommand in case the command was unintentionally called.
+
+. User executes `clearevents` command.
+. `AddressBookParser` class creates a new `ClearEventsCommand` object to execute the command.
+. This `ClearEventsCommand` object calls the `resetData` method under the app's `model` to reset the data with a new `EventBook`.
+. The new (empty) Event list is then updated in the app and displayed to the user.
+
+// end::clearevents[]
+
+// tag::jumpto[]
+
+=== Jump To Year-Month feature
+==== Current Implementation
+
+Aside from using the mouse cursor, users can jump to a particular year-month using the CLI.
+This saves a lot of time, especially when the user wishes to jump a few months back or forth.
+
+Format: `jumpto yyyy-mm`
+
+. User executes `jumpto` command with the required arguments.
+. `AddressBookParser` class creates a new `JumpToCommandParser` object to parse the command arguments.
+. This `JumpToCommandParser` object parses the arguments and create a new `JumpToCommand` object.
+. The `jumpto` command is then executed by creating a new `JumpToCalendarRequestEvent` that triggers the `EventsCenter`.
+. `EventsCenter` dispatches the event to be handled by `CalendarView` because it has to `populateCalendar` method that displays the calendar by taking `YearMonth` as an input.
+. `popularCalendar` finally displays the new `CalendarView` state to the user.
+// end::jumpto[]
+
+// tag::switchtab[]
+=== Switch Tab feature
+==== Current Implementation
+
+The switch tab functionality allows the user to use CLI to switch between the Event and Task tabs as shown below.
+This provides additional support for users who prefer CLI to mouse controls.
+
+Format: `switchtab`
+
+image::SwitchTab.PNG[width="490"]
+
+And this is how SwitchTab works!
+
+. The user executes the `switchtab` command.
+. The `SwitchTabCommand` class creates a new `SingleSelectionModel<Tab>` object using the TabPane displaying Events and Tasks list.
+. The selected tab-index for the `SingleSelectionModel<Tab>` object is updated and displayed to the user.
+// end::switchtab[]
+
+// tag::task-add[]
+=== Add Task feature
+==== Current Implementation
+
+The add task feature allows user to add a new task into the Address Book by specifying the required parameters.
+
+It allows the adding of the following fields: name, priority, description, due date, status and category.
+All of the fields are compulsory except category.
+
+Format: `task-add n/NAME p/PRIORITY d/DESCRIPTION dd/DUE_DATE s/STATUS [c/CATEGORY]...`
+
+The following sequence diagram shows how the add task operation works.
+
+image::TaskAddSequenceDiagram.png[width="590"]
+
+. The user executes the `task-add` command and specify the required parameters.
+. The `AddressBookParser` class creates a new `TaskAddCommandParser` class to parse the command parameters.
+. The `TaskAddCommandParser` class parses the parameters and create a new `TaskAddCommand` class.
+. The `task-add` command is executed and handled by the `ModelManager` class.
+. The task is added to the list of tasks in Address Book and displayed to the user.
+
+////
+The following activity diagram summarise what happens when a user executes the `task-add` command:
+
+image::TaskAddActivityDiagram.png[width="400"]
+////
+
+// end::task-add[]
+
+// tag::task-delete[]
+=== Delete Task feature
+==== Current Implementation
+
+The delete task feature allows user to delete any done, overdue or unwanted task from the Address Book by specifying
+the task's index in the displayed Task List.
+
+Format: `task-delete INDEX`
+
+The following sequence diagram shows how the delete task operation works.
+
+image::TaskDeleteSequenceDiagram.png[width="590"]
+
+. The user executes the `task-delete` command and specify the required parameter.
+. The `AddressBookParser` class creates a new `TaskDeleteCommandParser` class to parse the command parameter.
+. The `TaskDeleteCommandParser` class parses the parameter and create a new `TaskDeleteCommand` class.
+. The `task-delete` command is executed and handled by the `ModelManager` class.
+. The task is removed from the list of tasks in Address Book and the updated task list is displayed to the user.
+// end::task-delete[]
+
+// tag::task-edit[]
+=== Edit Task feature
+==== Current Implementation
+
+The edit task feature allows user to edit any fields of an existing task in the AddressBook by specifying
+the task's index in the displayed Task List followed by the parameters of the fields to be edited.
+
+Format: `task-edit INDEX [n/NAME] [p/PRIORITY] [d/DESCRIPTION] [dd/DUE_DATE] [s/STATUS] [c/CATEGORY]...`
+
+The following sequence diagram shows how the edit task operation works.
+
+image::TaskEditSequenceDiagram.png[width="590"]
+
+. The user executes the `task-edit` command and specify the required parameters.
+. The `AddressBookParser` class creates a new `TaskEditCommandParser` class to parse the command parameters.
+. The `TaskEditCommandParser` class parses the parameters and create a new `TaskEditCommand` class.
+. The `task-edit` command is executed and handled by the `ModelManager` class.
+. The task is updated with the new values and the updated task list is displayed to the user.
+
+The following activity diagram summarise what happens when a user executes the `task-edit` command:
+
+image::TaskEditActivityDiagram.png[width="410"]
+// end::task-edit[]
+
+// tag::task-find[]
+=== Find Tasks feature
+==== Current Implementation
+
+The find tasks feature allows user to search for any task whose names contains any of the specified keywords in the Address Book.
+The search is case-insensitive and matches partial keyword.
+
+Format: `task-find KEYWORD [MORE_KEYWORDS]...`
+
+The following sequence diagram shows how the find tasks operation works.
+
+image::TaskFindSequenceDiagram.png[width="590"]
+. The user executes the `task-find` command and specify the required parameter(s).
+. The `AddressBookParser` class creates a new `TaskFindCommandParser` class to parse the command parameter(s).
+. The `TaskFindCommandParser` class parses the parameter(s) and create a new `TaskFindCommand` class.
+. The `task-find` command is executed and handled by the `ModelManager` class.
+. The list of tasks in Address Book matching the keywords is returned and displayed to the user.
+
+==== Design Considerations
+
+===== Aspect: Implementation of `FindTasks` feature
+
+* **Alternative 1 (current choice):** Find task by name
+** Pros: Easy to implement and does not need to make changes for every newly added field
+** Cons: Lack flexibility in finding by other fields
+* **Alternative 2:** Find tasks by other fields
+** Pros: Allows flexibility in searching
+** Cons: Might be more difficult to implement as changes need to be made for every newly added field to enable searching using those fields
+// end::task-find[]
+
+// tag::task-list[]
+=== List Tasks feature
+==== Current Implementation
+
+The list tasks feature allows user to display all the tasks in the Address Book.
+
+Format: `task-list`
+
+The following sequence diagram shows how the list tasks operation works.
+
+image::TaskListSequenceDiagram.png[width="590"]
+
+. The user executes the `task-list` command.
+. The `AddressBookParser` class parses the command and creates a new `TaskListCommand` class.
+. The `task-list` command is executed and handled by the `ModelManager` class.
+. The list is returned and displayed to the user.
+// end::task-list[]
+
+// tag::task-sort[]
+=== Sort Tasks feature
+==== Current Implementation
+
+This feature is implemented as a default behaviour of the task list display, rather than as a command.
+
+The sort mechanism sorts the tasks list based on status (i.e. undone to done), due date in ascending order
+and priority level (i.e. high > medium > low). The internal details of the sort mechanism is handled by the
+`sortByStatusDueDateAndPriority` method in `UniqueTaskList` class. The sort mechanism is implemented using a
+custom comparator in JavaFX ObservableList `sort` method as follows:
+
+[source,java]
+----
+public void sortByStatusDueDateAndPriority() {
+    internalList.sort(Comparator.comparing(Task::getTaskStatus, (s1, s2) -> {
+        return TaskStatus.STATUS_ORDER.indexOf(s1.value.toLowerCase())
+                - TaskStatus.STATUS_ORDER.indexOf(s2.value.toLowerCase());
+    }).thenComparing(Comparator.comparing(Task::getTaskDueDate, (dd1, dd2) -> {
+        return dd1.value.compareTo(dd2.value);
+    })).thenComparing(Comparator.comparing(Task::getTaskPriority, (p1, p2) -> {
+        return TaskPriority.PRIORITY_ORDER.indexOf(p1.value.toLowerCase())
+                - TaskPriority.PRIORITY_ORDER.indexOf(p2.value.toLowerCase());
+    })));
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of `SortTasks` feature
+
+* **Alternative 1 (current choice):** Sort tasks by multiple fields (status > due date > priority)
+** Pros: Easy identification of tasks to be done as those at the top are incomplete tasks that are due first and with higher priority
+** Cons: Lack flexibility in sorting by other fields
+* **Alternative 2:** Sort tasks by individual fields
+** Pros: Allows flexibility in sorting
+** Cons: Might be more difficult to implement as changes need to be made for every newly added field and it is
+not possible for user to sort by multiple criteria
+// end::task-sort[]
+
+// tag::task-clear[]
+=== Clear Tasks feature
+==== Current Implementation
+
+The clear tasks feature allows user to clear all the tasks in the Address Book.
+
+The following sequence diagram shows how the clear tasks operation works.
+
+image::TaskClearSequenceDiagram.png[width="590"]
+
+. The user executes the `task-clear` command.
+. The `AddressBookParser` class parses the command and creates a new `TaskClearCommand` class.
+. The `task-clear` command is executed and handled by the `ModelManager` class.
+. The tasks are removed from the Address Book and an empty list is displayed to the user.
+// end::task-clear[]
+
+//tag::ConvertCurrency[]
+=== Convert currency feature
+==== Current Implementation
+
+The convert currency feature allows user to convert from one currency to another.
+
+The following sequence diagram shows how the converting of currency feature operation works.
+
+image::ConvertCurrencySequenceDiagram.png[width="800"]
+
+. The user executes the `convert` command.
+. The `AddressBookParser` class parses the command creates a new `ConvertCommand` class.
+. The `convert` command is executed and assisted by the `Currency` class.
+. The converted value is returned and displayed to the user.
+//end::ConvertCurrency[]
+
+// tag::editevent[]
+=== [Proposed] Edit an Event
+
+The edit event feature allows user to edit an event in the Event Book by specifying the index of the displayed Event List.
+Allows easy editing of an event just by using the event index given in the Event list.
+
+This is how the edit event command will work under LogicManager.
+
+image::EditEventCommandSequenceDiagram.png[width="590"]
+
+. User executes `editevent` command with the required arguments.
+. `AddressBookParser` class creates a new `EditEventCommandParser` object to parse the command arguments.
+. This `EditEventCommandParser` object parses the arguments and create a new `EditEventCommand` object.
+. The `editevent` command is then executed and handled by the `ModelManager` class.
+. The specified event is updated from the Event list in Address Book and the updated details are then displayed to the user.
+
+// end::editevent[]
+
+// tag::eventnotifications[]
+=== [Proposed] Event Notifications
+
+The app will send out notifications for an event, if the user sets the datetime for that particular event.
+The `eventnotify` command takes in the event index shown on the list, and the datetime for the app to send the notification.
+Using the same command again with a datetime will reset the notification datetime (i.e. only one notification for each event).
+
+// end::eventnotifications[]
+
 // tag::dataencryption[]
 === [Proposed] Data Encryption
 
-_{Explain here how the data encryption feature will be implemented}_
+The login feature helps to protect data files by encrypting them with the user's password as the secret key.
+User's access is restricted until the user logs in with the username and password.
+Upon correct credential input, data files are decrypted and the user will have full access to the app's features.
+
+. User executes `login` command with the required arguments.
+. `AddressBookParser` class creates a new `LogInCommandParser` object to parse the command arguments.
+. This `LogInCommandParser` object parses the arguments and create a new `LogInCommand` object.
+. The `login` command is then executed and handled by the `ModelManager` class.
+. The `ModelManager` class will then check for the validity of the credentials and return the corresponding command message.
 
 // end::dataencryption[]
+
+// tag::autoremovecompletedtasks[]
+=== [Proposed] Automatically Remove Completed Tasks
+This feature allows user to set a time limit to remove the completed tasks, so that the task list does not get too lengthy.
+However, the user can also mark completed tasks to be kept in order to retain them.
+After the specified time, the unmarked completed tasks will be removed permanently from the list.
+
+Three new fields need to be added to the Task class, namely `completionDate`, `timeLimit` and `markStatus`. +
+`completionDate` : Date when the task is completed (i.e. changes status from undone to done), it has a default date when first created
+`timeLimit` : Number of days to keep a task after its completion before it is removed from the task list. +
+`markStatus` : Indicate whether the completed task needs to be kept after time limit is over
+
+This feature can be merged into the current task features (e.g. task-add, task-edit)
+For instance, the user can directly specify the time limit and markStatus during task addition,
+and updates to these fields can be done using task-edit command.
+
+This feature works as follows:
+
+. When a task changes its status from undone to done, the completionDate is updated.
+. Every time the application is opened, it will check the current date and automatically remove any unmarked
+  completed task scheduled for removal on today's date.
+// end::autoremovecompletedtasks[]
 
 === Logging
 
@@ -782,13 +1387,67 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
+Our Address Book aims to target busy businessmen who have to travel frequently on business trips and meetings,
+but also loves to travel. The Address Book will allow the businessmen to manage their large number of contacts and
+note down the tasks to be done, as well as a calendar for them to record important events and check their schedule.
+
 * has a need to manage a significant number of contacts
+* has a need to manage many events and tasks
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*:
+
+* manage contacts, tasks and events faster than a typical mouse/GUI driven app
+* manage contacts, tasks and events from one place to save time for the businessmen with busy schedule
+
+*Feature contribution*:
+
+* Chan Yin Xin
+
+Major: Implement task feature to facilitate task management
+
+Every task will have a priority level and status, allowing the easy tracking of tasks.
+
+Minor: Sort contacts by name
+
+This enables easy viewing of multiple contacts that span across different alphabets that are in sequential order. For example, looking for contacts starting with NTU, then NUS.
+
+
+* Lee De Zhang
+
+Major: Profile picture feature
+
+As the businessman meet a lot of people, the profile picture allows them to recognise a contact more easily.
+
+Minor: Delete contacts by name
+
+It is more convenient to delete the contacts by name when there are a lot of contacts.
+
+
+* Tan Yong He
+
+Major: Implemented Event features to aid event managements
+
+Major: Calendar view that provides visuals to users, as well as work hand-in-hand with Event features when clicked on
+
+Minor: Export functionality for address book portability to Google Contacts or other address books
+
+Minor: Google Search function for users to know more about a particular person in the contacts list
+
+Minor: Addition of LinkedIn and Google Chrome pages for easier accessibility to social networking sites.
+
+
+* Jillian Wee
+
+Major: Currency converter feature to convert from one currency to another easily.
+
+Minor: Search by name
+
+This is not limited to full word but also partial word, so that the businessman can easily find and retrieve
+a contact's details.
 
 [appendix]
 == User Stories
@@ -800,18 +1459,82 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |traveler |add a new person |keep all my important contacts in case of an emergency
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |traveler |edit a person details| so that it is up-to-date
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |traveler |find a person by name | locate details of persons without having to go through the entire list
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |traveler |find a person by tag |  locate details of tags without having to go through the entire list
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |businessman |find a person by company |locate details of companies without having to go through the entire list
+
+|`* * *` |businessman with constantly changing networks |delete a person |remove entries that I no longer need
+
+|`* * *` |businessman with many contacts |sort persons by name |easily view the details of people in sequential order
+
+|`* * *` |businessman with many contacts |sort persons by tag |easily view the details of persons with tag of interest
+
+|`* * *` |eventful businessman |add event to my calender|receive a reminder on those dates (eg. Birthdays, Meetings)
+
+|`* * *` |eventful businessman |edit event |so that it is up-to-date
+
+|`* * *` |eventful businessman |delete event |to remove unwanted events
+
+|`* * *` |eventful businessman |find events with keywords |so that it is easier to search for an event or related events
+
+|`* * *` |eventful businessman |receive in-app notifications |to get reminders for incoming events
+
+|`* * *` |well-prepared businessman |google search about a particular contact |to understand more about that person's background
+
+|`* * *` |traveler and businessman|can convert from one currency to another | calculate the amount needed to exchange
+
+|`* * *` |traveler |add a post |to record my journey and reference back to it in future
+
+|`* * *` |traveler |edit a post |makes changes or add more information
+
+|`* * *` |traveler |list all the post |to view all the post that are posted
+
+|`* * *` |traveler |find the post by title| locate details of tags without having to go through the entire list
+
+|`* * *` |traveler and businessman |suggest possible words to type in the input |aid with the search
+
+|`* * *` |traveler and businessman |have my own user profile |for easy contact-sharing purposes
+
+|`* * *` |traveler and businessman |edit my user profile |it is kept up-to-date
+
+|`* * *` |traveler and businessman |add a new task |to keep track what I need to do
+
+|`* * *` |traveler and businessman |list all tasks | to view my current tasks
+
+|`* * *` |traveler and businessman |delete a task | remove completed tasks
+
+|`* * *` |traveler and businessman |see all tasks sorted according to status, due date and priority by default  | easily view all the tasks by importance level.
+
+|`* * *` |traveler and businessman |find a task by name  | easily locate tasks without having to go through the entire task list.
+
+|`* * *` |traveler and businessman |edit a task  | keep it updated.
+
+|`* * *` |traveler and businessman |clear all tasks  | conveniently remove all the tasks at once and start with a new list.
+
+|`* * *` |traveler and businessman |convert a sentence or word from one language to another |understand both language at the same time
+
+|`* *` |traveler and businessman |remove unimportant completed tasks automatically |keep an updated succinct task list without unimportant completed tasks for easy viewing
+
+|`* *` |traveler and businessman |subscribe to event |get more information about the event
+
+|`* *` |traveler and businessman |subscribe to mailing list | receive the latest events of interest
+
+|`* *` |businessman |convert from one timezone to another |know the working hours of a person in a different time zone to facilitate business communication
+
+|`* *` |traveler |display a motivational quote |keeps user motivated and going
+
+|`* *` |traveler and businessman |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* *` |careful businessman|export data |to keep as emergency backup or import to external facilities like Google Contacts
+
+
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
@@ -844,16 +1567,361 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Export filepath\filename
+
+*MSS*
+
+1.  User requests to export Addressbook data to user-defined filepath and filename
+2.  AddressBook exports XML file to provided location
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given filename is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case ends.
+
+* 1b. Only filename is given.
++
+[none]
+** 1b1. XML file is exported to Addressbook's folder (same location as the JAR file).
++
+Use case ends.
+
+* 1c. Filepaths are not created yet.
++
+[none]
+** 1c1. Creates necessary folders and files as indicated in the export filepath.
++
+Use case ends.
+
+* 1d. A file with the same name exists.
++
+[none]
+** 1d1. AddressBook warns the user with an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Adding an event
+
+*MSS*
+
+1.  User requests to add a new event
+2.  User enters command with required parameters
+3.  AddressBook adds the new event and updates the event list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The command is incorrectly entered.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Deleting an event
+
+*MSS*
+
+1.  User requests to list all events
+2.  AddressBook shows a list of events
+3.  User requests to delete a specific event in the list
+4.  AddressBook deletes the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort all events by a specific field
+
+*MSS*
+
+1.  User requests to sort all events in AddressBook via a specific field
+2.  AddressBook sorts the list of events
+3.  AddressBook shows the list of sorted events
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Jumping to specified year-month of calendar
+
+*MSS*
+
+1.  User requests calendar to jump to specific year-month
+2.  Calendar view shows that year-month
++
+Use case ends.
+
+*Extensions*.
+
+* 1a. The given year-month is invalid.
++
+[none]
+** 1a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Sort all persons by name
+
+*MSS*
+
+1.  User requests to sort all persons in AddressBook
+2.  AddressBook sorts the list of persons alphabetically by name in ascending order
+3.  AddressBook shows a list of sorted persons
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Add task
+
+*MSS*
+
+1.  User requests to add a new task
+2.  User enters command with required parameters
+3.  AddressBook adds the new task and updates the list of tasks
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The command is incorrectly entered.
++
+[none]
+** 2a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Delete task
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of tasks
+3.  User requests to delete a specific task in the list
+4.  AddressBook deletes the task
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Edit task
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of tasks
+3.  User requests to edit a specific task in the list by specifying the task's index and necessary parameters
+4.  AddressBook updates the task
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given parameters are invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Find tasks
+
+*MSS*
+
+1.  User requests to find tasks containing specified keywords
+2.  AddressBook shows a list of tasks matching the keywords
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty as no matching task.
++
+Use case ends.
+
+[discrete]
+=== Use case: List all tasks
+
+*MSS*
+
+1.  User requests to list tasks
+2.  AddressBook shows a list of tasks
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Clear all tasks
+
+*MSS*
+
+1.  User requests to clear tasks
+2.  AddressBook clears all the tasks
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find by name
+
+*MSS*
+
+1.  User search a name
+2. Person containing this name is found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
+** i. No such name found and error message is displayed
++
+Use case ends.
+
+[discrete]
+=== Use case: Find by tag
+
+*MSS*
+
+1.  User search a tag
+2.  Person containing this tag is found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
+** i. No such tag found and error message is displayed
++
+Use case ends.
+
+[discrete]
+=== Use case: Find by address
+
+*MSS*
+
+1.  User search a address
+2.  Person containing this address is found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
+** i. No such address found and error message is displayed
++
+Use case ends.
+
+[discrete]
+=== Use case: Find by phone
+
+*MSS*
+
+1.  User search a phone
+2.  Person containing this phone is found
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
+** i. No such phone found and error message is displayed
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands)
+should be able to accomplish most of the tasks faster using commands than using the mouse.
+. Command query should not take too long to execute (i.e. more than 10 seconds).
+. User should not have to remember frequently used command formats (i.e. can refer to command examples for easy reminder).
 
 [appendix]
 == Glossary
@@ -863,23 +1931,6 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
-
-[appendix]
-== Product Survey
-
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -895,15 +1946,13 @@ These instructions only provide a starting point for testers to work on; testers
 
 .. Download the jar file and copy into an empty folder
 .. Double-click the jar file +
-   Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
+   Expected: Shows the GUI with a set of sample contacts, events and tasks. The window size may not be optimum.
 
 . Saving window preferences
 
 .. Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
-
-_{ more test cases ... }_
 
 === Deleting a person
 
@@ -917,8 +1966,6 @@ _{ more test cases ... }_
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
-
 === Saving data
 
 . Dealing with missing/corrupted data files
@@ -926,3 +1973,225 @@ _{ more test cases ... }_
 .. _{explain how to simulate a missing/corrupted file and the expected behavior}_
 
 _{ more test cases ... }_
+
+=== Sorting all persons by name
+
+. Sorting all persons alphabetically by name in ascending order and list them
+
+.. Test case: `sort` +
+   Expected: All contacts in the list are sorted alphabetically by name in ascending order.
+   Listed all persons sorted alphabetically by name is shown in the status message.
+.. Test case: `sort extraString` +
+   Expected: All contacts in the list are sorted alphabetically by name in ascending order.
+.. Test case: `sort 123` +
+   Expected: All contacts in the list are sorted alphabetically by name in ascending order.
+
+.. Other correct sort commands: Adding any character or number after the command separated with a whitespace +
+   Expected: All contacts in the list are sorted alphabetically by name in ascending order.
+
+=== Adding an event
+
+. Adds a new event
+
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-04-22 1630` +
+   Expected: The new event is added to the list. Details of the added event shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `addevent et/Christmas Party ed/Christmas Event 2018 el/Samantha's House edt/2017-12-24 1830` +
+   Expected: The new event is added to the list. Details of the added event shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-04-22-1630` +
+   Expected: No event is added due to incorrect DATETIME format. Error details shown in the status message. Status bar remains the same.
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-02-31 1630` +
+   Expected: No event is added due to invalid date in DATETIME. Error details shown in the status message. Status bar remains the same.
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV edt/2018-04-22 16300` +
+   Expected: No event is added due to invalid time in DATETIME. Error details shown in the status message. Status bar remains the same.
+
+.. Other incorrect addevent commands to try: `addevent` +
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther el/Suntec City GV` +
+   Expected: No event is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `addevent et/Movie Outing ed/Watching Black Panther edt/2018-04-22 1630` +
+   Expected: Similar to previous
+.. Test case: `addevent et/Movie Outing el/Suntec City GV edt/2018-04-22 1630` +
+   Expected: Similar to previous
+.. Test case: `addevent ed/Watching Black Panther el/Suntec City GV edt/2018-04-22 1630` +
+   Expected: Similar to previous
+.. Test case: `addevent et/Movie Outing` +
+   Expected: Similar to previous
+.. Test case: `addevent ed/Watching Black Panther edt/2018-04-22 1630` +
+   Expected: Similar to previous
+
+=== Deleting an event
+
+. Deleting an event while all events are listed
+
+.. Prerequisites: List all tasks using the `listevents` or `listallevents` command with multiple events in the list.
+.. Test case: `deleteevent 1` +
+   Expected: First event is deleted from the list. Details of the deleted event is shown in the status message. Timestamp in the status bar is updated.
+
+.. Other incorrect deleteevent commands to try: `deleteevent`, `deleteevent x` (where x is larger than the list size) +
+   Expected: No event is deleted. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-delete 0` +
+   Expected: Similar to previous.
+.. Test case: `task-delete -3` +
+   Expected: Similar to previous.
+.. Test case: `task-delete 3.0` +
+   Expected: Similar to previous.
+
+=== Listing all events
+
+. List all events
+
+.. Test case: `listallevents` or `listevents` +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+.. Test case: `listallevents randomstring` or `listevents randomstring` +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+.. Test case: `listallevents 123` or `listevents 123` +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+
+.. Other correct `listallevents` or `listevents` commands: Adding any character or number after the command separated with a whitespace +
+   Expected: All events in the list are displayed. Listed all events shown in the status message.
+
+=== Adding a task
+
+. Adds a new task
+
+.. Test case: `task-add n/Agenda for meeting p/high d/Discuss proposal details dd/2018-04-29 s/undone c/meeting` +
+   Expected: The new task is added to the list. Details of the added task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/undone` +
+   Expected: The new task is added to the list. Details of the added task shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-add n/ p/medium d/Description for task 1 dd/2018-05-10 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+
+.. Test case: `task-add n/Task 1 p/ d/Description for task 1 dd/2018-05-10 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/randomString d/ dd/2018-05-10 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/123 d/ dd/2018-05-10 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+
+.. Test case: `task-add n/Task 1 p/medium d/ dd/2018-05-10 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/ s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018 05 10 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/20180510 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/randomString s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/123 s/undone` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/randomString` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/123` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+
+.. Other incorrect task-add commands to try: `task-add` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-add p/medium d/Description for task 1 dd/2018-05-10 s/undone` +
+   Expected: Similar to previous
+.. Test case: `task-add n/Task 1 d/Description for task 1 dd/2018-05-10 s/undone` +
+   Expected: Similar to previous
+.. Test case: `task-add n/Task 1 p/medium dd/2018-05-10 s/undone` +
+   Expected: Similar to previous
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 s/undone` +
+   Expected: Similar to previous
+.. Test case: `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10` +
+   Expected: Similar to previous
+
+=== Deleting a task
+
+. Deleting a task while all tasks are listed
+
+.. Prerequisites: List all tasks using the `task-list` command. Multiple tasks in the list.
+.. Test case: `task-delete 1` +
+   Expected: First task is deleted from the list. Details of the deleted task shown in the status message. Timestamp in the status bar is updated.
+
+.. Other incorrect task-delete commands to try: `task-delete`, `task-delete x` (where x is larger than the list size) +
+   Expected: No task is deleted. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-delete 0` +
+   Expected: Similar to previous.
+
+=== Editing a task
+
+. Editing a task while all tasks are listed
+
+.. Prerequisites: List all tasks using the `task-list` command. Multiple tasks in the list.
+.. Test case: `task-edit 1 n/Project meeting` +
+   Expected: Name of first task from the list is edited. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-edit 1 p/high` +
+   Expected: Priority of first task from the list is edited. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-edit 1 d/editedDesc` +
+   Expected: Description of first task from the list is edited. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-edit 1 dd/2018-05-10` +
+   Expected: Due date of first task from the list is edited. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-edit 1 s/done` +
+   Expected: Status of first task from the list is edited. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-edit 1 c/meeting c/boss` +
+   Expected: Category of first task from the list is edited. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+
+.. Other incorrect task-edit commands to try: `task-edit`, `task-edit x` (where x is larger than the list size) +
+   Expected: No task is edited. Error details shown in the status message. Status bar remains the same.
+.. Test case: `task-edit 0` +
+   Expected: Similar to previous.
+
+=== Finding tasks by name
+
+. Finding tasks whose name contain any of the given keywords
+
+.. Test case: `task-find project` +
+   Expected: Returns any task having names that contain `project`. X tasks listed shown in the status message (where X is the number of tasks found).
+
+.. Test case: `task-find PROJECT` +
+   Expected: Returns any task having names that contain `project` or `PROJECT`. X tasks listed shown in the status message (where X is the number of tasks found).
+
+.. Test case: `task-find pro` +
+   Expected: Returns any task having names that contain `pro` e.g. `project`. X tasks listed shown in the status message (where X is the number of tasks found).
+
+.. Test case: `task-find meet project` +
+   Expected: Returns any task having names that contain `meet` or `project`. X tasks listed shown in the status message (where X is the number of tasks found).
+
+.. Test case: `task-find 123` +
+   Expected: Returns any task having names that contain `123`. X tasks listed shown in the status message (where X is the number of tasks found).
+
+.. Other incorrect task-find commands to try: `task-find` +
+   Expected: No task is found. Error details shown in the status message. Status bar remains the same.
+
+=== Listing all tasks
+
+. Lists all tasks
+
+.. Test case: `task-list` +
+   Expected: All tasks in the list are displayed. Listed all tasks shown in the status message.
+.. Test case: `task-list extraString` +
+   Expected: All tasks in the list are displayed. Listed all tasks shown in the status message.
+.. Test case: `task-list 123` +
+   Expected: All tasks in the list are displayed. Listed all tasks shown in the status message.
+
+.. Other correct task-list commands: Adding any character or number after the command separated with a whitespace +
+   Expected: All tasks in the list are displayed. Listed all tasks shown in the status message.
+
+=== Clearing all tasks
+
+. Clears all tasks
+
+.. Test case: `task-clear` +
+   Expected: All tasks removed from the list. Task book has been cleared! shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-clear extraString` +
+   Expected: All tasks removed from the list. Task book has been cleared! shown in the status message. Timestamp in the status bar is updated.
+
+.. Test case: `task-clear 123` +
+   Expected: All tasks removed from the list. Task book has been cleared! shown in the status message. Timestamp in the status bar is updated.
+
+.. Other correct task-clear commands: Adding any character or number after the command separated with a whitespace +
+   Expected: All tasks removed from the list. Task book has been cleared! shown in the status message. Timestamp in the status bar is updated.

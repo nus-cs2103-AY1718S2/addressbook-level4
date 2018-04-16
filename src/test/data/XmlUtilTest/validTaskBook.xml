@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<taskbook>
+    <tasks>
+        <taskName>Discuss project with the group and department</taskName>
+        <taskPriority>medium</taskPriority>
+        <taskDescription>Finalise on project features</taskDescription>
+        <taskDueDate>2018-03-30</taskDueDate>
+        <taskStatus>undone</taskStatus>
+    </tasks>
+    <tasks>
+        <taskName>Questions for client</taskName>
+        <taskPriority>low</taskPriority>
+        <taskDescription>Clarify client's expectation of the project</taskDescription>
+        <taskDueDate>2018-04-11</taskDueDate>
+        <taskStatus>undone</taskStatus>
+        <categorised>work</categorised>
+        <categorised>project</categorised>
+    </tasks>
+    <tasks>
+        <taskName>Follow up with boss</taskName>
+        <taskPriority>high</taskPriority>
+        <taskDescription>Present proposal to boss regarding project concerns</taskDescription>
+        <taskDueDate>2018-04-13</taskDueDate>
+        <taskStatus>undone</taskStatus>
+        <categorised>work</categorised>
+    </tasks>
+    <taskCategories>work</taskCategories>
+    <taskCategories>project</taskCategories>
+</taskbook>

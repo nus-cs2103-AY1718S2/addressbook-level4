@@ -6,6 +6,7 @@ import java.io.IOException;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.Model;
+import seedu.address.model.event.ReadOnlyEvent;
 import seedu.address.model.person.Person;
 
 /**
@@ -51,4 +52,12 @@ public class TestUtil {
     public static Person getPerson(Model model, Index index) {
         return model.getAddressBook().getPersonList().get(index.getZeroBased());
     }
+
+    /**
+     * Returns the event in the {@code model}'s event list at {@code index}.
+     */
+    public static ReadOnlyEvent getEvent(Model model, Index index) {
+        return model.getEventBook().getEventList().get(index.getZeroBased());
+    }
+
 }

@@ -18,3 +18,8 @@
 .tooltip-text {
     -fx-text-fill: white;
 }
+
+.anchor {
+    -fx-border-color: white;
+    fx-text-fill: white;
+}

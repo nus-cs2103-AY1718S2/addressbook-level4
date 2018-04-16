@@ -4,10 +4,13 @@ import static org.junit.Assert.assertEquals;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 
+import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
+import org.junit.rules.TemporaryFolder;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
@@ -16,14 +19,44 @@ import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlEventBookStorage;
+import seedu.address.storage.XmlTaskBookStorage;
 
 
 public class LogicManagerTest {
     @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
+    @Rule
     public ExpectedException thrown = ExpectedException.none();
 
-    private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model);
+    private XmlAddressBookStorage addressBookStorage;
+    private JsonUserPrefsStorage userPrefsStorage;
+    private XmlTaskBookStorage taskBookStorage;
+    private Model model;
+    private Storage storage;
+    private Logic logic;
+    private UserPrefs userPrefs;
+
+    @Before
+    public void setUp() {
+        addressBookStorage = new XmlAddressBookStorage(getFilePath("ab.xml"));
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getFilePath("eb.xml"));
+        taskBookStorage = new XmlTaskBookStorage(getFilePath("tb.xml"));
+        userPrefsStorage = new JsonUserPrefsStorage(getFilePath("prefs.json"));
+
+        model = new ModelManager();
+        storage = new StorageManager(addressBookStorage, eventBookStorage, taskBookStorage, userPrefsStorage);
+        logic = new LogicManager(model, storage, userPrefs);
+    }
+
+    private String getFilePath(String fileName) {
+        return testFolder.getRoot().getPath() + fileName;
+    }
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -82,7 +115,8 @@ public class LogicManagerTest {
      * @see #assertCommandBehavior(Class, String, String, Model)
      */
     private void assertCommandFailure(String inputCommand, Class<?> expectedException, String expectedMessage) {
-        Model expectedModel = new ModelManager(model.getAddressBook(), new UserPrefs());
+        Model expectedModel =
+                new ModelManager(model.getAddressBook(), model.getEventBook(), model.getTaskBook(), new UserPrefs());
         assertCommandBehavior(expectedException, inputCommand, expectedMessage, expectedModel);
     }
 
@@ -99,7 +133,7 @@ public class LogicManagerTest {
             CommandResult result = logic.execute(inputCommand);
             assertEquals(expectedException, null);
             assertEquals(expectedMessage, result.feedbackToUser);
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | IllegalValueException e) {
             assertEquals(expectedException, e.getClass());
             assertEquals(expectedMessage, e.getMessage());
         }
@@ -117,7 +151,7 @@ public class LogicManagerTest {
             String expectedMessage = String.format(
                     HistoryCommand.MESSAGE_SUCCESS, String.join("\n", expectedCommands));
             assertEquals(expectedMessage, result.feedbackToUser);
-        } catch (ParseException | CommandException e) {
+        } catch (IllegalValueException | CommandException e) {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }

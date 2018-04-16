@@ -11,10 +11,12 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.control.Tab?>
 <fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
          minWidth="450" minHeight="600">
   <icons>
-    <Image url="@/images/address_book_32.png" />
+    <Image url="@/images/v1.3_icon.png" />
   </icons>
   <scene>
     <Scene>
@@ -30,6 +32,8 @@
           </Menu>
           <Menu mnemonicParsing="false" text="Help">
             <MenuItem fx:id="helpMenuItem" mnemonicParsing="false" onAction="#handleHelp" text="Help" />
+            <MenuItem fx:id="linkedInItem" mnemonicParsing="false" onAction="#handleLinkedIn" text="LinkedIn" />
+            <MenuItem fx:id="googleItem" mnemonicParsing="false" onAction="#handleGoogleSearch" text="Google" />
           </Menu>
         </MenuBar>
 
@@ -46,19 +50,37 @@
           </padding>
         </StackPane>
 
-        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.4" VBox.vgrow="ALWAYS">
-          <VBox fx:id="personList" minWidth="340" prefWidth="340" SplitPane.resizableWithParent="false">
+        <SplitPane id="splitPane" fx:id="splitPane" dividerPositions="0.2" VBox.vgrow="ALWAYS">
+          <VBox fx:id="personList" minWidth="380" prefWidth="700" SplitPane.resizableWithParent="true">
             <padding>
               <Insets top="10" right="10" bottom="10" left="10" />
             </padding>
             <StackPane fx:id="personListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
           </VBox>
 
-          <StackPane fx:id="browserPlaceholder" prefWidth="340" >
+          <VBox fx:id="calendarPanel" minWidth="500" prefWidth="500" minHeight="400" SplitPane.resizableWithParent="false">
             <padding>
-              <Insets top="10" right="10" bottom="10" left="10" />
+              <Insets top="30" right="10" bottom="10" left="20" />
             </padding>
-          </StackPane>
+            <StackPane fx:id="calendarViewPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+          </VBox>
+
+          <!-- @@author x3tsunayh -->
+          <VBox fx:id="eventTaskView" minWidth="380" prefWidth="380" SplitPane.resizableWithParent="true">
+            <padding>
+              <Insets top="10" right="10" bottom="10" left="10"/>
+            </padding>
+            <TabPane fx:id="tabPane" VBox.vgrow="ALWAYS" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab fx:id="eventTab" text="Events">
+                  <StackPane fx:id="eventListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                </Tab>
+                <Tab fx:id="taskTab" text="Tasks">
+                  <StackPane fx:id="taskListPanelPlaceholder" VBox.vgrow="ALWAYS"/>
+                </Tab>
+              </tabs>
+            </TabPane>
+          </VBox>
         </SplitPane>
 
         <StackPane fx:id="statusbarPlaceholder" VBox.vgrow="NEVER" />

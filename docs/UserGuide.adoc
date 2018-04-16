@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= BizConnect Journal - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,13 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-T15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018 T15-B4`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+BizConnect Journal is catered towards businessmen and travelers who *prefer to use a desktop app for managing contacts*. More importantly, BCJ is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, BCJ can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,7 +27,7 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
+.  Download the latest `[T15-B4][BizConnect Journal].jar` link:https://github.com/CS2103JAN2018-T15-B4/main/releases[here].
 .  Copy the file to the folder you want to use as the home folder for your Address Book.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
@@ -73,10 +73,45 @@ Examples:
 * `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
 * `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
 
-=== Listing all persons : `list`
+=== Deleting a person: `delete`
 
-Shows a list of all persons in the address book. +
-Format: `list`
+Deletes the specified person from the address book. +
+Format: `delete INDEX`
+
+****
+* Deletes the person at the specified `INDEX`.
+
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+Examples:
+
+* `list` +
+`delete 2` +
+Deletes the 2nd person in the address book.
+* `find Betsy` +
+`delete 1` +
+Deletes the 1st person in the results of the `find` command.
+
+// tag::deletebyname[]
+=== Deleting a person by name: `deletebyname` `[since v1.1]`
+
+Deletes the specified person from the address book by their fullname. +
+Format: `deletebyname FULLNAME`
+
+****
+* Deletes the person at the specified `FULLNAME`.
+* FULLNAME is not case sensitive.
+* The spelling of the FULLNAME must match the name on contact that is to be deleted on the list
+* If there are more than one contacts with the same name, use delete command instead.
+****
+
+Examples:
+
+* `deletebyname john doe` +
+Deletes the contact whose name matches john doe.
+// end::deletebyname[]
 
 === Editing a person : `edit`
 
@@ -98,45 +133,100 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+//tag::findByName[]
+=== Find persons by name: `find n/` `[since v1.4]`
 
 Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Format: `find n/KEYWORD [MORE_KEYWORDS]...`
 
 ****
 * The search is case insensitive. e.g `hans` will match `Hans`
 * The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
 * Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
+* Partial words will be matched e.g. `Han` will match `Hans`
 * Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
 ****
 
 Examples:
 
-* `find John` +
+* `find n/John` +
 Returns `john` and `John Doe`
-* `find Betsy Tim John` +
+* `find n/Betsy Tim John` +
 Returns any person having names `Betsy`, `Tim`, or `John`
+* `find n/J` +
+Returns any person having names `John`, `Jack`, or `Joanna`
+//end::findByName[]
 
-=== Deleting a person : `delete`
+//tag::findByTag[]
+=== Find persons by tag: `find t/` `[since v1.4]`
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Finds persons whose tag contain any of the given keywords. +
+Format: `find t/KEYWORD [MORE_KEYWORDS]...`
 
 ****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
+* The search is case insensitive. e.g `friends` will match `Friends`
+* The order of the keywords does not matter. e.g. `Friends Classmates` will match `Classmates Friends`
+* Only the tag is searched.
+* Partial words will be matched e.g. `fri` will match `Friends`
+* Tags matching at least one keyword will be returned (i.e. `OR` search). e.g. `Friends Classmates` will return person whose tag contains `Friends` or `Classmates`
 ****
 
 Examples:
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `find t/Friends` +
+Returns `friends` and `Friends`
+* `find t/Friends Classmates` +
+Returns any person having tag(s) `Friends`, or `Classmates`
+* `find t/f` +
+Returns any person having tag(s) `Friends`, or `Family`
+//end::findByTag[]
+
+//tag::findByAddress[]
+=== Find persons by address: `find a/` `[since in v1.5]`
+
+Finds persons whose address contain any of the given keywords. +
+Format: `find a/KEYWORD [MORE_KEYWORDS]...`
+
+****
+* The search is case insensitive. e.g `avenue` will match `Avenue`
+* The order of the keywords does not matter. e.g. `Loop Avenue` will match `Avenue Loop`
+* Only the address is searched.
+* Partial words will be matched e.g. `Ave` will match `Avenue`
+* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Loop Avenue` will return `Loop Street`, `5th Avenue`
+****
+
+Examples:
+
+* `find a/5TH` +
+Returns any person having address with `5th` and `5TH`
+* `find a/Sixth Avenue` +
+Returns any person having address `Sixth` or `Avenue`
+* `find a/s` +
+Returns any person having address `street` or `sixth` or `square'
+//end::findByAddress[]
+
+//tag::findByPhone[]
+=== Find persons by phone: `find p/` `[since in v1.5]`
+
+Finds persons whose phone contain any of the given value. +
+Format: `find p/KEYWORD [MORE_KEYWORDS]...`
+
+****
+* Only the phone is searched.
+* Partial numbers will be matched e.g. `984` will match `98450293`
+* Persons matching at least one phone will be returned (i.e. `OR` search).
+****
+
+Examples:
+
+* `find p/982039` +
+Returns any person having phone `98203910` or `98203950`
+//end::findByPhone[]
+
+=== Listing all persons : `list`
+
+Shows a list of all persons in the address book. +
+Format: `list`
 
 === Selecting a person : `select`
 
@@ -144,7 +234,7 @@ Selects the person identified by the index number used in the last person listin
 Format: `select INDEX`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
+* Selects the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* `1, 2, 3, ...`
 ****
@@ -157,6 +247,97 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+// tag::addpicture[]
+=== Adding a profile picture to a person: `addpicture` `[since v1.3]`
+
+Adds a profile picture to a person +
+Format: `addpicture INDEX f/FILENAME`
+
+****
+* Adds a picture at location `FILENAME` to person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
+* `FILENAME` must point to a valid image file.
+****
+
+Examples:
+
+* `addpicture 1 f/C://pictures/janeDoe.jpg` +
+Edits the profile picture of the 1st person to be the picture at C://pictures/janeDoe.jpg
+// end::addpicture[]
+
+// tag::addtag[]
+=== Adding individual tags to a contact: `addtag` `[since v1.4]`
+
+Adds tag(s) to a person +
+Format: `addtag INDEX t/TAG t/TAG ...`
+
+****
+* Edits the tag of the contact at the specified `INDEX`.
+The index refers to the index number shown in the last task listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one tag must be provided.
+* All input tags must be new and unique to the contact. For example, if tag `friend` exists for contact
+at index 1, then both `addtag 1 t/friend` and `addtag 1 t/friend t/schoolmate` will not work as all tags must be new
+
+****
+
+Examples:
+
+* `addtag 12 t/newFriend` +
+Adds the tag `newFriend` to the contact at index 12 of the last contact listing
+* `addtag 7 t/buddy t/CS2103 t/NUS` +
+Adds the tags `buddy`, `CS2103` and `NUS` to contact at index 7 of the last contact listing
+// end::addtag[]
+
+=== Googling a person's name : `google` `[since v1.5rc]`
+
+Google searches the person's name identified by the index number used in the latest person listing. +
+Format: `google INDEX`
+
+****
+* Google searches the name of the person at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+Examples:
+
+* `list` +
+`google 2` +
+Google searches the name of the 2nd person in the address book.
+* `find Betsy` +
+`google 1` +
+Google searches the name of the 1st person in the results of `find` command.
+
+// tag::sort[]
+=== Sorting all persons by name : `sort` `[since v1.1]`
+
+Sorts all persons in the address book alphabetically by name in ascending order and list them. +
+Format: `sort`
+// end::sort[]
+
+// tag::export[]
+=== Exporting addressbook data: `export` `[since v1.1]`
+
+Exports addressbook data into an XML or CSV file. +
+Format: `export FILEPATH [MORE_KEYWORDS]`
+
+****
+* Addressbook creates XML or CSV file if valid filepath and filename is given.
+* If filename already exists, a warning message is displayed.
+* If file extension is not .xml nor .csv, a warning message is displayed.
+* If filepath not given, the file is auto-generated in the same filepath as the JAR file.
+* If filepath is not found, Addressbook creates folders to support the filepath defined by the user.
+****
+
+Examples:
+
+* `export C:\Users\John Doe\Documents\addressbook.xml` +
+Creates XML file in the user-defined filepath
+* `export C:\Users\John Doe\Documents\addressbook.csv` +
+Creates CSV file in the user-defined filepath
+* `export addressbook.xml` +
+Creates XML file in the same folder as the JAR file
+// end::export[]
 
 === Listing entered commands : `history`
 
@@ -218,10 +399,334 @@ The `redo` command fails as there are no `undo` commands executed previously.
 `redo` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all contacts : `clear`
 
-Clears all entries from the address book. +
+Clears all entries in contacts list from the address book. +
 Format: `clear`
+
+//tag::convertCurrency[]
+=== Converting from one currency to another: `convert` `[since v1.3]`
+
+Convert any amount from SRC_CURRENCY_CODE to DST_CURRENCY_CODE +
+Format: `convert [VALUE] SRC_CURRENCY_CODE DST_CURRENCY_CODE`
+
+****
+* Rates are updated daily (except on the weekends)
+* Rates are accompanied with the date of which it is being retrieved/converted
+* Comma is use as a thousand separtor and to 2 decimal places, eg 1,000.00
+* 16 currencies available to be converted from one to another
+* List of currency codes available (according to ISO 4217):
+
+  AUD - Australian dollar
+  CAD - Canadian dollar
+  CHF - Swiss franc
+  CNY - Renminbi (Chinese) yuan
+  GBP - Pound sterling
+  HKD - Hong Kong dollar
+  ILS - Israeli new shekel
+  INR - Indian rupee
+  JPY - Japanese yen
+  MYR - Malaysian ringgit
+  NZD - New Zealand dollar
+  PHP - Philippine piso
+  SEK - Swedish krona/kronor
+  SGD - Singapore dollar
+  THB - Thai baht
+  USD - United States dollar
+
+****
+
+[TIP]
+Value can be empty to get the standard rate of 1 unit of a particular currency to be convert to another
+
+Examples:
+
+* `convert 1 SGD MYR` +
+Converts 1 SGD into MYR +
+Returns `Converted 1 SGD to MYR 2.95 as of 13-Apr-2018` +
+
+* `convert 10000 JPY USD` +
+Converts 10,000 JPY to USD +
+Returns `Converted 10,000 JPY to USD 92.86 as of 13-Apr-2018`
+
+* `convert SGD MYR` +
+Get the rate of MYR given one unit of SGD +
+Returns `Converted 1 SGD to MYR 2.95 as of 13-Apr-2018`
+//end::convertCurrency[]
+
+// tag::linkedinhotkey[]
+=== Adding an event: `F2` `[since v1.5rc]`
+
+Displays a LinkedIn page. +
+Format: Press `F2` hotkey on keyboard
+// end::linkedinhotkey[]
+
+// tag::googlehotkey[]
+=== Adding an event: `F3` `[since v1.5rc]`
+
+Displays a Google Chrome browser page. +
+Format: Press `F3` hotkey on keyboard
+// end::googlehotkey[]
+
+// tag::addevent[]
+=== Adding an event: `addevent` `[since v1.3]`
+
+Adds an event into event book. +
+Format: `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME`
+If arguments like TITLE or DESCRIPTION are too long, it may be cut off in the event list.
+Event details should not be too wordy!
+
+****
+* Adds an event if all fields have correct inputs.
+* If there is an empty field, event is not added.
+* If datetime field is detected to be incorrect, no event is added.
+****
+
+Examples:
+
+* `addevent et/Christmas Party ed/Celebrating Christmas 2018 el/Samuel's House edt/2018-12-25 1830` +
+Creates an event with the corresponding details and adds it into the event book; displays it on event list.
+// end::addevent[]
+
+// tag::deleteevent[]
+=== Deleting an event: `deleteevent` `[since v1.3]`
+
+Deletes an event in the event book. +
+Format: `deleteevent INDEX`
+
+****
+* Deletes an event if given index is valid.
+* Does not delete event if given index is invalid.
+****
+
+Examples:
+
+* `deleteevent 2` +
+Deletes the second event on the displayed event list.
+
+// end::deleteevent[]
+
+// tag::findevent[]
+=== Finding an event: `findevent` `[since v1.4]`
+
+Shows a list of all events matching the given keywords. +
+Format: `findevent et/KEYWORD [MORE_KEYWORDS]... for title OR ed/KEYWORD [MORE_KEYWORDS]... for description`
+For DATETIME, it will try to match datetimes containing the input argument, so try to be as accurate as possible!
+
+Example:
+* `findevent edt/01` +
+Returns all events with the argument '01' inside the datetime field.
+This includes dates like 2018-XX-XX, 2017-XX-XX since '01' is inside '2018' and '2017'.
+
+// end::findevent[]
+
+// tag::listallevents[]
+=== Listing all events: `listallevents` `[since v1.4]`
+
+Shows a list of all events in the address book. +
+Format: `listallevents`
+// end::listallevents[]
+
+// tag::sortevent[]
+=== Sort all events: `sortevent` `[since v1.5]`
+
+Sorts event list according to the specified parameter. +
+Format: `sortevent PARAMETER`
+
+Examples:
+
+* `sortevent TITLE` +
+Sorts event list according to the event titles in alphabetical order.
+
+* `sortevent DATETIME` +
+Sorts event list according to the event datetimes in chronological order from latest to oldest.
+// end::sortevent[]
+
+// tag::clearevents[]
+=== Clears all events: `clearevents` `[since v1.5rc]`
+
+Clears all events in the event list. +
+Format: `clearevents`
+// end::clearevents[]
+
+// tag::jumpto[]
+=== Jumps to specified year and month: `jumpto` `[since v1.5rc]`
+
+Jumps to specified year and month on the calendar. +
+Format: `jumpto yyyy-mm`
+
+****
+* Calendar shows year and month input if valid.
+* Does not change calendar view if given input is invalid.
+****
+
+Examples:
+
+* `jumpto 2018-05` +
+Jumps to 2018 May on the calendar view.
+// end::jumpto[]
+
+// tag::switchtab[]
+=== Switches between list tabs: `switchtab` `[since v1.4]`
+
+Switches between the Events and Tasks list tabs. +
+Format: `switchtab`
+// end::switchtab[]
+
+// tag::TaskDisplay[]
+=== Task Display `[since v1.5rc]`
+
+Enhances the task display to make it more user-friendly such as easily and quickly identifying the undone tasks
+and its due date and status.
+
+****
+* Task list is default sorted by status (i.e. undone to done), due date in ascending order and priority level
+in decreasing order of importance (i.e. high > medium > low), so that all the undone tasks appear first and completed tasks
+appear at the bottom.
+* Undone tasks: The due date and priority fields have varying display colours depending on duration left and priority level respectively.
+* Done tasks: The due date and priority fields are no longer displayed. However, a green tick is displayed to indicate the task as completed.
+* Text wrapping for variable length fields (e.g. name, description and category) so that longer text does not get truncated.
+****
+
+Examples:
+
+Behaviour of due date field for undone tasks:
+
+* Less than 0 day (i.e. overdue): Red color text with circular exclamation symbol
+* Less than 3 days: Red color text
+* Between 3 and 4 days: Orange color text
+* More than or equal to 5 days: Green color text
+
+Behaviour of priority field for undone tasks:
+
+* high: Red color display
+* medium: Orange color display
+* low: Green color display
+
+image::UG_TaskDisplay.PNG[width="250"]
+The task due dates displayed are computed against the current date of 2018-04-14.
+// end::TaskDisplay[]
+
+// tag::AddTask[]
+=== Adding a task: `task-add` `[since v1.3]`
+
+Adds a task to the address book. +
+Format: `task-add n/NAME p/PRIORITY d/DESCRIPTION dd/DUE_DATE s/STATUS [c/CATEGORY]...`
+
+****
+* Adds a task if all fields have valid inputs.
+* The valid values of priority are : high, medium and low (only lowercase accepted).
+* The valid values of status are : undone and done (only lowercase accepted).
+* Input for category can be in uppercase or lowercase, but it will be displayed in lowercase.
+****
+
+[TIP]
+A task can have any number of categories (including 0)
+
+Examples:
+
+* `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/undone`
+* `task-add n/Agenda for meeting p/high d/Discuss proposal details dd/2018-04-29 s/undone c/meeting`
+// end::AddTask[]
+
+// tag::DeleteTask[]
+=== Deleting a task: `task-delete` `[since v1.4]`
+
+Deletes the specified task from the address book. +
+Format: `task-delete INDEX`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ... that is not more than the maximum task list size.
+****
+
+Examples:
+
+* `task-list` +
+`task-delete 2` +
+Deletes the 2nd task in the address book.
+// end::DeleteTask[]
+
+// tag::EditTask[]
+=== Editing a task: `task-edit` `[since v1.4]`
+
+Edits an existing task in the address book. +
+Format: `task-edit INDEX [n/NAME] [p/PRIORITY] [d/DESCRIPTION] [dd/DUE_DATE] [s/STATUS] [c/CATEGORY]...`
+
+****
+* Edits the task at the specified `INDEX`.
+The index refers to the index number shown in the last task listing.
+* The index *must be a positive integer* 1, 2, 3, ... that is not more than the maximum task list size.
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing categories, the existing categories of the task will be removed i.e. adding of categories is not cumulative.
+* You can remove all the task's categories by typing `c/` without specifying any category after it.
+****
+
+Examples:
+
+* `task-list` +
+`task-edit 1 p/medium dd/2018-05-10` +
+Edits the priority and due date of the 1st task to be `medium` and `2018-05-10` respectively.
+* `task-edit 3 n/Project meeting c/` +
+Edits the name of the 3rd task to be `Project meeting` and clears all existing categories.
+// end::EditTask[]
+
+// tag::FindTask[]
+=== Finding tasks by name: `task-find` `[since v1.4]`
+
+Finds the tasks whose names contain any of the given keywords. +
+Format: `task-find KEYWORD [MORE_KEYWORDS]...`
+
+****
+* The search is case-insensitive. e.g. `task` will match `Task`
+* The order of the keywords does not matter. e.g. `Buy Gift` will match `Gift buy`
+* Partial words will be matched. e.g. `ta` will match `task`
+* Tasks matching at least one keyword will be returned (i.e. `OR` search).
+e.g. `Agenda gift` will return `Agenda for meeting`, `Buy gift`
+****
+
+Examples:
+
+* `task-find agenda` +
+Returns the tasks `Agenda for meeting` and `Project agenda`
+* `task-find email agenda project` +
+Returns any task having names `email`, `agenda` or `project`
+* `task-find nt` +
+Returns any task having names containing `nt` like `department` or `client`
+// end::FindTask[]
+
+// tag::ListTask[]
+=== Listing all tasks: `task-list` `[since v1.3]`
+
+Shows a list of all tasks in the address book. +
+Format: `task-list`
+// end::ListTask[]
+
+// tag::ClearTask[]
+=== Clearing all tasks : `task-clear` `[since v1.5]`
+
+Clears all entries in tasks list from the address book. +
+Format: `task-clear`
+// end::ClearTask[]
+
+// tag::resetpicture[]
+=== Reset a person's profile picture: `resetpicture INDEX` `[since v1.5rc]`
+
+Reset a contact's picture to the default picture. +
+Format: `resetpicture INDEX`
+
+****
+* Will reset a person's picture to the default picture.
+* This command is irreversible!
+****
+
+Examples:
+
+* `resetpicture 1` +
+Resets the picture of the person at index 1 to the default picture.
+// end::resetpicture[]
 
 === Exiting the program : `exit`
 
@@ -233,11 +738,113 @@ Format: `exit`
 Address book data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
+// tag::autoComplete[]
+=== Autocomplete of command `[coming in v2.0]`
+
+Finds persons whose names contain any of the given value. +
+
+****
+* Command will autocomplete if left one possible command remaining
+****
+
+Examples:
+
+* `fin` +
+Returns any command `find` +
+//end::autoComplete[]
+
+//tag::listOutPossibleCommand[]
+=== List out possible command `[coming in v2.0]`
+
+List out possible commands as one types on the command line +
+
+****
+* Possible commands will be listed
+****
+
+Examples:
+
+* Empty command line +
+Returns all of commands +
+
+* `f` +
+Returns commands started with `f` such as `findEvent`, `find' +
+
+* `find` +
+Returns commands started with `find` such as `find' +
+//end::listOutPossibleCommand[]
+
+//tag::hintPossibleCommand[]
+=== Hint out the possible command syntax `[coming in v2.0]`
+
+Guide user on the command sytnax +
+
+****
+* Syntax will be shown to guide thru till the command is completely written
+* Check for each parameter, the value conforming to
+****
+
+Examples:
+
+* `add n/` +
+Return feedback to ask user to input name +
+
+* `convert 10 SGD` +
+Returns feedback to input the currency code to be converted to +
+//end::hintPossibleCommand[]
+
+// tag::editevent[]
+=== Editing an event `[coming in v2.0]`
+
+Edits an existing event in the event list. +
+Format: `editevent 3 et/NEW_TITLE edt/NEW_DATETIME`
+
+****
+* Edits event is given index and prefix is valid
+* Error message if given index or prefix is invalid
+****
+// end::editevent[]
+
+// tag::eventnotifications[]
+=== Setting event notifications `[coming in v2.0]`
+
+A notification for the indexed event will pop up at the specified datetime. +
+Format: `eventnotify INDEX DATETIME`
+
+****
+* Sets notification for event if given index and datetime is valid
+* Error message if given index or datetime is invalid
+****
+// end::eventnotifications[]
+
 // tag::dataencryption[]
 === Encrypting data files `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
+Encrypts all data files until user logs in with correct credentials. +
+Format: `login u/USERNAME p/PASSWORD
+
+****
+* All data files are encrypted until the user logs in
+* Files are decrypted and accessible by the user and the app if the credentials are correct
+* Error message appears if credentials are incorrect
+* Before logging in, user features are restricted
+* User is logged out if the user exits the app
+****
 // end::dataencryption[]
+
+// tag::autoremovecompletedTasks[]
+=== Automatically remove completed tasks `[coming in v2.0]`
+Automatically remove any unmarked completed tasks so that the task list does not get too lengthy.
+It will be merged into the `task-add` and `task-edit` command with additional parameters. +
+
+New format for task-add: `task-add n/NAME p/PRIORITY d/DESCRIPTION dd/DUE_DATE s/STATUS tl/TIME_LIMIT_DAYS ms/MARK_STATUS [c/CATEGORY]...` +
+
+New format for task-edit: `task-edit INDEX [n/NAME] [p/PRIORITY] [d/DESCRIPTION] [dd/DUE_DATE] [s/STATUS] [tl/TIME_LIMIT_DAYS] [ms/MARK_STATUS] [c/CATEGORY]...` +
+
+TIME_LIMIT_DAYS : Number of days to keep a task after its completion +
+MARK_STATUS : Indicate whether the completed task needs to be kept after time limit is over
+// end::autoremovecompletedTasks[]
+
 
 == FAQ
 
@@ -246,19 +853,67 @@ _{explain how the user can enable/disable data encryption}_
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
+* *Add a person* : `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
 e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
+* *Delete a person* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete a person by name* : `deletebyname NAME` +
+e.g. `deletebyname John Appleseed`
+* *Edit a person* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
+* *Find persons by name* : `find n/KEYWORD [MORE_KEYWORDS]...` +
+e.g. `find n/James Jake`
+* *Find persons by tag* : `find t/KEYWORD [MORE_KEYWORDS]...` +
+e.g. `find t/friends`
+* *Find persons by address* : `find a/KEYWORD [MORE_KEYWORDS]...` +
+e.g. `find a/5th Avenue`
+* *Find persons by phone* : `find p/KEYWORD [MORE_KEYWORDS]...` +
+e.g. `find p/96965000`
+* *List all persons* : `list`
+* *Select a person* : `select INDEX` +
 e.g.`select 2`
+* *Add a profile picture to a person* : `addpicture INDEX f/FILENAME` +
+e.g. `addpicture 1 f/C://pictures/janeDoe.jpg`
+* *Reset a contact's picture* : `resetpicture  INDEX` +
+e.g. `resetpicture 1`
+* *Add tag(s) to a person* : `addtag INDEX t/TAG [t/TAG]...` +
+e.g. `addtag 12 t/newFriend`
+* *Google search a person's name* : `google INDEX` +
+e.g.`google 3`
+* *Sort all persons by name* : `sort`
+* *Export contacts list into XML or CSV file* : `export FILEPATH` +
+e.g. `export C:\Users\John Doe\Documents\addressbook.xml`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`
+* *Clear all contacts* : `clear`
+* *Convert currency* : `convert [VALUE] SRC_CURRENCY_CODE DST_CURRENCY_CODE` +
+e.g. `convert 10000 JPY USD`
+* *LinkedIn Page* : Press `F2` hotkey
+* *Google Page* : Press `F3` hotkey
+* *Add an event* : `addevent et/TITLE ed/DESCRIPTION el/LOCATION edt/DATETIME` +
+e.g. `addevent et/Christmas Party ed/Celebrating Christmas 2018 el/Samuel's House edt/2018-12-25 1830`
+* *Delete an event* : `deleteevent INDEX` +
+e.g. `deleteevent 2`
+* *Find an event* : `findevent PREFIX/KEYWORD [MORE_KEYWORDS]...` +
+e.g. `findevent et/Christmas CNY Halloween`
+* *Sort event list (case-insensitive)* : `sortevent PARAMETER` +
+e.g. `sortevent DATETIME`
+* *List all events* : `listallevents`
+* *Clear all events* : `clearevents`
+* *Jump to Year-Month* : `jumpto yyyy-mm` +
+e.g. `jumpto 2018-05`
+* *Click-to-view Events* : `Click the shaded days on the Calendar`
+* *Switch between events and tasks list* : `switchtab`
+* *Add a task* : `task-add n/NAME p/PRIORITY d/DESCRIPTION dd/DUE_DATE s/STATUS [c/CATEGORY]...` +
+e.g. `task-add n/Task 1 p/medium d/Description for task 1 dd/2018-05-10 s/undone`
+* *Delete a task* : `task-delete INDEX` +
+e.g. `task-delete 1`
+* *Edit a task* : `task-edit INDEX [n/NAME] [p/PRIORITY] [d/DESCRIPTION] [dd/DUE_DATE] [s/STATUS] [c/CATEGORY]...` +
+e.g. `task-edit 1 p/medium dd/2018-05-10`
+* *Find tasks by name* : `task-find KEYWORD [MORE_KEYWORDS]...` +
+e.g. `task-find project agenda`
+* *List all tasks* : `task-list`
+* *Clear all tasks* : `task-clear`
+* *Help* : `help`
+* *Exit program* : `exit`

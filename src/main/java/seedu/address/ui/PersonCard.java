@@ -1,11 +1,15 @@
 package seedu.address.ui;
 
 import javafx.fxml.FXML;
+
 import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import seedu.address.model.person.Person;
+
 
 /**
  * An UI component that displays information of a {@code Person}.
@@ -13,7 +17,7 @@ import seedu.address.model.person.Person;
 public class PersonCard extends UiPart<Region> {
 
     private static final String FXML = "PersonListCard.fxml";
-
+    private static final String BROKEN_IMAGE_URL = "images/imageFail.png";
     /**
      * Note: Certain keywords such as "location" and "resources" are reserved keywords in JavaFX.
      * As a consequence, UI elements' variable names cannot be set to such keywords
@@ -38,17 +42,39 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
+    @FXML
+    private ImageView imageView;
 
+    //TODO: Handle long names (Wrapping around long names waste space)
     public PersonCard(Person person, int displayedIndex) {
         super(FXML);
         this.person = person;
         id.setText(displayedIndex + ". ");
         name.setText(person.getName().fullName);
+        name.setWrapText(true); //to wrap around long names
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
         email.setText(person.getEmail().value);
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
+        initProfilePic(person);
     }
+    //@@author dezhanglee
+    /**
+     * initialize javafx imageview to profile pic of (@code person)
+     * @param person
+     */
+    public void initProfilePic(Person person) {
+
+
+        try {
+            String url = person.getPicture().getPath();
+            imageView.setImage(new Image(url, 128, 128, true, false));
+        } catch (Exception e) {
+            e.printStackTrace();
+            imageView.setImage(new Image(BROKEN_IMAGE_URL, 128, 128, true, false));
+        }
+    }
+    //@@author
 
     @Override
     public boolean equals(Object other) {
@@ -67,4 +93,7 @@ public class PersonCard extends UiPart<Region> {
         return id.getText().equals(card.id.getText())
                 && person.equals(card.person);
     }
+
 }
+
+

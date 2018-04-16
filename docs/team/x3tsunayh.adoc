@@ -1,0 +1,112 @@
+= Tan Yong He - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: BizConnect Journal
+
+---
+
+== Overview
+
+BizConnect Journal is a dedicated application catered to busy businessmen, especially those who travel a lot. This app helps to manage their wide range of contacts, events and tasks.
+It also uses Command Line Interface (CLI) as the primary source of input, with visual graphics as additional supported functionality for users.
+
+The everyday life of a businessman can be packed with many events, tasks and network contacts, thus having a single tool to manage all their necessary work information makes things easier,
+as well as save them valuable time and effort. With these goals in mind, BizConnect Journal is designed to provide one central application without the trouble
+of having different applications for each individual purpose.
+
+== Summary of contributions
+
+* *Major enhancement*: Event feature to facilitate *event management* (PRs https://github.com/CS2103JAN2018-T15-B4/main/pull/58[#58],
+https://github.com/CS2103JAN2018-T15-B4/main/pull/61[#61], https://github.com/CS2103JAN2018-T15-B4/main/pull/69[#69],
+https://github.com/CS2103JAN2018-T15-B4/main/pull/80[#80], https://github.com/CS2103JAN2018-T15-B4/main/pull/139[#139])
+
+** *What it does*:
+It allows the businessman to add, delete, find, sort and list all events.
+Each event consists of a title, description, location, date and time.
+
+** *Justification*:
+This feature enhances the product as users are now able to manage their events easily with simple add and delete event commands.
+The user is able to store each event with the vital information like the agenda, location, date and timing of the activity,
+as well as provide a short description of what the event is about. In addition, each listed event has a visual setting to display which events are coming soon,
+ongoing, or already over. With these functionalities, the user does not need to worry about forgetting an event ever again!
+
+** *Highlights*: This epic enhancement involves an Event Book that works hand-in-hand with the Address Book under a single application for businessmen when it comes
+to managing contacts and events. The implementation was difficult as a new Event Book system had to be constructed, which compromised of many classes working together.
+
+* *Major enhancement*: Calendar feature for visuals (PRs https://github.com/CS2103JAN2018-T15-B4/main/pull/37[#37], https://github.com/CS2103JAN2018-T15-B4/main/pull/61[#61])
+
+** *What it does*:
+A calendar is displayed with several visual benefits. It shows a brief overview on days of the month with ongoing events by providing a darker shaded colour on the calendar.
+The user can either use CLI or a mouse cursor to change the year and month displayed. Clicking on the shaded days functions like FindEventCommand for that day.
+
+** *Justification*:
+The visual benefits provide more functionality options for businessmen who work better with visual aids, or prefer to have a combination of visuals and commandline.
+This works well together with the Events feature without over-reliance on either visual or commandline techniques.
+
+** *Highlights*: This calendar enhancement was made using a combination of GridPane and setOnAction buttons, and has to be updated in accordance to
+CLI commands that changes the displayed event list, to support constant visual aid for the user.
+
+
+* *Minor enhancement*: Added an Export Command which exports the contacts on the Address Book into either XML or CSV files. (PRs https://github.com/CS2103JAN2018-T15-B4/main/pull/12 [#12], https://github.com/CS2103JAN2018-T15-B4/main/pull/93[#93])
+XML files allows for easy exportability across other platforms while the exported CSV is designed to help the user import contacts into Google Contacts.
+
+* *Minor enhancement*: Enabled Google searching for contact names. (PR https://github.com/CS2103JAN2018-T15-B4/main/pull/124 [#124])
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/x3tsunayh.md[Functional code]] [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/x3tsunayh.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+*** Set up Travis and Coveralls (https://github.com/CS2103JAN2018-T15-B4/main/pull/18[#18]
+** Enhancements to existing features:
+** Documentation:
+*** Wrote use cases, user stories, project description in Project Portfolio with team
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W09-B3/main/issues/115[#115], https://github.com/CS2103JAN2018-W09-B3/main/issues/116[#116], https://github.com/CS2103JAN2018-W09-B3/main/issues/123[#123])
+*** Addressed all bugs collected during the peer review testing session (examples:  https://github.com/CS2103JAN2018-T15-B4/main/issues/124[#124], https://github.com/CS2103JAN2018-T15-B4/main/issues/130[#130])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=export]
+
+include::../UserGuide.adoc[tag=addevent]
+
+include::../UserGuide.adoc[tag=deleteevent]
+
+include::../UserGuide.adoc[tag=findevent]
+
+include::../UserGuide.adoc[tag=listallevents]
+
+include::../UserGuide.adoc[tag=switchtab]
+
+include::../UserGuide.adoc[tag=jumpto]
+
+include::../UserGuide.adoc[tag=editevent]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are my contributions to the Developer Guide. They showcase my ability to write technical documentation and depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=export]
+
+include::../DeveloperGuide.adoc[tag=calendarview]
+
+include::../DeveloperGuide.adoc[tag=addevent]
+
+include::../DeveloperGuide.adoc[tag=findevent]
+
+include::../DeveloperGuide.adoc[tag=sortevent]
+
+include::../DeveloperGuide.adoc[tag=jumpto]
+
+include::../DeveloperGuide.adoc[tag=switchtab]
+
+include::../DeveloperGuide.adoc[tag=editevent]

@@ -9,11 +9,11 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -109,7 +109,7 @@ public class CommandBox extends UiPart<Region> {
             logger.info("Result: " + commandResult.feedbackToUser);
             raise(new NewResultAvailableEvent(commandResult.feedbackToUser));
 
-        } catch (CommandException | ParseException e) {
+        } catch (CommandException | IllegalValueException e) {
             initHistory();
             // handle command failure
             setStyleToIndicateCommandFailure();

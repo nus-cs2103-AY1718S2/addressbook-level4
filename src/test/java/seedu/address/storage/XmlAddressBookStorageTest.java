@@ -2,10 +2,10 @@ package seedu.address.storage;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
+import static seedu.address.testutil.TypicalAddressBook.getTypicalAddressBook;
 import static seedu.address.testutil.TypicalPersons.ALICE;
 import static seedu.address.testutil.TypicalPersons.HOON;
 import static seedu.address.testutil.TypicalPersons.IDA;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
 
 import java.io.IOException;
 
@@ -15,6 +15,7 @@ import org.junit.rules.ExpectedException;
 import org.junit.rules.TemporaryFolder;
 
 import seedu.address.commons.exceptions.DataConversionException;
+import seedu.address.commons.exceptions.InvalidFileException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -83,7 +84,7 @@ public class XmlAddressBookStorageTest {
         ReadOnlyAddressBook readBack = xmlAddressBookStorage.readAddressBook(filePath).get();
         assertEquals(original, new AddressBook(readBack));
 
-        //Modify data, overwrite exiting file, and read back
+        //Modify person data, overwrite exiting file, and read back
         original.addPerson(HOON);
         original.removePerson(ALICE);
         xmlAddressBookStorage.saveAddressBook(original, filePath);
@@ -99,15 +100,16 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullAddressBook_throwsNullPointerException() {
+    public void saveAddressBook_nullAddressBook_throwsNullPointerException() throws InvalidFileException {
         thrown.expect(NullPointerException.class);
-        saveAddressBook(null, "SomeFile.xml");
+        saveAddressBook(null,
+                "SomeFile.xml");
     }
 
     /**
      * Saves {@code addressBook} at the specified {@code filePath}.
      */
-    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) {
+    private void saveAddressBook(ReadOnlyAddressBook addressBook, String filePath) throws InvalidFileException {
         try {
             new XmlAddressBookStorage(filePath).saveAddressBook(addressBook, addToTestDataPathIfNotNull(filePath));
         } catch (IOException ioe) {
@@ -116,10 +118,9 @@ public class XmlAddressBookStorageTest {
     }
 
     @Test
-    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException {
+    public void saveAddressBook_nullFilePath_throwsNullPointerException() throws IOException, InvalidFileException {
         thrown.expect(NullPointerException.class);
         saveAddressBook(new AddressBook(), null);
     }
-
 
 }

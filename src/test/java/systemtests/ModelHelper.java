@@ -36,4 +36,5 @@ public class ModelHelper {
     private static Predicate<Person> getPredicateMatching(Person other) {
         return person -> person.equals(other);
     }
+
 }

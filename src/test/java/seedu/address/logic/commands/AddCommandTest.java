@@ -19,11 +19,17 @@ import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.ReadOnlyTaskBook;
+import seedu.address.model.TaskBook;
+import seedu.address.model.event.ReadOnlyEvent;
+import seedu.address.model.event.ReadOnlyEventBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -41,7 +47,6 @@ public class AddCommandTest {
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
         Person validPerson = new PersonBuilder().build();
-
         CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
 
         assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
@@ -96,6 +101,7 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -107,7 +113,28 @@ public class AddCommandTest {
         }
 
         @Override
+        public void resetData(ReadOnlyEventBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void resetData(ReadOnlyTaskBook newData) {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ReadOnlyAddressBook getAddressBook() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return null;
+        }
+
+        @Override
+        public ReadOnlyTaskBook getTaskBook() {
             fail("This method should not be called.");
             return null;
         }
@@ -118,8 +145,7 @@ public class AddCommandTest {
         }
 
         @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
+        public void updatePerson(Person target, Person editedPerson) {
             fail("This method should not be called.");
         }
 
@@ -131,6 +157,62 @@ public class AddCommandTest {
 
         @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersons() {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addTask(Task task) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteTask(Task target) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateTask(Task target, Task editedTask) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Task> getFilteredTaskList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void addEvent(ReadOnlyEvent toAdd) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void deleteEvent(ReadOnlyEvent eventToDelete) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<ReadOnlyEvent> getFilteredEventList() {
+            return null;
+        }
+
+        @Override
+        public void updateFilteredEventList(Predicate<ReadOnlyEvent> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortEventList(String parameter) throws CommandException {
             fail("This method should not be called.");
         }
     }
@@ -148,6 +230,16 @@ public class AddCommandTest {
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
         }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return new EventBook();
+        }
+
+        @Override
+        public ReadOnlyTaskBook getTaskBook() {
+            return new TaskBook();
+        }
     }
 
     /**
@@ -157,7 +249,7 @@ public class AddCommandTest {
         final ArrayList<Person> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addPerson(Person person) {
             requireNonNull(person);
             personsAdded.add(person);
         }
@@ -165,6 +257,16 @@ public class AddCommandTest {
         @Override
         public ReadOnlyAddressBook getAddressBook() {
             return new AddressBook();
+        }
+
+        @Override
+        public ReadOnlyEventBook getEventBook() {
+            return new EventBook();
+        }
+
+        @Override
+        public ReadOnlyTaskBook getTaskBook() {
+            return new TaskBook();
         }
     }
 

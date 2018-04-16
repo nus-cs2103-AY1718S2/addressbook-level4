@@ -12,10 +12,13 @@ import seedu.address.commons.exceptions.DataConversionException;
 import seedu.address.commons.util.FileUtil;
 import seedu.address.commons.util.XmlUtil;
 import seedu.address.model.AddressBook;
+import seedu.address.model.EventBook;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.TaskBook;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.event.ReadOnlyEventBook;
 import seedu.address.storage.UserPrefsStorage;
 import seedu.address.storage.XmlSerializableAddressBook;
 import seedu.address.testutil.TestUtil;
@@ -34,6 +37,7 @@ public class TestApp extends MainApp {
             TestUtil.getFilePathInSandboxFolder("pref_testing.json");
     protected static final String ADDRESS_BOOK_NAME = "Test";
     protected Supplier<ReadOnlyAddressBook> initialDataSupplier = () -> null;
+    protected Supplier<ReadOnlyEventBook> initialEventDataSupplier = () -> null;
     protected String saveFileLocation = SAVE_LOCATION_FOR_TESTING;
 
     public TestApp() {
@@ -94,7 +98,8 @@ public class TestApp extends MainApp {
      * Returns a defensive copy of the model.
      */
     public Model getModel() {
-        Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
+        Model copy = new ModelManager((model.getAddressBook()), new EventBook(), new TaskBook(),
+                new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
         return copy;
     }

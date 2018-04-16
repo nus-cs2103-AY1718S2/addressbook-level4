@@ -1,8 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.Scene?>
+<?import javafx.scene.image.Image?>
 <?import javafx.scene.web.WebView?>
 
-<StackPane xmlns:fx="http://javafx.com/fxml/1">
-  <WebView fx:id="browser"/>
-</StackPane>
+<!-- @@author x3tsunayh -->
+<!-- TODO: set a more appropriate initial size -->
+<fx:root type="javafx.stage.Stage" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1"
+         title="GoogleSearch" maximized="true">
+  <icons>
+    <Image url="@/images/chrome_icon.png" />
+  </icons>
+  <scene>
+    <Scene>
+      <WebView fx:id="browser"/>
+    </Scene>
+  </scene>
+</fx:root>

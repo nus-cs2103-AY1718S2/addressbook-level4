@@ -3,8 +3,8 @@ package seedu.address.logic.parser;
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
 
+import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.logic.commands.Command;
-import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
  * Contains helper methods for testing command parsers.
@@ -19,8 +19,8 @@ public class CommandParserTestUtil {
         try {
             Command command = parser.parse(userInput);
             assertEquals(expectedCommand, command);
-        } catch (ParseException pe) {
-            throw new IllegalArgumentException("Invalid userInput.", pe);
+        } catch (IllegalValueException e) {
+            throw new IllegalArgumentException("Invalid userInput.", e);
         }
     }
 
@@ -32,8 +32,8 @@ public class CommandParserTestUtil {
         try {
             parser.parse(userInput);
             fail("The expected ParseException was not thrown.");
-        } catch (ParseException pe) {
-            assertEquals(expectedMessage, pe.getMessage());
+        } catch (IllegalValueException e) {
+            assertEquals(expectedMessage, e.getMessage());
         }
     }
 }

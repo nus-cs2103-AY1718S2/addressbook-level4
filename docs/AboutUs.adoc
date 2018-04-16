@@ -3,53 +3,77 @@
 :imagesDir: images
 :stylesDir: stylesheets
 
-AddressBook - Level 4 was developed by the https://se-edu.github.io/docs/Team.html[se-edu] team. +
-_{The dummy content given below serves as a placeholder to be used by future forks of the project.}_ +
-{empty} +
+BizConnect Journal was developed by the https://github.com/CS2103JAN2018-T15-B4/main/blob/master/docs/AboutUs.adoc[CS2103JAN2018-T15-B4] team. +
 We are a team based in the http://www.comp.nus.edu.sg[School of Computing, National University of Singapore].
+
+== Project Mentor
+
+=== Lin Ziwen Kelvin
+{empty}[https://github.com/Esilocke[github]]
+
+'''
 
 == Project Team
 
-=== John Doe
-image::damithc.jpg[width="150", align="left"]
-{empty}[http://www.comp.nus.edu.sg/~damithch[homepage]] [https://github.com/damithc[github]] [<<johndoe#, portfolio>>]
+=== Tan Yong He
+image::x3tsunayh.jpg[width="100", align="left"]
+{empty}[https://github.com/x3tsunayh[github]] [<<x3tsunayh#, portfolio>>]
 
-Role: Project Advisor
-
-'''
-
-=== John Roe
-image::lejolly.jpg[width="150", align="left"]
-{empty}[http://github.com/lejolly[github]] [<<johndoe#, portfolio>>]
-
-Role: Team Lead +
-Responsibilities: UI
-
-'''
-
-=== Johnny Doe
-image::yijinl.jpg[width="150", align="left"]
-{empty}[http://github.com/yijinl[github]] [<<johndoe#, portfolio>>]
-
-Role: Developer +
-Responsibilities: Data
+* Components in charge of: Storage
+* Aspects/tools in charge of: Deliverables and Deadlines, Scheduling and Tracking
+* Features implemented:
+** Calendar View with CLI functionalities (Event Commands) and Mouse Cursor functionalities
+** Event Functionality (Add, Delete, Find, Sort, Clear and List All Events)
+** Switch Tab Functionality between Events and Tasks Tabs
+** Export Addressbook Data into XML/CSV Files
+** Google Search Contact Names
+** Saving Addressbook Data with Backup File
+** LinkedIn Page Hotkey
+** Google Page Hotkey
+* Code written: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/x3tsunayh.md[functional code]][https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/x3tsunayh.md[test code]]
 
 '''
 
-=== Johnny Roe
-image::m133225.jpg[width="150", align="left"]
-{empty}[http://github.com/m133225[github]] [<<johndoe#, portfolio>>]
+=== Lee De Zhang
+image::dezhanglee.jpg[width="100", align="left"]
+{empty}[https://github.com/dezhanglee[github]] [<<dezhanglee#, portfolio>>]
 
-Role: Developer +
-Responsibilities: Dev Ops + Threading
+* Components in charge of: Logic
+* Aspects/tools in charge of: Project Integration
+* Features implemented:
+** Shorthand Commands
+** Delete Person by Name Enhancement
+** Add Tag Feature
+** Display Picture Feature
+** Reset Picture to Default Feature
+* Code written: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/dezhanglee.md[functional code]][https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/dezhanglee.md[test code]]
 
 '''
 
-=== Benson Meier
-image::yl_coder.jpg[width="150", align="left"]
-{empty}[http://github.com/yl-coder[github]] [<<johndoe#, portfolio>>]
+=== Jillian Wee
+image::jill858.jpeg[width="100", align="left"]
+{empty}[https://github.com/jill858[github]] [<<jill858#, portfolio>>]
 
-Role: Developer +
-Responsibilities: UI
+* Components in charge of: Model
+* Aspects/tools in charge of: Code Quality
+* Features implemented:
+** Find by Partial-Word Enhancement
+** Find by Name, Tag, Address, or Phone
+** Currency Converter Feature with third party tool [https://fixer.io/[Fixer]]
+* Code written: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/jill858.md[functional code]][https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/jill858.md[test code]]
+
+'''
+
+=== Chan Yin Xin
+image::CYX28.jpg[width="100", align="left"]
+{empty}[https://github.com/CYX28[github]] [<<CYX28#, portfolio>>]
+
+* Components in charge of: UI
+* Aspects/tools in charge of: Project Testing
+* Features implemented:
+** Sort Contacts by Name
+** Task display UI enhancement
+** Task Functionality (Add, Delete, Edit, Find, Sort, List and Clear Tasks)
+* Code written: [https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/functional/CYX28.md[functional code]][https://github.com/CS2103JAN2018-T15-B4/main/tree/master/collated/test/CYX28.md[test code]]
 
 '''

@@ -5,7 +5,9 @@ import static org.junit.Assert.assertEquals;
 import java.util.ArrayList;
 
 import org.junit.Before;
+import org.junit.Rule;
 import org.junit.Test;
+import org.junit.rules.TemporaryFolder;
 
 import guitests.guihandles.CommandBoxHandle;
 import javafx.scene.input.KeyCode;
@@ -14,21 +16,37 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
+import seedu.address.storage.JsonUserPrefsStorage;
+import seedu.address.storage.Storage;
+import seedu.address.storage.StorageManager;
+import seedu.address.storage.XmlAddressBookStorage;
+import seedu.address.storage.XmlEventBookStorage;
+import seedu.address.storage.XmlTaskBookStorage;
 
 public class CommandBoxTest extends GuiUnitTest {
-
     private static final String COMMAND_THAT_SUCCEEDS = ListCommand.COMMAND_WORD;
     private static final String COMMAND_THAT_FAILS = "invalid command";
 
+    @Rule
+    public TemporaryFolder testFolder = new TemporaryFolder();
+
     private ArrayList<String> defaultStyleOfCommandBox;
     private ArrayList<String> errorStyleOfCommandBox;
+    private UserPrefs userPrefs;
 
     private CommandBoxHandle commandBoxHandle;
 
     @Before
     public void setUp() {
+        XmlAddressBookStorage addressBookStorage = new XmlAddressBookStorage(getFilePath("ab.xml"));
+        XmlEventBookStorage eventBookStorage = new XmlEventBookStorage(getFilePath("eb.xml"));
+        XmlTaskBookStorage taskBookStorage = new XmlTaskBookStorage(getFilePath("tb.xml"));
+        JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(getFilePath("prefs.json"));
+
         Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        Storage storage = new StorageManager(addressBookStorage, eventBookStorage, taskBookStorage, userPrefsStorage);
+        Logic logic = new LogicManager(model, storage, userPrefs);
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
@@ -39,6 +57,10 @@ public class CommandBoxTest extends GuiUnitTest {
 
         errorStyleOfCommandBox = new ArrayList<>(defaultStyleOfCommandBox);
         errorStyleOfCommandBox.add(CommandBox.ERROR_STYLE_CLASS);
+    }
+
+    private String getFilePath(String fileName) {
+        return testFolder.getRoot().getPath() + fileName;
     }
 
     @Test

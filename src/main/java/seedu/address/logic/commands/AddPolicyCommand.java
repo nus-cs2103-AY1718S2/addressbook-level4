@@ -106,9 +106,9 @@ public class AddPolicyCommand extends UndoableCommand {
                 personToEdit.getEmail(),
                 personToEdit.getAddress(),
                 personToEdit.getTags(),
-                //@author SoilChang
+                //@@author SoilChang
                 personToEdit.getIncome(),
-                //@author
+                //@@author
                 personToEdit.getActualSpending(),
                 personToEdit.getExpectedSpending(),
                 personToEdit.getAge(),

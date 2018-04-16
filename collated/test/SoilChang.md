@@ -1,23 +1,6 @@
-package systemtests;
-
-import static org.junit.Assert.assertEquals;
-
-import org.junit.Test;
-
-import seedu.address.logic.GradientDescent;
-import seedu.address.logic.commands.CommandResult;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.Model;
-import seedu.address.model.PredictionModel;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.testutil.PersonBuilder;
-
-
-
-
-//@@author SoilChang
+# SoilChang
+###### /java/systemtests/PredictCommandSystemTest.java
+``` java
 
 public class PredictCommandSystemTest extends AddressBookSystemTest {
 
@@ -67,7 +50,9 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
             .build();
 
 
-    //@@author SoilChang
+```
+###### /java/systemtests/PredictCommandSystemTest.java
+``` java
     @Test
     public void predict() {
 
@@ -166,3 +151,4 @@ public class PredictCommandSystemTest extends AddressBookSystemTest {
 
 
 }
+```

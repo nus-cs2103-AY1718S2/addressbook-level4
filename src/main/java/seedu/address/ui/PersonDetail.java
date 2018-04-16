@@ -66,7 +66,7 @@ public class PersonDetail extends UiPart<Stage> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        //@author SoilChang
+        //@@author SoilChang
         income.setText(person.getIncome().toString());
         age.setText(person.getAge().toString());
         email.setText(person.getEmail().value);
@@ -89,7 +89,7 @@ public class PersonDetail extends UiPart<Stage> {
             isNewClient.setVisible(true);
             expectedSpending.setVisible(true);
         }
-        //@author
+        //@@author 
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
         setSubmitListener();
     }

@@ -1,0 +1,2 @@
+collate from ./src/main to ./collated/functional
+collate from ./src/test to ./collated/test

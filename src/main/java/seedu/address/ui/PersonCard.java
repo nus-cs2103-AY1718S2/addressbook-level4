@@ -45,10 +45,10 @@ public class PersonCard extends UiPart<Region> {
     private Label email;
     @FXML
     private FlowPane tags;
-    //@author SoilChang
+    //@@author SoilChang
     @FXML
     private Label income;
-    //@author
+    //@@author 
     @FXML
     private Label actualSpending;
     @FXML
@@ -69,7 +69,7 @@ public class PersonCard extends UiPart<Region> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        //@author SoilChang
+        //@@author SoilChang
         income.setText("Income: " + person.getIncome().toString());
         age.setText("Age: " + person.getAge().toString() + " years old");
         email.setText(person.getEmail().value);
@@ -98,7 +98,7 @@ public class PersonCard extends UiPart<Region> {
         }
 
 
-        //@author
+        //@@author 
         person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
 
         setDoubleClickEvent();

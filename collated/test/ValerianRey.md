@@ -1,5 +1,5 @@
 # ValerianRey
-###### \java\seedu\address\model\policy\CoverageTest.java
+###### /java/seedu/address/model/policy/CoverageTest.java
 ``` java
 
 package seedu.address.model.policy;
@@ -41,7 +41,7 @@ public class CoverageTest {
     }
 }
 ```
-###### \java\seedu\address\model\policy\DateTest.java
+###### /java/seedu/address/model/policy/DateTest.java
 ``` java
 
 package seedu.address.model.policy;
@@ -122,7 +122,7 @@ public class DateTest {
     }
 }
 ```
-###### \java\seedu\address\model\policy\PolicyTest.java
+###### /java/seedu/address/model/policy/PolicyTest.java
 ``` java
 
 package seedu.address.model.policy;
@@ -187,7 +187,7 @@ public class PolicyTest {
     }
 }
 ```
-###### \java\seedu\address\model\policy\PriceTest.java
+###### /java/seedu/address/model/policy/PriceTest.java
 ``` java
 
 package seedu.address.model.policy;

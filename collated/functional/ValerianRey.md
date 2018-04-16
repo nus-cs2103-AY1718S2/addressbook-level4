@@ -1,140 +1,273 @@
 # ValerianRey
-###### \java\seedu\address\logic\commands\AddPolicyCommand.java
+###### /java/seedu/address/logic/parser/EditPolicyCommandParser.java
 ``` java
 
-package seedu.address.logic.commands;
+package seedu.address.logic.parser;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
+import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 import java.util.Optional;
 
-import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.policy.Policy;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.EditPolicyCommand;
+import seedu.address.logic.commands.EditPolicyCommand.EditPolicyDescriptor;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.policy.Coverage;
+import seedu.address.model.policy.Issue;
 
 /**
- * Add a policy to an existing person in the Smart Insurance Collection.
+ * Parses input arguments and creates a new EditPolicyCommand object
  */
-public class AddPolicyCommand extends UndoableCommand {
-
-    public static final String COMMAND_WORD = "add_policy";
-
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a policy to the person identified "
-            + "by the index number used in the last person listing.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + PREFIX_BEGINNING_DATE + "BEGINNING (DD/MM/YYYY) "
-            + PREFIX_EXPIRATION_DATE + "EXPIRATION (DD/MM/YYYY) "
-            + PREFIX_PRICE + "MONTHLY_PRICE "
-            + "[" + PREFIX_ISSUE + "ISSUE]...\n"
-            + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_BEGINNING_DATE + "03/04/2018 "
-            + PREFIX_EXPIRATION_DATE + "02/04/2020 "
-            + PREFIX_PRICE + "150 "
-            + PREFIX_ISSUE + "theft "
-            + PREFIX_ISSUE + "car_damage";
-
-    public static final String MESSAGE_POLICY_ADDED_SUCCESS = "Added policy";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Smart Insurance Collection.";
-    public static final String MESSAGE_ALREADY_ENROLLED = "This person already applied to a policy "
-            + "(use edit_policy instead).";
-
-    private final Index index;
-    private final Policy policy;
-
-    private Person personToEnroll;
-    private Person editedPerson;
+public class EditPolicyCommandParser implements Parser<EditPolicyCommand> {
 
     /**
-     * @param index  of the person in the filtered person list to edit
-     * @param policy policy to add to the person
+     * Parses the given {@code String} of arguments in the context of the EditPolicyCommand
+     * and returns an EditPolicyCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
      */
-    public AddPolicyCommand(Index index, Policy policy) {
-        requireNonNull(index);
-        requireNonNull(policy);
+    public EditPolicyCommand parse(String args) throws ParseException {
+        requireNonNull(args);
 
-        this.index = index;
-        this.policy = policy;
-    }
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_BEGINNING_DATE,
+                PREFIX_EXPIRATION_DATE, PREFIX_PRICE, PREFIX_ISSUE);
 
-    @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+        Index index;
         try {
-            model.updatePerson(personToEnroll, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_POLICY_ADDED_SUCCESS));
-    }
-
-    @Override
-    protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
-
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPolicyCommand.MESSAGE_USAGE));
         }
 
-        personToEnroll = lastShownList.get(index.getZeroBased());
-
-        if (personToEnroll.getPolicy().isPresent()) {
-            throw new CommandException(MESSAGE_ALREADY_ENROLLED);
+        EditPolicyDescriptor editPolicyDescriptor = new EditPolicyDescriptor();
+        try {
+            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE))
+                    .ifPresent(editPolicyDescriptor::setBeginning);
+            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE))
+                    .ifPresent(editPolicyDescriptor::setExpiration);
+            ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).ifPresent(editPolicyDescriptor::setPrice);
+            Optional<List<Issue>> optIssues = parseIssuesForEditPolicy(argMultimap.getAllValues(PREFIX_ISSUE));
+            if (optIssues.isPresent()) {
+                editPolicyDescriptor.setCoverage(new Coverage(optIssues.get()));
+            }
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
         }
 
-        editedPerson = createPersonWithPolicy(personToEnroll, policy);
+        if (!editPolicyDescriptor.isAnyFieldEdited()) {
+            throw new ParseException(EditPolicyCommand.MESSAGE_NOT_EDITED);
+        }
+
+        return new EditPolicyCommand(index, editPolicyDescriptor);
     }
 
     /**
-     * Creates and returns a {@code Person} with the specified {@code policyToAdd}
+     * Parses {@code List<String> issues} into a {@code List<Issue>} if {@code issues} is non-empty.
+     * If {@code issues} contain only one element which is an empty string, it will be parsed into a
+     * {@code List<Issue>} containing zero tags.
      */
-    private static Person createPersonWithPolicy(Person personToEdit, Policy policyToAdd) {
-        assert personToEdit != null;
+    private Optional<List<Issue>> parseIssuesForEditPolicy(List<String> issues) throws IllegalValueException {
+        assert issues != null;
 
-        return new Person(personToEdit.getName(),
-                personToEdit.getPhone(),
-                personToEdit.getEmail(),
-                personToEdit.getAddress(),
-                personToEdit.getTags(),
-                //@author SoilChang
-                personToEdit.getIncome(),
-                //@author
-                personToEdit.getActualSpending(),
-                personToEdit.getExpectedSpending(),
-                personToEdit.getAge(),
-                Optional.of(policyToAdd));
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
+        if (issues.isEmpty()) {
+            return Optional.empty();
         }
-
-        if (!(other instanceof AddPolicyCommand)) {
-            return false;
-        }
-
-        AddPolicyCommand e = (AddPolicyCommand) other;
-        return index.equals(e.index)
-                && policy.equals(e.policy)
-                && Objects.equals(personToEnroll, e.personToEnroll);
+        List<String> issueList = issues.size() == 1 && issues.contains("") ? Collections.emptyList() : issues;
+        return Optional.of(ParserUtil.parseIssues(issueList));
     }
 }
 ```
-###### \java\seedu\address\logic\commands\EditPolicyCommand.java
+###### /java/seedu/address/logic/parser/ParserUtil.java
+``` java
+
+    /**
+     * Parses a {@code String value} into a {@code Price}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code price} is invalid.
+     */
+    public static Price parsePrice(String price) throws IllegalValueException {
+        requireNonNull(price);
+        Double trimmedPrice = Double.parseDouble(price.trim());
+        if (!Price.isValidPrice(trimmedPrice)) {
+            throw new IllegalValueException(Price.PRICE_CONSTRAINTS);
+        }
+        return new Price(trimmedPrice);
+    }
+
+    /**
+     * Parses a {@code Optional<String> price} into an {@code Optional<Price>} if {@code price} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Price> parsePrice(Optional<String> price) throws IllegalValueException {
+        requireNonNull(price);
+        return price.isPresent() ? Optional.of(parsePrice(price.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String date} into a {@code Date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static Date parsePolicyDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedInput = date.trim();
+
+        String[] parts = trimmedInput.split("/");
+        if (parts.length != 3) {
+            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
+        }
+
+        Integer day = Integer.parseInt(parts[0]);
+        Integer monthValue = Integer.parseInt(parts[1]) - 1;    //month value is from 0 to 11 if the input is valid
+        Integer year = Integer.parseInt(parts[2]);
+
+        if (monthValue < 0 || monthValue >= Month.values().length) {
+            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
+        }
+
+        Month month = Month.values()[monthValue];
+
+        if (!Date.isValidDate(day, month, year)) {
+            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
+        }
+
+        return new Date(day, month, year);
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parsePolicyDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parsePolicyDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String issue} into a {@code Issue}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code issue} is invalid.
+     */
+    public static Issue parseIssue(String issue) throws IllegalValueException {
+        requireNonNull(issue);
+        String trimmedUppercaseIssue = issue.trim().toUpperCase();
+
+        if (!Issue.isValidIssueName(trimmedUppercaseIssue)) {
+            throw new IllegalValueException(Issue.ISSUE_CONSTRAINTS);
+        }
+
+        return Issue.valueOf(trimmedUppercaseIssue);
+    }
+
+    /**
+     * Parses {@code Collection<String> issues} into a {@code List<Issue>}.
+     */
+    public static List<Issue> parseIssues(Collection<String> issues) throws IllegalValueException {
+        requireNonNull(issues);
+        final List<Issue> issuesList = new ArrayList<>();
+        for (String issueName : issues) {
+            issuesList.add(parseIssue(issueName));
+        }
+        return issuesList;
+    }
+
+```
+###### /java/seedu/address/logic/parser/AddPolicyCommandParser.java
+``` java
+
+package seedu.address.logic.parser;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+
+import java.util.stream.Stream;
+
+import seedu.address.commons.core.index.Index;
+import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.AddPolicyCommand;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.policy.Coverage;
+import seedu.address.model.policy.Date;
+import seedu.address.model.policy.Policy;
+import seedu.address.model.policy.Price;
+
+/**
+ * Parses input arguments and creates a new AddPolicyCommand object
+ */
+public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
+
+    /**
+     * Parses the given {@code String} of arguments in the context of the AddPolicyCommand
+     * and returns an AddPolicyCommand object for execution.
+     *
+     * @throws ParseException if the user input does not conform the expected format
+     */
+    public AddPolicyCommand parse(String args) throws ParseException {
+        requireNonNull(args);
+
+        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_BEGINNING_DATE,
+                PREFIX_EXPIRATION_DATE, PREFIX_PRICE, PREFIX_ISSUE);
+
+        Index index;
+        try {
+            index = ParserUtil.parseIndex(argMultimap.getPreamble());
+        } catch (IllegalValueException ive) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
+        }
+
+        if (!arePrefixesPresent(argMultimap, PREFIX_BEGINNING_DATE, PREFIX_EXPIRATION_DATE, PREFIX_PRICE)) {
+            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
+        }
+
+        Price price;
+        Date beginningDate;
+        Date expirationDate;
+        Coverage coverage;
+
+        try {
+            price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
+            beginningDate = ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE).get());
+            expirationDate = ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE).get());
+            coverage = new Coverage(ParserUtil.parseIssues(argMultimap.getAllValues(PREFIX_ISSUE)));
+        } catch (IllegalValueException ive) {
+            throw new ParseException(ive.getMessage(), ive);
+        }
+
+        if (!Policy.isValidDuration(beginningDate, expirationDate)) {
+            throw new ParseException(Policy.DURATION_CONSTRAINTS);
+        }
+
+        Policy policy = new Policy(price, coverage, beginningDate, expirationDate);
+
+        return new AddPolicyCommand(index, policy);
+    }
+
+    /**
+     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
+     * {@code ArgumentMultimap}.
+     */
+    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
+        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
+    }
+
+}
+```
+###### /java/seedu/address/logic/commands/EditPolicyCommand.java
 ``` java
 
 package seedu.address.logic.commands;
@@ -164,7 +297,7 @@ import seedu.address.model.policy.Policy;
 import seedu.address.model.policy.Price;
 
 /**
- * Edits an existing policy of a person in the Smart Insurance Collection.
+ * Edits an existing policy of a person in the address book.
  */
 public class EditPolicyCommand extends UndoableCommand {
 
@@ -183,7 +316,7 @@ public class EditPolicyCommand extends UndoableCommand {
             + PREFIX_ISSUE + "car_damage";
 
     public static final String MESSAGE_POLICY_EDITED_SUCCESS = "Edited policy";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the Smart Insurance Collection.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_PERSON_NOT_ENROLLED = "This person did not enroll in a policy yet "
             + "(use add_policy to make it happen)";
@@ -368,274 +501,221 @@ public class EditPolicyCommand extends UndoableCommand {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddPolicyCommandParser.java
+###### /java/seedu/address/logic/commands/RemovePolicyCommand.java
 ``` java
 
-package seedu.address.logic.parser;
+package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
-import java.util.stream.Stream;
-
-import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.AddPolicyCommand;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.policy.Coverage;
-import seedu.address.model.policy.Date;
-import seedu.address.model.policy.Policy;
-import seedu.address.model.policy.Price;
-
-/**
- * Parses input arguments and creates a new AddPolicyCommand object
- */
-public class AddPolicyCommandParser implements Parser<AddPolicyCommand> {
-
-    /**
-     * Parses the given {@code String} of arguments in the context of the AddPolicyCommand
-     * and returns an AddPolicyCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public AddPolicyCommand parse(String args) throws ParseException {
-        requireNonNull(args);
-
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_BEGINNING_DATE,
-                PREFIX_EXPIRATION_DATE, PREFIX_PRICE, PREFIX_ISSUE);
-
-        Index index;
-        try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
-        }
-
-        if (!arePrefixesPresent(argMultimap, PREFIX_BEGINNING_DATE, PREFIX_EXPIRATION_DATE, PREFIX_PRICE)) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddPolicyCommand.MESSAGE_USAGE));
-        }
-
-        Price price;
-        Date beginningDate;
-        Date expirationDate;
-        Coverage coverage;
-
-        try {
-            price = ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE).get());
-            beginningDate = ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE).get());
-            expirationDate = ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE).get());
-            coverage = new Coverage(ParserUtil.parseIssues(argMultimap.getAllValues(PREFIX_ISSUE)));
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
-        }
-
-        if (!Policy.isValidDuration(beginningDate, expirationDate)) {
-            throw new ParseException(Policy.DURATION_CONSTRAINTS);
-        }
-
-        Policy policy = new Policy(price, coverage, beginningDate, expirationDate);
-
-        return new AddPolicyCommand(index, policy);
-    }
-
-    /**
-     * Returns true if none of the prefixes contains empty {@code Optional} values in the given
-     * {@code ArgumentMultimap}.
-     */
-    private static boolean arePrefixesPresent(ArgumentMultimap argumentMultimap, Prefix... prefixes) {
-        return Stream.of(prefixes).allMatch(prefix -> argumentMultimap.getValue(prefix).isPresent());
-    }
-
-}
-```
-###### \java\seedu\address\logic\parser\EditPolicyCommandParser.java
-``` java
-
-package seedu.address.logic.parser;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
-
-import java.util.Collections;
 import java.util.List;
+import java.util.Objects;
 import java.util.Optional;
 
+import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
-import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.logic.commands.EditPolicyCommand;
-import seedu.address.logic.commands.EditPolicyCommand.EditPolicyDescriptor;
-import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.policy.Coverage;
-import seedu.address.model.policy.Issue;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
 
 /**
- * Parses input arguments and creates a new EditPolicyCommand object
+ * Removes a policy from a person identified using it's last displayed index from the address book.
  */
-public class EditPolicyCommandParser implements Parser<EditPolicyCommand> {
+public class RemovePolicyCommand extends UndoableCommand {
 
-    /**
-     * Parses the given {@code String} of arguments in the context of the EditPolicyCommand
-     * and returns an EditPolicyCommand object for execution.
-     *
-     * @throws ParseException if the user input does not conform the expected format
-     */
-    public EditPolicyCommand parse(String args) throws ParseException {
-        requireNonNull(args);
+    public static final String COMMAND_WORD = "remove_policy";
 
-        ArgumentMultimap argMultimap = ArgumentTokenizer.tokenize(args, PREFIX_BEGINNING_DATE,
-                PREFIX_EXPIRATION_DATE, PREFIX_PRICE, PREFIX_ISSUE);
+    public static final String MESSAGE_USAGE = COMMAND_WORD
+            + ": Removes the policy of the person identified by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer)\n"
+            + "Example: " + COMMAND_WORD + " 1";
 
-        Index index;
+    public static final String MESSAGE_POLICY_REMOVED_SUCCESS = "Removed Policy";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_NOT_ENROLLED = "This person did not apply to any policy yet.";
+
+    private final Index targetIndex;
+
+    private Person target;
+    private Person editedPerson;
+
+    public RemovePolicyCommand(Index targetIndex) {
+        this.targetIndex = targetIndex;
+    }
+
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(target);
+
         try {
-            index = ParserUtil.parseIndex(argMultimap.getPreamble());
-        } catch (IllegalValueException ive) {
-            throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, EditPolicyCommand.MESSAGE_USAGE));
+            model.updatePerson(target, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
+        }
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_POLICY_REMOVED_SUCCESS));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (targetIndex.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
         }
 
-        EditPolicyDescriptor editPolicyDescriptor = new EditPolicyDescriptor();
-        try {
-            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_BEGINNING_DATE))
-                    .ifPresent(editPolicyDescriptor::setBeginning);
-            ParserUtil.parsePolicyDate(argMultimap.getValue(PREFIX_EXPIRATION_DATE))
-                    .ifPresent(editPolicyDescriptor::setExpiration);
-            ParserUtil.parsePrice(argMultimap.getValue(PREFIX_PRICE)).ifPresent(editPolicyDescriptor::setPrice);
-            Optional<List<Issue>> optIssues = parseIssuesForEditPolicy(argMultimap.getAllValues(PREFIX_ISSUE));
-            if (optIssues.isPresent()) {
-                editPolicyDescriptor.setCoverage(new Coverage(optIssues.get()));
-            }
-        } catch (IllegalValueException ive) {
-            throw new ParseException(ive.getMessage(), ive);
+        target = lastShownList.get(targetIndex.getZeroBased());
+
+        if (!target.getPolicy().isPresent()) {
+            throw new CommandException(MESSAGE_NOT_ENROLLED);
         }
 
-        if (!editPolicyDescriptor.isAnyFieldEdited()) {
-            throw new ParseException(EditPolicyCommand.MESSAGE_NOT_EDITED);
-        }
-
-        return new EditPolicyCommand(index, editPolicyDescriptor);
+        editedPerson = personWithoutPolicy(target);
     }
 
     /**
-     * Parses {@code List<String> issues} into a {@code List<Issue>} if {@code issues} is non-empty.
-     * If {@code issues} contain only one element which is an empty string, it will be parsed into a
-     * {@code List<Issue>} containing zero tags.
+     * Creates and returns a {@code Person} with the policy removed
      */
-    private Optional<List<Issue>> parseIssuesForEditPolicy(List<String> issues) throws IllegalValueException {
-        assert issues != null;
+    private static Person personWithoutPolicy(Person personToEdit) {
+        assert personToEdit != null;
 
-        if (issues.isEmpty()) {
-            return Optional.empty();
-        }
-        List<String> issueList = issues.size() == 1 && issues.contains("") ? Collections.emptyList() : issues;
-        return Optional.of(ParserUtil.parseIssues(issueList));
+        return new Person(personToEdit.getName(),
+                personToEdit.getPhone(),
+                personToEdit.getEmail(),
+                personToEdit.getAddress(),
+                personToEdit.getTags(),
+                personToEdit.getIncome(),
+                personToEdit.getActualSpending(),
+                personToEdit.getExpectedSpending(),
+                personToEdit.getAge(),
+                Optional.empty());
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this // short circuit if same object
+                || (other instanceof RemovePolicyCommand // instanceof handles nulls
+                && this.targetIndex.equals(((RemovePolicyCommand) other).targetIndex) // state check
+                && Objects.equals(this.target, ((RemovePolicyCommand) other).target));
     }
 }
 ```
-###### \java\seedu\address\logic\parser\ParserUtil.java
+###### /java/seedu/address/logic/commands/AddPolicyCommand.java
 ``` java
+
+package seedu.address.logic.commands;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_BEGINNING_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPIRATION_DATE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_ISSUE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRICE;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
+
+import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.index.Index;
+import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicatePersonException;
+import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.policy.Policy;
+
+/**
+ * Add a policy to an existing person in the Smart Insurance Collection.
+ */
+public class AddPolicyCommand extends UndoableCommand {
+
+    public static final String COMMAND_WORD = "add_policy";
+
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Adds a policy to the person identified "
+            + "by the index number used in the last person listing.\n"
+            + "Parameters: INDEX (must be a positive integer) "
+            + PREFIX_BEGINNING_DATE + "BEGINNING (DD/MM/YYYY) "
+            + PREFIX_EXPIRATION_DATE + "EXPIRATION (DD/MM/YYYY) "
+            + PREFIX_PRICE + "MONTHLY_PRICE "
+            + "[" + PREFIX_ISSUE + "ISSUE]...\n"
+            + "Example: " + COMMAND_WORD + " 1 "
+            + PREFIX_BEGINNING_DATE + "03/04/2018 "
+            + PREFIX_EXPIRATION_DATE + "02/04/2020 "
+            + PREFIX_PRICE + "150 "
+            + PREFIX_ISSUE + "theft "
+            + PREFIX_ISSUE + "car_damage";
+
+    public static final String MESSAGE_POLICY_ADDED_SUCCESS = "Added policy";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_ALREADY_ENROLLED = "This person already applied to a policy "
+            + "(use edit_policy instead).";
+
+    private final Index index;
+    private final Policy policy;
+
+    private Person personToEnroll;
+    private Person editedPerson;
+
     /**
-     * Parses a {@code String value} into a {@code Price}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code price} is invalid.
+     * @param index  of the person in the filtered person list to edit
+     * @param policy policy to add to the person
      */
-    public static Price parsePrice(String price) throws IllegalValueException {
-        requireNonNull(price);
-        Double trimmedPrice = Double.parseDouble(price.trim());
-        if (!Price.isValidPrice(trimmedPrice)) {
-            throw new IllegalValueException(Price.PRICE_CONSTRAINTS);
+    public AddPolicyCommand(Index index, Policy policy) {
+        requireNonNull(index);
+        requireNonNull(policy);
+
+        this.index = index;
+        this.policy = policy;
+    }
+
+    @Override
+    public CommandResult executeUndoableCommand() throws CommandException {
+        try {
+            model.updatePerson(personToEnroll, editedPerson);
+        } catch (DuplicatePersonException dpe) {
+            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
+        } catch (PersonNotFoundException pnfe) {
+            throw new AssertionError("The target person cannot be missing");
         }
-        return new Price(trimmedPrice);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        return new CommandResult(String.format(MESSAGE_POLICY_ADDED_SUCCESS));
+    }
+
+    @Override
+    protected void preprocessUndoableCommand() throws CommandException {
+        List<Person> lastShownList = model.getFilteredPersonList();
+
+        if (index.getZeroBased() >= lastShownList.size()) {
+            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
+        }
+
+        personToEnroll = lastShownList.get(index.getZeroBased());
+
+        if (personToEnroll.getPolicy().isPresent()) {
+            throw new CommandException(MESSAGE_ALREADY_ENROLLED);
+        }
+
+        editedPerson = createPersonWithPolicy(personToEnroll, policy);
     }
 
     /**
-     * Parses a {@code Optional<String> price} into an {@code Optional<Price>} if {@code price} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * Creates and returns a {@code Person} with the specified {@code policyToAdd}
      */
-    public static Optional<Price> parsePrice(Optional<String> price) throws IllegalValueException {
-        requireNonNull(price);
-        return price.isPresent() ? Optional.of(parsePrice(price.get())) : Optional.empty();
-    }
+    private static Person createPersonWithPolicy(Person personToEdit, Policy policyToAdd) {
+        assert personToEdit != null;
 
-    /**
-     * Parses a {@code String date} into a {@code Date}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code date} is invalid.
-     */
-    public static Date parsePolicyDate(String date) throws  IllegalValueException {
-        requireNonNull(date);
-        String trimmedInput = date.trim();
-
-        String[] parts = trimmedInput.split("/");
-        if (parts.length != 3) {
-            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
-        }
-
-        Integer day = Integer.parseInt(parts[0]);
-        Integer monthValue = Integer.parseInt(parts[1]) - 1;    //month value is from 0 to 11 if the input is valid
-        Integer year = Integer.parseInt(parts[2]);
-
-        if (monthValue < 0 || monthValue >= Month.values().length) {
-            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
-        }
-
-        Month month = Month.values()[monthValue];
-
-        if (!Date.isValidDate(day, month, year)) {
-            throw new IllegalValueException(Date.DATE_CONSTRAINTS);
-        }
-
-        return new Date(day, month, year);
-    }
-
-    /**
-     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
-     * See header comment of this class regarding the use of {@code Optional} parameters.
-     */
-    public static Optional<Date> parsePolicyDate(Optional<String> date) throws IllegalValueException {
-        requireNonNull(date);
-        return date.isPresent() ? Optional.of(parsePolicyDate(date.get())) : Optional.empty();
-    }
-
-    /**
-     * Parses a {@code String issue} into a {@code Issue}.
-     * Leading and trailing whitespaces will be trimmed.
-     *
-     * @throws IllegalValueException if the given {@code issue} is invalid.
-     */
-    public static Issue parseIssue(String issue) throws IllegalValueException {
-        requireNonNull(issue);
-        String trimmedUppercaseIssue = issue.trim().toUpperCase();
-
-        if (!Issue.isValidIssueName(trimmedUppercaseIssue)) {
-            throw new IllegalValueException(Issue.ISSUE_CONSTRAINTS);
-        }
-
-        return Issue.valueOf(trimmedUppercaseIssue);
-    }
-
-    /**
-     * Parses {@code Collection<String> issues} into a {@code List<Issue>}.
-     */
-    public static List<Issue> parseIssues(Collection<String> issues) throws IllegalValueException {
-        requireNonNull(issues);
-        final List<Issue> issuesList = new ArrayList<>();
-        for (String issueName : issues) {
-            issuesList.add(parseIssue(issueName));
-        }
-        return issuesList;
-    }
-
+        return new Person(personToEdit.getName(),
+                personToEdit.getPhone(),
+                personToEdit.getEmail(),
+                personToEdit.getAddress(),
+                personToEdit.getTags(),
 ```
-###### \java\seedu\address\model\policy\Coverage.java
+###### /java/seedu/address/model/policy/Coverage.java
 ``` java
 
 package seedu.address.model.policy;
@@ -679,7 +759,93 @@ public class Coverage {
 
 }
 ```
-###### \java\seedu\address\model\policy\Date.java
+###### /java/seedu/address/model/policy/Price.java
+``` java
+
+package seedu.address.model.policy;
+
+import static java.util.Objects.requireNonNull;
+import static seedu.address.commons.util.AppUtil.checkArgument;
+
+
+/**
+ * Represents a Policy's monthly price.
+ * Guarantees: immutable; is valid as declared in {@link #isValidPrice(Double)}
+ */
+public class Price {
+    public static final String PRICE_CONSTRAINTS =
+            "Prices must not be negative.";
+
+    public final Double price;
+
+    public Price(Double price) {
+        requireNonNull(price);
+        checkArgument(isValidPrice(price), PRICE_CONSTRAINTS);
+        this.price = price;
+    }
+
+    public static boolean isValidPrice(Double price) {
+        return price >= 0;
+    }
+
+    @Override
+    public String toString() {
+        return price.toString();
+    }
+
+    @Override
+    public boolean equals(Object other) {
+        return other == this
+                || (other instanceof Price
+                && this.price == ((Price) other).price);
+    }
+
+}
+```
+###### /java/seedu/address/model/policy/Issue.java
+``` java
+
+package seedu.address.model.policy;
+
+/**
+ * Represents the Issues that could happen to a Person.
+ * Note that this list is not complete and has to be extended.
+ */
+public enum Issue {
+    CAR_ACCIDENT, CAR_THEFT, CAR_DAMAGE, CAR_MALFUNCTION, ILLNESS,
+    DISABILITY, LIFE, HOUSE_DAMAGE, HOUSE_FIRE, HOUSE_BURGLARY, THEFT;
+
+    public static final String ISSUE_CONSTRAINTS = buildIssueConstraint();
+
+    /**
+     * Builds the Issue constraints String and returns it
+     */
+    private static String buildIssueConstraint() {
+        StringBuilder sb = new StringBuilder();
+        sb.append("Issue must be a correct issue. List of correct issues (can also be lower case) : ");
+        for (Issue i : Issue.values()) {
+            sb.append(i.toString()).append("   ");
+        }
+        return sb.toString();
+    }
+
+    /**
+     *
+     * @param issueName the name of the issue
+     * @return the Issue assiociated to the specified String
+     */
+    public static boolean isValidIssueName (String issueName) {
+        boolean match = false;
+        for (Issue i : Issue.values()) {
+            if (i.toString().equals(issueName)) {
+                match = true;
+            }
+        }
+        return match;
+    }
+}
+```
+###### /java/seedu/address/model/policy/Date.java
 ``` java
 
 package seedu.address.model.policy;
@@ -781,50 +947,7 @@ public class Date implements Comparable<Date> {
 
 }
 ```
-###### \java\seedu\address\model\policy\Issue.java
-``` java
-
-package seedu.address.model.policy;
-
-/**
- * Represents the Issues that could happen to a Person.
- * Note that this list is not complete and has to be extended.
- */
-public enum Issue {
-    CAR_ACCIDENT, CAR_THEFT, CAR_DAMAGE, CAR_MALFUNCTION, ILLNESS,
-    DISABILITY, LIFE, HOUSE_DAMAGE, HOUSE_FIRE, HOUSE_BURGLARY, THEFT;
-
-    public static final String ISSUE_CONSTRAINTS = buildIssueConstraint();
-
-    /**
-     * Builds the Issue constraints String and returns it
-     */
-    private static String buildIssueConstraint() {
-        StringBuilder sb = new StringBuilder();
-        sb.append("Issue must be a correct issue. List of correct issues (can also be lower case) : ");
-        for (Issue i : Issue.values()) {
-            sb.append(i.toString()).append("   ");
-        }
-        return sb.toString();
-    }
-
-    /**
-     *
-     * @param issueName the name of the issue
-     * @return the Issue assiociated to the specified String
-     */
-    public static boolean isValidIssueName (String issueName) {
-        boolean match = false;
-        for (Issue i : Issue.values()) {
-            if (i.toString().equals(issueName)) {
-                match = true;
-            }
-        }
-        return match;
-    }
-}
-```
-###### \java\seedu\address\model\policy\Month.java
+###### /java/seedu/address/model/policy/Month.java
 ``` java
 
 package seedu.address.model.policy;
@@ -850,7 +973,7 @@ public enum Month {
     }
 }
 ```
-###### \java\seedu\address\model\policy\Policy.java
+###### /java/seedu/address/model/policy/Policy.java
 ``` java
 
 package seedu.address.model.policy;
@@ -949,49 +1072,6 @@ public class Policy {
         }
 
         return builder.toString();
-    }
-
-}
-```
-###### \java\seedu\address\model\policy\Price.java
-``` java
-
-package seedu.address.model.policy;
-
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.AppUtil.checkArgument;
-
-
-/**
- * Represents a Policy's monthly price.
- * Guarantees: immutable; is valid as declared in {@link #isValidPrice(Double)}
- */
-public class Price {
-    public static final String PRICE_CONSTRAINTS =
-            "Prices must not be negative.";
-
-    public final Double price;
-
-    public Price(Double price) {
-        requireNonNull(price);
-        checkArgument(isValidPrice(price), PRICE_CONSTRAINTS);
-        this.price = price;
-    }
-
-    public static boolean isValidPrice(Double price) {
-        return price >= 0;
-    }
-
-    @Override
-    public String toString() {
-        return price.toString();
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        return other == this
-                || (other instanceof Price
-                && this.price == ((Price) other).price);
     }
 
 }

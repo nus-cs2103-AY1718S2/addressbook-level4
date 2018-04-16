@@ -162,82 +162,6 @@ public class PersonDetail extends UiPart<Stage> {
         name.setText(person.getName().fullName);
         phone.setText(person.getPhone().value);
         address.setText(person.getAddress().value);
-        //@author SoilChang
-        income.setText(person.getIncome().toString());
-        age.setText(person.getAge().toString());
-        email.setText(person.getEmail().value);
-        actualSpending.setText(person.getActualSpending().toString());
-        expectedSpending.setText(person.getExpectedSpending().toString());
-        isNewClient.setText("New Client");
-        if (person.getPolicy().isPresent()) {
-            policy.setText(person.getPolicy().get().toString());
-        } else {
-            policy.setText("");
-        }
-
-        if (person.getActualSpending().value != 0.0) {
-            // the client has actual income
-            actualSpending.setVisible(true);
-            isNewClient.setVisible(false);
-            expectedSpending.setVisible(false);
-        } else {
-            actualSpending.setVisible(false);
-            isNewClient.setVisible(true);
-            expectedSpending.setVisible(true);
-        }
-        //@author
-        person.getTags().forEach(tag -> tags.getChildren().add(new Label(tag.tagName)));
-        setSubmitListener();
-    }
-
-    /**
-     * Equals function.
-     */
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        } else if (!(other instanceof PersonDetail)) {
-            return false;
-        } else {
-            PersonDetail detail = (PersonDetail) other;
-            return this.id.getText().equals(detail.id.getText()) && this.person.equals(detail.person);
-        }
-    }
-
-    /**
-     * Shows the help window.
-     * @throws IllegalStateException
-     * <ul>
-     *     <li>
-     *         if this method is called on a thread other than the JavaFX Application Thread.
-     *     </li>
-     *     <li>
-     *         if this method is called during animation or layout processing.
-     *     </li>
-     *     <li>
-     *         if this method is called on the primary stage.
-     *     </li>
-     *     <li>
-     *         if {@code dialogStage} is already showing.
-     *     </li>
-     * </ul>
-     */
-    public void show() {
-        getRoot().show();
-    }
-
-    private void setSubmitListener() {
-        submit.setOnAction(new EventHandler<ActionEvent>() {
-            @Override public void handle(ActionEvent e) {
-                String args = index + " " + PREFIX_PHONE + phone.getText() + " "
-                        + PREFIX_EMAIL + email.getText() + " " + PREFIX_ADDRESS + address.getText() + " "
-                        + PREFIX_INCOME + income.getText().replaceAll("[^\\d.]+", "") + " "
-                        + PREFIX_AGE + age.getText();
-                raise(new PersonEditEvent(args));
-            }
-        });
-    }
-}
 ```
 ###### /java/seedu/address/ui/MainWindow.java
 ``` java
@@ -423,8 +347,8 @@ public class ShowCommand extends Command {
 ###### /java/seedu/address/model/person/Age.java
 ``` java
 /**
- * Represents a Person's age in the Smart Insurance Collection.
- * Represents a Person's value in the Smart Insurance Collection
+ * Represents a Person's age in the address book.
+ * Represents a Person's value in the address book
  * Guarantees: immutable; is valid as declare in {@link #isValidAge(Integer)}}
  */
 public class Age {

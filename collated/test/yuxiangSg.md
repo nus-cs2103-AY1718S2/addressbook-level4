@@ -1,5 +1,46 @@
 # yuxiangSg
-###### \java\seedu\address\logic\commands\AddAppointmentCommandTest.java
+###### /java/seedu/address/logic/parser/AddAppointmentParserTest.java
+``` java
+public class AddAppointmentParserTest {
+    private AddAppointmentCommandParser parser = new AddAppointmentCommandParser();
+
+    @Test
+    public void parse_allFieldsPresent_success() {
+        AppointmentEntry expectedEntry = TypicalAppointmentEntires.MEET_JOHN;
+
+        // whitespace only preamble
+        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TITLE_DESC_MEET_JOHN + START_DATE_DESC
+                + END_DATE_DESC, new AddAppointmentCommand(expectedEntry));
+    }
+
+    @Test
+    public void parse_fieldMissing_failure() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAppointmentCommand.MESSAGE_USAGE);
+
+        // missing name prefix
+        assertParseFailure(parser, START_DATE_DESC + END_DATE_DESC, expectedMessage);
+
+        // missing start interval prefix
+        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + END_DATE_DESC, expectedMessage);
+
+        // missing end interval prefix
+        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + START_DATE_DESC,
+                expectedMessage);
+
+        // all prefixes missing
+        assertParseFailure(parser, VALID_TITLE_JOHN + VALID_DATE_TIME_START + VALID_DATE_TIME_END,
+                expectedMessage);
+    }
+
+    @Test
+    public void parse_invalidDateFormat_failure() {
+
+        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + INVALID_DATE_TIME_START_DESC
+                + INVALID_DATE_TIME_END_DESC, AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
+    }
+}
+```
+###### /java/seedu/address/logic/commands/AddAppointmentCommandTest.java
 ``` java
 public class AddAppointmentCommandTest {
     @Rule
@@ -136,54 +177,8 @@ public class AddAppointmentCommandTest {
             fail("This method should not be called.");
         }
 
-        @Override
-        public CalendarSource getCalendar() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        public ArrayList<ArrayList<Double>> getPersonAttrMatrix() {
-            return null;
-        }
-    }
-
-    /**
-     * A Model stub that always throw a DuplicateAppointmentException when trying to add an appointment.
-     */
-    private class ModelStubThrowingDuplicateAppointmentException extends AddAppointmentCommandTest.ModelStub {
-
-        @Override
-        public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
-            throw new DuplicateAppointmentException();
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-    /**
-     * A Model stub that always accept the appointment being added.
-     */
-    private class ModelStubAcceptingAppointmentAdded extends AddAppointmentCommandTest.ModelStub {
-        final ArrayList<AppointmentEntry> appointmentAdded = new ArrayList<>();
-
-        @Override
-        public void addAppointment(AppointmentEntry appointmentEntry) throws DuplicateAppointmentException {
-            requireNonNull(appointmentEntry);
-            appointmentAdded.add(appointmentEntry);
-        }
-
-        @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
-        }
-    }
-
-}
 ```
-###### \java\seedu\address\logic\commands\EditAppointmentCommandTest.java
+###### /java/seedu/address/logic/commands/EditAppointmentCommandTest.java
 ``` java
 public class EditAppointmentCommandTest {
     private Model model = new ModelManager(getTypicalAppointmentAddressBook(), new UserPrefs());
@@ -243,7 +238,7 @@ public class EditAppointmentCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\commands\RemoveAppointmentCommandTest.java
+###### /java/seedu/address/logic/commands/RemoveAppointmentCommandTest.java
 ``` java
 public class RemoveAppointmentCommandTest {
     private Model model = new ModelManager(getTypicalAppointmentAddressBook(), new UserPrefs());
@@ -281,48 +276,7 @@ public class RemoveAppointmentCommandTest {
     }
 }
 ```
-###### \java\seedu\address\logic\parser\AddAppointmentParserTest.java
-``` java
-public class AddAppointmentParserTest {
-    private AddAppointmentCommandParser parser = new AddAppointmentCommandParser();
-
-    @Test
-    public void parse_allFieldsPresent_success() {
-        AppointmentEntry expectedEntry = TypicalAppointmentEntires.MEET_JOHN;
-
-        // whitespace only preamble
-        assertParseSuccess(parser, PREAMBLE_WHITESPACE + TITLE_DESC_MEET_JOHN + START_DATE_DESC
-                + END_DATE_DESC, new AddAppointmentCommand(expectedEntry));
-    }
-
-    @Test
-    public void parse_fieldMissing_failure() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, AddAppointmentCommand.MESSAGE_USAGE);
-
-        // missing name prefix
-        assertParseFailure(parser, START_DATE_DESC + END_DATE_DESC, expectedMessage);
-
-        // missing start interval prefix
-        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + END_DATE_DESC, expectedMessage);
-
-        // missing end interval prefix
-        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + START_DATE_DESC,
-                expectedMessage);
-
-        // all prefixes missing
-        assertParseFailure(parser, VALID_TITLE_JOHN + VALID_DATE_TIME_START + VALID_DATE_TIME_END,
-                expectedMessage);
-    }
-
-    @Test
-    public void parse_invalidDateFormat_failure() {
-
-        assertParseFailure(parser, TITLE_DESC_MEET_JOHN + INVALID_DATE_TIME_START_DESC
-                + INVALID_DATE_TIME_END_DESC, AppointmentEntry.MESSAGE_DATE_TIME_CONSTRAINTS);
-    }
-}
-```
-###### \java\seedu\address\storage\XmlAdaptedAppointmentEntryTest.java
+###### /java/seedu/address/storage/XmlAdaptedAppointmentEntryTest.java
 ``` java
 public class XmlAdaptedAppointmentEntryTest {
 
@@ -333,7 +287,7 @@ public class XmlAdaptedAppointmentEntryTest {
     }
 }
 ```
-###### \java\seedu\address\storage\XmlAddressBookStorageTest.java
+###### /java/seedu/address/storage/XmlAddressBookStorageTest.java
 ``` java
     @Test
     public void readAddressBook_invalidAppointmentAddressBook_throwDataConversionException() throws Exception {
@@ -341,7 +295,77 @@ public class XmlAdaptedAppointmentEntryTest {
         readAddressBook("invalidAppointmentAddressBook.fxml");
     }
 ```
-###### \java\seedu\address\testutil\AppointmentBuilder.java
+###### /java/seedu/address/testutil/TypicalAppointmentEntires.java
+``` java
+/**
+ * A utility class containing a list of {@code AppointmentEntry} objects to be used in tests.
+ */
+public class TypicalAppointmentEntires {
+
+    public static final AppointmentEntry MEET_JOHN = new AppointmentBuilder().withTitle("meet john").build();
+
+    public static final AppointmentEntry MEET_JAMES = new AppointmentBuilder().withTitle("meet james").build();
+
+    public static final AppointmentEntry MEET_JOSH = new AppointmentBuilder().withTitle("meet josh").build();
+
+    public static final String KEYWORD_MATCHING_YX = "yx"; // A keyword that matches YX
+
+    private TypicalAppointmentEntires(){
+
+    } // prevents instantiation
+
+    /**
+     * Returns an {@code AddressBook} with all the typical persons.
+     */
+    public static AddressBook getTypicalAppointmentAddressBook() {
+        AddressBook ab = new AddressBook();
+        for (AppointmentEntry entry : getTypicalAppointmentEntries()) {
+            try {
+                ab.addAppointment(entry);
+            } catch (DuplicateAppointmentException e) {
+                throw new AssertionError("not possible");
+            }
+        }
+        return ab;
+    }
+
+    public static ArrayList<AppointmentEntry> getTypicalAppointmentEntries() {
+        return new ArrayList<>(Arrays.asList(MEET_JAMES, MEET_JOHN, MEET_JOSH));
+    }
+
+
+
+
+}
+```
+###### /java/seedu/address/testutil/AppointmentUtil.java
+``` java
+/**
+ * A utility class for AppointmentEntry.
+ */
+public class AppointmentUtil {
+    /**
+     * Returns an addAppointment command string for adding the {@code entry}.
+     */
+    public static String getAddAppointmentCommand(AppointmentEntry entry) {
+        return AddAppointmentCommand.COMMAND_WORD + " " + geEntryDetails(entry);
+    }
+
+    /**
+     * Returns the part of command string for the given {@code entry}'s details.
+     */
+    public static String geEntryDetails(AppointmentEntry entry) {
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION);
+        StringBuilder sb = new StringBuilder();
+        sb.append(PREFIX_NAME + entry.getGivenTitle() + " ");
+        sb.append(PREFIX_START_INTERVAL + entry.getStartDateTime().format(formatter) + " ");
+        sb.append(PREFIX_END_INTERVAL  + entry.getEndDateTime().format(formatter));
+
+        return sb.toString();
+    }
+}
+```
+###### /java/seedu/address/testutil/AppointmentBuilder.java
 ``` java
 /**
  * A utility class to help with building AppointmentEntry objects.
@@ -393,76 +417,6 @@ public class AppointmentBuilder {
     public AppointmentEntry build() {
         return new AppointmentEntry(givenTitle, interval);
     }
-
-
-}
-```
-###### \java\seedu\address\testutil\AppointmentUtil.java
-``` java
-/**
- * A utility class for AppointmentEntry.
- */
-public class AppointmentUtil {
-    /**
-     * Returns an addAppointment command string for adding the {@code entry}.
-     */
-    public static String getAddAppointmentCommand(AppointmentEntry entry) {
-        return AddAppointmentCommand.COMMAND_WORD + " " + geEntryDetails(entry);
-    }
-
-    /**
-     * Returns the part of command string for the given {@code entry}'s details.
-     */
-    public static String geEntryDetails(AppointmentEntry entry) {
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern(AppointmentEntry.DATE_TIME_VALIDATION);
-        StringBuilder sb = new StringBuilder();
-        sb.append(PREFIX_NAME + entry.getGivenTitle() + " ");
-        sb.append(PREFIX_START_INTERVAL + entry.getStartDateTime().format(formatter) + " ");
-        sb.append(PREFIX_END_INTERVAL  + entry.getEndDateTime().format(formatter));
-
-        return sb.toString();
-    }
-}
-```
-###### \java\seedu\address\testutil\TypicalAppointmentEntires.java
-``` java
-/**
- * A utility class containing a list of {@code AppointmentEntry} objects to be used in tests.
- */
-public class TypicalAppointmentEntires {
-
-    public static final AppointmentEntry MEET_JOHN = new AppointmentBuilder().withTitle("meet john").build();
-
-    public static final AppointmentEntry MEET_JAMES = new AppointmentBuilder().withTitle("meet james").build();
-
-    public static final AppointmentEntry MEET_JOSH = new AppointmentBuilder().withTitle("meet josh").build();
-
-    public static final String KEYWORD_MATCHING_YX = "yx"; // A keyword that matches YX
-
-    private TypicalAppointmentEntires(){
-
-    } // prevents instantiation
-
-    /**
-     * Returns an {@code AddressBook} with all the typical persons.
-     */
-    public static AddressBook getTypicalAppointmentAddressBook() {
-        AddressBook ab = new AddressBook();
-        for (AppointmentEntry entry : getTypicalAppointmentEntries()) {
-            try {
-                ab.addAppointment(entry);
-            } catch (DuplicateAppointmentException e) {
-                throw new AssertionError("not possible");
-            }
-        }
-        return ab;
-    }
-
-    public static ArrayList<AppointmentEntry> getTypicalAppointmentEntries() {
-        return new ArrayList<>(Arrays.asList(MEET_JAMES, MEET_JOHN, MEET_JOSH));
-    }
-
-
 
 
 }

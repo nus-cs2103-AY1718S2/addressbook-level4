@@ -247,7 +247,7 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
-    //@author SoilChang
+    //@@author SoilChang
 
     /**
      * Parses a {@code String value} into an {@code value}.
@@ -312,7 +312,7 @@ public class ParserUtil {
         return actualSpending.isPresent()
                 ? Optional.of(parseActualSpending(actualSpending.get())) : Optional.empty();
     }
-    //@author
+    //@@author 
 
 
     /**

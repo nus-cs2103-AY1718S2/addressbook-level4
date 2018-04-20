@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Ma Hongqiang - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Ma Hongqiang - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-hr"><a class="link" href="#project-hr">PROJECT: HR+</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HR+ is a free recruiting and talent management software designed for campus recruiters to achieve hiring success. HR+ streamlines the recruiting process, increases the productivity and helps make more consistent and informed hiring decisions for hiring managers. HR+ contains around 10KLoC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: added <strong>the ability to filter persons</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: allows the user to filter persons according to fields like cGPA, expected graduation year, rating and interview date.</p>
+</li>
+<li>
+<p>Justification: This feature boosts the productivity significantly because a user can easily find out people in mind. For example, the user can <code>filter y/2019</code> to obtain all students graduating next year.</p>
+</li>
+<li>
+<p>Highlights: This enhancement builds upon the fields a person has. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required multiple new predicate and utility classes.</p>
+</li>
+<li>
+<p>Credits:</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a status field and status command that updates the field</p>
+</li>
+<li>
+<p>Adds a expected graduation year field and modify add and edit command to accommodate such changes</p>
+</li>
+<li>
+<p>Adds a resume field</p>
+</li>
+<li>
+<p>Copies resume and profile pic to <code>data</code> folder for easy migration purpose</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/mhq199657.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/mhq199657.md">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Wrote a larger sample data for sample HR+ content as well as for testing (Pull request <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/83">#83</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated User Guide and Developer Guide</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Some parts of the resume feature I added was adopted by several other class mates (<a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/66">#66</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="update-applicant-s-status-code-status-code-since-v1-3"><a class="link" href="#update-applicant-s-status-code-status-code-since-v1-3">Update applicant&#8217;s status: <code>status</code> [Since v1.3]</a></h3>
+<div class="paragraph">
+<p>Updates the status of an applicant.<br>
+Format: <code>status INDEX STATUS_INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index refers to the index number shown in the last person listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive number</strong> 1,2,3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Status index are</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>New</p>
+</li>
+<li>
+<p>1st round</p>
+</li>
+<li>
+<p>2nd round</p>
+</li>
+<li>
+<p>Rejected</p>
+</li>
+<li>
+<p>Waitlist</p>
+</li>
+<li>
+<p>Offered</p>
+</li>
+<li>
+<p>Accepted</p>
+</li>
+<li>
+<p>Withdrawn</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filter-persons-by-multiple-fields-code-filter-code-code-since-v1-3-code"><a class="link" href="#filter-persons-by-multiple-fields-code-filter-code-code-since-v1-3-code">Filter persons by multiple fields: <code>filter</code> <code>[since v1.3]</code></a></h3>
+<div class="paragraph">
+<p>Filters persons whose keyword is within the specified range.
+Format: <code>filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Keyword is in the format of (1) <code>KEYWORD</code> or (2) <code>KEYWORD1 - KEYWORD2</code> or (3) a combination of (1) and (2) <code>KEYWORD1, KEYWORD2 - KEYWORD3, KEYWORD4</code>.</p>
+</li>
+<li>
+<p>Each keyword must be valid with respect to the preceding prefix.</p>
+</li>
+<li>
+<p><code>filter</code> command will only be filtering based on the current view of the person list, instead of all the persons.</p>
+</li>
+<li>
+<p>Within each prefix, <code>filter</code> command will match all entries that satisfies at least one keyword range. You can think of an <code>OR</code> operator within the prefix.</p>
+</li>
+<li>
+<p><code>filter</code> command will match all persons that only matches every prefixes. You can think of an <code>AND</code> operator between all prefixes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>filter y/2020</code><br>
+Returns all persons whose graudation year that is exactly 2020</p>
+</li>
+<li>
+<p>`filter y/2019-2021' r/4.3, 4.5-5.0
+Returns all persons whose graduation year between 2019 and 2021, and whose rating is either 4.3, or between 4.5 to 5.0</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
+<code>Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]</code></p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="filter-command"><a class="link" href="#filter-command">Filter Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="paragraph">
+<p>Filter Command is supported by an <code>FilterCommand</code> class. It supports the advanced filtering of multiple fields such as <code>ExpectedGraduationYear</code>. Filter commands can supports both filtering by keyword and filtering by range, if the field has natural ordering.</p>
+</div>
+<div class="paragraph">
+<p>Filter command currently only filters <code>ExpectedGraduationYear</code> but will support more fields in the subsequent weeks.</p>
+</div>
+<div class="paragraph">
+<p>Filter command interact with <code>Model</code> and <code>UI</code> in the following way:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>FilterCommandParser</code> parses the user inputs into a wholesome <code>Predicate&lt;Person&gt;</code>.</p>
+</li>
+<li>
+<p>This predicate will be used to instantiate the <code>FilterCommand</code></p>
+</li>
+<li>
+<p>Upon execution of the filter command, the UI will be updated by imposing the new predicate to the <code>FilteredList</code> in the <code>ModelManager</code> class.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Below is the sequence diagram of filter command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FilterCommandSequenceDiagram.png" alt="FilterCommandSequenceDiagram" width="800">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-implementation-of-code-filtercommandparser-code"><a class="link" href="#aspect-implementation-of-code-filtercommandparser-code">Aspect: Implementation of <code>FilterCommandParser</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: <code>FilterCommandParser</code> breaks down user input according to prefix and pass to different methods in <code>FilterUtil</code> to generate respective <code>Predicate&lt;Person&gt;</code>, after which it unions these <code>Predicate</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This appoach breaks down the parsing process into multiple classes and each class is responsible for single duty. This makes debugging easier.</p>
+</li>
+<li>
+<p>Cons: New developers may find it hard to understand the design pattern.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Puts actual parsing in <code>FilterCommandParser</code> class.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It reduces number of classes used and is easier for new developers to understand.</p>
+</li>
+<li>
+<p>Cons: It violates single responsibility principle. <code>FilterCommandParser</code> will have too many distinct functionalities such as</p>
+<div class="ulist">
+<ul>
+<li>
+<p>breaking down user input by prefix</p>
+</li>
+<li>
+<p>breaking down user&#8217;s predicate for each prefix</p>
+</li>
+<li>
+<p>creating <code>FilterRange</code> objects to record down each range specified in the predicate</p>
+</li>
+<li>
+<p>creating <code>Predicate</code> from <code>FilterRange</code></p>
+</li>
+<li>
+<p>unioning these <code>Predicate</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-implementation-of-range-tracker-code-filterrange-e-code"><a class="link" href="#aspect-implementation-of-range-tracker-code-filterrange-e-code">Aspect: Implementation of range tracker: <code>FilterRange&lt;E&gt;</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: All user input will either be in form of <code>ToBeFilteredClassPrefix/singletonValue, lowerRange - higherRange</code>. Both singleton value and range will be parsed into a <code>FilterRange&lt;ToBeFilteredClass&gt;</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It ensures the user input is valid since <code>FilterRange&lt;E&gt;</code> can call <code>E.isValid()</code> to check. This ensures the integrity of <code>Predicate</code> later.</p>
+</li>
+<li>
+<p>Cons: New developers may find it hard to understand the design pattern.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 (current choice)</strong>: All parsing of singleton or ranged values will be handled by some methods in <code>FilterUtil</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: New developers will find it easier to understand the design pattern.</p>
+</li>
+<li>
+<p>Cons: It will be messy to handle both singletona dn ranged values in one method. It also adds the complexity of <code>FilterUtil</code> class.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-code-filtercommand-code-behaviour"><a class="link" href="#aspect-code-filtercommand-code-behaviour">Aspect: <code>FilterCommand</code> behaviour</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Predicates in the same field will be ORed together. Predicates in the different field will be ANDed together.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: For the same field, the user can have more flexibility in selecting the desired values. For the different field, the predicates are in logical conjunction to make the filter more restrictive. This follows the natural way of human thinking.</p>
+</li>
+<li>
+<p>Cons: The developers may be confused about the OR/AND rule at first.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Everything will be ORed together.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is an easier logical pattern for developers to understand.</p>
+</li>
+<li>
+<p>Cons: It is user unfriendly. The only way for user to filter the persons who is in Computer Science, graduating in 2020 and has a GPA greater than 4.6 is to use 3 filter commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-11 12:38:52 SGT
+</div>
+</div>
+</body>
+</html>

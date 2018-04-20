@@ -15,16 +15,20 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
+import seedu.address.model.Imdb;
 import seedu.address.model.Model;
-import seedu.address.model.ReadOnlyAddressBook;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.testutil.PersonBuilder;
+import seedu.address.model.ReadOnlyImdb;
+import seedu.address.model.appointment.AppointmentEntry;
+import seedu.address.model.appointment.DateTime;
+import seedu.address.model.patient.Patient;
+import seedu.address.model.patient.exceptions.DuplicatePatientException;
+import seedu.address.model.patient.exceptions.PatientNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.testutil.PatientBuilder;
 
 public class AddCommandTest {
 
@@ -40,29 +44,29 @@ public class AddCommandTest {
     @Test
     public void execute_personAcceptedByModel_addSuccessful() throws Exception {
         ModelStubAcceptingPersonAdded modelStub = new ModelStubAcceptingPersonAdded();
-        Person validPerson = new PersonBuilder().build();
+        Patient validPatient = new PatientBuilder().build();
 
-        CommandResult commandResult = getAddCommandForPerson(validPerson, modelStub).execute();
+        CommandResult commandResult = getAddCommandForPerson(validPatient, modelStub).execute();
 
-        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPerson), commandResult.feedbackToUser);
-        assertEquals(Arrays.asList(validPerson), modelStub.personsAdded);
+        assertEquals(String.format(AddCommand.MESSAGE_SUCCESS, validPatient), commandResult.feedbackToUser);
+        assertEquals(Arrays.asList(validPatient), modelStub.personsAdded);
     }
 
     @Test
     public void execute_duplicatePerson_throwsCommandException() throws Exception {
         ModelStub modelStub = new ModelStubThrowingDuplicatePersonException();
-        Person validPerson = new PersonBuilder().build();
+        Patient validPatient = new PatientBuilder().build();
 
         thrown.expect(CommandException.class);
         thrown.expectMessage(AddCommand.MESSAGE_DUPLICATE_PERSON);
 
-        getAddCommandForPerson(validPerson, modelStub).execute();
+        getAddCommandForPerson(validPatient, modelStub).execute();
     }
 
     @Test
-    public void equals() {
-        Person alice = new PersonBuilder().withName("Alice").build();
-        Person bob = new PersonBuilder().withName("Bob").build();
+    public void equals() throws Exception {
+        Patient alice = new PatientBuilder().withName("Alice").build();
+        Patient bob = new PatientBuilder().withName("Bob").build();
         AddCommand addAliceCommand = new AddCommand(alice);
         AddCommand addBobCommand = new AddCommand(bob);
 
@@ -79,15 +83,15 @@ public class AddCommandTest {
         // null -> returns false
         assertFalse(addAliceCommand.equals(null));
 
-        // different person -> returns false
+        // different patient -> returns false
         assertFalse(addAliceCommand.equals(addBobCommand));
     }
 
     /**
-     * Generates a new AddCommand with the details of the given person.
+     * Generates a new AddCommand with the details of the given patient.
      */
-    private AddCommand getAddCommandForPerson(Person person, Model model) {
-        AddCommand command = new AddCommand(person);
+    private AddCommand getAddCommandForPerson(Patient patient, Model model) {
+        AddCommand command = new AddCommand(patient);
         command.setData(model, new CommandHistory(), new UndoRedoStack());
         return command;
     }
@@ -97,74 +101,149 @@ public class AddCommandTest {
      */
     private class ModelStub implements Model {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
+        public void addPerson(Patient patient) throws DuplicatePatientException {
             fail("This method should not be called.");
         }
 
         @Override
-        public void resetData(ReadOnlyAddressBook newData) {
+        public void deleteTag(Tag tag) {
             fail("This method should not be called.");
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void deletePerson(Person target) throws PersonNotFoundException {
+        public void resetData(ReadOnlyImdb newData) {
             fail("This method should not be called.");
         }
 
         @Override
-        public void updatePerson(Person target, Person editedPerson)
-                throws DuplicatePersonException {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public ObservableList<Person> getFilteredPersonList() {
+        public ReadOnlyImdb getImdb() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
+        public void deletePerson(Patient target) throws PatientNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void updatePerson(Patient target, Patient editedPatient)
+                throws DuplicatePatientException {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Patient> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Patient> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Patient addPatientToQueue(Index targetIndex) throws DuplicatePatientException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Patient removePatientFromQueue() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public Patient removePatientFromQueueByIndex(Index targetIndex) throws PatientNotFoundException {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<Patient> getVisitingQueue() {
+            fail("This method should not be called.");
+            return null;    //update later
+        }
+
+        @Override
+        public Patient getPatientFromList(Predicate<Patient> predicate) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public ObservableList<AppointmentEntry> getAppointmentEntryList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void addPatientAppointment(Patient patient, DateTime dateTime) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public ObservableList<Integer> getPatientListIndexInQueue() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public int getPatientSourceIndexInList(int targetIndex) {
+            fail("This method should not be called.");
+            return 0;
+        }
+
+        @Override
+        public boolean checkIfPatientInQueue(Patient targetPatient) {
+            fail("This method should not be called.");
+            return false;
+        }
+
+        @Override
+        public Patient getPatientFromListByIndex(Index targetIndex) {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void deletePatientAppointment(Patient patient, DateTime targetAppointmentDateTime) {
             fail("This method should not be called.");
         }
     }
 
     /**
-     * A Model stub that always throw a DuplicatePersonException when trying to add a person.
+     * A Model stub that always throw a DuplicatePatientException when trying to add a patient.
      */
     private class ModelStubThrowingDuplicatePersonException extends ModelStub {
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            throw new DuplicatePersonException();
+        public void addPerson(Patient patient) throws DuplicatePatientException {
+            throw new DuplicatePatientException();
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyImdb getImdb() {
+            return new Imdb();
         }
     }
 
     /**
-     * A Model stub that always accept the person being added.
+     * A Model stub that always accept the patient being added.
      */
     private class ModelStubAcceptingPersonAdded extends ModelStub {
-        final ArrayList<Person> personsAdded = new ArrayList<>();
+        final ArrayList<Patient> personsAdded = new ArrayList<>();
 
         @Override
-        public void addPerson(Person person) throws DuplicatePersonException {
-            requireNonNull(person);
-            personsAdded.add(person);
+        public void addPerson(Patient patient) throws DuplicatePatientException {
+            requireNonNull(patient);
+            personsAdded.add(patient);
         }
 
         @Override
-        public ReadOnlyAddressBook getAddressBook() {
-            return new AddressBook();
+        public ReadOnlyImdb getImdb() {
+            return new Imdb();
         }
     }
 

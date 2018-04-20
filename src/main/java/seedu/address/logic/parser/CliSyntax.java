@@ -7,9 +7,18 @@ public class CliSyntax {
 
     /* Prefix definitions */
     public static final Prefix PREFIX_NAME = new Prefix("n/");
+    public static final Prefix PREFIX_NRIC = new Prefix("ic/");
     public static final Prefix PREFIX_PHONE = new Prefix("p/");
     public static final Prefix PREFIX_EMAIL = new Prefix("e/");
     public static final Prefix PREFIX_ADDRESS = new Prefix("a/");
-    public static final Prefix PREFIX_TAG = new Prefix("t/");
+    public static final Prefix PREFIX_DOB = new Prefix("dob/");
+    public static final Prefix PREFIX_BLOODTYPE = new Prefix("b/");
+    public static final Prefix PREFIX_TAG = new Prefix("c/");
+    public static final Prefix PREFIX_REMARK = new Prefix("r/");
+    public static final Prefix PREFIX_DATE = new Prefix("d/");
+    public static final Prefix PREFIX_SYMPTOM = new Prefix("s/");
+    public static final Prefix PREFIX_ILLNESS = new Prefix("i/");
+    public static final Prefix PREFIX_TREATMENT = new Prefix("t/");
+    public static final Prefix PREFIX_INDEX = new Prefix("in/");
 
 }

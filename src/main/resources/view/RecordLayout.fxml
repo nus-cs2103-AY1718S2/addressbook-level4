@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Text?>
+
+<!-- //@@author nhs-work -->
+
+<!-- TODO: set a more appropriate initial size -->
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="746.0" prefWidth="1061.0" xmlns="http://javafx.com/javafx/8.0.141" xmlns:fx="http://javafx.com/fxml/1" fx:controller="seedu.address.logic.record.RecordController">
+   <children>
+      <GridPane layoutX="16.0" layoutY="19.0" prefHeight="671.0" prefWidth="1010.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="133.3333740234375" minWidth="10.0" prefWidth="89.3333740234375" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="1.7976931348623157E308" minWidth="10.0" prefWidth="185.6666259765625" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="120.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="210.0" minHeight="10.0" prefHeight="210.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Date:" />
+            <TextArea fx:id="dateField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Symptoms:" GridPane.rowIndex="1" />
+            <TextArea fx:id="symptomField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Illness:" GridPane.rowIndex="2" />
+            <TextArea fx:id="illnessField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Text strokeType="OUTSIDE" strokeWidth="0.0" text="Treatment:" GridPane.rowIndex="3" />
+            <TextArea fx:id="treatmentField" onKeyPressed="#handleKeyAction" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+         </children>
+      </GridPane>
+      <Button fx:id="saveButton" layoutX="973.0" layoutY="701.0" mnemonicParsing="false" onAction="#handleButtonAction" text="Save" textAlignment="CENTER" />
+      <Text fx:id="messageText" fill="#cc1919" layoutX="350.0" layoutY="722.0" strokeType="OUTSIDE" strokeWidth="0.0" wrappingWidth="361.0" />
+   </children>
+</AnchorPane>

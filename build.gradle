@@ -41,6 +41,8 @@ jacocoTestReport {
 dependencies {
     String testFxVersion = '4.0.7-alpha'
 
+    compile files('lib/itextpdf-5.5.9.jar')
+
     compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
     compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.11'
     compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
@@ -54,10 +56,13 @@ dependencies {
         exclude group: 'junit', module: 'junit'
     }
     testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    compile 'com.calendarfx:calendar:8.4.2'
+    compile 'com.calendarfx:view:8.4.2'
+    compile 'com.calendarfx:recurrence:8.4.2'
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "imdb.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }

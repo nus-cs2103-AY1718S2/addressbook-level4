@@ -12,7 +12,7 @@ import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
-import seedu.address.commons.events.model.AddressBookChangedEvent;
+import seedu.address.commons.events.model.ImdbChangedEvent;
 
 /**
  * A ui for the status bar that is displayed at the footer of the application.
@@ -21,6 +21,7 @@ public class StatusBarFooter extends UiPart<Region> {
 
     public static final String SYNC_STATUS_INITIAL = "Not updated yet in this session";
     public static final String SYNC_STATUS_UPDATED = "Last Updated: %s";
+    public static final String RECORD_NUMBER_STATUS = "%d patient(s) in total";
 
     /**
      * Used to generate time stamps.
@@ -41,11 +42,21 @@ public class StatusBarFooter extends UiPart<Region> {
     @FXML
     private StatusBar saveLocationStatus;
 
+    @FXML
+    private StatusBar recordNumberStatus;
 
     public StatusBarFooter(String saveLocation) {
         super(FXML);
         setSyncStatus(SYNC_STATUS_INITIAL);
         setSaveLocation("./" + saveLocation);
+        registerAsAnEventHandler(this);
+    }
+
+    public StatusBarFooter(String saveLocation, int recordNumber) {
+        super(FXML);
+        setSyncStatus(SYNC_STATUS_INITIAL);
+        setSaveLocation("./" + saveLocation);
+        setRecordNumberStatus(recordNumber);
         registerAsAnEventHandler(this);
     }
 
@@ -71,11 +82,16 @@ public class StatusBarFooter extends UiPart<Region> {
         Platform.runLater(() -> this.syncStatus.setText(status));
     }
 
+    private void setRecordNumberStatus(int recordNumber) {
+        Platform.runLater(() -> this.recordNumberStatus.setText(String.format(RECORD_NUMBER_STATUS, recordNumber)));
+    }
+
     @Subscribe
-    public void handleAddressBookChangedEvent(AddressBookChangedEvent abce) {
+    public void handleAddressBookChangedEvent(ImdbChangedEvent abce) {
         long now = clock.millis();
         String lastUpdated = new Date(now).toString();
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
+        setRecordNumberStatus(abce.data.getPersonList().size());
     }
 }

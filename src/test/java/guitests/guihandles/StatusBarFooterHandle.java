@@ -12,18 +12,22 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
 
     private static final String SYNC_STATUS_ID = "#syncStatus";
     private static final String SAVE_LOCATION_STATUS_ID = "#saveLocationStatus";
+    private static final String SAVE_RECORD_NUMBER_ID = "#recordNumberStatus";
 
     private final StatusBar syncStatusNode;
     private final StatusBar saveLocationNode;
+    private final StatusBar recordNumberNode;
 
     private String lastRememberedSyncStatus;
     private String lastRememberedSaveLocation;
+    private String lastRememberedRecordNumber;
 
     public StatusBarFooterHandle(Node statusBarFooterNode) {
         super(statusBarFooterNode);
 
         this.syncStatusNode = getChildNode(SYNC_STATUS_ID);
         this.saveLocationNode = getChildNode(SAVE_LOCATION_STATUS_ID);
+        this.recordNumberNode = getChildNode(SAVE_RECORD_NUMBER_ID);
     }
 
     /**
@@ -38,6 +42,13 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public String getSaveLocation() {
         return saveLocationNode.getText();
+    }
+
+    /**
+     * Returns the text of the record number portion of the status bar.
+     */
+    public String getRecordNumber() {
+        return recordNumberNode.getText();
     }
 
     /**
@@ -68,5 +79,20 @@ public class StatusBarFooterHandle extends NodeHandle<Node> {
      */
     public boolean isSaveLocationChanged() {
         return !lastRememberedSaveLocation.equals(getSaveLocation());
+    }
+
+    /**
+     * Remembers the number of record portion of the status bar
+     */
+    public void rememberRecordNumber() {
+        lastRememberedRecordNumber = getRecordNumber();
+    }
+
+    /**
+     * Returns true if the current record number is different from the value remembered by the most recent
+     * {@code rememberRecordNumber()} call.
+     */
+    public boolean isRecordNumberChanged() {
+        return !lastRememberedRecordNumber.equals(getRecordNumber());
     }
 }

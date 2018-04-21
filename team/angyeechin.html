@@ -1,0 +1,923 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Ang Yee Chin - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Ang Yee Chin - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-hr"><a class="link" href="#project-hr">PROJECT: HR+</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately 33 kLOC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: Revamps the user interface and Improve user experience
+(Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/50">#50</a>)</p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: New user interface featured a clean theme which allows user to find the necessary information easily, thus improve in performance and productivity of the user.</p>
+</li>
+<li>
+<p>Justification: This enhancement is important because the user interface gives the first impression to the users.</p>
+</li>
+<li>
+<p>Highlights: This enhancement involves rewriting almost all FXML and Java code of the UI part. It also required changing and updating of <code>Logic</code> and <code>Model</code> in order to provide a seamless smooth interaction and animation between each components. Some parts and logic have to be rewritten such as the window event function (minimize, maximize, drag, resize) because it is not come out of the box for borderless window. Besides that, it is also responsive to adapt with different screen sizes.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added <code>interview</code> command and field that allows the user to schedule an interview date of students using natural language parser from Natty library
+(Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/21">#21</a>)</p>
+</li>
+<li>
+<p>Enhanced the <code>add</code> and <code>edit</code> command to include a new field <code>ProfileImage</code> and <code>Comment</code>, and wrote relevant tests (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/66">#66</a>)</p>
+</li>
+<li>
+<p>Added <code>show</code> command to allow the displaying of panels using command instead of [TAB] button. (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/114">#114</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/Ang-YC.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/Ang-YC.md">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Functionality</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>PDF Viewer are added with custom implementation (only the renderer are used from the PDFBox library) (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/80">#80</a>)</p>
+</li>
+<li>
+<p>Most of the panels in the interface are animated to provide a better interaction and transition. (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/114">#114</a>)</p>
+</li>
+<li>
+<p>Radar chart is implemented using Canvas for better visualizing of the rating. (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/114">#114</a>)</p>
+</li>
+<li>
+<p>Floating real-time parsing panel are added to show parsed result before executing. (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/114">#114</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Performance</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Multi-threading are used to prevent from thread blocking when loading the resume / PDF files (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/80">#80</a>)</p>
+</li>
+<li>
+<p>Profile Image are loaded only once, resized and cropped into correct dimension. (Pull requests <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/114">#114</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="showing-a-specific-panel-code-show-code-code-since-v1-5-code"><a class="link" href="#showing-a-specific-panel-code-show-code-code-since-v1-5-code">Showing a specific panel: <code>show</code> <code>[since v1.5]</code></a></h3>
+<div class="paragraph">
+<p>Showing a specific panel for more information about the currently selected person in HR+.<br>
+Format: <code>show PANEL</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure person are selected using <code>select</code> command before executing this command</p>
+</li>
+<li>
+<p>When resume is requested, it will only shows when it is available.</p>
+</li>
+<li>
+<p><code>PANEL</code> must be either 'info' or 'resume', case sensitive</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>show info</code><br>
+shows the info panel of the currently selected person.</p>
+</li>
+<li>
+<p><code>show resume</code><br>
+shows the resume panel of the currently selected person.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="scheduling-an-interview-for-a-person-code-interview-code-code-since-v1-2-code"><a class="link" href="#scheduling-an-interview-for-a-person-code-interview-code-code-since-v1-2-code">Scheduling an interview for a person : <code>interview</code> <code>[since v1.2]</code></a></h3>
+<div class="paragraph">
+<p>Schedules interview of an existing person in HR+.<br>
+Format: <code>interview INDEX DATE_TIME_EXPRESSION</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>interview command schedules interview for the person at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, etc.</p>
+</li>
+<li>
+<p><code>DATE_TIME_EXPRESSION</code> is the natural language date and time expression in English</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>interview 1 next Friday at 3pm</code><br>
+schedules the interview of the 1st person to be next Friday at 3pm.</p>
+</li>
+<li>
+<p><code>interview 2 Mar 14 2pm</code><br>
+schedules the interview of the 2nd person to be 14 March at 2pm.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Due to the complexity of languages, the parser might fail to interpret what you mean.
+Always refer to the real time floating panel below the command box (As shown in figure below) to check what is the parsed result.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/float_panel.png" alt="float panel" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>Below are some of the syntax for natural date and time parser:</p>
+</div>
+<div class="sect3">
+<h4 id="formal-dates"><a class="link" href="#formal-dates">Formal dates</a></h4>
+<div class="paragraph">
+<p>Formal dates are represented using integers, separated by character - or /.</p>
+</div>
+<div class="sect4">
+<h5 id="format"><a class="link" href="#format">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>YYYY-MM-DD</code></p>
+</li>
+<li>
+<p><code>YYYY/MM/DD</code></p>
+</li>
+<li>
+<p><code>MM-DD-YYYY</code></p>
+</li>
+<li>
+<p><code>MM/DD/YYYY</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DD</code> represent the day of a month</p>
+</li>
+<li>
+<p><code>MM</code> represent the month of a year</p>
+</li>
+<li>
+<p><code>YYYY</code> represent the year</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example"><a class="link" href="#example">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2018-04-21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2018/04/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">04-21-2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">04/21/2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="relaxed-dates"><a class="link" href="#relaxed-dates">Relaxed dates</a></h4>
+<div class="paragraph">
+<p>Relaxed dates are those in which the information are provided as words instead of integers.</p>
+</div>
+<div class="sect4">
+<h5 id="example-2"><a class="link" href="#example-2">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21st April 2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sat, 21 Apr 2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apr 21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04, the year when the command executed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="relative-dates"><a class="link" href="#relative-dates">Relative dates</a></h4>
+<div class="paragraph">
+<p>Relative dates are those that are relative to the current date.
+Do note that a week starts on Sunday and ends on the next Saturday.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>YYYY-MM-DD</code></p>
+</li>
+<li>
+<p><code>YYYY/MM/DD</code></p>
+</li>
+<li>
+<p><code>MM-DD-YYYY</code></p>
+</li>
+<li>
+<p><code>MM/DD/YYYY</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DD</code> represent the day of a month</p>
+</li>
+<li>
+<p><code>MM</code> represent the month of a year</p>
+</li>
+<li>
+<p><code>YYYY</code> represent the year</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="format-2"><a class="link" href="#format-2">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>next <code>DAY</code></p>
+</li>
+<li>
+<p>last <code>DAY</code></p>
+</li>
+<li>
+<p><code>NUMBER</code> days from now</p>
+</li>
+<li>
+<p><code>NUMBER</code> weeks ago</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DAY</code> represent the day of the week (Monday, Tuesday, &#8230;&#8203;)</p>
+</li>
+<li>
+<p><code>NUMBER</code> represent the integer or word representation of a number (1, two, 5)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example-3"><a class="link" href="#example-3">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">next thursday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Next Thursday after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">last wednesday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Wednesday before the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">today</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The day when the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tomorrow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The next day after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yesterday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The day before the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 days from now</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 days after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">three weeks ago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 weeks before the command executed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="time"><a class="link" href="#time">Time</a></h4>
+<div class="paragraph">
+<p>Time of a day.</p>
+</div>
+<div class="sect4">
+<h5 id="format-3"><a class="link" href="#format-3">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>HH</code>[<code>MM</code>][<code>SS</code>][<code>MERIDIAN</code>]</p>
+</li>
+<li>
+<p>[<code>WORD</code>]</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>HH</code> represent the hour of a day (Range of 00-23)</p>
+</li>
+<li>
+<p><code>MM</code> represent the minute of an hour (Range of 00-59), optional</p>
+</li>
+<li>
+<p><code>SS</code> represent the second of a minute (Range of 00-59), optional</p>
+</li>
+<li>
+<p><code>MERIDIAN</code> indicates the meridian (a, p, am, pm, a.m., p.m.), optional</p>
+</li>
+<li>
+<p><code>WORD</code> can be any of (afternoon: 12pm, noon: 12pm, midnight: 12am, morning: 8am, evening: 7pm)</p>
+</li>
+<li>
+<p>: can be added to separate between HH, MM and SS (such as 21:00)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example-4"><a class="link" href="#example-4">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9:00:00pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">232015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11:20:15pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21:00</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9:00:00pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8:00:00am</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7am</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:00:00am</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:30 a.m.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:30:00am</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">afternoon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12:00:00pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">midnight</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12:00:00am</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="relative-time"><a class="link" href="#relative-time">Relative Time</a></h4>
+<div class="paragraph">
+<p>Similar to relative dates, it is used to specify time that are relative to the current time.</p>
+</div>
+<div class="sect4">
+<h5 id="format-4"><a class="link" href="#format-4">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>NUMBER</code> <code>UNIT</code> ago</p>
+</li>
+<li>
+<p><code>NUMBER</code> <code>UNIT</code> from now</p>
+</li>
+<li>
+<p><code>NUMBER</code> <code>UNIT</code> later</p>
+</li>
+<li>
+<p>in <code>NUMBER</code> <code>UNIT</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NUMBER</code> represent the integer or word representation of a number (1, two, 5)</p>
+</li>
+<li>
+<p><code>UNIT</code> represent the unit of the</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example-5"><a class="link" href="#example-5">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 seconds ago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 second before the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 minutes from now</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 minutes after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 hours later</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 hours after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">in 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 minutes after the command executed</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The syntax above is just part of the accepted values, detailed grammar definition can be found on <a href="http://natty.joestelmach.com/doc.jsp">Natty&#8217;s documentation</a></p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="interview-command"><a class="link" href="#interview-command">Interview Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>interview</code> command allows Talent Acquisition Specialists to schedule an interview for candidates. The format of this command is <code>interview INDEX DATE_TIME_EXPRESSION</code>.</p>
+</div>
+<div class="paragraph">
+<p>This command make use of Natty, a natural language date parser library written in Java. When given a date expression, it will apply standard language recognition and translation techniques to produce <code>LocalDateTime</code> which represents the result.</p>
+</div>
+<div class="paragraph">
+<p>In our current implementation, the <code>interview</code> command inherits from the <code>UndoableCommand</code> class. Two components, <code>Logic</code> and <code>Model</code>, are involved in the execution of this command. The <code>Logic</code> component is responsible for parsing user inputs while the <code>Model</code> component deals with updating of filtered person list.</p>
+</div>
+<div class="paragraph">
+<p>Below is a sequence diagram that illustrates how these two components interact when the <code>interview</code> command is executed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/InterviewCommandSequenceDiagram.png" alt="InterviewCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.6.1.1 Sequence diagram to illustrate component interactions for the <code>interview</code> command</p>
+</div>
+<div class="paragraph">
+<p>As shown above, execution of the <code>interview</code> command comprises the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LogicManager</code> invokes <code>parseCommand</code> method of <code>AddressbookParser</code>, taking user inputs as arguments.</p>
+</li>
+<li>
+<p>During the <code>parseCommand</code> method call, an instance of <code>InterviewCommandParser</code> will be created when the keyword "interview" is matched. <code>InterviewCommandParser</code> then extracts the remaining user inputs and a <code>InterviewCommand</code> instance <code>i</code> will be returned provided that the format of user&#8217;s input is correct.</p>
+</li>
+<li>
+<p><code>LogicManager</code> then calls <code>executeUndoableCommand</code> of the <code>InterviewCommand</code>, <code>i</code>, instantiated in step 2. Another component, <code>Model</code>, will be involved as the <code>InterviewCommand</code> requests to update the interview date of the person.</p>
+</li>
+<li>
+<p>The <code>Model</code> component gets the filtered persons list and replaces <code>Person</code> p1 with <code>Person</code> p2 which is identical to p2 except interview date. A <code>CommandResult</code> will be generated and returned to <code>LogicManager</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-usage-of-natural-language-parser"><a class="link" href="#aspect-usage-of-natural-language-parser">Aspect: Usage of natural language parser</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use the natural language parser library by Natty to specify date and time</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Users are able to enter the date and time in more natural tone without looking at calendar (For example, schedule an interview next Friday at 3pm)</p>
+</li>
+<li>
+<p>Cons: Natural language parser doesn&#8217;t have 100% reliability due to the complexity of human language</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Use the typical DD/MM/YYYY HH:MM format to specify date and time</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Users are able to specify the date and time precisely</p>
+</li>
+<li>
+<p>Cons: Users have to be certain on the date and time, which have to refer to the calendar at the same time</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-implementation-of-scheduling-and-editing-interview-date"><a class="link" href="#aspect-implementation-of-scheduling-and-editing-interview-date">Aspect: Implementation of scheduling and editing interview date</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Implement a new command class <code>InterviewCommand</code> that supports both scheduling and editing of interview date.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Results in more customisable and modular command that can be easily modified</p>
+</li>
+<li>
+<p>Cons: Complicates the system as users need to familiarise themselves with more commands</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Extend the original <code>EditCommand</code> to allow it to schedule and modify interview date of a candidate</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly</p>
+</li>
+<li>
+<p>Cons: Requires substantial changes to <code>EditCommandParser</code> and hence harder to implement</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user-interface"><a class="link" href="#user-interface">User Interface</a></h3>
+<div class="paragraph">
+<p>Our user interface is specially designed to maximise HR+’s usability and improve user experience. We take into account minor details and ensure that data is presented clearly so that it appeals to our users.</p>
+</div>
+<div class="paragraph">
+<p>The following sections discuss the different aspects we have considered to make sure HR+ follows industry standards in user interface design. Our implementation follows <a href="https://material.io">Material Design</a> principles created by a leading technology company Google.</p>
+</div>
+<div class="sect3">
+<h4 id="responsive-design"><a class="link" href="#responsive-design">Responsive Design</a></h4>
+<div class="paragraph">
+<p>Responsive design is an approach to provide optimal viewing experience of an application regardless of the screen size of the user’s device. To incorporate responsive design into HR+, we use <code>AnchorPane</code> , a built-in JavaFX container component, to support relative positioning for all four directions (left, right, top and down) between parent and child components.</p>
+</div>
+<div class="paragraph">
+<p>All UI components have a minimum size requirement. Therefore, every container component in HR+ has a <code>minWidth</code> property.</p>
+</div>
+<div class="paragraph">
+<p>Besides <code>AnchorPane</code> , we also set a listener on the size of <code>InfoPanel</code> - a panel that displays detailed information about a student in HR+. The following code snippets illustrate how this listener is implemented:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// SPLIT_MIN_WIDTH is a constant to define when to trigger the merge</span>
+
+infoPaneWrapper.widthProperty().addListener((obs, old, newValue) -&gt; {
+    <span class="type">int</span> width = newValue.intValue();
+    <span class="keyword">if</span> (width &gt;= SPLIT_MIN_WIDTH) {
+        <span class="comment">// Split into two parts</span>
+    } <span class="keyword">else</span> {
+        <span class="comment">// Merge into one part</span>
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When a user runs HR+ on a device with a bigger screen size, the <code>InfoPanel</code> will be split into two parts. The left panel will display student’s information while the right panel shows the student’s rating scores and a View resume button. The figure below (Figure 3.7.1.1) shows an example of our interface on devices with larger screens:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/responsive_split.png" alt="responsive split" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.1.1 InfoPanel on devices with larger screens</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, if the device has a smaller screen size, the two components of <code>InfoPanel</code> will collapse into one. The student’s information is on top of the student’s ratings. <code>ScrollPane</code> in <code>InfoPanel</code> allows the user to scroll through the single merged panel. The figure below (Figure 3.7.1.2) shows our sample interface on devices with smaller screens:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/responsive_merge.png" alt="responsive merge" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.1.2 InfoPanel on devices with smaller screens</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="consistency"><a class="link" href="#consistency">Consistency</a></h4>
+<div class="paragraph">
+<p>Consistency is another principle that is important in life and in design. Not only it brings up the professional feel and look, users will feel that the app is more reliable and robust. Besides that, it is easier for users to get started as the app follows a consistent pattern.</p>
+</div>
+<div class="paragraph">
+<p>In order to follow this principle, we have used consistent color, layout and also fonts throughout the whole app. It will be discussed the in details below:</p>
+</div>
+<div class="sect4">
+<h5 id="color"><a class="link" href="#color">Color</a></h5>
+<div class="paragraph">
+<p>The primary color in HR+ is blue, with 10 shades of blue in the figure illustrated below (Figure 3.7.2.1). Other than the primary color, different shades of grey are also being used to show the level of significance of an information. Besides that, the colors that are being used are harmonized such that it brings up an unified feeling while users are using the app.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/blue_shades.png" alt="blue shades" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.2.1 10 shades of blue used in HR+</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="layout"><a class="link" href="#layout">Layout</a></h5>
+<div class="paragraph">
+<p>The spacing and layout inside HR+ is consistent and balanced. We make good use of spacing to achieve grouping of elements so that legibility is improved. This allow users to have a sense of which information are relevant to each other.</p>
+</div>
+<div class="paragraph">
+<p>For example, it is easy to separate between the applicant&#8217;s information, contact information and interview information at a glance without the need of boxes. Examples are shown in the figure below (Figure 3.7.2.2)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/spacing_group.png" alt="spacing group" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.2.2 Grouping with spacing</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="fonts"><a class="link" href="#fonts">Fonts</a></h5>
+<div class="paragraph">
+<p>The font family that is being used is Roboto. It follows a natural width that allows text to be read more fluently. Moreover, this font featured 6 different weights (thin, light, regular, medium, bold and black) which will allow text to be represented depending on the different level of importance. All different weights are shown in the figure below. (Figure 3.7.2.3)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/roboto_weight.png" alt="roboto weight" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.2.3 Different weights of Roboto font</p>
+</div>
+<div class="paragraph">
+<p>Important information is usually shown with a higher weight whereas trivial information is shown with a lower weight. This allow users to skim through the information to process data easily. The fonts are stored in <code>resources/fonts</code> folder and embedded into the packaged app so that it can be loaded on all devices.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="familiarity"><a class="link" href="#familiarity">Familiarity</a></h4>
+<div class="paragraph">
+<p>Familiarity is another aspect that is useful when designing an app. It can reduce the cognitive load of a user so that users will not feel overwhelmed by the information that is being displayed.</p>
+</div>
+<div class="paragraph">
+<p>In HR+, icons are used to represent some of the fields. For example, stars are used to represent average rating of an applicant in the PersonCard list on the left (Figure 3.7.3.1, pointed with red arrow).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/familiar_star.png" alt="familiar star" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.3.1 Rating icon in PersonCard</p>
+</div>
+<div class="paragraph">
+<p>Besides that, contact information fields such as e-mail, address and mobile phone number uses a familiar icon. (Figure 3.7.3.2)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/familiar_icons.png" alt="familiar icons" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.3.2 Contact information icons in InfoPanel</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="visual-feedback"><a class="link" href="#visual-feedback">Visual Feedback</a></h4>
+<div class="paragraph">
+<p>Visual Feedback is also essential for users to identify the current state of the app. This is because user might get interrupted while using the app and have to resume the session at any time.</p>
+</div>
+<div class="paragraph">
+<p>In HR+, when an applicant is selected in the PersonCard list on the left panel, it will be highlighted in blue border and shadow so that users know who they are currently selecting. (Figure 3.7.4.1)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/list_active.png" alt="list active" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.4.1 Highlighting of selected PersonCard</p>
+</div>
+<div class="paragraph">
+<p>Besides that, there is an indication when a panel is selected. This allows users to traverse between panel using keyboard only. (Figure 3.7.4.2)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/panel_active.png" alt="panel active" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.4.2 Highlighting of selected Panel</p>
+</div>
+<div class="paragraph">
+<p>Moreover, when a command entered in <code>CommandBox</code> is invalid, the text color will be changed into red to indicate that there is an error in the command itself. (Figure 3.7.4.3)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/userinterface/feedback_error.png" alt="feedback error" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.4.3 Invalid command indicator</p>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-21 04:18:08 UTC
+</div>
+</div>
+</body>
+</html>

@@ -1,114 +1,211 @@
 # tanhengyeow
-###### /java/seedu/address/logic/commands/FindCommandTest.java
+###### /java/seedu/address/testutil/PersonBuilder.java
 ``` java
-/**
- * Contains integration tests (interaction with the Model) for {@code FindCommand}.
- */
-public class FindCommandTest {
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-    private FindCommandParser parser = new FindCommandParser();
-
-    @Test
-    public void execute_noKeywords_invalidCommandFormat() {
-        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
-        FindCommand command;
-
-        try {
-            command = prepareCommand(" ");
-            assertCommandSuccess(command, Collections.emptyList());
-        } catch (ParseException pve) {
-            if (!pve.getMessage().equals(expectedMessage)) {
-                pve.printStackTrace();
-            }
-        }
-    }
-
-    @Test
-    public void execute_multipleKeywords_multiplePersonsFound() throws ParseException {
-        FindCommand command = prepareCommand("Developer, lydia@example.com");
-        assertCommandSuccess(command, Arrays.asList(CARL, FIONA));
-    }
-
-    @Test
-    public void execute_singlePrefixWithSingleKeyword_onePersonsFound() throws ParseException {
-        FindCommand command = prepareCommand(" n/Kurz");
-        assertCommandSuccess(command, Arrays.asList(CARL, FIONA)); // due to fuzzy search
-    }
-
-    @Test
-    public void execute_singlePrefixWithMultipleKeywords_multiplePersonsFound() throws ParseException {
-        FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz");
-        assertCommandSuccess(command, Arrays.asList(CARL, ELLE, FIONA));
-    }
-
-    @Test
-    public void execute_multiplePrefixesWithSingleKeyword_onePersonsFound() throws ParseException {
-        FindCommand command = prepareCommand(" n/\"arl Kurz\" p/95352563");
-        assertCommandSuccess(command, Arrays.asList(CARL));
-    }
-
-    @Test
-    public void execute_multiplePrefixesWithMultipleKeywords_zeroPersonsFound() throws ParseException {
-        FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz p/999, 555, "
-                + "000 e/heinz@example.com a/wall street y/2019");
-        assertCommandSuccess(command, Arrays.asList());
+    /**
+     * Sets the {@code Major} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withMajor(String major) {
+        this.major = new Major(major);
+        return this;
     }
 
     /**
-     * Parses {@code userInput} into a {@code FindCommand}.
+     * Sets the {@code GradePointAverage} of the {@code Person} that we are building.
      */
-    private FindCommand prepareCommand(String userInput) throws ParseException {
-        FindCommand command = parser.parse(userInput);
-        command.setData(model, new CommandHistory(), new UndoRedoStack());
-        return command;
+    public PersonBuilder withGradePointAverage(String gradePointAverage) {
+        this.gradePointAverage = new GradePointAverage(gradePointAverage);
+        return this;
+    }
+
+```
+###### /java/seedu/address/testutil/EditPersonDescriptorBuilder.java
+``` java
+    /**
+     * Sets the {@code Major} of the {@code EditPersonDescriptor} that we are building.
+     */
+    public EditPersonDescriptorBuilder withMajor(String major) {
+        descriptor.setMajor(new Major(major));
+        return this;
     }
 
     /**
-     * Asserts that {@code command} is successfully executed, and<br>
-     *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
-     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     * Sets the {@code GradePointAverage} of the {@code EditPersonDescriptor} that we are building.
      */
-    private void assertCommandSuccess(FindCommand command, List<Person> expectedList) {
-        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
-        command.execute();
-
-        assertEquals(expectedList, model.getFilteredPersonList());
-        assertEquals(expectedAddressBook, model.getAddressBook());
+    public EditPersonDescriptorBuilder withGradePointAverage(String gradePointAverage) {
+        descriptor.setGradePointAverage(new GradePointAverage(gradePointAverage));
+        return this;
     }
+
+```
+###### /java/seedu/address/model/FindResultsTest.java
+``` java
+public class FindResultsTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    @Test
+    public void containsWordIgnoreCase_validInput_success() {
+        assertTrue(FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        "Testing", "n/")); // exact word with exact case
+        assertTrue(FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        "tEsTIng", "n/")); // exact word with mixed case
+        assertTrue(FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        "  Testing  ", "n/")); // exact word with trailing spaces
+        assertTrue(FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        "  tEsTIng  ", "n/")); // exact word with mixed case + trailing spaces
+    }
+
+    @Test
+    public void containsWordIgnoreCase_validInput_failure() {
+        assertFalse(FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        "test", "n/")); // non matching word
+
+        assertFalse(FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        " test    ", "n/")); // non matching word + trailing spaces
+    }
+
+    @Test
+    public void containsWordIgnoreCase_nullInput_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        FindResults.getInstance()
+                .containsWordIgnoreCase("Testing 1 2 3",
+                        null, "n/"); // word is null
+    }
+
+    @Test
+    public void containsFuzzyMatchIgnoreCase_validInput_success() {
+        assertTrue(FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing one two three",
+                        "Testi",  "n/", 2)); // one word with exact case is a fuzzy match
+        assertTrue(FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing one two three",
+                        "tEsTi", "n/", 2)); // one word with mixed case is a fuzzy match
+        assertTrue(FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing one two three",
+                        "  Testi  ", "n/", 2)); // trailing spaces
+        assertTrue(FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing one two three",
+                        "  tEsTi  ", "n/", 2)); // trailing spaces
+    }
+
+    @Test
+    public void containsFuzzyMatchIgnoreCase_validInput_failure() {
+        assertFalse(FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing 1 2 3",
+                        "alex", "n/", 2)); // non matching fuzzy match
+
+        assertFalse(FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing 1 2 3",
+                        " alex    ", "n/", 2)); // trailing spaces
+    }
+
+    @Test
+    public void containsFuzzyMatchIgnoreCase_nullInput_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        FindResults.getInstance()
+                .containsFuzzyMatchIgnoreCase("Testing 1 2 3",
+                        null, "n/", 2); // word is null
+    }
+
+    @Test
+    public void containsPrefixIgnoreCase_validInput_success() {
+        assertTrue(FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing one two three",
+                        "Tes", "n/")); // start with this prefix word + exact case
+        assertTrue(FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing one two three",
+                        "tEsT", "n/")); // start with this prefix word + mixed case
+        assertTrue(FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing one two three",
+                        "     Tes  ", "n/")); // trailing spaces
+        assertTrue(FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing one two three",
+                        "  tEsT  ", "n/")); // trailing spaces
+    }
+
+    @Test
+    public void containsPrefixIgnoreCase_validInput_failure() {
+        assertFalse(FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing 1 2 3",
+                        "alex", "n/")); // non matching prefix word
+
+        assertFalse(FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing 1 2 3",
+                        " alex    ", "n/")); // trailing spaces
+    }
+
+    @Test
+    public void containsPrefixIgnoreCase_nullInput_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        FindResults.getInstance()
+                .containsPrefixIgnoreCase("Testing 1 2 3",
+                        null, "n/"); // word is null
+    }
+
+    @Test
+    public void containsSuffixIgnoreCase_validInput_success() {
+        assertTrue(FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing one two three",
+                        "three", "n/")); // end with this suffix word + exact case
+        assertTrue(FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing one two three",
+                        "tHrEe", "n/")); // end with this suffix word + mixed case
+        assertTrue(FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing one two three",
+                        "     ree  ", "n/")); // trailing spaces
+        assertTrue(FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing one two three",
+                        "  ThrEE  ", "n/")); // trailing spaces
+    }
+
+    @Test
+    public void containsSuffixIgnoreCase_validInput_failure() {
+        assertFalse(FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing 1 2 3",
+                        "alex", "n/")); // non matching prefix word
+
+        assertFalse(FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing 1 2 3",
+                        " alex    ", "n/")); // trailing spaces
+    }
+
+    @Test
+    public void containsSuffixIgnoreCase_nullInput_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        FindResults.getInstance()
+                .containsSuffixIgnoreCase("Testing 1 2 3",
+                        null, "n/"); // word is null
+    }
+
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+###### /java/seedu/address/model/person/NameContainsPrefixesPredicateTest.java
 ``` java
-    @Test
-    public void parseCommand_find() throws Exception {
-        List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        assertTrue(parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")))
-                instanceof FindCommand);
-        assertTrue(parser.parseCommand(FindCommand.COMMAND_WORD + " n/foo") instanceof FindCommand);
-    }
-
-```
-###### /java/seedu/address/model/person/AddressContainsKeywordsPredicateTest.java
-``` java
-public class AddressContainsKeywordsPredicateTest {
+public class NameContainsPrefixesPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
-        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
 
-        AddressContainsKeywordsPredicate firstPredicate =
-                new AddressContainsKeywordsPredicate(firstPredicateKeywordList);
-        AddressContainsKeywordsPredicate secondPredicate =
-                new AddressContainsKeywordsPredicate(secondPredicateKeywordList);
+        NameContainsPrefixesPredicate firstPredicate =
+                new NameContainsPrefixesPredicate(firstPredicateKeywordList);
+        NameContainsPrefixesPredicate secondPredicate =
+                new NameContainsPrefixesPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        AddressContainsKeywordsPredicate firstPredicateCopy =
-                new AddressContainsKeywordsPredicate(firstPredicateKeywordList);
+        NameContainsPrefixesPredicate firstPredicateCopy =
+                new NameContainsPrefixesPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -122,63 +219,119 @@ public class AddressContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_addressContainsKeywords_returnsTrue() {
-        // One keyword
-        AddressContainsKeywordsPredicate predicate =
-                new AddressContainsKeywordsPredicate(Collections.singletonList("Computing"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+    public void test_nameContainsPrefixes_returnsTrue() {
+        // One prefix
+        NameContainsPrefixesPredicate predicate =
+                new NameContainsPrefixesPredicate(Collections.singletonList("Ali"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
-        // Multiple keywords
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Computing", "Drive"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Kent Ridge Drive").build()));
-
-        // Only one matching keyword
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Computing", "Test"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-
-        // Mixed-case keywords
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("comPuTing", "dRivE"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        // Mixed-case prefix
+        predicate = new NameContainsPrefixesPredicate(Arrays.asList("aLi"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
     }
 
     @Test
-    public void test_addressDoesNotContainKeywords_returnsFalse() {
+    public void test_nameDoesNotContainPrefixes_returnsFalse() {
+        // Zero prefix
+        NameContainsPrefixesPredicate predicate = new NameContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        // Non-matching prefix
+        predicate = new NameContainsPrefixesPredicate(Arrays.asList("Charl"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/NameContainsKeywordsPredicateTest.java
+``` java
+public class NameContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        NameContainsKeywordsPredicate firstPredicate =
+                new NameContainsKeywordsPredicate(firstPredicateKeywordList);
+        NameContainsKeywordsPredicate secondPredicate =
+                new NameContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        NameContainsKeywordsPredicate firstPredicateCopy =
+                new NameContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_nameContainsKeywords_returnsTrue() {
+        // One keyword
+        NameContainsKeywordsPredicate predicate =
+                new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Multiple keywords
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Only one matching keyword
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
+
+        // Mixed-case keywords
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
+
+    @Test
+    public void test_nameDoesNotContainKeywords_returnsFalse() {
         // Zero keywords
-        AddressContainsKeywordsPredicate predicate =
-                new AddressContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
 
         // Non-matching keyword
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Com"));
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Carol"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
 
-        // Keywords match phone, email, expected graduation year and name, but does not match address
-        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));
+        // Keywords match phone, email, expected graduation year and address, but does not match name
+        predicate = new NameContainsKeywordsPredicate(
+                Arrays.asList("12345", "alice@email.com", "Main", "Street", "2020"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withAddress("Main Street").withExpectedGraduationYear("2020").build()));
     }
 }
 ```
-###### /java/seedu/address/model/person/AddressContainsPrefixesPredicateTest.java
+###### /java/seedu/address/model/person/JobAppliedContainsSuffixesPredicateTest.java
 ``` java
-public class AddressContainsPrefixesPredicateTest {
+public class JobAppliedContainsSuffixesPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
-        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
+        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
 
-        AddressContainsPrefixesPredicate firstPredicate =
-                new AddressContainsPrefixesPredicate(firstPredicateKeywordList);
-        AddressContainsPrefixesPredicate secondPredicate =
-                new AddressContainsPrefixesPredicate(secondPredicateKeywordList);
+        JobAppliedContainsSuffixesPredicate firstPredicate =
+                new JobAppliedContainsSuffixesPredicate(firstPredicateKeywordList);
+        JobAppliedContainsSuffixesPredicate secondPredicate =
+                new JobAppliedContainsSuffixesPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        AddressContainsPrefixesPredicate firstPredicateCopy =
-                new AddressContainsPrefixesPredicate(firstPredicateKeywordList);
+        JobAppliedContainsSuffixesPredicate firstPredicateCopy =
+                new JobAppliedContainsSuffixesPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -192,141 +345,27 @@ public class AddressContainsPrefixesPredicateTest {
     }
 
     @Test
-    public void test_addressContainsPrefixes_returnsTrue() {
-        // One prefix
-        AddressContainsPrefixesPredicate predicate =
-                new AddressContainsPrefixesPredicate(Collections.singletonList("Com"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-
-        // Mixed-case prefix
-        predicate = new AddressContainsPrefixesPredicate(Arrays.asList("cOm"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-    }
-
-    @Test
-    public void test_addressDoesNotContainPrefixes_returnsFalse() {
-        // Zero prefix
-        AddressContainsPrefixesPredicate predicate =
-                new AddressContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-
-        // Non-matching prefix
-        predicate = new AddressContainsPrefixesPredicate(Arrays.asList("Sci"));
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/AddressContainsSubstringsPredicateTest.java
-``` java
-public class AddressContainsSubstringsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
-        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
-
-        AddressContainsSubstringsPredicate firstPredicate =
-                new AddressContainsSubstringsPredicate(firstPredicateKeywordList);
-        AddressContainsSubstringsPredicate secondPredicate =
-                new AddressContainsSubstringsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        AddressContainsSubstringsPredicate firstPredicateCopy =
-                new AddressContainsSubstringsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_addressContainsSubstrings_returnsTrue() {
-        // One substring
-        AddressContainsSubstringsPredicate predicate =
-                new AddressContainsSubstringsPredicate(Collections.singletonList("ing Dr"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-
-        // Mixed-case substring
-        predicate = new AddressContainsSubstringsPredicate(Arrays.asList("tIng Dri"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-    }
-
-    @Test
-    public void test_addressDoesNotContainSubstrings_returnsFalse() {
-        // Zero substring
-        AddressContainsSubstringsPredicate predicate =
-                new AddressContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-
-        // Non-matching substring
-        predicate = new AddressContainsSubstringsPredicate(Arrays.asList("olland Dr"));
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/AddressContainsSuffixesPredicateTest.java
-``` java
-public class AddressContainsSuffixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
-        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
-
-        AddressContainsSuffixesPredicate firstPredicate =
-                new AddressContainsSuffixesPredicate(firstPredicateKeywordList);
-        AddressContainsSuffixesPredicate secondPredicate =
-                new AddressContainsSuffixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        AddressContainsSuffixesPredicate firstPredicateCopy =
-                new AddressContainsSuffixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_addressContainsSuffixes_returnsTrue() {
+    public void test_jobAppliedContainsSuffixes_returnsTrue() {
         // One suffix
-        AddressContainsSuffixesPredicate predicate =
-                new AddressContainsSuffixesPredicate(Collections.singletonList("ive"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        JobAppliedContainsSuffixesPredicate predicate =
+                new JobAppliedContainsSuffixesPredicate(Collections.singletonList("eer"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
 
         // Mixed-case suffix
-        predicate = new AddressContainsSuffixesPredicate(Arrays.asList("IvE"));
-        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        predicate = new JobAppliedContainsSuffixesPredicate(Arrays.asList("EEr"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
     }
 
     @Test
-    public void test_addressDoesNotContainSuffixes_returnsFalse() {
+    public void test_jobAppliedDoesNotContainSuffixes_returnsFalse() {
         // Zero suffix
-        AddressContainsSuffixesPredicate predicate =
-                new AddressContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        JobAppliedContainsSuffixesPredicate predicate =
+                new JobAppliedContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
 
         // Non-matching suffix
-        predicate = new AddressContainsSuffixesPredicate(Arrays.asList("road"));
-        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+        predicate = new JobAppliedContainsSuffixesPredicate(Arrays.asList("loper"));
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
     }
 }
 ```
@@ -397,685 +436,6 @@ public class CommentContainsKeywordsPredicateTest {
         predicate = new CommentContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));
         assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
                 .withEmail("alice@email.com").withComment("He is decent").withExpectedGraduationYear("2020").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/CommentContainsPrefixesPredicateTest.java
-``` java
-public class CommentContainsPrefixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("He is decent");
-        List<String> secondPredicateKeywordList = Arrays.asList("He is decent", "She is decent");
-
-        CommentContainsPrefixesPredicate firstPredicate =
-                new CommentContainsPrefixesPredicate(firstPredicateKeywordList);
-        CommentContainsPrefixesPredicate secondPredicate =
-                new CommentContainsPrefixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        CommentContainsPrefixesPredicate firstPredicateCopy =
-                new CommentContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_commentContainsPrefixes_returnsTrue() {
-        // One prefix
-        CommentContainsPrefixesPredicate predicate =
-                new CommentContainsPrefixesPredicate(Collections.singletonList("He"));
-        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-
-        // Mixed-case prefix
-        predicate = new CommentContainsPrefixesPredicate(Arrays.asList("hE"));
-        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-    }
-
-    @Test
-    public void test_commentDoesNotContainPrefixes_returnsFalse() {
-        // Zero prefix
-        CommentContainsPrefixesPredicate predicate =
-                new CommentContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-
-        // Non-matching prefix
-        predicate = new CommentContainsPrefixesPredicate(Arrays.asList("She"));
-        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/CommentContainsSubstringsPredicateTest.java
-``` java
-public class CommentContainsSubstringsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("He is decent");
-        List<String> secondPredicateKeywordList = Arrays.asList("He is decent", "She is decent");
-
-        CommentContainsSubstringsPredicate firstPredicate =
-                new CommentContainsSubstringsPredicate(firstPredicateKeywordList);
-        CommentContainsSubstringsPredicate secondPredicate =
-                new CommentContainsSubstringsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        CommentContainsSubstringsPredicate firstPredicateCopy =
-                new CommentContainsSubstringsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_commentContainsSubstrings_returnsTrue() {
-        // One substring
-        CommentContainsSubstringsPredicate predicate =
-                new CommentContainsSubstringsPredicate(Collections.singletonList("dec"));
-        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-
-        // Mixed-case substring
-        predicate = new CommentContainsSubstringsPredicate(Arrays.asList("s DecE"));
-        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-    }
-
-    @Test
-    public void test_commentDoesNotContainSubstrings_returnsFalse() {
-        // Zero substring
-        CommentContainsSubstringsPredicate predicate =
-                new CommentContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-
-        // Non-matching substring
-        predicate = new CommentContainsSubstringsPredicate(Arrays.asList("test"));
-        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/CommentContainsSuffixesPredicateTest.java
-``` java
-public class CommentContainsSuffixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("He is decent");
-        List<String> secondPredicateKeywordList = Arrays.asList("He is decent", "She is decent");
-
-        CommentContainsSuffixesPredicate firstPredicate =
-                new CommentContainsSuffixesPredicate(firstPredicateKeywordList);
-        CommentContainsSuffixesPredicate secondPredicate =
-                new CommentContainsSuffixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        CommentContainsSuffixesPredicate firstPredicateCopy =
-                new CommentContainsSuffixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_commentContainsSuffixes_returnsTrue() {
-        // One suffix
-        CommentContainsSuffixesPredicate predicate =
-                new CommentContainsSuffixesPredicate(Collections.singletonList("ent"));
-        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-
-        // Mixed-case suffix
-        predicate = new CommentContainsSuffixesPredicate(Arrays.asList("CeNt"));
-        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-    }
-
-    @Test
-    public void test_commentDoesNotContainSuffixes_returnsFalse() {
-        // Zero suffix
-        CommentContainsSuffixesPredicate predicate =
-                new CommentContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-
-        // Non-matching suffix
-        predicate = new CommentContainsSuffixesPredicate(Arrays.asList("alright"));
-        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/EmailContainsKeywordsPredicateTest.java
-``` java
-public class EmailContainsKeywordsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
-        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
-
-        EmailContainsKeywordsPredicate firstPredicate =
-                new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
-        EmailContainsKeywordsPredicate secondPredicate =
-                new EmailContainsKeywordsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        EmailContainsKeywordsPredicate firstPredicateCopy =
-                new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_emailContainsKeywords_returnsTrue() {
-        // One keyword
-        EmailContainsKeywordsPredicate predicate =
-                new EmailContainsKeywordsPredicate(Collections.singletonList("hy@example.com"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-
-        // Multiple keywords
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("hy@example.com", "yh@example.com"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-
-    @Test
-    public void test_emailDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        EmailContainsKeywordsPredicate predicate =
-                new EmailContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
-
-        // Non-matching keyword
-        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("lol@lol.com"));
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-
-        // Keywords match phone, name, expected graduation year and address, but does not match email
-        predicate = new EmailContainsKeywordsPredicate(
-                Arrays.asList("12345", "Alice", "Main", "Street", "2020"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").withExpectedGraduationYear("2020").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/EmailContainsPrefixesPredicateTest.java
-``` java
-public class EmailContainsPrefixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
-        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
-
-        EmailContainsPrefixesPredicate firstPredicate =
-                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
-        EmailContainsPrefixesPredicate secondPredicate =
-                new EmailContainsPrefixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        EmailContainsPrefixesPredicate firstPredicateCopy =
-                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_emailContainsPrefixes_returnsTrue() {
-        // One prefix
-        EmailContainsPrefixesPredicate predicate =
-                new EmailContainsPrefixesPredicate(Collections.singletonList("hy"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-
-        // Mixed-case prefix
-        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("Hy"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-
-    @Test
-    public void test_emailDoesNotContainPrefixes_returnsFalse() {
-        // Zero prefix
-        EmailContainsPrefixesPredicate predicate =
-                new EmailContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
-
-        // Non-matching prefix
-        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("yh"));
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/EmailContainsSubstringsPredicateTest.java
-``` java
-public class EmailContainsSubstringsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
-        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
-
-        EmailContainsSubstringsPredicate firstPredicate =
-                new EmailContainsSubstringsPredicate(firstPredicateKeywordList);
-        EmailContainsSubstringsPredicate secondPredicate =
-                new EmailContainsSubstringsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        EmailContainsSubstringsPredicate firstPredicateCopy =
-                new EmailContainsSubstringsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_emailContainsSubstrings_returnsTrue() {
-        // One substring
-        EmailContainsSubstringsPredicate predicate =
-                new EmailContainsSubstringsPredicate(Collections.singletonList("y@exa"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-
-        // Mixed-case substring
-        predicate = new EmailContainsSubstringsPredicate(Arrays.asList("Y@eXa"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-
-    @Test
-    public void test_emailDoesNotContainSubstrings_returnsFalse() {
-        // Zero substring
-        EmailContainsSubstringsPredicate predicate =
-                new EmailContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
-
-        // Non-matching substring
-        predicate = new EmailContainsSubstringsPredicate(Arrays.asList("yh@e"));
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/EmailContainsSuffixesPredicateTest.java
-``` java
-public class EmailContainsSuffixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
-        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
-
-        EmailContainsPrefixesPredicate firstPredicate =
-                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
-        EmailContainsPrefixesPredicate secondPredicate =
-                new EmailContainsPrefixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        EmailContainsPrefixesPredicate firstPredicateCopy =
-                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_emailContainsPrefixes_returnsTrue() {
-        // One prefix
-        EmailContainsPrefixesPredicate predicate =
-                new EmailContainsPrefixesPredicate(Collections.singletonList("hy"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-
-        // Mixed-case prefix
-        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("Hy"));
-        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-
-    @Test
-    public void test_emailDoesNotContainPrefixes_returnsFalse() {
-        // Zero prefix
-        EmailContainsPrefixesPredicate predicate =
-                new EmailContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
-
-        // Non-matching prefix
-        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("yh"));
-        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/GradePointAverageTest.java
-``` java
-public class GradePointAverageTest {
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new GradePointAverage(null));
-    }
-
-    @Test
-    public void constructor_invalidGradePointAverage_throwsIllegalArgumentException() {
-        String invalidGradePointAverage = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new GradePointAverage(invalidGradePointAverage));
-    }
-
-    @Test
-    public void isValidGradePointAverage() {
-        // null gradePointAverage
-        Assert.assertThrows(NullPointerException.class, () ->
-                GradePointAverage.isValidGradePointAverage(null));
-
-        // invalid gradePointAverage
-        assertFalse(GradePointAverage.isValidGradePointAverage(" ")); // spaces only
-        assertFalse(GradePointAverage.isValidGradePointAverage("5.10")); // not in range
-        assertFalse(GradePointAverage.isValidGradePointAverage("test")); // non-numeric
-        assertFalse(GradePointAverage.isValidGradePointAverage("-4.00")); // negative number
-
-        // valid gradePointAverage
-        assertTrue(GradePointAverage.isValidGradePointAverage("4.93"));
-        assertTrue(GradePointAverage.isValidGradePointAverage("4.75"));
-    }
-}
-```
-###### /java/seedu/address/model/person/JobAppliedContainsKeywordsPredicateTest.java
-``` java
-public class JobAppliedContainsKeywordsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
-
-        JobAppliedContainsKeywordsPredicate firstPredicate =
-                new JobAppliedContainsKeywordsPredicate(firstPredicateKeywordList);
-        JobAppliedContainsKeywordsPredicate secondPredicate =
-                new JobAppliedContainsKeywordsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        JobAppliedContainsKeywordsPredicate firstPredicateCopy =
-                new JobAppliedContainsKeywordsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_jobAppliedContainsKeywords_returnsTrue() {
-        // One keyword
-        JobAppliedContainsKeywordsPredicate predicate =
-                new JobAppliedContainsKeywordsPredicate(Collections.singletonList("Engineer"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Multiple keywords
-        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("Software", "Engineer"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Only one matching keyword
-        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("Front-end", "Developer"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Developer").build()));
-
-        // Mixed-case keywords
-        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("soFtWaRe", "eNGIneeR"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-    }
-
-    @Test
-    public void test_jobAppliedDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        JobAppliedContainsKeywordsPredicate predicate =
-                new JobAppliedContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Non-matching keyword
-        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("analyst"));
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Keywords match phone, email, expected graduation year and name, but does not match job applied
-        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withJobApplied("Software Engineer")
-                .withExpectedGraduationYear("2020").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/JobAppliedContainsPrefixesPredicateTest.java
-``` java
-public class JobAppliedContainsPrefixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
-
-        JobAppliedContainsPrefixesPredicate firstPredicate =
-                new JobAppliedContainsPrefixesPredicate(firstPredicateKeywordList);
-        JobAppliedContainsPrefixesPredicate secondPredicate =
-                new JobAppliedContainsPrefixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        JobAppliedContainsPrefixesPredicate firstPredicateCopy =
-                new JobAppliedContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_jobAppliedContainsPrefixes_returnsTrue() {
-        // One prefix
-        JobAppliedContainsPrefixesPredicate predicate =
-                new JobAppliedContainsPrefixesPredicate(Collections.singletonList("Soft"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Mixed-case prefix
-        predicate = new JobAppliedContainsPrefixesPredicate(Arrays.asList("sOfT"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-    }
-
-    @Test
-    public void test_jobAppliedDoesNotContainPrefixes_returnsFalse() {
-        // Zero prefix
-        JobAppliedContainsPrefixesPredicate predicate =
-                new JobAppliedContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Non-matching prefix
-        predicate = new JobAppliedContainsPrefixesPredicate(Arrays.asList("Data"));
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/JobAppliedContainsSubstringsPredicateTest.java
-``` java
-public class JobAppliedContainsSubstringsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
-
-        JobAppliedContainsSubstringsPredicate firstPredicate =
-                new JobAppliedContainsSubstringsPredicate(firstPredicateKeywordList);
-        JobAppliedContainsSubstringsPredicate secondPredicate =
-                new JobAppliedContainsSubstringsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        JobAppliedContainsSubstringsPredicate firstPredicateCopy =
-                new JobAppliedContainsSubstringsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_jobAppliedContainsSubstrings_returnsTrue() {
-        // One substring
-        JobAppliedContainsSubstringsPredicate predicate =
-                new JobAppliedContainsSubstringsPredicate(Collections.singletonList("are Engin"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Mixed-case substring
-        predicate = new JobAppliedContainsSubstringsPredicate(Arrays.asList("ArE EnGiNe"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-    }
-
-    @Test
-    public void test_jobAppliedDoesNotContainSubstrings_returnsFalse() {
-        // Zero substring
-        JobAppliedContainsSubstringsPredicate predicate =
-                new JobAppliedContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Non-matching substring
-        predicate = new JobAppliedContainsSubstringsPredicate(Arrays.asList("are Dev"));
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/JobAppliedContainsSuffixesPredicateTest.java
-``` java
-public class JobAppliedContainsSuffixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
-
-        JobAppliedContainsSuffixesPredicate firstPredicate =
-                new JobAppliedContainsSuffixesPredicate(firstPredicateKeywordList);
-        JobAppliedContainsSuffixesPredicate secondPredicate =
-                new JobAppliedContainsSuffixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        JobAppliedContainsSuffixesPredicate firstPredicateCopy =
-                new JobAppliedContainsSuffixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_jobAppliedContainsSuffixes_returnsTrue() {
-        // One suffix
-        JobAppliedContainsSuffixesPredicate predicate =
-                new JobAppliedContainsSuffixesPredicate(Collections.singletonList("eer"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Mixed-case suffix
-        predicate = new JobAppliedContainsSuffixesPredicate(Arrays.asList("EEr"));
-        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-    }
-
-    @Test
-    public void test_jobAppliedDoesNotContainSuffixes_returnsFalse() {
-        // Zero suffix
-        JobAppliedContainsSuffixesPredicate predicate =
-                new JobAppliedContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
-
-        // Non-matching suffix
-        predicate = new JobAppliedContainsSuffixesPredicate(Arrays.asList("loper"));
-        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
     }
 }
 ```
@@ -1150,229 +510,26 @@ public class MajorContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/MajorContainsPrefixesPredicateTest.java
+###### /java/seedu/address/model/person/AddressContainsPrefixesPredicateTest.java
 ``` java
-public class MajorContainsPrefixesPredicateTest {
+public class AddressContainsPrefixesPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Computer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Computer", "Science");
+        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
+        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
 
-        MajorContainsPrefixesPredicate firstPredicate =
-                new MajorContainsPrefixesPredicate(firstPredicateKeywordList);
-        MajorContainsPrefixesPredicate secondPredicate =
-                new MajorContainsPrefixesPredicate(secondPredicateKeywordList);
+        AddressContainsPrefixesPredicate firstPredicate =
+                new AddressContainsPrefixesPredicate(firstPredicateKeywordList);
+        AddressContainsPrefixesPredicate secondPredicate =
+                new AddressContainsPrefixesPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        MajorContainsPrefixesPredicate firstPredicateCopy =
-                new MajorContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate == null);
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_majorContainsPrefixes_returnsTrue() {
-        // One prefix
-        MajorContainsPrefixesPredicate predicate =
-                new MajorContainsPrefixesPredicate(Collections.singletonList("Com"));
-        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-
-        // Mixed-case prefix
-        predicate = new MajorContainsPrefixesPredicate(Arrays.asList("CoM"));
-        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-    }
-
-    @Test
-    public void test_majorDoesNotContainPrefixes_returnsFalse() {
-        // Zero prefix
-        MajorContainsPrefixesPredicate predicate = new MajorContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-
-        // Non-matching prefix
-        predicate = new MajorContainsPrefixesPredicate(Arrays.asList("Info"));
-        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/MajorContainsSubstringsPredicateTest.java
-``` java
-public class MajorContainsSubstringsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Computer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Computer", "Science");
-
-        MajorContainsSubstringsPredicate firstPredicate =
-                new MajorContainsSubstringsPredicate(firstPredicateKeywordList);
-        MajorContainsSubstringsPredicate secondPredicate =
-                new MajorContainsSubstringsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        MajorContainsSubstringsPredicate firstPredicateCopy =
-                new MajorContainsSubstringsPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate == null);
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_majorContainsSubstrings_returnsTrue() {
-        // One substring
-        MajorContainsSubstringsPredicate predicate =
-                new MajorContainsSubstringsPredicate(Collections.singletonList("ter Sci"));
-        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-
-        // Mixed-case substring
-        predicate = new MajorContainsSubstringsPredicate(Arrays.asList("TeR sCi"));
-        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-    }
-
-    @Test
-    public void test_majorDoesNotContainSubstrings_returnsFalse() {
-        // Zero substring
-        MajorContainsSubstringsPredicate predicate = new MajorContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-
-        // Non-matching substring
-        predicate = new MajorContainsSubstringsPredicate(Arrays.asList("mation Secu"));
-        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/MajorContainsSuffixesPredicateTest.java
-``` java
-public class MajorContainsSuffixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("Computer");
-        List<String> secondPredicateKeywordList = Arrays.asList("Computer", "Science");
-
-        MajorContainsSuffixesPredicate firstPredicate =
-                new MajorContainsSuffixesPredicate(firstPredicateKeywordList);
-        MajorContainsSuffixesPredicate secondPredicate =
-                new MajorContainsSuffixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        MajorContainsSuffixesPredicate firstPredicateCopy =
-                new MajorContainsSuffixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate == null);
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_majorContainsSuffixes_returnsTrue() {
-        // One suffix
-        MajorContainsSuffixesPredicate predicate =
-                new MajorContainsSuffixesPredicate(Collections.singletonList("ence"));
-        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-
-        // Mixed-case suffix
-        predicate = new MajorContainsSuffixesPredicate(Arrays.asList("EnCe"));
-        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-    }
-
-    @Test
-    public void test_majorDoesNotContainSuffixes_returnsFalse() {
-        // Zero suffix
-        MajorContainsSuffixesPredicate predicate = new MajorContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-
-        // Non-matching suffix
-        predicate = new MajorContainsSuffixesPredicate(Arrays.asList("curity"));
-        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/MajorTest.java
-``` java
-public class MajorTest {
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new Major(null));
-    }
-
-    @Test
-    public void constructor_invalidMajor_throwsIllegalArgumentException() {
-        String invalidMajor = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new Major(invalidMajor));
-    }
-
-    @Test
-    public void isValidMajor() {
-        // null major
-        Assert.assertThrows(NullPointerException.class, () -> Major.isValidMajor(null));
-
-        // invalid major
-        assertFalse(Major.isValidMajor("")); // empty string
-        assertFalse(Major.isValidMajor(" ")); // spaces only
-        assertFalse(Major.isValidMajor("^")); // only non-alphanumeric characters
-        assertFalse(Major.isValidMajor("comp*")); // contains non-alphanumeric characters
-
-        // valid major
-        assertTrue(Major.isValidMajor("computer science")); // alphabets only
-        assertTrue(Major.isValidMajor("12345")); // numbers only
-        assertTrue(Major.isValidMajor("2nd major in Business")); // alphanumeric characters
-        assertTrue(Major.isValidMajor("Computer Engineering")); // with capital letters
-        assertTrue(Major.isValidMajor("Business Analytics and Information Security")); // long names
-    }
-}
-```
-###### /java/seedu/address/model/person/NameContainsKeywordsPredicateTest.java
-``` java
-public class NameContainsKeywordsPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
-
-        NameContainsKeywordsPredicate firstPredicate =
-                new NameContainsKeywordsPredicate(firstPredicateKeywordList);
-        NameContainsKeywordsPredicate secondPredicate =
-                new NameContainsKeywordsPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        NameContainsKeywordsPredicate firstPredicateCopy =
-                new NameContainsKeywordsPredicate(firstPredicateKeywordList);
+        AddressContainsPrefixesPredicate firstPredicateCopy =
+                new AddressContainsPrefixesPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -1386,96 +543,27 @@ public class NameContainsKeywordsPredicateTest {
     }
 
     @Test
-    public void test_nameContainsKeywords_returnsTrue() {
-        // One keyword
-        NameContainsKeywordsPredicate predicate =
-                new NameContainsKeywordsPredicate(Collections.singletonList("Alice"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-
-        // Multiple keywords
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Alice", "Bob"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-
-        // Only one matching keyword
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Bob", "Carol"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Carol").build()));
-
-        // Mixed-case keywords
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("aLIce", "bOB"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-    }
-
-    @Test
-    public void test_nameDoesNotContainKeywords_returnsFalse() {
-        // Zero keywords
-        NameContainsKeywordsPredicate predicate = new NameContainsKeywordsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
-
-        // Non-matching keyword
-        predicate = new NameContainsKeywordsPredicate(Arrays.asList("Carol"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
-
-        // Keywords match phone, email, expected graduation year and address, but does not match name
-        predicate = new NameContainsKeywordsPredicate(
-                Arrays.asList("12345", "alice@email.com", "Main", "Street", "2020"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
-                .withEmail("alice@email.com").withAddress("Main Street").withExpectedGraduationYear("2020").build()));
-    }
-}
-```
-###### /java/seedu/address/model/person/NameContainsPrefixesPredicateTest.java
-``` java
-public class NameContainsPrefixesPredicateTest {
-
-    @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
-
-        NameContainsPrefixesPredicate firstPredicate =
-                new NameContainsPrefixesPredicate(firstPredicateKeywordList);
-        NameContainsPrefixesPredicate secondPredicate =
-                new NameContainsPrefixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        NameContainsPrefixesPredicate firstPredicateCopy =
-                new NameContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
-    }
-
-    @Test
-    public void test_nameContainsPrefixes_returnsTrue() {
+    public void test_addressContainsPrefixes_returnsTrue() {
         // One prefix
-        NameContainsPrefixesPredicate predicate =
-                new NameContainsPrefixesPredicate(Collections.singletonList("Ali"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        AddressContainsPrefixesPredicate predicate =
+                new AddressContainsPrefixesPredicate(Collections.singletonList("Com"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
 
         // Mixed-case prefix
-        predicate = new NameContainsPrefixesPredicate(Arrays.asList("aLi"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        predicate = new AddressContainsPrefixesPredicate(Arrays.asList("cOm"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
     }
 
     @Test
-    public void test_nameDoesNotContainPrefixes_returnsFalse() {
+    public void test_addressDoesNotContainPrefixes_returnsFalse() {
         // Zero prefix
-        NameContainsPrefixesPredicate predicate = new NameContainsPrefixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
+        AddressContainsPrefixesPredicate predicate =
+                new AddressContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
 
         // Non-matching prefix
-        predicate = new NameContainsPrefixesPredicate(Arrays.asList("Charl"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        predicate = new AddressContainsPrefixesPredicate(Arrays.asList("Sci"));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
     }
 }
 ```
@@ -1535,26 +623,82 @@ public class NameContainsSubstringsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/NameContainsSuffixesPredicateTest.java
+###### /java/seedu/address/model/person/MajorContainsSubstringsPredicateTest.java
 ``` java
-public class NameContainsSuffixesPredicateTest {
+public class MajorContainsSubstringsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("first");
-        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+        List<String> firstPredicateKeywordList = Collections.singletonList("Computer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Computer", "Science");
 
-        NameContainsSuffixesPredicate firstPredicate =
-                new NameContainsSuffixesPredicate(firstPredicateKeywordList);
-        NameContainsSuffixesPredicate secondPredicate =
-                new NameContainsSuffixesPredicate(secondPredicateKeywordList);
+        MajorContainsSubstringsPredicate firstPredicate =
+                new MajorContainsSubstringsPredicate(firstPredicateKeywordList);
+        MajorContainsSubstringsPredicate secondPredicate =
+                new MajorContainsSubstringsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        NameContainsSuffixesPredicate firstPredicateCopy =
-                new NameContainsSuffixesPredicate(firstPredicateKeywordList);
+        MajorContainsSubstringsPredicate firstPredicateCopy =
+                new MajorContainsSubstringsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate == null);
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_majorContainsSubstrings_returnsTrue() {
+        // One substring
+        MajorContainsSubstringsPredicate predicate =
+                new MajorContainsSubstringsPredicate(Collections.singletonList("ter Sci"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+
+        // Mixed-case substring
+        predicate = new MajorContainsSubstringsPredicate(Arrays.asList("TeR sCi"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+    }
+
+    @Test
+    public void test_majorDoesNotContainSubstrings_returnsFalse() {
+        // Zero substring
+        MajorContainsSubstringsPredicate predicate = new MajorContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+
+        // Non-matching substring
+        predicate = new MajorContainsSubstringsPredicate(Arrays.asList("mation Secu"));
+        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/CommentContainsSuffixesPredicateTest.java
+``` java
+public class CommentContainsSuffixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("He is decent");
+        List<String> secondPredicateKeywordList = Arrays.asList("He is decent", "She is decent");
+
+        CommentContainsSuffixesPredicate firstPredicate =
+                new CommentContainsSuffixesPredicate(firstPredicateKeywordList);
+        CommentContainsSuffixesPredicate secondPredicate =
+                new CommentContainsSuffixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        CommentContainsSuffixesPredicate firstPredicateCopy =
+                new CommentContainsSuffixesPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -1568,26 +712,154 @@ public class NameContainsSuffixesPredicateTest {
     }
 
     @Test
-    public void test_nameContainsSuffixes_returnsTrue() {
+    public void test_commentContainsSuffixes_returnsTrue() {
         // One suffix
-        NameContainsSuffixesPredicate predicate =
-                new NameContainsSuffixesPredicate(Collections.singletonList("ob"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        CommentContainsSuffixesPredicate predicate =
+                new CommentContainsSuffixesPredicate(Collections.singletonList("ent"));
+        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
 
         // Mixed-case suffix
-        predicate = new NameContainsSuffixesPredicate(Arrays.asList("Ob"));
-        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        predicate = new CommentContainsSuffixesPredicate(Arrays.asList("CeNt"));
+        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
     }
 
     @Test
-    public void test_nameDoesNotContainSuffixes_returnsFalse() {
+    public void test_commentDoesNotContainSuffixes_returnsFalse() {
         // Zero suffix
-        NameContainsSuffixesPredicate predicate = new NameContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
+        CommentContainsSuffixesPredicate predicate =
+                new CommentContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
 
         // Non-matching suffix
-        predicate = new NameContainsSuffixesPredicate(Arrays.asList("les"));
-        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+        predicate = new CommentContainsSuffixesPredicate(Arrays.asList("alright"));
+        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/AddressContainsKeywordsPredicateTest.java
+``` java
+public class AddressContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
+        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
+
+        AddressContainsKeywordsPredicate firstPredicate =
+                new AddressContainsKeywordsPredicate(firstPredicateKeywordList);
+        AddressContainsKeywordsPredicate secondPredicate =
+                new AddressContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        AddressContainsKeywordsPredicate firstPredicateCopy =
+                new AddressContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_addressContainsKeywords_returnsTrue() {
+        // One keyword
+        AddressContainsKeywordsPredicate predicate =
+                new AddressContainsKeywordsPredicate(Collections.singletonList("Computing"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Multiple keywords
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Computing", "Drive"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Kent Ridge Drive").build()));
+
+        // Only one matching keyword
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Computing", "Test"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Mixed-case keywords
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("comPuTing", "dRivE"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+    }
+
+    @Test
+    public void test_addressDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        AddressContainsKeywordsPredicate predicate =
+                new AddressContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Non-matching keyword
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("Com"));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Keywords match phone, email, expected graduation year and name, but does not match address
+        predicate = new AddressContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").withExpectedGraduationYear("2020").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/UniversityContainsSubstringsPredicateTest.java
+``` java
+public class UniversityContainsSubstringsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
+        List<String> secondPredicateKeywordList = Arrays.asList("NUS", "NTU");
+
+        UniversityContainsSubstringsPredicate firstPredicate =
+                new UniversityContainsSubstringsPredicate(firstPredicateKeywordList);
+        UniversityContainsSubstringsPredicate secondPredicate =
+                new UniversityContainsSubstringsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        UniversityContainsSubstringsPredicate firstPredicateCopy =
+                new UniversityContainsSubstringsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_universityContainsSubstrings_returnsTrue() {
+        // One substring
+        UniversityContainsSubstringsPredicate predicate =
+                new UniversityContainsSubstringsPredicate(Collections.singletonList("e NU"));
+        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+
+        // Mixed-case substring
+        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("LE nu"));
+        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+    }
+
+    @Test
+    public void test_universityDoesNotContainSubstrings_returnsFalse() {
+        // Zero substring
+        UniversityContainsSubstringsPredicate predicate =
+                new UniversityContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+
+        // Non-matching substring
+        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("sm"));
+        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
     }
 }
 ```
@@ -1655,6 +927,232 @@ public class PhoneContainsKeywordsPredicateTest {
     }
 }
 ```
+###### /java/seedu/address/model/person/NameContainsSuffixesPredicateTest.java
+``` java
+public class NameContainsSuffixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("first");
+        List<String> secondPredicateKeywordList = Arrays.asList("first", "second");
+
+        NameContainsSuffixesPredicate firstPredicate =
+                new NameContainsSuffixesPredicate(firstPredicateKeywordList);
+        NameContainsSuffixesPredicate secondPredicate =
+                new NameContainsSuffixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        NameContainsSuffixesPredicate firstPredicateCopy =
+                new NameContainsSuffixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_nameContainsSuffixes_returnsTrue() {
+        // One suffix
+        NameContainsSuffixesPredicate predicate =
+                new NameContainsSuffixesPredicate(Collections.singletonList("ob"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+
+        // Mixed-case suffix
+        predicate = new NameContainsSuffixesPredicate(Arrays.asList("Ob"));
+        assertTrue(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
+
+    @Test
+    public void test_nameDoesNotContainSuffixes_returnsFalse() {
+        // Zero suffix
+        NameContainsSuffixesPredicate predicate = new NameContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").build()));
+
+        // Non-matching suffix
+        predicate = new NameContainsSuffixesPredicate(Arrays.asList("les"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice Bob").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/EmailContainsPrefixesPredicateTest.java
+``` java
+public class EmailContainsPrefixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
+        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
+
+        EmailContainsPrefixesPredicate firstPredicate =
+                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
+        EmailContainsPrefixesPredicate secondPredicate =
+                new EmailContainsPrefixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        EmailContainsPrefixesPredicate firstPredicateCopy =
+                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_emailContainsPrefixes_returnsTrue() {
+        // One prefix
+        EmailContainsPrefixesPredicate predicate =
+                new EmailContainsPrefixesPredicate(Collections.singletonList("hy"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+
+        // Mixed-case prefix
+        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("Hy"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+    }
+
+    @Test
+    public void test_emailDoesNotContainPrefixes_returnsFalse() {
+        // Zero prefix
+        EmailContainsPrefixesPredicate predicate =
+                new EmailContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
+
+        // Non-matching prefix
+        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("yh"));
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/CommentContainsSubstringsPredicateTest.java
+``` java
+public class CommentContainsSubstringsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("He is decent");
+        List<String> secondPredicateKeywordList = Arrays.asList("He is decent", "She is decent");
+
+        CommentContainsSubstringsPredicate firstPredicate =
+                new CommentContainsSubstringsPredicate(firstPredicateKeywordList);
+        CommentContainsSubstringsPredicate secondPredicate =
+                new CommentContainsSubstringsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        CommentContainsSubstringsPredicate firstPredicateCopy =
+                new CommentContainsSubstringsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_commentContainsSubstrings_returnsTrue() {
+        // One substring
+        CommentContainsSubstringsPredicate predicate =
+                new CommentContainsSubstringsPredicate(Collections.singletonList("dec"));
+        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+
+        // Mixed-case substring
+        predicate = new CommentContainsSubstringsPredicate(Arrays.asList("s DecE"));
+        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+    }
+
+    @Test
+    public void test_commentDoesNotContainSubstrings_returnsFalse() {
+        // Zero substring
+        CommentContainsSubstringsPredicate predicate =
+                new CommentContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+
+        // Non-matching substring
+        predicate = new CommentContainsSubstringsPredicate(Arrays.asList("test"));
+        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/MajorContainsPrefixesPredicateTest.java
+``` java
+public class MajorContainsPrefixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Computer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Computer", "Science");
+
+        MajorContainsPrefixesPredicate firstPredicate =
+                new MajorContainsPrefixesPredicate(firstPredicateKeywordList);
+        MajorContainsPrefixesPredicate secondPredicate =
+                new MajorContainsPrefixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        MajorContainsPrefixesPredicate firstPredicateCopy =
+                new MajorContainsPrefixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate == null);
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_majorContainsPrefixes_returnsTrue() {
+        // One prefix
+        MajorContainsPrefixesPredicate predicate =
+                new MajorContainsPrefixesPredicate(Collections.singletonList("Com"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+
+        // Mixed-case prefix
+        predicate = new MajorContainsPrefixesPredicate(Arrays.asList("CoM"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+    }
+
+    @Test
+    public void test_majorDoesNotContainPrefixes_returnsFalse() {
+        // Zero prefix
+        MajorContainsPrefixesPredicate predicate = new MajorContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+
+        // Non-matching prefix
+        predicate = new MajorContainsPrefixesPredicate(Arrays.asList("Info"));
+        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+    }
+}
+```
 ###### /java/seedu/address/model/person/PhoneContainsPrefixesPredicateTest.java
 ``` java
 public class PhoneContainsPrefixesPredicateTest {
@@ -1704,6 +1202,452 @@ public class PhoneContainsPrefixesPredicateTest {
 
         // Non-matching prefix
         predicate = new PhoneContainsPrefixesPredicate(Arrays.asList("555"));
+        assertFalse(predicate.test(new PersonBuilder().withPhone("999111").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/JobAppliedContainsPrefixesPredicateTest.java
+``` java
+public class JobAppliedContainsPrefixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
+
+        JobAppliedContainsPrefixesPredicate firstPredicate =
+                new JobAppliedContainsPrefixesPredicate(firstPredicateKeywordList);
+        JobAppliedContainsPrefixesPredicate secondPredicate =
+                new JobAppliedContainsPrefixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        JobAppliedContainsPrefixesPredicate firstPredicateCopy =
+                new JobAppliedContainsPrefixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_jobAppliedContainsPrefixes_returnsTrue() {
+        // One prefix
+        JobAppliedContainsPrefixesPredicate predicate =
+                new JobAppliedContainsPrefixesPredicate(Collections.singletonList("Soft"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+
+        // Mixed-case prefix
+        predicate = new JobAppliedContainsPrefixesPredicate(Arrays.asList("sOfT"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+    }
+
+    @Test
+    public void test_jobAppliedDoesNotContainPrefixes_returnsFalse() {
+        // Zero prefix
+        JobAppliedContainsPrefixesPredicate predicate =
+                new JobAppliedContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+
+        // Non-matching prefix
+        predicate = new JobAppliedContainsPrefixesPredicate(Arrays.asList("Data"));
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/AddressContainsSubstringsPredicateTest.java
+``` java
+public class AddressContainsSubstringsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
+        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
+
+        AddressContainsSubstringsPredicate firstPredicate =
+                new AddressContainsSubstringsPredicate(firstPredicateKeywordList);
+        AddressContainsSubstringsPredicate secondPredicate =
+                new AddressContainsSubstringsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        AddressContainsSubstringsPredicate firstPredicateCopy =
+                new AddressContainsSubstringsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_addressContainsSubstrings_returnsTrue() {
+        // One substring
+        AddressContainsSubstringsPredicate predicate =
+                new AddressContainsSubstringsPredicate(Collections.singletonList("ing Dr"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Mixed-case substring
+        predicate = new AddressContainsSubstringsPredicate(Arrays.asList("tIng Dri"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+    }
+
+    @Test
+    public void test_addressDoesNotContainSubstrings_returnsFalse() {
+        // Zero substring
+        AddressContainsSubstringsPredicate predicate =
+                new AddressContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Non-matching substring
+        predicate = new AddressContainsSubstringsPredicate(Arrays.asList("olland Dr"));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/EmailContainsKeywordsPredicateTest.java
+``` java
+public class EmailContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
+        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
+
+        EmailContainsKeywordsPredicate firstPredicate =
+                new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        EmailContainsKeywordsPredicate secondPredicate =
+                new EmailContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        EmailContainsKeywordsPredicate firstPredicateCopy =
+                new EmailContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_emailContainsKeywords_returnsTrue() {
+        // One keyword
+        EmailContainsKeywordsPredicate predicate =
+                new EmailContainsKeywordsPredicate(Collections.singletonList("hy@example.com"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+
+        // Multiple keywords
+        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("hy@example.com", "yh@example.com"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+    }
+
+    @Test
+    public void test_emailDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        EmailContainsKeywordsPredicate predicate =
+                new EmailContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
+
+        // Non-matching keyword
+        predicate = new EmailContainsKeywordsPredicate(Arrays.asList("lol@lol.com"));
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+
+        // Keywords match phone, name, expected graduation year and address, but does not match email
+        predicate = new EmailContainsKeywordsPredicate(
+                Arrays.asList("12345", "Alice", "Main", "Street", "2020"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withAddress("Main Street").withExpectedGraduationYear("2020").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/AddressContainsSuffixesPredicateTest.java
+``` java
+public class AddressContainsSuffixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Kent Ridge Drive");
+        List<String> secondPredicateKeywordList = Arrays.asList("Kent Ridge Drive", "Computing Drive");
+
+        AddressContainsSuffixesPredicate firstPredicate =
+                new AddressContainsSuffixesPredicate(firstPredicateKeywordList);
+        AddressContainsSuffixesPredicate secondPredicate =
+                new AddressContainsSuffixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        AddressContainsSuffixesPredicate firstPredicateCopy =
+                new AddressContainsSuffixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_addressContainsSuffixes_returnsTrue() {
+        // One suffix
+        AddressContainsSuffixesPredicate predicate =
+                new AddressContainsSuffixesPredicate(Collections.singletonList("ive"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Mixed-case suffix
+        predicate = new AddressContainsSuffixesPredicate(Arrays.asList("IvE"));
+        assertTrue(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+    }
+
+    @Test
+    public void test_addressDoesNotContainSuffixes_returnsFalse() {
+        // Zero suffix
+        AddressContainsSuffixesPredicate predicate =
+                new AddressContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+
+        // Non-matching suffix
+        predicate = new AddressContainsSuffixesPredicate(Arrays.asList("road"));
+        assertFalse(predicate.test(new PersonBuilder().withAddress("Computing Drive").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/GradePointAverageTest.java
+``` java
+public class GradePointAverageTest {
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new GradePointAverage(null));
+    }
+
+    @Test
+    public void constructor_invalidGradePointAverage_throwsIllegalArgumentException() {
+        String invalidGradePointAverage = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new GradePointAverage(invalidGradePointAverage));
+    }
+
+    @Test
+    public void isValidGradePointAverage() {
+        // null gradePointAverage
+        Assert.assertThrows(NullPointerException.class, () ->
+                GradePointAverage.isValidGradePointAverage(null));
+
+        // invalid gradePointAverage
+        assertFalse(GradePointAverage.isValidGradePointAverage(" ")); // spaces only
+        assertFalse(GradePointAverage.isValidGradePointAverage("5.10")); // not in range
+        assertFalse(GradePointAverage.isValidGradePointAverage("test")); // non-numeric
+        assertFalse(GradePointAverage.isValidGradePointAverage("-4.00")); // negative number
+
+        // valid gradePointAverage
+        assertTrue(GradePointAverage.isValidGradePointAverage("4.93"));
+        assertTrue(GradePointAverage.isValidGradePointAverage("4.75"));
+    }
+}
+```
+###### /java/seedu/address/model/person/MajorContainsSuffixesPredicateTest.java
+``` java
+public class MajorContainsSuffixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Computer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Computer", "Science");
+
+        MajorContainsSuffixesPredicate firstPredicate =
+                new MajorContainsSuffixesPredicate(firstPredicateKeywordList);
+        MajorContainsSuffixesPredicate secondPredicate =
+                new MajorContainsSuffixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        MajorContainsSuffixesPredicate firstPredicateCopy =
+                new MajorContainsSuffixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate == null);
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_majorContainsSuffixes_returnsTrue() {
+        // One suffix
+        MajorContainsSuffixesPredicate predicate =
+                new MajorContainsSuffixesPredicate(Collections.singletonList("ence"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+
+        // Mixed-case suffix
+        predicate = new MajorContainsSuffixesPredicate(Arrays.asList("EnCe"));
+        assertTrue(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+    }
+
+    @Test
+    public void test_majorDoesNotContainSuffixes_returnsFalse() {
+        // Zero suffix
+        MajorContainsSuffixesPredicate predicate = new MajorContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+
+        // Non-matching suffix
+        predicate = new MajorContainsSuffixesPredicate(Arrays.asList("curity"));
+        assertFalse(predicate.test(new PersonBuilder().withMajor("Computer Science").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/JobAppliedContainsKeywordsPredicateTest.java
+``` java
+public class JobAppliedContainsKeywordsPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
+
+        JobAppliedContainsKeywordsPredicate firstPredicate =
+                new JobAppliedContainsKeywordsPredicate(firstPredicateKeywordList);
+        JobAppliedContainsKeywordsPredicate secondPredicate =
+                new JobAppliedContainsKeywordsPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        JobAppliedContainsKeywordsPredicate firstPredicateCopy =
+                new JobAppliedContainsKeywordsPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_jobAppliedContainsKeywords_returnsTrue() {
+        // One keyword
+        JobAppliedContainsKeywordsPredicate predicate =
+                new JobAppliedContainsKeywordsPredicate(Collections.singletonList("Engineer"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+
+        // Multiple keywords
+        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("Software", "Engineer"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+
+        // Only one matching keyword
+        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("Front-end", "Developer"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Developer").build()));
+
+        // Mixed-case keywords
+        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("soFtWaRe", "eNGIneeR"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+    }
+
+    @Test
+    public void test_jobAppliedDoesNotContainKeywords_returnsFalse() {
+        // Zero keywords
+        JobAppliedContainsKeywordsPredicate predicate =
+                new JobAppliedContainsKeywordsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+
+        // Non-matching keyword
+        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("analyst"));
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
+
+        // Keywords match phone, email, expected graduation year and name, but does not match job applied
+        predicate = new JobAppliedContainsKeywordsPredicate(Arrays.asList("12345", "alice@email.com", "Alice", "2020"));
+        assertFalse(predicate.test(new PersonBuilder().withName("Alice").withPhone("12345")
+                .withEmail("alice@email.com").withJobApplied("Software Engineer")
+                .withExpectedGraduationYear("2020").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/PhoneContainsSuffixesPredicateTest.java
+``` java
+public class PhoneContainsSuffixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("999");
+        List<String> secondPredicateKeywordList = Arrays.asList("999", "555");
+
+        PhoneContainsSuffixesPredicate firstPredicate =
+                new PhoneContainsSuffixesPredicate(firstPredicateKeywordList);
+        PhoneContainsSuffixesPredicate secondPredicate =
+                new PhoneContainsSuffixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        PhoneContainsSuffixesPredicate firstPredicateCopy =
+                new PhoneContainsSuffixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_phoneContainsSuffixes_returnsTrue() {
+        // One suffix
+        PhoneContainsSuffixesPredicate predicate =
+                new PhoneContainsSuffixesPredicate(Collections.singletonList("55"));
+        assertTrue(predicate.test(new PersonBuilder().withPhone("999555").build()));
+    }
+
+    @Test
+    public void test_phoneDoesNotContainSuffixes_returnsFalse() {
+        // Zero suffix
+        PhoneContainsSuffixesPredicate predicate =
+                new PhoneContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withPhone("999").build()));
+
+        // Non-matching suffix
+        predicate = new PhoneContainsSuffixesPredicate(Arrays.asList("55"));
         assertFalse(predicate.test(new PersonBuilder().withPhone("999111").build()));
     }
 }
@@ -1761,26 +1705,26 @@ public class PhoneContainsSubstringsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/PhoneContainsSuffixesPredicateTest.java
+###### /java/seedu/address/model/person/EmailContainsSuffixesPredicateTest.java
 ``` java
-public class PhoneContainsSuffixesPredicateTest {
+public class EmailContainsSuffixesPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("999");
-        List<String> secondPredicateKeywordList = Arrays.asList("999", "555");
+        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
+        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
 
-        PhoneContainsSuffixesPredicate firstPredicate =
-                new PhoneContainsSuffixesPredicate(firstPredicateKeywordList);
-        PhoneContainsSuffixesPredicate secondPredicate =
-                new PhoneContainsSuffixesPredicate(secondPredicateKeywordList);
+        EmailContainsPrefixesPredicate firstPredicate =
+                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
+        EmailContainsPrefixesPredicate secondPredicate =
+                new EmailContainsPrefixesPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        PhoneContainsSuffixesPredicate firstPredicateCopy =
-                new PhoneContainsSuffixesPredicate(firstPredicateKeywordList);
+        EmailContainsPrefixesPredicate firstPredicateCopy =
+                new EmailContainsPrefixesPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -1794,23 +1738,198 @@ public class PhoneContainsSuffixesPredicateTest {
     }
 
     @Test
-    public void test_phoneContainsSuffixes_returnsTrue() {
-        // One suffix
-        PhoneContainsSuffixesPredicate predicate =
-                new PhoneContainsSuffixesPredicate(Collections.singletonList("55"));
-        assertTrue(predicate.test(new PersonBuilder().withPhone("999555").build()));
+    public void test_emailContainsPrefixes_returnsTrue() {
+        // One prefix
+        EmailContainsPrefixesPredicate predicate =
+                new EmailContainsPrefixesPredicate(Collections.singletonList("hy"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+
+        // Mixed-case prefix
+        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("Hy"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
     }
 
     @Test
-    public void test_phoneDoesNotContainSuffixes_returnsFalse() {
+    public void test_emailDoesNotContainPrefixes_returnsFalse() {
+        // Zero prefix
+        EmailContainsPrefixesPredicate predicate =
+                new EmailContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
+
+        // Non-matching prefix
+        predicate = new EmailContainsPrefixesPredicate(Arrays.asList("yh"));
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/UniversityContainsPrefixesPredicateTest.java
+``` java
+public class UniversityContainsPrefixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
+        List<String> secondPredicateKeywordList = Arrays.asList("NUS", "NTU");
+
+        UniversityContainsPrefixesPredicate firstPredicate =
+                new UniversityContainsPrefixesPredicate(firstPredicateKeywordList);
+        UniversityContainsPrefixesPredicate secondPredicate =
+                new UniversityContainsPrefixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        UniversityContainsPrefixesPredicate firstPredicateCopy =
+                new UniversityContainsPrefixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_universityContainsPrefixes_returnsTrue() {
+        // One prefix
+        UniversityContainsSubstringsPredicate predicate =
+                new UniversityContainsSubstringsPredicate(Collections.singletonList("e NU"));
+        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+
+        // Mixed-case substring
+        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("LE nu"));
+        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+    }
+
+    @Test
+    public void test_universityDoesNotContainSubstrings_returnsFalse() {
+        // Zero substring
+        UniversityContainsSubstringsPredicate predicate =
+                new UniversityContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+
+        // Non-matching substring
+        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("sm"));
+        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/CommentContainsPrefixesPredicateTest.java
+``` java
+public class CommentContainsPrefixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("He is decent");
+        List<String> secondPredicateKeywordList = Arrays.asList("He is decent", "She is decent");
+
+        CommentContainsPrefixesPredicate firstPredicate =
+                new CommentContainsPrefixesPredicate(firstPredicateKeywordList);
+        CommentContainsPrefixesPredicate secondPredicate =
+                new CommentContainsPrefixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        CommentContainsPrefixesPredicate firstPredicateCopy =
+                new CommentContainsPrefixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_commentContainsPrefixes_returnsTrue() {
+        // One prefix
+        CommentContainsPrefixesPredicate predicate =
+                new CommentContainsPrefixesPredicate(Collections.singletonList("He"));
+        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+
+        // Mixed-case prefix
+        predicate = new CommentContainsPrefixesPredicate(Arrays.asList("hE"));
+        assertTrue(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+    }
+
+    @Test
+    public void test_commentDoesNotContainPrefixes_returnsFalse() {
+        // Zero prefix
+        CommentContainsPrefixesPredicate predicate =
+                new CommentContainsPrefixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+
+        // Non-matching prefix
+        predicate = new CommentContainsPrefixesPredicate(Arrays.asList("She"));
+        assertFalse(predicate.test(new PersonBuilder().withComment("He is decent").build()));
+    }
+}
+```
+###### /java/seedu/address/model/person/UniversityContainsSuffixesPredicateTest.java
+``` java
+public class UniversityContainsSuffixesPredicateTest {
+
+    @Test
+    public void equals() {
+        List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
+        List<String> secondPredicateKeywordList = Arrays.asList("NUS", "NTU");
+
+        UniversityContainsSuffixesPredicate firstPredicate =
+                new UniversityContainsSuffixesPredicate(firstPredicateKeywordList);
+        UniversityContainsSuffixesPredicate secondPredicate =
+                new UniversityContainsSuffixesPredicate(secondPredicateKeywordList);
+
+        // same object -> returns true
+        assertTrue(firstPredicate.equals(firstPredicate));
+
+        // same values -> returns true
+        UniversityContainsSuffixesPredicate firstPredicateCopy =
+                new UniversityContainsSuffixesPredicate(firstPredicateKeywordList);
+        assertTrue(firstPredicate.equals(firstPredicateCopy));
+
+        // different types -> returns false
+        assertFalse(firstPredicate.equals(1));
+
+        // null -> returns false
+        assertFalse(firstPredicate.equals(null));
+
+        // different person -> returns false
+        assertFalse(firstPredicate.equals(secondPredicate));
+    }
+
+    @Test
+    public void test_universityContainsSuffixes_returnsTrue() {
+        // One suffix
+        UniversityContainsSuffixesPredicate predicate =
+                new UniversityContainsSuffixesPredicate(Collections.singletonList("US"));
+        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+
+        // Mixed-case substring
+        predicate = new UniversityContainsSuffixesPredicate(Arrays.asList("uS"));
+        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+    }
+
+    @Test
+    public void test_universityDoesNotContainSuffixes_returnsFalse() {
         // Zero suffix
-        PhoneContainsSuffixesPredicate predicate =
-                new PhoneContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withPhone("999").build()));
+        UniversityContainsSuffixesPredicate predicate =
+                new UniversityContainsSuffixesPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
 
         // Non-matching suffix
-        predicate = new PhoneContainsSuffixesPredicate(Arrays.asList("55"));
-        assertFalse(predicate.test(new PersonBuilder().withPhone("999111").build()));
+        predicate = new UniversityContainsSuffixesPredicate(Arrays.asList("yale"));
+        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
     }
 }
 ```
@@ -1884,83 +2003,61 @@ public class UniversityContainsKeywordsPredicateTest {
     }
 }
 ```
-###### /java/seedu/address/model/person/UniversityContainsPrefixesPredicateTest.java
+###### /java/seedu/address/model/person/MajorTest.java
 ``` java
-public class UniversityContainsPrefixesPredicateTest {
+public class MajorTest {
 
     @Test
-    public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
-        List<String> secondPredicateKeywordList = Arrays.asList("NUS", "NTU");
-
-        UniversityContainsPrefixesPredicate firstPredicate =
-                new UniversityContainsPrefixesPredicate(firstPredicateKeywordList);
-        UniversityContainsPrefixesPredicate secondPredicate =
-                new UniversityContainsPrefixesPredicate(secondPredicateKeywordList);
-
-        // same object -> returns true
-        assertTrue(firstPredicate.equals(firstPredicate));
-
-        // same values -> returns true
-        UniversityContainsPrefixesPredicate firstPredicateCopy =
-                new UniversityContainsPrefixesPredicate(firstPredicateKeywordList);
-        assertTrue(firstPredicate.equals(firstPredicateCopy));
-
-        // different types -> returns false
-        assertFalse(firstPredicate.equals(1));
-
-        // null -> returns false
-        assertFalse(firstPredicate.equals(null));
-
-        // different person -> returns false
-        assertFalse(firstPredicate.equals(secondPredicate));
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new Major(null));
     }
 
     @Test
-    public void test_universityContainsPrefixes_returnsTrue() {
-        // One prefix
-        UniversityContainsSubstringsPredicate predicate =
-                new UniversityContainsSubstringsPredicate(Collections.singletonList("e NU"));
-        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
-
-        // Mixed-case substring
-        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("LE nu"));
-        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+    public void constructor_invalidMajor_throwsIllegalArgumentException() {
+        String invalidMajor = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new Major(invalidMajor));
     }
 
     @Test
-    public void test_universityDoesNotContainSubstrings_returnsFalse() {
-        // Zero substring
-        UniversityContainsSubstringsPredicate predicate =
-                new UniversityContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+    public void isValidMajor() {
+        // null major
+        Assert.assertThrows(NullPointerException.class, () -> Major.isValidMajor(null));
 
-        // Non-matching substring
-        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("sm"));
-        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+        // invalid major
+        assertFalse(Major.isValidMajor("")); // empty string
+        assertFalse(Major.isValidMajor(" ")); // spaces only
+        assertFalse(Major.isValidMajor("^")); // only non-alphanumeric characters
+        assertFalse(Major.isValidMajor("comp*")); // contains non-alphanumeric characters
+
+        // valid major
+        assertTrue(Major.isValidMajor("computer science")); // alphabets only
+        assertTrue(Major.isValidMajor("12345")); // numbers only
+        assertTrue(Major.isValidMajor("2nd major in Business")); // alphanumeric characters
+        assertTrue(Major.isValidMajor("Computer Engineering")); // with capital letters
+        assertTrue(Major.isValidMajor("Business Analytics and Information Security")); // long names
     }
 }
 ```
-###### /java/seedu/address/model/person/UniversityContainsSubstringsPredicateTest.java
+###### /java/seedu/address/model/person/JobAppliedContainsSubstringsPredicateTest.java
 ``` java
-public class UniversityContainsSubstringsPredicateTest {
+public class JobAppliedContainsSubstringsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
-        List<String> secondPredicateKeywordList = Arrays.asList("NUS", "NTU");
+        List<String> firstPredicateKeywordList = Collections.singletonList("Software Engineer");
+        List<String> secondPredicateKeywordList = Arrays.asList("Front-end Developer", "Data Analyst");
 
-        UniversityContainsSubstringsPredicate firstPredicate =
-                new UniversityContainsSubstringsPredicate(firstPredicateKeywordList);
-        UniversityContainsSubstringsPredicate secondPredicate =
-                new UniversityContainsSubstringsPredicate(secondPredicateKeywordList);
+        JobAppliedContainsSubstringsPredicate firstPredicate =
+                new JobAppliedContainsSubstringsPredicate(firstPredicateKeywordList);
+        JobAppliedContainsSubstringsPredicate secondPredicate =
+                new JobAppliedContainsSubstringsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        UniversityContainsSubstringsPredicate firstPredicateCopy =
-                new UniversityContainsSubstringsPredicate(firstPredicateKeywordList);
+        JobAppliedContainsSubstringsPredicate firstPredicateCopy =
+                new JobAppliedContainsSubstringsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -1974,50 +2071,50 @@ public class UniversityContainsSubstringsPredicateTest {
     }
 
     @Test
-    public void test_universityContainsSubstrings_returnsTrue() {
+    public void test_jobAppliedContainsSubstrings_returnsTrue() {
         // One substring
-        UniversityContainsSubstringsPredicate predicate =
-                new UniversityContainsSubstringsPredicate(Collections.singletonList("e NU"));
-        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+        JobAppliedContainsSubstringsPredicate predicate =
+                new JobAppliedContainsSubstringsPredicate(Collections.singletonList("are Engin"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
 
         // Mixed-case substring
-        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("LE nu"));
-        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+        predicate = new JobAppliedContainsSubstringsPredicate(Arrays.asList("ArE EnGiNe"));
+        assertTrue(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
     }
 
     @Test
-    public void test_universityDoesNotContainSubstrings_returnsFalse() {
+    public void test_jobAppliedDoesNotContainSubstrings_returnsFalse() {
         // Zero substring
-        UniversityContainsSubstringsPredicate predicate =
-                new UniversityContainsSubstringsPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+        JobAppliedContainsSubstringsPredicate predicate =
+                new JobAppliedContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
 
         // Non-matching substring
-        predicate = new UniversityContainsSubstringsPredicate(Arrays.asList("sm"));
-        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+        predicate = new JobAppliedContainsSubstringsPredicate(Arrays.asList("are Dev"));
+        assertFalse(predicate.test(new PersonBuilder().withJobApplied("Software Engineer").build()));
     }
 }
 ```
-###### /java/seedu/address/model/person/UniversityContainsSuffixesPredicateTest.java
+###### /java/seedu/address/model/person/EmailContainsSubstringsPredicateTest.java
 ``` java
-public class UniversityContainsSuffixesPredicateTest {
+public class EmailContainsSubstringsPredicateTest {
 
     @Test
     public void equals() {
-        List<String> firstPredicateKeywordList = Collections.singletonList("NUS");
-        List<String> secondPredicateKeywordList = Arrays.asList("NUS", "NTU");
+        List<String> firstPredicateKeywordList = Collections.singletonList("hy@example.com");
+        List<String> secondPredicateKeywordList = Arrays.asList("hy@example.com", "yh@example.com");
 
-        UniversityContainsSuffixesPredicate firstPredicate =
-                new UniversityContainsSuffixesPredicate(firstPredicateKeywordList);
-        UniversityContainsSuffixesPredicate secondPredicate =
-                new UniversityContainsSuffixesPredicate(secondPredicateKeywordList);
+        EmailContainsSubstringsPredicate firstPredicate =
+                new EmailContainsSubstringsPredicate(firstPredicateKeywordList);
+        EmailContainsSubstringsPredicate secondPredicate =
+                new EmailContainsSubstringsPredicate(secondPredicateKeywordList);
 
         // same object -> returns true
         assertTrue(firstPredicate.equals(firstPredicate));
 
         // same values -> returns true
-        UniversityContainsSuffixesPredicate firstPredicateCopy =
-                new UniversityContainsSuffixesPredicate(firstPredicateKeywordList);
+        EmailContainsSubstringsPredicate firstPredicateCopy =
+                new EmailContainsSubstringsPredicate(firstPredicateKeywordList);
         assertTrue(firstPredicate.equals(firstPredicateCopy));
 
         // different types -> returns false
@@ -2031,27 +2128,27 @@ public class UniversityContainsSuffixesPredicateTest {
     }
 
     @Test
-    public void test_universityContainsSuffixes_returnsTrue() {
-        // One suffix
-        UniversityContainsSuffixesPredicate predicate =
-                new UniversityContainsSuffixesPredicate(Collections.singletonList("US"));
-        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+    public void test_emailContainsSubstrings_returnsTrue() {
+        // One substring
+        EmailContainsSubstringsPredicate predicate =
+                new EmailContainsSubstringsPredicate(Collections.singletonList("y@exa"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
 
         // Mixed-case substring
-        predicate = new UniversityContainsSuffixesPredicate(Arrays.asList("uS"));
-        assertTrue(predicate.test(new PersonBuilder().withUniversity("Yale NUS").build()));
+        predicate = new EmailContainsSubstringsPredicate(Arrays.asList("Y@eXa"));
+        assertTrue(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
     }
 
     @Test
-    public void test_universityDoesNotContainSuffixes_returnsFalse() {
-        // Zero suffix
-        UniversityContainsSuffixesPredicate predicate =
-                new UniversityContainsSuffixesPredicate(Collections.emptyList());
-        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+    public void test_emailDoesNotContainSubstrings_returnsFalse() {
+        // Zero substring
+        EmailContainsSubstringsPredicate predicate =
+                new EmailContainsSubstringsPredicate(Collections.emptyList());
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@lol.com").build()));
 
-        // Non-matching suffix
-        predicate = new UniversityContainsSuffixesPredicate(Arrays.asList("yale"));
-        assertFalse(predicate.test(new PersonBuilder().withUniversity("NUS").build()));
+        // Non-matching substring
+        predicate = new EmailContainsSubstringsPredicate(Arrays.asList("yh@e"));
+        assertFalse(predicate.test(new PersonBuilder().withEmail("hy@example.com").build()));
     }
 }
 ```
@@ -2082,6 +2179,280 @@ public class UniversityContainsSuffixesPredicateTest {
 
 
 }
+```
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidMajor_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_UNIVERSITY,
+                        VALID_EXPECTED_GRADUATION_YEAR, INVALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
+                        VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                        VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = Major.MESSAGE_MAJOR_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullMajor_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, null,
+                VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                Major.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_invalidGradePointAverage_throwsIllegalValueException() {
+        XmlAdaptedPerson person =
+                new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_UNIVERSITY,
+                        VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
+                        INVALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                        VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
+                        VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                        VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+```
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_nullGradePointAverage_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
+                null, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE,
+                VALID_EXPERIENCE_SCORE, VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                GradePointAverage.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+```
+###### /java/seedu/address/logic/commands/FindCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) for {@code FindCommand}.
+ */
+public class FindCommandTest {
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private FindCommandParser parser = new FindCommandParser();
+
+    @Test
+    public void execute_noKeywords_invalidCommandFormat() {
+        String expectedMessage = String.format(MESSAGE_INVALID_COMMAND_FORMAT, FindCommand.MESSAGE_USAGE);
+        FindCommand command;
+
+        try {
+            command = prepareCommand(" ");
+            assertCommandSuccess(command, Collections.emptyList());
+        } catch (ParseException pve) {
+            if (!pve.getMessage().equals(expectedMessage)) {
+                pve.printStackTrace();
+            }
+        }
+    }
+
+    @Test
+    public void execute_multipleKeywords_multiplePersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" Developer, lydia@example.com");
+        assertCommandSuccess(command, Arrays.asList(CARL, FIONA));
+    }
+
+    @Test
+    public void execute_singlePrefixWithSingleKeyword_onePersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/Kurz");
+        assertCommandSuccess(command, Arrays.asList(CARL, FIONA)); // due to fuzzy search
+    }
+
+    @Test
+    public void execute_singlePrefixWithMultipleKeywords_multiplePersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz");
+        assertCommandSuccess(command, Arrays.asList(CARL, ELLE, FIONA));
+    }
+
+    @Test
+    public void execute_multiplePrefixesWithSingleKeyword_onePersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/\"arl Kurz\" p/95352563");
+        assertCommandSuccess(command, Arrays.asList(CARL));
+    }
+
+    @Test
+    public void execute_multiplePrefixesWithMultipleKeywords_zeroPersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/Kurz, Elle, Kunz p/999, 555, "
+                + "000 e/heinz@example.com a/wall street y/2019");
+        assertCommandSuccess(command, Arrays.asList());
+    }
+
+    @Test
+    public void execute_allSupportedPrefixesWithSingleKeyword_onePersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/\"arl Kurz\" p/95352563 "
+                + "e/heinz@example.com a/\"wall street\" u/\"SMU\" m/Computer* j/*Developer");
+        assertCommandSuccess(command, Arrays.asList(CARL));
+    }
+
+    @Test
+    public void execute_allSupportedPrefixesWithMultipleKeyword_twoPersonsFound() throws ParseException {
+        FindCommand command = prepareCommand(" n/\"arl Kurz\", \"Elle\" p/95352563, 9482224 "
+                + "e/heinz@example.com, werner@example.com a/\"wall street\", michegan"
+                + " u/\"SMU\", \"NUS\" m/Computer*, *Analytics j/*Developer, Big*");
+        assertCommandSuccess(command, Arrays.asList(CARL, ELLE));
+    }
+
+    /**
+     * Parses {@code userInput} into a {@code FindCommand}.
+     */
+    private FindCommand prepareCommand(String userInput) throws ParseException {
+        FindCommand command = parser.parse(userInput);
+        command.setData(model, new CommandHistory(), new UndoRedoStack());
+        return command;
+    }
+
+    /**
+     * Asserts that {@code command} is successfully executed, and<br>
+     *     - the {@code FilteredList<Person>} is equal to {@code expectedList}<br>
+     *     - the {@code AddressBook} in model remains the same after executing the {@code command}
+     */
+    private void assertCommandSuccess(FindCommand command, List<Person> expectedList) {
+        AddressBook expectedAddressBook = new AddressBook(model.getAddressBook());
+        command.execute();
+
+        assertEquals(expectedList, model.getFilteredPersonList());
+        assertEquals(expectedAddressBook, model.getAddressBook());
+    }
+}
+```
+###### /java/seedu/address/logic/parser/PredicateUtilTest.java
+``` java
+public class PredicateUtilTest {
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private PredicateUtil testAllPredicate = new PredicateUtil();
+
+    @Test
+    public void parseKeywordsArray_validInput_success() {
+        String[] globalKeywords = {"Alex", "\"example.com\"", "9012*", "*Science"};
+        String[] prefixKeywords = {"n/Alex, Bernice", "e/\"example.com\"",
+            "p/9012*, 8121*", "m/*Science, *Engineering"};
+        try {
+            testAllPredicate.parseAllPredicates(globalKeywords);
+            testAllPredicate.parseAllPredicates(prefixKeywords);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+    }
+
+    @Test
+    public void parseKeywordsArray_emptyWordParameterForGlobalSearch_throwsParseException() {
+        String[] globalKeywords = {};
+
+        thrown.expect(ArrayIndexOutOfBoundsException.class);
+        try {
+            testAllPredicate.parseAllPredicates(globalKeywords);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+    }
+
+    @Test
+    public void parseKeywordsArray_emptyWordParameterForPrefixSearch_throwsParseException() {
+        String testArgs = "n/";
+        ArgumentMultimap testArgMultiMap = ArgumentTokenizer.tokenize(testArgs,
+                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
+                PREFIX_JOB_APPLIED, PREFIX_COMMENT);
+
+        try {
+            testAllPredicate.parseSelectedPredicates(testArgMultiMap);
+        } catch (ParseException pe) {
+            thrown.expect(ParseException.class);
+        }
+    }
+
+    @Test
+    public void parseKeywordsArray_invalidWildcardForPrefixSearch_throwsParseException() {
+        String testArgs = "n/\"";
+        ArgumentMultimap testArgMultiMap = ArgumentTokenizer.tokenize(testArgs,
+                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
+                PREFIX_JOB_APPLIED, PREFIX_COMMENT);
+
+        try {
+            testAllPredicate.parseSelectedPredicates(testArgMultiMap);
+        } catch (ParseException pe) {
+            thrown.expect(ParseException.class);
+        }
+    }
+
+    @Test
+    public void parseKeywordsArray_emptySubstringParameterForPrefixSearch_throwsParseException() {
+        String testArgs = "n/\"\"";
+        ArgumentMultimap testArgMultiMap = ArgumentTokenizer.tokenize(testArgs,
+                PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
+                PREFIX_JOB_APPLIED, PREFIX_COMMENT);
+
+        try {
+            testAllPredicate.parseSelectedPredicates(testArgMultiMap);
+        } catch (ParseException pe) {
+            thrown.expect(ParseException.class);
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/parser/FindUtilTest.java
+``` java
+public class FindUtilTest {
+
+    @Rule
+    public final ExpectedException thrown = ExpectedException.none();
+
+    private FindUtil testFindUtil = new FindUtil();
+
+    @Test
+    public void parseFindArgs_validInput_success() {
+        String testGlobalArgs = "test";
+        String testPrefixArgs = "m/";
+        ArgumentMultimap testGlobalArgMultiMap =
+                ArgumentTokenizer.tokenize(testGlobalArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
+                        PREFIX_JOB_APPLIED, PREFIX_COMMENT); // more fields to be added if necessary
+
+        ArgumentMultimap testPrefixArgMultiMap =
+                ArgumentTokenizer.tokenize(testPrefixArgs, PREFIX_NAME, PREFIX_PHONE, PREFIX_EMAIL,
+                        PREFIX_ADDRESS, PREFIX_UNIVERSITY, PREFIX_MAJOR,
+                        PREFIX_JOB_APPLIED, PREFIX_COMMENT); // more fields to be added if necessary
+
+        try {
+            testFindUtil.parseFindArgs(testGlobalArgs, testGlobalArgMultiMap);
+            testFindUtil.parseFindArgs(testPrefixArgs, testPrefixArgMultiMap);
+        } catch (ParseException pe) {
+            pe.printStackTrace();
+        }
+    }
+}
+```
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
+``` java
+    @Test
+    public void parseCommand_find() throws Exception {
+        List<String> keywords = Arrays.asList("foo", "bar", "baz");
+        assertTrue(parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")))
+                instanceof FindCommand);
+        assertTrue(parser.parseCommand(FindCommand.COMMAND_WORD + " n/foo") instanceof FindCommand);
+    }
+
 ```
 ###### /java/systemtests/FindCommandSystemTest.java
 ``` java

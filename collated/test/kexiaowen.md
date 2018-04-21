@@ -1,4 +1,442 @@
 # kexiaowen
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code University} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withUniversity(String university) {
+        this.university = new University(university);
+        return this;
+    }
+```
+###### /java/seedu/address/testutil/PersonBuilder.java
+``` java
+    /**
+     * Sets the {@code JobApplied} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withJobApplied(String jobApplied) {
+        this.jobApplied = new JobApplied(jobApplied);
+        return this;
+    }
+
+    /**
+     * Sets the {@code Rating} of the {@code Person} that we are building.
+     */
+    public PersonBuilder withRating(String technicalSkillsScore, String communicationSkillsScore,
+                                    String problemSolvingSkillsScore, String experienceScore) {
+        this.rating = new Rating(Double.valueOf(technicalSkillsScore),
+                Double.valueOf(communicationSkillsScore),
+                Double.valueOf(problemSolvingSkillsScore),
+                Double.valueOf(experienceScore));
+        return this;
+    }
+
+```
+###### /java/seedu/address/testutil/EditRatingDescriptorBuilder.java
+``` java
+/**
+ * A utility class to help with building EditPersonDescriptor objects.
+ */
+public class EditRatingDescriptorBuilder {
+    private EditRatingDescriptor descriptor;
+
+    public EditRatingDescriptorBuilder() {
+        descriptor = new EditRatingDescriptor();
+    }
+
+    public EditRatingDescriptorBuilder(EditRatingDescriptor descriptor) {
+        this.descriptor = new EditRatingDescriptor(descriptor);
+    }
+
+    /**
+     * Returns an {@code EditRatingDescriptor} with fields containing {@code rating}'s details
+     */
+    public EditRatingDescriptorBuilder(Rating rating) {
+        descriptor = new EditRatingDescriptor();
+        descriptor.setTechnicalSkillsScore(rating.getTechnicalSkillsScore());
+        descriptor.setCommunicationSkillsScore(rating.getCommunicationSkillsScore());
+        descriptor.setProblemSolvingSkillsScore(rating.getProblemSolvingSkillsScore());
+        descriptor.setExperienceScore(rating.getExperienceScore());
+    }
+
+    /**
+     * Sets the {@code technicalSkillsScore} of the {@code EditRatingDescriptor} that we are building.
+     */
+    public EditRatingDescriptorBuilder withTechnicalSkillsScore(double technicalSkillsScore) {
+        descriptor.setTechnicalSkillsScore(technicalSkillsScore);
+        return this;
+    }
+
+    /**
+     * Sets the {@code communicationSkillsScore} of the {@code EditRatingDescriptor} that we are building.
+     */
+    public EditRatingDescriptorBuilder withCommunicationSkillsScore(double communicationSkillsScore) {
+        descriptor.setCommunicationSkillsScore(communicationSkillsScore);
+        return this;
+    }
+
+    /**
+     * Sets the {@code problemSolvingSkillsScore} of the {@code EditRatingDescriptor} that we are building.
+     */
+    public EditRatingDescriptorBuilder withProblemSolvingSkillsScore(double problemSolvingSkillsScore) {
+        descriptor.setProblemSolvingSkillsScore(problemSolvingSkillsScore);
+        return this;
+    }
+
+    /**
+     * Sets the {@code experienceScore} of the {@code EditRatingDescriptor} that we are building.
+     */
+    public EditRatingDescriptorBuilder withExperienceScore(double experienceScore) {
+        descriptor.setExperienceScore(experienceScore);
+        return this;
+    }
+
+    public EditRatingDescriptor build() {
+        return descriptor;
+    }
+}
+```
+###### /java/seedu/address/model/ModelManagerTest.java
+``` java
+    @Test
+    public void sortPersonListAscOrder() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(GEORGE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(GEORGE)
+                .withPerson(ALICE).withPerson(BENSON).build();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.sortPersonListAscOrder(SortCommand.SortField.RATING);
+        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
+    }
+
+    @Test
+    public void sortPersonListDescOrder() {
+        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(GEORGE).build();
+        UserPrefs userPrefs = new UserPrefs();
+        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BENSON)
+                .withPerson(ALICE).withPerson(GEORGE).build();
+
+        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
+        modelManager.sortPersonListDescOrder(SortCommand.SortField.RATING);
+        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
+    }
+}
+```
+###### /java/seedu/address/model/AddressBookTest.java
+``` java
+    @Test
+    public void sortDesc_sortByRating_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortDesc(SortCommand.SortField.RATING);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE)
+                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortAsc_sortByRating_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortAsc(SortCommand.SortField.RATING);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(DANIEL)
+                .withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).withPerson(ALICE).withPerson(BENSON).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortDesc_sortByGradePointAverage_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortDesc(SortCommand.SortField.GPA);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(ALICE)
+                .withPerson(FIONA).withPerson(BENSON).withPerson(ELLE).withPerson(DANIEL).withPerson(GEORGE).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortAsc_sortByGradePointAverage_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortAsc(SortCommand.SortField.GPA);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(GEORGE).withPerson(DANIEL)
+                .withPerson(ELLE).withPerson(BENSON).withPerson(FIONA).withPerson(ALICE).withPerson(CARL).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortDesc_sortByName_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortDesc(SortCommand.SortField.NAME);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(GEORGE).withPerson(FIONA)
+                .withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).withPerson(BENSON).withPerson(ALICE).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+    @Test
+    public void sortAsc_sortByName_sortSuccessful() {
+        AddressBook newData = getTypicalAddressBook();
+        newData.sortAsc(SortCommand.SortField.NAME);
+
+        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
+                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
+        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    }
+
+```
+###### /java/seedu/address/model/person/UniversityTest.java
+``` java
+public class UniversityTest {
+
+    private final University university = new University("NUS");
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new University(null));
+    }
+
+    @Test
+    public void constructor_invalidUniversity_throwsIllegalArgumentException() {
+        String invalidUniversity = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new University(invalidUniversity));
+    }
+
+    @Test
+    public void isValidUniversity() {
+        // null university
+        Assert.assertThrows(NullPointerException.class, () -> University.isValidUniversity(null));
+
+        // invalid university
+        assertFalse(University.isValidUniversity("")); // empty string
+        assertFalse(University.isValidUniversity(" ")); // spaces only
+        assertFalse(University.isValidUniversity("^")); // only non-alphanumeric characters
+        assertFalse(University.isValidUniversity("N*S")); // contains non-alphanumeric characters
+
+        // valid name
+        assertTrue(University.isValidUniversity("ntu")); // alphabets only
+        assertTrue(University.isValidUniversity("12345")); // numbers only
+        assertTrue(University.isValidUniversity("nus the 1st")); // alphanumeric characters
+        assertTrue(University.isValidUniversity("National University of Singapore")); // with capital letters
+        assertTrue(University.isValidUniversity("University of California Santa Barbara")); // long names
+    }
+
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        assertTrue(university.equals(university));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        University universityCopy = new University("NUS");
+        assertTrue(university.equals(universityCopy));
+    }
+
+    @Test
+    public void equals_differentTypes_returnsFalse() {
+        assertFalse(university.equals(1));
+    }
+
+    @Test
+    public void equals_null_returnsFalse() {
+        assertFalse(university.equals(null));
+    }
+
+    @Test
+    public void equals_differentValues_returnsFalse() {
+        University differentUniversity = new University("NTU");
+        assertFalse(university.equals(differentUniversity));
+    }
+}
+```
+###### /java/seedu/address/model/person/JobAppliedTest.java
+``` java
+public class JobAppliedTest {
+
+    private final JobApplied jobApplied = new JobApplied("Software Engineer");
+
+    @Test
+    public void constructor_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> new JobApplied(null));
+    }
+
+    @Test
+    public void constructor_invalidJobApplied_throwsIllegalArgumentException() {
+        String invalidJobApplied = "";
+        Assert.assertThrows(IllegalArgumentException.class, () -> new JobApplied(invalidJobApplied));
+    }
+
+    @Test
+    public void isValidJobApplied() {
+        // null jobApplied
+        Assert.assertThrows(NullPointerException.class, () -> JobApplied.isValidJobApplied(null));
+
+        // invalid jobApplied
+        assertFalse(JobApplied.isValidJobApplied("")); // empty string
+        assertFalse(JobApplied.isValidJobApplied(" ")); // spaces only
+
+        // valid jobApplied
+        assertTrue(JobApplied.isValidJobApplied("software engineer")); // alphabets only
+        assertTrue(JobApplied.isValidJobApplied("12345")); // numbers only
+        assertTrue(JobApplied.isValidJobApplied("1 software engineer 2 DevOps")); // alphanumeric characters
+        assertTrue(JobApplied.isValidJobApplied("Software Engineer")); // with capital letters
+        assertTrue(JobApplied.isValidJobApplied("Software Engineer & Web Developer")); // long names
+    }
+
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        assertTrue(jobApplied.equals(jobApplied));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        JobApplied jobAppliedCopy = new JobApplied("Software Engineer");
+        assertTrue(jobApplied.equals(jobAppliedCopy));
+    }
+
+    @Test
+    public void equals_differentTypes_returnsFalse() {
+        assertFalse(jobApplied.equals(1));
+    }
+
+    @Test
+    public void equals_null_returnsFalse() {
+        assertFalse(jobApplied.equals(null));
+    }
+
+    @Test
+    public void equals_differentValues_returnsFalse() {
+        JobApplied differentJobApplied = new JobApplied("Front-end Developer");
+        assertFalse(jobApplied.equals(differentJobApplied));
+    }
+}
+```
+###### /java/seedu/address/model/person/RatingTest.java
+``` java
+public class RatingTest {
+
+    private final Rating rating = new Rating(3, 3,
+            4, 3.5);
+    @Test
+    public void isValidScore() {
+        // null phone number
+        Assert.assertThrows(NullPointerException.class, () -> Rating.isValidScore(null));
+
+        // invalid scores
+        assertFalse(Rating.isValidScore((double) 0));
+        assertFalse(Rating.isValidScore(5.5));
+        assertFalse(Rating.isValidScore((double) -3));
+
+        // valid phone numbers
+        assertTrue(Rating.isValidScore((double) 1));
+        assertTrue(Rating.isValidScore(3.5));
+        assertTrue(Rating.isValidScore((double) 5));
+    }
+
+    @Test
+    public void equals_sameObject_returnsTrue() {
+        assertTrue(rating.equals(rating));
+    }
+
+    @Test
+    public void equals_sameValues_returnsTrue() {
+        Rating ratingCopy = new Rating(rating.getTechnicalSkillsScore(), rating.communicationSkillsScore,
+                rating.getProblemSolvingSkillsScore(), rating.getExperienceScore());
+        assertTrue(rating.equals(ratingCopy));
+    }
+
+    @Test
+    public void equals_differentTypes_returnsFalse() {
+        assertFalse(rating.equals(1));
+    }
+
+    @Test
+    public void equals_null_returnsFalse() {
+        assertFalse(rating.equals(null));
+    }
+
+    @Test
+    public void equals_differentValues_returnsFalse() {
+        Rating differentRating = new Rating(1, 1,
+                1, 1);
+        assertFalse(rating.equals(differentRating));
+    }
+}
+```
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidUniversity_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                INVALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
+                VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE,
+                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT, VALID_INTERVIEW_DATE, VALID_STATUS,
+                VALID_TAGS);
+        String expectedMessage = University.MESSAGE_UNIVERSITY_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullUniversity_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
+                null, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
+                VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
+                VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE,
+                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT, VALID_INTERVIEW_DATE, VALID_STATUS,
+                VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                University.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+```
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidJobApplied_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
+                INVALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+    @Test
+    public void toModelType_nullJobApplied_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
+                null, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                JobApplied.class.getSimpleName());
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+```
+###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
+``` java
+    @Test
+    public void toModelType_invalidRating_throwsIllegalValueException() {
+        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
+                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
+                VALID_JOB_APPLIED, INVALID_TECHNICAL_SKILLS_SCORE, INVALID_COMMUNICATION_SKILLS_SCORE,
+                INVALID_PROBLEM_SOLVING_SKILLS_SCORE, INVALID_EXPERIENCE_SCORE,
+                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
+        String expectedMessage = Rating.MESSAGE_RATING_CONSTRAINTS;
+        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
+    }
+
+```
 ###### /java/seedu/address/commons/util/DoubleUtilTest.java
 ``` java
 public class DoubleUtilTest {
@@ -21,45 +459,6 @@ public class DoubleUtilTest {
                 "3.345331231234444444232322325898788765767645436658689797676547587698") == 3.35);
     }
 }
-```
-###### /java/seedu/address/logic/commands/AddCommandTest.java
-``` java
-        @Override
-        public ObservableList<Person> getActivePersonList() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void setSelectedPerson(Person selectedPerson) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public Person getSelectedPerson() {
-            fail("This method should not be called.");
-            return null;
-        }
-
-        @Override
-        public void updateFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void filterFilteredPersonList(Predicate<Person> predicate) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void sortPersonListAscOrder(SortCommand.SortField sortField) {
-            fail("This method should not be called.");
-        }
-
-        @Override
-        public void sortPersonListDescOrder(SortCommand.SortField sortField) {
-            fail("This method should not be called.");
-        }
 ```
 ###### /java/seedu/address/logic/commands/RateCommandTest.java
 ``` java
@@ -255,6 +654,123 @@ public class RateCommandTest {
     }
 }
 ```
+###### /java/seedu/address/logic/commands/AddCommandTest.java
+``` java
+        @Override
+        public ObservableList<Person> getActivePersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setSelectedPerson(Person selectedPerson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Person getSelectedPerson() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void updateFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void filterFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListAscOrder(SortCommand.SortField sortField) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListDescOrder(SortCommand.SortField sortField) {
+            fail("This method should not be called.");
+        }
+```
+###### /java/seedu/address/logic/commands/RatingEditCommandTest.java
+``` java
+/**
+ * Contains integration tests (interaction with the Model) and unit tests for RatingEditCommand.
+ */
+public class RatingEditCommandTest {
+    public static final double TECHNICAL_SKILLS_SCORE = 4;
+    public static final double COMMUNICATION_SKILLS_SCORE = 4.5;
+    public static final double PROBLEM_SOLVING_SKILLS_SCORE = 3;
+    public static final double EXPERIENCE_SCORE = 3.2;
+    public static final String TECHNICAL_SKILLS_SCORE_STRING = "4";
+    public static final String COMMUNICATION_SKILLS_SCORE_STRING = "4.5";
+    public static final String PROBLEM_SOLVING_SKILLS_SCORE_STRING = "3";
+    public static final String EXPERIENCE_SCORE_STRING = "3.2";
+    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+
+    @Test
+    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
+        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(firstPerson).withRating(TECHNICAL_SKILLS_SCORE_STRING,
+                COMMUNICATION_SKILLS_SCORE_STRING, PROBLEM_SOLVING_SKILLS_SCORE_STRING,
+                EXPERIENCE_SCORE_STRING).build();
+        Rating rating = new Rating(TECHNICAL_SKILLS_SCORE, COMMUNICATION_SKILLS_SCORE,
+                PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE);
+        EditRatingDescriptor descriptor = new EditRatingDescriptorBuilder(rating).build();
+
+
+        RatingEditCommand ratingEditCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        String expectedMessage = String.format(RatingEditCommand.MESSAGE_EDIT_RATING_SUCCESS,
+                editedPerson.getName(), editedPerson.getRating().getTechnicalSkillsScore(),
+                editedPerson.getRating().getCommunicationSkillsScore(),
+                editedPerson.getRating().getProblemSolvingSkillsScore(),
+                editedPerson.getRating().getExperienceScore(),
+                editedPerson.getRating().getOverallScore());
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(ratingEditCommand, model, expectedMessage, expectedModel);
+    }
+
+    @Test
+    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
+        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
+        Person editedPerson = new PersonBuilder(firstPerson).withRating(TECHNICAL_SKILLS_SCORE_STRING,
+                COMMUNICATION_SKILLS_SCORE_STRING, PROBLEM_SOLVING_SKILLS_SCORE_STRING,
+                Double.toString(firstPerson.getRating().experienceScore)).build();
+        Rating rating = new Rating(TECHNICAL_SKILLS_SCORE, COMMUNICATION_SKILLS_SCORE,
+                PROBLEM_SOLVING_SKILLS_SCORE, firstPerson.getRating().experienceScore);
+        EditRatingDescriptor descriptor = new EditRatingDescriptorBuilder(rating).build();
+
+
+        RatingEditCommand ratingEditCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
+        String expectedMessage = String.format(RatingEditCommand.MESSAGE_EDIT_RATING_SUCCESS,
+                editedPerson.getName(), editedPerson.getRating().getTechnicalSkillsScore(),
+                editedPerson.getRating().getCommunicationSkillsScore(),
+                editedPerson.getRating().getProblemSolvingSkillsScore(),
+                editedPerson.getRating().getExperienceScore(),
+                editedPerson.getRating().getOverallScore());
+
+        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
+        expectedModel.updatePerson(firstPerson, editedPerson);
+
+        assertCommandSuccess(ratingEditCommand, model, expectedMessage, expectedModel);
+    }
+
+    /**
+     * Returns a {@code RateCommand}.
+     */
+    private RatingEditCommand prepareCommand(Index index, EditRatingDescriptor editRatingDescriptor) {
+        RatingEditCommand ratingEditCommand = new RatingEditCommand(index, editRatingDescriptor);
+        ratingEditCommand.setData(model, new CommandHistory(), new UndoRedoStack());
+        return ratingEditCommand;
+    }
+}
+
+```
 ###### /java/seedu/address/logic/commands/RatingDeleteCommandTest.java
 ``` java
 /**
@@ -419,84 +935,6 @@ public class RatingDeleteCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/commands/RatingEditCommandTest.java
-``` java
-/**
- * Contains integration tests (interaction with the Model) and unit tests for RatingEditCommand.
- */
-public class RatingEditCommandTest {
-    public static final double TECHNICAL_SKILLS_SCORE = 4;
-    public static final double COMMUNICATION_SKILLS_SCORE = 4.5;
-    public static final double PROBLEM_SOLVING_SKILLS_SCORE = 3;
-    public static final double EXPERIENCE_SCORE = 3.2;
-    public static final String TECHNICAL_SKILLS_SCORE_STRING = "4";
-    public static final String COMMUNICATION_SKILLS_SCORE_STRING = "4.5";
-    public static final String PROBLEM_SOLVING_SKILLS_SCORE_STRING = "3";
-    public static final String EXPERIENCE_SCORE_STRING = "3.2";
-    private Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-
-    @Test
-    public void execute_allFieldsSpecifiedUnfilteredList_success() throws Exception {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withRating(TECHNICAL_SKILLS_SCORE_STRING,
-                COMMUNICATION_SKILLS_SCORE_STRING, PROBLEM_SOLVING_SKILLS_SCORE_STRING,
-                EXPERIENCE_SCORE_STRING).build();
-        Rating rating = new Rating(TECHNICAL_SKILLS_SCORE, COMMUNICATION_SKILLS_SCORE,
-                PROBLEM_SOLVING_SKILLS_SCORE, EXPERIENCE_SCORE);
-        EditRatingDescriptor descriptor = new EditRatingDescriptorBuilder(rating).build();
-
-
-        RatingEditCommand ratingEditCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
-        String expectedMessage = String.format(RatingEditCommand.MESSAGE_EDIT_RATING_SUCCESS,
-                editedPerson.getName(), editedPerson.getRating().getTechnicalSkillsScore(),
-                editedPerson.getRating().getCommunicationSkillsScore(),
-                editedPerson.getRating().getProblemSolvingSkillsScore(),
-                editedPerson.getRating().getExperienceScore(),
-                editedPerson.getRating().getOverallScore());
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(firstPerson, editedPerson);
-
-        assertCommandSuccess(ratingEditCommand, model, expectedMessage, expectedModel);
-    }
-
-    @Test
-    public void execute_someFieldsSpecifiedUnfilteredList_success() throws Exception {
-        Person firstPerson = model.getFilteredPersonList().get(INDEX_FIRST_PERSON.getZeroBased());
-        Person editedPerson = new PersonBuilder(firstPerson).withRating(TECHNICAL_SKILLS_SCORE_STRING,
-                COMMUNICATION_SKILLS_SCORE_STRING, PROBLEM_SOLVING_SKILLS_SCORE_STRING,
-                Double.toString(firstPerson.getRating().experienceScore)).build();
-        Rating rating = new Rating(TECHNICAL_SKILLS_SCORE, COMMUNICATION_SKILLS_SCORE,
-                PROBLEM_SOLVING_SKILLS_SCORE, firstPerson.getRating().experienceScore);
-        EditRatingDescriptor descriptor = new EditRatingDescriptorBuilder(rating).build();
-
-
-        RatingEditCommand ratingEditCommand = prepareCommand(INDEX_FIRST_PERSON, descriptor);
-        String expectedMessage = String.format(RatingEditCommand.MESSAGE_EDIT_RATING_SUCCESS,
-                editedPerson.getName(), editedPerson.getRating().getTechnicalSkillsScore(),
-                editedPerson.getRating().getCommunicationSkillsScore(),
-                editedPerson.getRating().getProblemSolvingSkillsScore(),
-                editedPerson.getRating().getExperienceScore(),
-                editedPerson.getRating().getOverallScore());
-
-        Model expectedModel = new ModelManager(new AddressBook(model.getAddressBook()), new UserPrefs());
-        expectedModel.updatePerson(firstPerson, editedPerson);
-
-        assertCommandSuccess(ratingEditCommand, model, expectedMessage, expectedModel);
-    }
-
-    /**
-     * Returns a {@code RateCommand}.
-     */
-    private RatingEditCommand prepareCommand(Index index, EditRatingDescriptor editRatingDescriptor) {
-        RatingEditCommand ratingEditCommand = new RatingEditCommand(index, editRatingDescriptor);
-        ratingEditCommand.setData(model, new CommandHistory(), new UndoRedoStack());
-        return ratingEditCommand;
-    }
-}
-
-```
 ###### /java/seedu/address/logic/commands/SortCommandTest.java
 ``` java
 public class SortCommandTest {
@@ -594,38 +1032,6 @@ public class SortCommandTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/AddressBookParserTest.java
-``` java
-    @Test
-    public void parseCommand_rate() throws Exception {
-        final Rating rating = new Rating(4.5, 4,
-                3.5, 4);
-        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + " "
-                + INDEX_FIRST_PERSON.getOneBased() + " "
-                + PREFIX_TECHNICAL_SKILLS_SCORE + rating.technicalSkillsScore + " "
-                + PREFIX_COMMUNICATION_SKILLS_SCORE + rating.communicationSkillsScore + " "
-                + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + rating.problemSolvingSkillsScore + " "
-                + PREFIX_EXPERIENCE_SCORE + rating.experienceScore);
-        assertEquals(new RateCommand(INDEX_FIRST_PERSON, rating), command);
-    }
-
-    @Test
-    public void parseCommand_deleteRating() throws Exception {
-        RatingDeleteCommand command = (RatingDeleteCommand) parser.parseCommand(
-                RatingDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
-        assertEquals(new RatingDeleteCommand(INDEX_FIRST_PERSON), command);
-    }
-
-    @Test
-    public void parseCommand_sort() throws Exception {
-        SortCommand command =
-                (SortCommand) parser.parseCommand(
-                        SortCommand.COMMAND_WORD + " " + SORT_FIELD_NAME + " " + PREFIX_SORT_ORDER
-                                + SortCommand.SORT_ORDER_ASC);
-        assertEquals(new SortCommand(SortCommand.SortOrder.ASC, SortCommand.SortField.NAME), command);
-    }
-
-```
 ###### /java/seedu/address/logic/parser/ParserUtilTest.java
 ``` java
     @Test
@@ -676,25 +1082,26 @@ public class SortCommandTest {
     }
 
 ```
-###### /java/seedu/address/logic/parser/RateCommandParserTest.java
+###### /java/seedu/address/logic/parser/RatingEditCommandParserTest.java
 ``` java
-public class RateCommandParserTest {
-
+public class RatingEditCommandParserTest {
     private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RateCommand.MESSAGE_USAGE);
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingEditCommand.MESSAGE_USAGE);
+    private static final String MESSAGE_MISSING_INDEX =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingEditCommand.MESSAGE_MISSING_INDEX);
 
-    private RateCommandParser parser = new RateCommandParser();
+    private RatingEditCommandParser parser = new RatingEditCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
-        // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
-
-        // no field specified
-        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
-
         // no index and no field specified
         assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
+
+        // no index specified
+        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_MISSING_INDEX);
+
+        // no field specified
+        assertParseFailure(parser, "1", RatingEditCommand.MESSAGE_NOT_EDITED);
     }
 
     @Test
@@ -702,8 +1109,7 @@ public class RateCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_RATING_DESC, Rating.MESSAGE_RATING_CONSTRAINTS);
         assertParseFailure(parser, "1" + " " + PREFIX_TECHNICAL_SKILLS_SCORE
                 + " " + PREFIX_COMMUNICATION_SKILLS_SCORE
-                + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE
-                + " " + PREFIX_EXPERIENCE_SCORE, RatingEditCommand.MESSAGE_EMPTY_SCORE);
+                + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE, RatingEditCommand.MESSAGE_EMPTY_SCORE);
     }
 
 }
@@ -737,26 +1143,25 @@ public class RatingDeleteCommandParserTest {
     }
 }
 ```
-###### /java/seedu/address/logic/parser/RatingEditCommandParserTest.java
+###### /java/seedu/address/logic/parser/RateCommandParserTest.java
 ``` java
-public class RatingEditCommandParserTest {
-    private static final String MESSAGE_INVALID_FORMAT =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingEditCommand.MESSAGE_USAGE);
-    private static final String MESSAGE_MISSING_INDEX =
-            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RatingEditCommand.MESSAGE_MISSING_INDEX);
+public class RateCommandParserTest {
 
-    private RatingEditCommandParser parser = new RatingEditCommandParser();
+    private static final String MESSAGE_INVALID_FORMAT =
+            String.format(MESSAGE_INVALID_COMMAND_FORMAT, RateCommand.MESSAGE_USAGE);
+
+    private RateCommandParser parser = new RateCommandParser();
 
     @Test
     public void parse_missingParts_failure() {
-        // no index and no field specified
-        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
-
         // no index specified
-        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_MISSING_INDEX);
+        assertParseFailure(parser, VALID_NAME_AMY, MESSAGE_INVALID_FORMAT);
 
         // no field specified
-        assertParseFailure(parser, "1", RatingEditCommand.MESSAGE_NOT_EDITED);
+        assertParseFailure(parser, "1", MESSAGE_INVALID_FORMAT);
+
+        // no index and no field specified
+        assertParseFailure(parser, "", MESSAGE_INVALID_FORMAT);
     }
 
     @Test
@@ -764,446 +1169,41 @@ public class RatingEditCommandParserTest {
         assertParseFailure(parser, "1" + INVALID_RATING_DESC, Rating.MESSAGE_RATING_CONSTRAINTS);
         assertParseFailure(parser, "1" + " " + PREFIX_TECHNICAL_SKILLS_SCORE
                 + " " + PREFIX_COMMUNICATION_SKILLS_SCORE
-                + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE, RatingEditCommand.MESSAGE_EMPTY_SCORE);
+                + " " + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE
+                + " " + PREFIX_EXPERIENCE_SCORE, RatingEditCommand.MESSAGE_EMPTY_SCORE);
     }
 
 }
 ```
-###### /java/seedu/address/model/AddressBookTest.java
+###### /java/seedu/address/logic/parser/AddressBookParserTest.java
 ``` java
     @Test
-    public void sortDesc_sortByRating_sortSuccessful() {
-        AddressBook newData = getTypicalAddressBook();
-        newData.sortDesc(SortCommand.SortField.RATING);
-
-        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(BENSON).withPerson(ALICE)
-                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
-        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    public void parseCommand_rate() throws Exception {
+        final Rating rating = new Rating(4.5, 4,
+                3.5, 4);
+        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + PREFIX_TECHNICAL_SKILLS_SCORE + rating.technicalSkillsScore + " "
+                + PREFIX_COMMUNICATION_SKILLS_SCORE + rating.communicationSkillsScore + " "
+                + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + rating.problemSolvingSkillsScore + " "
+                + PREFIX_EXPERIENCE_SCORE + rating.experienceScore);
+        assertEquals(new RateCommand(INDEX_FIRST_PERSON, rating), command);
     }
 
     @Test
-    public void sortAsc_sortByRating_sortSuccessful() {
-        AddressBook newData = getTypicalAddressBook();
-        newData.sortAsc(SortCommand.SortField.RATING);
-
-        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(DANIEL)
-                .withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).withPerson(ALICE).withPerson(BENSON).build();
-        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
+    public void parseCommand_deleteRating() throws Exception {
+        RatingDeleteCommand command = (RatingDeleteCommand) parser.parseCommand(
+                RatingDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RatingDeleteCommand(INDEX_FIRST_PERSON), command);
     }
 
     @Test
-    public void sortDesc_sortByGradePointAverage_sortSuccessful() {
-        AddressBook newData = getTypicalAddressBook();
-        newData.sortDesc(SortCommand.SortField.GPA);
-
-        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(CARL).withPerson(ALICE)
-                .withPerson(FIONA).withPerson(BENSON).withPerson(ELLE).withPerson(DANIEL).withPerson(GEORGE).build();
-        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
-    }
-
-    @Test
-    public void sortAsc_sortByGradePointAverage_sortSuccessful() {
-        AddressBook newData = getTypicalAddressBook();
-        newData.sortAsc(SortCommand.SortField.GPA);
-
-        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(GEORGE).withPerson(DANIEL)
-                .withPerson(ELLE).withPerson(BENSON).withPerson(FIONA).withPerson(ALICE).withPerson(CARL).build();
-        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
-    }
-
-    @Test
-    public void sortDesc_sortByName_sortSuccessful() {
-        AddressBook newData = getTypicalAddressBook();
-        newData.sortDesc(SortCommand.SortField.NAME);
-
-        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(GEORGE).withPerson(FIONA)
-                .withPerson(ELLE).withPerson(DANIEL).withPerson(CARL).withPerson(BENSON).withPerson(ALICE).build();
-        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
-    }
-
-    @Test
-    public void sortAsc_sortByName_sortSuccessful() {
-        AddressBook newData = getTypicalAddressBook();
-        newData.sortAsc(SortCommand.SortField.NAME);
-
-        AddressBook expectedAddressbook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
-                .withPerson(CARL).withPerson(DANIEL).withPerson(ELLE).withPerson(FIONA).withPerson(GEORGE).build();
-        assertEquals(expectedAddressbook.getPersonList(), newData.getPersonList());
-    }
-
-```
-###### /java/seedu/address/model/ModelManagerTest.java
-``` java
-    @Test
-    public void sortPersonListAscOrder() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
-                .withPerson(GEORGE).build();
-        UserPrefs userPrefs = new UserPrefs();
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(GEORGE)
-                .withPerson(ALICE).withPerson(BENSON).build();
-
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.sortPersonListAscOrder(SortCommand.SortField.RATING);
-        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
-    }
-
-    @Test
-    public void sortPersonListDescOrder() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON)
-                .withPerson(GEORGE).build();
-        UserPrefs userPrefs = new UserPrefs();
-        AddressBook expectedAddressBook = new AddressBookBuilder().withPerson(BENSON)
-                .withPerson(ALICE).withPerson(GEORGE).build();
-
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        modelManager.sortPersonListDescOrder(SortCommand.SortField.RATING);
-        assertEquals(modelManager, new ModelManager(expectedAddressBook, userPrefs));
-    }
-}
-```
-###### /java/seedu/address/model/person/JobAppliedTest.java
-``` java
-public class JobAppliedTest {
-
-    private final JobApplied jobApplied = new JobApplied("Software Engineer");
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new JobApplied(null));
-    }
-
-    @Test
-    public void constructor_invalidJobApplied_throwsIllegalArgumentException() {
-        String invalidJobApplied = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new JobApplied(invalidJobApplied));
-    }
-
-    @Test
-    public void isValidJobApplied() {
-        // null jobApplied
-        Assert.assertThrows(NullPointerException.class, () -> JobApplied.isValidJobApplied(null));
-
-        // invalid jobApplied
-        assertFalse(JobApplied.isValidJobApplied("")); // empty string
-        assertFalse(JobApplied.isValidJobApplied(" ")); // spaces only
-
-        // valid jobApplied
-        assertTrue(JobApplied.isValidJobApplied("software engineer")); // alphabets only
-        assertTrue(JobApplied.isValidJobApplied("12345")); // numbers only
-        assertTrue(JobApplied.isValidJobApplied("1 software engineer 2 DevOps")); // alphanumeric characters
-        assertTrue(JobApplied.isValidJobApplied("Software Engineer")); // with capital letters
-        assertTrue(JobApplied.isValidJobApplied("Software Engineer & Web Developer")); // long names
-    }
-
-    @Test
-    public void equals_sameObject_returnsTrue() {
-        assertTrue(jobApplied.equals(jobApplied));
-    }
-
-    @Test
-    public void equals_sameValues_returnsTrue() {
-        JobApplied jobAppliedCopy = new JobApplied("Software Engineer");
-        assertTrue(jobApplied.equals(jobAppliedCopy));
-    }
-
-    @Test
-    public void equals_differentTypes_returnsFalse() {
-        assertFalse(jobApplied.equals(1));
-    }
-
-    @Test
-    public void equals_null_returnsFalse() {
-        assertFalse(jobApplied.equals(null));
-    }
-
-    @Test
-    public void equals_differentValues_returnsFalse() {
-        JobApplied differentJobApplied = new JobApplied("Front-end Developer");
-        assertFalse(jobApplied.equals(differentJobApplied));
-    }
-}
-```
-###### /java/seedu/address/model/person/RatingTest.java
-``` java
-public class RatingTest {
-
-    private final Rating rating = new Rating(3, 3,
-            4, 3.5);
-    @Test
-    public void isValidScore() {
-        // null phone number
-        Assert.assertThrows(NullPointerException.class, () -> Rating.isValidScore(null));
-
-        // invalid scores
-        assertFalse(Rating.isValidScore((double) 0));
-        assertFalse(Rating.isValidScore(5.5));
-        assertFalse(Rating.isValidScore((double) -3));
-
-        // valid phone numbers
-        assertTrue(Rating.isValidScore((double) 1));
-        assertTrue(Rating.isValidScore(3.5));
-        assertTrue(Rating.isValidScore((double) 5));
-    }
-
-    @Test
-    public void equals_sameObject_returnsTrue() {
-        assertTrue(rating.equals(rating));
-    }
-
-    @Test
-    public void equals_sameValues_returnsTrue() {
-        Rating ratingCopy = new Rating(rating.getTechnicalSkillsScore(), rating.communicationSkillsScore,
-                rating.getProblemSolvingSkillsScore(), rating.getExperienceScore());
-        assertTrue(rating.equals(ratingCopy));
-    }
-
-    @Test
-    public void equals_differentTypes_returnsFalse() {
-        assertFalse(rating.equals(1));
-    }
-
-    @Test
-    public void equals_null_returnsFalse() {
-        assertFalse(rating.equals(null));
-    }
-
-    @Test
-    public void equals_differentValues_returnsFalse() {
-        Rating differentRating = new Rating(1, 1,
-                1, 1);
-        assertFalse(rating.equals(differentRating));
-    }
-}
-```
-###### /java/seedu/address/model/person/UniversityTest.java
-``` java
-public class UniversityTest {
-
-    private final University university = new University("NUS");
-
-    @Test
-    public void constructor_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> new University(null));
-    }
-
-    @Test
-    public void constructor_invalidUniversity_throwsIllegalArgumentException() {
-        String invalidUniversity = "";
-        Assert.assertThrows(IllegalArgumentException.class, () -> new University(invalidUniversity));
-    }
-
-    @Test
-    public void isValidUniversity() {
-        // null university
-        Assert.assertThrows(NullPointerException.class, () -> University.isValidUniversity(null));
-
-        // invalid university
-        assertFalse(University.isValidUniversity("")); // empty string
-        assertFalse(University.isValidUniversity(" ")); // spaces only
-        assertFalse(University.isValidUniversity("^")); // only non-alphanumeric characters
-        assertFalse(University.isValidUniversity("N*S")); // contains non-alphanumeric characters
-
-        // valid name
-        assertTrue(University.isValidUniversity("ntu")); // alphabets only
-        assertTrue(University.isValidUniversity("12345")); // numbers only
-        assertTrue(University.isValidUniversity("nus the 1st")); // alphanumeric characters
-        assertTrue(University.isValidUniversity("National University of Singapore")); // with capital letters
-        assertTrue(University.isValidUniversity("University of California Santa Barbara")); // long names
-    }
-
-    @Test
-    public void equals_sameObject_returnsTrue() {
-        assertTrue(university.equals(university));
-    }
-
-    @Test
-    public void equals_sameValues_returnsTrue() {
-        University universityCopy = new University("NUS");
-        assertTrue(university.equals(universityCopy));
-    }
-
-    @Test
-    public void equals_differentTypes_returnsFalse() {
-        assertFalse(university.equals(1));
-    }
-
-    @Test
-    public void equals_null_returnsFalse() {
-        assertFalse(university.equals(null));
-    }
-
-    @Test
-    public void equals_differentValues_returnsFalse() {
-        University differentUniversity = new University("NTU");
-        assertFalse(university.equals(differentUniversity));
-    }
-}
-```
-###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
-``` java
-    @Test
-    public void toModelType_invalidUniversity_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                INVALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
-                VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
-                VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE,
-                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT, VALID_INTERVIEW_DATE, VALID_STATUS,
-                VALID_TAGS);
-        String expectedMessage = University.MESSAGE_UNIVERSITY_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
-    public void toModelType_nullUniversity_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS,
-                null, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR,
-                VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE,
-                VALID_COMMUNICATION_SKILLS_SCORE, VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE,
-                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT, VALID_INTERVIEW_DATE, VALID_STATUS,
-                VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                University.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-```
-###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
-``` java
-    @Test
-    public void toModelType_invalidJobApplied_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
-                INVALID_JOB_APPLIED, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
-                VALID_PROFILE_IMAGE, VALID_COMMENT,
-                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
-        String expectedMessage = JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-    @Test
-    public void toModelType_nullJobApplied_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
-                null, VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
-                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
-                VALID_PROFILE_IMAGE, VALID_COMMENT,
-                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
-        String expectedMessage = String.format(MISSING_FIELD_MESSAGE_FORMAT,
-                JobApplied.class.getSimpleName());
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-```
-###### /java/seedu/address/storage/XmlAdaptedPersonTest.java
-``` java
-    @Test
-    public void toModelType_invalidRating_throwsIllegalValueException() {
-        XmlAdaptedPerson person = new XmlAdaptedPerson(VALID_NAME, VALID_PHONE, VALID_EMAIL,
-                VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR, VALID_MAJOR, VALID_GRADE_POINT_AVERAGE,
-                VALID_JOB_APPLIED, INVALID_TECHNICAL_SKILLS_SCORE, INVALID_COMMUNICATION_SKILLS_SCORE,
-                INVALID_PROBLEM_SOLVING_SKILLS_SCORE, INVALID_EXPERIENCE_SCORE,
-                VALID_RESUME, VALID_PROFILE_IMAGE, VALID_COMMENT,
-                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
-        String expectedMessage = Rating.MESSAGE_RATING_CONSTRAINTS;
-        Assert.assertThrows(IllegalValueException.class, expectedMessage, person::toModelType);
-    }
-
-```
-###### /java/seedu/address/testutil/EditRatingDescriptorBuilder.java
-``` java
-/**
- * A utility class to help with building EditPersonDescriptor objects.
- */
-public class EditRatingDescriptorBuilder {
-    private EditRatingDescriptor descriptor;
-
-    public EditRatingDescriptorBuilder() {
-        descriptor = new EditRatingDescriptor();
-    }
-
-    public EditRatingDescriptorBuilder(EditRatingDescriptor descriptor) {
-        this.descriptor = new EditRatingDescriptor(descriptor);
-    }
-
-    /**
-     * Returns an {@code EditRatingDescriptor} with fields containing {@code rating}'s details
-     */
-    public EditRatingDescriptorBuilder(Rating rating) {
-        descriptor = new EditRatingDescriptor();
-        descriptor.setTechnicalSkillsScore(rating.getTechnicalSkillsScore());
-        descriptor.setCommunicationSkillsScore(rating.getCommunicationSkillsScore());
-        descriptor.setProblemSolvingSkillsScore(rating.getProblemSolvingSkillsScore());
-        descriptor.setExperienceScore(rating.getExperienceScore());
-    }
-
-    /**
-     * Sets the {@code technicalSkillsScore} of the {@code EditRatingDescriptor} that we are building.
-     */
-    public EditRatingDescriptorBuilder withTechnicalSkillsScore(double technicalSkillsScore) {
-        descriptor.setTechnicalSkillsScore(technicalSkillsScore);
-        return this;
-    }
-
-    /**
-     * Sets the {@code communicationSkillsScore} of the {@code EditRatingDescriptor} that we are building.
-     */
-    public EditRatingDescriptorBuilder withCommunicationSkillsScore(double communicationSkillsScore) {
-        descriptor.setCommunicationSkillsScore(communicationSkillsScore);
-        return this;
-    }
-
-    /**
-     * Sets the {@code problemSolvingSkillsScore} of the {@code EditRatingDescriptor} that we are building.
-     */
-    public EditRatingDescriptorBuilder withProblemSolvingSkillsScore(double problemSolvingSkillsScore) {
-        descriptor.setProblemSolvingSkillsScore(problemSolvingSkillsScore);
-        return this;
-    }
-
-    /**
-     * Sets the {@code experienceScore} of the {@code EditRatingDescriptor} that we are building.
-     */
-    public EditRatingDescriptorBuilder withExperienceScore(double experienceScore) {
-        descriptor.setExperienceScore(experienceScore);
-        return this;
-    }
-
-    public EditRatingDescriptor build() {
-        return descriptor;
-    }
-}
-```
-###### /java/seedu/address/testutil/PersonBuilder.java
-``` java
-    /**
-     * Sets the {@code University} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withUniversity(String university) {
-        this.university = new University(university);
-        return this;
-    }
-```
-###### /java/seedu/address/testutil/PersonBuilder.java
-``` java
-    /**
-     * Sets the {@code JobApplied} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withJobApplied(String jobApplied) {
-        this.jobApplied = new JobApplied(jobApplied);
-        return this;
-    }
-
-    /**
-     * Sets the {@code Rating} of the {@code Person} that we are building.
-     */
-    public PersonBuilder withRating(String technicalSkillsScore, String communicationSkillsScore,
-                                    String problemSolvingSkillsScore, String experienceScore) {
-        this.rating = new Rating(Double.valueOf(technicalSkillsScore),
-                Double.valueOf(communicationSkillsScore),
-                Double.valueOf(problemSolvingSkillsScore),
-                Double.valueOf(experienceScore));
-        return this;
+    public void parseCommand_sort() throws Exception {
+        SortCommand command =
+                (SortCommand) parser.parseCommand(
+                        SortCommand.COMMAND_WORD + " " + SORT_FIELD_NAME + " " + PREFIX_SORT_ORDER
+                                + SortCommand.SORT_ORDER_ASC);
+        assertEquals(new SortCommand(SortCommand.SortOrder.ASC, SortCommand.SortField.NAME), command);
     }
 
 ```

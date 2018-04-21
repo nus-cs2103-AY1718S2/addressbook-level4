@@ -509,12 +509,12 @@ The execution of the find command comprises the following steps:
 The following code snippets show how methods `formOrPredicate` and `formAndPredicate` are implemented:
 [source,java]
 ----
-public static Predicate<Person> formOrPredicate(Predicate<Person>... predicates) {
+public final Predicate<Person> formOrPredicate(Predicate<Person>... predicates) {
     return Stream.of(predicates).filter(Objects::nonNull)
             .reduce(condition -> false, Predicate::or);
 }
 
-public static Predicate<Person> formAndPredicate(Predicate<Person>... predicates) {
+public final Predicate<Person> formAndPredicate(Predicate<Person>... predicates) {
     return Stream.of(predicates).filter(Objects::nonNull)
             .reduce(condition -> true, Predicate::and);
 }
@@ -537,9 +537,9 @@ Figure 3.4.1.5 Activity diagram when user executes `find` command
 
 ==== Aspect: Implementation of find command
 
-* *Alternative 1 (current choice)*: Each field has its own field predicate composing of the predicates corresponding to the search pattern. The AllPredicate class is used to manage all these field predicates.
+* *Alternative 1 (current choice)*: Each field has its own field predicate composing of the predicates corresponding to the search pattern. The `AllPredicate` class is used to manage all these field predicates.
 
-** Pros: It is easy for new developers to understand. New developers can test each predicate easily, resulting in the debugging process to be smoother. They can also add or remove new predicates of each field easily as all predicates all grouped separately. This choice also adheres to Single Responsibility Principle and (SRP) and Separation of Concerns (SoC).
+** Pros: It is easy for new developers to understand. New developers can test each predicate easily, resulting in the debugging process to be smoother. They can also add or remove new predicates of each field easily as all predicates all grouped separately. This choice also adheres to Single Responsibility Principle (SRP) and Separation of Concerns (SoC).
 
 ** Cons: It results in a lot of classes to be created. Although there is increased cohesion, there is also increased coupling. Furthermore, this choice also violates Open-Closed Principle (OCP).
 
@@ -1646,14 +1646,14 @@ These instructions only provide a starting point for testers to work on; testers
    Expected: A student named Damith with the above particulars will be added into HR+. The student will be shown in the persons list panel.
 .. Add a resume pdf file named resume.pdf to the same folder as the jar file. It also must be valid PDF and smaller than 1MB. +
    Add an image named image.jpg to the same folder as the jar file. It also must be valid image file and smaller than 1MB. +
-   Command: `add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg +
+   Command: `add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg` +
    Expected: A student named Irene is added with the above particulars. A resume and a profile image will be added.
 
 === Showing info panel or resume
 
 . Showing either student info or resume in the right panel
 
-.. Prerequisites: A student is selected using the `select` command.
+.. Prerequisites: A student is selected using the `select` command. The student selected has a resume added into HR+.
 .. Command: `show resume` +
    Expected: The resume of the student is displayed when it is available.
    Command: `show info` +
@@ -1717,3 +1717,12 @@ Scheduling an interview for a student
 .. Command: `filter y/2019 r/3.5-4.5` +
    Expected: The student list now only contains students with 2019 as their expected graduation year and with overall rating score between 3.5 to 4.5, inclusive.
 
+=== Finding every field of the student
+. Finding the list of students with **any** fields that match the search keyword according to the search support stated in the User Guide.
+.. Command `find bernice, charlot` +
+   Expected: The student list now displays students `Bernice Yu` and `Charlotte Oliveiro` with reference to the sample data provided.
+
+=== Finding specific field of the student
+. Finding the list of students with **chosen** fields that match the search keyword according to the search support stated in the User Guide.
+.. Command `find e/alexyeoh@example.com, lidavxx@example.com j/Software p/87438807` +
+   Expected: The student list now displays student `Alex Yeoh` with reference to the sample data provided.

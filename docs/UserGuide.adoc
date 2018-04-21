@@ -62,6 +62,14 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 [TIP]
 The command keywords and parameters are *case sensitive*.
 
+[TIP]
+There is a floating real-time parsing panel below the command box that shows parsed results before commands are executed. +
+However, it only verifies that the command format is correct. Commands that are shown to be "valid commands" might not execute successfully. +
+For example, when you use a correct `add` command format to add a duplicate student into HR+, the real time parser shows that it is a valid command but it will not be successfully executed.
+
+[TIP]
+If you want to hide the real-time parsing panel, press kbd:[Tab].
+
 === Viewing help : `help`
 
 Format: `help`
@@ -274,7 +282,7 @@ These are the prefixes supported by the `find` command: +
 1. Name -  `n/` +
 2. Phone - `p/` +
 3. Email - `e/` +
-4. Address - `n/` +
+4. Address - `a/` +
 5. University - `u/` +
 6. Major - `m/` +
 7. Job Applied - `j/` +
@@ -284,7 +292,7 @@ These are 3 types of features that are supported for the `find` command: +
 
 1. Exact keyword match - Matches your search keyword with exact keywords found in the fields of persons. +
 
-2. Fuzzy keyword match - Matches your search keyword that is a fuzzy match with keywords found in the fields of persons. The fuzzy matching algorithm is based on the Levenshtein distance (LD) , which is a measure of the similarity between two strings. The threshold is set to 2 in HR+. This means that any keyword that is 2 characters different from the search keyword will be detected. If you are interested in finding out how the fuzzy match algorithm works, you can refer to the Java documentation on how this feature is implemented.
+2. Fuzzy keyword match - Matches your search keyword that is a fuzzy match with keywords found in the fields of persons. The fuzzy matching algorithm is based on the `Levenshtein distance (LD)` , which is a measure of the similarity between two strings. The threshold is set to `2` in HR+. This means that any keyword that is 2 characters different from the search keyword will be detected. If you are interested in finding out how the fuzzy match algorithm works, you can refer to the Java API on how this method is implemented.
 
 3. Wildcard keyword match – Matches your search keyword with 3 types of wildcard support. You should substitute the keyword " example " with your desired keyword. +
 • Wildcard "example" searches for field that contains keyword example
@@ -298,12 +306,12 @@ Search results are displayed in the application console. The format is: +
 (PREFIX) - represents which field the matched keyword was in. +
 ****
 
-The fuzzy search algorithm is implemented to cater users that fits the following profile: +
+The fuzzy search algorithm is implemented to cater to users that fit the following profiles: +
 1. Unsure what they want to search for +
 2. Aware of some patterns of the keywords but not the full keyword +
 3. Prone to typos +
 
-If you are certain that you want to find a certain keyword, please use the wildcard `"example"` so that all fields that contains the search keyword would be displayed only. Customizing fuzzy searching is one of our considerations for v2.0.
+If you are certain that you want to find a certain keyword, please use the wildcard `"example"` so that all fields that contains the search keyword would be displayed only. Customizing fuzzy searching is one of our considerations for `v2.0`.
 
 Examples: +
 
@@ -311,7 +319,7 @@ Examples: +
 General tips are not repeated across different examples!
 
 * `find bernice, charlot` +
-Returns list of persons whose keywords in **any** of their fields that are of an exact match **OR** fuzzy match with `bernice` **OR** `charlot`. In the sample data provided, the list will return persons `Bernice Yu` and `Charlotte Oliveiro`. Keyword `bernice` is an exact match with one of the keywords `Bernice` and `charlot` is a fuzzy match with one of the keywords `Charlotte` in `Charlotte Oliveiro`.
+Returns list of persons whose keywords in **any** of their fields are of an exact keyword match **OR** fuzzy keyword match with `bernice` **OR** `charlot`. In the sample data provided, the list will return persons `Bernice Yu` and `Charlotte Oliveiro`. Keyword `bernice` is an exact keyword match with one of the keywords `Bernice` and `charlot` is a fuzzy keyword match with one of the keywords `Charlotte` in `Charlotte Oliveiro`.
 
 [TIP]
 The search is case insensitive in HR+. e.g `bernice` might match `Bernice`. +
@@ -324,7 +332,7 @@ Returns list of persons that matches the following conditions: +
 1. Keywords in their `email` field are of an exact match **OR** fuzzy match with `alexyeoh@example.com` **OR** `lidavxx@example.com` **AND** +
 2. Keywords in their `job applied` field are of an exact match **OR** fuzzy match with `Software` **AND** +
 3. Keywords in their `phone` field are of an exact match **OR** fuzzy match with `87438807`. +
-In the sample data provided, the list with return person `Alex` as he is the only person that matches all these conditions.
+In the sample data provided, the list will return person `Alex` as he is the only person that matches all these conditions.
 
 [TIP]
 The first keyword is prepended with a prefix, thus this command assumes a prefix search. A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes. +
@@ -349,10 +357,10 @@ Keywords are not comma separated, thus they are treated as one keyword.
 
 * `find bernice, "alex", ir&ast;, &ast;li` +
 Returns list of persons with **any** of their fields that matches the following conditions: +
-1. Keywords that are of an exact match **OR** fuzzy match with keyword `bernice`
-2. Field contains keyword `alex`
-3. Field starts with keyword `ir`
-4. Field ends with keyword `li`
+1. Keywords that are of an exact match **OR** fuzzy match with keyword `bernice` **OR**
+2. Field contains keyword `alex` **OR**
+3. Field starts with keyword `ir` **OR**
+4. Field ends with keyword `li` +
 In the sample data provided, this command will return persons `Alex Yeoh`, `Bernice Yu`, `David Li` and `Irfan Ibrahim`. +
 
 * `find n/bernice, "alex", ir&ast;, &ast;li e/&ast;example.com p/"5" m/Computer&ast;` +
@@ -405,8 +413,8 @@ Examples:
 
 * `filter y/2020` +
 Returns all persons whose graudation year that is exactly 2020
-* `filter y/2019-2021' r/4.3, 4.5-5.0
-Returns all persons whose graduation year between 2019 and 2021, and whose rating is either 4.3, or between 4.5 to 5.0
+* `filter y/2019-2021 r/4.3, 4.5-5.0`
+Returns all persons whose graduation year between 2019 and 2021, and whose overall rating score is either 4.3, or between 4.5 to 5.0
 
 Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
 `Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]`
@@ -658,6 +666,7 @@ There is no need to save manually.
 
 Displays the tags that are added to a student in the left panel.
 
+// tag::futurefind[]
 === Highlights search results in user interface `[coming in v2.0]`
 
 Highlights search results after user executes the `find` command.
@@ -674,11 +683,12 @@ Allows user to toggle which search support they want at any point of time.
 
 Allows user to view a list of suggested searches on the fly when typing in their search keywords.
 
-=== Customising rating criteria `[coming in v2.0]`
-Specifies the criteria that candidates will be rated against.
-
 === Saving searches `[coming in v2.0]`
 Saves searches that can be displayed in future for fast lookups.
+// end::futurefind[]
+
+=== Customising rating criteria `[coming in v2.0]`
+Specifies the criteria that candidates will be rated against.
 
 === Sending and receiving emails `[coming in v2.0]`
 Sends and receives emails within HR+.
@@ -704,6 +714,8 @@ e.g. `edit 2 n/James Lee e/jameslee@example.com`
 e.g. `find James Jake`
 * *Filter* : `filter [y/KEYWORD] [r/RATING]` +
 e.g. `filter y/2019`
+* *Interview* : `interview INDEX DATE_TIME_EXPRESSION` +
+e.g. `interview 1 next Friday at 3pm`
 * *Status* : `status INDEX STATUS_INDEX` +
 e.g. `status 1 2`
 * *List* : `list`
@@ -718,6 +730,8 @@ e.g. `rating-edit 1 t/4.5 c/3`
 e.g. `rating-delete 1`
 * *Sort* : `sort FIELD o/SORT ORDER` +
 e.g. `sort gpa o/asc`
+* *Show* : `show PANEL` +
+e.g. `show resume`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

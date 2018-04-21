@@ -39,7 +39,22 @@ public class XmlUtilTest {
     private static final String VALID_PHONE = "9482424";
     private static final String VALID_EMAIL = "hans@example";
     private static final String VALID_ADDRESS = "4th street";
-    private static final List<XmlAdaptedTag> VALID_TAGS = Collections.singletonList(new XmlAdaptedTag("friends"));
+    private static final String VALID_UNIVERSITY = "NUS";
+    private static final String VALID_EXPECTED_GRADUATION_YEAR = "2020";
+    private static final String VALID_MAJOR = "Computer Science";
+    private static final String VALID_GRADE_POINT_AVERAGE = "4.77";
+    private static final String VALID_JOB_APPLIED = "Software Engineer";
+    private static final String VALID_TECHNICAL_SKILLS_SCORE = "4";
+    private static final String VALID_COMMUNICATION_SKILLS_SCORE = "3.5";
+    private static final String VALID_PROBLEM_SOLVING_SKILLS_SCORE = "3";
+    private static final String VALID_EXPERIENCE_SCORE = "2.5";
+    private static final String VALID_RESUME = TEST_DATA_FOLDER + "hans.pdf";
+    private static final String VALID_PROFILE_IMAGE = TEST_DATA_FOLDER + "gates.jpg";
+    private static final String VALID_COMMENT = "Competitive programmer";
+    private static final String VALID_INTERVIEW_DATE = "1540814400";
+    private static final String VALID_STATUS = "offer accepted";
+    private static final List<XmlAdaptedTag> VALID_TAGS =
+            Collections.singletonList(new XmlAdaptedTag("friends"));
 
     @Rule
     public ExpectedException thrown = ExpectedException.none();
@@ -80,7 +95,12 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 MISSING_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                null, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR,
+                VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
+                VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -89,7 +109,12 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 INVALID_PERSON_FIELD_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, INVALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR,
+                VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
+                VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 
@@ -98,7 +123,12 @@ public class XmlUtilTest {
         XmlAdaptedPerson actualPerson = XmlUtil.getDataFromFile(
                 VALID_PERSON_FILE, XmlAdaptedPersonWithRootElement.class);
         XmlAdaptedPerson expectedPerson = new XmlAdaptedPerson(
-                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_TAGS);
+                VALID_NAME, VALID_PHONE, VALID_EMAIL, VALID_ADDRESS, VALID_UNIVERSITY, VALID_EXPECTED_GRADUATION_YEAR,
+                VALID_MAJOR, VALID_GRADE_POINT_AVERAGE, VALID_JOB_APPLIED,
+                VALID_TECHNICAL_SKILLS_SCORE, VALID_COMMUNICATION_SKILLS_SCORE,
+                VALID_PROBLEM_SOLVING_SKILLS_SCORE, VALID_EXPERIENCE_SCORE, VALID_RESUME,
+                VALID_PROFILE_IMAGE, VALID_COMMENT,
+                VALID_INTERVIEW_DATE, VALID_STATUS, VALID_TAGS);
         assertEquals(expectedPerson, actualPerson);
     }
 

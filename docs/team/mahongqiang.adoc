@@ -1,0 +1,54 @@
+= Ma Hongqiang - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HR+
+
+---
+
+== Overview
+
+HR+ is a free recruiting and talent management software designed for campus recruiters to achieve hiring success. HR+ streamlines the recruiting process, increases the productivity and helps make more consistent and informed hiring decisions for hiring managers. HR+ contains around 10KLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to filter persons*
+** What it does: allows the user to filter persons according to fields like cGPA, expected graduation year, rating and interview date.
+** Justification: This feature boosts the productivity significantly because a user can easily find out people in mind. For example, the user can `filter y/2019` to obtain all students graduating next year.
+** Highlights: This enhancement builds upon the fields a person has. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required multiple new predicate and utility classes.
+** Credits:
+
+* *Minor enhancement*:
+** Adds a status field and status command that updates the field
+** Adds a expected graduation year field and modify add and edit command to accommodate such changes
+** Adds a resume field
+** Copies resume and profile pic to `data` folder for easy migration purpose
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/mhq199657.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/mhq199657.md[Test code]]
+
+* *Other contributions*:
+
+** Enhancements to existing features:
+*** Wrote a larger sample data for sample HR+ content as well as for testing (Pull request https://github.com/CS2103JAN2018-W14-B3/main/pull/83[#83])
+** Documentation:
+*** Updated User Guide and Developer Guide
+** Community:
+*** Some parts of the resume feature I added was adopted by several other class mates (https://github.com/CS2103JAN2018-W14-B3/main/pull/66[#66])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=status]
+
+include::../UserGuide.adoc[tag=filter]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=filtercommand]
+

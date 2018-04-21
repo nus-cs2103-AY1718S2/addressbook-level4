@@ -1,0 +1,386 @@
+= Ang Yee Chin - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: HR+
+
+---
+
+== Overview
+
+HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately 33 kLOC.
+
+
+== Summary of contributions
+
+* *Major enhancement*: Revamps the user interface and Improve user experience
+(Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/50[#50])
+** What it does: New user interface featured a clean theme which allows user to find the necessary information easily, thus improve in performance and productivity of the user.
+** Justification: This enhancement is important because the user interface gives the first impression to the users.
+** Highlights: This enhancement involves rewriting almost all FXML and Java code of the UI part. It also required changing and updating of `Logic` and `Model` in order to provide a seamless smooth interaction and animation between each components. Some parts and logic have to be rewritten such as the window event function (minimize, maximize, drag, resize) because it is not come out of the box for borderless window. Besides that, it is also responsive to adapt with different screen sizes.
+
+* *Minor enhancement*:
+** Added `interview` command and field that allows the user to schedule an interview date of students using natural language parser from Natty library
+(Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/21[#21])
+** Enhanced the `add` and `edit` command to include a new field `ProfileImage` and `Comment`, and wrote relevant tests (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/66[#66])
+** Added `show` command to allow the displaying of panels using command instead of [TAB] button. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/Ang-YC.md[Functional code]] [https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/Ang-YC.md[Test code]]
+
+* *Other contributions*:
+** *Functionality*:
+*** PDF Viewer are added with custom implementation (only the renderer are used from the PDFBox library) (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/80[#80])
+*** Most of the panels in the interface are animated to provide a better interaction and transition. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Radar chart is implemented using Canvas for better visualizing of the rating. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+*** Floating real-time parsing panel are added to show parsed result before executing. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+
+** *Performance*:
+*** Multi-threading are used to prevent from thread blocking when loading the resume / PDF files (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/80[#80])
+*** Profile Image are loaded only once, resized and cropped into correct dimension. (Pull requests https://github.com/CS2103JAN2018-W14-B3/main/pull/114[#114])
+
+
+
+
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+
+
+// tag::show[]
+=== Showing a specific panel: `show` `[since v1.5]`
+
+Showing a specific panel for more information about the currently selected person in HR+. +
+Format: `show PANEL`
+
+****
+* Make sure person are selected using `select` command before executing this command
+* When resume is requested, it will only shows when it is available.
+* `PANEL` must be either 'info' or 'resume', case sensitive
+****
+
+Examples:
+
+* `show info` +
+shows the info panel of the currently selected person.
+* `show resume` +
+shows the resume panel of the currently selected person.
+// end::show[]
+
+
+
+// tag::interviewCommand[]
+=== Scheduling an interview for a person : `interview` `[since v1.2]`
+
+Schedules interview of an existing person in HR+. +
+Format: `interview INDEX DATE_TIME_EXPRESSION`
+
+****
+* interview command schedules interview for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, etc.
+* `DATE_TIME_EXPRESSION` is the natural language date and time expression in English
+****
+
+Examples:
+
+* `interview 1 next Friday at 3pm` +
+schedules the interview of the 1st person to be next Friday at 3pm.
+
+* `interview 2 Mar 14 2pm` +
+schedules the interview of the 2nd person to be 14 March at 2pm.
+
+Due to the complexity of languages, the parser might fail to interpret what you mean.
+Always refer to the real time floating panel below the command box (As shown in figure below) to check what is the parsed result.
+
+image::userinterface/float_panel.png[width="250"]
+
+Below are some of the syntax for natural date and time parser:
+
+==== Formal dates
+Formal dates are represented using integers, separated by character - or /.
+
+===== Format
+****
+- `YYYY-MM-DD`
+- `YYYY/MM/DD`
+- `MM-DD-YYYY`
+- `MM/DD/YYYY`
+****
+- `DD` represent the day of a month
+- `MM` represent the month of a year
+- `YYYY` represent the year
+
+===== Example
+|===
+| *Input*    | *Output*
+| 2018-04-21 | 21/04/2018
+| 2018/04/21 | 21/04/2018
+| 04-21-2018 | 21/04/2018
+| 04/21/2018 | 21/04/2018
+|===
+
+==== Relaxed dates
+Relaxed dates are those in which the information are provided as words instead of integers.
+
+===== Example
+|===
+| *Input*          | *Output*
+| 21st April 2018  | 21/04/2018
+| Sat, 21 Apr 2018 | 21/04/2018
+| Apr 21           | 21/04, the year when the command executed
+|===
+
+==== Relative dates
+Relative dates are those that are relative to the current date.
+Do note that a week starts on Sunday and ends on the next Saturday.
+
+****
+- `YYYY-MM-DD`
+- `YYYY/MM/DD`
+- `MM-DD-YYYY`
+- `MM/DD/YYYY`
+****
+- `DD` represent the day of a month
+- `MM` represent the month of a year
+- `YYYY` represent the year
+
+===== Format
+****
+- next `DAY`
+- last `DAY`
+- `NUMBER` days from now
+- `NUMBER` weeks ago
+****
+- `DAY` represent the day of the week (Monday, Tuesday, ...)
+- `NUMBER` represent the integer or word representation of a number (1, two, 5)
+
+===== Example
+|===
+| *Input*          | *Output*
+| next thursday    | Next Thursday after the command executed
+| last wednesday   | The Wednesday before the command executed
+| today            | The day when the command executed
+| tomorrow         | The next day after the command executed
+| yesterday        | The day before the command executed
+| 3 days from now  | 3 days after the command executed
+| three weeks ago  | 3 weeks before the command executed
+|===
+
+==== Time
+Time of a day.
+
+===== Format
+****
+- `HH`[`MM`][`SS`][`MERIDIAN`]
+- [`WORD`]
+****
+- `HH` represent the hour of a day (Range of 00-23)
+- `MM` represent the minute of an hour (Range of 00-59), optional
+- `SS` represent the second of a minute (Range of 00-59), optional
+- `MERIDIAN` indicates the meridian (a, p, am, pm, a.m., p.m.), optional
+- `WORD` can be any of (afternoon: 12pm, noon: 12pm, midnight: 12am, morning: 8am, evening: 7pm)
+- : can be added to separate between HH, MM and SS (such as 21:00)
+
+===== Example
+|===
+| *Input*    | *Output*
+| 21         | 9:00:00pm
+| 232015     | 11:20:15pm
+| 21:00      | 9:00:00pm
+| 8a         | 8:00:00am
+| 7am        | 7:00:00am
+| 6:30 a.m.  | 6:30:00am
+| afternoon  | 12:00:00pm
+| midnight   | 12:00:00am
+|===
+
+==== Relative Time
+Similar to relative dates, it is used to specify time that are relative to the current time.
+
+===== Format
+****
+- `NUMBER` `UNIT` ago
+- `NUMBER` `UNIT` from now
+- `NUMBER` `UNIT` later
+- in `NUMBER` `UNIT`
+****
+- `NUMBER` represent the integer or word representation of a number (1, two, 5)
+- `UNIT` represent the unit of the
+
+===== Example
+|===
+| *Input*             | *Output*
+| 10 seconds ago      | 10 second before the command executed
+| 4 minutes from now  | 4 minutes after the command executed
+| 8 hours later       | 8 hours after the command executed
+| in 5 minutes        | 5 minutes after the command executed
+|===
+
+The syntax above is just part of the accepted values, detailed grammar definition can be found on http://natty.joestelmach.com/doc.jsp[Natty's documentation]
+// end::interviewCommand[]
+
+
+
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+
+
+// tag::interview[]
+=== Interview Command
+
+==== Current Implementation
+
+The `interview` command allows Talent Acquisition Specialists to schedule an interview for candidates. The format of this command is `interview INDEX DATE_TIME_EXPRESSION`.
+
+This command make use of Natty, a natural language date parser library written in Java. When given a date expression, it will apply standard language recognition and translation techniques to produce `LocalDateTime` which represents the result.
+
+In our current implementation, the `interview` command inherits from the `UndoableCommand` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
+
+Below is a sequence diagram that illustrates how these two components interact when the `interview` command is executed:
+
+image::InterviewCommandSequenceDiagram.png[width="800"]
+Figure 3.6.1.1 Sequence diagram to illustrate component interactions for the `interview` command
+
+As shown above, execution of the `interview` command comprises the following steps:
+
+. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+. During the `parseCommand` method call, an instance of `InterviewCommandParser` will be created when the keyword "interview" is matched. `InterviewCommandParser` then extracts the remaining user inputs and a `InterviewCommand` instance `i` will be returned provided that the format of user's input is correct.
+. `LogicManager` then calls `executeUndoableCommand` of the `InterviewCommand`, `i`, instantiated in step 2. Another component, `Model`, will be involved as the `InterviewCommand` requests to update the interview date of the person.
+. The `Model` component gets the filtered persons list and replaces `Person` p1 with `Person` p2 which is identical to p2 except interview date. A `CommandResult` will be generated and returned to `LogicManager`.
+
+==== Design Considerations
+
+===== Aspect: Usage of natural language parser
+
+* **Alternative 1 (current choice):** Use the natural language parser library by Natty to specify date and time
+** Pros: Users are able to enter the date and time in more natural tone without looking at calendar (For example, schedule an interview next Friday at 3pm)
+** Cons: Natural language parser doesn't have 100% reliability due to the complexity of human language
+
+* **Alternative 2:** Use the typical DD/MM/YYYY HH:MM format to specify date and time
+** Pros: Users are able to specify the date and time precisely
+** Cons: Users have to be certain on the date and time, which have to refer to the calendar at the same time
+
+===== Aspect: Implementation of scheduling and editing interview date
+
+* **Alternative 1 (current choice):** Implement a new command class `InterviewCommand` that supports both scheduling and editing of interview date.
+** Pros: Results in more customisable and modular command that can be easily modified
+** Cons: Complicates the system as users need to familiarise themselves with more commands
+
+* **Alternative 2:** Extend the original `EditCommand` to allow it to schedule and modify interview date of a candidate
+** Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly
+** Cons: Requires substantial changes to `EditCommandParser` and hence harder to implement
+// end::interview[]
+
+
+
+// tag::userinterface[]
+=== User Interface
+
+Our user interface is specially designed to maximise HR+’s usability and improve user experience. We take into account minor details and ensure that data is presented clearly so that it appeals to our users.
+
+The following sections discuss the different aspects we have considered to make sure HR+ follows industry standards in user interface design. Our implementation follows https://material.io[Material Design] principles created by a leading technology company Google.
+
+==== Responsive Design
+
+Responsive design is an approach to provide optimal viewing experience of an application regardless of the screen size of the user’s device. To incorporate responsive design into HR+, we use `AnchorPane` , a built-in JavaFX container component, to support relative positioning for all four directions (left, right, top and down) between parent and child components.
+
+All UI components have a minimum size requirement. Therefore, every container component in HR+ has a `minWidth` property.
+
+Besides `AnchorPane` , we also set a listener on the size of `InfoPanel` - a panel that displays detailed information about a student in HR+. The following code snippets illustrate how this listener is implemented:
+
+[source,java]
+----
+// SPLIT_MIN_WIDTH is a constant to define when to trigger the merge
+
+infoPaneWrapper.widthProperty().addListener((obs, old, newValue) -> {
+    int width = newValue.intValue();
+    if (width >= SPLIT_MIN_WIDTH) {
+        // Split into two parts
+    } else {
+        // Merge into one part
+    }
+});
+----
+
+When a user runs HR+ on a device with a bigger screen size, the `InfoPanel` will be split into two parts. The left panel will display student’s information while the right panel shows the student’s rating scores and a View resume button. The figure below (Figure 3.7.1.1) shows an example of our interface on devices with larger screens:
+
+image::userinterface/responsive_split.png[width="500"]
+Figure 3.7.1.1 InfoPanel on devices with larger screens
+
+On the other hand, if the device has a smaller screen size, the two components of `InfoPanel` will collapse into one. The student’s information is on top of the student’s ratings. `ScrollPane` in `InfoPanel` allows the user to scroll through the single merged panel. The figure below (Figure 3.7.1.2) shows our sample interface on devices with smaller screens:
+
+image::userinterface/responsive_merge.png[width="300"]
+Figure 3.7.1.2 InfoPanel on devices with smaller screens
+
+==== Consistency
+
+Consistency is another principle that is important in life and in design. Not only it brings up the professional feel and look, users will feel that the app is more reliable and robust. Besides that, it is easier for users to get started as the app follows a consistent pattern.
+
+In order to follow this principle, we have used consistent color, layout and also fonts throughout the whole app. It will be discussed the in details below:
+
+===== Color
+
+The primary color in HR+ is blue, with 10 shades of blue in the figure illustrated below (Figure 3.7.2.1). Other than the primary color, different shades of grey are also being used to show the level of significance of an information. Besides that, the colors that are being used are harmonized such that it brings up an unified feeling while users are using the app.
+
+image::userinterface/blue_shades.png[width="300"]
+Figure 3.7.2.1 10 shades of blue used in HR+
+
+===== Layout
+
+The spacing and layout inside HR+ is consistent and balanced. We make good use of spacing to achieve grouping of elements so that legibility is improved. This allow users to have a sense of which information are relevant to each other.
+
+For example, it is easy to separate between the applicant's information, contact information and interview information at a glance without the need of boxes. Examples are shown in the figure below (Figure 3.7.2.2)
+
+image::userinterface/spacing_group.png[width="300"]
+Figure 3.7.2.2 Grouping with spacing
+
+===== Fonts
+
+The font family that is being used is Roboto. It follows a natural width that allows text to be read more fluently. Moreover, this font featured 6 different weights (thin, light, regular, medium, bold and black) which will allow text to be represented depending on the different level of importance. All different weights are shown in the figure below. (Figure 3.7.2.3)
+
+image::userinterface/roboto_weight.png[width="300"]
+Figure 3.7.2.3 Different weights of Roboto font
+
+Important information is usually shown with a higher weight whereas trivial information is shown with a lower weight. This allow users to skim through the information to process data easily. The fonts are stored in `resources/fonts` folder and embedded into the packaged app so that it can be loaded on all devices.
+
+==== Familiarity
+
+Familiarity is another aspect that is useful when designing an app. It can reduce the cognitive load of a user so that users will not feel overwhelmed by the information that is being displayed.
+
+In HR+, icons are used to represent some of the fields. For example, stars are used to represent average rating of an applicant in the PersonCard list on the left (Figure 3.7.3.1, pointed with red arrow).
+
+image::userinterface/familiar_star.png[width="300"]
+Figure 3.7.3.1 Rating icon in PersonCard
+
+Besides that, contact information fields such as e-mail, address and mobile phone number uses a familiar icon. (Figure 3.7.3.2)
+
+image::userinterface/familiar_icons.png[width="300"]
+Figure 3.7.3.2 Contact information icons in InfoPanel
+
+==== Visual Feedback
+
+Visual Feedback is also essential for users to identify the current state of the app. This is because user might get interrupted while using the app and have to resume the session at any time.
+
+In HR+, when an applicant is selected in the PersonCard list on the left panel, it will be highlighted in blue border and shadow so that users know who they are currently selecting. (Figure 3.7.4.1)
+
+image::userinterface/list_active.png[width="300"]
+Figure 3.7.4.1 Highlighting of selected PersonCard
+
+Besides that, there is an indication when a panel is selected. This allows users to traverse between panel using keyboard only. (Figure 3.7.4.2)
+
+image::userinterface/panel_active.png[width="500"]
+Figure 3.7.4.2 Highlighting of selected Panel
+
+Moreover, when a command entered in `CommandBox` is invalid, the text color will be changed into red to indicate that there is an error in the command itself. (Figure 3.7.4.3)
+
+image::userinterface/feedback_error.png[width="250"]
+Figure 3.7.4.3 Invalid command indicator
+// end::userinterface[]

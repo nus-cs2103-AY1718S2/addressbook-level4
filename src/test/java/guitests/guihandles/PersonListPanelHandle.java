@@ -11,7 +11,7 @@ import seedu.address.ui.PersonCard;
  * Provides a handle for {@code PersonListPanel} containing the list of {@code PersonCard}.
  */
 public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
-    public static final String PERSON_LIST_VIEW_ID = "#personListView";
+    public static final String PERSON_LIST_VIEW_ID = "#listPersons";
 
     private Optional<PersonCard> lastRememberedSelectedPersonCard;
 
@@ -27,8 +27,10 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
     public PersonCardHandle getHandleToSelectedCard() {
         List<PersonCard> personList = getRootNode().getSelectionModel().getSelectedItems();
 
-        if (personList.size() != 1) {
-            throw new AssertionError("Person list size expected 1.");
+        if (personList.size() > 1) {
+            throw new AssertionError("Person list size expected 0 or 1.");
+        } else if (personList.size() == 0) {
+            return null;
         }
 
         return new PersonCardHandle(personList.get(0).getRoot());
@@ -59,7 +61,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      */
     public void navigateToCard(Person person) {
         List<PersonCard> cards = getRootNode().getItems();
-        Optional<PersonCard> matchingCard = cards.stream().filter(card -> card.person.equals(person)).findFirst();
+        Optional<PersonCard> matchingCard = cards.stream().filter(card -> card.getPerson().equals(person)).findFirst();
 
         if (!matchingCard.isPresent()) {
             throw new IllegalArgumentException("Person does not exist.");
@@ -76,7 +78,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      * Returns the person card handle of a person associated with the {@code index} in the list.
      */
     public PersonCardHandle getPersonCardHandle(int index) {
-        return getPersonCardHandle(getRootNode().getItems().get(index).person);
+        return getPersonCardHandle(getRootNode().getItems().get(index).getPerson());
     }
 
     /**
@@ -84,7 +86,7 @@ public class PersonListPanelHandle extends NodeHandle<ListView<PersonCard>> {
      */
     public PersonCardHandle getPersonCardHandle(Person person) {
         Optional<PersonCardHandle> handle = getRootNode().getItems().stream()
-                .filter(card -> card.person.equals(person))
+                .filter(card -> card.getPerson().equals(person))
                 .map(card -> new PersonCardHandle(card.getRoot()))
                 .findFirst();
         return handle.orElseThrow(() -> new IllegalArgumentException("Person does not exist."));

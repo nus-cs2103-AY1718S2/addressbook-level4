@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= HR+ Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,15 +10,15 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W14-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W14-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Setting up
 
-=== Prerequisites
 
 . *JDK `1.8.0_60`* or later
+
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -230,6 +230,105 @@ Classes used by multiple components are in the `seedu.addressbook.commons` packa
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::rate[]
+=== Rate Command
+==== Current Implementation
+The `rate` command allows Talent Acquisition Specialists to evaluate candidates' performance in interviews against four specific criteria, namely technical skills, communication skills, problem solving skills and experience. The format of this command is `rate INDEX t/TECHNICAL SKILLS SCORE c/COMMUNICATINO SKILLS SCORE p/PROBLEM SOLVING SKILLS SCORE e/EXPERIENCE SCORE`.
+
+In our current implementation, the `rate` command inherits from the `UndoableCommand` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
+
+Below is a sequence diagram that illustrates how these two components interact when the `rate` command is executed:
+
+image::RateCommandSequenceDiagram.png[width="800"]
+Figure 3.1.1.1 Sequence diagram to illustrate component interactions for the `rate` command
+
+As shown above, execution of the `rate` command comprises the following steps:
+
+. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+. During the `parseCommand` method call, an instance of `RateCommandParser` will be created when the keyword "rate" is matched. `RateCommandParser` then extracts the remaining user inputs and a `RateCommand` instance `r` will be returned provided that the format of user's input is correct.
+. `LogicManager` then calls `executeUndoableCommand` of the `RateCommand`, `r`, instantiated in step 2. Another component, `Model`, will be involved as the `RateCommand` requests to update the rating scores of the person.
+. The `Model` component gets the filtered persons list and replaces `Person` p1 with `Person` p2 which is identical to p2 except rating scores. A `CommandResult` will be generated and returned to `LogicManager`.
+
+==== Design Considerations
+
+===== Aspect: Implementation of adding and editing rating scores
+
+* **Alternative 1 (current choice):** Implement a new command class `RateCommand` that supports adding rating scores and `RatingEditCommand` to handle editing of rating scores
+** Pros: Results in more customisable commands that can be easily modified to support more prefixes and additional rating criteria
+** Cons: Complicates the system as users need to familiarise themselves with more commands
+* **Alternative 2:** Extend the original `EditCommand` to allow it to add and modify rating scores of a student
+** Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly
+** Cons: Requires substantial changes to `EditCommandParser` and hence harder to implement
+// end::rate[]
+
+// tag::sort[]
+=== Sort Command
+==== Current Implementation
+The `sort` command supports the listing of students in HR+ based on GPA, name or overall rating in ascending or descending order as specified by the user. The format of this `sort` command is `sort FIELD o/SORT ORDER`.
+
+As sorting is not undoable, this command inherits from the `Command` class instead of the `UndoableCommand` class. The sorting mechanism is mainly facilitated by `Logic` and `ModelManager`. `SortCommandParser` residing in `LogicManager` processes user inputs and creates a corresponding `SortCommand`. `ModelManager` will then invoke appropriate sorting methods in `UniquePersonList`.
+
+The following sequence diagrams depict the interactions between `LogicManager` and `ModelManager` when a user issues a request for sorting:
+
+image::SortCommandSequenceDiagram1.png[width="800"]
+image::SortCommandSequenceDiagram2.png[width="800"]
+Figure 3.2.1.1 Sequence diagrams for execution of `sort` command
+
+As seen from the sequence diagram above, `LogicManager` and `ModelManager` interact in the following way:
+
+. When a user keys in `sort gpa o/desc`, `LogicManager` calls method `parser` in `AddressBookParser`.
+. `SortCommandParser` is instantiated. If the user input is of the correct format, a `SortCommand` will be successfully created and returned back to `LogicManager`. Suppose the inputs are not valid or the format of the command is invalid, an exception will be thrown and users will see an error message.
+. `LogicManager` proceeds to invoke `execute` method of `SortCommand`.
+. `ModelManager` is in charge of sorting the list of persons through calling relevant methods provided in `AddressBook` and `UniquePersonList` according to the field to be sorted by.
+
+Currently, HR+ only allows users to sort the list of students by selected fields in ascending or descending order. This is achieved by encapsulating acceptable sorting orders and fields into `SortOrder` and `SortField` of the type `enum` respectively.
+
+In order to make Person objects comparable, additional methods need to be implemented in the `Person` class to compare different `Person` objects based on GPA, name and rating scores. The following code snippet demonstrates how these methods are implemented:
+[source,java]
+----
+/**
+ * Compares the overall ratings of two {@code Person} objects.
+ * @param p1
+ * @param p2
+ * @return 1 if p1 has a higher overall rating, 0 if p1 and p2 have equal overall rating and -1 otherwise.
+ */
+public static int compareByOverallRating(Person p1, Person p2) {
+    return Double.compare(p1.getRating().getOverallScore(),
+            p2.getRating().getOverallScore());
+}
+----
+
+To sort the list based on a particular field, we used the `sort` method from Java's `Collections` library. An example usage is shown below:
+
+[source,java]
+----
+/**
+ * Sorts the list based on GPA in ascending order
+ */
+public void sortPersonsGradePointAverageAsc() {
+    Collections.sort(internalList, Person::compareByGradePointAverage);
+}
+
+/**
+ * Sorts the list based on GPA in descending order
+ */
+public void sortPersonsGradePointAverageDesc() {
+    Collections.sort(internalList, Person::compareByGradePointAverage);
+    Collections.reverse(internalList);
+}
+----
+
+==== Design Considerations
+
+==== Aspect: Implementation of `SortCommand`
+* **Alternative 1 (current choice):** Implement a more generic `SortCommand` that sorts the list of students based on parameters supplied by the user
+** Pros: It is easier to modify `SortCommand` to support more fields to be sorted by.
+** Cons: It restricts the format of sort command to be the same and is thus less flexible.
+* **Alternative 2:** Use separate commands for each possible field, such as `gpa-sort`, `rating-sort` and `name-sort` commands
+** Pros: It allows developers to specify different command formats. For example, users might not need to specify the sorting order explicitly. `rating-sort` and `gpa-sort` can have default sorting order to be descending while results from `name-sort` can be in ascending order.
+** Cons: It increases the number of commands in HR+ and might be less user-friendly as users need to familiarise themselves with more commands.
+// end::sort[]
+
 // tag::undoredo[]
 === Undo/Redo feature
 ==== Current Implementation
@@ -357,6 +456,330 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
+
+//tag::findcommand[]
+=== Find Command
+
+==== Current Implementation
+
+The `find` command is facilitated by an `AllPredicate` class, which composes of predicates that determine the fields that are supported. Each field has its own set of predicates that determine the types of search patterns the user can perform. Search results of the keywords are stored in `FindResults`, which is a singleton pattern class.
+
+The following diagram, Figure 3.4.1.1 shows the composition of the `AllPredicate` class and the relationship between `FindResults`:
+
+image::AllPredicateComposition.png[width="800"]
+Figure 3.4.1.1 Composition of `AllPredicate` class
+
+The following code snippet shows an example of one type of predicate:
+
+[source,java]
+----
+public boolean test(Person person) {
+    return keywords.stream()
+            .anyMatch(keyword -> FindResults.getInstance()
+                    .containsWordIgnoreCase(person.getName().fullName, keyword,
+                    commandPrefix)
+                || keywords.stream()
+                    .anyMatch(fuzzyKeyword ->
+                    FindResults.getInstance().containsFuzzyMatchIgnoreCase(
+                            person.getName().fullName, fuzzyKeyword, commandPrefix,
+                            FindCommand.LEVENSHTEIN_DISTANCE_THRESHOLD)));
+}
+----
+
+The following sequence diagrams, Figure 3.4.1.2 and Figure 3.4.1.3 shows how the `find` command works:
+
+image::FindCommandSequenceDiagram1.png[width="800"]
+Figure 3.4.1.2 Sequence diagram of `find` command (1st part)
+
+image::FindCommandSequenceDiagram2.png[width="800"]
+Figure 3.4.1.3 Sequence diagram of `find` command (2nd part)
+
+The execution of the find command comprises the following steps:
+
+1. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+
+2. `AddressbookParser` calls the `parse` method of `FindCommandParser` to parse the arguments and return a `FindCommand` object.
+
+3. `FindCommandParser` calls the `parseFindArgs` method of `FindUtil` , which calls either the `parseAllPredicates` or `parseSelectedPredicates` method from `PredicateUtil` depending on whether the argument starts with a prefix.
+
+4. The `FindCommand` object is initialized with a combined `Predicate<Person>` object.
+
+5. The `FindCommand` object calls the method `updateFilteredPersonList` with the `Predicate<Person>` object.
+
+The following code snippets show how methods `formOrPredicate` and `formAndPredicate` are implemented:
+[source,java]
+----
+public final Predicate<Person> formOrPredicate(Predicate<Person>... predicates) {
+    return Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -> false, Predicate::or);
+}
+
+public final Predicate<Person> formAndPredicate(Predicate<Person>... predicates) {
+    return Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -> true, Predicate::and);
+}
+----
+
+The following sequence diagram, Figure 3.4.1.4, shows how the `Logic` component retrieves search results from `FindResults` without interference from the `Model` component:
+
+image::FindCommandComponents.png[width="800"]
+Figure 3.4.1.4 Component interactions for `find` command
+
+[NOTE]
+Note how results are retrieved from `FindResults`. It is important to have `FindResults` as a singleton pattern class as there should only be one instance of search results for every search performed by the `find` command.
+
+The following activity diagram, Figure 3.4.1.5 summarizes what happens when an user executes the `find` command:
+
+image::FindCommandActivityDiagram.png[width="800"]
+Figure 3.4.1.5 Activity diagram when user executes `find` command
+
+==== Design Considerations
+
+==== Aspect: Implementation of find command
+
+* *Alternative 1 (current choice)*: Each field has its own field predicate composing of the predicates corresponding to the search pattern. The `AllPredicate` class is used to manage all these field predicates.
+
+** Pros: It is easy for new developers to understand. New developers can test each predicate easily, resulting in the debugging process to be smoother. They can also add or remove new predicates of each field easily as all predicates all grouped separately. This choice also adheres to Single Responsibility Principle (SRP) and Separation of Concerns (SoC).
+
+** Cons: It results in a lot of classes to be created. Although there is increased cohesion, there is also increased coupling. Furthermore, this choice also violates Open-Closed Principle (OCP).
+
+* *Alternative 2*: Merge all predicates into one class
+
+** Pros: It is easy for new developers to manage this command. This choice also reduces the amount of code written significantly.
+
+** Cons: It is difficult to test existing and new predicates. This choice decreases cohesion although it decreases coupling.
+
+
+==== Aspect: Implementation of Levenshtein distance threshold
+
+* *Alternative 1 (current choice)*: Set a private static constant
+
+** Pros: It does not involve user intervention to set the threshold. It also decreases the chances of an increase in false positives should the user set a high threshold.
+
+** Cons: It does not allow users to set their desired threshold. Some users might need specific threshold to suit their needs
+
+* *Alternative 2*: Allow users to set their own threshold
+
+** Pros: It caters to more users with specific preferences.
+
+** Cons: It results in more implementation and tests to be written.
+//end::findcommand[]
+
+//tag::filtercommand[]
+=== Filter Command
+
+==== Current Implementation
+
+Filter Command is supported by an `FilterCommand` class. It supports the advanced filtering of multiple fields such as `ExpectedGraduationYear`. Filter commands can supports both filtering by keyword and filtering by range, if the field has natural ordering.
+
+Filter command currently only filters `ExpectedGraduationYear` but will support more fields in the subsequent weeks.
+
+Filter command interact with `Model` and `UI` in the following way:
+
+. `FilterCommandParser` parses the user inputs into a wholesome `Predicate<Person>`.
+. This predicate will be used to instantiate the `FilterCommand`
+. Upon execution of the filter command, the UI will be updated by imposing the new predicate to the `FilteredList` in the `ModelManager` class.
+
+Below is the sequence diagram of filter command.
+
+image::FilterCommandSequenceDiagram.png[width="800"]
+==== Design Considerations
+===== Aspect: Implementation of `FilterCommandParser`
+* *Alternative 1 (current choice)*: `FilterCommandParser` breaks down user input according to prefix and pass to different methods in `FilterUtil` to generate respective `Predicate<Person>`, after which it unions these `Predicate`.
+
+** Pros: This appoach breaks down the parsing process into multiple classes and each class is responsible for single duty. This makes debugging easier.
+
+** Cons: New developers may find it hard to understand the design pattern.
+
+* *Alternative 2*: Puts actual parsing in `FilterCommandParser` class.
+
+** Pros: It reduces number of classes used and is easier for new developers to understand.
+
+** Cons: It violates single responsibility principle. `FilterCommandParser` will have too many distinct functionalities such as
+*** breaking down user input by prefix
+*** breaking down user's predicate for each prefix
+*** creating `FilterRange` objects to record down each range specified in the predicate
+*** creating `Predicate` from `FilterRange`
+*** unioning these `Predicate`
+
+===== Aspect: Implementation of range tracker: `FilterRange<E>`
+* *Alternative 1 (current choice)*: All user input will either be in form of `ToBeFilteredClassPrefix/singletonValue, lowerRange - higherRange`. Both singleton value and range will be parsed into a `FilterRange<ToBeFilteredClass>`.
+** Pros: It ensures the user input is valid since `FilterRange<E>` can call `E.isValid()` to check. This ensures the integrity of `Predicate` later.
+
+** Cons: New developers may find it hard to understand the design pattern.
+
+* *Alternative 2 (current choice)*: All parsing of singleton or ranged values will be handled by some methods in `FilterUtil`.
+** Pros: New developers will find it easier to understand the design pattern.
+
+** Cons: It will be messy to handle both singletona dn ranged values in one method. It also adds the complexity of `FilterUtil` class.
+
+===== Aspect: `FilterCommand` behaviour
+* *Alternative 1 (current choice)*: Predicates in the same field will be ORed together. Predicates in the different field will be ANDed together.
+** Pros: For the same field, the user can have more flexibility in selecting the desired values. For the different field, the predicates are in logical conjunction to make the filter more restrictive. This follows the natural way of human thinking.
+
+** Cons: The developers may be confused about the OR/AND rule at first.
+
+* *Alternative 2*: Everything will be ORed together.
+** Pros: It is an easier logical pattern for developers to understand.
+
+** Cons: It is user unfriendly. The only way for user to filter the persons who is in Computer Science, graduating in 2020 and has a GPA greater than 4.6 is to use 3 filter commands.
+//end::filtercommand[]
+
+
+
+// tag::interview[]
+=== Interview Command
+
+==== Current Implementation
+
+The `interview` command allows Talent Acquisition Specialists to schedule an interview for candidates. The format of this command is `interview INDEX DATE_TIME_EXPRESSION`.
+
+This command make use of Natty, a natural language date parser library written in Java. When given a date expression, it will apply standard language recognition and translation techniques to produce `LocalDateTime` which represents the result.
+
+In our current implementation, the `interview` command inherits from the `UndoableCommand` class. Two components, `Logic` and `Model`, are involved in the execution of this command. The `Logic` component is responsible for parsing user inputs while the `Model` component deals with updating of filtered person list.
+
+Below is a sequence diagram that illustrates how these two components interact when the `interview` command is executed:
+
+image::InterviewCommandSequenceDiagram.png[width="800"]
+Figure 3.6.1.1 Sequence diagram to illustrate component interactions for the `interview` command
+
+As shown above, execution of the `interview` command comprises the following steps:
+
+. `LogicManager` invokes `parseCommand` method of `AddressbookParser`, taking user inputs as arguments.
+. During the `parseCommand` method call, an instance of `InterviewCommandParser` will be created when the keyword "interview" is matched. `InterviewCommandParser` then extracts the remaining user inputs and a `InterviewCommand` instance `i` will be returned provided that the format of user's input is correct.
+. `LogicManager` then calls `executeUndoableCommand` of the `InterviewCommand`, `i`, instantiated in step 2. Another component, `Model`, will be involved as the `InterviewCommand` requests to update the interview date of the person.
+. The `Model` component gets the filtered persons list and replaces `Person` p1 with `Person` p2 which is identical to p2 except interview date. A `CommandResult` will be generated and returned to `LogicManager`.
+
+==== Design Considerations
+
+===== Aspect: Usage of natural language parser
+
+* **Alternative 1 (current choice):** Use the natural language parser library by Natty to specify date and time
+** Pros: Users are able to enter the date and time in more natural tone without looking at calendar (For example, schedule an interview next Friday at 3pm)
+** Cons: Natural language parser doesn't have 100% reliability due to the complexity of human language
+
+* **Alternative 2:** Use the typical DD/MM/YYYY HH:MM format to specify date and time
+** Pros: Users are able to specify the date and time precisely
+** Cons: Users have to be certain on the date and time, which have to refer to the calendar at the same time
+
+===== Aspect: Implementation of scheduling and editing interview date
+
+* **Alternative 1 (current choice):** Implement a new command class `InterviewCommand` that supports both scheduling and editing of interview date.
+** Pros: Results in more customisable and modular command that can be easily modified
+** Cons: Complicates the system as users need to familiarise themselves with more commands
+
+* **Alternative 2:** Extend the original `EditCommand` to allow it to schedule and modify interview date of a candidate
+** Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly
+** Cons: Requires substantial changes to `EditCommandParser` and hence harder to implement
+// end::interview[]
+
+
+
+// tag::userinterface[]
+=== User Interface
+
+Our user interface is specially designed to maximise HR+’s usability and improve user experience. We take into account minor details and ensure that data is presented clearly so that it appeals to our users.
+
+The following sections discuss the different aspects we have considered to make sure HR+ follows industry standards in user interface design. Our implementation follows https://material.io[Material Design] principles created by a leading technology company Google.
+
+==== Responsive Design
+
+Responsive design is an approach to provide optimal viewing experience of an application regardless of the screen size of the user’s device. To incorporate responsive design into HR+, we use `AnchorPane` , a built-in JavaFX container component, to support relative positioning for all four directions (left, right, top and down) between parent and child components.
+
+All UI components have a minimum size requirement. Therefore, every container component in HR+ has a `minWidth` property.
+
+Besides `AnchorPane` , we also set a listener on the size of `InfoPanel` - a panel that displays detailed information about a student in HR+. The following code snippets illustrate how this listener is implemented:
+
+[source,java]
+----
+// SPLIT_MIN_WIDTH is a constant to define when to trigger the merge
+
+infoPaneWrapper.widthProperty().addListener((obs, old, newValue) -> {
+    int width = newValue.intValue();
+    if (width >= SPLIT_MIN_WIDTH) {
+        // Split into two parts
+    } else {
+        // Merge into one part
+    }
+});
+----
+
+When a user runs HR+ on a device with a bigger screen size, the `InfoPanel` will be split into two parts. The left panel will display student’s information while the right panel shows the student’s rating scores and a View resume button. The figure below (Figure 3.7.1.1) shows an example of our interface on devices with larger screens:
+
+image::userinterface/responsive_split.png[width="500"]
+Figure 3.7.1.1 InfoPanel on devices with larger screens
+
+On the other hand, if the device has a smaller screen size, the two components of `InfoPanel` will collapse into one. The student’s information is on top of the student’s ratings. `ScrollPane` in `InfoPanel` allows the user to scroll through the single merged panel. The figure below (Figure 3.7.1.2) shows our sample interface on devices with smaller screens:
+
+image::userinterface/responsive_merge.png[width="300"]
+Figure 3.7.1.2 InfoPanel on devices with smaller screens
+
+==== Consistency
+
+Consistency is another principle that is important in life and in design. Not only it brings up the professional feel and look, users will feel that the app is more reliable and robust. Besides that, it is easier for users to get started as the app follows a consistent pattern.
+
+In order to follow this principle, we have used consistent color, layout and also fonts throughout the whole app. It will be discussed the in details below:
+
+===== Color
+
+The primary color in HR+ is blue, with 10 shades of blue in the figure illustrated below (Figure 3.7.2.1). Other than the primary color, different shades of grey are also being used to show the level of significance of an information. Besides that, the colors that are being used are harmonized such that it brings up an unified feeling while users are using the app.
+
+image::userinterface/blue_shades.png[width="300"]
+Figure 3.7.2.1 10 shades of blue used in HR+
+
+===== Layout
+
+The spacing and layout inside HR+ is consistent and balanced. We make good use of spacing to achieve grouping of elements so that legibility is improved. This allow users to have a sense of which information are relevant to each other.
+
+For example, it is easy to separate between the applicant's information, contact information and interview information at a glance without the need of boxes. Examples are shown in the figure below (Figure 3.7.2.2)
+
+image::userinterface/spacing_group.png[width="300"]
+Figure 3.7.2.2 Grouping with spacing
+
+===== Fonts
+
+The font family that is being used is Roboto. It follows a natural width that allows text to be read more fluently. Moreover, this font featured 6 different weights (thin, light, regular, medium, bold and black) which will allow text to be represented depending on the different level of importance. All different weights are shown in the figure below. (Figure 3.7.2.3)
+
+image::userinterface/roboto_weight.png[width="300"]
+Figure 3.7.2.3 Different weights of Roboto font
+
+Important information is usually shown with a higher weight whereas trivial information is shown with a lower weight. This allow users to skim through the information to process data easily. The fonts are stored in `resources/fonts` folder and embedded into the packaged app so that it can be loaded on all devices.
+
+==== Familiarity
+
+Familiarity is another aspect that is useful when designing an app. It can reduce the cognitive load of a user so that users will not feel overwhelmed by the information that is being displayed.
+
+In HR+, icons are used to represent some of the fields. For example, stars are used to represent average rating of an applicant in the PersonCard list on the left (Figure 3.7.3.1, pointed with red arrow).
+
+image::userinterface/familiar_star.png[width="300"]
+Figure 3.7.3.1 Rating icon in PersonCard
+
+Besides that, contact information fields such as e-mail, address and mobile phone number uses a familiar icon. (Figure 3.7.3.2)
+
+image::userinterface/familiar_icons.png[width="300"]
+Figure 3.7.3.2 Contact information icons in InfoPanel
+
+==== Visual Feedback
+
+Visual Feedback is also essential for users to identify the current state of the app. This is because user might get interrupted while using the app and have to resume the session at any time.
+
+In HR+, when an applicant is selected in the PersonCard list on the left panel, it will be highlighted in blue border and shadow so that users know who they are currently selecting. (Figure 3.7.4.1)
+
+image::userinterface/list_active.png[width="300"]
+Figure 3.7.4.1 Highlighting of selected PersonCard
+
+Besides that, there is an indication when a panel is selected. This allows users to traverse between panel using keyboard only. (Figure 3.7.4.2)
+
+image::userinterface/panel_active.png[width="500"]
+Figure 3.7.4.2 Highlighting of selected Panel
+
+Moreover, when a command entered in `CommandBox` is invalid, the text color will be changed into red to indicate that there is an error in the command itself. (Figure 3.7.4.3)
+
+image::userinterface/feedback_error.png[width="250"]
+Figure 3.7.4.3 Invalid command indicator
+// end::userinterface[]
+
+
 
 // tag::dataencryption[]
 === [Proposed] Data Encryption
@@ -782,13 +1205,75 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
+* campus recruiters that have a need to manage a significant number of student contacts
 * prefer desktop apps over other types
 * can type fast
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
+* need to keep track of interviews scheduled
+* want to evaluate students' performance after interviews to decide who to hire
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: offers an open source solution to the recruiting process, enables campus recruiters to find the best-fitting candidates easily and allows them to manage student contacts faster than a typical mouse/GUI driven app.
+
+*Feature contribution*:
+
+1. Ang Yee Chin
++
+* Major Feature: UI Scheme
++
+** Revamps the interface to make it more intuitive and clean
+** Makes the design responsive so that the application page looks good on devices with any screen size
+** Integrates a PDF viewer to display applicants' resumes
+** Adds a calendar that displays scheduled interviews
++
+* Minor Features:
++
+** Adds a `comments` field that allows recruiters to provide additional information
+** Creates radar graphs to help visualise applicants' performance in interviews
+** Adds a `profile picture` field for applicants
++
+2. Ke Xiaowen
++
+* Major Feature: Rating
++
+** Rates an applicant based on technical, communication, problem solving skills and experience after an interview
+** Allows editing of rating scores
+** Supports deletion of ratings
+** Displays overall ratings for rated applicants
+** Offers keyboard shortcuts to auto-fill prefixes
++
+* Minor Features:
++
+** Adds a `job applied` field for applicants
+** Adds a `university` field for applicants
++
+3. Ma Hongqiang
++
+* Major Feature: Filter
++
+** Supports filtering based on the current view of listed persons
+** Allows users to filter fields whose values are either finite or have natural ordering
+** Supports filtering multiple fields at the same time
++
+* Minor Features:
++
+** Adds a `expected graduation year` field for applicants
+** Adds a `resume` field for applicants
++
+4. Tan Heng Yeow
++
+* Major Feature: Find
++
+** Allows users to find all fields that match the exact keyword input
+** Supports finding all fields that contains the keyword input
+** Supports finding all fields that start with the keyword input
+** Supports finding all fields that end with the keyword input
+** Adds a fuzzy find function that enables users to find all fields that are a fuzzy match of the keyword input
++
+* Minor Features:
++
+** Adds a `major` field for applicants
+** Adds a `cGPA` field for applicants
 
 [appendix]
 == User Stories
@@ -800,18 +1285,62 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |user |add a new student |manage details of students, schedule interviews and track job offers.
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |user |delete a student |remove entries that I no longer need
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |user |find a student by name |locate details of students without having to go through the entire list
+
+|`* * *` |user |find a student by some characters |locate details of students without having to remember his/her full name
+
+|`* * *` |user |filter a student by <<fields,fields>> |locate details of students in a more optimized view
+
+|`* * *` |user |add profile photo of a student |recognize the student easily
+
+|`* * *` |user |add a student's expected graduation date |gauge how far along the student is in his/her degree
+
+|`* * *` |user |add a student's interview date |keep track of interviews scheduled
+
+|`* * *` |user |add a student's resume |view the competency of the student
+
+|`* * *` |user |edit a student's <<status,status>> |indicate whether students are still being considered or rejected
+
+|`* * *` |user |add a remark |update additional information about the student
+
+|`* * *` |user |add a <<rating,rating>> |evaluate the performance of the student after an interview
+
+|`* * *` |user |sort students according to their interview performance |decide on the best-fitting students
+
+|`* * *` |user |add tags for students |categorise the students better
+
+|`* * *` |user |delete students with a particular tag |remove groups of student contacts that I no longer need
+
+|`* * *` |user |undo my previous command |Restore the data to its previous state before the command was executed
+
+|`* * *` |user |redo the previously undone command |Reverse the most recent undo command
+
+|`* *` |user |view all interviews scheduled in a calendar |have a overview of all interviews arranged
+
+|`* *` |user |send mass emails to successful/unsuccessful candidates |make recruitment easier
+
+|`* *` |user |have syntax highlight for my commands |check my command easily and spot errors faster
+
+|`* *` |user |change colour scheme of the interface |customise it according to my preferences
+
+|`* *` |user who values efficiency |see a list of suggested commands when I key in the command |select the command I want without having to type out the entire command
 
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`*` |user |visualise a student's performance using a radar graph|easily understand his/her performance
 
-_{More to be added}_
+|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+
+|`*` |careless user |auto-correct typos in my command |save time checking the command manually
+
+|`*` |cautious user |encrypt student's data stored |ensure sensitive information will not leak out
+
+|`*` |user |send and receive emails within the application |save time switching between different applications
+|=======================================================================
 
 [appendix]
 == Use Cases
@@ -844,7 +1373,201 @@ Use case ends.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+=== Use case: Add person
+
+*MSS*
+
+1.  User requests to add a new person in the list
+2.  AddressBook adds the new person into the address book.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The command is invalid
++
+Use case ends.
+
+=== Use case: Find person by name
+
+*MSS*
+
+1.  User enters the command with the keyword as the name
+2.  AddressBook shows the list of persons with the keyword
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The keyword is not found in the list of persons
++
+Use case ends.
+
+=== Use case: Find person by some letters
+
+*MSS*
+
+1.  User enters the command with the some letters as the name
+2.  AddressBook shows the list of persons with fields containing the letters
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There is no such letter found in the list of persons.
++
+Use case ends.
+
+=== Use case: Filter a person by field
+
+*MSS*
+
+1.  User requests to filter a list of persons that matches the filter
+2.  AddressBook shows the list of persons that matches the filter
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The filter condition is invalid
++
+Use case ends.
+
+=== Use case: Add resume
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a resume to the person in the list
+4.  AddressBook adds a resume to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add profile picture
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a profile picture to a specific person in the list
+4.  AddressBook adds a profile picture to the person in the list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given path to the image is invalid.
++
+[none]
+** 3b1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add rating
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a rating to the specific person in the list
+4.  AddressBook adds a rating to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add remark
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add a remark to the person in the list
+4.  AddressBook adds a remark to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
+
+=== Use case: Add interview date
+
+*MSS*
+
+1.  User requests to list persons
+2.  AddressBook shows a list of persons
+3.  User requests to add an interview date to the person in the list
+4.  AddressBook adds an interview date to the person
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. AddressBook shows an error message.
++
+Use case resumes at step 2.
 
 [appendix]
 == Non Functional Requirements
@@ -852,8 +1575,10 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should follow Java coding standards/styles.
+.  Should work on both 32-bit and 64-bit environments.
+.  Should work without access to the internet.
+.  Should work without external software.
 
 [appendix]
 == Glossary
@@ -863,6 +1588,15 @@ Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
+
+[[rating]] Rating::
+A score given to a student by interviewers based on areas such as technical competency, leadership quality, communication skills and ability to work well in a team
+
+[[status]] Status::
+Indicates a student's current state within the hiring process - new, in-review, interview, offered, rejected or withdrawn
+
+[[fields]] Fields::
+Refer to the student's attributes, including name, phone, address, email, expected graduation year, GPA, interview date, university, major, position applied, profile photo, salutation, status, rating and remark. Some of these fields are mandatory while optional fields can be updated later.
 
 [appendix]
 == Product Survey
@@ -903,26 +1637,92 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Adding a student
 
-=== Deleting a person
+. Adding a student into HR+
 
-. Deleting a person while all persons are listed
+.. Prerequisites: No student contact in HR+ has the same name, phone number, email, address, university, expected graduation year, major and grade point average as the student contacts to be added.
+.. Command: `add n/Damith p/98765432 e/damith@nus.edu.sg a/311, Clementi Ave 2, #02-25 u/NUS y/2018 m/Computer Science g/2.74 j/Software Developer c/Extraordinary Regex skill` +
+   Expected: A student named Damith with the above particulars will be added into HR+. The student will be shown in the persons list panel.
+.. Add a resume pdf file named resume.pdf to the same folder as the jar file. It also must be valid PDF and smaller than 1MB. +
+   Add an image named image.jpg to the same folder as the jar file. It also must be valid image file and smaller than 1MB. +
+   Command: `add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg` +
+   Expected: A student named Irene is added with the above particulars. A resume and a profile image will be added.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+=== Showing info panel or resume
 
-_{ more test cases ... }_
+. Showing either student info or resume in the right panel
 
-=== Saving data
+.. Prerequisites: A student is selected using the `select` command. The student selected has a resume added into HR+.
+.. Command: `show resume` +
+   Expected: The resume of the student is displayed when it is available.
+   Command: `show info` +
+   Expected: The information of the student is displayed in the right panel.
 
-. Dealing with missing/corrupted data files
+=== Scheduling an interview
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+Scheduling an interview for a student
 
-_{ more test cases ... }_
+.. Command: `interview 1 next Friday at 3pm` +
+   Expected: The interview date of the 1st person will be scheduled on next Friday at 3pm.
+.. Command: `interview 2 Mar 14 2pm` +
+   Expected: The interview of the 2nd person will be scheduled on 14 March at 2pm.
+
+=== Rating a student
+
+. Adding rating scores to a student without ratings
+
+.. Prerequisites: Student at index 2 must not have ratings yet.
+.. Command: `rate 2 t/3.45 c/4.5 p/3.25 e/4` +
+            `select 2` +
+   Expected: Ratings of the second person updated to the above scores. Overall rating is updated to 3.8.
+
+=== Editing a rating
+
+. Editing rating scores assigned to a student whom you have already rated
+
+.. Prerequisites: Student at index 2 must have rating scores assigned already.
+.. Command: `rating-edit 2 t/4.2` +
+            `select 2` +
+   Expected: Technical skills score of the second student is updated to 4.2.
+
+=== Deleting a rating
+
+. Deleting rating scores assigned to a student whom you have already rated
+
+.. Prerequisites: Student at index 2 must have rating scores assigned already.
+.. Command: `rating-delete 2` +
+   Expected: Rating scores of the second student is cleared.
+
+=== Sorting the students list
+
+. Sorting the list of students in the left panel according to some order
+
+.. Command: `sort rating o/desc` +
+   Expected: List of students in the left panel are arranged based on their overall rating in descending order.
+.. Command: `sort name o/asc` +
+   Expected: List of students in the left panel are listed in alphabetical order with cases ignored.
+
+=== Updating status of a student
+
+. Updating the status of a student from the list of status
+
+.. Command: `status 1 2` +
+   Expected: Student at index 2 has its status changed to 1st round interview.
+
+=== Filtering according to multiple fields
+
+. Filtering the list of students according to multiple fields
+
+.. Command: `filter y/2019 r/3.5-4.5` +
+   Expected: The student list now only contains students with 2019 as their expected graduation year and with overall rating score between 3.5 to 4.5, inclusive.
+
+=== Finding every field of the student
+. Finding the list of students with **any** fields that match the search keyword according to the search support stated in the User Guide.
+.. Command `find bernice, charlot` +
+   Expected: The student list now displays students `Bernice Yu` and `Charlotte Oliveiro` with reference to the sample data provided.
+
+=== Finding specific field of the student
+. Finding the list of students with **chosen** fields that match the search keyword according to the search support stated in the User Guide.
+.. Command `find e/alexyeoh@example.com, lidavxx@example.com j/Software p/87438807` +
+   Expected: The student list now displays student `Alex Yeoh` with reference to the sample data provided.

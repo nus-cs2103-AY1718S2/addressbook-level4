@@ -5,8 +5,16 @@ import static org.junit.Assert.assertTrue;
 import static org.junit.Assert.fail;
 import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT;
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
+import static seedu.address.logic.commands.SortCommand.SORT_FIELD_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_COMMUNICATION_SKILLS_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_EXPERIENCE_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PROBLEM_SOLVING_SKILLS_SCORE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_SORT_ORDER;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_TECHNICAL_SKILLS_SCORE;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 
+import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -21,16 +29,24 @@ import seedu.address.logic.commands.DeleteCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.EditCommand.EditPersonDescriptor;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.FilterCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.InterviewCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.RateCommand;
+import seedu.address.logic.commands.RatingDeleteCommand;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.StatusCommand;
 import seedu.address.logic.commands.UndoCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
-import seedu.address.model.person.NameContainsKeywordsPredicate;
+import seedu.address.model.person.ExpectedGraduationYearInKeywordsRangePredicate;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.Rating;
+import seedu.address.model.person.Status;
 import seedu.address.testutil.EditPersonDescriptorBuilder;
 import seedu.address.testutil.PersonBuilder;
 import seedu.address.testutil.PersonUtil;
@@ -70,18 +86,79 @@ public class AddressBookParserTest {
         assertEquals(new EditCommand(INDEX_FIRST_PERSON, descriptor), command);
     }
 
+    //@@author Ang-YC
+    @Test
+    public void parseCommand_interview() throws Exception {
+        LocalDateTime dateTime = LocalDateTime.ofEpochSecond(1521036000, 0, ZoneOffset.UTC);
+
+        InterviewCommand command = (InterviewCommand) parser.parseCommand(InterviewCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " Mar 14 2018 2pm");
+        assertEquals(new InterviewCommand(INDEX_FIRST_PERSON, dateTime), command);
+    }
+    //@@author
+
     @Test
     public void parseCommand_exit() throws Exception {
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD) instanceof ExitCommand);
         assertTrue(parser.parseCommand(ExitCommand.COMMAND_WORD + " 3") instanceof ExitCommand);
     }
 
+    //@@author tanhengyeow
     @Test
     public void parseCommand_find() throws Exception {
         List<String> keywords = Arrays.asList("foo", "bar", "baz");
-        FindCommand command = (FindCommand) parser.parseCommand(
-                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")));
-        assertEquals(new FindCommand(new NameContainsKeywordsPredicate(keywords)), command);
+        assertTrue(parser.parseCommand(
+                FindCommand.COMMAND_WORD + " " + keywords.stream().collect(Collectors.joining(" ")))
+                instanceof FindCommand);
+        assertTrue(parser.parseCommand(FindCommand.COMMAND_WORD + " n/foo") instanceof FindCommand);
+    }
+
+    //@@author
+    @Test
+    public void parseCommand_filter() throws Exception {
+        Person person = new PersonBuilder().build();
+        FilterCommand command = (FilterCommand) parser.parseCommand(
+                PersonUtil.getFilterCommand(person));
+        assertEquals(new FilterCommand(new ExpectedGraduationYearInKeywordsRangePredicate(
+                person.getExpectedGraduationYear(), person.getExpectedGraduationYear())), command);
+    }
+
+    //@@author kexiaowen
+    @Test
+    public void parseCommand_rate() throws Exception {
+        final Rating rating = new Rating(4.5, 4,
+                3.5, 4);
+        RateCommand command = (RateCommand) parser.parseCommand(RateCommand.COMMAND_WORD + " "
+                + INDEX_FIRST_PERSON.getOneBased() + " "
+                + PREFIX_TECHNICAL_SKILLS_SCORE + rating.technicalSkillsScore + " "
+                + PREFIX_COMMUNICATION_SKILLS_SCORE + rating.communicationSkillsScore + " "
+                + PREFIX_PROBLEM_SOLVING_SKILLS_SCORE + rating.problemSolvingSkillsScore + " "
+                + PREFIX_EXPERIENCE_SCORE + rating.experienceScore);
+        assertEquals(new RateCommand(INDEX_FIRST_PERSON, rating), command);
+    }
+
+    @Test
+    public void parseCommand_deleteRating() throws Exception {
+        RatingDeleteCommand command = (RatingDeleteCommand) parser.parseCommand(
+                RatingDeleteCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased());
+        assertEquals(new RatingDeleteCommand(INDEX_FIRST_PERSON), command);
+    }
+
+    @Test
+    public void parseCommand_sort() throws Exception {
+        SortCommand command =
+                (SortCommand) parser.parseCommand(
+                        SortCommand.COMMAND_WORD + " " + SORT_FIELD_NAME + " " + PREFIX_SORT_ORDER
+                                + SortCommand.SORT_ORDER_ASC);
+        assertEquals(new SortCommand(SortCommand.SortOrder.ASC, SortCommand.SortField.NAME), command);
+    }
+
+    //@@author
+    @Test
+    public void parseCommand_status() throws Exception {
+        StatusCommand command = (StatusCommand) parser.parseCommand(
+                StatusCommand.COMMAND_WORD + " " + INDEX_FIRST_PERSON.getOneBased() + " " + "3");
+        assertEquals(new StatusCommand(INDEX_FIRST_PERSON, new Status(3)), command);
     }
 
     @Test

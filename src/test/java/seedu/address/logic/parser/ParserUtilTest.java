@@ -18,6 +18,7 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
@@ -30,12 +31,14 @@ public class ParserUtilTest {
     private static final String INVALID_PHONE = "+651234";
     private static final String INVALID_ADDRESS = " ";
     private static final String INVALID_EMAIL = "example.com";
+    private static final String INVALID_SORT_ORDER = "a";
     private static final String INVALID_TAG = "#friend";
 
     private static final String VALID_NAME = "Rachel Walker";
     private static final String VALID_PHONE = "123456";
     private static final String VALID_ADDRESS = "123 Main Street #0505";
     private static final String VALID_EMAIL = "rachel@example.com";
+    private static final String VALID_SORT_ORDER = "asc";
     private static final String VALID_TAG_1 = "friend";
     private static final String VALID_TAG_2 = "neighbour";
 
@@ -66,6 +69,23 @@ public class ParserUtilTest {
         assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
     }
 
+    //@@author kexiaowen
+    @Test
+    public void parseSortField_invalidInput_throwsIllegalValueException() throws Exception {
+        thrown.expect(IllegalValueException.class);
+        ParserUtil.parseSortField("gpa name");
+    }
+
+    @Test
+    public void parseSortField_validInput_success() throws Exception {
+        // No whitespaces
+        assertEquals(SortCommand.SortField.GPA, ParserUtil.parseSortField("gpa"));
+
+        // Leading and trailing whitespaces
+        assertEquals(SortCommand.SortField.RATING, ParserUtil.parseSortField("   rating   "));
+    }
+
+    //@@author
     @Test
     public void parseName_null_throwsNullPointerException() {
         Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseName((String) null));
@@ -194,6 +214,37 @@ public class ParserUtilTest {
         assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
     }
 
+    //@@author kexiaowen
+    @Test
+    public void parseSortOrder_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseSortOrder((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
+    }
+
+    @Test
+    public void parseSortOrder_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(
+            IllegalValueException.class, () -> ParserUtil.parseSortOrder(INVALID_SORT_ORDER));
+        Assert.assertThrows(
+            IllegalValueException.class, () -> ParserUtil.parseSortOrder(Optional.of(INVALID_SORT_ORDER)));
+    }
+
+    @Test
+    public void parseSortOrder_validValueWithoutWhitespace_returnsSortOrder() throws Exception {
+        SortCommand.SortOrder expectedSortOrder = SortCommand.SortOrder.ASC;
+        assertEquals(expectedSortOrder, ParserUtil.parseSortOrder(VALID_SORT_ORDER));
+        assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(VALID_SORT_ORDER)));
+    }
+
+    @Test
+    public void parseSortOrder_validValueWithWhitespace_returnsSortOrder() throws Exception {
+        SortCommand.SortOrder expectedSortOrder = SortCommand.SortOrder.ASC;
+        String sortOrderWithWhitespace = WHITESPACE + VALID_SORT_ORDER + WHITESPACE;
+        assertEquals(expectedSortOrder, ParserUtil.parseSortOrder(sortOrderWithWhitespace));
+        assertEquals(Optional.of(expectedSortOrder), ParserUtil.parseSortOrder(Optional.of(sortOrderWithWhitespace)));
+    }
+
+    //@@author
     @Test
     public void parseTag_null_throwsNullPointerException() throws Exception {
         thrown.expect(NullPointerException.class);

@@ -7,6 +7,18 @@
         <phone>85355255</phone>
         <email>alice@example.com</email>
         <address>123, Jurong West Ave 6, #08-111</address>
+        <university>NUS</university>
+        <expectedGraduationYear>2020</expectedGraduationYear>
+        <major>Computer Science</major>
+        <gradePointAverage>4.84</gradePointAverage>
+        <jobApplied>Software Engineer</jobApplied>
+        <status>New</status>
+        <interviewDate>1522677600</interviewDate>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
+        <comment>Alice!</comment>
         <tagged>friends</tagged>
     </persons>
     <persons>
@@ -14,6 +26,18 @@
         <phone>98765432</phone>
         <email>johnd@example.com</email>
         <address>311, Clementi Ave 2, #02-25</address>
+        <university>NTU</university>
+        <expectedGraduationYear>2021</expectedGraduationYear>
+        <major>Computer Engineering</major>
+        <gradePointAverage>4.73</gradePointAverage>
+        <jobApplied>Software Engineer</jobApplied>
+        <status>1st round</status>
+        <interviewDate>1523030400</interviewDate>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
+        <comment>Benson!</comment>
         <tagged>owesMoney</tagged>
         <tagged>friends</tagged>
     </persons>
@@ -22,30 +46,83 @@
         <phone>95352563</phone>
         <email>heinz@example.com</email>
         <address>wall street</address>
+        <university>SMU</university>
+        <expectedGraduationYear>2019</expectedGraduationYear>
+        <major>Computer Science</major>
+        <gradePointAverage>4.92</gradePointAverage>
+        <jobApplied>Front-end Developer</jobApplied>
+        <status>New</status>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <persons>
         <name>Daniel Meier</name>
         <phone>87652533</phone>
         <email>cornelia@example.com</email>
         <address>10th street</address>
+        <university>SUTD</university>
+        <expectedGraduationYear>2020</expectedGraduationYear>
+        <major>Information Security</major>
+        <gradePointAverage>4.24</gradePointAverage>
+        <jobApplied>Web Security Researcher</jobApplied>
+        <status>New</status>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
+        <comment>Daniel!</comment>
     </persons>
     <persons>
         <name>Elle Meyer</name>
         <phone>9482224</phone>
         <email>werner@example.com</email>
         <address>michegan ave</address>
+        <university>NUS</university>
+        <expectedGraduationYear>2018</expectedGraduationYear>
+        <major>Business Analytics</major>
+        <gradePointAverage>4.33</gradePointAverage>
+        <jobApplied>Big Data Analyst</jobApplied>
+        <status>Accepted</status>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
+        <comment>Elle!</comment>
     </persons>
     <persons>
         <name>Fiona Kunz</name>
         <phone>9482427</phone>
         <email>lydia@example.com</email>
         <address>little tokyo</address>
+        <university>NUS</university>
+        <expectedGraduationYear>2019</expectedGraduationYear>
+        <major>Computer Science</major>
+        <gradePointAverage>4.75</gradePointAverage>
+        <jobApplied>Software Engineer</jobApplied>
+        <status>New</status>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
+        <comment>Fiona!</comment>
     </persons>
     <persons>
         <name>George Best</name>
         <phone>9482442</phone>
         <email>anna@example.com</email>
         <address>4th street</address>
+        <university>NYU</university>
+        <expectedGraduationYear>2022</expectedGraduationYear>
+        <major>Information Systems</major>
+        <gradePointAverage>3.88</gradePointAverage>
+        <jobApplied>Software Engineer</jobApplied>
+        <status>Offered</status>
+        <technicalSkillsScore isPrivate="false">-1</technicalSkillsScore>
+        <communicationSkillsScore isPrivate="false">-1</communicationSkillsScore>
+        <problemSolvingSkillsScore isPrivate="false">-1</problemSolvingSkillsScore>
+        <experienceScore isPrivate="false">-1</experienceScore>
     </persons>
     <tags>friends</tags>
     <tags>owesMoney</tags>

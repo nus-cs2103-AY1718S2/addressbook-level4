@@ -1,6 +1,7 @@
 package seedu.address.model;
 
 import static java.util.Objects.requireNonNull;
+import static seedu.address.logic.commands.SortCommand.MESSAGE_INVALID_SORT_FIELD;
 
 import java.util.HashMap;
 import java.util.HashSet;
@@ -11,12 +12,14 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 import javafx.collections.ObservableList;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.UniquePersonList;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 
 /**
  * Wraps all data at the address-book level
@@ -76,6 +79,52 @@ public class AddressBook implements ReadOnlyAddressBook {
         }
     }
 
+    //@@author kexiaowen
+    /**
+     * Sorts all students in HR+ based on {@code sortField} in ascending order
+     */
+    public void sortAsc(SortCommand.SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            persons.sortPersonsGradePointAverageAsc();
+            break;
+
+        case NAME:
+            persons.sortPersonsNameAsc();
+            break;
+
+        case RATING:
+            persons.sortPersonsRatingAsc();
+            break;
+
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
+        }
+    }
+
+    /**
+     * Sorts all students in HR+ based on {@code sortField} in descending order
+     */
+    public void sortDesc(SortCommand.SortField sortField) {
+        switch (sortField) {
+        case GPA:
+            persons.sortPersonsGradePointAverageDesc();
+            break;
+
+        case NAME:
+            persons.sortPersonsNameDesc();
+            break;
+
+        case RATING:
+            persons.sortPersonsRatingDesc();
+            break;
+
+        default:
+            throw new IllegalArgumentException(MESSAGE_INVALID_SORT_FIELD);
+        }
+    }
+
+    //@@author
     //// person-level operations
 
     /**
@@ -132,7 +181,10 @@ public class AddressBook implements ReadOnlyAddressBook {
         final Set<Tag> correctTagReferences = new HashSet<>();
         personTags.forEach(tag -> correctTagReferences.add(masterTagObjects.get(tag)));
         return new Person(
-                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), correctTagReferences);
+                person.getName(), person.getPhone(), person.getEmail(), person.getAddress(), person.getUniversity(),
+                person.getExpectedGraduationYear(), person.getMajor(), person.getGradePointAverage(),
+                person.getJobApplied(), person.getRating(), person.getResume(), person.getProfileImage(),
+                person.getComment(), person.getInterviewDate(), person.getStatus(), correctTagReferences);
     }
 
     /**
@@ -151,6 +203,53 @@ public class AddressBook implements ReadOnlyAddressBook {
 
     public void addTag(Tag t) throws UniqueTagList.DuplicateTagException {
         tags.add(t);
+    }
+
+    /**
+     * Removes {@code tag} from this {@code AddressBook}.
+     * @throws TagNotFoundException if the {@code tag} is not in this {@code AddressBook}.
+     */
+    public void removeTag(Tag tag) throws TagNotFoundException {
+        if (tags.contains(tag)) {
+            for (Person person: persons) {
+                removeTagFromEachPerson(person, tag);
+            }
+            removeUnusedTags();
+        } else {
+            throw new TagNotFoundException();
+        }
+    }
+
+    /**
+     * Removes {@code tag} from this {@code person} if the person has that tag.
+     */
+    private void removeTagFromEachPerson(Person person, Tag tag) {
+        Set<Tag> editedTags = new HashSet<>(person.getTags());
+        if (editedTags.remove(tag)) {
+            Person editedPerson = new Person(person.getName(), person.getPhone(), person.getEmail(),
+                    person.getAddress(), person.getUniversity(), person.getExpectedGraduationYear(), person.getMajor(),
+                    person.getGradePointAverage(), person.getJobApplied(), person.getRating(), person.getResume(),
+                    person.getProfileImage(), person.getComment(), person.getInterviewDate(), person.getStatus(),
+                    editedTags);
+            try {
+                updatePerson(person, editedPerson);
+            } catch (DuplicatePersonException dpe) {
+                throw new AssertionError("Deleting a tag should not result in duplicate persons.");
+            } catch (PersonNotFoundException pnfe) {
+                throw new AssertionError("The target person cannot be missing.");
+            }
+        }
+    }
+
+    /**
+     * Removes unreferenced tags from {@code tags}.
+     */
+    public void removeUnusedTags() {
+        Set<Tag> referencedTags = new HashSet<>();
+        for (Person person: persons) {
+            person.getTags().forEach(tag -> referencedTags.add(tag));
+        }
+        tags.setTags(referencedTags);
     }
 
     //// util methods

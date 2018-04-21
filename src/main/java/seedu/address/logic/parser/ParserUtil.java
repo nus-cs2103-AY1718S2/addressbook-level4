@@ -9,11 +9,23 @@ import java.util.Set;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.commons.util.DoubleUtil;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.logic.commands.RatingEditCommand;
+import seedu.address.logic.commands.SortCommand;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.Comment;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.ExpectedGraduationYear;
+import seedu.address.model.person.GradePointAverage;
+import seedu.address.model.person.JobApplied;
+import seedu.address.model.person.Major;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.ProfileImage;
+import seedu.address.model.person.Rating;
+import seedu.address.model.person.Resume;
+import seedu.address.model.person.University;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -26,7 +38,6 @@ import seedu.address.model.tag.Tag;
  * {@code Optional} return value inside {@code ParserUtil} methods.
  */
 public class ParserUtil {
-
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
     public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
 
@@ -43,6 +54,27 @@ public class ParserUtil {
         return Index.fromOneBased(Integer.parseInt(trimmedIndex));
     }
 
+    //@@author kexiaowen
+    /**
+     * Parses {@code sortField} into a {@code SortCommand.SortField} and returns it.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if the specified sort field is invalid (not gpa, name or rating).
+     */
+    public static SortCommand.SortField parseSortField(String sortField) throws IllegalValueException {
+        String trimmedLowercaseSortField = sortField.trim().toLowerCase();
+        if (!SortCommand.isValidSortField(trimmedLowercaseSortField)) {
+            throw new IllegalValueException(SortCommand.MESSAGE_INVALID_SORT_FIELD);
+        }
+        if (trimmedLowercaseSortField.equals(SortCommand.SORT_FIELD_GPA)) {
+            return SortCommand.SortField.GPA;
+        } else if (trimmedLowercaseSortField.equals(SortCommand.SORT_FIELD_RATING)) {
+            return SortCommand.SortField.RATING;
+        } else {
+            return SortCommand.SortField.NAME;
+        }
+    }
+
+    //@@author
     /**
      * Parses a {@code String name} into a {@code Name}.
      * Leading and trailing whitespaces will be trimmed.
@@ -139,6 +171,240 @@ public class ParserUtil {
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
 
+    //@@author kexiaowen
+    /**
+     * Parses a {@code String university} into an {@code University}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code University} is invalid.
+     */
+    public static University parseUniversity(String university) throws IllegalValueException {
+        requireNonNull(university);
+        String trimmedUniversity = university.trim();
+        if (!University.isValidUniversity(trimmedUniversity)) {
+            throw new IllegalValueException(University.MESSAGE_UNIVERSITY_CONSTRAINTS);
+        }
+        return new University(trimmedUniversity);
+    }
+
+    /**
+     * Parses a {@code Optional<String> university}
+     * into an {@code Optional<University>} if {@code university} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<University> parseUniversity(Optional<String> university) throws IllegalValueException {
+        requireNonNull(university);
+        return university.isPresent() ? Optional.of(parseUniversity(
+                university.get())) : Optional.empty();
+    }
+
+    //@@author mhq199657
+    /**
+     * Parses a {@code String expectedGraduationYear} into an {@code ExpectedGraduationYear}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code expectedGraduationYear} is invalid.
+     */
+    public static ExpectedGraduationYear parseExpectedGraduationYear(String expectedGraduationYear)
+            throws IllegalValueException {
+        requireNonNull(expectedGraduationYear);
+        String trimmedExpectedGraduationYear = expectedGraduationYear.trim();
+        if (!ExpectedGraduationYear.isValidExpectedGraduationYear(trimmedExpectedGraduationYear)) {
+            throw new IllegalValueException(ExpectedGraduationYear.MESSAGE_EXPECTED_GRADUATION_YEAR_CONSTRAINTS);
+        }
+        return new ExpectedGraduationYear(trimmedExpectedGraduationYear);
+    }
+    /**
+     * Parses a {@code Optional<String> expectedGraduationYear}
+     * into an {@code Optional<ExpectedGraduationYear>} if {@code expectedGraduationYear} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ExpectedGraduationYear> parseExpectedGraduationYear(Optional<String> expectedGraduationYear)
+            throws IllegalValueException {
+        requireNonNull(expectedGraduationYear);
+        return expectedGraduationYear.isPresent() ? Optional.of(parseExpectedGraduationYear(
+                expectedGraduationYear.get())) : Optional.empty();
+    }
+
+    //@@author tanhengyeow
+    /**
+     * Parses a {@code String major} into a {@code Major}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code major} is invalid.
+     */
+    public static Major parseMajor(String major) throws IllegalValueException {
+        requireNonNull(major);
+        String trimmedMajor = major.trim();
+        if (!Major.isValidMajor(trimmedMajor)) {
+            throw new IllegalValueException(Major.MESSAGE_MAJOR_CONSTRAINTS);
+        }
+        return new Major(trimmedMajor);
+    }
+
+    /**
+     * Parses a {@code Optional<String> major} into an {@code Optional<Major>} if {@code major} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Major> parseMajor(Optional<String> major) throws IllegalValueException {
+        requireNonNull(major);
+        return major.isPresent() ? Optional.of(parseMajor(major.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String gradePointAverage} into an {@code gradePointAverage}.
+     * Leading and trailing whitespaces will be trimmed.
+     * @throws IllegalValueException if given {@code gradePointAverage} is invalid.
+     */
+    public static GradePointAverage parseGradePointAverage(String gradePointAverage)
+            throws IllegalValueException {
+        requireNonNull(gradePointAverage);
+        String trimmedGradePointAverage = gradePointAverage.trim();
+        if (!GradePointAverage.isValidGradePointAverage(trimmedGradePointAverage)) {
+            throw new IllegalValueException(GradePointAverage.MESSAGE_GRADE_POINT_AVERAGE_CONSTRAINTS);
+        }
+        return new GradePointAverage(trimmedGradePointAverage);
+    }
+
+    /**
+     * Parses a {@code Optional<String> gradePointAverage}
+     * into an {@code Optional<GradePointAverage>} if {@code gradePointAverage} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<GradePointAverage> parseGradePointAverage(Optional<String> gradePointAverage)
+            throws IllegalValueException {
+        requireNonNull(gradePointAverage);
+        return gradePointAverage.isPresent() ? Optional.of(parseGradePointAverage(
+                gradePointAverage.get())) : Optional.empty();
+    }
+
+    //@@author kexiaowen
+    /**
+     * Parses a {@code String jobApplied} into a {@code JobApplied}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code jobApplied} is invalid.
+     */
+    public static JobApplied parseJobApplied(String jobApplied) throws IllegalValueException {
+        requireNonNull(jobApplied);
+        String trimmedJobApplied = jobApplied.trim();
+        if (!JobApplied.isValidJobApplied(trimmedJobApplied)) {
+            throw new IllegalValueException(JobApplied.MESSAGE_JOB_APPLIED_CONSTRAINTS);
+        }
+        return new JobApplied(trimmedJobApplied);
+    }
+
+    /**
+     * Parses a {@code Optional<String> jobApplied} into an {@code Optional<JobApplied>}
+     * if {@code jobApplied} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<JobApplied> parseJobApplied(Optional<String> jobApplied) throws IllegalValueException {
+        requireNonNull(jobApplied);
+        return jobApplied.isPresent() ? Optional.of(parseJobApplied(jobApplied.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String score} into a {@code double}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code score} is invalid.
+     */
+    public static double parseScore(String score)
+            throws IllegalValueException {
+        requireNonNull(score);
+        String trimmedScore = score.trim();
+        double scoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedScore);
+        if (!Rating.isValidScore(scoreValue)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+        return scoreValue;
+    }
+
+    /**
+     * Parses a {@code Optional<String> score} into an {@code Optional<Double>}
+     * if {@code score} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parseScore(Optional<String> score)
+            throws IllegalValueException {
+        requireNonNull(score);
+        if (score.get().trim().equals("")) {
+            throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
+        }
+        return score.isPresent() ? Optional.of(parseScore(
+                score.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String score} into a {@code double}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code score} is invalid.
+     */
+    public static double parseEditedScore(String score)
+            throws IllegalValueException {
+        requireNonNull(score);
+        String trimmedScore = score.trim();
+        if (trimmedScore.equals("")) {
+            throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
+        }
+        double scoreValue;
+        try {
+            scoreValue = DoubleUtil.roundToTwoDecimalPlaces(trimmedScore);
+            if (!Rating.isValidScore(scoreValue)) {
+                throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+            }
+        } catch (NumberFormatException nfe) {
+            throw new IllegalValueException(RatingEditCommand.MESSAGE_EMPTY_SCORE);
+        }
+        return scoreValue;
+    }
+
+    /**
+     * Parses a {@code Optional<String> score} into an {@code Optional<Double>}
+     * if {@code score} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Double> parseEditedScore(Optional<String> score)
+            throws IllegalValueException {
+        requireNonNull(score);
+        return score.isPresent() ? Optional.of(parseEditedScore(score.get())) : Optional.empty();
+    }
+
+
+    /**
+     * Parses a {@code String sortOrder} into a {@code SortCommand.SortOrder}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if given {@code sortOrder} is invalid.
+     */
+    public static SortCommand.SortOrder parseSortOrder(String sortOrder)
+            throws IllegalValueException {
+        requireNonNull(sortOrder);
+        String trimmedSortOrder = sortOrder.trim();
+        if (!SortCommand.isValidSortOrder(trimmedSortOrder)) {
+            throw new IllegalValueException(SortCommand.MESSAGE_INVALID_SORT_ORDER);
+        }
+        if (trimmedSortOrder.equals(SortCommand.SORT_ORDER_ASC)) {
+            return SortCommand.SortOrder.ASC;
+        } else {
+            return SortCommand.SortOrder.DESC;
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> sortOrder} into an {@code Optional<SortCommand.SortOrder>}
+     * if {@code sortOrder} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<SortCommand.SortOrder> parseSortOrder(Optional<String> sortOrder)
+            throws IllegalValueException {
+        requireNonNull(sortOrder);
+        return sortOrder.isPresent() ? Optional.of(parseSortOrder(sortOrder.get())) : Optional.empty();
+    }
+
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -164,5 +430,79 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+    //@@author mhq199657
+    /**
+     * Parses a {@code String resume} into an {@code Resume}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code resume} is invalid.
+     */
+    public static Resume parseResume(String resume) throws IllegalValueException {
+        requireNonNull(resume);
+        String trimmedResume = resume.trim();
+        if (!Resume.isValidResume(trimmedResume)) {
+            throw new IllegalValueException(Resume.MESSAGE_RESUME_CONSTRAINTS);
+        }
+        return new Resume(trimmedResume);
+    }
+
+    /**
+     * Parses a {@code Optional<String> resume} into an {@code Optional<Resume>} if {@code resume} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Resume> parseResume(Optional<String> resume) throws IllegalValueException {
+        requireNonNull(resume);
+        return resume.isPresent() ? Optional.of(parseResume(resume.get())) : Optional.empty();
+    }
+
+    //@@author Ang-YC
+    /**
+     * Parses a {@code String profileImage} into a {@code ProfileImage}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code profileImage} is invalid.
+     */
+    public static ProfileImage parseProfileImage(String profileImage) throws IllegalValueException {
+        requireNonNull(profileImage);
+        String trimmedProfileImage = profileImage.trim();
+        if (!ProfileImage.isValidFile(trimmedProfileImage)) {
+            throw new IllegalValueException(ProfileImage.MESSAGE_IMAGE_CONSTRAINTS);
+        }
+        return new ProfileImage(trimmedProfileImage);
+    }
+
+    /**
+     * Parses a {@code Optional<String> profileImage} into an {@code Optional<ProfileImage>}
+     * if {@code profileImage} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<ProfileImage> parseProfileImage(Optional<String> profileImage) throws IllegalValueException {
+        requireNonNull(profileImage);
+        return profileImage.isPresent() ? Optional.of(parseProfileImage(profileImage.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String comment} into a {@code Comment}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code comment} is invalid.
+     */
+    public static Comment parseComment(String comment) throws IllegalValueException {
+        requireNonNull(comment);
+        String trimmedComment = comment.trim();
+        if (!Comment.isValidComment(trimmedComment)) {
+            throw new IllegalValueException(Comment.MESSAGE_COMMENT_CONSTRAINTS);
+        }
+        return new Comment(trimmedComment);
+    }
+
+    /**
+     * Parses a {@code Optional<String> comment} into an {@code Optional<Comment>} if {@code comment} is present.
+     * See header comment of this class regarding the use of {@code Comment} parameters.
+     */
+    public static Optional<Comment> parseComment(Optional<String> comment) throws IllegalValueException {
+        requireNonNull(comment);
+        return comment.isPresent() ? Optional.of(parseComment(comment.get())) : Optional.empty();
     }
 }

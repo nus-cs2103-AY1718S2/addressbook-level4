@@ -24,6 +24,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.tag.Tag;
+import seedu.address.model.tag.exceptions.TagNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -124,7 +126,30 @@ public class AddCommandTest {
         }
 
         @Override
+        public void deleteTag(Tag tag) throws TagNotFoundException {
+            fail("This method should not be called.");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author kexiaowen
+        @Override
+        public ObservableList<Person> getActivePersonList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        @Override
+        public void setSelectedPerson(Person selectedPerson) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public Person getSelectedPerson() {
             fail("This method should not be called.");
             return null;
         }
@@ -133,6 +158,22 @@ public class AddCommandTest {
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
         }
+
+        @Override
+        public void filterFilteredPersonList(Predicate<Person> predicate) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListAscOrder(SortCommand.SortField sortField) {
+            fail("This method should not be called.");
+        }
+
+        @Override
+        public void sortPersonListDescOrder(SortCommand.SortField sortField) {
+            fail("This method should not be called.");
+        }
+        //@@author
     }
 
     /**

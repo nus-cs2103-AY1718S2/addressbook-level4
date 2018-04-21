@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= HR+ - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,13 +11,16 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W14-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W14-B3`      Since: `Jan 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Welcome to *Human Resources Plus* (*HR+*)! HR+ is a free recruiting and talent management software designed for *campus recruiters* to achieve hiring success. HR+ streamlines your recruiting process, increases your productivity and helps you make more consistent and informed hiring decisions.
+This guide provides you with everything you need to know about setting up and using various features of HR+ effectively as a campus recruiter. To enjoy the full benefits of HR+, you should be *comfortable using desktop applications* and *working with a Command Line Interface (CLI)*. If you can type fast, HR+ can get your talent management tasks done faster than traditional Graphical User Interface (GUI) applications.
+
+Interested? Navigate to <<Quick Start>> to get started. Enjoy!
 
 == Quick Start
 
@@ -27,8 +30,8 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
+.  Download the latest `HR.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for HR+.
 .  Double-click the file to start the app. The GUI should appear in a few seconds.
 +
 image::Ui.png[width="790"]
@@ -38,7 +41,7 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 .  Some example commands you can try:
 
 * *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
+* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 u/NUS y/2020 m/Computer Science g/4.93 j/Software Tester` : adds a contact named `John Doe` to the Address Book.
 * **`delete`**`3` : deletes the 3rd contact shown in the current list
 * *`exit`* : exits the app
 
@@ -56,38 +59,56 @@ e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+[TIP]
+The command keywords and parameters are *case sensitive*.
+
+[TIP]
+There is a floating real-time parsing panel below the command box that shows parsed results before commands are executed. +
+However, it only verifies that the command format is correct. Commands that are shown to be "valid commands" might not execute successfully. +
+For example, when you use a correct `add` command format to add a duplicate student into HR+, the real time parser shows that it is a valid command but it will not be successfully executed.
+
+[TIP]
+If you want to hide the real-time parsing panel, press kbd:[Tab].
+
 === Viewing help : `help`
 
 Format: `help`
 
 === Adding a person: `add`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Adds a person to HR+ +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [i/IMAGE] [c/COMMENT] [t/TAG]...`
 
 [TIP]
 A person can have any number of tags (including 0)
 
+****
+* Two student contacts are considered to be duplicates only if they have the same name, phone number, email, address, university, expected graduation year, major and grade point average.
+* Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.
+* Image to be added is specified by the relative path to the jar file and must be smaller than 1MB.
+****
+
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 u/NUS y/2020 m/Computer Science g/4.93 j/Software Tester`
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 u/SMU y/2018 m/Information Security g/4.56 j/Web Security Analyst t/Python`
 
 === Listing all persons : `list`
 
-Shows a list of all persons in the address book. +
+Shows a list of all persons in HR+. +
 Format: `list`
 
 === Editing a person : `edit`
 
 Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Format: `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [j/JOB_APPLIED] [r/RESUME] [i/IMAGE] [c/COMMENT] [j/JOB_APPLIED] [t/TAG]...`
 
 ****
 * Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
 * At least one of the optional fields must be provided.
 * Existing values will be updated to the input values.
 * When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
+* You can remove the person's resume by typing `r/` without specifying any resume after it.
 * You can remove all the person's tags by typing `t/` without specifying any tags after it.
 ****
 
@@ -98,25 +119,306 @@ Edits the phone number and email address of the 1st person to be `91234567` and 
 * `edit 2 n/Betsy Crower t/` +
 Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
 
-=== Locating persons by name: `find`
+// tag::interview[]
+=== Scheduling an interview for a person : `interview` `[since v1.2]`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Schedules interview of an existing person in HR+. +
+Format: `interview INDEX DATE_TIME_EXPRESSION`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* interview command schedules interview for the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, etc.
+* `DATE_TIME_EXPRESSION` is the natural language date and time expression in English
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `interview 1 next Friday at 3pm` +
+schedules the interview of the 1st person to be next Friday at 3pm.
+
+* `interview 2 Mar 14 2pm` +
+schedules the interview of the 2nd person to be 14 March at 2pm.
+
+Due to the complexity of languages, the parser might fail to interpret what you mean.
+Always refer to the real time floating panel below the command box (As shown in figure below) to check what is the parsed result.
+
+image::userinterface/float_panel.png[width="250"]
+
+Below are some of the syntax for natural date and time parser:
+
+==== Formal dates
+Formal dates are represented using integers, separated by character - or /.
+
+===== Format
+****
+- `YYYY-MM-DD`
+- `YYYY/MM/DD`
+- `MM-DD-YYYY`
+- `MM/DD/YYYY`
+****
+- `DD` represent the day of a month
+- `MM` represent the month of a year
+- `YYYY` represent the year
+
+===== Example
+|===
+| *Input*    | *Output*
+| 2018-04-21 | 21/04/2018
+| 2018/04/21 | 21/04/2018
+| 04-21-2018 | 21/04/2018
+| 04/21/2018 | 21/04/2018
+|===
+
+==== Relaxed dates
+Relaxed dates are those in which the information are provided as words instead of integers.
+
+===== Example
+|===
+| *Input*          | *Output*
+| 21st April 2018  | 21/04/2018
+| Sat, 21 Apr 2018 | 21/04/2018
+| Apr 21           | 21/04, the year when the command executed
+|===
+
+==== Relative dates
+Relative dates are those that are relative to the current date.
+Do note that a week starts on Sunday and ends on the next Saturday.
+
+****
+- `YYYY-MM-DD`
+- `YYYY/MM/DD`
+- `MM-DD-YYYY`
+- `MM/DD/YYYY`
+****
+- `DD` represent the day of a month
+- `MM` represent the month of a year
+- `YYYY` represent the year
+
+===== Format
+****
+- next `DAY`
+- last `DAY`
+- `NUMBER` days from now
+- `NUMBER` weeks ago
+****
+- `DAY` represent the day of the week (Monday, Tuesday, ...)
+- `NUMBER` represent the integer or word representation of a number (1, two, 5)
+
+===== Example
+|===
+| *Input*          | *Output*
+| next thursday    | Next Thursday after the command executed
+| last wednesday   | The Wednesday before the command executed
+| today            | The day when the command executed
+| tomorrow         | The next day after the command executed
+| yesterday        | The day before the command executed
+| 3 days from now  | 3 days after the command executed
+| three weeks ago  | 3 weeks before the command executed
+|===
+
+==== Time
+Time of a day.
+
+===== Format
+****
+- `HH`[`MM`][`SS`][`MERIDIAN`]
+- [`WORD`]
+****
+- `HH` represent the hour of a day (Range of 00-23)
+- `MM` represent the minute of an hour (Range of 00-59), optional
+- `SS` represent the second of a minute (Range of 00-59), optional
+- `MERIDIAN` indicates the meridian (a, p, am, pm, a.m., p.m.), optional
+- `WORD` can be any of (afternoon: 12pm, noon: 12pm, midnight: 12am, morning: 8am, evening: 7pm)
+- : can be added to separate between HH, MM and SS (such as 21:00)
+
+===== Example
+|===
+| *Input*    | *Output*
+| 21         | 9:00:00pm
+| 232015     | 11:20:15pm
+| 21:00      | 9:00:00pm
+| 8a         | 8:00:00am
+| 7am        | 7:00:00am
+| 6:30 a.m.  | 6:30:00am
+| afternoon  | 12:00:00pm
+| midnight   | 12:00:00am
+|===
+
+==== Relative Time
+Similar to relative dates, it is used to specify time that are relative to the current time.
+
+===== Format
+****
+- `NUMBER` `UNIT` ago
+- `NUMBER` `UNIT` from now
+- `NUMBER` `UNIT` later
+- in `NUMBER` `UNIT`
+****
+- `NUMBER` represent the integer or word representation of a number (1, two, 5)
+- `UNIT` represent the unit of the
+
+===== Example
+|===
+| *Input*             | *Output*
+| 10 seconds ago      | 10 second before the command executed
+| 4 minutes from now  | 4 minutes after the command executed
+| 8 hours later       | 8 hours after the command executed
+| in 5 minutes        | 5 minutes after the command executed
+|===
+
+The syntax above is just part of the accepted values, detailed grammar definition can be found on http://natty.joestelmach.com/doc.jsp[Natty's documentation]
+// end::interview[]
+
+// tag::find[]
+=== Locating persons by field: `find` `[since v1.2]`
+
+Finds persons whose fields contain any of the given keywords. +
+
+Option 1: `find KEYWORD, [MORE_KEYWORDS]`
+
+Option 2: `find prefix/KEYWORD, [MORE KEYWORDS] prefix/...`
+
+****
+These are the prefixes supported by the `find` command: +
+1. Name -  `n/` +
+2. Phone - `p/` +
+3. Email - `e/` +
+4. Address - `a/` +
+5. University - `u/` +
+6. Major - `m/` +
+7. Job Applied - `j/` +
+8. Comment - `c/` +
+
+These are 3 types of features that are supported for the `find` command: +
+
+1. Exact keyword match - Matches your search keyword with exact keywords found in the fields of persons. +
+
+2. Fuzzy keyword match - Matches your search keyword that is a fuzzy match with keywords found in the fields of persons. The fuzzy matching algorithm is based on the `Levenshtein distance (LD)` , which is a measure of the similarity between two strings. The threshold is set to `2` in HR+. This means that any keyword that is 2 characters different from the search keyword will be detected. If you are interested in finding out how the fuzzy match algorithm works, you can refer to the Java API on how this method is implemented.
+
+3. Wildcard keyword match – Matches your search keyword with 3 types of wildcard support. You should substitute the keyword " example " with your desired keyword. +
+• Wildcard "example" searches for field that contains keyword example
+• Wildcard *example searches for field that ends with keyword example
+• Wildcard example* searches for field that starts with keyword example
+
+Search results are displayed in the application console. The format is: +
+`TYPE OF SEARCH MATCH` +
+`KEYWORD: (PREFIX)MATCHED KEYWORD` +
+
+(PREFIX) - represents which field the matched keyword was in. +
+****
+
+The fuzzy search algorithm is implemented to cater to users that fit the following profiles: +
+1. Unsure what they want to search for +
+2. Aware of some patterns of the keywords but not the full keyword +
+3. Prone to typos +
+
+If you are certain that you want to find a certain keyword, please use the wildcard `"example"` so that all fields that contains the search keyword would be displayed only. Customizing fuzzy searching is one of our considerations for `v2.0`.
+
+Examples: +
+
+[TIP]
+General tips are not repeated across different examples!
+
+* `find bernice, charlot` +
+Returns list of persons whose keywords in **any** of their fields are of an exact keyword match **OR** fuzzy keyword match with `bernice` **OR** `charlot`. In the sample data provided, the list will return persons `Bernice Yu` and `Charlotte Oliveiro`. Keyword `bernice` is an exact keyword match with one of the keywords `Bernice` and `charlot` is a fuzzy keyword match with one of the keywords `Charlotte` in `Charlotte Oliveiro`.
+
+[TIP]
+The search is case insensitive in HR+. e.g `bernice` might match `Bernice`. +
+Different keywords should be **comma separated**, if not it will be treated as one keyword in HR+. +
+All fields are searched if no prefix is supplied **first** in HR+. If the first keyword does not **start** with a valid prefix, this command would assume a global search for **all** fields. A global search does an **OR** search between keywords. +
+Persons matching at least one keyword will be returned in HR+. +
+
+* `find e/alexyeoh@example.com, lidavxx@example.com j/Software p/87438807` +
+Returns list of persons that matches the following conditions: +
+1. Keywords in their `email` field are of an exact match **OR** fuzzy match with `alexyeoh@example.com` **OR** `lidavxx@example.com` **AND** +
+2. Keywords in their `job applied` field are of an exact match **OR** fuzzy match with `Software` **AND** +
+3. Keywords in their `phone` field are of an exact match **OR** fuzzy match with `87438807`. +
+In the sample data provided, the list will return person `Alex` as he is the only person that matches all these conditions.
+
+[TIP]
+The first keyword is prepended with a prefix, thus this command assumes a prefix search. A prefix search does an **OR** search between keywords in the same prefix and an **AND** search between different prefixes. +
+
+* `find Mohammed, Julius, n/test@example.com` +
+Returns list of persons whose keywords in **any** of their fields that are of an exact match **OR** fuzzy match with `Mohammed`, `Julius` **OR** `n/test@example.com`. In the sample data provided, the list will return persons `Julius Hassange` and `Mohammed Lee`. +
+
+[TIP]
+The prefix is not accounted for in the third keyword as the first keyword does not **start** with a valid prefix.
+
+* `find alex bernice david` +
+Returns list of persons whose keywords in **any** of their fields that are of an exact match **OR** fuzzy match with `alex bernice david`. In the sample data provided, this command will return an empty list.
+
+* `find n/alex bernice david p/98293213 92421423` +
+Returns list of persons that matches the following conditions: +
+1. Keywords in their `name` field are of an exact match **OR** fuzzy match with keyword `alex bernice david` **AND** +
+2. Keywords in their `phone` field are of an exact match **OR** fuzzy match with keyword `98293213 92421423` +
+In the sample data provided, this command will return an empty list. +
+
+[TIP]
+Keywords are not comma separated, thus they are treated as one keyword.
+
+* `find bernice, "alex", ir&ast;, &ast;li` +
+Returns list of persons with **any** of their fields that matches the following conditions: +
+1. Keywords that are of an exact match **OR** fuzzy match with keyword `bernice` **OR**
+2. Field contains keyword `alex` **OR**
+3. Field starts with keyword `ir` **OR**
+4. Field ends with keyword `li` +
+In the sample data provided, this command will return persons `Alex Yeoh`, `Bernice Yu`, `David Li` and `Irfan Ibrahim`. +
+
+* `find n/bernice, "alex", ir&ast;, &ast;li e/&ast;example.com p/"5" m/Computer&ast;` +
+Returns list of persons with matches the following conditions: +
+1. `Name` field with keywords that are of an exact match **OR** fuzzy match with keyword `bernice` **OR** contains keyword `alex` **OR** starts with `ir` **OR** ends with `li` **AND** +
+2. `Email` field ends with keyword `example.com` **AND** +
+3. `Phone` field contains keyword `5` **AND** +
+4. `Major` field starts with keyword `Computer` +
+In the sample data provided, the list with return person `Bernice` as she is the only person that matches all these conditions.
+
+
+* `find berni, charlot, bernice, charlotte` +
+Returns list of persons whose keywords in **any** of their fields that are of an exact match **OR** fuzzy match with `berni` **OR** `charlot` **OR** `bernice` **OR** `charlotte`. In the sample data provided, the list will return persons `Bernice Yu` and `Charlotte Oliveiro`. +
+
+Below shows how the application console looks like when this command is executed:
+
+****
+Exact word search matches: +
+charlotte: - +
+charlot: - +
+bernice: - +
+berni: - +
+
+Fuzzy search matches: +
+charlotte: - +
+charlot: (n/)Charlotte +
+bernice: - +
+berni: (n/)Bernice +
+
+Wildcard search matches: +
+****
+
+[TIP]
+When a search keyword matches a person first, subsequent search keywords that matches the same person would be reflected in the application console as `-`.
+// end::find[]
+
+// tag::filter[]
+=== Filter persons by multiple fields: `filter` `[since v1.3]`
+
+Filters persons whose keyword is within the specified range.
+Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]`
+
+* Keyword is in the format of (1) `KEYWORD` or (2) `KEYWORD1 - KEYWORD2` or (3) a combination of (1) and (2) `KEYWORD1, KEYWORD2 - KEYWORD3, KEYWORD4`.
+* Each keyword must be valid with respect to the preceding prefix.
+* `filter` command will only be filtering based on the current view of the person list, instead of all the persons.
+* Within each prefix, `filter` command will match all entries that satisfies at least one keyword range. You can think of an `OR` operator within the prefix.
+* `filter` command will match all persons that only matches every prefixes. You can think of an `AND` operator between all prefixes.
+
+Examples:
+
+* `filter y/2020` +
+Returns all persons whose graudation year that is exactly 2020
+* `filter y/2019-2021 r/4.3, 4.5-5.0`
+Returns all persons whose graduation year between 2019 and 2021, and whose overall rating score is either 4.3, or between 4.5 to 5.0
+
+Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
+`Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]`
+// end::filter[]
 
 === Deleting a person : `delete`
 
@@ -157,6 +459,133 @@ Selects the 2nd person in the address book.
 * `find Betsy` +
 `select 1` +
 Selects the 1st person in the results of the `find` command.
+
+// tag::rate[]
+=== Rating a student : `rate` `[since v1.1]`
+
+Rates the student identified by the index number used in the last person listing based on technical, communication, problem solving skills and experience. +
+Format: `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE`
+
+****
+* Rates the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* such as 1, 2, 3, ...
+* All four rating scores need to be supplied.
+* The scores should be a number in the range of *1 to 5* (inclusive). Scores with more than two decimal places are rounded to *two decimal places*.
+* The overall rating of a student is computed as the average of the four rating scores, rounded to two decimal places.
+****
+
+[TIP]
+If you have rated the student, you will NOT be able to use the `rate` command on the same student again. Please use the `rating-edit` command to overwrite existing scores.
+
+Examples:
+
+* `rate 1 t/4.5 c/3 p/4 e/3.5` +
+Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5. The overall rating is computed to be 3.75.
+* `rate 2 t/3 c/5 p/3.5 e/2` +
+Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2. The overall rating is computed to be 3.38.
+// end::rate[]
+
+// tag::rating-edit[]
+=== Editing the rating given to a student : `rating-edit` `[since v1.5]`
+
+Edits the rating given to the student identified by the index number used in the last person listing. +
+Format: `rating-edit INDEX [t/TECHNICAL_SKILLS_SCORE] [c/COMMUNICATION_SKILLS_SCORE] [p/PROBLEM_SOLVING_SKILLS_SCORE] [e/EXPERIENCE_SKILLS_SCORE]`
+
+****
+* Edits the rating of the student at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* such as 1, 2, 3, ...
+* At least one rating score must be edited.
+* The score(s) should be a number in the range of *1 to 5* (inclusive). Scores with more than two decimal places are rounded to *two decimal places*.
+* The overall rating of a student will be re-computed and rounded to two decimal places.
+****
+
+[TIP]
+If you have not rated the student, please use the `rate` command to assign new rating scores.
+
+Examples:
+
+* `rating-edit 1 t/4.5 p/4 e/3.5` +
+Edits the 1st person to have technical skills score of 4.5, problem solving skills of 4, experience score of 3.5.
+* `rating-edit 2 p/3.5` +
+Edits the 2nd person to have problem solving skills of 3.5.
+// end::ratingedit[]
+
+// tag::ratingdelete[]
+=== Deleting the rating given to a student : `rating-delete` `[since v1.2]`
+
+Deletes the rating given to the student identified by the index number used in the last person listing. +
+Format: `rating-delete INDEX`
+
+****
+* Deletes the rating of the applicant at the specified `INDEX`.
+* The index refers to the index number shown in the last person listing.
+* The index *must be a positive integer* such as 1, 2, 3, ...
+****
+
+Examples:
+
+* `rating-delete 1` +
+Deletes the rating of the first applicant in HR+.
+// end::ratingdelete[]
+
+// tag::sort[]
+=== Sorting the list of students based on different fields : `sort` `[since v1.3]`
+
+Sorts the current list of students in HR+ based on GPA, name or overall rating in descending or ascending order. +
+Format: `sort FIELD o/SORT ORDER`
+
+****
+* The field to be sorted by, `FIELD`, must be either `gpa`, `name` or `rating`.
+* The sort order can only be `asc` (ascending order) or `desc` (descending order).
+* When sorting the students based on name, cases are ignored when doing comparisons.
+* If the list has been filtered, only current students on the list will be sorted instead of all students in HR+. If you intend to sort all the students in HR+, you may run the `list` command first.
+****
+
+Examples:
+
+* `sort rating o/asc` +
+Sorts the current list of students according to their overall rating in ascending order.
+* `sort gpa o/desc` +
+Sorts the current list of students according to their grade point average in descending order.
+// end::sort[]
+
+// tag::status[]
+=== Update applicant's status: `status` [Since v1.3]
+Updates the status of an applicant. +
+Format: `status INDEX STATUS_INDEX`
+
+****
+* The index refers to the index number shown in the last person listing.
+* The index *must be a positive number* 1,2,3, ...
+* Status index are
+1. New
+2. 1st round
+3. 2nd round
+4. Rejected
+5. Waitlist
+6. Offered
+7. Accepted
+8. Withdrawn
+****
+// end::status[]
+
+// tag::show[]
+=== Showing a specific panel: `show` `[since v1.5]`
+
+Showing a specific panel for more information about the currently selected person in HR+. +
+Format: `show PANEL`
+
+****
+* Make sure person are selected using `select` command before executing this command
+* When resume is requested, it will only shows when it is available.
+* `PANEL` must be either 'info' or 'resume', case sensitive
+****
+
+Examples:
+
+* `show info` +
+shows the info panel of the currently selected person.
+* `show resume` +
+shows the resume panel of the currently selected person.
+// end::show[]
 
 === Listing entered commands : `history`
 
@@ -230,35 +659,79 @@ Format: `exit`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Data in HR+ are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+=== Display tags added to a student `[coming in v2.0]`
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
+Displays the tags that are added to a student in the left panel.
+
+// tag::futurefind[]
+=== Highlights search results in user interface `[coming in v2.0]`
+
+Highlights search results after user executes the `find` command.
+
+=== User specified Levenshtein distance `[coming in v2.0]`
+
+Allows user to set the threshold used in the fuzzy match.
+
+=== User specified search support `[coming in v2.0]`
+
+Allows user to toggle which search support they want at any point of time.
+
+=== Displays suggested searches for user before executing find command `[coming in v2.0]`
+
+Allows user to view a list of suggested searches on the fly when typing in their search keywords.
+
+=== Saving searches `[coming in v2.0]`
+Saves searches that can be displayed in future for fast lookups.
+// end::futurefind[]
+
+=== Customising rating criteria `[coming in v2.0]`
+Specifies the criteria that candidates will be rated against.
+
+=== Sending and receiving emails `[coming in v2.0]`
+Sends and receives emails within HR+.
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
 *A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
 
+*Q*: What is HR+'s behaviour if the XML file is corrupted?
+*A*: HR+ will then start up empty, i.e., no person is inside. This empty HR+ alerts to the user that the XML file is corrupted.
+
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [i/IMAGE] [c/COMMENT] [t/TAG]...` +
+e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 u/NTU y/2020 m/Information System g/4.33 j/Software Engineer`
 * *Clear* : `clear`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [j/JOB_APPLIED] [r/RESUME] [i/IMAGE] [c/COMMENT] [j/JOB_APPLIED] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
 e.g. `find James Jake`
+* *Filter* : `filter [y/KEYWORD] [r/RATING]` +
+e.g. `filter y/2019`
+* *Interview* : `interview INDEX DATE_TIME_EXPRESSION` +
+e.g. `interview 1 next Friday at 3pm`
+* *Status* : `status INDEX STATUS_INDEX` +
+e.g. `status 1 2`
 * *List* : `list`
 * *Help* : `help`
 * *Select* : `select INDEX` +
 e.g.`select 2`
+* *Rate* : `rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE` +
+e.g. `rate 1 t/4.5 c/3 p/4 e/3.5`
+* *Edit Rating* : `rating-edit INDEX [t/TECHNICAL_SKILLS_SCORE] [c/COMMUNICATION_SKILLS_SCORE] [p/PROBLEM_SOLVING_SKILLS_SCORE] [e/EXPERIENCE_SKILLS_SCORE]` +
+e.g. `rating-edit 1 t/4.5 c/3`
+* *Delete Rating* : `rating-delete INDEX` +
+e.g. `rating-delete 1`
+* *Sort* : `sort FIELD o/SORT ORDER` +
+e.g. `sort gpa o/asc`
+* *Show* : `show PANEL` +
+e.g. `show resume`
 * *History* : `history`
 * *Undo* : `undo`
 * *Redo* : `redo`

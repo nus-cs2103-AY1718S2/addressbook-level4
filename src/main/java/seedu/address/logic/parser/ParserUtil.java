@@ -11,10 +11,17 @@ import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.model.person.Address;
+import seedu.address.model.person.DisplayPic;
 import seedu.address.model.person.Email;
+import seedu.address.model.person.MatriculationNumber;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Deadline;
+import seedu.address.model.task.Priority;
+import seedu.address.model.task.TaskDescription;
+import seedu.address.model.task.Title;
+import seedu.address.storage.DisplayPicStorage;
 
 /**
  * Contains utility methods used for parsing strings in the various *Parser classes.
@@ -67,6 +74,33 @@ public class ParserUtil {
         return name.isPresent() ? Optional.of(parseName(name.get())) : Optional.empty();
     }
 
+    //@@author JoonKai1995
+    /**
+     * Parses a {@code String matricNumber} into a {@code MatriculationNumber}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code matricNumber} is invalid.
+     */
+    public static MatriculationNumber parseMatricNumber(String matricNumber) throws IllegalValueException {
+        requireNonNull(matricNumber);
+        String trimmedMatricNumber = matricNumber.trim();
+        if (!MatriculationNumber.isValidMatricNumber(trimmedMatricNumber)) {
+            throw new IllegalValueException(MatriculationNumber.MESSAGE_MATRIC_NUMBER_CONSTRAINTS);
+        }
+        return new MatriculationNumber(trimmedMatricNumber);
+    }
+
+    /**
+     * Parses a {@code Optional<String> matricNumber} into an {@code Optional<MatriculationNumber>}
+     * if {@code matricNumber} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<MatriculationNumber>
+        parseMatricNumber(Optional<String> matricNumber) throws IllegalValueException {
+        requireNonNull(matricNumber);
+        return matricNumber.isPresent() ? Optional.of(parseMatricNumber(matricNumber.get())) : Optional.empty();
+    }
+    //@@author
     /**
      * Parses a {@code String phone} into a {@code Phone}.
      * Leading and trailing whitespaces will be trimmed.
@@ -138,7 +172,72 @@ public class ParserUtil {
         requireNonNull(email);
         return email.isPresent() ? Optional.of(parseEmail(email.get())) : Optional.empty();
     }
+    //@@author Alaru
+    /**
+     * Parses a {@code String displayPic} into an {@code DisplayPic}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code displayPic} is invalid.
+     */
+    public static DisplayPic parseDisplayPic(String displayPic)
+            throws IllegalValueException {
+        if (displayPic.equals("")) {
+            return new DisplayPic();
+        } else {
+            String trimmedDisplayPath = displayPic.trim();
+            if (!DisplayPicStorage.isValidPath(trimmedDisplayPath)) {
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NONEXISTENT_CONSTRAINTS);
+            }
+            if (!DisplayPicStorage.isValidImage(trimmedDisplayPath)) {
+                throw new IllegalValueException(DisplayPic.MESSAGE_DISPLAY_PIC_NOT_IMAGE);
+            }
+            return new DisplayPic(displayPic);
+        }
+    }
 
+    /**
+     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
+     * if {@code displayPic} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPic> parseDisplayPic(Optional<String> displayPic) throws IllegalValueException {
+        if (displayPic.isPresent()) {
+            return Optional.of(parseDisplayPic(displayPic.get()));
+        } else {
+            return Optional.empty();
+        }
+    }
+
+    /**
+     * Parses a {@code Optional<String> displayPic} into an {@code Optional<DisplayPic>}
+     * if {@code displayPic} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<DisplayPic> parseEditDisplayPic(Optional<String> displayPic) throws IllegalValueException {
+        requireNonNull(displayPic);
+        return displayPic.isPresent() ? Optional.of(parseDisplayPic(displayPic.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses {@code String marks} into a {@code Integer marks}
+     *
+     * @throws IllegalValueException if the given {@code name} is invalid.
+     */
+    public static Integer parseMarks(String marks) throws IllegalValueException {
+        requireNonNull(marks);
+        return Integer.parseInt(marks);
+    }
+
+    /**
+     * Parses a {@code Optional<String> marks} into an {@code Optional<Integer>} if {@code marks} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     * @param marks are the marks to add
+     */
+    public static Optional<Integer> parseMarks(Optional<String> marks) throws IllegalValueException {
+        requireNonNull(marks);
+        return marks.isPresent() ? Optional.of(parseMarks(marks.get())) : Optional.empty();
+    }
+    //@@author
     /**
      * Parses a {@code String tag} into a {@code Tag}.
      * Leading and trailing whitespaces will be trimmed.
@@ -165,4 +264,105 @@ public class ParserUtil {
         }
         return tagSet;
     }
+
+    //@@author WoodySIN
+    /**
+     * Parses a {@code String taskTitle} into a {@code TaskTitle}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code taskDescription} is invalid.
+     */
+    public static Title parseTaskTitle(String taskTitle) throws IllegalValueException {
+        requireNonNull(taskTitle);
+        String trimmedTaskTitle = taskTitle.trim();
+        if (!Title.isValidTitle(trimmedTaskTitle)) {
+            throw new IllegalValueException(Title.MESSAGE_TITLE_CONSTRAINTS);
+        }
+        return new Title(trimmedTaskTitle);
+    }
+
+    /**
+     * Parses a {@code Optional<String> taskDescription} into an {@code Optional<TaskDescription>}
+     * if {@code TaskDscription} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Title> parseTaskTitle(Optional<String> title) throws IllegalValueException {
+        requireNonNull(title);
+        return title.isPresent() ? Optional.of(parseTaskTitle(title.get())) : Optional.empty();
+    }
+
+    //@@author
+    /**
+     * Parses a {@code String taskDescription} into a {@code TaskDescription}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code taskDescription} is invalid.
+     */
+    public static TaskDescription parseTaskDescription(String taskDescription) throws IllegalValueException {
+        requireNonNull(taskDescription);
+        String trimmedTaskDescription = taskDescription.trim();
+        if (!TaskDescription.isValidDescription(trimmedTaskDescription)) {
+            throw new IllegalValueException(TaskDescription.MESSAGE_DESCRIPTION_CONSTRAINTS);
+        }
+        return new TaskDescription(trimmedTaskDescription);
+    }
+
+    /**
+     * Parses a {@code Optional<String> taskDescription} into an {@code Optional<TaskDescription>}
+     * if {@code TaskDscription} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<TaskDescription> parseTaskDescription(Optional<String> task) throws IllegalValueException {
+        requireNonNull(task);
+        return task.isPresent() ? Optional.of(parseTaskDescription(task.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String Deadline} into a {@code Deadline}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code deadline} is invalid.
+     */
+    public static Deadline parseDeadline(String deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        String trimmedDeadline = deadline.trim();
+        if (!Deadline.isValidDeadline(trimmedDeadline)) {
+            throw new IllegalValueException(Deadline.MESSAGE_DEADLINE_CONSTRAINTS);
+        }
+        return new Deadline(trimmedDeadline);
+    }
+
+    /**
+     * Parses a {@code Optional<String> deadline} into an {@code Optional<Deadline>} if {@code Deadline} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Deadline> parseDeadline(Optional<String> deadline) throws IllegalValueException {
+        requireNonNull(deadline);
+        return deadline.isPresent() ? Optional.of(parseDeadline(deadline.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String priority} into a {@code Priority}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code priority} is invalid.
+     */
+    public static Priority parsePriority(String priority) throws IllegalValueException {
+        requireNonNull(priority);
+        String trimmedPriority = priority.trim();
+        if (!Priority.isValidPriority(trimmedPriority)) {
+            throw new IllegalValueException(Priority.MESSAGE_PRIORITY_CONSTRAINTS);
+        }
+        return new Priority(trimmedPriority);
+    }
+
+    /**
+     * Parses a {@code Optional<String> priority} into an {@code Optional<Priority>} if {@code priority} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Priority> parsePriority(Optional<String> priority) throws IllegalValueException {
+        requireNonNull(priority);
+        return priority.isPresent() ? Optional.of(parsePriority(priority.get())) : Optional.empty();
+    }
+
 }

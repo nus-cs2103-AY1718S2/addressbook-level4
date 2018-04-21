@@ -8,6 +8,7 @@ import static org.junit.Assert.fail;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.function.Predicate;
 
 import org.junit.Rule;
@@ -24,6 +25,8 @@ import seedu.address.model.ReadOnlyAddressBook;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.task.Task;
+import seedu.address.model.task.exceptions.TaskNotFoundException;
 import seedu.address.testutil.PersonBuilder;
 
 public class AddCommandTest {
@@ -102,6 +105,18 @@ public class AddCommandTest {
         }
 
         @Override
+        public void addTask(Task task) {
+        }
+
+        @Override
+        public void deleteTask(Task target) throws TaskNotFoundException {
+        }
+
+        @Override
+        public void updateTask(Task target, Task editedTask) throws TaskNotFoundException {
+        }
+
+        @Override
         public void resetData(ReadOnlyAddressBook newData) {
             fail("This method should not be called.");
         }
@@ -124,14 +139,49 @@ public class AddCommandTest {
         }
 
         @Override
+        public void sortPersons() {
+            fail("This method should not be called");
+        }
+
+        @Override
+        public void sortTasks() {
+            fail("This method should not be called");
+        }
+
+        @Override
         public ObservableList<Person> getFilteredPersonList() {
             fail("This method should not be called.");
             return null;
         }
 
         @Override
+        public ObservableList<Task> getFilteredTaskList() {
+            return null;
+        }
+
+        @Override
+        public ObservableList<Task>[][] getCalendarTaskLists() {
+            return new ObservableList[0][];
+        }
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void updateFilteredTaskList(Predicate<Task> predicate) {
+
+        }
+
+        @Override
+        public List<String> getItemList() {
+            return null;
+        }
+
+        @Override
+        public void clearDeleteItems() {
+
         }
     }
 

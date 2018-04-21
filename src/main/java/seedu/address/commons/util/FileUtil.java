@@ -1,10 +1,17 @@
 package seedu.address.commons.util;
 
+import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.AppUtil.checkArgument;
 
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.file.Files;
+
+import seedu.address.commons.exceptions.IllegalValueException;
 
 /**
  * Writes and reads files
@@ -88,6 +95,48 @@ public class FileUtil {
     public static String getPath(String pathWithForwardSlash) {
         checkArgument(pathWithForwardSlash.contains("/"));
         return pathWithForwardSlash.replace("/", File.separator);
+    }
+
+    //@@author Alaru
+    public static String getFileType(String filePath) throws IllegalValueException {
+        requireNonNull(filePath);
+        String trimmedFilePath = filePath.trim();
+        int lastDot = trimmedFilePath.lastIndexOf('.');
+        if (lastDot == -1) {
+            throw new IllegalValueException("THE FILE MUST HAVE A FILE EXTENSION.");
+        } else {
+            return trimmedFilePath.substring(lastDot + 1);
+        }
+    }
+
+    /**
+     * Copies a file over. The new file will be binary equivalent to the original.
+     */
+    public static void copyFile(String origFile, File outputFile) throws IOException {
+        byte[] buffer = new byte[4096];
+        createIfMissing(outputFile);
+        BufferedInputStream bis = new BufferedInputStream(new FileInputStream(origFile));
+        BufferedOutputStream bos = new BufferedOutputStream(new FileOutputStream(outputFile));
+
+        int fileBytes = bis.read(buffer);
+        while (fileBytes != -1) {
+            bos.write(buffer, 0, fileBytes);
+            fileBytes = bis.read(buffer);
+        }
+
+        bis.close();
+        bos.close();
+    }
+
+    /**
+     * Copies an image from the filepath provided to the specified destination
+     */
+    public static void copyImage(String image, File toSave) throws IllegalValueException {
+        try {
+            copyFile(image, toSave);
+        } catch (IOException ioe) {
+            throw new IllegalValueException("IMAGE FILE COULD NOT BE COPIED.");
+        }
     }
 
 }

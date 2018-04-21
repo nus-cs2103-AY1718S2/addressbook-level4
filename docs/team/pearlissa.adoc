@@ -1,0 +1,350 @@
+= Pearlissa Taim Qi Yah - Project Portfolio
+
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main
+
+== Project: Your TA
+
+'''
+
+== Overview
+
+Your TA is a desktop contact, calendar and task manager application that caters to tech-savvy university Teaching Assistants (TAs) and/or Professors/Lecturers. +
+It allows the user to manage their deadlines, as well as keep track of their students. +
+The user is mostly required to interact with the application through a Command Line Interface (CLI), along with minimal Graphical User Interface (GUI) features created with JavaFX. It is written in Java, and has about 15 kLoC.
+
+== Summary of Contributions
+
+* *Major feature*: Implemented a *login* system
+
+** What it does: Requires users to log in to their accounts (and create accounts for first-time users) with a username and password to access their personal data.
+
+** Justification: This feature makes the software much more accessible to multiple users as it ensures that each user only has access to their own personal information, and not those of other users.
+
+** Highlights: This feature precedes all the other functionalities upon starting up the application. It is the first attempt at improving data security of the software. It required an in-depth analysis of the `Model` and `Storage` components. The implementation too was challenging as it called for the creation of new model classes and storage classes from scratch.
+
+** Credits: The code was adapted from the study of the `Model` and `Storage` components, together with all their classes.
+
+* *Minor feature*: Added *sort* which sorts the contacts alphanumerically by their name
+
+* *Minor feature*: Added a new *theme* for the application
+
+* *Minor feature*: Added *default tag colours* for "Lecturer", "TA", "student" and "T1"
+
+* *Code contributed*: https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/functional/Pearlissa.md[functional], https://github.com/CS2103JAN2018-F09-B1/main/blob/master/collated/test/Pearlissa.md[test].
+
+* *Other contributions*:
+
+** Documentation:
+*** Checked and improved consistency of User Guide
+*** Updated screenshots used in the User Guide: (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/136[#136])
+*** Created images for Developer's Guide: (PR https://github.com/CS2103JAN2018-F09-B1/main/pull/104[#104])
+
+** Community:
+*** Reported bugs in another group's application (Examples: https://github.com/CS2103JAN2018-T11-B4/main/issues/135[1], https://github.com/CS2103JAN2018-T11-B4/main/issues/130[2], https://github.com/CS2103JAN2018-T11-B4/main/issues/128[3], https://github.com/CS2103JAN2018-T11-B4/main/issues/116[4], https://github.com/CS2103JAN2018-T11-B4/main/issues/123[5])
+
+<<<
+
+== Contributions to the User Guide
+
+*****
+_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+*****
+
+== Introduction
+
+*Your TA* is for university Teaching Assistants (TAs) who prefer using a desktop application to manage student contacts and plan schedules. +
+
+Its features include a login system, tools to manage students' information, task schedulers linked to a calendar and many more! +
+
+It is optimized for those who prefer to work with a *Command Line Interface* (CLI) while still having the benefits of a *Graphical User Interface* (GUI). +
+This means if you prefer using the keyboard over the mouse and can type fast, it can get your contact management and scheduling done faster than traditional GUI applications. +
+
+This user guide will take you through the features and commands available for use.
+
+.  Enter your `Username` and `Password` to log in. _Refer to <<Features>> for details of the feature._
+[TIP]
+If you're a first-time user without an account, enter your desired `Username` and `Password` and an account will be created and you will be logged in automatically.
+
+After logging in, you should now see the main Application GUI appear. +
+The key parts of the GUI (as shown in Figure 2 below) are: +
+
+.  Person List (displays all contacts)
+.  Todo List (displays all outstanding tasks)
+.  Calendar
+.  Command Box (field where you input your commands)
+.  Results Display Panel (field where results of commands appear)
+
+.Parts of the GUI
+image::UiParts.png[width="800"]
+
+=== Sorting all entries : `sort`
+
+Sorts all entries from the address book in alphabetical order based on name. +
+Alias: `s` +
+Format: `sort`
+
+== Login Feature
+
+Before you are able to access the application, login is required.
+====
+* Enter your `Username` and `Password` in the respective fields. +
+* Click on the `login` button.
+* If you have entered either of those incorrectly, the text "Wrong username or password entered" will be displayed. You have an unlimited number of tries to log in. +
+* Upon successful login, the application will load with your previously saved data.
+====
+
+[NOTE]
+Both `Username` and `Password` fields are case-sensitive.
+
+[TIP]
+If you are a first-time user, create an account by entering your desired `Username` and `Password` in the username and password text fields respectively. +
+Then, click on the `Login` button.
+
+=== Editing a task: `editTask`
+
+Edits a task in the todo list. +
+
+Alias: `et` +
+Format: `editTask` `INDEX` `[title/TASK TITLE] [desc/TASK DESCRIPTION]` `[by/DEADLINE]` `[priority/PRIORITY]`
+
+[TIP]
+====
+Not all fields are required, you may only pick the fields that you want to edit.
+====
+
+The specified tasks will be edited in the *Todo List* and *Calendar*.
+
+****
+* The `INDEX` refers to the index number shown in the last task listing. +
+The index must be a *positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+****
+
+Examples:
+
+Current date: 15-04-2018 +
+
+The application initially starts with 2 tasks (see Figure 33).
+
+.Initial Application View +
+image::SecondTask.png[width="800"]
+
+Command entered: `editTask` `1` `priority/1` +
+
+Result: This edits the task at index 1, and change its priority to 1 (see Figure 34).
+
+.Task at Index 1 Priority Changed to 1 +
+image::FirstEditTask.png[width="800"]
+
+Command entered: `editTask` `2` `by/23-04-2018` +
+
+Result: This edits the task at index 2, and change its deadline to 23-04-2018 (see Figure 35).
+
+.Task at Index 2 Deadline Changed to 23-04-2018 +
+image::SecondEditTask.png[width="800"]
+
+=== Deleting a task: `deleteTask`
+
+Deletes a task in the todo list. +
+
+Alias: `dt` +
+Format: `deleteTask` `INDEX`
+
+The specified indexed task will be deleted from the *Todo List* and *Calendar*.
+
+Examples:
+
+Current date: 15-04-2018 +
+
+The application initially starts with 2 tasks as seen in Figure 36 below.
+
+.Initial Application View +
+image::SecondEditTask.png[width="800"]
+
+Command entered: `deleteTask` `1` +
+
+Result: This will delete the task at index 1, as shown in Figure 37 below.
+
+.Task at Index 1 Removed +
+image::DeleteTask.png[width="800"]
+
+== Frequently Asked Questions (FAQ)
+
+*Q*: How do I transfer my data to another Computer? +
+
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the data file of your previous *Your TA* folder.
+
+*Q*: How do i keep my information safe? +
+
+*A*: A login feature has already been implemented as of v1.5, which ensures that a user can only access their own accounts via authentication.
+
+== Contributions to the Developer guide
+
+*****
+_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+*****
+The `User` Class:
+
+* Stores the information of a specific user (TA/Lecturer/Professor) in the application.
+* Information includes: Username and Password.
+* Implements `UniqueUserList` that enforces uniqueness of its elements and disallows nulls.
+* `Username`: Object that stores the username of the `User` Object and contains the regex requirements for a valid username.
+[NOTE]
+User's username should only contain alphanumeric characters, be between 3 and 15 characters long and should not be null.
+* `Password`: Object that stores the password of the `User` Object and contains the regex requirements for a valid password.
+[NOTE]
+User's password should only contain alphanumeric characters, be between 8 and 30 characters long and should not be null.
+
+The `Storage` component:
+
+* Can save the user data in xml format and read it back.
+* can save list of `User` objects for login authentication.
+
+// tag::login[]
+=== Login feature
+==== Current Implementation
+
+The login feature is initialized upon startup of the application, through `LoginStorage` and `LoginManager` and is facilitated by the `LoginUi`. +
+It supports multiple accounts whereby one user cannot access the application content of another user by creating multiple `.xml` storage files. +
+
+image::LoginDiagram.png[width="800"]
+
+As seen from the diagram, upon opening the application, the user is prompted to enter their `Username` and `Password`. The `LoginManager` fetches the data of existing `User` objects, before putting them into a Hashmap<Username, User> as shown below. +
+
+[source,java]
+----
+    public synchronized void addUser(String username, String password) throws DuplicateUserException {
+        if (!userList.getUserList().containsKey(username)) {
+            Username addUsername = new Username(username);
+            Password addPassword = new Password(password);
+            User toAdd = new User(addUsername, addPassword);
+            userList.add(toAdd);
+        }
+    }
+----
+[NOTE]
+`Username` and `Password` are case-sensitive.
+
+The credentials entered by the user are then checked against the HashMap to authenticate the account. Upon successful login, the user's file is retrieved from the `Storage` component and is loaded up with the application. +
+
+[source, java]
+----
+@Override
+    public void authenticate(String username, String password) throws DuplicateUserException {
+
+        logger.fine("Authenticating user: " + username);
+        String filepath = username + ".xml";
+        if (userList.getUserList().containsKey(username)) {
+            if (userList.getUserList().get(username).getPassword().getPassword().equals(password)) {
+                loginUser(filepath);
+            } else {
+                throw new DuplicateUserException();
+            }
+        } else {
+            addUser(username, password);
+            try {
+                File file = new File("data/login/" + filepath);
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new DuplicateUserException();
+            }
+            loginUser(filepath);
+        }
+
+    }
+----
+
+[NOTE]
+If the user is a new (username does not exist), they should simply enter their desired `Username` and `Password` into the respective fields, and the account will be created with the default data of the application.
+
+==== Design Considerations
+
+===== Aspect: Implementing new `User`
+* **Alternative 1 (current choice)**: Using same login window, create new `User` if `Username` entered does not exist
+** Pros: Use of only 1 window, no need to implement additional UI functionalities.
+** Cons: Not the most user-friendly or the most conventional way a login works.
+* **Alternative 2**: Create a registration button, which brings the user to a registration UI for the creation of `User` object
+** Pros: More user-friendly, able to implement a username field, along with a password field and, especially a field for password confirmation.
+** Cons: Need to further add onto UI.
+
+===== Aspect: Managing existing users
+* **Alternative 1 (current choice)**: `User` is immutable
+** Pros: Easier to keep track of `User`.
+** Cons: Highly inflexible, not user-friendly.
+* **Alternative 2**: `User` to be mutable, can be edited or deleted
+** Pros: Users can change their usernames/passwords if they feel their credentials may be insecure.
+** Cons: Need for rigorous salting/hashing if repeated usernames/passwords are allowed.
+
+===== Aspect: `User` identification
+* **Alternative 1 (current choice)**: `Username` is case-sensitive
+** Pros: "Johndoe" and "johndoe" are different usernames and different accounts with the same name can be created.
+** Cons: If a user makes a typo in the `Username` field, another account is created instead of correctly logging on to their account.
+* **Alternative 2**: `Username` to be made case-insensitive
+** Pros: Users will not have to worry about whether they signed up with a different `Username`.
+** Cons: Less usernames are available.
+
+===== Aspect: `Username` and `Password` Representation
+* **Alternative 1 (current choice)**: `Username` and `Password` only allow alphanumeric characters
+** Pros: Easy authentication, no need to worry about corner cases.
+** Cons: Less room for different usernames and passwords, not as secure.
+* **Alternative 2**: Include special characters in `Username` and `Password` Regex
+** Pros: More secure, less prone to security issues.
+** Cons: Need for more rigorous testing to ensure no corner cases are left out.
+
+===== Aspect: Salting Passwords/Encryption of Files
+* **Alternative 1 (current choice)**: No encryption/salting implemented
+** Pros: Ease of editing information by administrator.
+** Cons: Security issues, easy to find data path and retrieve files.
+* **Alternative 2**: Encrypt files and salt passwords before encryption
+** Pros: Increases security of software, less prone to be used for malicious purposes.
+** Cons: Large amount of coding and implementation required, prerequisites also include knowledge of security issues and safeguards.
+// end::login[]
+
+== User Stories
+
+Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (unlikely to have) - `*`
+
+[width="59%",cols="22%,<23%,<25%,<30%",options="header",]
+|=======================================================================
+|Priority |As a ... |I want to ... |So that I can...
+|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+
+|`* * *` |new user |get error messages/prompts |better adapt to commands to use them properly
+
+|`* * *` |user |add a new person |better manage all my contacts at one go
+
+|`* * *` |user |delete a person |remove entries that I no longer need
+
+|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+
+|`* * *` |user |find a person by matriculation number/email |identify people easily
+
+|`* * *` |user |sort contacts based on name/address/email/tags |work with specific groups of people
+
+|`* * *` |user |assign a to-do list to each person in address book |know what I need to do for them
+
+|`* * *` |user |add individual items to the to-do lists |update additional tasks
+
+|`* * *` |user |remove entire to-do lists or items in it |remove completed tasks
+
+|`* * *` |user |add events to the schedule |better manage work/students
+
+|`* * *` |user |add a deadline to tasks/items |know what needs to be done and by when
+
+|`* * *` |user |prioritize tasks/items |efficiently get tasks/items done on time
+
+|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* *` |user |import students/people from a text file |it is easier to enter large numbers of people
+
+|`* *` |user |add profile pictures |know who the people I am working with are
+
+|`* *` |user |mass email students/people based on a tag |easily email/inform a class of students of announcements
+
+|`* *` |user |set reminders for certain events |have an email sent to me before the actual event so that I don't forget
+
+|`*` |user with many persons in the address book |combine groups/tags |better work with people who have similar interests/work
+|=======================================================================

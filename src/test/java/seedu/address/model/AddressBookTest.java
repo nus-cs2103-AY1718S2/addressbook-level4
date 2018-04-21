@@ -16,8 +16,10 @@ import org.junit.rules.ExpectedException;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import seedu.address.model.item.UniqueItemList;
 import seedu.address.model.person.Person;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.task.Task;
 
 public class AddressBookTest {
 
@@ -86,8 +88,23 @@ public class AddressBookTest {
         }
 
         @Override
+        public ObservableList<Task> getTaskList() {
+            return null;
+        }
+
+        @Override
         public ObservableList<Tag> getTagList() {
             return tags;
+        }
+
+        @Override
+        public ObservableList<Task>[][] getCalendarList() {
+            return new ObservableList[0][];
+        }
+
+        @Override
+        public List<String> getItemList() {
+            return new UniqueItemList().getItemList();
         }
     }
 

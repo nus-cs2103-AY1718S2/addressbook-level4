@@ -1,6 +1,6 @@
-= AddressBook Level 4 - Developer Guide
+= Your TA - Developer Guide
 :toc:
-:toc-title:
+:toc-title: Table of Content
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -10,13 +10,47 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-F09-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `F09-B1`      Since: `Jun 2016`      Licence: `MIT`
 
-== Setting up
+== Introduction
+
+Your TA is an address book application designed to enhance the capabilities of a university Teaching Assistant (TA) or tutor.
+
+It aims to provide all the essential functions needed to manage the administrative duties of handling a class as well as
+to aid the tutor to better connect with the class. +
+
+It includes a calendar, scheduling capabilities, as well as the ability to mark
+attendance and participation.
+
+== How to Contribute to Your TA
+
+=== New developers
+
+You may wish to refer to Section 3: <<Setting up, Setting up>>
+to properly set up the *Your TA* project file.
+
+Read through the rest of the guide to familiarise yourself with how *Your TA* components functions together.
+
+Try making some enhancements or edits to a component and make a pull request (PR) to our repo! We will take a look at your PR and
+give you some feedback or even merge your code if it's a good working enhancement.
+
+=== Experienced developers
+
+The developer guide contains the design of the models that make up the program. Each section also details how each and every functionality
+is implemented and how it interacts with the different components. +
+
+We would greatly appreciate your help in fine-tuning the components and also
+welcome any suggestions or feedback to improve *Your TA*.
+
+== Setting Up
+
+This section contains the steps needed to properly set up the required files to work on the program source code and to ensure the application runs properly.
 
 === Prerequisites
+
+The following are essential programs and libraries needed to start developing Your TA.
 
 . *JDK `1.8.0_60`* or later
 +
@@ -31,31 +65,45 @@ This app will not work with earlier versions of Java 8.
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
+. Sufficient *Java* and *Javafx* knowledge
++
+[NOTE]
+This application is written in Java and Javafx. A good amount of experience with the language (about 10k lines of code written in *Java* and *Javafx*) is required to understand and work in the application.
+
 
 === Setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+Please follow the steps below to download and set up the project.
+
+. Fork this repository, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+Run the following steps to ensure that you successfully set up the project.
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
+
+You should see in the console that all the tests have been successfully completed.
 
 === Configurations to do before writing code
 
+The following configurations should be set up before you start coding to ensure a uniform coding style.
+
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards].
+IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify:
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
@@ -68,7 +116,7 @@ Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> docume
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-F09-B1/main` repository. If you plan to develop this as a separate product (i.e. instead of contributing to the `CS2103JAN2018-F09-B1/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
@@ -86,47 +134,53 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding, you may:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
 
+This section will go through the design aspect of Your TA. It contains the architecture of the application and how the components that make up the program function and interact with one another in more detail.
+
 [[Design-Architecture]]
 === Architecture
+
+Figure 1 below is the architecture diagram explains the high-level design of the application. It shows all of the components of the application and how they interact with one another.
 
 .Architecture Diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
-
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+Given below is a quick overview of each component.
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
+
+* Initializing the components in the correct sequence at the app launch, and connects them up with each other.
+* Shutting down the components and invokes cleanup method where necessary when the application exits.
 
 <<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+The classes can be found in the `seedu.addressbook.commons` package.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter` : Used by many classes to write log messages to the app's log file.
 
-The rest of the App consists of four components.
+The rest of the App consists of the following five components:
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
+* <<Design-Login, *`Login`*>>: Authenticates access to app.
+* <<Design-Ui,*`UI`*>>: The UI of the app.
 * <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
+* <<Design-Model,*`Model`*>>: Holds the data of the app in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Do note that each of the components
 
-* Defines its _API_ in an `interface` with the same name as the Component.
+* Defines its _API_ in an `interface` with the same name as the component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (see Figure 2 given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
@@ -134,15 +188,17 @@ image::LogicClassDiagram.png[width="800"]
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+Your TA's design is based on an event driven architecture. This allows the different components to communicate with another by utilizing events.
+
+The _Sequence Diagram_ (Figure 3) below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
 .Component interactions for `delete 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `AddressBookChangedEvent` when Your TA data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+Figure 4 below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
 .Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
@@ -152,43 +208,79 @@ Note how the event is propagated through the `EventsCenter` to the `Storage` and
 
 The sections below give more details of each component.
 
+[[Design-Login]]
+=== Login component
+Before access to the application is granted, the user is required to log in with their `Username` and `Password` (see Figure 5).
+
+.Interactions for Login Component
+image::Login.png[width="800"]
+
+Upon launching the app, the Login component takes in two inputs from the user: `Username` and `Password`, creates an account, then stores the user's login credentials into a `.xml` file. +
+If that `.xml` file already exists (`Username` entered is existing `Username`), it authenticates the User then loads in data previously saved by that User. +
+[Optional] `.xml` file is encrypted.
+
+* The login credentials are therefore immutable (cannot be changed).
+* The same username and password have to be used every time the user wishes to access the app.
+[NOTE]
+`Username` and `Password` are case-sensitive.
+* Only upon successful authentication will the app load data from the `Storage` Component.
+
 [[Design-Ui]]
 === UI component
+
+The UI component handles to interaction between Your TA and the user. It itself contains other smaller components that build up to form the entire UI.
+
+The figure below shows what makes up the structure of the UI component.
 
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+As seen in Figure 6, the UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `TodoListPanel`, `StatusBarFooter`, `CalendarView` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
+The `UI` component loads the layout of each part from the `.fxml` file and then does the bindings to various variables in the address book model in the corresponding `.java` file.
+
+[NOTE]
+It may be difficult to edit the `.fxml` file directly. *Javafx* http://gluonhq.com/products/scene-builder/[Scene Builder] is recommended to be used to edit or create new `.fxml` files.
+
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
 * Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
 
+
 [[Design-Logic]]
 === Logic component
+
+The logic component controls how Your TA functions upon the different commands that it supports.
+
+Figure 7 below shows how the `LogicManager` functions in the application.
 
 [[fig-LogicClassDiagram]]
 .Structure of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+Figure 8 below shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>.
+
+[[fig-LogicCommandClassDiagram]]
+.Logic Command Class Diagram
 image::LogicCommandClassDiagram.png[width="800"]
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The following steps are a brief overview of how a command is handled by the logic component.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  This results in the creation of a `Command` object which is executed by the `LogicManager`. The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `UI`.
+.  The `UI` then displays to the user the changes and the result of the command.
+
+Figure 9 below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
 
 .Interactions Inside the Logic Component for the `delete 1` Command
 image::DeletePersonSdForLogic.png[width="800"]
@@ -196,43 +288,202 @@ image::DeletePersonSdForLogic.png[width="800"]
 [[Design-Model]]
 === Model component
 
+The model component tackles how Your TA maintains the data it holds and how the data is communicated between each major component.
+
+Figure 10 shows the different components and interfaces that make up the `Model` component.
+
 .Structure of the Model Component
 image::ModelClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model`:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores the data used by Your TA.
+* Exposes an unmodifiable `ObservableList<Person>` and `ObservableList<Task>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* Does not depend on any of the other four major components.
+
+The following are details of the purpose and function of the different classes that make up the entire `Model`.
+
+The `Person` Class:
+
+* Stores the information of a specific person (student) in Your TA.
+* Information includes: Name, Matriculation Number, Phone Number, Email, Address, DisplayPic, Participation and different tags to associate with that person.
+* Implements `UniquePersonList` that enforces uniqueness of its elements and disallows nulls.
+* `Name`: Object that stores the name of the `Person` object.
+[NOTE]
+Person's name should only contain alphanumeric characters, and should not be null.
+* `Matriculation Number`: Object that stores the matriculation number of the `Person` object.
+[NOTE]
+Matriculation number should start with either 'A' or 'U', followed by 7 digits and ending with an alphabet (A-Z).
+* `Phone Number`: Object that stores the phone number of the `Person` object.
+* `Email`: Object that stores the email address of the `Person` object.
+[NOTE]
+Email address should be of the format _local-part@domain_.
+* `DisplayPic`: Object that contains the filepath to the display picture used by the `Person` object.
+* `Participation`: Object that stores the participation marks of the `Person` object.
+
+The `User` Class:
+
+* Stores the information of a specific user (TA/Lecturer/Professor) in the application.
+* Information includes: Username and Password.
+* Implements `UniqueUserList` that enforces uniqueness of its elements and disallows nulls.
+* `Username`: Object that stores the username of the `User` Object and contains the regex requirements for a valid username.
+[NOTE]
+User's username should only contain alphanumeric characters, be between 3 and 15 characters long and should not be null.
+* `Password`: Object that stores the password of the `User` Object and contains the regex requirements for a valid password.
+[NOTE]
+User's password should only contain alphanumeric characters, be between 8 and 30 characters long and should not be null.
+
+The `Tag` Class:
+
+* An immutable object that has to be valid.
+* Checks are implemented to guarantee validity.
+[TIP]
+For every `Person` object, there can be multiple (or zero) tags.
+
+The `Task` Class:
+
+* Stores the information of a specific Task in Your TA.
+* Information includes: Title, Description, Deadline, Priority.
+* Implements `UniqueTaskList` that enforces uniqueness of its elements and disallows nulls.
+* `Title` & `TaskDescription`: Object that stores the title and description of the `Task` Object.
+[NOTE]
+Tasks title and description should only contain alphanumeric characters, and should not be null.
+* `Deadline`: Object that stores the deadline of the `Task` Object.
+[NOTE]
+Deadline should be a valid date that exists and in the format dd-mm-yyyy. Tasks cannot be scheduled in the past. And can only be scheduled at most 6 months in advance. (Based on months: tasks cannot be scheduled on 1st August 2018 if the current date is 31st January 2018).
+* `Priority`: Object that stores the priority of the `Task` Object.
+[NOTE]
+Priority value input can only be a value from 1 to 3. 1 being lowest priority and 3 being highest.
 
 [[Design-Storage]]
 === Storage component
+
+The storage component maintains the reading and writing of data used by Your TA. It allows the application to save and read files on the user's computer.
 
 .Structure of the Storage Component
 image::StorageClassDiagram.png[width="800"]
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
-
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+* can save data used by Your TA in xml format and read it back.
+* can save images used by Your TA.
+* can save the user data in xml format and read it back.
+* can save list of `User` objects for login authentication.
 
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
 
+// tag::login[]
+=== Login feature
+==== Current implementation
+
+The login feature is initialized upon startup of the application, through `LoginStorage` and `LoginManager` and is facilitated by the `LoginUi`. +
+It supports multiple accounts whereby one user cannot access the application content of another user by creating multiple `.xml` storage files. +
+
+.Structure of the Login System
+image::LoginDiagram.png[width="800"]
+
+As seen from the Figure 12, upon opening the application, the user is prompted to enter their `Username` and `Password`. The `LoginManager` fetches the data of existing `User` objects, before putting them into a Hashmap<Username, User> as shown below. +
+
+[source,java]
+----
+    public synchronized void addUser(String username, String password) throws DuplicateUserException {
+        if (!userList.getUserList().containsKey(username)) {
+            Username addUsername = new Username(username);
+            Password addPassword = new Password(password);
+            User toAdd = new User(addUsername, addPassword);
+            userList.add(toAdd);
+        }
+    }
+----
+[NOTE]
+`Username` and `Password` are case-sensitive.
+
+The credentials entered by the user are then checked against the HashMap to authenticate the account. Upon successful login, the user's file is retrieved from the `Storage` component and is loaded up with the application. +
+
+[source, java]
+----
+@Override
+    public void authenticate(String username, String password) throws DuplicateUserException {
+
+        logger.fine("Authenticating user: " + username);
+        String filepath = username + ".xml";
+        if (userList.getUserList().containsKey(username)) {
+            if (userList.getUserList().get(username).getPassword().getPassword().equals(password)) {
+                loginUser(filepath);
+            } else {
+                throw new DuplicateUserException();
+            }
+        } else {
+            addUser(username, password);
+            try {
+                File file = new File("data/login/" + filepath);
+                file.createNewFile();
+            } catch (IOException e) {
+                throw new DuplicateUserException();
+            }
+            loginUser(filepath);
+        }
+
+    }
+----
+
+[NOTE]
+If the user is a new (username does not exist), they should simply enter their desired `Username` and `Password` into the respective fields, and the account will be created with the default data of the application.
+
+==== Design considerations
+
+===== Aspect: Implementing new `User`
+* **Alternative 1 (current choice)**: Using same login window, create new `User` if `Username` entered does not exist
+** Pros: Use of only 1 window, no need to implement additional UI functionalities.
+** Cons: Not the most user-friendly or the most conventional way a login works.
+* **Alternative 2**: Create a registration button, which brings the user to a registration UI for the creation of `User` object
+** Pros: More user-friendly, able to implement a username field, along with a password field and, especially a field for password confirmation.
+** Cons: Need to further add onto UI.
+
+===== Aspect: Managing existing users
+* **Alternative 1 (current choice)**: `User` is immutable
+** Pros: Easier to keep track of `User`.
+** Cons: Highly inflexible, not user-friendly.
+* **Alternative 2**: `User` to be mutable, can be edited or deleted
+** Pros: Users can change their usernames/passwords if they feel their credentials may be insecure.
+** Cons: Need for rigorous salting/hashing if repeated usernames/passwords are allowed.
+
+===== Aspect: `User` identification
+* **Alternative 1 (current choice)**: `Username` is case-sensitive
+** Pros: "Johndoe" and "johndoe" are different usernames and different accounts with the same name can be created.
+** Cons: If a user makes a typo in the `Username` field, another account is created instead of correctly logging on to their account.
+* **Alternative 2**: `Username` to be made case-insensitive
+** Pros: Users will not have to worry about whether they signed up with a different `Username`.
+** Cons: Less usernames are available.
+
+===== Aspect: `Username` and `Password` representation
+* **Alternative 1 (current choice)**: `Username` and `Password` only allow alphanumeric characters
+** Pros: Easy authentication, no need to worry about corner cases.
+** Cons: Less room for different usernames and passwords, not as secure.
+* **Alternative 2**: Include special characters in `Username` and `Password` Regex
+** Pros: More secure, less prone to security issues.
+** Cons: Need for more rigorous testing to ensure no corner cases are left out.
+
+===== Aspect: Salting passwords/encryption of files
+* **Alternative 1 (current choice)**: No encryption/salting implemented
+** Pros: Ease of editing information by administrator.
+** Cons: Security issues, easy to find data path and retrieve files.
+* **Alternative 2**: Encrypt files and salt passwords before encryption
+** Pros: Increases security of software, less prone to be used for malicious purposes.
+** Cons: Large amount of coding and implementation required, prerequisites also include knowledge of security issues and safeguards.
+// end::login[]
+
 // tag::undoredo[]
 === Undo/Redo feature
-==== Current Implementation
+==== Current implementation
 
 The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
@@ -288,7 +539,8 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
+It would then proceed to restore the address book to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -316,7 +568,7 @@ The following activity diagram summarize what happens inside the `UndoRedoStack`
 
 image::UndoRedoActivityDiagram.png[width="650"]
 
-==== Design Considerations
+==== Design considerations
 
 ===== Aspect: Implementation of `UndoableCommand`
 
@@ -358,19 +610,366 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::matricuationNumber[]
+=== Matriculation number
 
-_{Explain here how the data encryption feature will be implemented}_
+This feature allows the user to keep track of the matriculation number of a `Person`. The matriculation number in this case
+has to start with an "A" or "U" followed by 7 digits and end with a capital letter. A new class, `Matriculation Number`, is created and is associated to the `Person` class.
+This is integrated into the `AddCommand` and `EditCommand` commands to update the participation marks of a `Person`.
 
-// end::dataencryption[]
+==== Current implementation
+
+The user will input an AddCommand or EditCommand, with the additional parameter `m/MATRICULATION_NUMBER`, to the application to update the marks.
+
+==== Design considerations
+
+===== Aspect: Should 2 people be allowed to have to same matriculation number
+
+* **Alternative 1 (current choice):** No, no 2 people can have the same matriculation number, DuplicateUserException will be thrown when trying to add a person with a matriculation number already inside Your TA.
+** Pros: It makes sense as no 2 students would have the same matriculation number, it alerts the user when they've most likely typed in the wrong matriculation number.
+** Cons: The user will not be able to add 2 different instances of the same student.
+* **Alternative 2:** Duplicate matriculation numbers are allowed
+** Pros: User have more freedom to add anyone.
+** Cons: Duplicate matriculation numbers will cause messiness when dealing with many students.
+
+==== Future enhancements (Coming in v2.0)
+
+** Link matriculation number to the students IVLE account info.
+// end::matriculationNumber[]
+
+// tag::participation[]
+=== Participation
+
+This feature allows the user to keep track of participation marks of a `Person`. The participation marks in this case is limited to an integer value of 0 to 100 inclusive. A new class, `Participation`, is created and is associated to the `Person` class.
+This utilizes the `MarkCommand` command to update the participation marks of a `Person`.
+
+==== Current implementation
+
+The user will input a command, `markPart INDEX marks/DIGITS`, to the application to update the marks.
+
+The following figure 13 and paragraph below shows the sequence of how the `MarkCommand` command functions:
+
+.MarkCommand Sequence Diagram
+image::MarkCommandSequenceDiagram.png[width="700"]
+
+
+. The user will enter the command `markPart INDEX marks/DIGITS` to the application.
+. The application will then pass the arguments to `AddressBookParser` which in turns passes it to  `MarkCommandParser` to parse the argument.
+. The `MarkCommandParser` would then create a `MarkCommand` with the data from the arguments.
+. The `LogicManager` will then execute the `preprocessUndoableCommand()` in `MarkCommand`.
+. The `preprocessUndoableCommand()` will then execute the `createUpdatedPerson()` to create a new `Person` object with a new `Participation` object containing the new total marks.
+. Finally, this new `Person` object created in step 3 will replace the original `Person` object with the old `Participation` object stored in the `Model` through the `updatePerson()` method.
+
+==== Design considerations
+
+===== Aspect: How to update the marks
+
+* **Alternative 1 (current choice):** Create an entire new `Person` object
+** Pros: It is similar to the rest of the `Logic` commands.
+** Cons: This uses more memory when executing.
+* **Alternative 2:** Make the `value` in the `Participation` class editable
+** Pros: It uses less memory, and only the value has to be updated.
+** Cons: The implementation will require the writing of more methods.
+
+===== Aspect: Setting a limit to the number of marks
+
+* **Alternative 1 (current choice):** Set the limit of participation marks to 100
+** Pros: Maintain a fixed value, prevents unforeseen issues such as <<integer-overflow,integer overflows>>.
+** Cons: The user is restricted to only 100 marks total, and has to be more careful in the amount of marks they wish to add.
+* **Alternative 2:** Do not set a limit for the amount of participation marks
+** Pros: It is more flexible, and allows more variation in the marks the user wishes to add
+** Cons: This requires more validation checks to prevent issues like an integer overflow.
+
+==== Future enhancements (Coming in v2.0)
+
+** Support for setting a threshold and easily seeing how many students made the cut over the threshold.
+
+// end::participation[]
+
+// tag::display[]
+
+=== Display picture
+
+Users are able to add a display picture for any person within the application. The user can utilise 3 different commands (`add`, `edit` and `updateDP`) to create and specify a display image for the person.
+It fully supports the `undo` and `redo` commands. It adds a drop shadow around the frame to indicate the level of participation (see above <<Participation, section 5.4 Participation>>) of the person.
+
+This feature allows the user to enter a path to their selected image file when entering any of the above 3 commands and copies the image into the `data/displayPic` folder.
+
+It utilises the `DisplayPicStorage` class to handle all image storage related operations.
+
+It also makes use of the `Participation` feature to display a colored shadow around the display picture.
+This image will be shown in the application next to the details of the person as seen in figure 14 below.
+
+.Display Picture example
+image::displaypic_personcard.PNG[width="250"]
+
+==== Current implementation
+
+An additional class, `DisplayPic`, is added to the `Person` class. This class contains the filepath to the stored image file.
+It uses validation checks to ensure that the image meets the following requirements:
+
+** It is a file that exists and has a file extension.
+** It is a valid image file that can be opened as an image.
+
+If it passes the checks, then a new `DisplayPic` object will be created with the filepath to the image stored as its value.
+It will then proceed to duplicate the image. After duplicating the image, the value will be further updated with the duplicate image's filepath.
+
+===== Adding a display picture when creating a new person
+
+The `add` command supports a new field `dp/`, where the user will provide the filepath of the image and the newly created `Person` will have that specified image as the display picture.
+
+For persons that were not specified a `dp/` during the `add` command, the `DisplayPic` object associated to them would contain the value of the default display picture.
+
+===== Editing a display picture
+
+The display picture can also be changed by using the `edit` or `updateDP` commands.
+The implementation of the UpdateDisplayCommand (`updateDP`) command closely follows the `edit` command, hence we will only showcase the implementation of the `UpdateDP` command.
+
+The following figure 15 is the sequence diagram of the `updateDP` command to show how it functions:
+
+.UpdateDisplayCommand Sequence Diagram
+image::UpdateDisplayCommandSequenceDiagram.png[width="800"]
+
+. The user input will be passed in and parsed by the `AddressBookParser` and `UpdateDisplayCommandParser`.
+. The `UpdateDisplayCommandParser` then creates a new `UpdateDisplayCommand` where the `LogicManager` executes the `preprocessUndoableCommand()`.
+. The `preprocessUndoableCommand()` will execute the `createUpdatedPerson()` to create a new `Person` object with the updated `DisplayPicture` object which contains the new filepath.
+. Finally, this new `Person` object created in step 3 will replace the original `Person` object with the old `DisplayPic` object stored in the `Model` through the `updatePerson()` method.
+
+===== Deleting a display picture
+
+To fully support the `undo` and `redo` commands, image files cannot be immediately deleted when it is not in use by the `UI`.
+
+To work around this, a new class `UniqueItemList` was added to the model of the `AddressBook` as seen below in Figure 16.
+
+.AddressBook Class Diagram
+image::AddressBookClass.png[width="600"]
+
+The `UniqueItemList` consists of an `ArrayList` of unique `String` objects. These `String` objects represent the filepaths of all images that have been added or are used by the application during its runtime.
+
+Upon every launch of the application, during the initialization of the `LogicManager` class, it will run through the `UniqueItemList` and delete
+any unused image files from the `data` folder. It does this by looping through the `UniquePersonList` as well and checks if the image file is used. If it is not used, it will be deleted.
+The following code fragment shows the deletion process:
+
+[source, java]
+----
+public static void clearImageFiles(List<String> itemsToDelete, ObservableList<Person> persons) {
+    for (String item : itemsToDelete) {
+        boolean notUsed = true;
+        for (Person p : persons) {
+            if (p.getDisplayPic().toString().equals(item) || item.equals(DisplayPic.DEFAULT_DISPLAY_PIC)) {
+                notUsed = false;
+                break;
+            }
+        }
+        if (notUsed) {
+            //deletion of file occurs here
+        }
+    }
+}
+----
+
+The list is then cleared for the next usage of the application.
+
+===== Storing the image file for the display picture
+The application will take in an argument for the 3 commands mentioned above through `dp/ [PATH TO IMAGE]`. The `[PATH TO IMAGE]` can be the absolute or relative path to the image file.
+[NOTE]
+An example of a `[PATH TO IMAGE]` would be C:\Users\Desktop\Image.jpg for Windows.
+
+If this `[PATH TO IMAGE]` leads to a non-existent file or a non-image file, it will utilise the default profile picture
+which is stored in `src/resources/images/displayPic` as `default.png`.
+If a valid path to an image is provided, the image will be processed and copied over to the `data` folder where the `addressbook.xml` is stored as well.
+
+The filename of the image copied over will be a <<sha-256,SHA-256>> hash. This hash is calculated over the `Person` object's details (i.e Name, Phone and Email) to ensure a unique filename.
+The following activity diagram in Figure 17 shows how the files are saved:
+
+.Activity diagram for storing image files
+image::StoreDisplayPictureActivityDiagram.png[width="800"]
+
+Due to the possibility that display pictures for a `Person` can be updated, this could lead to clashing of the same file names. In order to prevent overwriting of files, the new image filename
+will be the SHA-256 hash of the previous image filename.
+
+The code utilised to duplicate the image file copies the file byte for byte, ensuring that they are binary equivalent. The code used is implemented as follows:
+[source, java]
+----
+public static void copyFile(String origFile, File outputFile) throws IOException {
+        //initialize buffer
+        //open bis/bos as the buffered input and output streams respectively
+
+        int fileBytes = bis.read(buffer);
+        while (fileBytes != -1) {
+            bos.write(buffer, 0, fileBytes);
+            fileBytes = bis.read(buffer);
+        }
+        //close IO streams
+}
+----
+Finally, the `DisplayPic` object will then be updated to store the relative filepath to this new duplicated image.
+
+===== Fetching and displaying the image file
+The following activity diagram shows the flow of how an image file is retrieved to be displayed.
+
+.Activity diagram for fetching image files
+image::FetchDisplayPictureActivityDiagram.png[width="800"]
+
+The image file will then be utilized by JavaFX and displayed on the UI. The drop shadow of the image is determined by the `Participation` of the `Person`.
+
+==== Design considerations
+===== Aspect: Filepath to the image
+* **Alternative 1 (current choice):** Copy the image file over to a designated location.
+** Pros: The user does not need to maintain the image file, as the application does so itself.
+** Cons: Duplication of the image file will take up more space on the user's storage.
+* **Alternative 2:** Use the location of the file the user enters into the application.
+** Pros: This would mean that there would always be only one copy of the image, hence less space used.
+** Cons: The user needs to ensure the original image file is not moved or deleted.
+
+===== Aspect: Filename of the image
+* **Alternative 1 (current choice):** Use a hashing algorithm to name the file.
+** Pros: SHA-256 provides <<collision-resistance,collision resistance>> which means the filename would be unique majority of the time and it is easy to implement.
+** Cons: It is difficult to manually check which `Person` the image file belongs to.
+* **Alternative 2:** Use the name of the `Person` to name the file.
+** Pros: Image files can be easily identified separately and easy to implement.
+** Cons: This could lead to potential image files overwriting each other without additional checks.
+
+===== Aspect: Deletion of the image
+* **Alternative 1 (current choice):** Store the filepath in the `AddressBook` and delete it afterwards.
+** Pros: Fully supports `undo` and `redo` even if the user moves or deletes the original image file.
+** Cons: It is difficult to manually check which `Person` the image file belongs to.
+* **Alternative 2:** Delete the image file immediately when the associated `Person` is removed.
+** Pros: This allows a simple implementation of immediately deleting the image file.
+** Cons: The image file could be lost forever if the user moves or deletes the original image file, thus causing `undo` and `redo` to malfunction.
+
+==== Future enhancements (Coming in v2.0)
+
+* Support for online URLs to download images.
+
+// end::display[]
+
+// tag::task[]
+=== Task list
+
+Users are able to add, edit and remove tasks (with command `addTask`, `editTask` and `deleteTask`) in order to schedule their tasks within the application.
+Tasks scheduled in this application will be stored in `addressbook.xml` and displayed in the `Todo List` tab and `Calender` view respectively.
+
+`Todo List` displays tasks with all fields (title, description, deadline and priority) in a list view whereas `Calender` displays tasks with only task titles in their respective date cells determined by their deadline.
+Tasks displayed in a date cell are color coded according to their priorities -- Green being lowest, yellow being medium and red being highest . Tasks are displayed in `Todo List` and `Calender` as shown in figure 19.
+
+.Tasks displayed in the application.
+image::displayTask.png[width = "800"]
+
+==== Current implementation
+
+An additional class, `UniqueTaskList` is added to the `AddressBook` class. This class contains an `ObservableList` of tasks and a 2-dimensional `ObservableList` of tasks.
+The previous is the actual copy of tasks stored in `addressbook.xml` while the latter is a copy of reorganized tasks for displaying in `Calendar`.
+
+===== Adding a task
+
+The `addTask` command requires fields of `title/`, `desc/`, `by/` and `priority/` to be present.
+Any missing field will cause a built-in exception thrown when creating the `Task` object as the `addTaskCommandParser` validates the presence of all required fields.
+The exception prevents the invalid task from being created and added into `UniqueTaskList`.
+
+Multiple of same field is allowed but all are discarded except the last entry of that field by `ArgumentTokenizer` called in `AddTaskCommandParser`.
+
+After successful creating the `Task` object, `ModelManager` will help add the object into `Addressbook`.
+
+===== Deleting a task
+
+The `deleteTask` command requires a positive task index which specifies the task to be deleted. The `DeleteTaskCommandParse` validates this index with accordance to the current displayed `Todo List` size.
+If the index is valid, the `DeleteTaskCommand` will delete the corresponding `Task` object from `UniqueTaskList`.
+
+===== Editing a task
+
+The `editTask` command requires a positive task index and desired edit fields indicated by prefix `title/`, `desc/`, `by/` and `priority/`. The `EditTaskCommandParser` validates that there is at least one field specified in the command.
+
+`EditTaskCommand` then creates a new `Task` object with modified fields and other unmodified fields identical.
+The `AddressBook` will be called by `ModelManager` to delete the original `Task` object from the `UniqueTaskList` and add the newly created task to the `UniqueTaskList`.
+
+[NOTE]
+====
+Add task, delete task and edit task commands support `undo` and `redo` commands.
+====
+
+Add task, delete task and edit task commands have similar sequence behavior. Below is an example of the overview how components interact during deletion of a task.
+
+.Dlete a task.
+image::DeleteTaskCommandSequenceDiagram.png[width = "800"]
+
+===== Listing tasks
+
+The execution of `listTask` command parses a predicate argument PREDICATE_SHOW_ALL_TASK to `ModelManager` which updates the task list based on this predicate.
+This will extract all tasks saved in the data file `addressbook.xml`.
+
+===== Listing current month tasks
+
+The execution of `listCurrentTask` command parses the predicate argument PREDICATE_SHOW_ALL_CURRENT_TASK to `Model`. `ModelManager` then updates the task list based on this predicate.
+This is similar to Listing tasks but it will only extract tasks with deadlines due in the current month.
+
+===== Sorting tasks
+
+`Task` class implements Java `Comparable<>` class which enables sorting without writing the actual sorting algorithm. Thus,the execution of `sortTask` command relies on it.
+`Model` then calls `AddressBook` which sorts the tasks in `UniqueTaskList`.
+
+The sorting is done by comparing the year, month and date sequentially. This is specified in the compareTo() method in `Task`.
+
+[NOTE]
+====
+listing and sorting tasks do not support `undo` and `redo` commands.
+====
+
+==== Design consideration
+
+===== Aspect: How `EditTaskCommand` executes
+* **Alternative 1(current choice): ** Adds a new Task and deletes the original task
+** Pros: Easy to implement, no need to worry about the change of deadline shown in `Calendar`
+** Cons: Unable to maintain the original task list order.
+
+* **Alternative 2: ** Edits the field of original task
+** Pros: Maintains the task list order
+** Cons: Difficult to implement as a new mechanism to sync the `Calendar` cells is needed.
+
+// end::task[]
+
+// tag::calendar[]
+=== Tasks on calendar view
+
+** This feature allows the user to see the calendar on the UI and see the scheduled `Task` deadlines on the calendar.
+
+==== Current implementation
+
+The user will enter a command `addTask title/TITLE desc/DESCRIPTION by/DEADLINE priority/PRIORITY` to the application. The application will then rely on `AddressBookparser` and
+parse the argument. The argument will be passed into the AddTaskCommand to be executed. From there, it will create a new `Task` object that will be
+added to the `calendarList` of the `UniqueTaskList` which in turn will be displayed on the date of the deadline, on the calendar.
+
+==== Design considerations
+
+===== Aspect: How to link specific tasks to the correct calendar nodes
+
+* **Alternative 1 (current choice):** Use a 7 by 32, 2D `Array` to store the tasks to be added into the calendar.
+** Pros: Separate from the Task list (less prone to bugs). Faster run time (does not need to iterate through all tasks).
+** Cons: Higher memory usage constraint, can only schedule tasks up to 6 months in advance to prevent high memory usage that will affect the speed and performance of the app.
+* **Alternative 2:** Use the task list itself to be displayed in the calendar.
+** Pros: Easier to program and less memory usage (only 1 task list is used without another 2D array for the calendar), tasks can be scheduled as far ahead as desired.
+** Cons: Needs to iterate through the entire task list for every calendar node when loading the calendar view (slows performance when dealing with tasks).
+
+===== Aspect: Viewing the calendar only by month
+
+* **Alternative 1 (current choice):** Use a monthly only calendar view.
+** Pros: Easy view of the current tasks that are due on that month.
+** Cons: Not much choice for the user as only the monthly view is provided.
+* **Alternative 2:** Give the user a choice to switch between weekly, monthly or yearly, e.g. _calendarfx_.
+** Pros: User has more choice and freedom to control their UI.
+** Cons: Difficult to implement, also if 3rd party programs such at _calendarfx_ is used, certain features in those programs are redundant (e.g. map) and would only slow the app down.
+
+==== Future enhancements (Coming in v2.0)
+
+** Link specific key-press or select actions to the todo list such that a click on either side will display the selected task on the other.
+//end::calendar[]
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We utilize `java.util.logging` package for logging. The `LogsCenter` class manages the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file. (See <<Implementation-Configuration>>)
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
@@ -383,7 +982,14 @@ We are using `java.util.logging` package for logging. The `LogsCenter` class is 
 [[Implementation-Configuration]]
 === Configuration
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+Certain properties of the application can be controlled (e.g app name, logging level) through the configuration file (default: `config.json`).
+
+// tag::dataencryption[]
+=== Data encryption (coming in v2.0)
+
+_{Explain here how the data encryption feature will be implemented}_
+
+// end::dataencryption[]
 
 == Documentation
 
@@ -392,24 +998,24 @@ We use asciidoc for writing documentation.
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
-We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
+Use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
 Here are the steps to convert the project documentation files to PDF format.
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
-.  Within Chrome, click on the `Print` option in Chrome's menu.
+.  Click on the `Print` option in Chrome's menu.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
 .Saving documentation as PDF files in Chrome
@@ -418,7 +1024,7 @@ image::chrome_save_as_pdf.png[width="300"]
 [[Testing]]
 == Testing
 
-=== Running Tests
+=== Running tests
 
 There are three ways to run tests.
 
@@ -432,10 +1038,10 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* To run the tests, You need to open a console or terminal and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
 
 [NOTE]
-See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+Detailed information on how to run tests using Gradle is specified in <<UsingGradle#, UsingGradle.adoc>>.
 
 *Method 3: Using Gradle (headless)*
 
@@ -449,17 +1055,17 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit Tests_ that test the individual components. These are in `seedu.address.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
+..  _Unit Tests_ targeting the lowest level methods/classes. +
 e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
+..  _Integration Tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
 e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
+..  Hybrids of Unit and Integration Tests. These test are checking multiple code units as well as how the are connected together. +
 e.g. `seedu.address.logic.LogicManagerTest`
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -467,22 +1073,25 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+=== Build automation
 
-See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
+See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for Build Automation.
 
-=== Continuous Integration
+=== Continuous integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects.
+See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
+=== Coverage reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. +
+See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
-=== Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+=== Documentation previews
+When there are changes to asciidoc files in a pull request, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. +
+See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
@@ -491,304 +1100,104 @@ Here are the steps to create a new release.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
 A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
-[[GetStartedProgramming]]
 [appendix]
-== Suggested Programming Tasks to Get Started
+== Product Scope and Features
 
-Suggested path for new programmers:
+=== Product scope
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
+*Target user profile*: Tech-Savvy University Teachers/Tutors
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
-
-[[GetStartedProgramming-EachComponent]]
-=== Improving each component
-
-Each individual exercise in this section is component-based (i.e. you would not need to modify the other components to get it to work).
-
-[discrete]
-==== `Logic` component
-
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
-
-[TIP]
-Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
-
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
-+
-****
-* Hints
-** Just like we store each individual command word constant `COMMAND_WORD` inside `*Command.java` (e.g.  link:{repoURL}/src/main/java/seedu/address/logic/commands/FindCommand.java[`FindCommand#COMMAND_WORD`], link:{repoURL}/src/main/java/seedu/address/logic/commands/DeleteCommand.java[`DeleteCommand#COMMAND_WORD`]), you need a new constant for aliases as well (e.g. `FindCommand#COMMAND_ALIAS`).
-** link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] is responsible for analyzing command words.
-* Solution
-** Modify the switch statement in link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser#parseCommand(String)`] such that both the proper command word and alias can be used to execute the same intended command.
-** Add new tests for each of the aliases that you have added.
-** Update the user guide to document the new aliases.
-** See this https://github.com/se-edu/addressbook-level4/pull/785[PR] for the full solution.
-****
-
-[discrete]
-==== `Model` component
-
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
-
-[TIP]
-Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
-
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
-+
-****
-* Hints
-** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
-** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
-* Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
-** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
-** Add new tests for each of the new public methods that you have added.
-** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
-*** The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. This may cause some tests to fail. See issue  https://github.com/se-edu/addressbook-level4/issues/753[`#753`] for more information about this flaw.
-*** The solution PR has a temporary fix for the flaw mentioned above in its first commit.
-****
-
-[discrete]
-==== `Ui` component
-
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
-
-[TIP]
-Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
-
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
-+
-**Before**
-+
-image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
-image::getting-started-ui-tag-after.png[width="300"]
-+
-****
-* Hints
-** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
-** Use the .css attribute `-fx-background-color` to add a color.
-** You may wish to modify link:{repoURL}/src/main/resources/view/DarkTheme.css[`DarkTheme.css`] to include some pre-defined colors using css, especially if you have experience with web-based css.
-* Solution
-** You can modify the existing test methods for `PersonCard` 's to include testing the tag's color as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/798[PR] for the full solution.
-*** The PR uses the hash code of the tag names to generate a color. This is deliberately designed to ensure consistent colors each time the application runs. You may wish to expand on this design to include additional features, such as allowing users to set their own tag colors, and directly saving the colors to storage, so that tags retain their colors even if the hash code algorithm changes.
-****
-
-. Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
-+
-**Before**
-+
-image::getting-started-ui-result-before.png[width="200"]
-+
-**After**
-+
-image::getting-started-ui-result-after.png[width="200"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] is raised by link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] which also knows whether the result is a success or failure, and is caught by link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] which is where we want to change the style to.
-** Refer to link:{repoURL}/src/main/java/seedu/address/ui/CommandBox.java[`CommandBox`] for an example on how to display an error.
-* Solution
-** Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] 's constructor so that users of the event can indicate whether an error has occurred.
-** Modify link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)`] to react to this event appropriately.
-** You can write two different kinds of tests to ensure that the functionality works:
-*** The unit tests for `ResultDisplay` can be modified to include verification of the color.
-*** The system tests link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()`] to include verification for `ResultDisplay` as well.
-** See this https://github.com/se-edu/addressbook-level4/pull/799[PR] for the full solution.
-*** Do read the commits one at a time if you feel overwhelmed.
-****
-
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
-+
-**Before**
-+
-image::getting-started-ui-status-before.png[width="500"]
-+
-**After**
-+
-image::getting-started-ui-status-after.png[width="500"]
-+
-****
-* Hints
-** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
-* Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
-** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
-** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
-****
-
-[discrete]
-==== `Storage` component
-
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
-
-[TIP]
-Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
-
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
-+
-****
-* Hint
-** Add the API method in link:{repoURL}/src/main/java/seedu/address/storage/AddressBookStorage.java[`AddressBookStorage`] interface.
-** Implement the logic in link:{repoURL}/src/main/java/seedu/address/storage/StorageManager.java[`StorageManager`] and link:{repoURL}/src/main/java/seedu/address/storage/XmlAddressBookStorage.java[`XmlAddressBookStorage`] class.
-* Solution
-** See this https://github.com/se-edu/addressbook-level4/pull/594[PR] for the full solution.
-****
-
-[[GetStartedProgramming-RemarkCommand]]
-=== Creating a new command: `remark`
-
-By creating this command, you will get a chance to learn how to implement a feature end-to-end, touching all major components of the app.
-
-*Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
-
-==== Description
-Edits the remark for a person specified in the `INDEX`. +
-Format: `remark INDEX r/[REMARK]`
-
-Examples:
-
-* `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
-* `remark 1 r/` +
-Removes the remark for the first person.
-
-==== Step-by-step Instructions
-
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
-Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
-
-**Main:**
-
-. Add a `RemarkCommand` that extends link:{repoURL}/src/main/java/seedu/address/logic/commands/UndoableCommand.java[`UndoableCommand`]. Upon execution, it should just throw an `Exception`.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to accept a `RemarkCommand`.
-
-**Tests:**
-
-. Add `RemarkCommandTest` that tests that `executeUndoableCommand()` throws an Exception.
-. Add new test method to link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`], which tests that typing "remark" returns an instance of `RemarkCommand`.
-
-===== [Step 2] Logic: Teach the app to accept 'remark' arguments
-Let's teach the application to parse arguments that our `remark` command will accept. E.g. `1 r/Likes to drink coffee.`
-
-**Main:**
-
-. Modify `RemarkCommand` to take in an `Index` and `String` and print those two parameters as the error message.
-. Add `RemarkCommandParser` that knows how to parse two arguments, one index and one with prefix 'r/'.
-. Modify link:{repoURL}/src/main/java/seedu/address/logic/parser/AddressBookParser.java[`AddressBookParser`] to use the newly implemented `RemarkCommandParser`.
-
-**Tests:**
-
-. Modify `RemarkCommandTest` to test the `RemarkCommand#equals()` method.
-. Add `RemarkCommandParserTest` that tests different boundary values
-for `RemarkCommandParser`.
-. Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
-
-===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
-
-**Main:**
-
-. Add a `Label` with any random text inside link:{repoURL}/src/main/resources/view/PersonListCard.fxml[`PersonListCard.fxml`].
-. Add FXML annotation in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] to tie the variable to the actual label.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
-
-===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
-
-**Main:**
-
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
-. Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
-
-**Tests:**
-
-. Add test for `Remark`, to test the `Remark#equals()` method.
-
-===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Main:**
-
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
-
-===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
-We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
-
-**Main:**
-
-. Add a new Xml field for `Remark`.
-
-**Tests:**
-
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
-
-===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-
-**Tests:**
-
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
-. Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
-
-===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
-Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] is still a placeholder. Let's bring it to life by binding it with the actual `remark` field.
-
-**Main:**
-
-. Modify link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`]'s constructor to bind the `Remark` field to the `Person` 's remark.
-
-**Tests:**
-
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
-
-===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
-We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
-
-**Main:**
-
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
-
-**Tests:**
-
-. Update `RemarkCommandTest` to test that the `execute()` logic works.
-
-==== Full Solution
-
-See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-by-step solution.
-
-[appendix]
-== Product Scope
-
-*Target user profile*:
-
-* has a need to manage a significant number of contacts
+* have the need to manage a significant number of contacts
 * prefer desktop apps over other types
 * can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* prefer typing over mouse input
+* are reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: manage contacts faster than a typical mouse/GUI driven app, includes to-do
+    list features (with prioritization, etc.) and scheduling (with calendar)
+
+=== Feature contribution
+
+*Wu Di*
+
+* *Major*: Implement the todo list
+
+** Support adding, editing and deleting of tasks
+** Works with undo/redo functions
+
+This enables the tutor to view all tasks in one glance so that he/she is able to stay organized and productive.
+
+* *Minor*: Import feature to migrate data from an external file
+
+** Imports data anywhere in any OS
+
+This helps the tutor work on different devices with the unique data set.
+
+* *Minor*: add the alias feature to some of the commands
+
+** Support majority of commands
+
+This helps the tutor remember the commands intuitively and type them more efficiently.
+
+*Daniel*
+
+* *Major*: Calendar and Scheduler for user
+
+** Supports adding of new tasks that will be slotted into the calendar(if it has a deadline)
+** Also assigns a priority value to each task based on parameters keyed in when task is added
+
+This helps the tutor to keep track of what needs to be done and which task to focus on.
+
+* *Minor*: Person has new parameter - Matriculation number
+
+** Person now stores matriculation number of the person
+** Add command supports adding person with matriculation number(compulsory parameter)
+** Find command supports search by matriculation number
+
+This helps the tutor to easily search for a certain student by their unique matriculation number instead of just
+their names (e.g. easier than searching for a common name such as Daniel).
+
+* *Minor*: Toggle between dark and light theme
+
+** The app can now be toggled between 2 different themes.
+
+This allows the tutor to customise their GUI so that they do not have to be restricted to 1 set layout throughout the entire time they use the app.
+
+*Pearlissa*
+
+* *Major*: Login feature
+
+** Implements new User package
+
+This allows multiple tutors to store their data in separate accounts, which can only be accessed by them.
+
+* *Minor*: Sorting of contacts based on selected parameters
+
+** Any number of parameters (at least 1), and in order of priority
+
+This allows tutors to be better able to go through their lists of students.
+
+*Ellery*
+
+* *Major*: Display picture for all students entered
+
+** Support adding, editing and deleting of picture
+** Also shows a quick glance on student's participation (related to minor)
+** Also works with the redo/undo function
+
+This helps the tutor keep track of his students, and be able to easily remember them better.
+
+* *Minor*: Participation marks to keep track of student participation
+
+** Add and keep track of participation marks for the student
+
+This helps the tutor to keep track of the student's participation.
 
 [appendix]
 == User Stories
@@ -800,33 +1209,57 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 |Priority |As a ... |I want to ... |So that I can...
 |`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |new user |get error messages/prompts |better adapt to commands to use them properly
+
+|`* * *` |user |add a new person |better manage all my contacts at one go
 
 |`* * *` |user |delete a person |remove entries that I no longer need
 
 |`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
 
+|`* * *` |user |find a person by matriculation number/email |identify people easily
+
+|`* * *` |user |sort contacts based on name/address/email/tags |work with specific groups of people
+
+|`* * *` |user |assign a to-do list to each person in address book |know what I need to do for them
+
+|`* * *` |user |add individual items to the to-do lists |update additional tasks
+
+|`* * *` |user |remove entire to-do lists or items in it |remove completed tasks
+
+|`* * *` |user |add events to the schedule |better manage work/students
+
+|`* * *` |user |add a deadline to tasks/items |know what needs to be done and by when
+
+|`* * *` |user |prioritize tasks/items |efficiently get tasks/items done on time
+
 |`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
-|=======================================================================
+|`* *` |user |import students/people from a text file |it is easier to enter large numbers of people
 
-_{More to be added}_
+|`* *` |user |add profile pictures |know who the people I am working with are
+
+|`* *` |user |mass email students/people based on a tag |easily email/inform a class of students of announcements
+
+|`* *` |user |set reminders for certain events |have an email sent to me before the actual event so that I don't forget
+
+|`*` |user with many persons in the address book |combine groups/tags |better work with people who have similar interests/work
+|=======================================================================
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Your TA` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
 === Use case: Delete person
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list persons.
+2.  Your TA shows a list of persons.
+3.  User requests to delete a specific student in the list.
+4.  Your TA deletes the student and all related entries (if any).
 +
 Use case ends.
 
@@ -839,12 +1272,46 @@ Use case ends.
 
 * 3a. The given index is invalid.
 +
-[none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Your TA shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Updating the display picture
+
+*MSS*
+
+1.  User requests to update the display picture of a person with an image file filepath.
+2.  Your TA shows a list of persons that match the search query.
+3.  Your TA reads the image file, duplicates it and updates the display picture of the person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The filepath provided does not lead to any valid image file. +
+** 3a1. Your TA shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find a person by name
+
+*MSS*
+
+1.  User requests to find a person by name.
+2.  Your TA shows a list of persons that match the search query.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
 
 [appendix]
 == Non Functional Requirements
@@ -852,34 +1319,65 @@ _{More to be added}_
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
 .  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be intuitive or easily understood after reading the User Guide.
+.  Should not exceed the size of 100 MB.
+.  Should respond to any requests within 3 seconds.
+.  Should not modify and copy any user's personal data on the computer.
+.  A user's data should be password protected.
 
 [appendix]
 == Glossary
 
+[[collision-resistance]] Collision resistance::
+Two different inputs to a function will very unlikely provide the same output.
+
+[[deadline]] Deadline::
+The date for which certain tasks are due to be done.
+
+[[feature]] Feature::
+A specific function of the program.
+
+[[import]] Import::
+Bring into the application from an external source.
+
+[[integer-overflow]] Integer overflow::
+When the value of the integer exceeds the maximum possible value value that can be stored.
+
+[[logic]] Logic::
+The set of commands that can be executed by the application.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
+[[model]] Model::
+The internal memory used when application is running.
+
+[[parser]] Parser::
+A converting function or class that takes in raw input and separates it into its usable components for other methods.
+
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
 
-[appendix]
-== Product Survey
+[[sha-256]] SHA-256::
+A cryptographic hash that is akin to a 'signature' for a text or a data file.
+SHA-256 generates an almost-unique 256-bit (32-byte) signature for a text.
 
-*Product Name*
+[[storage]] Storage::
+The set of instructions to store specific states and data of the application when application is not running so that it
+can be loaded back into the application when application is started again.
 
-Author: ...
+[[tags]] Tags::
+Keywords tied to categories or people.
 
-Pros:
+[[tasks]] Tasks::
+A command to be executed.
 
-* ...
-* ...
+[[to-do-list]]To-do list::
+A list of things to do.
 
-Cons:
+[[ui]] User interface::
+The visible interface that the user will be seeing when using the application.
 
-* ...
-* ...
 
 [appendix]
 == Instructions for Manual Testing
@@ -889,40 +1387,141 @@ Given below are instructions to test the app manually.
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch and shutdown
 
-. Initial launch
+** Initial launch
 
-.. Download the jar file and copy into an empty folder
+*** Download the jar file and copy into an empty folder
 .. Double-click the jar file +
    Expected: Shows the GUI with a set of sample contacts. The window size may not be optimum.
 
-. Saving window preferences
+** Saving window preferences
 
-.. Resize the window to an optimum size. Move the window to a different location. Close the window.
+*** Resize the window to an optimum size. Move the window to a different location. Close the window.
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
-
 === Deleting a person
 
-. Deleting a person while all persons are listed
+** Deleting a person while all persons are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
    Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+The corresponding display picture image to the person deleted is expected to be deleted upon next application start up and log in (to same account).
 
-=== Saving data
+=== Adding participation marks for a person
 
-. Dealing with missing/corrupted data files
+** Adding participation marks to a person while all persons are listed.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Test case: `markPart 1 marks/50` +
+   Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `markPart 0 marks/50` +
+   Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same. +
+.. Test case: `markPart 1` +
+   Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect markPart commands to try: `markPart`, `markPat x marks/50` (where x is larger than the list size) +
+   Expected: Similar to previous.
 
-_{ more test cases ... }_
+** Adding participation marks to a person when you searched for a person using `find`
+
+*** Prerequisites: Find a person using the `find` command. At least one person in the list returned.
+.. Test case: `markPart 1 marks/50` +
+   Expected: First person is updated with the addition of the marks. Success message shown in the status message. Timestamp in the status bar is updated. List is still filtered.
+.. Test case: `markPart 0 marks/50` +
+   Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same. List is still filtered. +
+.. Test case: `markPart 1` +
+   Expected: No marks are added to anyone. Error details shown in the status message. Status bar remains the same. List is still filtered.
+
+
+=== Adding/Updating display picture for a person
+
+** Adding display picture when adding a new (non-duplicate) person while all persons are listed.
+
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list. Not adding a duplicate person.
+.. Assumptions: There is a valid image file at the specified location. +
+.. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
+   Expected: John Doe is added with the specified details and image. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `add n/John Doe m/A1234567J p/98765432 e/johnd@example.com a/COM1 B#1-04 dp/C:\Users\Hello\Desktop\picture.jpg` +
+   Expected: John Doe is added with the specified details and has the default display picture. Success message shown in the status message. Timestamp in the status bar is updated. +
+
+** Adding display picture to an already existing person while all persons are listed.
+
+*** Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Assumptions: There is a valid image file at the specified location. +
+.. Test case: `updateDP 1 dp/C:\Users\Hello\Desktop\picture.jpg` +
+   Expected: First person's display picture is updated with the image. Success message shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `updateDP 1 dp/` +
+   Expected: First person's display picture is updated to the default display picture. Success message shown in the status message. Timestamp in the status bar is updated.
+
+=== Saving and loading of the image files
+
+** Deleting image files while the application is still running.
+
+*** Prerequisites: There exists some persons already added and are utilizing a display picture.
+.. Test case: Delete all images from the `data/displayPic` folder. +
+   Expected: Upon next refresh of the list that causes changes, the affected persons will be reset back to the default profile picture.
+
+** Checking proper deletion of image files
+*** Prerequisites: None of the existing persons in Your TA have a display picture.
+.. Test case:
+. Adding multiple images using the `updateDP` or `edit` command. E.g executing `updateDP 1 dp/C:\Users\Hello\Desktop\picture.jpg` twice.
+. Open the `data/displayPic` folder to note that there are 2 image files created.
+. Close and restart the application and log back in to the same account. +
+Expected: Unused image files will be deleted, only one image file remains.
+
+** Deleting image files while the application is not running.
+*** Prerequisites: There exists some persons already added and are utilizing a display picture.
+.. Test case: Delete all images from the `data/displayPic` folder. +
+   Expected: Upon loading up the application, the affected persons will be reset back to the default profile picture.
+. Adding a task while all tasks are listed.
+
+=== Adding a Task
+
+** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
+.. Test case: `addTask title/meeting desc/there is team meeting for CS2103 by/20-04-2018 priority/3`
+   Expected: a task is added with title, description, deadline and priority stated in the command. Details of the added task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: 'addTask title/meeting`
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect addTask commands to try: `addTask title/meeting priority/1`, `addTask by/20-04-2018 priority/3`
+   Expected: similar to previous.
+
+. Adding a task while current month tasks are listed.
+
+** Prerequisites: List all current month tasks using the `listCurrentTask` command. Multiple tasks in the list.
+.. Test case: `addTask title/meeting desc/there is team meeting for CS2103 by/20-04-2018 priority/3`
+   Expected: a task is added with title, description, deadline and priority stated in the command. All tasks again are shown in the list. Details of the added task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: 'addTask title/meeting`
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect addTask commands to try: `addTask title/meeting priority/1`, `addTask by/20-04-2018 priority/3`
+   Expected: similar to previous.
+
+=== Deleting a Task
+
+. Deleting a task while all tasks are listed.
+
+** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
+.. Test case: `deleteTask 1` +
+   Expected: First task is deleted from the list. Details of the deleted task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `deleteTask 0` +
+   Expected: No task is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect deleteTask commands to try: `deleteTask`, `deleteTask x` (where x is larger than the list size)
+   Expected: similar to previous.
+
+=== Editing a Task
+
+. Editing a task while all tasks are listed.
+
+** Prerequisites: List all tasks using the `listTask` command. Multiple tasks in the list.
+.. Test case: `editTask 1 title/meeting priority/3`
+   Expected: First task is edited with title meeting and priority 3. It is shown last in the list. Details of the edited task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: 'editTask 1`
+   Expected: No task is edited. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect addTask commands to try: `editTask title/meeting priority/1`, `editTask x by/20-04-2018 priority/3` (where x is larger than the list size)
+   Expected: similar to previous.

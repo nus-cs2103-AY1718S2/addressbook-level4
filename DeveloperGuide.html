@@ -5,20 +5,20 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>AddressBook Level 4 - Developer Guide</title>
+<title>HR+ Developer Guide</title>
 <link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>AddressBook Level 4 - Developer Guide</h1>
+<h1>HR+ Developer Guide</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+<p>By: <code>Team W14-B3</code>      Since: <code>Jan 2018</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -26,10 +26,9 @@
 <ul class="sectlevel1">
 <li><a href="#setting-up">1. Setting up</a>
 <ul class="sectlevel2">
-<li><a href="#prerequisites">1.1. Prerequisites</a></li>
-<li><a href="#setting-up-the-project-in-your-computer">1.2. Setting up the project in your computer</a></li>
-<li><a href="#verifying-the-setup">1.3. Verifying the setup</a></li>
-<li><a href="#configurations-to-do-before-writing-code">1.4. Configurations to do before writing code</a></li>
+<li><a href="#setting-up-the-project-in-your-computer">1.1. Setting up the project in your computer</a></li>
+<li><a href="#verifying-the-setup">1.2. Verifying the setup</a></li>
+<li><a href="#configurations-to-do-before-writing-code">1.3. Configurations to do before writing code</a></li>
 </ul>
 </li>
 <li><a href="#design">2. Design</a>
@@ -44,10 +43,16 @@
 </li>
 <li><a href="#implementation">3. Implementation</a>
 <ul class="sectlevel2">
-<li><a href="#undo-redo-feature">3.1. Undo/Redo feature</a></li>
-<li><a href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></li>
-<li><a href="#logging">3.3. Logging</a></li>
-<li><a href="#Implementation-Configuration">3.4. Configuration</a></li>
+<li><a href="#rate-command">3.1. Rate Command</a></li>
+<li><a href="#sort-command">3.2. Sort Command</a></li>
+<li><a href="#undo-redo-feature">3.3. Undo/Redo feature</a></li>
+<li><a href="#find-command">3.4. Find Command</a></li>
+<li><a href="#filter-command">3.5. Filter Command</a></li>
+<li><a href="#interview-command">3.6. Interview Command</a></li>
+<li><a href="#user-interface">3.7. User Interface</a></li>
+<li><a href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></li>
+<li><a href="#logging">3.9. Logging</a></li>
+<li><a href="#Implementation-Configuration">3.10. Configuration</a></li>
 </ul>
 </li>
 <li><a href="#documentation">4. Documentation</a>
@@ -82,15 +87,36 @@
 </li>
 <li><a href="#product-scope">Appendix B: Product Scope</a></li>
 <li><a href="#user-stories">Appendix C: User Stories</a></li>
-<li><a href="#use-cases">Appendix D: Use Cases</a></li>
+<li><a href="#use-cases">Appendix D: Use Cases</a>
+<ul class="sectlevel2">
+<li><a href="#use-case-add-person">D.1. Use case: Add person</a></li>
+<li><a href="#use-case-find-person-by-name">D.2. Use case: Find person by name</a></li>
+<li><a href="#use-case-find-person-by-some-letters">D.3. Use case: Find person by some letters</a></li>
+<li><a href="#use-case-filter-a-person-by-field">D.4. Use case: Filter a person by field</a></li>
+<li><a href="#use-case-add-resume">D.5. Use case: Add resume</a></li>
+<li><a href="#use-case-add-profile-picture">D.6. Use case: Add profile picture</a></li>
+<li><a href="#use-case-add-rating">D.7. Use case: Add rating</a></li>
+<li><a href="#use-case-add-remark">D.8. Use case: Add remark</a></li>
+<li><a href="#use-case-add-interview-date">D.9. Use case: Add interview date</a></li>
+</ul>
+</li>
 <li><a href="#non-functional-requirements">Appendix E: Non Functional Requirements</a></li>
 <li><a href="#glossary">Appendix F: Glossary</a></li>
 <li><a href="#product-survey">Appendix G: Product Survey</a></li>
 <li><a href="#instructions-for-manual-testing">Appendix H: Instructions for Manual Testing</a>
 <ul class="sectlevel2">
 <li><a href="#launch-and-shutdown">H.1. Launch and Shutdown</a></li>
-<li><a href="#deleting-a-person">H.2. Deleting a person</a></li>
-<li><a href="#saving-data">H.3. Saving data</a></li>
+<li><a href="#adding-a-student">H.2. Adding a student</a></li>
+<li><a href="#showing-info-panel-or-resume">H.3. Showing info panel or resume</a></li>
+<li><a href="#scheduling-an-interview">H.4. Scheduling an interview</a></li>
+<li><a href="#rating-a-student">H.5. Rating a student</a></li>
+<li><a href="#editing-a-rating">H.6. Editing a rating</a></li>
+<li><a href="#deleting-a-rating">H.7. Deleting a rating</a></li>
+<li><a href="#sorting-the-students-list">H.8. Sorting the students list</a></li>
+<li><a href="#updating-status-of-a-student">H.9. Updating status of a student</a></li>
+<li><a href="#filtering-according-to-multiple-fields">H.10. Filtering according to multiple fields</a></li>
+<li><a href="#finding-every-field-of-the-student">H.11. Finding every field of the student</a></li>
+<li><a href="#finding-specific-field-of-the-student">H.12. Finding specific field of the student</a></li>
 </ul>
 </li>
 </ul>
@@ -99,8 +125,6 @@
 <div class="sect1">
 <h2 id="setting-up"><a class="link" href="#setting-up">1. Setting up</a></h2>
 <div class="sectionbody">
-<div class="sect2">
-<h3 id="prerequisites"><a class="link" href="#prerequisites">1.1. Prerequisites</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -137,9 +161,8 @@ Do not disable them. If you have disabled them, go to <code>File</code> &gt; <co
 </li>
 </ol>
 </div>
-</div>
 <div class="sect2">
-<h3 id="setting-up-the-project-in-your-computer"><a class="link" href="#setting-up-the-project-in-your-computer">1.2. Setting up the project in your computer</a></h3>
+<h3 id="setting-up-the-project-in-your-computer"><a class="link" href="#setting-up-the-project-in-your-computer">1.1. Setting up the project in your computer</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -181,7 +204,7 @@ This will generate all resources required by the application and tests.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="verifying-the-setup"><a class="link" href="#verifying-the-setup">1.3. Verifying the setup</a></h3>
+<h3 id="verifying-the-setup"><a class="link" href="#verifying-the-setup">1.2. Verifying the setup</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
@@ -194,9 +217,9 @@ This will generate all resources required by the application and tests.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="configurations-to-do-before-writing-code"><a class="link" href="#configurations-to-do-before-writing-code">1.4. Configurations to do before writing code</a></h3>
+<h3 id="configurations-to-do-before-writing-code"><a class="link" href="#configurations-to-do-before-writing-code">1.3. Configurations to do before writing code</a></h3>
 <div class="sect3">
-<h4 id="configuring-the-coding-style"><a class="link" href="#configuring-the-coding-style">1.4.1. Configuring the coding style</a></h4>
+<h4 id="configuring-the-coding-style"><a class="link" href="#configuring-the-coding-style">1.3.1. Configuring the coding style</a></h4>
 <div class="paragraph">
 <p>This project follows <a href="https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc">oss-generic coding standards</a>. IntelliJ&#8217;s default style is mostly compliant with ours but it uses a different import order from ours. To rectify,</p>
 </div>
@@ -228,13 +251,13 @@ This will generate all resources required by the application and tests.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="updating-documentation-to-match-your-fork"><a class="link" href="#updating-documentation-to-match-your-fork">1.4.2. Updating documentation to match your fork</a></h4>
+<h4 id="updating-documentation-to-match-your-fork"><a class="link" href="#updating-documentation-to-match-your-fork">1.3.2. Updating documentation to match your fork</a></h4>
 <div class="paragraph">
 <p>After forking the repo, links in the documentation will still point to the <code>se-edu/addressbook-level4</code> repo. If you plan to develop this as a separate product (i.e. instead of contributing to the <code>se-edu/addressbook-level4</code>) , you should replace the URL in the variable <code>repoURL</code> in <code>DeveloperGuide.adoc</code> and <code>UserGuide.adoc</code> with the URL of your fork.</p>
 </div>
 </div>
 <div class="sect3">
-<h4 id="setting-up-ci"><a class="link" href="#setting-up-ci">1.4.3. Setting up CI</a></h4>
+<h4 id="setting-up-ci"><a class="link" href="#setting-up-ci">1.3.3. Setting up CI</a></h4>
 <div class="paragraph">
 <p>Set up Travis to perform Continuous Integration (CI) for your fork. See <a href="UsingTravis.html">UsingTravis.adoc</a> to learn how to set it up.</p>
 </div>
@@ -270,7 +293,7 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 </div>
 </div>
 <div class="sect3">
-<h4 id="getting-started-with-coding"><a class="link" href="#getting-started-with-coding">1.4.4. Getting started with coding</a></h4>
+<h4 id="getting-started-with-coding"><a class="link" href="#getting-started-with-coding">1.3.4. Getting started with coding</a></h4>
 <div class="paragraph">
 <p>When you are ready to start coding,</p>
 </div>
@@ -309,13 +332,13 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 <i class="fa icon-tip" title="Tip"></i>
 </td>
 <td class="content">
-The <code>.pptx</code> files used to create diagrams in this document can be found in the <a href="https://github.com/se-edu/addressbook-level4/tree/master/docs/diagrams/">diagrams</a> folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose <code>Save as picture</code>.
+The <code>.pptx</code> files used to create diagrams in this document can be found in the <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/docs/diagrams/">diagrams</a> folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose <code>Save as picture</code>.
 </td>
 </tr>
 </table>
 </div>
 <div class="paragraph">
-<p><code>Main</code> has only one class called <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
+<p><code>Main</code> has only one class called <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp</code></a>. It is responsible for,</p>
 </div>
 <div class="ulist">
 <ul>
@@ -437,13 +460,13 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="title">Figure 5. Structure of the UI Component</div>
 </div>
 <div class="paragraph">
-<p><strong>API</strong> : <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
+<p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/Ui.java"><code>Ui.java</code></a></p>
 </div>
 <div class="paragraph">
 <p>The UI consists of a <code>MainWindow</code> that is made up of parts e.g.<code>CommandBox</code>, <code>ResultDisplay</code>, <code>PersonListPanel</code>, <code>StatusBarFooter</code>, <code>BrowserPanel</code> etc. All these, including the <code>MainWindow</code>, inherit from the abstract <code>UiPart</code> class.</p>
 </div>
 <div class="paragraph">
-<p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
+<p>The <code>UI</code> component uses JavaFx UI framework. The layout of these UI parts are defined in matching <code>.fxml</code> files that are in the <code>src/main/resources/view</code> folder. For example, the layout of the <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/MainWindow.java"><code>MainWindow</code></a> is specified in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/resources/view/MainWindow.fxml"><code>MainWindow.fxml</code></a></p>
 </div>
 <div class="paragraph">
 <p>The <code>UI</code> component,</p>
@@ -478,7 +501,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 </div>
 <div class="paragraph">
 <p><strong>API</strong> :
-<a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/Logic.java"><code>Logic.java</code></a></p>
+<a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/Logic.java"><code>Logic.java</code></a></p>
 </div>
 <div class="olist arabic">
 <ol class="arabic">
@@ -515,7 +538,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="title">Figure 9. Structure of the Model Component</div>
 </div>
 <div class="paragraph">
-<p><strong>API</strong> : <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
+<p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model.java</code></a></p>
 </div>
 <div class="paragraph">
 <p>The <code>Model</code>,</p>
@@ -546,7 +569,7 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <div class="title">Figure 10. Structure of the Storage Component</div>
 </div>
 <div class="paragraph">
-<p><strong>API</strong> : <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
+<p><strong>API</strong> : <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/storage/Storage.java"><code>Storage.java</code></a></p>
 </div>
 <div class="paragraph">
 <p>The <code>Storage</code> component,</p>
@@ -577,9 +600,212 @@ Note how the event is propagated through the <code>EventsCenter</code> to the <c
 <p>This section describes some noteworthy details on how certain features are implemented.</p>
 </div>
 <div class="sect2">
-<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.1. Undo/Redo feature</a></h3>
+<h3 id="rate-command"><a class="link" href="#rate-command">3.1. Rate Command</a></h3>
 <div class="sect3">
 <h4 id="current-implementation"><a class="link" href="#current-implementation">3.1.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>rate</code> command allows Talent Acquisition Specialists to evaluate candidates' performance in interviews against four specific criteria, namely technical skills, communication skills, problem solving skills and experience. The format of this command is <code>rate INDEX t/TECHNICAL SKILLS SCORE c/COMMUNICATINO SKILLS SCORE p/PROBLEM SOLVING SKILLS SCORE e/EXPERIENCE SCORE</code>.</p>
+</div>
+<div class="paragraph">
+<p>In our current implementation, the <code>rate</code> command inherits from the <code>UndoableCommand</code> class. Two components, <code>Logic</code> and <code>Model</code>, are involved in the execution of this command. The <code>Logic</code> component is responsible for parsing user inputs while the <code>Model</code> component deals with updating of filtered person list.</p>
+</div>
+<div class="paragraph">
+<p>Below is a sequence diagram that illustrates how these two components interact when the <code>rate</code> command is executed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/RateCommandSequenceDiagram.png" alt="RateCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.1.1.1 Sequence diagram to illustrate component interactions for the <code>rate</code> command</p>
+</div>
+<div class="paragraph">
+<p>As shown above, execution of the <code>rate</code> command comprises the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LogicManager</code> invokes <code>parseCommand</code> method of <code>AddressbookParser</code>, taking user inputs as arguments.</p>
+</li>
+<li>
+<p>During the <code>parseCommand</code> method call, an instance of <code>RateCommandParser</code> will be created when the keyword "rate" is matched. <code>RateCommandParser</code> then extracts the remaining user inputs and a <code>RateCommand</code> instance <code>r</code> will be returned provided that the format of user&#8217;s input is correct.</p>
+</li>
+<li>
+<p><code>LogicManager</code> then calls <code>executeUndoableCommand</code> of the <code>RateCommand</code>, <code>r</code>, instantiated in step 2. Another component, <code>Model</code>, will be involved as the <code>RateCommand</code> requests to update the rating scores of the person.</p>
+</li>
+<li>
+<p>The <code>Model</code> component gets the filtered persons list and replaces <code>Person</code> p1 with <code>Person</code> p2 which is identical to p2 except rating scores. A <code>CommandResult</code> will be generated and returned to <code>LogicManager</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-implementation-of-adding-and-editing-rating-scores"><a class="link" href="#aspect-implementation-of-adding-and-editing-rating-scores">Aspect: Implementation of adding and editing rating scores</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Implement a new command class <code>RateCommand</code> that supports adding rating scores and <code>RatingEditCommand</code> to handle editing of rating scores</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Results in more customisable commands that can be easily modified to support more prefixes and additional rating criteria</p>
+</li>
+<li>
+<p>Cons: Complicates the system as users need to familiarise themselves with more commands</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Extend the original <code>EditCommand</code> to allow it to add and modify rating scores of a student</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly</p>
+</li>
+<li>
+<p>Cons: Requires substantial changes to <code>EditCommandParser</code> and hence harder to implement</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sort-command"><a class="link" href="#sort-command">3.2. Sort Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-2"><a class="link" href="#current-implementation-2">3.2.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>sort</code> command supports the listing of students in HR+ based on GPA, name or overall rating in ascending or descending order as specified by the user. The format of this <code>sort</code> command is <code>sort FIELD o/SORT ORDER</code>.</p>
+</div>
+<div class="paragraph">
+<p>As sorting is not undoable, this command inherits from the <code>Command</code> class instead of the <code>UndoableCommand</code> class. The sorting mechanism is mainly facilitated by <code>Logic</code> and <code>ModelManager</code>. <code>SortCommandParser</code> residing in <code>LogicManager</code> processes user inputs and creates a corresponding <code>SortCommand</code>. <code>ModelManager</code> will then invoke appropriate sorting methods in <code>UniquePersonList</code>.</p>
+</div>
+<div class="paragraph">
+<p>The following sequence diagrams depict the interactions between <code>LogicManager</code> and <code>ModelManager</code> when a user issues a request for sorting:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SortCommandSequenceDiagram1.png" alt="SortCommandSequenceDiagram1" width="800">
+</div>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/SortCommandSequenceDiagram2.png" alt="SortCommandSequenceDiagram2" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.2.1.1 Sequence diagrams for execution of <code>sort</code> command</p>
+</div>
+<div class="paragraph">
+<p>As seen from the sequence diagram above, <code>LogicManager</code> and <code>ModelManager</code> interact in the following way:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>When a user keys in <code>sort gpa o/desc</code>, <code>LogicManager</code> calls method <code>parser</code> in <code>AddressBookParser</code>.</p>
+</li>
+<li>
+<p><code>SortCommandParser</code> is instantiated. If the user input is of the correct format, a <code>SortCommand</code> will be successfully created and returned back to <code>LogicManager</code>. Suppose the inputs are not valid or the format of the command is invalid, an exception will be thrown and users will see an error message.</p>
+</li>
+<li>
+<p><code>LogicManager</code> proceeds to invoke <code>execute</code> method of <code>SortCommand</code>.</p>
+</li>
+<li>
+<p><code>ModelManager</code> is in charge of sorting the list of persons through calling relevant methods provided in <code>AddressBook</code> and <code>UniquePersonList</code> according to the field to be sorted by.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Currently, HR+ only allows users to sort the list of students by selected fields in ascending or descending order. This is achieved by encapsulating acceptable sorting orders and fields into <code>SortOrder</code> and <code>SortField</code> of the type <code>enum</code> respectively.</p>
+</div>
+<div class="paragraph">
+<p>In order to make Person objects comparable, additional methods need to be implemented in the <code>Person</code> class to compare different <code>Person</code> objects based on GPA, name and rating scores. The following code snippet demonstrates how these methods are implemented:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * Compares the overall ratings of two {@code Person} objects.
+ * @param p1
+ * @param p2
+ * @return 1 if p1 has a higher overall rating, 0 if p1 and p2 have equal overall rating and -1 otherwise.
+ */</span>
+<span class="directive">public</span> <span class="directive">static</span> <span class="type">int</span> compareByOverallRating(Person p1, Person p2) {
+    <span class="keyword">return</span> <span class="predefined-type">Double</span>.compare(p1.getRating().getOverallScore(),
+            p2.getRating().getOverallScore());
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>To sort the list based on a particular field, we used the <code>sort</code> method from Java&#8217;s <code>Collections</code> library. An example usage is shown below:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">/**
+ * Sorts the list based on GPA in ascending order
+ */</span>
+<span class="directive">public</span> <span class="type">void</span> sortPersonsGradePointAverageAsc() {
+    <span class="predefined-type">Collections</span>.sort(internalList, Person::compareByGradePointAverage);
+}
+
+<span class="comment">/**
+ * Sorts the list based on GPA in descending order
+ */</span>
+<span class="directive">public</span> <span class="type">void</span> sortPersonsGradePointAverageDesc() {
+    <span class="predefined-type">Collections</span>.sort(internalList, Person::compareByGradePointAverage);
+    <span class="predefined-type">Collections</span>.reverse(internalList);
+}</code></pre>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-2"><a class="link" href="#design-considerations-2">3.2.2. Design Considerations</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="aspect-implementation-of-code-sortcommand-code"><a class="link" href="#aspect-implementation-of-code-sortcommand-code">3.2.3. Aspect: Implementation of <code>SortCommand</code></a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Implement a more generic <code>SortCommand</code> that sorts the list of students based on parameters supplied by the user</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easier to modify <code>SortCommand</code> to support more fields to be sorted by.</p>
+</li>
+<li>
+<p>Cons: It restricts the format of sort command to be the same and is thus less flexible.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Use separate commands for each possible field, such as <code>gpa-sort</code>, <code>rating-sort</code> and <code>name-sort</code> commands</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It allows developers to specify different command formats. For example, users might not need to specify the sorting order explicitly. <code>rating-sort</code> and <code>gpa-sort</code> can have default sorting order to be descending while results from <code>name-sort</code> can be in ascending order.</p>
+</li>
+<li>
+<p>Cons: It increases the number of commands in HR+ and might be less user-friendly as users need to familiarise themselves with more commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="undo-redo-feature"><a class="link" href="#undo-redo-feature">3.3. Undo/Redo feature</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-3"><a class="link" href="#current-implementation-3">3.3.1. Current Implementation</a></h4>
 <div class="paragraph">
 <p>The undo/redo mechanism is facilitated by an <code>UndoRedoStack</code>, which resides inside <code>LogicManager</code>. It supports undoing and redoing of commands that modifies the state of the address book (e.g. <code>add</code>, <code>edit</code>). Such commands will inherit from <code>UndoableCommand</code>.</p>
 </div>
@@ -732,7 +958,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect3">
-<h4 id="design-considerations"><a class="link" href="#design-considerations">3.1.2. Design Considerations</a></h4>
+<h4 id="design-considerations-3"><a class="link" href="#design-considerations-3">3.3.2. Design Considerations</a></h4>
 <div class="sect4">
 <h5 id="aspect-implementation-of-code-undoablecommand-code"><a class="link" href="#aspect-implementation-of-code-undoablecommand-code">Aspect: Implementation of <code>UndoableCommand</code></a></h5>
 <div class="ulist">
@@ -869,20 +1095,671 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.2. [Proposed] Data Encryption</a></h3>
+<h3 id="find-command"><a class="link" href="#find-command">3.4. Find Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-4"><a class="link" href="#current-implementation-4">3.4.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>find</code> command is facilitated by an <code>AllPredicate</code> class, which composes of predicates that determine the fields that are supported. Each field has its own set of predicates that determine the types of search patterns the user can perform. Search results of the keywords are stored in <code>FindResults</code>, which is a singleton pattern class.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram, Figure 3.4.1.1 shows the composition of the <code>AllPredicate</code> class and the relationship between <code>FindResults</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/AllPredicateComposition.png" alt="AllPredicateComposition" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.1 Composition of <code>AllPredicate</code> class</p>
+</div>
+<div class="paragraph">
+<p>The following code snippet shows an example of one type of predicate:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> test(Person person) {
+    <span class="keyword">return</span> keywords.stream()
+            .anyMatch(keyword -&gt; FindResults.getInstance()
+                    .containsWordIgnoreCase(person.getName().fullName, keyword,
+                    commandPrefix)
+                || keywords.stream()
+                    .anyMatch(fuzzyKeyword -&gt;
+                    FindResults.getInstance().containsFuzzyMatchIgnoreCase(
+                            person.getName().fullName, fuzzyKeyword, commandPrefix,
+                            FindCommand.LEVENSHTEIN_DISTANCE_THRESHOLD)));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagrams, Figure 3.4.1.2 and Figure 3.4.1.3 shows how the <code>find</code> command works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/FindCommandSequenceDiagram1.png" alt="FindCommandSequenceDiagram1" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.2 Sequence diagram of <code>find</code> command (1st part)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/FindCommandSequenceDiagram2.png" alt="FindCommandSequenceDiagram2" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.3 Sequence diagram of <code>find</code> command (2nd part)</p>
+</div>
+<div class="paragraph">
+<p>The execution of the find command comprises the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LogicManager</code> invokes <code>parseCommand</code> method of <code>AddressbookParser</code>, taking user inputs as arguments.</p>
+</li>
+<li>
+<p><code>AddressbookParser</code> calls the <code>parse</code> method of <code>FindCommandParser</code> to parse the arguments and return a <code>FindCommand</code> object.</p>
+</li>
+<li>
+<p><code>FindCommandParser</code> calls the <code>parseFindArgs</code> method of <code>FindUtil</code> , which calls either the <code>parseAllPredicates</code> or <code>parseSelectedPredicates</code> method from <code>PredicateUtil</code> depending on whether the argument starts with a prefix.</p>
+</li>
+<li>
+<p>The <code>FindCommand</code> object is initialized with a combined <code>Predicate&lt;Person&gt;</code> object.</p>
+</li>
+<li>
+<p>The <code>FindCommand</code> object calls the method <code>updateFilteredPersonList</code> with the <code>Predicate&lt;Person&gt;</code> object.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following code snippets show how methods <code>formOrPredicate</code> and <code>formAndPredicate</code> are implemented:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;Person&gt; formOrPredicate(<span class="predefined-type">Predicate</span>&lt;Person&gt;... predicates) {
+    <span class="keyword">return</span> Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -&gt; <span class="predefined-constant">false</span>, <span class="predefined-type">Predicate</span>::or);
+}
+
+<span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;Person&gt; formAndPredicate(<span class="predefined-type">Predicate</span>&lt;Person&gt;... predicates) {
+    <span class="keyword">return</span> Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -&gt; <span class="predefined-constant">true</span>, <span class="predefined-type">Predicate</span>::and);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram, Figure 3.4.1.4, shows how the <code>Logic</code> component retrieves search results from <code>FindResults</code> without interference from the <code>Model</code> component:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/FindCommandComponents.png" alt="FindCommandComponents" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.4 Component interactions for <code>find</code> command</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note how results are retrieved from <code>FindResults</code>. It is important to have <code>FindResults</code> as a singleton pattern class as there should only be one instance of search results for every search performed by the <code>find</code> command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following activity diagram, Figure 3.4.1.5 summarizes what happens when an user executes the <code>find</code> command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/FindCommandActivityDiagram.png" alt="FindCommandActivityDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.5 Activity diagram when user executes <code>find</code> command</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-4"><a class="link" href="#design-considerations-4">3.4.2. Design Considerations</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="aspect-implementation-of-find-command"><a class="link" href="#aspect-implementation-of-find-command">3.4.3. Aspect: Implementation of find command</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Each field has its own field predicate composing of the predicates corresponding to the search pattern. The <code>AllPredicate</code> class is used to manage all these field predicates.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easy for new developers to understand. New developers can test each predicate easily, resulting in the debugging process to be smoother. They can also add or remove new predicates of each field easily as all predicates all grouped separately. This choice also adheres to Single Responsibility Principle (SRP) and Separation of Concerns (SoC).</p>
+</li>
+<li>
+<p>Cons: It results in a lot of classes to be created. Although there is increased cohesion, there is also increased coupling. Furthermore, this choice also violates Open-Closed Principle (OCP).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Merge all predicates into one class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easy for new developers to manage this command. This choice also reduces the amount of code written significantly.</p>
+</li>
+<li>
+<p>Cons: It is difficult to test existing and new predicates. This choice decreases cohesion although it decreases coupling.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="aspect-implementation-of-levenshtein-distance-threshold"><a class="link" href="#aspect-implementation-of-levenshtein-distance-threshold">3.4.4. Aspect: Implementation of Levenshtein distance threshold</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Set a private static constant</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It does not involve user intervention to set the threshold. It also decreases the chances of an increase in false positives should the user set a high threshold.</p>
+</li>
+<li>
+<p>Cons: It does not allow users to set their desired threshold. Some users might need specific threshold to suit their needs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Allow users to set their own threshold</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It caters to more users with specific preferences.</p>
+</li>
+<li>
+<p>Cons: It results in more implementation and tests to be written.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filter-command"><a class="link" href="#filter-command">3.5. Filter Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-5"><a class="link" href="#current-implementation-5">3.5.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>Filter Command is supported by an <code>FilterCommand</code> class. It supports the advanced filtering of multiple fields such as <code>ExpectedGraduationYear</code>. Filter commands can supports both filtering by keyword and filtering by range, if the field has natural ordering.</p>
+</div>
+<div class="paragraph">
+<p>Filter command currently only filters <code>ExpectedGraduationYear</code> but will support more fields in the subsequent weeks.</p>
+</div>
+<div class="paragraph">
+<p>Filter command interact with <code>Model</code> and <code>UI</code> in the following way:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>FilterCommandParser</code> parses the user inputs into a wholesome <code>Predicate&lt;Person&gt;</code>.</p>
+</li>
+<li>
+<p>This predicate will be used to instantiate the <code>FilterCommand</code></p>
+</li>
+<li>
+<p>Upon execution of the filter command, the UI will be updated by imposing the new predicate to the <code>FilteredList</code> in the <code>ModelManager</code> class.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Below is the sequence diagram of filter command.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/FilterCommandSequenceDiagram.png" alt="FilterCommandSequenceDiagram" width="800">
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-5"><a class="link" href="#design-considerations-5">3.5.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-implementation-of-code-filtercommandparser-code"><a class="link" href="#aspect-implementation-of-code-filtercommandparser-code">Aspect: Implementation of <code>FilterCommandParser</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: <code>FilterCommandParser</code> breaks down user input according to prefix and pass to different methods in <code>FilterUtil</code> to generate respective <code>Predicate&lt;Person&gt;</code>, after which it unions these <code>Predicate</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: This appoach breaks down the parsing process into multiple classes and each class is responsible for single duty. This makes debugging easier.</p>
+</li>
+<li>
+<p>Cons: New developers may find it hard to understand the design pattern.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Puts actual parsing in <code>FilterCommandParser</code> class.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It reduces number of classes used and is easier for new developers to understand.</p>
+</li>
+<li>
+<p>Cons: It violates single responsibility principle. <code>FilterCommandParser</code> will have too many distinct functionalities such as</p>
+<div class="ulist">
+<ul>
+<li>
+<p>breaking down user input by prefix</p>
+</li>
+<li>
+<p>breaking down user&#8217;s predicate for each prefix</p>
+</li>
+<li>
+<p>creating <code>FilterRange</code> objects to record down each range specified in the predicate</p>
+</li>
+<li>
+<p>creating <code>Predicate</code> from <code>FilterRange</code></p>
+</li>
+<li>
+<p>unioning these <code>Predicate</code></p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-implementation-of-range-tracker-code-filterrange-e-code"><a class="link" href="#aspect-implementation-of-range-tracker-code-filterrange-e-code">Aspect: Implementation of range tracker: <code>FilterRange&lt;E&gt;</code></a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: All user input will either be in form of <code>ToBeFilteredClassPrefix/singletonValue, lowerRange - higherRange</code>. Both singleton value and range will be parsed into a <code>FilterRange&lt;ToBeFilteredClass&gt;</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It ensures the user input is valid since <code>FilterRange&lt;E&gt;</code> can call <code>E.isValid()</code> to check. This ensures the integrity of <code>Predicate</code> later.</p>
+</li>
+<li>
+<p>Cons: New developers may find it hard to understand the design pattern.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2 (current choice)</strong>: All parsing of singleton or ranged values will be handled by some methods in <code>FilterUtil</code>.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: New developers will find it easier to understand the design pattern.</p>
+</li>
+<li>
+<p>Cons: It will be messy to handle both singletona dn ranged values in one method. It also adds the complexity of <code>FilterUtil</code> class.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-code-filtercommand-code-behaviour"><a class="link" href="#aspect-code-filtercommand-code-behaviour">Aspect: <code>FilterCommand</code> behaviour</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Predicates in the same field will be ORed together. Predicates in the different field will be ANDed together.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: For the same field, the user can have more flexibility in selecting the desired values. For the different field, the predicates are in logical conjunction to make the filter more restrictive. This follows the natural way of human thinking.</p>
+</li>
+<li>
+<p>Cons: The developers may be confused about the OR/AND rule at first.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Everything will be ORed together.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is an easier logical pattern for developers to understand.</p>
+</li>
+<li>
+<p>Cons: It is user unfriendly. The only way for user to filter the persons who is in Computer Science, graduating in 2020 and has a GPA greater than 4.6 is to use 3 filter commands.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="interview-command"><a class="link" href="#interview-command">3.6. Interview Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation-6"><a class="link" href="#current-implementation-6">3.6.1. Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>interview</code> command allows Talent Acquisition Specialists to schedule an interview for candidates. The format of this command is <code>interview INDEX DATE_TIME_EXPRESSION</code>.</p>
+</div>
+<div class="paragraph">
+<p>This command make use of Natty, a natural language date parser library written in Java. When given a date expression, it will apply standard language recognition and translation techniques to produce <code>LocalDateTime</code> which represents the result.</p>
+</div>
+<div class="paragraph">
+<p>In our current implementation, the <code>interview</code> command inherits from the <code>UndoableCommand</code> class. Two components, <code>Logic</code> and <code>Model</code>, are involved in the execution of this command. The <code>Logic</code> component is responsible for parsing user inputs while the <code>Model</code> component deals with updating of filtered person list.</p>
+</div>
+<div class="paragraph">
+<p>Below is a sequence diagram that illustrates how these two components interact when the <code>interview</code> command is executed:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/InterviewCommandSequenceDiagram.png" alt="InterviewCommandSequenceDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.6.1.1 Sequence diagram to illustrate component interactions for the <code>interview</code> command</p>
+</div>
+<div class="paragraph">
+<p>As shown above, execution of the <code>interview</code> command comprises the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LogicManager</code> invokes <code>parseCommand</code> method of <code>AddressbookParser</code>, taking user inputs as arguments.</p>
+</li>
+<li>
+<p>During the <code>parseCommand</code> method call, an instance of <code>InterviewCommandParser</code> will be created when the keyword "interview" is matched. <code>InterviewCommandParser</code> then extracts the remaining user inputs and a <code>InterviewCommand</code> instance <code>i</code> will be returned provided that the format of user&#8217;s input is correct.</p>
+</li>
+<li>
+<p><code>LogicManager</code> then calls <code>executeUndoableCommand</code> of the <code>InterviewCommand</code>, <code>i</code>, instantiated in step 2. Another component, <code>Model</code>, will be involved as the <code>InterviewCommand</code> requests to update the interview date of the person.</p>
+</li>
+<li>
+<p>The <code>Model</code> component gets the filtered persons list and replaces <code>Person</code> p1 with <code>Person</code> p2 which is identical to p2 except interview date. A <code>CommandResult</code> will be generated and returned to <code>LogicManager</code>.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations-6"><a class="link" href="#design-considerations-6">3.6.2. Design Considerations</a></h4>
+<div class="sect4">
+<h5 id="aspect-usage-of-natural-language-parser"><a class="link" href="#aspect-usage-of-natural-language-parser">Aspect: Usage of natural language parser</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Use the natural language parser library by Natty to specify date and time</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Users are able to enter the date and time in more natural tone without looking at calendar (For example, schedule an interview next Friday at 3pm)</p>
+</li>
+<li>
+<p>Cons: Natural language parser doesn&#8217;t have 100% reliability due to the complexity of human language</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Use the typical DD/MM/YYYY HH:MM format to specify date and time</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Users are able to specify the date and time precisely</p>
+</li>
+<li>
+<p>Cons: Users have to be certain on the date and time, which have to refer to the calendar at the same time</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="aspect-implementation-of-scheduling-and-editing-interview-date"><a class="link" href="#aspect-implementation-of-scheduling-and-editing-interview-date">Aspect: Implementation of scheduling and editing interview date</a></h5>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice):</strong> Implement a new command class <code>InterviewCommand</code> that supports both scheduling and editing of interview date.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Results in more customisable and modular command that can be easily modified</p>
+</li>
+<li>
+<p>Cons: Complicates the system as users need to familiarise themselves with more commands</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2:</strong> Extend the original <code>EditCommand</code> to allow it to schedule and modify interview date of a candidate</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: Minimises the number of commands users have to remember to execute tasks, making the application more user-friendly</p>
+</li>
+<li>
+<p>Cons: Requires substantial changes to <code>EditCommandParser</code> and hence harder to implement</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user-interface"><a class="link" href="#user-interface">3.7. User Interface</a></h3>
+<div class="paragraph">
+<p>Our user interface is specially designed to maximise HR+’s usability and improve user experience. We take into account minor details and ensure that data is presented clearly so that it appeals to our users.</p>
+</div>
+<div class="paragraph">
+<p>The following sections discuss the different aspects we have considered to make sure HR+ follows industry standards in user interface design. Our implementation follows <a href="https://material.io">Material Design</a> principles created by a leading technology company Google.</p>
+</div>
+<div class="sect3">
+<h4 id="responsive-design"><a class="link" href="#responsive-design">3.7.1. Responsive Design</a></h4>
+<div class="paragraph">
+<p>Responsive design is an approach to provide optimal viewing experience of an application regardless of the screen size of the user’s device. To incorporate responsive design into HR+, we use <code>AnchorPane</code> , a built-in JavaFX container component, to support relative positioning for all four directions (left, right, top and down) between parent and child components.</p>
+</div>
+<div class="paragraph">
+<p>All UI components have a minimum size requirement. Therefore, every container component in HR+ has a <code>minWidth</code> property.</p>
+</div>
+<div class="paragraph">
+<p>Besides <code>AnchorPane</code> , we also set a listener on the size of <code>InfoPanel</code> - a panel that displays detailed information about a student in HR+. The following code snippets illustrate how this listener is implemented:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="comment">// SPLIT_MIN_WIDTH is a constant to define when to trigger the merge</span>
+
+infoPaneWrapper.widthProperty().addListener((obs, old, newValue) -&gt; {
+    <span class="type">int</span> width = newValue.intValue();
+    <span class="keyword">if</span> (width &gt;= SPLIT_MIN_WIDTH) {
+        <span class="comment">// Split into two parts</span>
+    } <span class="keyword">else</span> {
+        <span class="comment">// Merge into one part</span>
+    }
+});</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>When a user runs HR+ on a device with a bigger screen size, the <code>InfoPanel</code> will be split into two parts. The left panel will display student’s information while the right panel shows the student’s rating scores and a View resume button. The figure below (Figure 3.7.1.1) shows an example of our interface on devices with larger screens:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/responsive_split.png" alt="responsive split" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.1.1 InfoPanel on devices with larger screens</p>
+</div>
+<div class="paragraph">
+<p>On the other hand, if the device has a smaller screen size, the two components of <code>InfoPanel</code> will collapse into one. The student’s information is on top of the student’s ratings. <code>ScrollPane</code> in <code>InfoPanel</code> allows the user to scroll through the single merged panel. The figure below (Figure 3.7.1.2) shows our sample interface on devices with smaller screens:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/responsive_merge.png" alt="responsive merge" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.1.2 InfoPanel on devices with smaller screens</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="consistency"><a class="link" href="#consistency">3.7.2. Consistency</a></h4>
+<div class="paragraph">
+<p>Consistency is another principle that is important in life and in design. Not only it brings up the professional feel and look, users will feel that the app is more reliable and robust. Besides that, it is easier for users to get started as the app follows a consistent pattern.</p>
+</div>
+<div class="paragraph">
+<p>In order to follow this principle, we have used consistent color, layout and also fonts throughout the whole app. It will be discussed the in details below:</p>
+</div>
+<div class="sect4">
+<h5 id="color"><a class="link" href="#color">Color</a></h5>
+<div class="paragraph">
+<p>The primary color in HR+ is blue, with 10 shades of blue in the figure illustrated below (Figure 3.7.2.1). Other than the primary color, different shades of grey are also being used to show the level of significance of an information. Besides that, the colors that are being used are harmonized such that it brings up an unified feeling while users are using the app.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/blue_shades.png" alt="blue shades" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.2.1 10 shades of blue used in HR+</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="layout"><a class="link" href="#layout">Layout</a></h5>
+<div class="paragraph">
+<p>The spacing and layout inside HR+ is consistent and balanced. We make good use of spacing to achieve grouping of elements so that legibility is improved. This allow users to have a sense of which information are relevant to each other.</p>
+</div>
+<div class="paragraph">
+<p>For example, it is easy to separate between the applicant&#8217;s information, contact information and interview information at a glance without the need of boxes. Examples are shown in the figure below (Figure 3.7.2.2)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/spacing_group.png" alt="spacing group" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.2.2 Grouping with spacing</p>
+</div>
+</div>
+<div class="sect4">
+<h5 id="fonts"><a class="link" href="#fonts">Fonts</a></h5>
+<div class="paragraph">
+<p>The font family that is being used is Roboto. It follows a natural width that allows text to be read more fluently. Moreover, this font featured 6 different weights (thin, light, regular, medium, bold and black) which will allow text to be represented depending on the different level of importance. All different weights are shown in the figure below. (Figure 3.7.2.3)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/roboto_weight.png" alt="roboto weight" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.2.3 Different weights of Roboto font</p>
+</div>
+<div class="paragraph">
+<p>Important information is usually shown with a higher weight whereas trivial information is shown with a lower weight. This allow users to skim through the information to process data easily. The fonts are stored in <code>resources/fonts</code> folder and embedded into the packaged app so that it can be loaded on all devices.</p>
+</div>
+</div>
+</div>
+<div class="sect3">
+<h4 id="familiarity"><a class="link" href="#familiarity">3.7.3. Familiarity</a></h4>
+<div class="paragraph">
+<p>Familiarity is another aspect that is useful when designing an app. It can reduce the cognitive load of a user so that users will not feel overwhelmed by the information that is being displayed.</p>
+</div>
+<div class="paragraph">
+<p>In HR+, icons are used to represent some of the fields. For example, stars are used to represent average rating of an applicant in the PersonCard list on the left (Figure 3.7.3.1, pointed with red arrow).</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/familiar_star.png" alt="familiar star" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.3.1 Rating icon in PersonCard</p>
+</div>
+<div class="paragraph">
+<p>Besides that, contact information fields such as e-mail, address and mobile phone number uses a familiar icon. (Figure 3.7.3.2)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/familiar_icons.png" alt="familiar icons" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.3.2 Contact information icons in InfoPanel</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="visual-feedback"><a class="link" href="#visual-feedback">3.7.4. Visual Feedback</a></h4>
+<div class="paragraph">
+<p>Visual Feedback is also essential for users to identify the current state of the app. This is because user might get interrupted while using the app and have to resume the session at any time.</p>
+</div>
+<div class="paragraph">
+<p>In HR+, when an applicant is selected in the PersonCard list on the left panel, it will be highlighted in blue border and shadow so that users know who they are currently selecting. (Figure 3.7.4.1)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/list_active.png" alt="list active" width="300">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.4.1 Highlighting of selected PersonCard</p>
+</div>
+<div class="paragraph">
+<p>Besides that, there is an indication when a panel is selected. This allows users to traverse between panel using keyboard only. (Figure 3.7.4.2)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/panel_active.png" alt="panel active" width="500">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.4.2 Highlighting of selected Panel</p>
+</div>
+<div class="paragraph">
+<p>Moreover, when a command entered in <code>CommandBox</code> is invalid, the text color will be changed into red to indicate that there is an error in the command itself. (Figure 3.7.4.3)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/feedback_error.png" alt="feedback error" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.7.4.3 Invalid command indicator</p>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="proposed-data-encryption"><a class="link" href="#proposed-data-encryption">3.8. [Proposed] Data Encryption</a></h3>
 <div class="paragraph">
 <p><em>{Explain here how the data encryption feature will be implemented}</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="logging"><a class="link" href="#logging">3.3. Logging</a></h3>
+<h3 id="logging"><a class="link" href="#logging">3.9. Logging</a></h3>
 <div class="paragraph">
 <p>We are using <code>java.util.logging</code> package for logging. The <code>LogsCenter</code> class is used to manage the logging levels and logging destinations.</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.4, &#8220;Configuration&#8221;</a>)</p>
+<p>The logging level can be controlled using the <code>logLevel</code> setting in the configuration file (See <a href="#Implementation-Configuration">Section 3.10, &#8220;Configuration&#8221;</a>)</p>
 </li>
 <li>
 <p>The <code>Logger</code> for a class can be obtained using <code>LogsCenter.getLogger(Class)</code> which will log messages according to the specified logging level</p>
@@ -913,7 +1790,7 @@ If the <code>redoStack</code> is empty, then there are no other commands left to
 </div>
 </div>
 <div class="sect2">
-<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.4. Configuration</a></h3>
+<h3 id="Implementation-Configuration"><a class="link" href="#Implementation-Configuration">3.10. Configuration</a></h3>
 <div class="paragraph">
 <p>Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: <code>config.json</code>).</p>
 </div>
@@ -1144,7 +2021,7 @@ e.g. <code>seedu.address.logic.LogicManagerTest</code></p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Update the version number in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp.java</code></a>.</p>
+<p>Update the version number in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/MainApp.java"><code>MainApp.java</code></a>.</p>
 </li>
 <li>
 <p>Generate a JAR file <a href="UsingGradle.html#creating-the-jar-file">using Gradle</a>.</p>
@@ -1218,10 +2095,10 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Just like we store each individual command word constant <code>COMMAND_WORD</code> inside <code>*Command.java</code> (e.g.  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/FindCommand.java"><code>FindCommand#COMMAND_WORD</code></a>, <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java"><code>DeleteCommand#COMMAND_WORD</code></a>), you need a new constant for aliases as well (e.g. <code>FindCommand#COMMAND_ALIAS</code>).</p>
+<p>Just like we store each individual command word constant <code>COMMAND_WORD</code> inside <code>*Command.java</code> (e.g.  <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/commands/FindCommand.java"><code>FindCommand#COMMAND_WORD</code></a>, <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/commands/DeleteCommand.java"><code>DeleteCommand#COMMAND_WORD</code></a>), you need a new constant for aliases as well (e.g. <code>FindCommand#COMMAND_ALIAS</code>).</p>
 </li>
 <li>
-<p><a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> is responsible for analyzing command words.</p>
+<p><a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> is responsible for analyzing command words.</p>
 </li>
 </ul>
 </div>
@@ -1231,7 +2108,7 @@ Do take a look at <a href="#Design-Logic">Section 2.3, &#8220;Logic component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Modify the switch statement in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser#parseCommand(String)</code></a> such that both the proper command word and alias can be used to execute the same intended command.</p>
+<p>Modify the switch statement in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser#parseCommand(String)</code></a> such that both the proper command word and alias can be used to execute the same intended command.</p>
 </li>
 <li>
 <p>Add new tests for each of the aliases that you have added.</p>
@@ -1281,13 +2158,13 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>The <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model</code></a> and the <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> API need to be updated.</p>
+<p>The <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/Model.java"><code>Model</code></a> and the <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> API need to be updated.</p>
 </li>
 <li>
 <p>Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?</p>
 </li>
 <li>
-<p>Find out which of the existing API methods in  <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
+<p>Find out which of the existing API methods in  <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> and <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> classes can be used to implement the tag removal logic. <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a> allows you to update a person, and <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> allows you to update the tags.</p>
 </li>
 </ul>
 </div>
@@ -1297,10 +2174,10 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each person, and remove the <code>tag</code> from each person.</p>
+<p>Implement a <code>removeTag(Tag)</code> method in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. Loop through each person, and remove the <code>tag</code> from each person.</p>
 </li>
 <li>
-<p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>AddressBook#removeTag(Tag)</code>.</p>
+<p>Add a new API method <code>deleteTag(Tag)</code> in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a>. Your <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/ModelManager.java"><code>ModelManager</code></a> should call <code>AddressBook#removeTag(Tag)</code>.</p>
 </li>
 <li>
 <p>Add new tests for each of the new public methods that you have added.</p>
@@ -1310,7 +2187,7 @@ Do take a look at <a href="#Design-Model">Section 2.4, &#8220;Model component&#8
 <div class="ulist">
 <ul>
 <li>
-<p>The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. This may cause some tests to fail. See issue  <a href="https://github.com/se-edu/addressbook-level4/issues/753"><code>#753</code></a> for more information about this flaw.</p>
+<p>The current codebase has a flaw in tags management. Tags no longer in use by anyone may still exist on the <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/AddressBook.java"><code>AddressBook</code></a>. This may cause some tests to fail. See issue  <a href="https://github.com/se-edu/addressbook-level4/issues/753"><code>#753</code></a> for more information about this flaw.</p>
 </li>
 <li>
 <p>The solution PR has a temporary fix for the flaw mentioned above in its first commit.</p>
@@ -1373,13 +2250,13 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>The tag labels are created inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java">the <code>PersonCard</code> constructor</a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
+<p>The tag labels are created inside <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java">the <code>PersonCard</code> constructor</a> (<code>new Label(tag.tagName)</code>). <a href="https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html">JavaFX&#8217;s <code>Label</code> class</a> allows you to modify the style of each Label, such as changing its color.</p>
 </li>
 <li>
 <p>Use the .css attribute <code>-fx-background-color</code> to add a color.</p>
 </li>
 <li>
-<p>You may wish to modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/DarkTheme.css"><code>DarkTheme.css</code></a> to include some pre-defined colors using css, especially if you have experience with web-based css.</p>
+<p>You may wish to modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/resources/view/DarkTheme.css"><code>DarkTheme.css</code></a> to include some pre-defined colors using css, especially if you have experience with web-based css.</p>
 </li>
 </ul>
 </div>
@@ -1410,7 +2287,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 </div>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> such that <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay</code></a> can show a different style on error (currently it shows the same regardless of errors).</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> such that <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay</code></a> can show a different style on error (currently it shows the same regardless of errors).</p>
 <div class="paragraph">
 <p><strong>Before</strong></p>
 </div>
@@ -1436,10 +2313,10 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> is raised by <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/CommandBox.java"><code>CommandBox</code></a> which also knows whether the result is a success or failure, and is caught by <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay</code></a> which is where we want to change the style to.</p>
+<p><a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> is raised by <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/CommandBox.java"><code>CommandBox</code></a> which also knows whether the result is a success or failure, and is caught by <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay</code></a> which is where we want to change the style to.</p>
 </li>
 <li>
-<p>Refer to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/CommandBox.java"><code>CommandBox</code></a> for an example on how to display an error.</p>
+<p>Refer to <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/CommandBox.java"><code>CommandBox</code></a> for an example on how to display an error.</p>
 </li>
 </ul>
 </div>
@@ -1449,10 +2326,10 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> 's constructor so that users of the event can indicate whether an error has occurred.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java"><code>NewResultAvailableEvent</code></a> 's constructor so that users of the event can indicate whether an error has occurred.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)</code></a> to react to this event appropriately.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/ResultDisplay.java"><code>ResultDisplay#handleNewResultAvailableEvent(NewResultAvailableEvent)</code></a> to react to this event appropriately.</p>
 </li>
 <li>
 <p>You can write two different kinds of tests to ensure that the functionality works:</p>
@@ -1462,7 +2339,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <p>The unit tests for <code>ResultDisplay</code> can be modified to include verification of the color.</p>
 </li>
 <li>
-<p>The system tests <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()</code></a> to include verification for <code>ResultDisplay</code> as well.</p>
+<p>The system tests <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest#assertCommandBoxShowsDefaultStyle() and AddressBookSystemTest#assertCommandBoxShowsErrorStyle()</code></a> to include verification for <code>ResultDisplay</code> as well.</p>
 </li>
 </ul>
 </div>
@@ -1486,7 +2363,7 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 </div>
 </li>
 <li>
-<p>Modify the <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to show the total number of people in the address book.</p>
+<p>Modify the <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to show the total number of people in the address book.</p>
 <div class="paragraph">
 <p><strong>Before</strong></p>
 </div>
@@ -1512,10 +2389,10 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p><a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/StatusBarFooter.fxml"><code>StatusBarFooter.fxml</code></a> will need a new <code>StatusBar</code>. Be sure to set the <code>GridPane.columnIndex</code> properly for each <code>StatusBar</code> to avoid misalignment!</p>
+<p><a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/resources/view/StatusBarFooter.fxml"><code>StatusBarFooter.fxml</code></a> will need a new <code>StatusBar</code>. Be sure to set the <code>GridPane.columnIndex</code> properly for each <code>StatusBar</code> to avoid misalignment!</p>
 </li>
 <li>
-<p><a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.</p>
+<p><a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.</p>
 </li>
 </ul>
 </div>
@@ -1525,16 +2402,16 @@ Do take a look at <a href="#Design-Ui">Section 2.2, &#8220;UI component&#8221;</
 <div class="ulist">
 <ul>
 <li>
-<p>Modify the constructor of <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to take in the number of persons when the application just started.</p>
+<p>Modify the constructor of <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter</code></a> to take in the number of persons when the application just started.</p>
 </li>
 <li>
-<p>Use <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)</code></a> to update the number of persons whenever there are new changes to the addressbook.</p>
+<p>Use <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/StatusBarFooter.java"><code>StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)</code></a> to update the number of persons whenever there are new changes to the addressbook.</p>
 </li>
 <li>
-<p>For tests, modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/guitests/guihandles/StatusBarFooterHandle.java"><code>StatusBarFooterHandle</code></a> by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.</p>
+<p>For tests, modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/guitests/guihandles/StatusBarFooterHandle.java"><code>StatusBarFooterHandle</code></a> by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.</p>
 </li>
 <li>
-<p>For system tests, modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest</code></a> to also verify the new total number of persons status bar.</p>
+<p>For system tests, modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/systemtests/AddressBookSystemTest.java"><code>AddressBookSystemTest</code></a> to also verify the new total number of persons status bar.</p>
 </li>
 <li>
 <p>See this <a href="https://github.com/se-edu/addressbook-level4/pull/803">PR</a> for the full solution.</p>
@@ -1578,10 +2455,10 @@ Do take a look at <a href="#Design-Storage">Section 2.5, &#8220;Storage componen
 <div class="ulist">
 <ul>
 <li>
-<p>Add the API method in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/AddressBookStorage.java"><code>AddressBookStorage</code></a> interface.</p>
+<p>Add the API method in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/storage/AddressBookStorage.java"><code>AddressBookStorage</code></a> interface.</p>
 </li>
 <li>
-<p>Implement the logic in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> and <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/XmlAddressBookStorage.java"><code>XmlAddressBookStorage</code></a> class.</p>
+<p>Implement the logic in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/storage/StorageManager.java"><code>StorageManager</code></a> and <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/storage/XmlAddressBookStorage.java"><code>XmlAddressBookStorage</code></a> class.</p>
 </li>
 </ul>
 </div>
@@ -1647,10 +2524,10 @@ Removes the remark for the first person.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a <code>RemarkCommand</code> that extends <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/commands/UndoableCommand.java"><code>UndoableCommand</code></a>. Upon execution, it should just throw an <code>Exception</code>.</p>
+<p>Add a <code>RemarkCommand</code> that extends <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/commands/UndoableCommand.java"><code>UndoableCommand</code></a>. Upon execution, it should just throw an <code>Exception</code>.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to accept a <code>RemarkCommand</code>.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to accept a <code>RemarkCommand</code>.</p>
 </li>
 </ol>
 </div>
@@ -1663,7 +2540,7 @@ Removes the remark for the first person.</p>
 <p>Add <code>RemarkCommandTest</code> that tests that <code>executeUndoableCommand()</code> throws an Exception.</p>
 </li>
 <li>
-<p>Add new test method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
+<p>Add new test method to <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a>, which tests that typing "remark" returns an instance of <code>RemarkCommand</code>.</p>
 </li>
 </ol>
 </div>
@@ -1685,7 +2562,7 @@ Removes the remark for the first person.</p>
 <p>Add <code>RemarkCommandParser</code> that knows how to parse two arguments, one index and one with prefix 'r/'.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to use the newly implemented <code>RemarkCommandParser</code>.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/logic/parser/AddressBookParser.java"><code>AddressBookParser</code></a> to use the newly implemented <code>RemarkCommandParser</code>.</p>
 </li>
 </ol>
 </div>
@@ -1702,7 +2579,7 @@ Removes the remark for the first person.</p>
 for <code>RemarkCommandParser</code>.</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a> to test that the correct command is generated according to the user input.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java"><code>AddressBookParserTest</code></a> to test that the correct command is generated according to the user input.</p>
 </li>
 </ol>
 </div>
@@ -1710,7 +2587,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code"><a class="link" href="#step-3-ui-add-a-placeholder-for-remark-in-code-personcard-code">[Step 3] Ui: Add a placeholder for remark in <code>PersonCard</code></a></h5>
 <div class="paragraph">
-<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
+<p>Let&#8217;s add a placeholder on all our <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> s to display a remark for each person later.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1718,10 +2595,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/resources/view/PersonListCard.fxml"><code>PersonListCard.fxml</code></a>.</p>
+<p>Add a <code>Label</code> with any random text inside <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/resources/view/PersonListCard.fxml"><code>PersonListCard.fxml</code></a>.</p>
 </li>
 <li>
-<p>Add FXML annotation in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> to tie the variable to the actual label.</p>
+<p>Add FXML annotation in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> to tie the variable to the actual label.</p>
 </li>
 </ol>
 </div>
@@ -1731,7 +2608,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/guitests/guihandles/PersonCardHandle.java"><code>PersonCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/guitests/guihandles/PersonCardHandle.java"><code>PersonCardHandle</code></a> so that future tests can read the contents of the remark label.</p>
 </li>
 </ol>
 </div>
@@ -1739,7 +2616,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-4-model-add-code-remark-code-class"><a class="link" href="#step-4-model-add-code-remark-code-class">[Step 4] Model: Add <code>Remark</code> class</a></h5>
 <div class="paragraph">
-<p>We have to properly encapsulate the remark in our <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
+<p>We have to properly encapsulate the remark in our <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a> class. Instead of just using a <code>String</code>, let&#8217;s follow the conventional class structure that the codebase already uses by adding a <code>Remark</code> class.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1747,7 +2624,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
+<p>Add <code>Remark</code> to model component (you can copy from <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Address.java"><code>Address</code></a>, remove the regex and change the names accordingly).</p>
 </li>
 <li>
 <p>Modify <code>RemarkCommand</code> to now take in a <code>Remark</code> instead of a <code>String</code>.</p>
@@ -1768,7 +2645,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-5-model-modify-code-person-code-to-support-a-code-remark-code-field"><a class="link" href="#step-5-model-modify-code-person-code-to-support-a-code-remark-code-field">[Step 5] Model: Modify <code>Person</code> to support a <code>Remark</code> field</a></h5>
 <div class="paragraph">
-<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Now we have the <code>Remark</code> class, we need to actually use it inside <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1776,13 +2653,13 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add <code>getRemark()</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Add <code>getRemark()</code> in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
 </li>
 <li>
 <p>You may assume that the user will not be able to use the <code>add</code> and <code>edit</code> commands to modify the remarks field (i.e. the person will be created without a remark).</p>
 </li>
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>addressBook.xml</code> so that the application will load the sample data when you launch it.)</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/util/SampleDataUtil.java/"><code>SampleDataUtil</code></a> to add remarks for the sample data (delete your <code>addressBook.xml</code> so that the application will load the sample data when you launch it.)</p>
 </li>
 </ol>
 </div>
@@ -1790,7 +2667,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-6-storage-add-code-remark-code-field-to-code-xmladaptedperson-code-class"><a class="link" href="#step-6-storage-add-code-remark-code-field-to-code-xmladaptedperson-code-class">[Step 6] Storage: Add <code>Remark</code> field to <code>XmlAdaptedPerson</code> class</a></h5>
 <div class="paragraph">
-<p>We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/storage/XmlAdaptedPerson.java"><code>XmlAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
+<p>We now have <code>Remark</code> s for <code>Person</code> s, but they will be gone when we exit the application. Let&#8217;s modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/storage/XmlAdaptedPerson.java"><code>XmlAdaptedPerson</code></a> to include a <code>Remark</code> field so that it will be saved.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1816,7 +2693,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-6b-test-add-withremark-for-code-personbuilder-code"><a class="link" href="#step-6b-test-add-withremark-for-code-personbuilder-code">[Step 6b] Test: Add withRemark() for <code>PersonBuilder</code></a></h5>
 <div class="paragraph">
-<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
+<p>Since <code>Person</code> can now have a <code>Remark</code>, we should add a helper method to <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>, so that users are able to create remarks when building a <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/model/person/Person.java"><code>Person</code></a>.</p>
 </div>
 <div class="paragraph">
 <p><strong>Tests:</strong></p>
@@ -1824,10 +2701,10 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Add a new method <code>withRemark()</code> for <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>. This method will create a new <code>Remark</code> for the person that it is currently building.</p>
+<p>Add a new method <code>withRemark()</code> for <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/seedu/address/testutil/PersonBuilder.java"><code>PersonBuilder</code></a>. This method will create a new <code>Remark</code> for the person that it is currently building.</p>
 </li>
 <li>
-<p>Try and use the method on any sample <code>Person</code> in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/testutil/TypicalPersons.java"><code>TypicalPersons</code></a>.</p>
+<p>Try and use the method on any sample <code>Person</code> in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/seedu/address/testutil/TypicalPersons.java"><code>TypicalPersons</code></a>.</p>
 </li>
 </ol>
 </div>
@@ -1835,7 +2712,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="sect4">
 <h5 id="step-7-ui-connect-code-remark-code-field-to-code-personcard-code"><a class="link" href="#step-7-ui-connect-code-remark-code-field-to-code-personcard-code">[Step 7] Ui: Connect <code>Remark</code> field to <code>PersonCard</code></a></h5>
 <div class="paragraph">
-<p>Our remark label in <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
+<p>Our remark label in <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a> is still a placeholder. Let&#8217;s bring it to life by binding it with the actual <code>remark</code> field.</p>
 </div>
 <div class="paragraph">
 <p><strong>Main:</strong></p>
@@ -1843,7 +2720,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a>'s constructor to bind the <code>Remark</code> field to the <code>Person</code> 's remark.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/main/java/seedu/address/ui/PersonCard.java"><code>PersonCard</code></a>'s constructor to bind the <code>Remark</code> field to the <code>Person</code> 's remark.</p>
 </li>
 </ol>
 </div>
@@ -1853,7 +2730,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Modify <a href="https://github.com/se-edu/addressbook-level4/tree/master/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java"><code>GuiTestAssert#assertCardDisplaysPerson(&#8230;&#8203;)</code></a> so that it will compare the now-functioning remark label.</p>
+<p>Modify <a href="https://github.com/CS2103JAN2018-W14-B3/main/tree/master/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java"><code>GuiTestAssert#assertCardDisplaysPerson(&#8230;&#8203;)</code></a> so that it will compare the now-functioning remark label.</p>
 </li>
 </ol>
 </div>
@@ -1903,7 +2780,7 @@ for <code>RemarkCommandParser</code>.</p>
 <div class="ulist">
 <ul>
 <li>
-<p>has a need to manage a significant number of contacts</p>
+<p>campus recruiters that have a need to manage a significant number of student contacts</p>
 </li>
 <li>
 <p>prefer desktop apps over other types</p>
@@ -1917,10 +2794,185 @@ for <code>RemarkCommandParser</code>.</p>
 <li>
 <p>is reasonably comfortable using CLI apps</p>
 </li>
+<li>
+<p>need to keep track of interviews scheduled</p>
+</li>
+<li>
+<p>want to evaluate students' performance after interviews to decide who to hire</p>
+</li>
 </ul>
 </div>
 <div class="paragraph">
-<p><strong>Value proposition</strong>: manage contacts faster than a typical mouse/GUI driven app</p>
+<p><strong>Value proposition</strong>: offers an open source solution to the recruiting process, enables campus recruiters to find the best-fitting candidates easily and allows them to manage student contacts faster than a typical mouse/GUI driven app.</p>
+</div>
+<div class="paragraph">
+<p><strong>Feature contribution</strong>:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Ang Yee Chin</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Major Feature: UI Scheme</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Revamps the interface to make it more intuitive and clean</p>
+</li>
+<li>
+<p>Makes the design responsive so that the application page looks good on devices with any screen size</p>
+</li>
+<li>
+<p>Integrates a PDF viewer to display applicants' resumes</p>
+</li>
+<li>
+<p>Adds a calendar that displays scheduled interviews</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Minor Features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a <code>comments</code> field that allows recruiters to provide additional information</p>
+</li>
+<li>
+<p>Creates radar graphs to help visualise applicants' performance in interviews</p>
+</li>
+<li>
+<p>Adds a <code>profile picture</code> field for applicants</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Ke Xiaowen</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Major Feature: Rating</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Rates an applicant based on technical, communication, problem solving skills and experience after an interview</p>
+</li>
+<li>
+<p>Allows editing of rating scores</p>
+</li>
+<li>
+<p>Supports deletion of ratings</p>
+</li>
+<li>
+<p>Displays overall ratings for rated applicants</p>
+</li>
+<li>
+<p>Offers keyboard shortcuts to auto-fill prefixes</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Minor Features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a <code>job applied</code> field for applicants</p>
+</li>
+<li>
+<p>Adds a <code>university</code> field for applicants</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Ma Hongqiang</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Major Feature: Filter</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Supports filtering based on the current view of listed persons</p>
+</li>
+<li>
+<p>Allows users to filter fields whose values are either finite or have natural ordering</p>
+</li>
+<li>
+<p>Supports filtering multiple fields at the same time</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Minor Features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a <code>expected graduation year</code> field for applicants</p>
+</li>
+<li>
+<p>Adds a <code>resume</code> field for applicants</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Tan Heng Yeow</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Major Feature: Find</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Allows users to find all fields that match the exact keyword input</p>
+</li>
+<li>
+<p>Supports finding all fields that contains the keyword input</p>
+</li>
+<li>
+<p>Supports finding all fields that start with the keyword input</p>
+</li>
+<li>
+<p>Supports finding all fields that end with the keyword input</p>
+</li>
+<li>
+<p>Adds a fuzzy find function that enables users to find all fields that are a fuzzy match of the keyword input</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Minor Features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Adds a <code>major</code> field for applicants</p>
+</li>
+<li>
+<p>Adds a <code>cGPA</code> field for applicants</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -1955,20 +3007,134 @@ for <code>RemarkCommandParser</code>.</p>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">add a new person</p></td>
-<td class="tableblock halign-left valign-top"></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a new student</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">manage details of students, schedule interviews and track job offers.</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">delete a person</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete a student</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">remove entries that I no longer need</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">find a person by name</p></td>
-<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of persons without having to go through the entire list</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a student by name</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of students without having to go through the entire list</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">find a student by some characters</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of students without having to remember his/her full name</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">filter a student by <a href="#fields">fields</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">locate details of students in a more optimized view</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add profile photo of a student</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">recognize the student easily</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a student&#8217;s expected graduation date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">gauge how far along the student is in his/her degree</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a student&#8217;s interview date</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">keep track of interviews scheduled</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a student&#8217;s resume</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view the competency of the student</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">edit a student&#8217;s <a href="#status">status</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">indicate whether students are still being considered or rejected</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a remark</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">update additional information about the student</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add a <a href="#rating">rating</a></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">evaluate the performance of the student after an interview</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">sort students according to their interview performance</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">decide on the best-fitting students</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">add tags for students</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">categorise the students better</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">delete students with a particular tag</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">remove groups of student contacts that I no longer need</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">undo my previous command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Restore the data to its previous state before the command was executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* * *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">redo the previously undone command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Reverse the most recent undo command</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">view all interviews scheduled in a calendar</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">have a overview of all interviews arranged</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send mass emails to successful/unsuccessful candidates</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">make recruitment easier</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">have syntax highlight for my commands</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">check my command easily and spot errors faster</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">change colour scheme of the interface</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">customise it according to my preferences</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user who values efficiency</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">see a list of suggested commands when I key in the command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">select the command I want without having to type out the entire command</p></td>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>* *</code></p></td>
@@ -1978,15 +3144,36 @@ for <code>RemarkCommandParser</code>.</p>
 </tr>
 <tr>
 <td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">visualise a student&#8217;s performance using a radar graph</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">easily understand his/her performance</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">user with many persons in the address book</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">sort persons by name</p></td>
 <td class="tableblock halign-left valign-top"><p class="tableblock">locate a person easily</p></td>
 </tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">careless user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">auto-correct typos in my command</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">save time checking the command manually</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">cautious user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">encrypt student&#8217;s data stored</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">ensure sensitive information will not leak out</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><code>*</code></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">user</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">send and receive emails within the application</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">save time switching between different applications</p></td>
+</tr>
 </tbody>
 </table>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
-</div>
 </div>
 </div>
 <div class="sect1">
@@ -2044,8 +3231,401 @@ for <code>RemarkCommandParser</code>.</p>
 </li>
 </ul>
 </div>
+<div class="sect2">
+<h3 id="use-case-add-person"><a class="link" href="#use-case-add-person">D.1. Use case: Add person</a></h3>
 <div class="paragraph">
-<p><em>{More to be added}</em></p>
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to add a new person in the list</p>
+</li>
+<li>
+<p>AddressBook adds the new person into the address book.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The command is invalid</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-find-person-by-name"><a class="link" href="#use-case-find-person-by-name">D.2. Use case: Find person by name</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User enters the command with the keyword as the name</p>
+</li>
+<li>
+<p>AddressBook shows the list of persons with the keyword</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The keyword is not found in the list of persons</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-find-person-by-some-letters"><a class="link" href="#use-case-find-person-by-some-letters">D.3. Use case: Find person by some letters</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User enters the command with the some letters as the name</p>
+</li>
+<li>
+<p>AddressBook shows the list of persons with fields containing the letters</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. There is no such letter found in the list of persons.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-filter-a-person-by-field"><a class="link" href="#use-case-filter-a-person-by-field">D.4. Use case: Filter a person by field</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to filter a list of persons that matches the filter</p>
+</li>
+<li>
+<p>AddressBook shows the list of persons that matches the filter</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>1a. The filter condition is invalid</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-add-resume"><a class="link" href="#use-case-add-resume">D.5. Use case: Add resume</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to add a resume to the person in the list</p>
+</li>
+<li>
+<p>AddressBook adds a resume to the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-add-profile-picture"><a class="link" href="#use-case-add-profile-picture">D.6. Use case: Add profile picture</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to add a profile picture to a specific person in the list</p>
+</li>
+<li>
+<p>AddressBook adds a profile picture to the person in the list</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>3b. The given path to the image is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3b1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-add-rating"><a class="link" href="#use-case-add-rating">D.7. Use case: Add rating</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to add a rating to the specific person in the list</p>
+</li>
+<li>
+<p>AddressBook adds a rating to the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-add-remark"><a class="link" href="#use-case-add-remark">D.8. Use case: Add remark</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to add a remark to the person in the list</p>
+</li>
+<li>
+<p>AddressBook adds a remark to the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="use-case-add-interview-date"><a class="link" href="#use-case-add-interview-date">D.9. Use case: Add interview date</a></h3>
+<div class="paragraph">
+<p><strong>MSS</strong></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>User requests to list persons</p>
+</li>
+<li>
+<p>AddressBook shows a list of persons</p>
+</li>
+<li>
+<p>User requests to add an interview date to the person in the list</p>
+</li>
+<li>
+<p>AddressBook adds an interview date to the person</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p><strong>Extensions</strong></p>
+</div>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>2a. The list is empty.</p>
+<div class="paragraph">
+<p>Use case ends.</p>
+</div>
+</li>
+<li>
+<p>3a. The given index is invalid.</p>
+<div class="ulist none">
+<ul class="none">
+<li>
+<p>3a1. AddressBook shows an error message.</p>
+<div class="paragraph">
+<p>Use case resumes at step 2.</p>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
 </div>
 </div>
 </div>
@@ -2063,10 +3643,19 @@ for <code>RemarkCommandParser</code>.</p>
 <li>
 <p>A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.</p>
 </li>
+<li>
+<p>Should follow Java coding standards/styles.</p>
+</li>
+<li>
+<p>Should work on both 32-bit and 64-bit environments.</p>
+</li>
+<li>
+<p>Should work without access to the internet.</p>
+</li>
+<li>
+<p>Should work without external software.</p>
+</li>
 </ol>
-</div>
-<div class="paragraph">
-<p><em>{More to be added}</em></p>
 </div>
 </div>
 </div>
@@ -2082,6 +3671,18 @@ for <code>RemarkCommandParser</code>.</p>
 <dt class="hdlist1"><a id="private-contact-detail"></a> Private contact detail</dt>
 <dd>
 <p>A contact detail that is not meant to be shared with others</p>
+</dd>
+<dt class="hdlist1"><a id="rating"></a> Rating</dt>
+<dd>
+<p>A score given to a student by interviewers based on areas such as technical competency, leadership quality, communication skills and ability to work well in a team</p>
+</dd>
+<dt class="hdlist1"><a id="status"></a> Status</dt>
+<dd>
+<p>Indicates a student&#8217;s current state within the hiring process - new, in-review, interview, offered, rejected or withdrawn</p>
+</dd>
+<dt class="hdlist1"><a id="fields"></a> Fields</dt>
+<dd>
+<p>Refer to the student&#8217;s attributes, including name, phone, address, email, expected graduation year, GPA, interview date, university, major, position applied, profile photo, salutation, status, rating and remark. Some of these fields are mandatory while optional fields can be updated later.</p>
 </dd>
 </dl>
 </div>
@@ -2176,60 +3777,232 @@ Expected: The most recent window size and location is retained.</p>
 </li>
 </ol>
 </div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
-</div>
 </div>
 <div class="sect2">
-<h3 id="deleting-a-person"><a class="link" href="#deleting-a-person">H.2. Deleting a person</a></h3>
+<h3 id="adding-a-student"><a class="link" href="#adding-a-student">H.2. Adding a student</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Deleting a person while all persons are listed</p>
+<p>Adding a student into HR+</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p>Prerequisites: List all persons using the <code>list</code> command. Multiple persons in the list.</p>
+<p>Prerequisites: No student contact in HR+ has the same name, phone number, email, address, university, expected graduation year, major and grade point average as the student contacts to be added.</p>
 </li>
 <li>
-<p>Test case: <code>delete 1</code><br>
-Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.</p>
+<p>Command: <code>add n/Damith p/98765432 e/damith@nus.edu.sg a/311, Clementi Ave 2, #02-25 u/NUS y/2018 m/Computer Science g/2.74 j/Software Developer c/Extraordinary Regex skill</code><br>
+Expected: A student named Damith with the above particulars will be added into HR+. The student will be shown in the persons list panel.</p>
 </li>
 <li>
-<p>Test case: <code>delete 0</code><br>
-Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.</p>
-</li>
-<li>
-<p>Other incorrect delete commands to try: <code>delete</code>, <code>delete x</code> (where x is larger than the list size) <em>{give more}</em><br>
-Expected: Similar to previous.</p>
+<p>Add a resume pdf file named resume.pdf to the same folder as the jar file. It also must be valid PDF and smaller than 1MB.<br>
+Add an image named image.jpg to the same folder as the jar file. It also must be valid image file and smaller than 1MB.<br>
+Command: <code>add n/Irene Bae p/83627133 e/irene@sm.com a/341, Woodlands Drive 20, #22-15 u/SNU y/2020 m/Computer Engineering g/4.87 j/Software Tester r/resume.pdf i/image.jpg</code><br>
+Expected: A student named Irene is added with the above particulars. A resume and a profile image will be added.</p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
-</div>
-<div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-data"><a class="link" href="#saving-data">H.3. Saving data</a></h3>
+<h3 id="showing-info-panel-or-resume"><a class="link" href="#showing-info-panel-or-resume">H.3. Showing info panel or resume</a></h3>
 <div class="olist arabic">
 <ol class="arabic">
 <li>
-<p>Dealing with missing/corrupted data files</p>
+<p>Showing either student info or resume in the right panel</p>
 <div class="olist loweralpha">
 <ol class="loweralpha" type="a">
 <li>
-<p><em>{explain how to simulate a missing/corrupted file and the expected behavior}</em></p>
+<p>Prerequisites: A student is selected using the <code>select</code> command. The student selected has a resume added into HR+.</p>
+</li>
+<li>
+<p>Command: <code>show resume</code><br>
+Expected: The resume of the student is displayed when it is available.
+Command: <code>show info</code><br>
+Expected: The information of the student is displayed in the right panel.</p>
 </li>
 </ol>
 </div>
 </li>
 </ol>
 </div>
+</div>
+<div class="sect2">
+<h3 id="scheduling-an-interview"><a class="link" href="#scheduling-an-interview">H.4. Scheduling an interview</a></h3>
 <div class="paragraph">
-<p><em>{ more test cases &#8230;&#8203; }</em></p>
+<p>Scheduling an interview for a student</p>
+</div>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command: <code>interview 1 next Friday at 3pm</code><br>
+Expected: The interview date of the 1st person will be scheduled on next Friday at 3pm.</p>
+</li>
+<li>
+<p>Command: <code>interview 2 Mar 14 2pm</code><br>
+Expected: The interview of the 2nd person will be scheduled on 14 March at 2pm.</p>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="rating-a-student"><a class="link" href="#rating-a-student">H.5. Rating a student</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Adding rating scores to a student without ratings</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Student at index 2 must not have ratings yet.</p>
+</li>
+<li>
+<p>Command: <code>rate 2 t/3.45 c/4.5 p/3.25 e/4</code><br>
+         <code>select 2</code><br>
+Expected: Ratings of the second person updated to the above scores. Overall rating is updated to 3.8.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-a-rating"><a class="link" href="#editing-a-rating">H.6. Editing a rating</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Editing rating scores assigned to a student whom you have already rated</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Student at index 2 must have rating scores assigned already.</p>
+</li>
+<li>
+<p>Command: <code>rating-edit 2 t/4.2</code><br>
+         <code>select 2</code><br>
+Expected: Technical skills score of the second student is updated to 4.2.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-rating"><a class="link" href="#deleting-a-rating">H.7. Deleting a rating</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Deleting rating scores assigned to a student whom you have already rated</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Prerequisites: Student at index 2 must have rating scores assigned already.</p>
+</li>
+<li>
+<p>Command: <code>rating-delete 2</code><br>
+Expected: Rating scores of the second student is cleared.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorting-the-students-list"><a class="link" href="#sorting-the-students-list">H.8. Sorting the students list</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Sorting the list of students in the left panel according to some order</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command: <code>sort rating o/desc</code><br>
+Expected: List of students in the left panel are arranged based on their overall rating in descending order.</p>
+</li>
+<li>
+<p>Command: <code>sort name o/asc</code><br>
+Expected: List of students in the left panel are listed in alphabetical order with cases ignored.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="updating-status-of-a-student"><a class="link" href="#updating-status-of-a-student">H.9. Updating status of a student</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Updating the status of a student from the list of status</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command: <code>status 1 2</code><br>
+Expected: Student at index 2 has its status changed to 1st round interview.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filtering-according-to-multiple-fields"><a class="link" href="#filtering-according-to-multiple-fields">H.10. Filtering according to multiple fields</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Filtering the list of students according to multiple fields</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command: <code>filter y/2019 r/3.5-4.5</code><br>
+Expected: The student list now only contains students with 2019 as their expected graduation year and with overall rating score between 3.5 to 4.5, inclusive.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="finding-every-field-of-the-student"><a class="link" href="#finding-every-field-of-the-student">H.11. Finding every field of the student</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Finding the list of students with <strong>any</strong> fields that match the search keyword according to the search support stated in the User Guide.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command <code>find bernice, charlot</code><br>
+Expected: The student list now displays students <code>Bernice Yu</code> and <code>Charlotte Oliveiro</code> with reference to the sample data provided.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
+</div>
+</div>
+<div class="sect2">
+<h3 id="finding-specific-field-of-the-student"><a class="link" href="#finding-specific-field-of-the-student">H.12. Finding specific field of the student</a></h3>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Finding the list of students with <strong>chosen</strong> fields that match the search keyword according to the search support stated in the User Guide.</p>
+<div class="olist loweralpha">
+<ol class="loweralpha" type="a">
+<li>
+<p>Command <code>find e/alexyeoh@example.com, <a href="mailto:lidavxx@example.com">lidavxx@example.com</a> j/Software p/87438807</code><br>
+Expected: The student list now displays student <code>Alex Yeoh</code> with reference to the sample data provided.</p>
+</li>
+</ol>
+</div>
+</li>
+</ol>
 </div>
 </div>
 </div>
@@ -2237,7 +4010,7 @@ Expected: Similar to previous.</p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-21 14:13:38 UTC
+Last updated 2018-04-21 04:18:08 UTC
 </div>
 </div>
 </body>

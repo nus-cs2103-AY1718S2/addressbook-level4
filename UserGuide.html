@@ -5,20 +5,20 @@
 <!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="generator" content="Asciidoctor 1.5.6.1">
-<title>AddressBook Level 4 - User Guide</title>
+<title>HR+ - User Guide</title>
 <link rel="stylesheet" href="stylesheets/gh-pages.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
 <link rel="stylesheet" href="stylesheets/coderay-asciidoctor.css">
 </head>
 <body class="article">
 <div id="header">
-<h1>AddressBook Level 4 - User Guide</h1>
+<h1>HR+ - User Guide</h1>
 </div>
 <div id="content">
 <div id="preamble">
 <div class="sectionbody">
 <div class="paragraph">
-<p>By: <code>Team SE-EDU</code>      Since: <code>Jun 2016</code>      Licence: <code>MIT</code></p>
+<p>By: <code>Team W14-B3</code>      Since: <code>Jan 2018</code>      Licence: <code>MIT</code></p>
 </div>
 </div>
 <div id="toc" class="toc">
@@ -32,16 +32,31 @@
 <li><a href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></li>
 <li><a href="#listing-all-persons-code-list-code">3.3. Listing all persons : <code>list</code></a></li>
 <li><a href="#editing-a-person-code-edit-code">3.4. Editing a person : <code>edit</code></a></li>
-<li><a href="#locating-persons-by-name-code-find-code">3.5. Locating persons by name: <code>find</code></a></li>
-<li><a href="#deleting-a-person-code-delete-code">3.6. Deleting a person : <code>delete</code></a></li>
-<li><a href="#selecting-a-person-code-select-code">3.7. Selecting a person : <code>select</code></a></li>
-<li><a href="#listing-entered-commands-code-history-code">3.8. Listing entered commands : <code>history</code></a></li>
-<li><a href="#undoing-previous-command-code-undo-code">3.9. Undoing previous command : <code>undo</code></a></li>
-<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.10. Redoing the previously undone command : <code>redo</code></a></li>
-<li><a href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></li>
-<li><a href="#exiting-the-program-code-exit-code">3.12. Exiting the program : <code>exit</code></a></li>
-<li><a href="#saving-the-data">3.13. Saving the data</a></li>
-<li><a href="#encrypting-data-files-code-coming-in-v2-0-code">3.14. Encrypting data files <code>[coming in v2.0]</code></a></li>
+<li><a href="#scheduling-an-interview-for-a-person-code-interview-code-code-since-v1-2-code">3.5. Scheduling an interview for a person : <code>interview</code> <code>[since v1.2]</code></a></li>
+<li><a href="#locating-persons-by-field-code-find-code-code-since-v1-2-code">3.6. Locating persons by field: <code>find</code> <code>[since v1.2]</code></a></li>
+<li><a href="#filter-persons-by-multiple-fields-code-filter-code-code-since-v1-3-code">3.7. Filter persons by multiple fields: <code>filter</code> <code>[since v1.3]</code></a></li>
+<li><a href="#deleting-a-person-code-delete-code">3.8. Deleting a person : <code>delete</code></a></li>
+<li><a href="#selecting-a-person-code-select-code">3.9. Selecting a person : <code>select</code></a></li>
+<li><a href="#rating-a-student-code-rate-code-code-since-v1-1-code">3.10. Rating a student : <code>rate</code> <code>[since v1.1]</code></a></li>
+<li><a href="#editing-the-rating-given-to-a-student-code-rating-edit-code-code-since-v1-5-code">3.11. Editing the rating given to a student : <code>rating-edit</code> <code>[since v1.5]</code></a></li>
+<li><a href="#deleting-the-rating-given-to-a-student-code-rating-delete-code-code-since-v1-2-code">3.12. Deleting the rating given to a student : <code>rating-delete</code> <code>[since v1.2]</code></a></li>
+<li><a href="#sorting-the-list-of-students-based-on-different-fields-code-sort-code-code-since-v1-3-code">3.13. Sorting the list of students based on different fields : <code>sort</code> <code>[since v1.3]</code></a></li>
+<li><a href="#update-applicant-s-status-code-status-code-since-v1-3">3.14. Update applicant&#8217;s status: <code>status</code> [Since v1.3]</a></li>
+<li><a href="#showing-a-specific-panel-code-show-code-code-since-v1-5-code">3.15. Showing a specific panel: <code>show</code> <code>[since v1.5]</code></a></li>
+<li><a href="#listing-entered-commands-code-history-code">3.16. Listing entered commands : <code>history</code></a></li>
+<li><a href="#undoing-previous-command-code-undo-code">3.17. Undoing previous command : <code>undo</code></a></li>
+<li><a href="#redoing-the-previously-undone-command-code-redo-code">3.18. Redoing the previously undone command : <code>redo</code></a></li>
+<li><a href="#clearing-all-entries-code-clear-code">3.19. Clearing all entries : <code>clear</code></a></li>
+<li><a href="#exiting-the-program-code-exit-code">3.20. Exiting the program : <code>exit</code></a></li>
+<li><a href="#saving-the-data">3.21. Saving the data</a></li>
+<li><a href="#display-tags-added-to-a-student-code-coming-in-v2-0-code">3.22. Display tags added to a student <code>[coming in v2.0]</code></a></li>
+<li><a href="#highlights-search-results-in-user-interface-code-coming-in-v2-0-code">3.23. Highlights search results in user interface <code>[coming in v2.0]</code></a></li>
+<li><a href="#user-specified-levenshtein-distance-code-coming-in-v2-0-code">3.24. User specified Levenshtein distance <code>[coming in v2.0]</code></a></li>
+<li><a href="#user-specified-search-support-code-coming-in-v2-0-code">3.25. User specified search support <code>[coming in v2.0]</code></a></li>
+<li><a href="#displays-suggested-searches-for-user-before-executing-find-command-code-coming-in-v2-0-code">3.26. Displays suggested searches for user before executing find command <code>[coming in v2.0]</code></a></li>
+<li><a href="#saving-searches-code-coming-in-v2-0-code">3.27. Saving searches <code>[coming in v2.0]</code></a></li>
+<li><a href="#customising-rating-criteria-code-coming-in-v2-0-code">3.28. Customising rating criteria <code>[coming in v2.0]</code></a></li>
+<li><a href="#sending-and-receiving-emails-code-coming-in-v2-0-code">3.29. Sending and receiving emails <code>[coming in v2.0]</code></a></li>
 </ul>
 </li>
 <li><a href="#faq">4. FAQ</a></li>
@@ -53,7 +68,11 @@
 <h2 id="introduction"><a class="link" href="#introduction">1. Introduction</a></h2>
 <div class="sectionbody">
 <div class="paragraph">
-<p>AddressBook Level 4 (AB4) is for those who <strong>prefer to use a desktop app for managing contacts</strong>. More importantly, AB4 is <strong>optimized for those who prefer to work with a Command Line Interface</strong> (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
+<p>Welcome to <strong>Human Resources Plus</strong> (<strong>HR+</strong>)! HR+ is a free recruiting and talent management software designed for <strong>campus recruiters</strong> to achieve hiring success. HR+ streamlines your recruiting process, increases your productivity and helps you make more consistent and informed hiring decisions.
+This guide provides you with everything you need to know about setting up and using various features of HR+ effectively as a campus recruiter. To enjoy the full benefits of HR+, you should be <strong>comfortable using desktop applications</strong> and <strong>working with a Command Line Interface (CLI)</strong>. If you can type fast, HR+ can get your talent management tasks done faster than traditional Graphical User Interface (GUI) applications.</p>
+</div>
+<div class="paragraph">
+<p>Interested? Navigate to <a href="#quick-start">Section 2, &#8220;Quick Start&#8221;</a> to get started. Enjoy!</p>
 </div>
 </div>
 </div>
@@ -79,10 +98,10 @@ This app will not work with earlier versions of Java 8.
 </div>
 </li>
 <li>
-<p>Download the latest <code>addressbook.jar</code> <a href="https://github.com/se-edu/addressbook-level4/releases">here</a>.</p>
+<p>Download the latest <code>HR.jar</code> <a href="https://github.com/CS2103JAN2018-W14-B3/main/releases">here</a>.</p>
 </li>
 <li>
-<p>Copy the file to the folder you want to use as the home folder for your Address Book.</p>
+<p>Copy the file to the folder you want to use as the home folder for HR+.</p>
 </li>
 <li>
 <p>Double-click the file to start the app. The GUI should appear in a few seconds.</p>
@@ -104,7 +123,7 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <p><strong><code>list</code></strong> : lists all contacts</p>
 </li>
 <li>
-<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
+<p><strong><code>add</code></strong><code>n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 u/NUS y/2020 m/Computer Science g/4.93 j/Software Tester</code> : adds a contact named <code>John Doe</code> to the Address Book.</p>
 </li>
 <li>
 <p><strong><code>delete</code></strong><code>3</code> : deletes the 3rd contact shown in the current list</p>
@@ -148,6 +167,44 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 </div>
 </div>
 </div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The command keywords and parameters are <strong>case sensitive</strong>.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+There is a floating real-time parsing panel below the command box that shows parsed results before commands are executed.<br>
+However, it only verifies that the command format is correct. Commands that are shown to be "valid commands" might not execute successfully.<br>
+For example, when you use a correct <code>add</code> command format to add a duplicate student into HR+, the real time parser shows that it is a valid command but it will not be successfully executed.
+</td>
+</tr>
+</table>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you want to hide the real-time parsing panel, press <kbd>Tab</kbd>.
+</td>
+</tr>
+</table>
+</div>
 <div class="sect2">
 <h3 id="viewing-help-code-help-code"><a class="link" href="#viewing-help-code-help-code">3.1. Viewing help : <code>help</code></a></h3>
 <div class="paragraph">
@@ -157,8 +214,8 @@ e.g. typing <strong><code>help</code></strong> and pressing <kbd>Enter</kbd> wil
 <div class="sect2">
 <h3 id="adding-a-person-code-add-code"><a class="link" href="#adding-a-person-code-add-code">3.2. Adding a person: <code>add</code></a></h3>
 <div class="paragraph">
-<p>Adds a person to the address book<br>
-Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code></p>
+<p>Adds a person to HR+<br>
+Format: <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [i/IMAGE] [c/COMMENT] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="admonitionblock tip">
 <table>
@@ -172,16 +229,33 @@ A person can have any number of tags (including 0)
 </tr>
 </table>
 </div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Two student contacts are considered to be duplicates only if they have the same name, phone number, email, address, university, expected graduation year, major and grade point average.</p>
+</li>
+<li>
+<p>Resume to be added is specified by the relative path to the jar file. It also must be valid PDF, and smaller than 1MB.</p>
+</li>
+<li>
+<p>Image to be added is specified by the relative path to the jar file and must be smaller than 1MB.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
 <div class="paragraph">
 <p>Examples:</p>
 </div>
 <div class="ulist">
 <ul>
 <li>
-<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01</code></p>
+<p><code>add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01 u/NUS y/2020 m/Computer Science g/4.93 j/Software Tester</code></p>
 </li>
 <li>
-<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal</code></p>
+<p><code>add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 u/SMU y/2018 m/Information Security g/4.56 j/Web Security Analyst t/Python</code></p>
 </li>
 </ul>
 </div>
@@ -189,7 +263,7 @@ A person can have any number of tags (including 0)
 <div class="sect2">
 <h3 id="listing-all-persons-code-list-code"><a class="link" href="#listing-all-persons-code-list-code">3.3. Listing all persons : <code>list</code></a></h3>
 <div class="paragraph">
-<p>Shows a list of all persons in the address book.<br>
+<p>Shows a list of all persons in HR+.<br>
 Format: <code>list</code></p>
 </div>
 </div>
@@ -197,7 +271,7 @@ Format: <code>list</code></p>
 <h3 id="editing-a-person-code-edit-code"><a class="link" href="#editing-a-person-code-edit-code">3.4. Editing a person : <code>edit</code></a></h3>
 <div class="paragraph">
 <p>Edits an existing person in the address book.<br>
-Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code></p>
+Format: <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [j/JOB_APPLIED] [r/RESUME] [i/IMAGE] [c/COMMENT] [j/JOB_APPLIED] [t/TAG]&#8230;&#8203;</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
@@ -214,6 +288,9 @@ Format: <code>edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;
 </li>
 <li>
 <p>When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.</p>
+</li>
+<li>
+<p>You can remove the person&#8217;s resume by typing <code>r/</code> without specifying any resume after it.</p>
 </li>
 <li>
 <p>You can remove all the person&#8217;s tags by typing <code>t/</code> without specifying any tags after it.</p>
@@ -239,29 +316,20 @@ Edits the name of the 2nd person to be <code>Betsy Crower</code> and clears all 
 </div>
 </div>
 <div class="sect2">
-<h3 id="locating-persons-by-name-code-find-code"><a class="link" href="#locating-persons-by-name-code-find-code">3.5. Locating persons by name: <code>find</code></a></h3>
+<h3 id="scheduling-an-interview-for-a-person-code-interview-code-code-since-v1-2-code"><a class="link" href="#scheduling-an-interview-for-a-person-code-interview-code-code-since-v1-2-code">3.5. Scheduling an interview for a person : <code>interview</code> <code>[since v1.2]</code></a></h3>
 <div class="paragraph">
-<p>Finds persons whose names contain any of the given keywords.<br>
-Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
+<p>Schedules interview of an existing person in HR+.<br>
+Format: <code>interview INDEX DATE_TIME_EXPRESSION</code></p>
 </div>
 <div class="sidebarblock">
 <div class="content">
 <div class="ulist">
 <ul>
 <li>
-<p>The search is case insensitive. e.g <code>hans</code> will match <code>Hans</code></p>
+<p>interview command schedules interview for the person at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> 1, 2, 3, etc.</p>
 </li>
 <li>
-<p>The order of the keywords does not matter. e.g. <code>Hans Bo</code> will match <code>Bo Hans</code></p>
-</li>
-<li>
-<p>Only the name is searched.</p>
-</li>
-<li>
-<p>Only full words will be matched e.g. <code>Han</code> will not match <code>Hans</code></p>
-</li>
-<li>
-<p>Persons matching at least one keyword will be returned (i.e. <code>OR</code> search). e.g. <code>Hans Bo</code> will return <code>Hans Gruber</code>, <code>Bo Yang</code></p>
+<p><code>DATE_TIME_EXPRESSION</code> is the natural language date and time expression in English</p>
 </li>
 </ul>
 </div>
@@ -273,18 +341,748 @@ Format: <code>find KEYWORD [MORE_KEYWORDS]</code></p>
 <div class="ulist">
 <ul>
 <li>
-<p><code>find John</code><br>
-Returns <code>john</code> and <code>John Doe</code></p>
+<p><code>interview 1 next Friday at 3pm</code><br>
+schedules the interview of the 1st person to be next Friday at 3pm.</p>
 </li>
 <li>
-<p><code>find Betsy Tim John</code><br>
-Returns any person having names <code>Betsy</code>, <code>Tim</code>, or <code>John</code></p>
+<p><code>interview 2 Mar 14 2pm</code><br>
+schedules the interview of the 2nd person to be 14 March at 2pm.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Due to the complexity of languages, the parser might fail to interpret what you mean.
+Always refer to the real time floating panel below the command box (As shown in figure below) to check what is the parsed result.</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="images/userinterface/float_panel.png" alt="float panel" width="250">
+</div>
+</div>
+<div class="paragraph">
+<p>Below are some of the syntax for natural date and time parser:</p>
+</div>
+<div class="sect3">
+<h4 id="formal-dates"><a class="link" href="#formal-dates">3.5.1. Formal dates</a></h4>
+<div class="paragraph">
+<p>Formal dates are represented using integers, separated by character - or /.</p>
+</div>
+<div class="sect4">
+<h5 id="format"><a class="link" href="#format">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>YYYY-MM-DD</code></p>
+</li>
+<li>
+<p><code>YYYY/MM/DD</code></p>
+</li>
+<li>
+<p><code>MM-DD-YYYY</code></p>
+</li>
+<li>
+<p><code>MM/DD/YYYY</code></p>
 </li>
 </ul>
 </div>
 </div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DD</code> represent the day of a month</p>
+</li>
+<li>
+<p><code>MM</code> represent the month of a year</p>
+</li>
+<li>
+<p><code>YYYY</code> represent the year</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example"><a class="link" href="#example">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2018-04-21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">2018/04/21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">04-21-2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">04/21/2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="relaxed-dates"><a class="link" href="#relaxed-dates">3.5.2. Relaxed dates</a></h4>
+<div class="paragraph">
+<p>Relaxed dates are those in which the information are provided as words instead of integers.</p>
+</div>
+<div class="sect4">
+<h5 id="example-2"><a class="link" href="#example-2">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21st April 2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Sat, 21 Apr 2018</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04/2018</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Apr 21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21/04, the year when the command executed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="relative-dates"><a class="link" href="#relative-dates">3.5.3. Relative dates</a></h4>
+<div class="paragraph">
+<p>Relative dates are those that are relative to the current date.
+Do note that a week starts on Sunday and ends on the next Saturday.</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>YYYY-MM-DD</code></p>
+</li>
+<li>
+<p><code>YYYY/MM/DD</code></p>
+</li>
+<li>
+<p><code>MM-DD-YYYY</code></p>
+</li>
+<li>
+<p><code>MM/DD/YYYY</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DD</code> represent the day of a month</p>
+</li>
+<li>
+<p><code>MM</code> represent the month of a year</p>
+</li>
+<li>
+<p><code>YYYY</code> represent the year</p>
+</li>
+</ul>
+</div>
+<div class="sect4">
+<h5 id="format-2"><a class="link" href="#format-2">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>next <code>DAY</code></p>
+</li>
+<li>
+<p>last <code>DAY</code></p>
+</li>
+<li>
+<p><code>NUMBER</code> days from now</p>
+</li>
+<li>
+<p><code>NUMBER</code> weeks ago</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>DAY</code> represent the day of the week (Monday, Tuesday, &#8230;&#8203;)</p>
+</li>
+<li>
+<p><code>NUMBER</code> represent the integer or word representation of a number (1, two, 5)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example-3"><a class="link" href="#example-3">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">next thursday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">Next Thursday after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">last wednesday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The Wednesday before the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">today</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The day when the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">tomorrow</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The next day after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">yesterday</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">The day before the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 days from now</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 days after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">three weeks ago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">3 weeks before the command executed</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="time"><a class="link" href="#time">3.5.4. Time</a></h4>
+<div class="paragraph">
+<p>Time of a day.</p>
+</div>
+<div class="sect4">
+<h5 id="format-3"><a class="link" href="#format-3">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>HH</code>[<code>MM</code>][<code>SS</code>][<code>MERIDIAN</code>]</p>
+</li>
+<li>
+<p>[<code>WORD</code>]</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>HH</code> represent the hour of a day (Range of 00-23)</p>
+</li>
+<li>
+<p><code>MM</code> represent the minute of an hour (Range of 00-59), optional</p>
+</li>
+<li>
+<p><code>SS</code> represent the second of a minute (Range of 00-59), optional</p>
+</li>
+<li>
+<p><code>MERIDIAN</code> indicates the meridian (a, p, am, pm, a.m., p.m.), optional</p>
+</li>
+<li>
+<p><code>WORD</code> can be any of (afternoon: 12pm, noon: 12pm, midnight: 12am, morning: 8am, evening: 7pm)</p>
+</li>
+<li>
+<p>: can be added to separate between HH, MM and SS (such as 21:00)</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example-4"><a class="link" href="#example-4">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9:00:00pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">232015</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">11:20:15pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">21:00</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">9:00:00pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8a</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8:00:00am</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7am</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">7:00:00am</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:30 a.m.</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">6:30:00am</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">afternoon</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12:00:00pm</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">midnight</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">12:00:00am</p></td>
+</tr>
+</tbody>
+</table>
+</div>
+</div>
+<div class="sect3">
+<h4 id="relative-time"><a class="link" href="#relative-time">3.5.5. Relative Time</a></h4>
+<div class="paragraph">
+<p>Similar to relative dates, it is used to specify time that are relative to the current time.</p>
+</div>
+<div class="sect4">
+<h5 id="format-4"><a class="link" href="#format-4">Format</a></h5>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p><code>NUMBER</code> <code>UNIT</code> ago</p>
+</li>
+<li>
+<p><code>NUMBER</code> <code>UNIT</code> from now</p>
+</li>
+<li>
+<p><code>NUMBER</code> <code>UNIT</code> later</p>
+</li>
+<li>
+<p>in <code>NUMBER</code> <code>UNIT</code></p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>NUMBER</code> represent the integer or word representation of a number (1, two, 5)</p>
+</li>
+<li>
+<p><code>UNIT</code> represent the unit of the</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect4">
+<h5 id="example-5"><a class="link" href="#example-5">Example</a></h5>
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 50%;">
+<col style="width: 50%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Input</strong></p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><strong>Output</strong></p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 seconds ago</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">10 second before the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 minutes from now</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">4 minutes after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 hours later</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">8 hours after the command executed</p></td>
+</tr>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock">in 5 minutes</p></td>
+<td class="tableblock halign-left valign-top"><p class="tableblock">5 minutes after the command executed</p></td>
+</tr>
+</tbody>
+</table>
+<div class="paragraph">
+<p>The syntax above is just part of the accepted values, detailed grammar definition can be found on <a href="http://natty.joestelmach.com/doc.jsp">Natty&#8217;s documentation</a></p>
+</div>
+</div>
+</div>
+</div>
 <div class="sect2">
-<h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">3.6. Deleting a person : <code>delete</code></a></h3>
+<h3 id="locating-persons-by-field-code-find-code-code-since-v1-2-code"><a class="link" href="#locating-persons-by-field-code-find-code-code-since-v1-2-code">3.6. Locating persons by field: <code>find</code> <code>[since v1.2]</code></a></h3>
+<div class="paragraph">
+<p>Finds persons whose fields contain any of the given keywords.<br></p>
+</div>
+<div class="paragraph">
+<p>Option 1: <code>find KEYWORD, [MORE_KEYWORDS]</code></p>
+</div>
+<div class="paragraph">
+<p>Option 2: <code>find prefix/KEYWORD, [MORE KEYWORDS] prefix/&#8230;&#8203;</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>These are the prefixes supported by the <code>find</code> command:<br>
+1. Name -  <code>n/</code><br>
+2. Phone - <code>p/</code><br>
+3. Email - <code>e/</code><br>
+4. Address - <code>a/</code><br>
+5. University - <code>u/</code><br>
+6. Major - <code>m/</code><br>
+7. Job Applied - <code>j/</code><br>
+8. Comment - <code>c/</code><br></p>
+</div>
+<div class="paragraph">
+<p>These are 3 types of features that are supported for the <code>find</code> command:<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Exact keyword match - Matches your search keyword with exact keywords found in the fields of persons.<br></p>
+</li>
+<li>
+<p>Fuzzy keyword match - Matches your search keyword that is a fuzzy match with keywords found in the fields of persons. The fuzzy matching algorithm is based on the <code>Levenshtein distance (LD)</code> , which is a measure of the similarity between two strings. The threshold is set to <code>2</code> in HR+. This means that any keyword that is 2 characters different from the search keyword will be detected. If you are interested in finding out how the fuzzy match algorithm works, you can refer to the Java API on how this method is implemented.</p>
+</li>
+<li>
+<p>Wildcard keyword match – Matches your search keyword with 3 types of wildcard support. You should substitute the keyword " example " with your desired keyword.<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Wildcard "example" searches for field that contains keyword example</p>
+</li>
+<li>
+<p>Wildcard *example searches for field that ends with keyword example</p>
+</li>
+<li>
+<p>Wildcard example* searches for field that starts with keyword example</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Search results are displayed in the application console. The format is:<br>
+<code>TYPE OF SEARCH MATCH</code><br>
+<code>KEYWORD: (PREFIX)MATCHED KEYWORD</code><br></p>
+</div>
+<div class="paragraph">
+<p>(PREFIX) - represents which field the matched keyword was in.<br></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The fuzzy search algorithm is implemented to cater to users that fit the following profiles:<br>
+1. Unsure what they want to search for<br>
+2. Aware of some patterns of the keywords but not the full keyword<br>
+3. Prone to typos<br></p>
+</div>
+<div class="paragraph">
+<p>If you are certain that you want to find a certain keyword, please use the wildcard <code>"example"</code> so that all fields that contains the search keyword would be displayed only. Customizing fuzzy searching is one of our considerations for <code>v2.0</code>.</p>
+</div>
+<div class="paragraph">
+<p>Examples:<br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+General tips are not repeated across different examples!
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find bernice, charlot</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields are of an exact keyword match <strong>OR</strong> fuzzy keyword match with <code>bernice</code> <strong>OR</strong> <code>charlot</code>. In the sample data provided, the list will return persons <code>Bernice Yu</code> and <code>Charlotte Oliveiro</code>. Keyword <code>bernice</code> is an exact keyword match with one of the keywords <code>Bernice</code> and <code>charlot</code> is a fuzzy keyword match with one of the keywords <code>Charlotte</code> in <code>Charlotte Oliveiro</code>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The search is case insensitive in HR+. e.g <code>bernice</code> might match <code>Bernice</code>.<br>
+Different keywords should be <strong>comma separated</strong>, if not it will be treated as one keyword in HR+.<br>
+All fields are searched if no prefix is supplied <strong>first</strong> in HR+. If the first keyword does not <strong>start</strong> with a valid prefix, this command would assume a global search for <strong>all</strong> fields. A global search does an <strong>OR</strong> search between keywords.<br>
+Persons matching at least one keyword will be returned in HR+.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find e/alexyeoh@example.com, <a href="mailto:lidavxx@example.com">lidavxx@example.com</a> j/Software p/87438807</code><br>
+Returns list of persons that matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Keywords in their <code>email</code> field are of an exact match <strong>OR</strong> fuzzy match with <code>alexyeoh@example.com</code> <strong>OR</strong> <code>lidavxx@example.com</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p>Keywords in their <code>job applied</code> field are of an exact match <strong>OR</strong> fuzzy match with <code>Software</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p>Keywords in their <code>phone</code> field are of an exact match <strong>OR</strong> fuzzy match with <code>87438807</code>.<br>
+In the sample data provided, the list will return person <code>Alex</code> as he is the only person that matches all these conditions.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The first keyword is prepended with a prefix, thus this command assumes a prefix search. A prefix search does an <strong>OR</strong> search between keywords in the same prefix and an <strong>AND</strong> search between different prefixes.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find Mohammed, Julius, n/test@example.com</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields that are of an exact match <strong>OR</strong> fuzzy match with <code>Mohammed</code>, <code>Julius</code> <strong>OR</strong> <code>n/test@example.com</code>. In the sample data provided, the list will return persons <code>Julius Hassange</code> and <code>Mohammed Lee</code>.<br></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The prefix is not accounted for in the third keyword as the first keyword does not <strong>start</strong> with a valid prefix.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find alex bernice david</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields that are of an exact match <strong>OR</strong> fuzzy match with <code>alex bernice david</code>. In the sample data provided, this command will return an empty list.</p>
+</li>
+<li>
+<p><code>find n/alex bernice david p/98293213 92421423</code><br>
+Returns list of persons that matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Keywords in their <code>name</code> field are of an exact match <strong>OR</strong> fuzzy match with keyword <code>alex bernice david</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p>Keywords in their <code>phone</code> field are of an exact match <strong>OR</strong> fuzzy match with keyword <code>98293213 92421423</code><br>
+In the sample data provided, this command will return an empty list.<br></p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Keywords are not comma separated, thus they are treated as one keyword.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find bernice, "alex", ir&ast;, &ast;li</code><br>
+Returns list of persons with <strong>any</strong> of their fields that matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Keywords that are of an exact match <strong>OR</strong> fuzzy match with keyword <code>bernice</code> <strong>OR</strong></p>
+</li>
+<li>
+<p>Field contains keyword <code>alex</code> <strong>OR</strong></p>
+</li>
+<li>
+<p>Field starts with keyword <code>ir</code> <strong>OR</strong></p>
+</li>
+<li>
+<p>Field ends with keyword <code>li</code><br>
+In the sample data provided, this command will return persons <code>Alex Yeoh</code>, <code>Bernice Yu</code>, <code>David Li</code> and <code>Irfan Ibrahim</code>.<br></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>find n/bernice, "alex", ir&ast;, &ast;li e/&ast;example.com p/"5" m/Computer&ast;</code><br>
+Returns list of persons with matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>Name</code> field with keywords that are of an exact match <strong>OR</strong> fuzzy match with keyword <code>bernice</code> <strong>OR</strong> contains keyword <code>alex</code> <strong>OR</strong> starts with <code>ir</code> <strong>OR</strong> ends with <code>li</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p><code>Email</code> field ends with keyword <code>example.com</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p><code>Phone</code> field contains keyword <code>5</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p><code>Major</code> field starts with keyword <code>Computer</code><br>
+In the sample data provided, the list with return person <code>Bernice</code> as she is the only person that matches all these conditions.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>find berni, charlot, bernice, charlotte</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields that are of an exact match <strong>OR</strong> fuzzy match with <code>berni</code> <strong>OR</strong> <code>charlot</code> <strong>OR</strong> <code>bernice</code> <strong>OR</strong> <code>charlotte</code>. In the sample data provided, the list will return persons <code>Bernice Yu</code> and <code>Charlotte Oliveiro</code>.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Below shows how the application console looks like when this command is executed:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Exact word search matches:<br>
+charlotte: -<br>
+charlot: -<br>
+bernice: -<br>
+berni: -<br></p>
+</div>
+<div class="paragraph">
+<p>Fuzzy search matches:<br>
+charlotte: -<br>
+charlot: (n/)Charlotte<br>
+bernice: -<br>
+berni: (n/)Bernice<br></p>
+</div>
+<div class="paragraph">
+<p>Wildcard search matches:<br></p>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When a search keyword matches a person first, subsequent search keywords that matches the same person would be reflected in the application console as <code>-</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="filter-persons-by-multiple-fields-code-filter-code-code-since-v1-3-code"><a class="link" href="#filter-persons-by-multiple-fields-code-filter-code-code-since-v1-3-code">3.7. Filter persons by multiple fields: <code>filter</code> <code>[since v1.3]</code></a></h3>
+<div class="paragraph">
+<p>Filters persons whose keyword is within the specified range.
+Format: <code>filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE]</code></p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p>Keyword is in the format of (1) <code>KEYWORD</code> or (2) <code>KEYWORD1 - KEYWORD2</code> or (3) a combination of (1) and (2) <code>KEYWORD1, KEYWORD2 - KEYWORD3, KEYWORD4</code>.</p>
+</li>
+<li>
+<p>Each keyword must be valid with respect to the preceding prefix.</p>
+</li>
+<li>
+<p><code>filter</code> command will only be filtering based on the current view of the person list, instead of all the persons.</p>
+</li>
+<li>
+<p>Within each prefix, <code>filter</code> command will match all entries that satisfies at least one keyword range. You can think of an <code>OR</code> operator within the prefix.</p>
+</li>
+<li>
+<p><code>filter</code> command will match all persons that only matches every prefixes. You can think of an <code>AND</code> operator between all prefixes.</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>filter y/2020</code><br>
+Returns all persons whose graudation year that is exactly 2020</p>
+</li>
+<li>
+<p><code>filter y/2019-2021 r/4.3, 4.5-5.0</code>
+Returns all persons whose graduation year between 2019 and 2021, and whose overall rating score is either 4.3, or between 4.5 to 5.0</p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Since v1.4, filter command supports filtering by cGPA and interview date. It now takes the format:
+<code>Format: `filter [y/KEYWORD_RANGE] [r/KEYWORD_RANGE] [g/CGPA_RANGE] [d/INTERVIEW_DATE_RANGE]</code></p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-a-person-code-delete-code"><a class="link" href="#deleting-a-person-code-delete-code">3.8. Deleting a person : <code>delete</code></a></h3>
 <div class="paragraph">
 <p>Deletes the specified person from the address book.<br>
 Format: <code>delete INDEX</code></p>
@@ -325,7 +1123,7 @@ Deletes the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">3.7. Selecting a person : <code>select</code></a></h3>
+<h3 id="selecting-a-person-code-select-code"><a class="link" href="#selecting-a-person-code-select-code">3.9. Selecting a person : <code>select</code></a></h3>
 <div class="paragraph">
 <p>Selects the person identified by the index number used in the last person listing.<br>
 Format: <code>select INDEX</code></p>
@@ -366,7 +1164,283 @@ Selects the 1st person in the results of the <code>find</code> command.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">3.8. Listing entered commands : <code>history</code></a></h3>
+<h3 id="rating-a-student-code-rate-code-code-since-v1-1-code"><a class="link" href="#rating-a-student-code-rate-code-code-since-v1-1-code">3.10. Rating a student : <code>rate</code> <code>[since v1.1]</code></a></h3>
+<div class="paragraph">
+<p>Rates the student identified by the index number used in the last person listing based on technical, communication, problem solving skills and experience.<br>
+Format: <code>rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Rates the student at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> such as 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>All four rating scores need to be supplied.</p>
+</li>
+<li>
+<p>The scores should be a number in the range of <strong>1 to 5</strong> (inclusive). Scores with more than two decimal places are rounded to <strong>two decimal places</strong>.</p>
+</li>
+<li>
+<p>The overall rating of a student is computed as the average of the four rating scores, rounded to two decimal places.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you have rated the student, you will NOT be able to use the <code>rate</code> command on the same student again. Please use the <code>rating-edit</code> command to overwrite existing scores.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>rate 1 t/4.5 c/3 p/4 e/3.5</code><br>
+Rates the 1st person to have technical skills score of 4.5, communication skills score of 3, problem solving skills of 4, experience score of 3.5. The overall rating is computed to be 3.75.</p>
+</li>
+<li>
+<p><code>rate 2 t/3 c/5 p/3.5 e/2</code><br>
+Rates the 2nd person to have technical skills score of 3, communication skills score of 5, problem solving skills of 3.5, experience score of 2. The overall rating is computed to be 3.38.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="editing-the-rating-given-to-a-student-code-rating-edit-code-code-since-v1-5-code"><a class="link" href="#editing-the-rating-given-to-a-student-code-rating-edit-code-code-since-v1-5-code">3.11. Editing the rating given to a student : <code>rating-edit</code> <code>[since v1.5]</code></a></h3>
+<div class="paragraph">
+<p>Edits the rating given to the student identified by the index number used in the last person listing.<br>
+Format: <code>rating-edit INDEX [t/TECHNICAL_SKILLS_SCORE] [c/COMMUNICATION_SKILLS_SCORE] [p/PROBLEM_SOLVING_SKILLS_SCORE] [e/EXPERIENCE_SKILLS_SCORE]</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Edits the rating of the student at the specified <code>INDEX</code>. The index refers to the index number shown in the last person listing. The index <strong>must be a positive integer</strong> such as 1, 2, 3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>At least one rating score must be edited.</p>
+</li>
+<li>
+<p>The score(s) should be a number in the range of <strong>1 to 5</strong> (inclusive). Scores with more than two decimal places are rounded to <strong>two decimal places</strong>.</p>
+</li>
+<li>
+<p>The overall rating of a student will be re-computed and rounded to two decimal places.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+If you have not rated the student, please use the <code>rate</code> command to assign new rating scores.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>rating-edit 1 t/4.5 p/4 e/3.5</code><br>
+Edits the 1st person to have technical skills score of 4.5, problem solving skills of 4, experience score of 3.5.</p>
+</li>
+<li>
+<p><code>rating-edit 2 p/3.5</code><br>
+Edits the 2nd person to have problem solving skills of 3.5.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="deleting-the-rating-given-to-a-student-code-rating-delete-code-code-since-v1-2-code"><a class="link" href="#deleting-the-rating-given-to-a-student-code-rating-delete-code-code-since-v1-2-code">3.12. Deleting the rating given to a student : <code>rating-delete</code> <code>[since v1.2]</code></a></h3>
+<div class="paragraph">
+<p>Deletes the rating given to the student identified by the index number used in the last person listing.<br>
+Format: <code>rating-delete INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Deletes the rating of the applicant at the specified <code>INDEX</code>.</p>
+</li>
+<li>
+<p>The index refers to the index number shown in the last person listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive integer</strong> such as 1, 2, 3, &#8230;&#8203;</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>rating-delete 1</code><br>
+Deletes the rating of the first applicant in HR+.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sorting-the-list-of-students-based-on-different-fields-code-sort-code-code-since-v1-3-code"><a class="link" href="#sorting-the-list-of-students-based-on-different-fields-code-sort-code-code-since-v1-3-code">3.13. Sorting the list of students based on different fields : <code>sort</code> <code>[since v1.3]</code></a></h3>
+<div class="paragraph">
+<p>Sorts the current list of students in HR+ based on GPA, name or overall rating in descending or ascending order.<br>
+Format: <code>sort FIELD o/SORT ORDER</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The field to be sorted by, <code>FIELD</code>, must be either <code>gpa</code>, <code>name</code> or <code>rating</code>.</p>
+</li>
+<li>
+<p>The sort order can only be <code>asc</code> (ascending order) or <code>desc</code> (descending order).</p>
+</li>
+<li>
+<p>When sorting the students based on name, cases are ignored when doing comparisons.</p>
+</li>
+<li>
+<p>If the list has been filtered, only current students on the list will be sorted instead of all students in HR+. If you intend to sort all the students in HR+, you may run the <code>list</code> command first.</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>sort rating o/asc</code><br>
+Sorts the current list of students according to their overall rating in ascending order.</p>
+</li>
+<li>
+<p><code>sort gpa o/desc</code><br>
+Sorts the current list of students according to their grade point average in descending order.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="update-applicant-s-status-code-status-code-since-v1-3"><a class="link" href="#update-applicant-s-status-code-status-code-since-v1-3">3.14. Update applicant&#8217;s status: <code>status</code> [Since v1.3]</a></h3>
+<div class="paragraph">
+<p>Updates the status of an applicant.<br>
+Format: <code>status INDEX STATUS_INDEX</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>The index refers to the index number shown in the last person listing.</p>
+</li>
+<li>
+<p>The index <strong>must be a positive number</strong> 1,2,3, &#8230;&#8203;</p>
+</li>
+<li>
+<p>Status index are</p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>New</p>
+</li>
+<li>
+<p>1st round</p>
+</li>
+<li>
+<p>2nd round</p>
+</li>
+<li>
+<p>Rejected</p>
+</li>
+<li>
+<p>Waitlist</p>
+</li>
+<li>
+<p>Offered</p>
+</li>
+<li>
+<p>Accepted</p>
+</li>
+<li>
+<p>Withdrawn</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="sect2">
+<h3 id="showing-a-specific-panel-code-show-code-code-since-v1-5-code"><a class="link" href="#showing-a-specific-panel-code-show-code-code-since-v1-5-code">3.15. Showing a specific panel: <code>show</code> <code>[since v1.5]</code></a></h3>
+<div class="paragraph">
+<p>Showing a specific panel for more information about the currently selected person in HR+.<br>
+Format: <code>show PANEL</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="ulist">
+<ul>
+<li>
+<p>Make sure person are selected using <code>select</code> command before executing this command</p>
+</li>
+<li>
+<p>When resume is requested, it will only shows when it is available.</p>
+</li>
+<li>
+<p><code>PANEL</code> must be either 'info' or 'resume', case sensitive</p>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>Examples:</p>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>show info</code><br>
+shows the info panel of the currently selected person.</p>
+</li>
+<li>
+<p><code>show resume</code><br>
+shows the resume panel of the currently selected person.</p>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect2">
+<h3 id="listing-entered-commands-code-history-code"><a class="link" href="#listing-entered-commands-code-history-code">3.16. Listing entered commands : <code>history</code></a></h3>
 <div class="paragraph">
 <p>Lists all the commands that you have entered in reverse chronological order.<br>
 Format: <code>history</code></p>
@@ -387,7 +1461,7 @@ Format: <code>history</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.9. Undoing previous command : <code>undo</code></a></h3>
+<h3 id="undoing-previous-command-code-undo-code"><a class="link" href="#undoing-previous-command-code-undo-code">3.17. Undoing previous command : <code>undo</code></a></h3>
 <div class="paragraph">
 <p>Restores the address book to the state before the previous <em>undoable</em> command was executed.<br>
 Format: <code>undo</code></p>
@@ -432,7 +1506,7 @@ The <code>undo</code> command fails as there are no undoable commands executed p
 </div>
 </div>
 <div class="sect2">
-<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.10. Redoing the previously undone command : <code>redo</code></a></h3>
+<h3 id="redoing-the-previously-undone-command-code-redo-code"><a class="link" href="#redoing-the-previously-undone-command-code-redo-code">3.18. Redoing the previously undone command : <code>redo</code></a></h3>
 <div class="paragraph">
 <p>Reverses the most recent <code>undo</code> command.<br>
 Format: <code>redo</code></p>
@@ -464,30 +1538,72 @@ The <code>redo</code> command fails as there are no <code>undo</code> commands e
 </div>
 </div>
 <div class="sect2">
-<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.11. Clearing all entries : <code>clear</code></a></h3>
+<h3 id="clearing-all-entries-code-clear-code"><a class="link" href="#clearing-all-entries-code-clear-code">3.19. Clearing all entries : <code>clear</code></a></h3>
 <div class="paragraph">
 <p>Clears all entries from the address book.<br>
 Format: <code>clear</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.12. Exiting the program : <code>exit</code></a></h3>
+<h3 id="exiting-the-program-code-exit-code"><a class="link" href="#exiting-the-program-code-exit-code">3.20. Exiting the program : <code>exit</code></a></h3>
 <div class="paragraph">
 <p>Exits the program.<br>
 Format: <code>exit</code></p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.13. Saving the data</a></h3>
+<h3 id="saving-the-data"><a class="link" href="#saving-the-data">3.21. Saving the data</a></h3>
 <div class="paragraph">
-<p>Address book data are saved in the hard disk automatically after any command that changes the data.<br>
+<p>Data in HR+ are saved in the hard disk automatically after any command that changes the data.<br>
 There is no need to save manually.</p>
 </div>
 </div>
 <div class="sect2">
-<h3 id="encrypting-data-files-code-coming-in-v2-0-code"><a class="link" href="#encrypting-data-files-code-coming-in-v2-0-code">3.14. Encrypting data files <code>[coming in v2.0]</code></a></h3>
+<h3 id="display-tags-added-to-a-student-code-coming-in-v2-0-code"><a class="link" href="#display-tags-added-to-a-student-code-coming-in-v2-0-code">3.22. Display tags added to a student <code>[coming in v2.0]</code></a></h3>
 <div class="paragraph">
-<p><em>{explain how the user can enable/disable data encryption}</em></p>
+<p>Displays the tags that are added to a student in the left panel.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="highlights-search-results-in-user-interface-code-coming-in-v2-0-code"><a class="link" href="#highlights-search-results-in-user-interface-code-coming-in-v2-0-code">3.23. Highlights search results in user interface <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Highlights search results after user executes the <code>find</code> command.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user-specified-levenshtein-distance-code-coming-in-v2-0-code"><a class="link" href="#user-specified-levenshtein-distance-code-coming-in-v2-0-code">3.24. User specified Levenshtein distance <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Allows user to set the threshold used in the fuzzy match.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user-specified-search-support-code-coming-in-v2-0-code"><a class="link" href="#user-specified-search-support-code-coming-in-v2-0-code">3.25. User specified search support <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Allows user to toggle which search support they want at any point of time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="displays-suggested-searches-for-user-before-executing-find-command-code-coming-in-v2-0-code"><a class="link" href="#displays-suggested-searches-for-user-before-executing-find-command-code-coming-in-v2-0-code">3.26. Displays suggested searches for user before executing find command <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Allows user to view a list of suggested searches on the fly when typing in their search keywords.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-searches-code-coming-in-v2-0-code"><a class="link" href="#saving-searches-code-coming-in-v2-0-code">3.27. Saving searches <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Saves searches that can be displayed in future for fast lookups.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="customising-rating-criteria-code-coming-in-v2-0-code"><a class="link" href="#customising-rating-criteria-code-coming-in-v2-0-code">3.28. Customising rating criteria <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Specifies the criteria that candidates will be rated against.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="sending-and-receiving-emails-code-coming-in-v2-0-code"><a class="link" href="#sending-and-receiving-emails-code-coming-in-v2-0-code">3.29. Sending and receiving emails <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Sends and receives emails within HR+.</p>
 </div>
 </div>
 </div>
@@ -499,6 +1615,10 @@ There is no need to save manually.</p>
 <p><strong>Q</strong>: How do I transfer my data to another Computer?<br>
 <strong>A</strong>: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.</p>
 </div>
+<div class="paragraph">
+<p><strong>Q</strong>: What is HR+'s behaviour if the XML file is corrupted?
+<strong>A</strong>: HR+ will then start up empty, i.e., no person is inside. This empty HR+ alerts to the user that the XML file is corrupted.</p>
+</div>
 </div>
 </div>
 <div class="sect1">
@@ -507,8 +1627,8 @@ There is no need to save manually.</p>
 <div class="ulist">
 <ul>
 <li>
-<p><strong>Add</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]&#8230;&#8203;</code><br>
-e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague</code></p>
+<p><strong>Add</strong> <code>add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS u/UNIVERSITY y/EXPECTED_GRADUATION_YEAR m/MAJOR g/GRADE_POINT_AVERAGE j/JOB_APPLIED [r/RESUME] [i/IMAGE] [c/COMMENT] [t/TAG]&#8230;&#8203;</code><br>
+e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 u/NTU y/2020 m/Information System g/4.33 j/Software Engineer</code></p>
 </li>
 <li>
 <p><strong>Clear</strong> : <code>clear</code></p>
@@ -518,12 +1638,24 @@ e.g. <code>add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1
 e.g. <code>delete 3</code></p>
 </li>
 <li>
-<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]&#8230;&#8203;</code><br>
+<p><strong>Edit</strong> : <code>edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [u/UNIVERSITY] [y/EXPECTED_GRADUATION_YEAR] [m/MAJOR] [j/JOB_APPLIED] [r/RESUME] [i/IMAGE] [c/COMMENT] [j/JOB_APPLIED] [t/TAG]&#8230;&#8203;</code><br>
 e.g. <code>edit 2 n/James Lee e/jameslee@example.com</code></p>
 </li>
 <li>
 <p><strong>Find</strong> : <code>find KEYWORD [MORE_KEYWORDS]</code><br>
 e.g. <code>find James Jake</code></p>
+</li>
+<li>
+<p><strong>Filter</strong> : <code>filter [y/KEYWORD] [r/RATING]</code><br>
+e.g. <code>filter y/2019</code></p>
+</li>
+<li>
+<p><strong>Interview</strong> : <code>interview INDEX DATE_TIME_EXPRESSION</code><br>
+e.g. <code>interview 1 next Friday at 3pm</code></p>
+</li>
+<li>
+<p><strong>Status</strong> : <code>status INDEX STATUS_INDEX</code><br>
+e.g. <code>status 1 2</code></p>
 </li>
 <li>
 <p><strong>List</strong> : <code>list</code></p>
@@ -534,6 +1666,26 @@ e.g. <code>find James Jake</code></p>
 <li>
 <p><strong>Select</strong> : <code>select INDEX</code><br>
 e.g.<code>select 2</code></p>
+</li>
+<li>
+<p><strong>Rate</strong> : <code>rate INDEX t/TECHNICAL_SKILLS_SCORE c/COMMUNICATION_SKILLS_SCORE p/PROBLEM_SOLVING_SKILLS_SCORE e/EXPERIENCE_SKILLS_SCORE</code><br>
+e.g. <code>rate 1 t/4.5 c/3 p/4 e/3.5</code></p>
+</li>
+<li>
+<p><strong>Edit Rating</strong> : <code>rating-edit INDEX [t/TECHNICAL_SKILLS_SCORE] [c/COMMUNICATION_SKILLS_SCORE] [p/PROBLEM_SOLVING_SKILLS_SCORE] [e/EXPERIENCE_SKILLS_SCORE]</code><br>
+e.g. <code>rating-edit 1 t/4.5 c/3</code></p>
+</li>
+<li>
+<p><strong>Delete Rating</strong> : <code>rating-delete INDEX</code><br>
+e.g. <code>rating-delete 1</code></p>
+</li>
+<li>
+<p><strong>Sort</strong> : <code>sort FIELD o/SORT ORDER</code><br>
+e.g. <code>sort gpa o/asc</code></p>
+</li>
+<li>
+<p><strong>Show</strong> : <code>show PANEL</code><br>
+e.g. <code>show resume</code></p>
 </li>
 <li>
 <p><strong>History</strong> : <code>history</code></p>
@@ -551,7 +1703,7 @@ e.g.<code>select 2</code></p>
 </div>
 <div id="footer">
 <div id="footer-text">
-Last updated 2018-02-21 14:13:38 UTC
+Last updated 2018-04-21 04:18:08 UTC
 </div>
 </div>
 </body>

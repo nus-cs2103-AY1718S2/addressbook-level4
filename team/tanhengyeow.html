@@ -1,0 +1,677 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<!--[if IE]><meta http-equiv="X-UA-Compatible" content="IE=edge"><![endif]-->
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Asciidoctor 1.5.6.1">
+<title>Tan Heng Yeow - Project Portfolio</title>
+<link rel="stylesheet" href="../stylesheets/gh-pages.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+<link rel="stylesheet" href="../stylesheets/coderay-asciidoctor.css">
+</head>
+<body class="article">
+<div id="header">
+<h1>Tan Heng Yeow - Project Portfolio</h1>
+</div>
+<div id="content">
+<div class="sect1">
+<h2 id="project-hr"><a class="link" href="#project-hr">PROJECT: HR+</a></h2>
+<div class="sectionbody">
+<hr>
+</div>
+</div>
+<div class="sect1">
+<h2 id="overview"><a class="link" href="#overview">Overview</a></h2>
+<div class="sectionbody">
+<div class="paragraph">
+<p>HR+ is a recruiting and talent management desktop application targeting University Talent Acquisition Specialists. It is built to help them manage a significant number of student contacts and find the best-fitting candidates. University Talent Acquisition Specialists interact with HR+ using a Command Line Interface(CLI). HR+ has a Graphical User Interface(GUI) created with JavaFX and it is written in Java with approximately 33 kLOC.</p>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="summary-of-contributions"><a class="link" href="#summary-of-contributions">Summary of contributions</a></h2>
+<div class="sectionbody">
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Major enhancement</strong>: enhanced <strong>find command to support a variety of search patterns</strong></p>
+<div class="ulist">
+<ul>
+<li>
+<p>What it does: The <code>find</code> command allows the user to search for a student easily through exact keyword match, fuzzy keyword match or wildcard keyword match.</p>
+</li>
+<li>
+<p>Justification: This feature is important as users might be managing a large number of contacts and finding the contacts that they desire is not easy.</p>
+</li>
+<li>
+<p>Highlights: This enhancement involves adding new predicates on top of existing ones. Various new classes are created to manage and process the new predicates. A singleton pattern class <code>FindResults</code> is created to store find results and provide utility functions for parsing predicates.</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Minor enhancement</strong>: added <code>Major</code> and <code>GradePointAverage</code> fields to all students. These fields affect the <code>add</code> command and are editable by the <code>edit</code> command. They are crucial details that affect the hiring decision of an university student.</p>
+</li>
+<li>
+<p><strong>Code contributed</strong>: [<a href="https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/functional/tanhengyeow.md">Functional code</a>] [<a href="https://github.com/CS2103JAN2018-W14-B3/main/blob/master/collated/test/tanhengyeow.md">Test code</a>]</p>
+</li>
+<li>
+<p><strong>Other contributions</strong>:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Project Management:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Setup Travis, AppVeyor and Coveralls (<a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/4">#4</a>)</p>
+</li>
+<li>
+<p>Managed releases <code>v1.2 - v1.5</code> on GitHub</p>
+</li>
+<li>
+<p>Provide updates to main repo (<a href="https://github.com/nus-cs2103-AY1718S2/addressbook-level4/pull/8">#8</a>)</p>
+</li>
+<li>
+<p>Maintained the issue tracker</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Enhancements to existing features:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Added API for backing up storage in the future (<a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/11">#11</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Documentation:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Updated User Guide and Developer Guide (<a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/3">#3</a>, <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/19">#19</a>, <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/52">#52</a>, <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/61">#61</a>, <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/79">#79</a>, <a href="https://github.com/CS2103JAN2018-W14-B3/main/pull/118">#118</a>)</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p>Community:</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Reported bugs and suggestions for other projects (<a href="https://github.com/CS2103JAN2018-W10-B2/main/issues/81">#81</a>, <a href="https://github.com/CS2103JAN2018-W10-B2/main/issues/74">#74</a>, <a href="https://github.com/CS2103JAN2018-W10-B2/main/issues/71">#71</a>, <a href="https://github.com/CS2103JAN2018-W10-B2/main/issues/70">#70</a>)</p>
+</li>
+<li>
+<p>Participated in forum discussion (<a href="https://github.com/nus-cs2103-AY1718S2/forum/issues/7">#7</a>, <a href="https://github.com/nus-cs2103-AY1718S2/forum/issues/12">#12</a>)</p>
+</li>
+<li>
+<p>Participated and assisted in queries on slack forum</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-user-guide"><a class="link" href="#contributions-to-the-user-guide">Contributions to the User Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="locating-persons-by-field-code-find-code-code-since-v1-2-code"><a class="link" href="#locating-persons-by-field-code-find-code-code-since-v1-2-code">Locating persons by field: <code>find</code> <code>[since v1.2]</code></a></h3>
+<div class="paragraph">
+<p>Finds persons whose fields contain any of the given keywords.<br></p>
+</div>
+<div class="paragraph">
+<p>Option 1: <code>find KEYWORD, [MORE_KEYWORDS]</code></p>
+</div>
+<div class="paragraph">
+<p>Option 2: <code>find prefix/KEYWORD, [MORE KEYWORDS] prefix/&#8230;&#8203;</code></p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>These are the prefixes supported by the <code>find</code> command:<br>
+1. Name -  <code>n/</code><br>
+2. Phone - <code>p/</code><br>
+3. Email - <code>e/</code><br>
+4. Address - <code>a/</code><br>
+5. University - <code>u/</code><br>
+6. Major - <code>m/</code><br>
+7. Job Applied - <code>j/</code><br>
+8. Comment - <code>c/</code><br></p>
+</div>
+<div class="paragraph">
+<p>These are 3 types of features that are supported for the <code>find</code> command:<br></p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Exact keyword match - Matches your search keyword with exact keywords found in the fields of persons.<br></p>
+</li>
+<li>
+<p>Fuzzy keyword match - Matches your search keyword that is a fuzzy match with keywords found in the fields of persons. The fuzzy matching algorithm is based on the <code>Levenshtein distance (LD)</code> , which is a measure of the similarity between two strings. The threshold is set to <code>2</code> in HR+. This means that any keyword that is 2 characters different from the search keyword will be detected. If you are interested in finding out how the fuzzy match algorithm works, you can refer to the Java API on how this method is implemented.</p>
+</li>
+<li>
+<p>Wildcard keyword match – Matches your search keyword with 3 types of wildcard support. You should substitute the keyword " example " with your desired keyword.<br></p>
+<div class="ulist">
+<ul>
+<li>
+<p>Wildcard "example" searches for field that contains keyword example</p>
+</li>
+<li>
+<p>Wildcard *example searches for field that ends with keyword example</p>
+</li>
+<li>
+<p>Wildcard example* searches for field that starts with keyword example</p>
+</li>
+</ul>
+</div>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>Search results are displayed in the application console. The format is:<br>
+<code>TYPE OF SEARCH MATCH</code><br>
+<code>KEYWORD: (PREFIX)MATCHED KEYWORD</code><br></p>
+</div>
+<div class="paragraph">
+<p>(PREFIX) - represents which field the matched keyword was in.<br></p>
+</div>
+</div>
+</div>
+<div class="paragraph">
+<p>The fuzzy search algorithm is implemented to cater to users that fit the following profiles:<br>
+1. Unsure what they want to search for<br>
+2. Aware of some patterns of the keywords but not the full keyword<br>
+3. Prone to typos<br></p>
+</div>
+<div class="paragraph">
+<p>If you are certain that you want to find a certain keyword, please use the wildcard <code>"example"</code> so that all fields that contains the search keyword would be displayed only. Customizing fuzzy searching is one of our considerations for <code>v2.0</code>.</p>
+</div>
+<div class="paragraph">
+<p>Examples:<br></p>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+General tips are not repeated across different examples!
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find bernice, charlot</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields are of an exact keyword match <strong>OR</strong> fuzzy keyword match with <code>bernice</code> <strong>OR</strong> <code>charlot</code>. In the sample data provided, the list will return persons <code>Bernice Yu</code> and <code>Charlotte Oliveiro</code>. Keyword <code>bernice</code> is an exact keyword match with one of the keywords <code>Bernice</code> and <code>charlot</code> is a fuzzy keyword match with one of the keywords <code>Charlotte</code> in <code>Charlotte Oliveiro</code>.</p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The search is case insensitive in HR+. e.g <code>bernice</code> might match <code>Bernice</code>.<br>
+Different keywords should be <strong>comma separated</strong>, if not it will be treated as one keyword in HR+.<br>
+All fields are searched if no prefix is supplied <strong>first</strong> in HR+. If the first keyword does not <strong>start</strong> with a valid prefix, this command would assume a global search for <strong>all</strong> fields. A global search does an <strong>OR</strong> search between keywords.<br>
+Persons matching at least one keyword will be returned in HR+.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find e/alexyeoh@example.com, <a href="mailto:lidavxx@example.com">lidavxx@example.com</a> j/Software p/87438807</code><br>
+Returns list of persons that matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Keywords in their <code>email</code> field are of an exact match <strong>OR</strong> fuzzy match with <code>alexyeoh@example.com</code> <strong>OR</strong> <code>lidavxx@example.com</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p>Keywords in their <code>job applied</code> field are of an exact match <strong>OR</strong> fuzzy match with <code>Software</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p>Keywords in their <code>phone</code> field are of an exact match <strong>OR</strong> fuzzy match with <code>87438807</code>.<br>
+In the sample data provided, the list will return person <code>Alex</code> as he is the only person that matches all these conditions.</p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The first keyword is prepended with a prefix, thus this command assumes a prefix search. A prefix search does an <strong>OR</strong> search between keywords in the same prefix and an <strong>AND</strong> search between different prefixes.<br>
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find Mohammed, Julius, n/test@example.com</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields that are of an exact match <strong>OR</strong> fuzzy match with <code>Mohammed</code>, <code>Julius</code> <strong>OR</strong> <code>n/test@example.com</code>. In the sample data provided, the list will return persons <code>Julius Hassange</code> and <code>Mohammed Lee</code>.<br></p>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+The prefix is not accounted for in the third keyword as the first keyword does not <strong>start</strong> with a valid prefix.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find alex bernice david</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields that are of an exact match <strong>OR</strong> fuzzy match with <code>alex bernice david</code>. In the sample data provided, this command will return an empty list.</p>
+</li>
+<li>
+<p><code>find n/alex bernice david p/98293213 92421423</code><br>
+Returns list of persons that matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Keywords in their <code>name</code> field are of an exact match <strong>OR</strong> fuzzy match with keyword <code>alex bernice david</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p>Keywords in their <code>phone</code> field are of an exact match <strong>OR</strong> fuzzy match with keyword <code>98293213 92421423</code><br>
+In the sample data provided, this command will return an empty list.<br></p>
+</li>
+</ol>
+</div>
+</li>
+</ul>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+Keywords are not comma separated, thus they are treated as one keyword.
+</td>
+</tr>
+</table>
+</div>
+<div class="ulist">
+<ul>
+<li>
+<p><code>find bernice, "alex", ir&ast;, &ast;li</code><br>
+Returns list of persons with <strong>any</strong> of their fields that matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p>Keywords that are of an exact match <strong>OR</strong> fuzzy match with keyword <code>bernice</code> <strong>OR</strong></p>
+</li>
+<li>
+<p>Field contains keyword <code>alex</code> <strong>OR</strong></p>
+</li>
+<li>
+<p>Field starts with keyword <code>ir</code> <strong>OR</strong></p>
+</li>
+<li>
+<p>Field ends with keyword <code>li</code><br>
+In the sample data provided, this command will return persons <code>Alex Yeoh</code>, <code>Bernice Yu</code>, <code>David Li</code> and <code>Irfan Ibrahim</code>.<br></p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>find n/bernice, "alex", ir&ast;, &ast;li e/&ast;example.com p/"5" m/Computer&ast;</code><br>
+Returns list of persons with matches the following conditions:<br></p>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>Name</code> field with keywords that are of an exact match <strong>OR</strong> fuzzy match with keyword <code>bernice</code> <strong>OR</strong> contains keyword <code>alex</code> <strong>OR</strong> starts with <code>ir</code> <strong>OR</strong> ends with <code>li</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p><code>Email</code> field ends with keyword <code>example.com</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p><code>Phone</code> field contains keyword <code>5</code> <strong>AND</strong><br></p>
+</li>
+<li>
+<p><code>Major</code> field starts with keyword <code>Computer</code><br>
+In the sample data provided, the list with return person <code>Bernice</code> as she is the only person that matches all these conditions.</p>
+</li>
+</ol>
+</div>
+</li>
+<li>
+<p><code>find berni, charlot, bernice, charlotte</code><br>
+Returns list of persons whose keywords in <strong>any</strong> of their fields that are of an exact match <strong>OR</strong> fuzzy match with <code>berni</code> <strong>OR</strong> <code>charlot</code> <strong>OR</strong> <code>bernice</code> <strong>OR</strong> <code>charlotte</code>. In the sample data provided, the list will return persons <code>Bernice Yu</code> and <code>Charlotte Oliveiro</code>.<br></p>
+</li>
+</ul>
+</div>
+<div class="paragraph">
+<p>Below shows how the application console looks like when this command is executed:</p>
+</div>
+<div class="sidebarblock">
+<div class="content">
+<div class="paragraph">
+<p>Exact word search matches:<br>
+charlotte: -<br>
+charlot: -<br>
+bernice: -<br>
+berni: -<br></p>
+</div>
+<div class="paragraph">
+<p>Fuzzy search matches:<br>
+charlotte: -<br>
+charlot: (n/)Charlotte<br>
+bernice: -<br>
+berni: (n/)Bernice<br></p>
+</div>
+<div class="paragraph">
+<p>Wildcard search matches:<br></p>
+</div>
+</div>
+</div>
+<div class="admonitionblock tip">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-tip" title="Tip"></i>
+</td>
+<td class="content">
+When a search keyword matches a person first, subsequent search keywords that matches the same person would be reflected in the application console as <code>-</code>.
+</td>
+</tr>
+</table>
+</div>
+</div>
+<div class="sect2">
+<h3 id="highlights-search-results-in-user-interface-code-coming-in-v2-0-code"><a class="link" href="#highlights-search-results-in-user-interface-code-coming-in-v2-0-code">Highlights search results in user interface <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Highlights search results after user executes the <code>find</code> command.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user-specified-levenshtein-distance-code-coming-in-v2-0-code"><a class="link" href="#user-specified-levenshtein-distance-code-coming-in-v2-0-code">User specified Levenshtein distance <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Allows user to set the threshold used in the fuzzy match.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="user-specified-search-support-code-coming-in-v2-0-code"><a class="link" href="#user-specified-search-support-code-coming-in-v2-0-code">User specified search support <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Allows user to toggle which search support they want at any point of time.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="displays-suggested-searches-for-user-before-executing-find-command-code-coming-in-v2-0-code"><a class="link" href="#displays-suggested-searches-for-user-before-executing-find-command-code-coming-in-v2-0-code">Displays suggested searches for user before executing find command <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Allows user to view a list of suggested searches on the fly when typing in their search keywords.</p>
+</div>
+</div>
+<div class="sect2">
+<h3 id="saving-searches-code-coming-in-v2-0-code"><a class="link" href="#saving-searches-code-coming-in-v2-0-code">Saving searches <code>[coming in v2.0]</code></a></h3>
+<div class="paragraph">
+<p>Saves searches that can be displayed in future for fast lookups.</p>
+</div>
+</div>
+</div>
+</div>
+<div class="sect1">
+<h2 id="contributions-to-the-developer-guide"><a class="link" href="#contributions-to-the-developer-guide">Contributions to the Developer Guide</a></h2>
+<div class="sectionbody">
+<table class="tableblock frame-all grid-all spread">
+<colgroup>
+<col style="width: 100%;">
+</colgroup>
+<tbody>
+<tr>
+<td class="tableblock halign-left valign-top"><p class="tableblock"><em>Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project.</em></p></td>
+</tr>
+</tbody>
+</table>
+<div class="sect2">
+<h3 id="find-command"><a class="link" href="#find-command">Find Command</a></h3>
+<div class="sect3">
+<h4 id="current-implementation"><a class="link" href="#current-implementation">Current Implementation</a></h4>
+<div class="paragraph">
+<p>The <code>find</code> command is facilitated by an <code>AllPredicate</code> class, which composes of predicates that determine the fields that are supported. Each field has its own set of predicates that determine the types of search patterns the user can perform. Search results of the keywords are stored in <code>FindResults</code>, which is a singleton pattern class.</p>
+</div>
+<div class="paragraph">
+<p>The following diagram, Figure 3.4.1.1 shows the composition of the <code>AllPredicate</code> class and the relationship between <code>FindResults</code>:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/AllPredicateComposition.png" alt="AllPredicateComposition" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.1 Composition of <code>AllPredicate</code> class</p>
+</div>
+<div class="paragraph">
+<p>The following code snippet shows an example of one type of predicate:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="type">boolean</span> test(Person person) {
+    <span class="keyword">return</span> keywords.stream()
+            .anyMatch(keyword -&gt; FindResults.getInstance()
+                    .containsWordIgnoreCase(person.getName().fullName, keyword,
+                    commandPrefix)
+                || keywords.stream()
+                    .anyMatch(fuzzyKeyword -&gt;
+                    FindResults.getInstance().containsFuzzyMatchIgnoreCase(
+                            person.getName().fullName, fuzzyKeyword, commandPrefix,
+                            FindCommand.LEVENSHTEIN_DISTANCE_THRESHOLD)));
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagrams, Figure 3.4.1.2 and Figure 3.4.1.3 shows how the <code>find</code> command works:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FindCommandSequenceDiagram1.png" alt="FindCommandSequenceDiagram1" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.2 Sequence diagram of <code>find</code> command (1st part)</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FindCommandSequenceDiagram2.png" alt="FindCommandSequenceDiagram2" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.3 Sequence diagram of <code>find</code> command (2nd part)</p>
+</div>
+<div class="paragraph">
+<p>The execution of the find command comprises the following steps:</p>
+</div>
+<div class="olist arabic">
+<ol class="arabic">
+<li>
+<p><code>LogicManager</code> invokes <code>parseCommand</code> method of <code>AddressbookParser</code>, taking user inputs as arguments.</p>
+</li>
+<li>
+<p><code>AddressbookParser</code> calls the <code>parse</code> method of <code>FindCommandParser</code> to parse the arguments and return a <code>FindCommand</code> object.</p>
+</li>
+<li>
+<p><code>FindCommandParser</code> calls the <code>parseFindArgs</code> method of <code>FindUtil</code> , which calls either the <code>parseAllPredicates</code> or <code>parseSelectedPredicates</code> method from <code>PredicateUtil</code> depending on whether the argument starts with a prefix.</p>
+</li>
+<li>
+<p>The <code>FindCommand</code> object is initialized with a combined <code>Predicate&lt;Person&gt;</code> object.</p>
+</li>
+<li>
+<p>The <code>FindCommand</code> object calls the method <code>updateFilteredPersonList</code> with the <code>Predicate&lt;Person&gt;</code> object.</p>
+</li>
+</ol>
+</div>
+<div class="paragraph">
+<p>The following code snippets show how methods <code>formOrPredicate</code> and <code>formAndPredicate</code> are implemented:</p>
+</div>
+<div class="listingblock">
+<div class="content">
+<pre class="CodeRay highlight"><code data-lang="java"><span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;Person&gt; formOrPredicate(<span class="predefined-type">Predicate</span>&lt;Person&gt;... predicates) {
+    <span class="keyword">return</span> Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -&gt; <span class="predefined-constant">false</span>, <span class="predefined-type">Predicate</span>::or);
+}
+
+<span class="directive">public</span> <span class="directive">final</span> <span class="predefined-type">Predicate</span>&lt;Person&gt; formAndPredicate(<span class="predefined-type">Predicate</span>&lt;Person&gt;... predicates) {
+    <span class="keyword">return</span> Stream.of(predicates).filter(Objects::nonNull)
+            .reduce(condition -&gt; <span class="predefined-constant">true</span>, <span class="predefined-type">Predicate</span>::and);
+}</code></pre>
+</div>
+</div>
+<div class="paragraph">
+<p>The following sequence diagram, Figure 3.4.1.4, shows how the <code>Logic</code> component retrieves search results from <code>FindResults</code> without interference from the <code>Model</code> component:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FindCommandComponents.png" alt="FindCommandComponents" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.4 Component interactions for <code>find</code> command</p>
+</div>
+<div class="admonitionblock note">
+<table>
+<tr>
+<td class="icon">
+<i class="fa icon-note" title="Note"></i>
+</td>
+<td class="content">
+Note how results are retrieved from <code>FindResults</code>. It is important to have <code>FindResults</code> as a singleton pattern class as there should only be one instance of search results for every search performed by the <code>find</code> command.
+</td>
+</tr>
+</table>
+</div>
+<div class="paragraph">
+<p>The following activity diagram, Figure 3.4.1.5 summarizes what happens when an user executes the <code>find</code> command:</p>
+</div>
+<div class="imageblock">
+<div class="content">
+<img src="../images/FindCommandActivityDiagram.png" alt="FindCommandActivityDiagram" width="800">
+</div>
+</div>
+<div class="paragraph">
+<p>Figure 3.4.1.5 Activity diagram when user executes <code>find</code> command</p>
+</div>
+</div>
+<div class="sect3">
+<h4 id="design-considerations"><a class="link" href="#design-considerations">Design Considerations</a></h4>
+
+</div>
+<div class="sect3">
+<h4 id="aspect-implementation-of-find-command"><a class="link" href="#aspect-implementation-of-find-command">Aspect: Implementation of find command</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Each field has its own field predicate composing of the predicates corresponding to the search pattern. The <code>AllPredicate</code> class is used to manage all these field predicates.</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easy for new developers to understand. New developers can test each predicate easily, resulting in the debugging process to be smoother. They can also add or remove new predicates of each field easily as all predicates all grouped separately. This choice also adheres to Single Responsibility Principle (SRP) and Separation of Concerns (SoC).</p>
+</li>
+<li>
+<p>Cons: It results in a lot of classes to be created. Although there is increased cohesion, there is also increased coupling. Furthermore, this choice also violates Open-Closed Principle (OCP).</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Merge all predicates into one class</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It is easy for new developers to manage this command. This choice also reduces the amount of code written significantly.</p>
+</li>
+<li>
+<p>Cons: It is difficult to test existing and new predicates. This choice decreases cohesion although it decreases coupling.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+<div class="sect3">
+<h4 id="aspect-implementation-of-levenshtein-distance-threshold"><a class="link" href="#aspect-implementation-of-levenshtein-distance-threshold">Aspect: Implementation of Levenshtein distance threshold</a></h4>
+<div class="ulist">
+<ul>
+<li>
+<p><strong>Alternative 1 (current choice)</strong>: Set a private static constant</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It does not involve user intervention to set the threshold. It also decreases the chances of an increase in false positives should the user set a high threshold.</p>
+</li>
+<li>
+<p>Cons: It does not allow users to set their desired threshold. Some users might need specific threshold to suit their needs</p>
+</li>
+</ul>
+</div>
+</li>
+<li>
+<p><strong>Alternative 2</strong>: Allow users to set their own threshold</p>
+<div class="ulist">
+<ul>
+<li>
+<p>Pros: It caters to more users with specific preferences.</p>
+</li>
+<li>
+<p>Cons: It results in more implementation and tests to be written.</p>
+</li>
+</ul>
+</div>
+</li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<div id="footer">
+<div id="footer-text">
+Last updated 2018-04-21 04:18:08 UTC
+</div>
+</div>
+</body>
+</html>

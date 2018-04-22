@@ -10,10 +10,18 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.commons.util.StringUtil;
+import seedu.address.model.appointment.Date;
+import seedu.address.model.appointment.Description;
+import seedu.address.model.appointment.Duration;
+import seedu.address.model.appointment.Time;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
+import seedu.address.model.person.PersonRole;
 import seedu.address.model.person.Phone;
+import seedu.address.model.pet.PetAge;
+import seedu.address.model.pet.PetGender;
+import seedu.address.model.pet.PetName;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -28,11 +36,12 @@ import seedu.address.model.tag.Tag;
 public class ParserUtil {
 
     public static final String MESSAGE_INVALID_INDEX = "Index is not a non-zero unsigned integer.";
-    public static final String MESSAGE_INSUFFICIENT_PARTS = "Number of parts must be more than 1.";
+    public static final String MESSAGE_INVALID_TYPE = "Type is not 'client', 'pet' or 'vettech.";
 
     /**
      * Parses {@code oneBasedIndex} into an {@code Index} and returns it. Leading and trailing whitespaces will be
      * trimmed.
+     *
      * @throws IllegalValueException if the specified index is invalid (not non-zero unsigned integer).
      */
     public static Index parseIndex(String oneBasedIndex) throws IllegalValueException {
@@ -131,7 +140,6 @@ public class ParserUtil {
     }
 
     /**
-     * Parses a {@code Optional<String> email} into an {@code Optional<Email>} if {@code email} is present.
      * See header comment of this class regarding the use of {@code Optional} parameters.
      */
     public static Optional<Email> parseEmail(Optional<String> email) throws IllegalValueException {
@@ -164,5 +172,185 @@ public class ParserUtil {
             tagSet.add(parseTag(tagName));
         }
         return tagSet;
+    }
+
+    /**
+     * Parses a {@code String role} into an {@code PersonRole} enum type.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code role} is invalid.
+     */
+    public static PersonRole parseRole(String role) throws IllegalValueException {
+        requireNonNull(role);
+        String trimmedRole = role.trim();
+        if (!PersonRole.isValidPersonRole(trimmedRole)) {
+            throw new IllegalValueException(PersonRole.MESSAGE_ROLE_CONSTRAINTS);
+        }
+        return new PersonRole(trimmedRole);
+    }
+
+    /**
+     * Parses a {@code Optional<String> role} into an {@code Optional<PersonRole>} if {@code role} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<PersonRole> parseRole(Optional<String> role) throws IllegalValueException {
+        requireNonNull(role);
+        return role.isPresent()
+                ? Optional.of(parseRole(role.get()))
+                : Optional.empty();
+    }
+
+    //@@author Godxin-functional
+    /**
+     * Parses a {@code String date} into a {@code Date}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code date} is invalid.
+     */
+    public static Date parseDate(String date) throws IllegalValueException {
+        requireNonNull(date);
+        String trimmedDate = date.trim();
+        if (!Date.isValidDate(trimmedDate)) {
+            throw new IllegalValueException(Date.MESSAGE_DATE_CONSTRAINTS);
+        }
+        if (!Date.isValidYear(Date.getYear(trimmedDate))) {
+            throw new IllegalValueException(Date.MESSAGE_YEAR_CONSTRAINTS);
+        }
+        if (!Date.isValidDaysInMonth(trimmedDate)) {
+            throw new IllegalValueException(Date.MESSAGE_DAYINMONTH_CONSTRAINTS);
+        }
+        return new Date(trimmedDate);
+    }
+
+    /**
+     * Parses a {@code Optional<String> date} into an {@code Optional<Date>} if {@code date} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Date> parseDate(Optional<String> date) throws IllegalValueException {
+        requireNonNull(date);
+        return date.isPresent() ? Optional.of(parseDate(date.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String time} into a {@code Time}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code time} is invalid.
+     */
+    public static Time parseTime(String time) throws IllegalValueException {
+        requireNonNull(time);
+        String trimmedTime = time.trim();
+        if (!Time.isValidTime(trimmedTime)) {
+            throw new IllegalValueException(Time.MESSAGE_TIME_CONSTRAINTS);
+        }
+        return new Time(trimmedTime);
+    }
+
+    /**
+     * Parses a {@code Optional<String> time} into an {@code Optional<Time>} if {@code time} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Time> parseTime(Optional<String> time) throws IllegalValueException {
+        requireNonNull(time);
+        return time.isPresent() ? Optional.of(parseTime(time.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String duration} into a {@code Duration}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code duration} is invalid.
+     */
+    public static Duration parseDuration(String duration) throws IllegalValueException {
+        requireNonNull(duration);
+        String trimmedDuration = duration.trim();
+        if (!Duration.isValidDuration(trimmedDuration)) {
+            throw new IllegalValueException(Duration.MESSAGE_DURATION_CONSTRAINTS);
+        }
+        return new Duration(trimmedDuration);
+    }
+
+    /**
+     * Parses a {@code Optional<String> duration} into an {@code Optional<Duration>} if {@code duration} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Duration> parseDuration(Optional<String> duration) throws IllegalValueException {
+        requireNonNull(duration);
+        return duration.isPresent() ? Optional.of(parseDuration(duration.get())) : Optional.empty();
+    }
+
+    /**
+     * Parses a {@code String description} into a {@code Description}
+     * leading and trailing whitespaces will be trimmed.
+     */
+    public static Description parseDescription(String description) throws IllegalValueException {
+        requireNonNull(description);
+        return new Description(description.trim());
+    }
+
+    /**
+     * Parses a {@code Optional<String> description} into an {@code Optional<Description>}
+     * if {@code description} is present.
+     * See header comment of this class regarding the use of {@code Optional} parameters.
+     */
+    public static Optional<Description> parseDescription(Optional<String> description) throws IllegalValueException {
+        requireNonNull(description);
+        return description.isPresent() ? Optional.of(parseDescription(description.get())) : Optional.empty();
+    }
+    //@@author
+
+    /**
+     * Parses a {@code String petName} into {@code PetName}.
+     * Leading and trailing whitespaces will be trimmed.
+     *
+     * @throws IllegalValueException if the given {@code petName} is invalid.
+     */
+    public static PetName parsePetName(String petName) throws IllegalValueException {
+        requireNonNull(petName);
+        String trimmedPetName = petName.trim();
+        if (!PetName.isValidPetName(trimmedPetName)) {
+            throw new IllegalValueException(PetName.MESSAGE_PETNAME_CONSTRAINTS);
+        }
+        return new PetName(trimmedPetName);
+    }
+
+
+    /**
+     * Parses {@code String petAge} into {@code PetAge}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static PetAge parsePetAge(String petAge) throws IllegalValueException {
+        requireNonNull(petAge);
+        String trimmedPetAge = petAge.trim();
+        if (!PetAge.isValidPetAge(trimmedPetAge)) {
+            throw new IllegalValueException(PetAge.MESSAGE_PETAGE_CONSTRAINTS);
+        }
+        return new PetAge(trimmedPetAge);
+    }
+
+    /**
+     * Parses {@code String petGender} into {@code PetGender}.
+     * Leading and trailing whitespaces will be trimmed.
+     */
+    public static PetGender parsePetGender(String petGender) throws IllegalValueException {
+        requireNonNull(petGender);
+        String trimmedPetGender = petGender.trim();
+        if (!PetGender.isValidGender(trimmedPetGender)) {
+            throw new IllegalValueException(PetGender.MESSAGE_PETGENDER_CONSTRAINTS);
+        }
+        return new PetGender(trimmedPetGender);
+    }
+
+    /**
+     * Parses {@code valueType} into a {@code String} and returns it. Leading and trailing whitespaces will be
+     * trimmed.
+     * @throws IllegalValueException if the specified type is invalid (not 'client', 'pet' or 'vettech').
+     */
+    public static String parseType(String valueType) throws IllegalValueException {
+        String trimmedValue = valueType.trim();
+        if (!trimmedValue.matches("pet") && !trimmedValue.matches("client") && !trimmedValue.matches("vettech")) {
+            throw new IllegalValueException(MESSAGE_INVALID_TYPE);
+        }
+        return trimmedValue;
     }
 }

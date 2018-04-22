@@ -4,9 +4,12 @@ import static java.util.Objects.requireNonNull;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PERSON_ROLE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TECHNICIAN;
 
 import java.util.Collections;
 import java.util.HashSet;
@@ -19,14 +22,20 @@ import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
+import seedu.address.model.client.Client;
+import seedu.address.model.client.exceptions.ClientHasExistingAppointmentException;
+import seedu.address.model.client.exceptions.ClientHasExistingPetException;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonRole;
 import seedu.address.model.person.Phone;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.vettechnician.VetTechnician;
+import seedu.address.model.vettechnician.exceptions.TechnicianHasExistingAppointmentException;
 
 /**
  * Edits the details of an existing person in the address book.
@@ -39,6 +48,7 @@ public class EditCommand extends UndoableCommand {
             + "by the index number used in the last person listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
+            + "[" + PREFIX_PERSON_ROLE + "ROLE] "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
@@ -51,15 +61,22 @@ public class EditCommand extends UndoableCommand {
     public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
     public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    private static final String MESSAGE_TECHNICIAN_HAS_APPOINTMENT = "Technician has existing appointment,"
+            + " please remove appointment before changing role.";
+    private static final String MESSAGE_CLIENT_HAS_APPOINTMENT = "Client has existing appiontment,"
+            + " please remove appointment before changing role";
+    private static final String MESSAGE_CLIENT_HAS_PET = "Client has existing pet,"
+            + " please remove pet before changing role";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
+    private int currList = 0; //default is on client list upon opening app
 
     private Person personToEdit;
     private Person editedPerson;
 
     /**
-     * @param index of the person in the filtered person list to edit
+     * @param index                of the person in the filtered person list to edit
      * @param editPersonDescriptor details to edit the person with
      */
     public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
@@ -70,6 +87,10 @@ public class EditCommand extends UndoableCommand {
         this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
     }
 
+    public void setCurrentList() {
+        this.currList = model.getCurrentList();
+    }
+
     @Override
     public CommandResult executeUndoableCommand() throws CommandException {
         try {
@@ -78,14 +99,33 @@ public class EditCommand extends UndoableCommand {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
             throw new AssertionError("The target person cannot be missing");
+        } catch (ClientHasExistingPetException e) {
+            throw new CommandException(MESSAGE_CLIENT_HAS_PET);
+        } catch (TechnicianHasExistingAppointmentException e) {
+            throw new CommandException(MESSAGE_TECHNICIAN_HAS_APPOINTMENT);
+        } catch (ClientHasExistingAppointmentException e) {
+            throw new CommandException(MESSAGE_CLIENT_HAS_APPOINTMENT);
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+        model.updateFilteredVetTechnicianList(PREDICATE_SHOW_ALL_TECHNICIAN);
+
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        List<? extends Person> lastShownList;
+
+        setCurrentList();
+
+        if (currList == 0) {
+            lastShownList = model.getFilteredClientList();
+        } else if (currList == 2) {
+            lastShownList = model.getFilteredVetTechnicianList();
+        } else {
+            throw new CommandException("Not currently on a list that 'edit' command can change");
+        }
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -102,13 +142,21 @@ public class EditCommand extends UndoableCommand {
     private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
         assert personToEdit != null;
 
+        PersonRole updatedRole = editPersonDescriptor.getRole().orElse(personToEdit.getRole());
         Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        if (updatedRole.equals(PersonRole.CLIENT_ROLE)) {
+            return new Client(updatedName, updatedPhone, updatedEmail,
+                    updatedAddress, updatedTags);
+        } else {
+            return new VetTechnician(updatedName, updatedPhone, updatedEmail,
+                    updatedAddress, updatedTags);
+        }
+
     }
 
     @Override
@@ -135,19 +183,22 @@ public class EditCommand extends UndoableCommand {
      * corresponding field value of the person.
      */
     public static class EditPersonDescriptor {
+        private PersonRole role;
         private Name name;
         private Phone phone;
         private Email email;
         private Address address;
         private Set<Tag> tags;
 
-        public EditPersonDescriptor() {}
+        public EditPersonDescriptor() {
+        }
 
         /**
          * Copy constructor.
          * A defensive copy of {@code tags} is used internally.
          */
         public EditPersonDescriptor(EditPersonDescriptor toCopy) {
+            setRole(toCopy.role);
             setName(toCopy.name);
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
@@ -159,7 +210,15 @@ public class EditCommand extends UndoableCommand {
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.role, this.name, this.phone, this.email, this.address, this.tags);
+        }
+
+        public void setRole(PersonRole role) {
+            this.role = role;
+        }
+
+        public Optional<PersonRole> getRole() {
+            return Optional.ofNullable(role);
         }
 
         public void setName(Name name) {
@@ -230,7 +289,9 @@ public class EditCommand extends UndoableCommand {
                     && getPhone().equals(e.getPhone())
                     && getEmail().equals(e.getEmail())
                     && getAddress().equals(e.getAddress())
+                    && getRole().equals(e.getRole())
                     && getTags().equals(e.getTags());
         }
+
     }
 }

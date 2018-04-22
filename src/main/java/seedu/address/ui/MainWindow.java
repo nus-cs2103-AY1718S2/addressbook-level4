@@ -4,9 +4,13 @@ import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.TabPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
@@ -15,7 +19,10 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeListTabEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.NewApptAvailableEvent;
+import seedu.address.commons.events.ui.NewListAllDisplayAvailableEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
@@ -34,13 +41,17 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private ClientListPanel clientListPanel;
+    private PetListPanel petListPanel;
+    private VetTechnicianListPanel vetTechnicianListPanel;
+    private ApptListPanel apptListPanel;
+    private ListAllPanel listAllPanel;
+    private DateTimeCard dateTimeCard;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane dateTimePlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,7 +60,22 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane clientListPanelPlaceholder;
+
+    @FXML
+    private StackPane petListPanelPlaceholder;
+
+    @FXML
+    private StackPane vetTechnicianListPanelPlaceholder;
+
+    @FXML
+    private TabPane listPanel;
+
+    @FXML
+    private StackPane apptListPanelPlaceholder;
+
+    @FXML
+    private StackPane listAllPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -67,11 +93,14 @@ public class MainWindow extends UiPart<Stage> {
         this.prefs = prefs;
 
         // Configure the UI
+        config.setAppTitle("VetterAppointments");
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
+
+        updateCurrentList();
     }
 
     public Stage getPrimaryStage() {
@@ -84,6 +113,7 @@ public class MainWindow extends UiPart<Stage> {
 
     /**
      * Sets the accelerator of a MenuItem.
+     *
      * @param keyCombination the KeyCombination value of the accelerator
      */
     private void setAccelerator(MenuItem menuItem, KeyCombination keyCombination) {
@@ -116,11 +146,15 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        clientListPanel = new ClientListPanel(logic.getFilteredClientList());
+        clientListPanelPlaceholder.getChildren().add(clientListPanel.getRoot());
+
+        petListPanel = new PetListPanel(logic.getClientPetAssociationList());
+        petListPanelPlaceholder.getChildren().add(petListPanel.getRoot());
+
+        vetTechnicianListPanel = new VetTechnicianListPanel(logic.getFilteredVetTechnicianList());
+        vetTechnicianListPanelPlaceholder.getChildren().add(vetTechnicianListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
@@ -130,7 +164,32 @@ public class MainWindow extends UiPart<Stage> {
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxPlaceholder.getChildren().add(commandBox.getRoot());
+
+        dateTimeCard = new DateTimeCard();
+        dateTimePlaceholder.getChildren().add(dateTimeCard.getRoot());
+
+        fillAppt();
     }
+
+    //@@author purplepers0n
+    void fillAppt() {
+        apptListPanel = new ApptListPanel(logic.getFilteredAppointmentList());
+        apptListPanelPlaceholder.getChildren().add(apptListPanel.getRoot());
+    }
+
+    /**
+     * updates the listallpanel display
+     */
+    void fillListAllPanel() {
+        if (logic.getClientDetails() != null) {
+            listAllPanel = new ListAllPanel(logic.getClientDetails(),
+                    logic.getClientPetList(), logic.getClientApptList());
+            listAllPanelPlaceholder.getChildren().add(listAllPanel.getRoot());
+        } else {
+            listAllPanelPlaceholder.getChildren().remove(0, listAllPanelPlaceholder.getChildren().size());
+        }
+    }
+    //@@author
 
     void hide() {
         primaryStage.hide();
@@ -181,13 +240,64 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
+    public ClientListPanel getClientListPanel() {
+        return this.clientListPanel;
     }
 
-    void releaseResources() {
-        browserPanel.freeResources();
+    public PetListPanel getPetListPanel() {
+        return this.petListPanel;
     }
+
+    public VetTechnicianListPanel getVetTechnicianListPanel() {
+        return this.vetTechnicianListPanel;
+    }
+
+    public ApptListPanel getApptListPanel() {
+        return this.apptListPanel;
+    }
+
+    //@@author purplepers0n
+
+    /**
+     * Changes to the {@code Tab} of the specific {@code list} requested and selects it.
+     */
+    private void changeTo(int list) {
+        Platform.runLater(() -> {
+            listPanel.getSelectionModel().select(list);
+        });
+    }
+
+    @Subscribe
+    private void handleChangeListTabEvent(ChangeListTabEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        changeTo(event.targetList);
+        logic.setCurrentList(event.targetList);
+    }
+
+    @Subscribe
+    private void handleApptAvailableEvent(NewApptAvailableEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> fillAppt());
+    }
+
+    @Subscribe
+    private void handleListAllDisplayAvailableEvent(NewListAllDisplayAvailableEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        Platform.runLater(() -> fillListAllPanel());
+    }
+
+    /**
+     * Updates the current index being viewed if tab is changed by mouseclick event
+     */
+    private void updateCurrentList() {
+        listPanel.getSelectionModel().selectedIndexProperty().addListener(new ChangeListener<Number>() {
+            @Override
+            public void changed(ObservableValue<? extends Number> observable, Number oldValue, Number newValue) {
+                logic.setCurrentList(newValue.intValue());
+            }
+        });
+    }
+    //@@author
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {

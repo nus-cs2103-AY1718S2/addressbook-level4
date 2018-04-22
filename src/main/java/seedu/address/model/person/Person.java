@@ -6,6 +6,7 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.client.Client;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -13,7 +14,7 @@ import seedu.address.model.tag.UniqueTagList;
  * Represents a Person in the address book.
  * Guarantees: details are present and not null, field values are validated, immutable.
  */
-public class Person {
+public abstract class Person {
 
     private final Name name;
     private final Phone phone;
@@ -51,29 +52,14 @@ public class Person {
         return address;
     }
 
+    public abstract PersonRole getRole();
+
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
      * if modification is attempted.
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
-    }
-
-    @Override
-    public boolean equals(Object other) {
-        if (other == this) {
-            return true;
-        }
-
-        if (!(other instanceof Person)) {
-            return false;
-        }
-
-        Person otherPerson = (Person) other;
-        return otherPerson.getName().equals(this.getName())
-                && otherPerson.getPhone().equals(this.getPhone())
-                && otherPerson.getEmail().equals(this.getEmail())
-                && otherPerson.getAddress().equals(this.getAddress());
     }
 
     @Override
@@ -86,6 +72,8 @@ public class Person {
     public String toString() {
         final StringBuilder builder = new StringBuilder();
         builder.append(getName())
+                .append(" Role: ")
+                .append(getRole())
                 .append(" Phone: ")
                 .append(getPhone())
                 .append(" Email: ")
@@ -96,5 +84,13 @@ public class Person {
         getTags().forEach(builder::append);
         return builder.toString();
     }
+
+    /**
+     * Returns true if person is a client
+     */
+    public boolean isClient() {
+        return this instanceof Client;
+    }
+
 
 }

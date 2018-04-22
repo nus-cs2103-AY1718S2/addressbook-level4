@@ -2,8 +2,14 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_APPOINTMENT;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_CLIENTS;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PET;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_TECHNICIAN;
 
+import seedu.address.commons.core.EventsCenter;
+import seedu.address.commons.events.ui.NewApptAvailableEvent;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -39,6 +45,11 @@ public abstract class UndoableCommand extends Command {
         requireAllNonNull(model, previousAddressBook);
         model.resetData(previousAddressBook);
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+        model.updateFilteredVetTechnicianList(PREDICATE_SHOW_ALL_TECHNICIAN);
+        model.updateFilteredPetList(PREDICATE_SHOW_ALL_PET);
+        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENT);
+        EventsCenter.getInstance().post(new NewApptAvailableEvent("undo addressbook"));
     }
 
     /**
@@ -54,6 +65,11 @@ public abstract class UndoableCommand extends Command {
                     + "it should not fail now");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        model.updateFilteredClientList(PREDICATE_SHOW_ALL_CLIENTS);
+        model.updateFilteredVetTechnicianList(PREDICATE_SHOW_ALL_TECHNICIAN);
+        model.updateFilteredPetList(PREDICATE_SHOW_ALL_PET);
+        model.updateFilteredAppointmentList(PREDICATE_SHOW_ALL_APPOINTMENT);
+        EventsCenter.getInstance().post(new NewApptAvailableEvent("Redo addressbook"));
     }
 
     @Override

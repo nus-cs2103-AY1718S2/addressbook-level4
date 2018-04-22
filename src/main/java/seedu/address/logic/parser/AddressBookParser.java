@@ -6,19 +6,31 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import seedu.address.logic.commands.AddAppointmentToPetCommand;
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPetCommand;
+import seedu.address.logic.commands.AddVetTechToAppointmentCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeletePetCommand;
 import seedu.address.logic.commands.EditCommand;
 import seedu.address.logic.commands.ExitCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
+import seedu.address.logic.commands.ListAllCommand;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.logic.commands.RedoCommand;
-import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.RemoveAppointmentFromPetCommand;
+import seedu.address.logic.commands.RemoveVetTechFromAppointmentCommand;
+import seedu.address.logic.commands.RescheduleCommand;
+import seedu.address.logic.commands.ScheduleCommand;
+import seedu.address.logic.commands.SortAppointmentCommand;
+import seedu.address.logic.commands.SortClientCommand;
+import seedu.address.logic.commands.SortPetCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnscheduleCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -54,22 +66,23 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
-        case SelectCommand.COMMAND_WORD:
-            return new SelectCommandParser().parse(arguments);
-
         case DeleteCommand.COMMAND_WORD:
+        case DeleteCommand.COMMAND_ALIAS:
             return new DeleteCommandParser().parse(arguments);
 
         case ClearCommand.COMMAND_WORD:
+        case ClearCommand.COMMAND_ALIAS:
             return new ClearCommand();
 
         case FindCommand.COMMAND_WORD:
             return new FindCommandParser().parse(arguments);
 
         case ListCommand.COMMAND_WORD:
-            return new ListCommand();
+        case ListCommand.COMMAND_ALIAS:
+            return new ListCommandParser().parse(arguments);
 
         case HistoryCommand.COMMAND_WORD:
+        case HistoryCommand.COMMAND_ALIAS:
             return new HistoryCommand();
 
         case ExitCommand.COMMAND_WORD:
@@ -79,10 +92,52 @@ public class AddressBookParser {
             return new HelpCommand();
 
         case UndoCommand.COMMAND_WORD:
+        case UndoCommand.COMMAND_ALIAS:
             return new UndoCommand();
 
         case RedoCommand.COMMAND_WORD:
+        case RedoCommand.COMMAND_ALIAS:
             return new RedoCommand();
+
+        case ScheduleCommand.COMMAND_WORD:
+            return new ScheduleCommandParser().parse(arguments);
+
+        case RescheduleCommand.COMMAND_WORD:
+            return new RescheduleCommandParser().parse(arguments);
+
+        case UnscheduleCommand.COMMAND_WORD:
+            return new UnscheduleCommandParser().parse(arguments);
+
+        case AddPetCommand.COMMAND_WORD:
+            return new AddPetCommandParser().parse(arguments);
+
+        case DeletePetCommand.COMMAND_WORD:
+        case DeletePetCommand.COMMAND_ALIAS:
+            return new DeletePetCommandParser().parse(arguments);
+
+        case SortClientCommand.COMMAND_WORD:
+            return new SortClientCommand();
+
+        case SortPetCommand.COMMAND_WORD:
+            return new SortPetCommand();
+
+        case SortAppointmentCommand.COMMAND_WORD:
+            return new SortAppointmentCommand();
+
+        case AddAppointmentToPetCommand.COMMAND_WORD:
+            return new AddAppointmentToPetCommandParser().parse(arguments);
+
+        case RemoveAppointmentFromPetCommand.COMMAND_WORD:
+            return new RemoveAppointmentFromPetParser().parse(arguments);
+
+        case AddVetTechToAppointmentCommand.COMMAND_WORD:
+            return new AddVetTechToAppointmentCommandParser().parse(arguments);
+
+        case RemoveVetTechFromAppointmentCommand.COMMAND_WORD:
+            return new RemoveVetTechFromAppointmentCommandParser().parse(arguments);
+
+        case ListAllCommand.COMMAND_WORD:
+            return new ListAllCommandParser().parse(arguments);
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

@@ -7,9 +7,8 @@ import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
 import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
-import org.junit.Test;
+import org.junit.Ignore;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.RedoCommand;
@@ -18,7 +17,11 @@ import seedu.address.logic.commands.UndoCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
-    @Test
+
+    /**
+     * Command not used
+     */
+    @Ignore
     public void select() {
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
@@ -29,7 +32,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         assertCommandSuccess(command, INDEX_FIRST_PERSON);
 
         /* Case: select the last card in the person list -> selected */
-        Index personCount = Index.fromOneBased(getTypicalPersons().size());
+        Index personCount = Index.fromOneBased(getModel().getFilteredClientList().size());
         command = SelectCommand.COMMAND_WORD + " " + personCount.getOneBased();
         assertCommandSuccess(command, personCount);
 
@@ -115,7 +118,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         Model expectedModel = getModel();
         String expectedResultMessage = String.format(
                 MESSAGE_SELECT_PERSON_SUCCESS, expectedSelectedCardIndex.getOneBased());
-        int preExecutionSelectedCardIndex = getPersonListPanel().getSelectedCardIndex();
+        int preExecutionSelectedCardIndex = getClientListPanel().getSelectedCardIndex();
 
         executeCommand(command);
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);

@@ -9,12 +9,15 @@ import java.util.Set;
 import javax.xml.bind.annotation.XmlElement;
 
 import seedu.address.commons.exceptions.IllegalValueException;
+import seedu.address.model.client.Client;
 import seedu.address.model.person.Address;
 import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.PersonRole;
 import seedu.address.model.person.Phone;
 import seedu.address.model.tag.Tag;
+import seedu.address.model.vettechnician.VetTechnician;
 
 /**
  * JAXB-friendly version of the Person.
@@ -22,6 +25,9 @@ import seedu.address.model.tag.Tag;
 public class XmlAdaptedPerson {
 
     public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+
+    public static final String ROLE_CLIENT = "CLIENT";
+    public static final String ROLE_TECHNICIAN = "TECHNICIAN";
 
     @XmlElement(required = true)
     private String name;
@@ -31,6 +37,8 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String role;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -44,8 +52,10 @@ public class XmlAdaptedPerson {
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String role, String phone,
+                            String email, String address, List<XmlAdaptedTag> tagged) {
         this.name = name;
+        this.role = role;
         this.phone = phone;
         this.email = email;
         this.address = address;
@@ -68,8 +78,14 @@ public class XmlAdaptedPerson {
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        if (source.getRole().equals(PersonRole.CLIENT_ROLE)) {
+            role = ROLE_CLIENT;
+        } else {
+            role = ROLE_TECHNICIAN;
+        }
     }
 
+    //@@author jonathanwj-reused
     /**
      * Converts this jaxb-friendly adapted person object into the model's Person object.
      *
@@ -77,6 +93,8 @@ public class XmlAdaptedPerson {
      */
     public Person toModelType() throws IllegalValueException {
         final List<Tag> personTags = new ArrayList<>();
+        Person convertedPerson;
+
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
         }
@@ -114,7 +132,22 @@ public class XmlAdaptedPerson {
         final Address address = new Address(this.address);
 
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+
+        if (this.role == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    PersonRole.class.getSimpleName()));
+        }
+        if (!PersonRole.isValidPersonRole(this.role)) {
+            throw new IllegalValueException(PersonRole.MESSAGE_ROLE_CONSTRAINTS);
+        }
+        final PersonRole role = new PersonRole(this.role);
+
+        if (role.equals(PersonRole.CLIENT_ROLE)) {
+            convertedPerson = new Client(name, phone, email, address, tags);
+        } else {
+            convertedPerson = new VetTechnician(name, phone, email, address, tags);
+        }
+        return convertedPerson;
     }
 
     @Override

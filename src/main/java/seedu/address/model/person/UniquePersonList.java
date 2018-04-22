@@ -94,6 +94,20 @@ public class UniquePersonList implements Iterable<Person> {
         setPersons(replacement);
     }
 
+    //@@author md-azsa
+    /**
+     * Sorts the internal list
+     */
+    public void sort() {
+        internalList.sort((Person one, Person two) -> one.getName().toString().toLowerCase()
+                .compareTo(two.getName().toString().toLowerCase()));
+    }
+    //@@author
+
+    public boolean isEmpty() {
+        return internalList.isEmpty();
+    }
+
     /**
      * Returns the backing list as an unmodifiable {@code ObservableList}.
      */

@@ -1,24 +1,56 @@
 package seedu.address.ui;
 
+import static seedu.address.logic.commands.ChangeThemeCommand.BRIGHT_THEME_CSS_FILE_NAME;
+import static seedu.address.logic.commands.ChangeThemeCommand.DARK_THEME_CSS_FILE_NAME;
+import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_HEIGHT;
+import static seedu.address.ui.NotificationCard.NOTIFICATION_CARD_WIDTH;
+
+import java.io.File;
+import java.util.LinkedList;
+import java.util.Optional;
+import java.util.Timer;
+import java.util.TimerTask;
+import java.util.concurrent.Semaphore;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
 
+import javafx.animation.TranslateTransition;
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.ScrollPane;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.StackPane;
+import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 import seedu.address.commons.core.Config;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.logic.FileChoosedEvent;
+import seedu.address.commons.events.logic.PasswordEnteredEvent;
+import seedu.address.commons.events.logic.SetPasswordEnteredEvent;
+import seedu.address.commons.events.model.RequestForNotificationCenterEvent;
+import seedu.address.commons.events.ui.ChangeThemeEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowFileChooserEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowMyCalendarEvent;
+import seedu.address.commons.events.ui.ShowNotificationEvent;
+import seedu.address.commons.events.ui.ShowPasswordFieldEvent;
+import seedu.address.commons.events.ui.ShowReviewDialogEvent;
+import seedu.address.commons.events.ui.ShowSetPasswordDialogEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
+import seedu.address.model.theme.Theme;
 
 /**
  * The Main Window. Provides the basic application layout containing
@@ -27,6 +59,14 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static final int ENTER = -1;
+    private static final int EXIT = 1;
+    private static final int DOWN = 1;
+    private static final int UP = -1;
+    private static final int NOTIFICATION_PANEL_WIDTH = 330;
+    private static final int NOTIFICATION_CARD_SHOW_TIME = 5000;
+    private static final int SHOW = 1;
+    private static final int HIDE = 0;
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -34,10 +74,15 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private DetailPanel detailPanel;
     private PersonListPanel personListPanel;
     private Config config;
     private UserPrefs prefs;
+
+    private LinkedList<Region> shownNotificationCards;
+    private NotificationCenter notificationCenter;
+    private int notificationCenterStatus;
+    private Semaphore semaphore;
 
     @FXML
     private StackPane browserPlaceholder;
@@ -57,6 +102,16 @@ public class MainWindow extends UiPart<Stage> {
     @FXML
     private StackPane statusbarPlaceholder;
 
+    @FXML
+    private StackPane mainStage;
+
+    @FXML
+    private ScrollPane notificationCenterPlaceHolder;
+
+    @FXML
+    private VBox notificationCardsBox;
+
+
     public MainWindow(Stage primaryStage, Config config, UserPrefs prefs, Logic logic) {
         super(FXML, primaryStage);
 
@@ -69,9 +124,18 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
-
         setAccelerators();
         registerAsAnEventHandler(this);
+
+
+        //@@author IzHoBX
+        shownNotificationCards = new LinkedList<>();
+        notificationCenter = new NotificationCenter(notificationCardsBox, notificationCenterPlaceHolder);
+        logic.setNotificationCenter(notificationCenter);
+        mainStage.getChildren().remove(notificationCenterPlaceHolder);
+        notificationCenterStatus = HIDE;
+        semaphore = new Semaphore(1);
+        //@@author IzHoBX
     }
 
     public Stage getPrimaryStage() {
@@ -116,8 +180,8 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        detailPanel = new DetailPanel();
+        browserPlaceholder.getChildren().add(detailPanel.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
@@ -157,8 +221,18 @@ public class MainWindow extends UiPart<Stage> {
      */
     GuiSettings getCurrentGuiSetting() {
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), Theme.getTheme());
     }
+
+    //@@author crizyli
+    /**
+     * Opens calendar web page window.
+     */
+    public void handleShowMyCalendar() {
+        MyCalendarView myCalendarView = new MyCalendarView();
+        myCalendarView.start(new Stage());
+    }
+    //@@author
 
     /**
      * Opens the help window.
@@ -169,10 +243,22 @@ public class MainWindow extends UiPart<Stage> {
         helpWindow.show();
     }
 
+    //@@author Yoochard
+    @FXML
+    private void handleChangeDarkTheme() {
+        EventsCenter.getInstance().post(new ChangeThemeEvent("dark"));
+    }
+
+    @FXML
+    private void handleChangeBrightTheme() {
+        EventsCenter.getInstance().post(new ChangeThemeEvent("bright"));
+    }
+
     void show() {
         primaryStage.show();
     }
 
+    //@@author
     /**
      * Closes the application.
      */
@@ -186,7 +272,7 @@ public class MainWindow extends UiPart<Stage> {
     }
 
     void releaseResources() {
-        browserPanel.freeResources();
+        detailPanel.freeResources();
     }
 
     @Subscribe
@@ -194,4 +280,209 @@ public class MainWindow extends UiPart<Stage> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
     }
+
+    //@@author crizyli
+    @Subscribe
+    private void handleShowMyCalendarEvent(ShowMyCalendarEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        handleShowMyCalendar();
+    }
+
+    //@@author Yoochard
+    @Subscribe
+    private void handleChangeThemeEvent (ChangeThemeEvent changeThemeEvent) {
+        Scene scene = primaryStage.getScene();
+        // Clear the original theme
+        scene.getStylesheets().clear();
+
+        String newTheme = changeThemeEvent.getTheme();
+        String cssFileName = null;
+
+        // Get the associate CSS file path for theme
+        switch (newTheme) {
+        case "dark":
+            cssFileName = DARK_THEME_CSS_FILE_NAME;
+            break;
+        case "bright":
+            cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
+            break;
+        default:
+            cssFileName = BRIGHT_THEME_CSS_FILE_NAME;
+            //Theme.changeTheme(primaryStage, changeThemeEvent.getTheme());
+        }
+
+        scene.getStylesheets().add(cssFileName);
+        primaryStage.setScene(scene);
+    }
+
+    //@@author IzHoBX
+    /**
+     * Show in-app notification
+     */
+    public void showNewNotification(ShowNotificationEvent event) {
+        logger.info("Preparing in app notification");
+
+        //metadata update
+        NotificationCard x = new NotificationCard(event.getNotification().getTitle(),
+                notificationCenter.getTotalUndismmissedNotificationCards() + "",
+                event.getOwnerName(),
+                event.getNotification().getEndDateDisplay(),
+                event.getNotification().getOwnerId(), event.isFirstSatge(), event.getNotification().getEventId());
+        Region notificationCard = x.getRoot();
+        notificationCard.setMaxHeight(NOTIFICATION_CARD_HEIGHT);
+        notificationCard.setMaxWidth(NOTIFICATION_CARD_WIDTH);
+        notificationCenter.add(x);
+
+        //hides notificationCard away from screen
+        notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
+        shownNotificationCards.add(notificationCard);
+        semaphore.release();
+
+        //enter animation
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                mainStage.getChildren().add(notificationCard);
+                animateHorizontally(notificationCard, NOTIFICATION_CARD_WIDTH, ENTER);
+
+                Timer timer = new Timer();
+                TimerTask timerTask = new TimerTask() {
+                    @Override
+                    public void run() {
+                        //it should be the first notification card to exit first
+                        try {
+                            semaphore.acquire();
+                        } catch (InterruptedException e) {
+                            e.printStackTrace();
+                        }
+                        Region firstNotificationCard = shownNotificationCards.removeFirst();
+
+                        //cards are reused later in notification center
+                        animateHorizontally(firstNotificationCard, NOTIFICATION_CARD_WIDTH, EXIT);
+                        moveAllNotificationCardsDown();
+                        semaphore.release();
+                    }
+                };
+                timer.schedule(timerTask, NOTIFICATION_CARD_SHOW_TIME);
+            }
+        });
+    }
+
+    private void moveAllNotificationCardsDown() {
+        for (Region r: shownNotificationCards) {
+            animateVertically(r, NOTIFICATION_CARD_HEIGHT, DOWN);
+        }
+    }
+
+    /**
+     * Animates any Region object vertically according to predefined style.
+     */
+    private void animateVertically(Region r, int distanceToMove, int direction) {
+        TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), r);
+        enterAnimation.setByY(direction * 0.25 * distanceToMove);
+        enterAnimation.play();
+        TranslateTransition enterAnimation1 = new TranslateTransition(Duration.millis(250), r);
+        enterAnimation1.setByY(direction * 0.75 * distanceToMove);
+        enterAnimation1.play();
+        TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), r);
+        enterAnimation2.setByY(direction * distanceToMove);
+        enterAnimation2.play();
+    }
+
+    /**
+     * Animates any Region object horizontally according to predefined style.
+     */
+    private void animateHorizontally(Region component, double width, int direction) {
+        TranslateTransition enterAnimation = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation.setByX(direction * 0.25 * width);
+        enterAnimation.play();
+        TranslateTransition enterAnimation1 = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation1.setByX(direction * 0.75 * width);
+        enterAnimation1.play();
+        TranslateTransition enterAnimation2 = new TranslateTransition(Duration.millis(250), component);
+        enterAnimation2.setByX(direction * width);
+        enterAnimation2.play();
+    }
+
+    /**
+     * Show the notification panel with an animation
+     */
+    public void toggleNotificationCenter() {
+        if (notificationCenterStatus == SHOW) {
+            animateHorizontally(notificationCenterPlaceHolder, NOTIFICATION_PANEL_WIDTH, EXIT);
+            mainStage.getChildren().remove(notificationCenterPlaceHolder);
+            notificationCenterStatus = HIDE;
+        } else { //shows
+            assert(notificationCenterStatus == HIDE);
+            notificationCenterPlaceHolder = notificationCenter.getNotificationCenter();
+            mainStage.getChildren().add(notificationCenterPlaceHolder);
+            animateHorizontally(notificationCenterPlaceHolder, NOTIFICATION_PANEL_WIDTH, ENTER);
+            notificationCenterStatus = SHOW;
+        }
+    }
+
+    public void deleteNotificationCard(String id) {
+        notificationCenter.deleteNotification(id);
+    }
+
+    @Subscribe
+    protected void provideNotificationCenter(RequestForNotificationCenterEvent event) {
+        logic.setNotificationCenter(notificationCenter);
+    }
+    //@@author
+
+    //@@author emer7
+    @Subscribe
+    private void showReviewDialog(ShowReviewDialogEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        ReviewDialog reviewDialog = new ReviewDialog();
+        reviewDialog.show();
+    }
+
+    //@@author crizyli
+    @FXML
+    @Subscribe
+    protected void showFileChooser(ShowFileChooserEvent event) {
+        FileChooser chooser = new FileChooser();
+        chooser.setTitle("Choose a Photo");
+        File file = chooser.showOpenDialog(new Stage());
+        String filePath;
+        if (file != null) {
+            filePath = file.getPath();
+        } else {
+            filePath = "NoFileChoosed";
+        }
+        raise(new FileChoosedEvent(filePath));
+    }
+
+    @FXML
+    @Subscribe
+    protected void handleShowPasswordFieldEvent(ShowPasswordFieldEvent event) {
+        PasswordDialog passwordDialog = new PasswordDialog();
+        Optional<String> input = passwordDialog.showAndWait();
+        if (input.isPresent()) {
+            raise(new PasswordEnteredEvent(input.get()));
+        } else {
+            raise(new PasswordEnteredEvent("nopassword"));
+        }
+    }
+
+    @FXML
+    @Subscribe
+    protected void handleShowSetPasswordDialogEvent(ShowSetPasswordDialogEvent event) {
+        SetPasswordDialog setPasswordDialog = new SetPasswordDialog();
+        Optional<String> input = setPasswordDialog.showAndWait();
+        if (input.isPresent() && !input.get().equals("incomplete")) {
+            raise(new SetPasswordEnteredEvent(input.get()));
+        } else {
+            raise(new SetPasswordEnteredEvent("incomplete"));
+        }
+    }
+    //@@author
 }

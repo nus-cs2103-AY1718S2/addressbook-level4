@@ -78,4 +78,5 @@ public class StatusBarFooter extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(abce, "Setting last updated status to " + lastUpdated));
         setSyncStatus(String.format(SYNC_STATUS_UPDATED, lastUpdated));
     }
+
 }

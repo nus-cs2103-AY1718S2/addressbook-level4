@@ -10,6 +10,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.notification.Notification;
 
 /**
  * An Immutable AddressBook that is serializable to XML format
@@ -21,6 +22,14 @@ public class XmlSerializableAddressBook {
     private List<XmlAdaptedPerson> persons;
     @XmlElement
     private List<XmlAdaptedTag> tags;
+    @XmlElement
+    private List<XmlAdaptedPhoto> photos;
+    @XmlElement
+    private List<XmlAdaptedNotification> notifications;
+    @XmlElement
+    private Integer nextId;
+    @XmlElement
+    private String password;
 
     /**
      * Creates an empty XmlSerializableAddressBook.
@@ -29,6 +38,10 @@ public class XmlSerializableAddressBook {
     public XmlSerializableAddressBook() {
         persons = new ArrayList<>();
         tags = new ArrayList<>();
+        photos = new ArrayList<>();
+        notifications = new ArrayList<>();
+        nextId = 0;
+        password = "admin";
     }
 
     /**
@@ -38,6 +51,14 @@ public class XmlSerializableAddressBook {
         this();
         persons.addAll(src.getPersonList().stream().map(XmlAdaptedPerson::new).collect(Collectors.toList()));
         tags.addAll(src.getTagList().stream().map(XmlAdaptedTag::new).collect(Collectors.toList()));
+        photos.addAll(src.getPhotoList().stream().map(XmlAdaptedPhoto::new).collect(Collectors.toList()));
+        for (Notification t: src.getNotificationsList()) {
+            notifications.add(new XmlAdaptedNotification(t.getTitle(), t.getCalendarId(), t.getEventId(), t
+                    .getEndDate(),
+                    t.getOwnerId()));
+        }
+        nextId = src.getNextId();
+        password = src.getPassword();
     }
 
     /**
@@ -51,9 +72,21 @@ public class XmlSerializableAddressBook {
         for (XmlAdaptedTag t : tags) {
             addressBook.addTag(t.toModelType());
         }
+        //@@author crizyli
+        for (XmlAdaptedPhoto p : photos) {
+            addressBook.addPhoto(p.toModelType());
+        }
+        //@@author
         for (XmlAdaptedPerson p : persons) {
             addressBook.addPerson(p.toModelType());
         }
+        for (XmlAdaptedNotification t : notifications) {
+            addressBook.addNotification(t.toModelType());
+        }
+        //@@author IzHoBX
+        addressBook.setNextId(nextId);
+        addressBook.setPassword(password);
+        //@@author IzHoBX
         return addressBook;
     }
 
@@ -68,6 +101,9 @@ public class XmlSerializableAddressBook {
         }
 
         XmlSerializableAddressBook otherAb = (XmlSerializableAddressBook) other;
-        return persons.equals(otherAb.persons) && tags.equals(otherAb.tags);
+        return persons.equals(otherAb.persons)
+                && tags.equals(otherAb.tags)
+                && photos.equals(otherAb.photos)
+                && notifications.equals(otherAb.notifications);
     }
 }

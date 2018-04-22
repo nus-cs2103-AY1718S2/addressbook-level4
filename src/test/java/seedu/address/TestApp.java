@@ -64,7 +64,7 @@ public class TestApp extends MainApp {
         UserPrefs userPrefs = super.initPrefs(storage);
         double x = Screen.getPrimary().getVisualBounds().getMinX();
         double y = Screen.getPrimary().getVisualBounds().getMinY();
-        userPrefs.updateLastUsedGuiSetting(new GuiSettings(600.0, 600.0, (int) x, (int) y));
+        userPrefs.updateLastUsedGuiSetting(new GuiSettings(800.0, 800.0, (int) x, (int) y));
         userPrefs.setAddressBookFilePath(saveFileLocation);
         userPrefs.setAddressBookName(ADDRESS_BOOK_NAME);
         return userPrefs;
@@ -77,7 +77,7 @@ public class TestApp extends MainApp {
         try {
             return new AddressBook(storage.readAddressBook().get());
         } catch (DataConversionException dce) {
-            throw new AssertionError("Data is not in the AddressBook format.");
+            throw new AssertionError("Data is not in the Employees Tracker format.");
         } catch (IOException ioe) {
             throw new AssertionError("Storage file cannot be found.");
         }
@@ -96,6 +96,7 @@ public class TestApp extends MainApp {
     public Model getModel() {
         Model copy = new ModelManager((model.getAddressBook()), new UserPrefs());
         ModelHelper.setFilteredList(copy, model.getFilteredPersonList());
+        copy.setPassword("admin");
         return copy;
     }
 

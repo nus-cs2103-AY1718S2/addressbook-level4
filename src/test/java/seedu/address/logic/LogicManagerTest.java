@@ -23,7 +23,16 @@ public class LogicManagerTest {
     public ExpectedException thrown = ExpectedException.none();
 
     private Model model = new ModelManager();
-    private Logic logic = new LogicManager(model);
+    private Logic logic = new LogicManager(model, false);
+
+    //@@author crizyli
+    @Test
+    public void execute_applicationLocked() {
+        String validCommand = "list";
+        LogicManager.lock();
+        assertUnlockRequired(validCommand, LogicManager.MESSAGE_LOCKED);
+    }
+    //@@author
 
     @Test
     public void execute_invalidCommandFormat_throwsParseException() {
@@ -121,4 +130,18 @@ public class LogicManagerTest {
             throw new AssertionError("Parsing and execution of HistoryCommand.COMMAND_WORD should succeed.", e);
         }
     }
+
+    //@@author crizyli
+    /**
+     * Asserts that the feedback to user is the same as the message showed when application is locked.
+     */
+    private void assertUnlockRequired(String command, String expectedMessage) {
+        try {
+            CommandResult result = logic.execute(command);
+            assertEquals(expectedMessage, result.feedbackToUser);
+        } catch (ParseException | CommandException e) {
+            throw new AssertionError("ParseException and CommandException should not be thrown.");
+        }
+    }
+    //@@author
 }

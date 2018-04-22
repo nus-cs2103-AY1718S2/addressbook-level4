@@ -1,6 +1,6 @@
-= AddressBook Level 4 - User Guide
+= E.T. (Employees Tracker) - User Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
@@ -11,120 +11,380 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W15-B1/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+
+By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+Ever feels overwhelmed in managing all your employees? +
+Ever wants to keep track of all the tasks you have assigned to your employees?
+
+Employees Tracker (E.T.) comes to the rescue!
+
+Employees Tracker is a *Human Resource Manager* application that helps managers to manage their subordinates. It has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
+
+This user guide serves to guide you so that you are able to use utilize Employees Tracker to its fullest extent.
+
+Jump to <<Quick Start>> to get started!
 
 == Quick Start
+This section contains essential information and instructions to help you to start using E.T. quickly.
 
-.  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
+=== Setting up
+If you are using E.T. for the first time, please set up E.T. by following the instructions below carefully:
+
+.  Ensure you have Java version `1.8.0_60` or later installed in your computer.
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+. Ensure that you have access to the internet.
+.  Download the latest `et-employeestracker.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for your E.T.
+.  Double-click the file to start the app. The user interface should appear in a few seconds, as shown in _Figure 1_.
 +
-image::Ui.png[width="790"]
+.User Interface.
+image::Ui_locked.png[width="790"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
+. Type `unlock` in E.T. and press kbd:[Enter] to unlock E.T. You will be greeted by a pop-up window as shown in _Figure 2_.
++
+.Pop-up window on top of E.T.
+image::password_box.png[width="790"]
++
+. Type the default password `admin` in the pop-up window and press kbd:[Enter] or left-click on the `Unlock` button at the bottom right corner of the pop-up window. The pop-up window will then disappear.
+. Type `authenET` in E.T. and press kbd:[Enter] to authorize E.T. You will be directed to an authorization web page as shown in _Figure 3_.
+
++
+.Authorization web page.
+image::authorize_ET.png[width="790"]
++
+. Click on `allow` at the bottom right corner.
+. Close your browser and return to E.T. once you see a web page with a confirmation message similar to that in _Figure 4_.
++
+.Confirmation message.
+image::login_done.png[width="790"]
+
+
+[NOTE]
+The above instructions are only for first-time users. However, because E.T. is locked by default for security purposes, you will need to follow step 4, 5, 6 for every time you open E.T. in the future. Of course, if you have changed your password, then you will need to execute step 6 with your new password.
+
+After setting up, you can start using E.T. by typing commands and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+****
+Some example commands you can try:
 
-.  Refer to <<Features>> for details of each command.
+* `list` +
+lists all employees.
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+adds an employee named `John Doe` to E.T.
+* `delete 3` +
+deletes the 3^rd^ contact shown in the current list.
+* `exit` +
+exits the app.
+****
+Refer to <<Commands>> for more details on commands.
 
-[[Features]]
-== Features
+=== Knowing the User Interface
+
+The User Interface will be the application’s interface that you will interact with. E.T. has a Graphical User Interface (GUI) instead of a Command Line Interface (CLI).
+
+_Figure 5_ shows the 5 major components of the GUI of E.T. :
+
+* *Command Box*: where you type in commands.
+* *Result Display Box*: where E.T. shows text result to you.
+* *Employees List Panel*: where the list of all employees is shown.
+* *Employee's Profile Panel*: where the details of the selected employee is shown.
+* *Notification cards*: where E.T. reminds you about events.
+
+
+.Graphical User Interface (GUI).
+image::UiLabelled.png[width="800"]
+
+
+=== Reading the result display box
+
+The result display box shows 3 types of information:
+
+* Error messages in [red]#red# if the command you entered does not exists or does not match the pre-defined format.
+* Hints about the format and usage of the command in [maroon]#maroon#.
+* Status of E.T. in [maroon]#maroon# if your command is processed successfully.
+
+[NOTE]
+Whenever you type keyword of a command in the `Command Box`, E.T. will provide [maroon]#hints# about its usage.
+// tag::quickStart[]
+
+
+=== Understanding the notifications
+E.T. has a 2 phase notification system, i.e. there will be 2 notification cards popping up to remind you of each event:
+
+* The first phase notification will pop out in a [blue]#blue# notification card, on the day of expiry, as shown in _Figure 6_.
+* The second phase notification will pop out in a [red]#red# notification card, at the exact time of expiry, as shown in _Figure 7_.
+
+.First phase notification card.
+image::card_blue.png[width=""]
+
+.Second phase notification card.
+image::card_red.png[width=""]
+
+For example, suppose you have assigned a task to Jane which will due on 15^th^ Apr 2018 0032 hrs. When you open E.T. for the first time in the morning of 15^th^ Apr 2018, you will be notified that Jane has a task that will due on *today* in a [blue]#blue# notification card. Later at 0032 hrs of 15^th^ Apr 2018, you will receive the second phase notification in [red]#red#, informing you that Jane should have finished the task by *now*.
+
+Notification cards will disappear from the screen after 5 seconds and will be stored in the `Notification Center`. If you want to refer to them later, use `noti` command or double press kbd:[Shift] to open the `Notification Center`.
+
+Also, if you minimizes E.T. to use other software, E.T. is capable of showing notification cards in your computer's system (e.g. Windows, Mac, Linux, etc.), as shown in _Figure 8_. However, this feature may not work on some computer systems.
+
+.E.T. shows notification card about event expiry even if you are using other programs.
+image::card_windows.png[width=""]
+
+// end::quickStart[]
+
+[[Commands]]
+== Commands
+This section lists all E.T.'s command.
 
 ====
 *Command Format*
 
 * Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
+* Items in brackets are mandatory e.g. `(n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)` can be used as `n/John t/Sales r/5` but cannot be empty.
 * Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
 * Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
+// tag::unlock[]
+=== Unlocking E.T. : `unlock`
+Unlocks E.T. +
+Format: `unlock`
+
+[NOTE]
+====
+* You need to enter the password in a pop-up window and it must match the application's password.
+* The initial default password is 'admin'.
+====
+
+Examples:
+
+* `unlock` +
+A pop-up window will appear as shown in _Figure 9_. +
+Fill in the input box with matching password to unlock E.T.
+
+.Unlock pop-up window.
+image::unlock_dialog.png[width="790"][height="200"]
+// end::unlock[]
+
+// tag::lock[]
+=== Locking E.T.: `lock`
+
+Locks E.T., so that the data is protected without the need of closing the program or shutting down your computer. +
+Format: `lock`
+
+[NOTE]
+=====
+E.T. will not respond to any command other than `unlock` when it is locked.
+=====
+
+Examples:
+
+* `lock` +
+Locks E.T. +
+All information in E.T. will be hidden when it is locked as shown in _Figure 10_ below.
+
+.Information is hidden when E.T. is locked.
+image::lock_screen.png[width="300"][height="400"]
+// end::lock[]
+
+=== Setting E.T.'s password: `setPassword`
+
+Sets E.T.'s password. +
+Format: `setPassword`
+
+[NOTE]
+====
+* You can press kbd:[Tab] to switch the selection between the window elements.
+* You need to enter both old and new password in a pop-up window, and old password must match current password.
+* The new password can contain any character *except comma(,)*.
+====
+
+Examples:
+
+* `setPassword` +
+A pop-up window will appear as shown in _Figure 11_. +
+Fill in the input boxes with matching old password and new password.
+
+.Set password pop-up window.
+image::setPassword_dialog.png[width="790"][height="200"]
+
+// tag::auth[]
+=== Authorizing E.T. : `authenET`
+
+Gets the permission to allow E.T. to access your Google calendar. +
+Format: `authenET`
+// end::auth[]
+
 === Viewing help : `help`
 
+Displays the user guide, which is this document, as shown in _Figure 12_. +
 Format: `help`
 
-=== Adding a person: `add`
+.The user guide.
+image::user_guide.png[width=""]
 
-Adds a person to the address book +
+=== Changing the theme of E.T.: `changeTheme`
+
+Changes E.T.'s theme to bright or dark. +
+Format: `changeTheme (bright | dark)`
+
+[NOTE]
+====
+`changeTheme` command is not undoable.
+====
+
+Examples:
+
+* `changeTheme bright` +
+Changes E.T.'s theme to bright theme
+
+=== Adding an employee: `add`
+
+Adds an employee to E.T. +
 Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
 
 [TIP]
-A person can have any number of tags (including 0)
+An employee can have any number of tags (including 0).
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` +
+Adds John Doe with the information given into E.T.
+* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal` +
+Adds Betsy Crowe with the information given into E.T.
 
-=== Listing all persons : `list`
+// tag::addphoto[]
+=== Adding a profile photo to an employee: `addPhoto`
 
-Shows a list of all persons in the address book. +
+Adds a profile photo to an existing employee in E.T. +
+Format: `addPhoto INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* You will need to select a photo in a pop-up file chooser.
+* The acceptable photo types are .jpg, .jpeg, .png and .bmp.
+****
+
+[NOTE]
+====
+This command will automatically copy the file you chosed to the application's data folder if it does not exist. Once
+the photo is copied, you should not delete it from that folder manually.
+====
+
+Examples:
+
+* `list` +
+`addPhoto 1` +
+Adds a photo to the 1st employee in the last employees listing.
+// end::addphoto[]
+
+=== Listing all employees : `list`
+
+Shows a list of all employees as shown in _Figure 13_. +
 Format: `list`
 
-=== Editing a person : `edit`
+.List of employees.
+image::employeesList.png[width="790"][height="200"]
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+// tag::sort[]
+=== Sorting the employees by any field: `sort`
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
-
-Examples:
-
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
-
-=== Locating persons by name: `find`
-
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Sorts existing employees by any field +
+Format: `sort FIELD`
 
 ****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
+* Employees are sorted by any existing field in alphabetical order. Note that rate field will be sorted in descending order.
+* The field entered must be one of the following: `name`, `phone`, `email`, `address`, `rate`, `tag`.
+* Sorting is case-insensitive.
+* Sorted result is stored permanently. If you want to revert to the previous ordering, please refer to <<Undoing previous command : `undo`>>.
 ****
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `sort name` +
+Sort the employees by name in alphabetical order (case-insensitive).
+* `sort rate` +
+Sort the employees by rating in descending order.
+// end::sort[]
 
-=== Deleting a person : `delete`
+// tag::find[]
+=== Searching for employees: `find`
 
-Deletes the specified person from the address book. +
+Finds employees whose name, tags, rating, or all of those contain any of the given keyphrases. +
+Format: `find (n/NAME_KEYPHRASE | t/TAG_KEYPHRASE | r/RATING_KEYPHRASE)  [n/NAME_KEYPHRASE]... [t/TAG_KEYPHRASE]... [r/RATING_KEYPHRASE]...`
+
+****
+* The search is case insensitive, e.g. `n/hANs` will match `Hans`
+* The order of the keyphrase does not matter, e.g. `n/Hans Bo` will match `Bo Hans`
+* The search does not match exactly all the words in a phrase in sequential order, but only finds any phrase that contains the specified keyphrase's words without sequential order, e.g. `n/Hans Bo` will match `Jonathan Bo Hans`
+* The search only matches full word, e.g. `n/Han` will not match `Hans`
+* Searching by multiple criteria will yield the result of employees that match all of them, e.g. +
+** `n/Hans Bo t/Sales` will match `Hans Bo` with tag `Sales` but not `Hans Bo` with tag `Marketing` or `John Doe` with tag `Sales` +
+** `n/Hans Bo n/John Doe t/Sales t/Marketing` will match only `Hans Bo | Sales` or `Hans Bo | Marketing` or `John Doe | Sales` or `John Doe | Marketing`
+****
+
+Examples:
+
+* `find n/John` +
+Returns all employees having name `John`. +
+e.g. `john` and `John Doe`
+* `find n/Betsy Tim John` +
+Returns all employees with name that contains `Betsy Tim John` without any sequential order. +
+e.g. `Caroline John Tim Betsy` and `Betsy Tim John`
+* `find n/Betsy n/Tim n/John` +
+Returns all employees with name that contains either `Betsy`, `Tim`, or `John` +
+e.g. `Betsy`, `Tim`, `John`, `Betsy Toe`, `John Cook`, and `Tim John`
+* `find n/John t/Developer iOS r/3` +
+Returns all employees with name `John`, both tags `Developer` and `iOS`, and rating of 3 +
+e.g. `John | Developer, iOS | 3`
+* `find n/John t/Sales t/Associate` +
+Returns all employees having both names `John` and either tags `Sales` or `Associate` +
+e.g. `John Doe | Sales`, `John Dick| Associate`, `John | Friends, Associate`, and `John Dare | Sales, Associate, Newbie`
+// end::find[]
+
+=== Selecting an employee : `select`
+
+Selects the employee identified by the index number used in the last employees listing. +
+Format: `select INDEX`
+
+****
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+* Loads the employee's name, address, calendar, and reviews at the specified `INDEX`.
+****
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2^nd^ employee in E.T.
+* `find Betsy` +
+`select 1` +
+Selects the 1^st^ employee in the results of the `find` command.
+
+[NOTE]
+If `Calendar` in employee's `Profile Panel` looks something similar to _Figure 14_, it means you will have to sign in to your *Google Account* from there. This is because for security purposes, you will be required to sign in every time you close E.T. and open it again,
+
+.Signing in to Google account at the Calendar row.
+image::sign_in.png[width="790"][height="200"]
+
+=== Deleting an employee : `delete`
+
+Deletes the specified employee from E.T. whose calendar will also be deleted. +
 Format: `delete INDEX`
 
 ****
-* Deletes the person at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
 ****
@@ -133,30 +393,95 @@ Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2^nd^ employee and his calendar in E.T.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1^st^ employee and his calendar in the results of the `find` command.
 
-=== Selecting a person : `select`
+=== Clearing all entries : `clear`
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Clears all entries from E.T. +
+Format: `clear`
+
+=== Editing an employee : `edit`
+
+Edits an existing employee in E.T. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [r/RATING] [t/TAG]...`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* The index refers to the index number shown in the last employees listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* When editing tags, the existing tags of the employee will be removed i.e adding of tags is not cumulative.
+* You can remove all the employee's tags by typing `t/` without specifying any tags after it.
+****
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1^st^ employee to be `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2^nd^ employee to be `Betsy Crower` and clears all existing tags.
+
+// tag::rate[]
+=== Rating an employee : `rate`
+
+Updates the rating of an existing employee in E.T. +
+Format: `rate INDEX RATING`
+
+****
+* The index refers to the index number shown in the last employees listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+* Both INDEX and RATING must be provided.
+* Existing rating will be updated to the input RATING.
+* RATING must be a positive integer between 1 and 5, i.e. 1, 2, 3, 4, or 5.
+****
+
+[NOTE]
+====
+* An employee will have a null rating (shown as `-`) by default upon added. This implies that the employee is yet to be rated.
+* You cannot assign null rating to an employee.
+====
+
+Examples:
+
+* `list` +
+`rate 1 5` +
+Gives the 1^st^ employee in the last employees listing a 5-stars rating.
+* `find Alex` +
+`rate 2 2` +
+Gives the 2^nd^ employee in the list of Alex(s) a 2-stars rating.
+// end::rate[]
+
+// tag::review[]
+=== Reviewing an employee : `review`
+
+Assigns a review to an existing employee in E.T. +
+Format: `review INDEX`
+
+****
+* The index refers to the index number shown in the last employees listing.
+* The index *must be a positive integer*, i.e. 1, 2, 3, ...
+* The reviewer must be a valid email address.
+* The review can contain any character without length limitation.
+* A review will be tied to a single reviewer.
 ****
 
 Examples:
 
 * `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+`review 1` +
+Gives the 1^st^ employee in the last employees listing a review. +
+* `find n/Alex` +
+`review 2` +
+Gives the 2^nd^ employee in the list of Alex(s) a review. +
+
+A pop-up window will appear after user executes the `review` command as shown in _Figure 15_. The window will prompts user to enter user's email (as a reviewer) and the review.
+
+.Review pop-up window.
+image::review_dialog.png[width=""]
+// end::review[]
 
 === Listing entered commands : `history`
 
@@ -171,19 +496,20 @@ Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and 
 // tag::undoredo[]
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
+Restores E.T. to the state before the previous _undoable command_ was executed. +
 Format: `undo`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+_Undoable commands_ are commands that modify E.T.'s content (`add`, `addPhoto`, `clear`, `delete`, `dismiss`, `edit`, `email`, `rate`, `review`, and `sort`).
 ====
 
 Examples:
 
 * `delete 1` +
 `list` +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+Reverses the `delete 1` command.
 
 * `select 1` +
 `list` +
@@ -192,8 +518,10 @@ The `undo` command fails as there are no undoable commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`undo` +
+Reverses the `clear` command. +
+`undo` +
+Reverses the `delete 1` command.
 
 === Redoing the previously undone command : `redo`
 
@@ -203,8 +531,10 @@ Format: `redo`
 Examples:
 
 * `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+`undo` +
+Reverses the `delete 1` command. +
+`redo` +
+Reapplies the `delete 1` command.
 
 * `delete 1` +
 `redo` +
@@ -212,53 +542,194 @@ The `redo` command fails as there are no `undo` commands executed previously.
 
 * `delete 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`undo` +
+Reverses the `clear` command. +
+`undo` +
+Reverses the `delete 1` command. +
+`redo` +
+Reapplies the `delete 1` command. +
+`redo` +
+Reapplies the `clear` command.
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+// tag::ct[]
+=== Viewing my own calendar: `myCalendar`
 
-Clears all entries from the address book. +
-Format: `clear`
+Views my own calendar. +
+Format: `myCalendar`
 
-=== Exiting the program : `exit`
+Examples:
 
-Exits the program. +
+* `myCalendar` +
+Your Google calendar will be displayed on a pop-up window.
+
+=== Viewing my to-do-list: `todoList`
+
+Views the upcoming events on my google account main calendar. +
+Format: `todoList`
+
+Examples:
+
+* `todoList` +
+A pop-up window will appear as shown in _Figure 16_.
+
+.To-do list pop-up window.
+image::todoList.png[width="300"][height="400"]
+// end::ct[]
+
+// tag::addevent[]
+=== Adding an event to an employee's calendar: `addEvent`
+
+Adds an event to the employee identified by the index number used in the last employees listing. +
+Format: `addEvent INDEX title/TITLE loca/LOCATION stime/STARTTIME etime/ENDTIME descrip/DESCRIPTION`
+
+****
+* `STARTTIME` and `ENDTIME` *must be in the format `YYYY-MM-DDTHH-MM-SS`*, which corresponds to year, month, day, hour, minute and second.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer 1, 2, 3,* …​
+****
+
+Examples:
+
+* `list` +
+`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event` +
+Adds the event to 2^nd^ employee in the list calendar.
+
+// end::addevent[]
+
+// tag::deleteevent[]
+=== Deleting an event in an employee's calendar: `deleteEvent`
+
+Deletes an event with specified title which is the first occurrence in the calendar of employee identified by the index number used in the last employees listing. +
+Format: `deleteEvent INDEX TITLE`
+
+****
+* The `TITLE` is a String.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer 1, 2, 3,* …​
+****
+
+Examples:
+
+* `list` +
+`deleteEvent 2 Project Meeting` +
+Deletes the event with title "Project Meeting" in 2^nd^ employee in the list calendar.
+// end::deleteevent[]
+
+// tag::ns[]
+=== Toggling the notification center : `noti`
+
+Shows the notification center if it is hidden or hides the notification center if it is shown. +
+Format: `noti`
+
+[TIP]
+Alternatively, you can *double press* kbd:[SHIFT] to toggle the notification center.
+
+=== Dismissing a notification card : `dismiss`
+
+Dismisses the notification card identified by the index number. +
+Format: `dismiss INDEX`
+
+=== Reminding an employee through email : `email`
+
+Opens up the email app of the computer to send a reminder email about the notification identified by the index number used in notification cards. +
+Format: `email INDEX`
+
+[NOTE]
+=====
+* You will be brought straight to the email composing interface of your email app.
+* The recipient of the email will be set to the email address of the employee who was assigned the event.
+=====
+
+=== Reminding all notifications through email : `emailall`
+
+Opens up the email app of the computer to send a reminder email to all persons who has a task ended. +
+Format: `emailall INDEX`
+
+[NOTE]
+=====
+* You will be brought straight to the email composing interface of your email app.
+* The recipient of the email will be set to the email address of all employees who has task(s) ended.
+=====
+// end::ns[]
+
+// tag::export[]
+=== Exporting the employees : `export`
+
+Exports current employees in E.T. to a .csv (Excel) file named "employees.csv" inside data folder. +
+Format: `export`
+
+[NOTE]
+=====
+Make sure that the employees.csv is not open in your computer before executing `export`.
+=====
+
+Examples:
+
+* `export` +
+Current employees in E.T. will be exported.
+// end::export[]
+
+=== Exiting E.T. : `exit`
+
+Exits E.T. +
 Format: `exit`
 
-=== Saving the data
+[NOTE]
+E.T. saves data automatically in the hard disk after any command that changes the data. There is no need to save manually before exit.
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
-There is no need to save manually.
+=== Upcoming features
 
+Features yet to be implemented. Coming in `v2.0`.
+
+* Editing an event. +
+You will be able to edit an event.
+* Adding an event in mass to many employees' timetable at once. +
+You will be able to add an event to many employee's timetable at once for maximum convenience.
 // tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
+* Encrypting data files. +
+Employees Tracker will ensure data security by encrypting data files.
+* Grouping employees. +
+You will be able to group employees according to the projects that they are working on and address the whole team with the group name.
 
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
-== FAQ
+
+== Frequently Asked Questions (FAQ)
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous E.T. folder.
 
 == Command Summary
+This section summarizes the usage of all E.T.'s commands.
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+|===
+|*Command* |*Format* |*Example*
+|*Add* |`add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` |`add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+|*AddEvent* |`addEvent INDEX title/TITLE loca/LOCATION stime/STARTTIME etime/ENDTIME descrip/DESCRIPTION` |`addEvent 2 title/Test Event loca/NUS, Singapore stime/2017-04-09T19:00:00 etime/2018-04-09T21:00:00 descrip/A Test Event`
+|*AddPhoto* |`addPhoto INDEX` |
+|*Authentication* |`authenET` |
+|*ChangeTheme* |`changeTheme THEME` |`changeTheme dark`
+|*Clear* |`clear` |
+|*Delete* |`delete INDEX` |`delete 3`
+|*DeleteEvent* |`deleteEvent INDEX TITLE` |`deleteEvent 1 event title`
+|*Dismiss* |`dismiss INDEX` |`dismiss 2`
+|*Edit* |`edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` |`edit 2 n/James Lee e/jameslee@example.com`
+|*Email* |`email INDEX` |`email 2`
+|*EmailAll* |`emailall` |
+|*Export* |`export` |
+|*Find* |`find (n/NAME_KEYPHRASE \| t/TAG_KEYPHRASE \| r/RATING_KEYPHRASE) [n/NAME_KEYPHRASE]…​ [t/TAG_KEYPHRASE]…​ [r/RATING_KEYPHRASE]…` |`find n/James n/Jake Black t/Sales t/Marketing Senior r/3`
+|*Help* |`help` |
+|*History* |`history` |
+|*List* |`list` |
+|*Lock* |`lock` |
+|*MyCalendar* |`myCalendar` |
+|*Noti* |`noti` |
+|*Redo* |`redo` |
+|*Review* |`review INDEX` |`review 2`
+|*Select* |`select INDEX` |`select 2`
+|*SetPassword* |`setPassword OLD_PASSWORD NEW_PASSWORD ` |`setPassword admin 12345`
+|*Sort* |`sort FIELD` |`sort name`
+|*TodoList* |`todoList` |
+|*Undo* |`undo` |
+|*Unlock* |`unlock` |
+|===

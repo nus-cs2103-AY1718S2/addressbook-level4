@@ -2,11 +2,13 @@ package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Objects;
 
 import seedu.address.commons.core.Messages;
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.DeleteCalendar;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
@@ -19,11 +21,13 @@ public class DeleteCommand extends UndoableCommand {
     public static final String COMMAND_WORD = "delete";
 
     public static final String MESSAGE_USAGE = COMMAND_WORD
-            + ": Deletes the person identified by the index number used in the last person listing.\n"
+            + ": Deletes the employee identified by the index number used in the last employees listing.\n"
             + "Parameters: INDEX (must be a positive integer)\n"
             + "Example: " + COMMAND_WORD + " 1";
 
-    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Deleted Person: %1$s";
+    public static final String MESSAGE_DELETE_PERSON_SUCCESS = "Employee has been permanently deleted with"
+            + " his calendar, please DO NOT undo this command, or his calendar will become invalid. "
+            + " Instead, you can mannualy add it back. \nDeleted Employee: %1$s";
 
     private final Index targetIndex;
 
@@ -39,8 +43,13 @@ public class DeleteCommand extends UndoableCommand {
         requireNonNull(personToDelete);
         try {
             model.deletePerson(personToDelete);
+            if (personToDelete.getCalendarId().endsWith("@group.calendar.google.com")) {
+                DeleteCalendar.execute(personToDelete.getCalendarId());
+            }
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target employee cannot be missing");
+        } catch (IOException ioe) {
+            ioe.printStackTrace();
         }
 
         return new CommandResult(String.format(MESSAGE_DELETE_PERSON_SUCCESS, personToDelete));

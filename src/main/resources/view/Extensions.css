@@ -1,7 +1,13 @@
 
 .error {
-    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+    -fx-text-fill: red !important; /* The error class should always override the default text-fill style */
 }
+
+/* @@author IzHoBX*/
+.suggestion {
+    -fx-text-fill: darkred !important; /* The error class should always override the default text-fill style */
+}
+/* @@author */
 
 .list-cell:empty {
     /* Empty cells will not have alternating colours */

@@ -5,11 +5,13 @@ import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
 import seedu.address.model.person.Person;
+import seedu.address.ui.NotificationCenter;
 
 /**
  * API of the Logic component
  */
 public interface Logic {
+
     /**
      * Executes the command and returns the result.
      * @param commandText The command as entered by the user.
@@ -24,4 +26,6 @@ public interface Logic {
 
     /** Returns the list of input entered by the user, encapsulated in a {@code ListElementPointer} object */
     ListElementPointer getHistorySnapshot();
+
+    void setNotificationCenter(NotificationCenter notificationCenter);
 }

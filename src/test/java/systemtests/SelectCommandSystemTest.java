@@ -6,20 +6,31 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_PERSON_DISPLAY
 import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.SelectCommand.MESSAGE_SELECT_PERSON_SUCCESS;
 import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
+import static seedu.address.testutil.TypicalPersons.KEYPHRASE_MATCHING_MEIER;
 import static seedu.address.testutil.TypicalPersons.getTypicalPersons;
 
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
+import seedu.address.logic.CommandHistory;
+import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.SelectCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.model.Model;
 
 public class SelectCommandSystemTest extends AddressBookSystemTest {
+
     @Test
     public void select() {
+
+        UnlockCommand testUnlockCommand = new UnlockCommand();
+        testUnlockCommand.setTestMode(true);
+        testUnlockCommand.setData(getModel(), new CommandHistory(), new UndoRedoStack());
+        testUnlockCommand.execute();
+        showAllPersons();
+
         /* ------------------------ Perform select operations on the shown unfiltered list -------------------------- */
 
         /* Case: select the first card in the person list, command with leading spaces and trailing spaces
@@ -56,7 +67,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         /* Case: filtered person list, select index within bounds of address book but out of bounds of person list
          * -> rejected
          */
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        showPersonsWithName(KEYPHRASE_MATCHING_MEIER);
         int invalidIndex = getModel().getAddressBook().getPersonList().size();
         assertCommandFailure(SelectCommand.COMMAND_WORD + " " + invalidIndex, MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
 
@@ -104,7 +115,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * 3. Result display box displays the success message of executing select command with the
      * {@code expectedSelectedCardIndex} of the selected person.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
-     * 5. Selected card is at {@code expectedSelectedCardIndex} and the browser url is updated accordingly.<br>
+     * 5. Selected card is at {@code expectedSelectedCardIndex} and the detail panel is updated accordingly.<br>
      * 6. Status bar remains unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
@@ -126,7 +137,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
             assertSelectedCardChanged(expectedSelectedCardIndex);
         }
 
-        assertCommandBoxShowsDefaultStyle();
+        assertCommandBoxAndResultDisplayShowsDefaultStyle();
         assertStatusBarUnchanged();
     }
 
@@ -136,7 +147,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
      * 2. Command box has the error style class.<br>
      * 3. Result display box displays {@code expectedResultMessage}.<br>
      * 4. {@code Model}, {@code Storage} and {@code PersonListPanel} remain unchanged.<br>
-     * 5. Browser url, selected card and status bar remain unchanged.<br>
+     * 5. Detail panel, selected card and status bar remain unchanged.<br>
      * Verifications 1, 3 and 4 are performed by
      * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
@@ -147,7 +158,7 @@ public class SelectCommandSystemTest extends AddressBookSystemTest {
         executeCommand(command);
         assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
         assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
+        assertCommandBoxAndResultDisplayShowsErrorStyle();
         assertStatusBarUnchanged();
     }
 }

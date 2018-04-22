@@ -1,3 +1,4 @@
+
 package seedu.address.model.person;
 
 import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
@@ -6,6 +7,8 @@ import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
 
+import seedu.address.model.review.Review;
+import seedu.address.model.review.UniqueReviewList;
 import seedu.address.model.tag.Tag;
 import seedu.address.model.tag.UniqueTagList;
 
@@ -15,17 +18,25 @@ import seedu.address.model.tag.UniqueTagList;
  */
 public class Person {
 
+    public static final int UNINITIALISED_ID = -1;
+    public static final String DEFAULT_PHOTO = "DefaultPerson.png";
+
     private final Name name;
     private final Phone phone;
     private final Email email;
     private final Address address;
+    private Rating rating;
+    private int id;
+    private String photoName;
 
+    private UniqueReviewList reviews;
     private final UniqueTagList tags;
+    private final String calendarId;
 
     /**
-     * Every field must be present and not null.
+     * All fields except Rating and Review is not provided
      */
-    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags) {
+    public Person(Name name, Phone phone, Email email, Address address, Set<Tag> tags, String calendarId) {
         requireAllNonNull(name, phone, email, address, tags);
         this.name = name;
         this.phone = phone;
@@ -33,6 +44,12 @@ public class Person {
         this.address = address;
         // protect internal tags from changes in the arg list
         this.tags = new UniqueTagList(tags);
+        this.reviews = new UniqueReviewList();
+
+        this.calendarId = calendarId;
+        this.rating = new Rating();
+        this.photoName = DEFAULT_PHOTO;
+        this.id = UNINITIALISED_ID;
     }
 
     public Name getName() {
@@ -47,9 +64,33 @@ public class Person {
         return email;
     }
 
+    //@@author IzHoBX
+    public Rating getRating() {
+        return rating;
+    }
+
+    public String getRatingDisplay() {
+        return rating.getRatingDisplay();
+    }
+    //@@author
+
     public Address getAddress() {
         return address;
     }
+
+    public Integer getId() {
+        return id;
+    }
+
+    //@@author crizyli
+    public String getCalendarId() {
+        return calendarId;
+    }
+
+    public String getPhotoName() {
+        return photoName;
+    }
+    //@@author
 
     /**
      * Returns an immutable tag set, which throws {@code UnsupportedOperationException}
@@ -57,6 +98,40 @@ public class Person {
      */
     public Set<Tag> getTags() {
         return Collections.unmodifiableSet(tags.toSet());
+    }
+
+    //@@author emer7
+    /**
+     * Returns an immutable review set, which throws {@code UnsupportedOperationException}
+     * if modification is attempted.
+     */
+    public Set<Review> getReviews() {
+        return Collections.unmodifiableSet(reviews.toSet());
+    }
+
+    public void setReviews(Set<Review> reviews) {
+        this.reviews = new UniqueReviewList(reviews);
+    }
+
+    public String getPersonUrl() {
+        return "https://calendar.google.com/calendar/embed?src="
+                + calendarId.replaceAll("@", "%40") + "&ctz=Asia%2FSingapore";
+    }
+
+    /**
+     * Set the photo field which is the path to the photo.
+     */
+    public void setPhotoName(String photoName) {
+        this.photoName = photoName;
+    }
+
+    public void setRating(Rating rating) {
+        this.rating = rating;
+    }
+    //@@author
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -92,9 +167,18 @@ public class Person {
                 .append(getEmail())
                 .append(" Address: ")
                 .append(getAddress())
-                .append(" Tags: ");
+                .append(" Rating: ")
+                .append(getRatingDisplay())
+                .append("\n")
+                .append("Reviews:")
+                .append("\n");
+        getReviews().forEach(review -> builder.append(review).append("\n"));
+        builder.append(" Tags: ");
         getTags().forEach(builder::append);
         return builder.toString();
     }
 
+    public boolean isInitialized() {
+        return id != UNINITIALISED_ID;
+    }
 }

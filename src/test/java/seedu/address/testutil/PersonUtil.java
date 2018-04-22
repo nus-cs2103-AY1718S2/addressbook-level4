@@ -22,6 +22,13 @@ public class PersonUtil {
     }
 
     /**
+     * Returns an test add command string for adding the {@code person}.
+     */
+    public static String getTestAddCommand(Person person) {
+        return AddCommand.TEST_COMMAND_WORD + " " + getPersonDetails(person);
+    }
+
+    /**
      * Returns the part of command string for the given {@code person}'s details.
      */
     public static String getPersonDetails(Person person) {

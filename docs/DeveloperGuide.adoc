@@ -1,68 +1,88 @@
-= AddressBook Level 4 - Developer Guide
+= E.T. (Employees Tracker) - Developer Guide
 :toc:
-:toc-title:
+:toc-title: Table of Contents
 :toc-placement: preamble
 :sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
+:experimental:
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W15-B1/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
 
-== Setting up
+By: `Team W15-B1`      Since: `Feb 2018`      Licence: `MIT`
+
+== Introduction
+
+Employees Tracker is a *Human Resource Manager* application that helps managers to manage their subordinates. It has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to each employee.
+
+This developer guide serves to guide you so that you are able to develop Employees Tracker further and contribute to it.
+
+== Setting Up
+
+Make sure you follow this section carefully so that you get to work on Employees Tracker right away!
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+Before you start developing, make sure you have the followings in your computer:
+
+* *JDK `1.8.0_60`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
 
-. *IntelliJ* IDE
+* *IntelliJ* IDE
 +
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
 
 
-=== Setting up the project in your computer
+=== Instructions for setting up the project in your computer
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
+Follow the steps below to set up the project in your computer:
+
+. Fork this repo, and clone the fork to your computer.
+. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first).
+. Set up the correct JDK version for Gradle.
+.. Click `Configure` > `Project Defaults` > `Project Structure`.
+.. Click `New...` and find the directory of the JDK.
+. Click `Import Project`.
+. Locate the `build.gradle` file and select it. Click `OK`.
+. Click `Open as Project`.
+. Click `OK` to accept the default settings.
 . Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
-=== Verifying the setup
+=== Verification of the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+Follow the steps below to verify your setup:
+
+. Run the `seedu.address.MainApp` and try a few commands.
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
 
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours.
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+To rectify:
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab to set the order.
+
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: +
+Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: +
+Add a `<blank line>` between `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, and `import all other imports` each sequentially.
 
 Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
 
@@ -82,149 +102,150 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
 
+This section outlines the design of Employees Tracker.
+
 [[Design-Architecture]]
 === Architecture
 
-.Architecture Diagram
-image::Architecture.png[width="600"]
+The *Architecture Diagram* given in _Figure 1_ below explains the high-level design of the App.
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+.Architecture Diagram.
+image::Architecture.png[width="600"]
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+Given below is a quick overview of each component:
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+* `Main` : It only has one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
+** At app launch: Initializing the components in the correct sequence, and connecting them up with each other.
+** At shut down: Shutting down the components and invoking cleanup method where necessary.
+* `Commons` : It represents a collection of classes used by other components. +
+Two of those classes play important roles at the architecture level:
+** `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design).
+** `LogsCenter` : This class is used by many classes to write log messages to the App's log file.
+* <<Design-Ui,*`UI`*>> : It is the User Interface (UI) of the App.
+* <<Design-Logic,*`Logic`*>> : It executes command.
+* <<Design-Model,*`Model`*>> : It holds Employees Tracker's data in memory.
+* <<Design-Storage,*`Storage`*>> : It communicates between Employees Tracker and hard disk to read and write data.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
-
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
-
-The rest of the App consists of four components.
-
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
-
-Each of the four components
+Each of the last four components (<<Design-Ui,*`UI`*>>, <<Design-Logic,*`Logic`*>>, <<Design-Model,*`Model`*>>, and <<Design-Storage,*`Storage`*>>) shares a common functionality:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (refer to the class diagram given in _Figure 2_ below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
 .Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
 
 [discrete]
-==== Events-Driven nature of the design
+==== Events-driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The *Sequence Diagram* given in _Figure 3_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
+.Component interactions for `delete 1` command (part 1).
 image::SDforDeletePerson.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Pay attention to how the `Model` simply raises a `AddressBookChangedEvent` when Employees Tracker's data are changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The *Sequence Diagram* given in _Figure 4_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
+.Component interactions for `delete 1` command (part 2).
 image::SDforDeletePersonEventHandling.png[width="800"]
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Pay attention to how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
 The sections below give more details of each component.
 
 [[Design-Ui]]
 === UI component
 
+The *Class Diagram* given in _Figure 5_ below shows the classes in UI component and their associations.
+
 .Structure of the UI Component
 image::UiClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`] for the *API* of UI Component.
 
 The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
 The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The `UI` component,
-
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+The `UI` component executes user commands using the `Logic` component, binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change, and responds to events raised from various parts of the App and updates the UI accordingly.
 
 [[Design-Logic]]
 === Logic component
 
+The *Class Diagram* given in _Figure 6_ below shows the classes in Logic component and their associations.
+
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Structure of the Logic Component.
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+The *Class Diagram* given in _Figure 7_ below shows a finer detail concerning `XYZCommand` and `Command` in _Figure 6_.
+
+.Structure of Commands in the Logic Component.
 image::LogicCommandClassDiagram.png[width="800"]
 
-*API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`] for the *API* of Logic Component.
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The `Logic` component uses the AddressBookParser class to parse the user command. This will result in a `Command` object which is executed by the `LogicManager`, which may affect the `Model` (e.g. adding a person) and/or raise events. The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+The *Sequence Diagram* given in _Figure 8_ below shows the interactions within the `Logic` component for `execute("delete 1")` _API_ call.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+.Interactions Inside the Logic Component for the `delete 1` Command.
 image::DeletePersonSdForLogic.png[width="800"]
 
 [[Design-Model]]
 === Model component
 
-.Structure of the Model Component
+The *Class Diagram* given in _Figure 9_ below shows the classes in Model component and their associations.
+
+.Structure of the Model Component.
 image::ModelClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`] for the *API* of Model Component.
 
-The `Model`,
+The `Model` component does the following:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
-* does not depend on any of the other three components.
+* Stores a `UserPref` object that represents the user's preferences.
+* Stores Employees Tracker's data.
+* Exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+
+The `Model` component does not depend on any of the other three components.
 
 [[Design-Storage]]
 === Storage component
 
-.Structure of the Storage Component
+The *Class Diagram* given in _Figure 10_ below shows the classes in Storage component and their associations.
+
+.Structure of the Storage Component.
 image::StorageClassDiagram.png[width="800"]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
+[NOTE]
+Refer to link:{repoURL}/src/main/java/seedu/address/model/Storage.java[`Storage.java`] for the *API* of Storage Component.
 
-The `Storage` component,
+The `Storage` component does the following:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
-
-[[Design-Commons]]
-=== Common classes
-
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+* Save `UserPref` objects in json format and read it back.
+* Save Employees Tracker data in xml format and read it back.
 
 == Implementation
 
@@ -234,13 +255,13 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of Employees Tracker (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
 
 `UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of Employees Tracker before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,7 +296,7 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5^th^ person in Employees Tracker. The current state of Employees Tracker is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
@@ -288,7 +309,7 @@ If a command fails its execution, it will not be pushed to the `UndoRedoStack` a
 
 The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore Employees Tracker to the state before the `add` command executed.
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
@@ -299,7 +320,7 @@ The following sequence diagram shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores Employees Tracker to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
@@ -320,16 +341,16 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
+** Pros: Will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
+* **Alternative 2:** Just override `execute()`.
+** Pros: Template pattern is not involved when developing, so it is easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
 ===== Aspect: How undo & redo executes
 
-* **Alternative 1 (current choice):** Saves the entire address book.
+* **Alternative 1 (current choice):** Saves entire Employees Tracker.
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
@@ -339,69 +360,765 @@ image::UndoRedoActivityDiagram.png[width="650"]
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+* **Alternative 1 (current choice):** Only include commands that modifies Employees Tracker (`add`, `clear`, `edit`).
+** Pros: Only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
 ** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Cons: User have no way of skipping such commands if he or she just want to reset the state of Employees Tracker and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
+* **Alternative 1 (current choice):** Use separate stack for undo and redo.
 ** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
 ** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
+* **Alternative 2:** Use `HistoryManager` for undo/redo.
+** Pros: Do not need to maintain a separate stack, and just reuse what is already in the codebase.
 ** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::rate[]
+=== Edit and rate a person
+This section presents the implmentation of `edit` command and `rate` command, which are implemented in a similar manner. The only difference is that `rate` can only change the `Rating` field, but `edit` can be used to change any field.
 
-_{Explain here how the data encryption feature will be implemented}_
+==== Current Implementation
 
-// end::dataencryption[]
+There are 4 classes that play a vital role in the current implementation:
+
+* Person
+* EditCommandParser or RateCommandParser
+* EditPersonDescriptor
+* EditCommand
+
+The following code snippet shows the fields of the `EditPersonDescriptor` class, which is an internal class of `EditCommand`.
+
+[source, java]
+----
+  public static class EditPersonDescriptor {
+        private Name name;
+        private Phone phone;
+        private Email email;
+        private Address address;
+        private Set<Tag> tags;
+        private Set<Review> reviews;
+        private Rating rating;
+        private Photo photo;
+  }
+----
+Note that the `EditPersonDescriptor` has the exact same fields as the `Person` class.
+Each of the fields is used to contain the corresponding *new* value of the field. For example, suppose the user wants to edit the name from "Alek" to "Alex", "Alex" will be stored in the `name` field of `EditPersonDescriptor`. +
+
+_Figure 11_ below shows the sequence diagram of the execution of `rate` command. `Edit` command has an exactly same execution, `RateCommandParser` will be replaced with `EditCommandParser` while `RateCommand` will be replaced with `EditCommand`.
+
+.Sequence diagram of Rate Command execution
+image::Rate Command Sequence Diagram.png[width="500"]
+
+The important method calls during the execution of `edit` and `rate` command includes:
+
+. parse(args): `EditCommandParser` extracts the new information for each field from user input.
+. EditPersonDescriptor(): `EditPersonDescriptor` is used to record which field(s) will be changed and the respective new value.
+. getFilteredPersonList(): The original Person, `toEdit` is obtained from `Model`.
+. person(): `edited` Person will be created, by obtaining the new value for modified fields from `EditPersonDescriptor`. The value of unmodified field(s) are obtained from `toEdit`.
+. updatePerson(toEdit, edited): `edited` Person is used to replace `toEdit` Person in `AddressBook`.
+
+[NOTE]
+This current implementation of `edit` command is by courtesy of the original AddressBook application. The W15B1 team is only responsible for adapting the implementation into `rate` command.
+
+==== Design Considerations
+
+This section showcases some of the alternative designs for the implementation of `rate` and `edit` command.
+
+There are 2 ways to update information regarding a `Person` object. +
+
+* Alternative 1 (current implementation): Creates a new `Person` object that contains the new information to replace the old `Person` object
+** Pros: data integrity is guaranteed, higher cohesion (all modifications on data must be done through `Model`)
+** Cons: implementation is more complicated
+* Alternative 2: Uses setter methods on the `Person` object
+** Pros: implementation is simple
+** Cons: data integrity is compromised (the `Person` object can be modified by any entity), more coupling
+// end::rate[]
+
+// tag::emer7[]
+=== Review feature
+
+==== Current Implementation
+
+A `Review` consists of the _review_ content itself and the _reviewer_. _Review_ and _reviewer_ are separated by a single newline character.
+
+_Review_ content itself has no restriction on the content, it accepts all characters with no length limitation). _Reviewer_ must be a valid email format. A new empty `Review` will be instantiated with null value of `-` for both _review_ and _reviewer_, signifying that both fields are empty.
+
+Each `Person` has a `UniqueReviewList`, that is a unique list of `Review(s)`. A new `Person` upon creation will have an empty `UniqueReviewList`. A `Person` can be assigned `Review(s)` through `review` command.
+
+`review` command and `review` command are implemented in a similar manner. They both involve modifying the field(s) of a `Person`. The only difference is that `review` can only change the `Review` field, but `edit` can be used to change any field except `Review`. Hence, the implementation may be very similar to <<Edit and rate a person>>.
+
+The implementation of `review` and `edit` command in the Logic component involves 4 objects: +
+
+. `Person` personToEdit.
+. `Person` editedPerson.
+. `Parser` ReviewCommandParser.
+. `EditPersonDescriptor`.
+
+Since all fields of the `Person` class are immutable, we need to use `Person` _editedPerson_ to replace the `Person` _personToEdit_.
+
+Additionally, the implementation also involves `ReviewDialog` in the UI component and `ShowReviewDialogEvent` in Common component to show the pop-up review dialog for user to input _reviewer_ and _review_.
+
+The details of implementation are as follow:
+
+. `Parser` extracts `Index` from user input and validates it.
+. `Parser` posts `ShowReviewDialogEvent` to show the review pop-up dialog for user to input the _reviewer_ and _review_.
+. `EditPersonDescriptor` is used to record the new `Review` value.
+. `Person` _editedPerson_ will be created by obtaining the new `Review` value from `EditPersonDescriptor` together with the old `Review` value. +
+The old `Review` value is obtained from `Person` _personToEdit_.
+. `Person` _editedPerson_ is used to replace `Person` _personToEdit_ in `AddressBook`.
+
+Given below in _Figure 11_ is the partial sequence diagram of Review Command. `LogicManager` and how `ReviewCommand` executes are omitted as they are similar to _Figure 8_.
+
+.Sequence Diagram for Review Command
+image::review_seq.png[width="800"]
+
+[source,java]
+----
+public class ReviewCommandParser implements Parser<ReviewCommand> {
+
+    public ReviewCommand parse(String args) throws ParseException {
+        // ... get Index from args and validates it to be positive
+        // ... post events for the review dialog
+        try {
+            // ... create Review from the input from review dialog ...
+            // ... create EditPersonDescriptor based on the Review ...
+            return new ReviewCommand(index, editPersonDescriptor);
+        } catch (IllegalValueException ive) {
+            // ... throw exception ...
+        }
+    }
+
+    @Subscribe
+    private void getReviewInput(ReviewInputEvent event) {
+        // ... get reviewer and review content from the review dialog ...
+    }
+}
+----
+
+==== Design Considerations
+
+===== Aspect: How to get the review input from user
+
+* **Alternative 1 (current choice):** Use JavaFX's Dialog for a pop-up window.
+** Pros: More comfortable and convenient for user to type longer review and also easier for them to edit.
+** Cons: Harder to implement and user may not necessarily want a pop-up window.
+* **Alternative 2:** Use CommandBox.
+** Pros: Easier to implement and user can directly type to the CommandBox, which may be more efficient.
+** Cons: May be restrictive for user to enter a long review or to edit what they have typed.
+
+===== Aspect: Way of showing the review dialog
+
+* **Alternative 1 (current choice):** Post an event to request MainWindow to show the Dialog.
+** Pros: Good to comply with the Events-Driven nature of the application's design, making the design more cohesive and less coupling.
+** Cons: Events-Driven design is routine-less. Need to put extra effort to control the events. As the application grows, there are more events posted
+and it is necessary to control these events well to prevent events messing up.
+* **Alternative 2:** Just add a static method in MainWindow that will show the Dialog.
+** Pros: Simpler implementation than current one, no need extra effort for event controlling.
+** Cons: The static method could not use the non-static attributes in MainWindow, as a result, need extra effort to deal with referencing non-static variables.
+// end::emer7[]
+
+// tag::calendar[]
+=== Calendars and operations on calendars
+==== Current Implementation
+
+To implement the calendars for employees, a third party source has been used which is Google Calendar API, it allows to manage google
+calendars on desktop applications. The commands that relating to calendars are `addEvent`, `deleteEvent`, `todoList` and `authenET`.
+Below is the overall design:
+
+.Overall design relating to calendars.
+image::calendarsystem.png[width="800"]
+
+[NOTE]
+Command `authenET` should be executed before all other commands if it is the first time to use E.T., because only when E.T. is authorized
+with one working google account, all other commands can be executed correctly.
+
+===== Implementation of `todoList` command
+
+The logic flow of `todoList` command is:
+
+. `AddressBookParser` is used to let the application accept `todoList` command.
+. `TodoListCommand` will firstly get the google calendar service through `Authentication`, then it will request google calendar service to retrieve all the events
+on the main calendar. After that, it will post an event to request to open a todo-list window. And post another event containing all the retrieved events that are to be displayed.
+. `UiManager` will handle the first event posted by `TodoListCommand` and show the `TodoListWindow`.
+. `TodoListWindow` will handle the second event posted by `TodoListCommand` and display all the events.
+
+Here is the code snippet of how `todoList` command executes:
+[source,java]
+----
+public CommandResult execute() {
+        // Build a new authorized API client service.
+        com.google.api.services.calendar.Calendar service =
+                null;
+        try {
+            service = Authentication.getCalendarService();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        //retrieve events from the main calendar
+        String calendarId = "primary";
+        String pageToken = null;
+        do {
+            Events events = null;
+            try {
+                events = service.events().list(calendarId).setPageToken(pageToken).execute();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            List<Event> items = events.getItems();
+            for (Event event : items) {
+                eventList.add(new ListEvent(event.getSummary(), event.getLocation(), event.getStart().getDateTime()));
+            }
+            pageToken = events.getNextPageToken();
+        } while (pageToken != null);
+        //post events
+        EventsCenter.getInstance().post(new ShowTodoListEvent());
+        EventsCenter.getInstance().post(new ShowTodoListDisplayContentEvent(eventList));
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+
+Below is the sequence diagram for the execution of `todoList` command.
+
+.Sequence diagram of `todoList`.
+image::todolist_seq.png[width="800"]
+
+===== Implementation of `addEvent`, `deleteEvent` and `authenET` commands
+
+As stated, `authenET` command is to be executed at the very beginning, and what it does is to sent a HTTP request through `Authentication` in order
+to authorize E.T.. It will then receive a status code and a content page which will be opened by the default browser to ask the permission of authorizing E.T..
+
+The implementation of  `addEvent` and `deleteEvent` commands are similar to `todoList` command, both require to first build a new authorized API calendar service.
+Then they will just sent request through the API service and all other things will be done at google service side. Finally, they will do updates according to the request results.
+
+==== Design Considerations
+===== Aspect: Where to place the todo-list window
+* **Alternative 1 (current choice):** Make it as a pop-up window.
+** Pros: Easy to manage, it is relatively independent to main window as it is created at a new javaFX stage.
+** Cons: Cannot update information in pop-up windows, that is, if leave the todo-list window open and execute another `todoList` command, another todo-list
+window will pop up which contains the most up-to-date information, then the two windows may cause confusion.
+* **Alternative 2:** create a field called todo-list panel in `MainWindow`.
+** Pros: Every time execute `todoList` command, the information can be updated, without creating new windows.
+** Cons: Need to re-structure the layout of MainWindow.
+
+===== Aspect: When and how to authorize E.T.
+* **Alternative 1 (current choice):** A dedicated command `authenET` to authorize E.T..
+** Pros: Make the logic more clear and systematic.
+** Cons: Single point of failure: if not execute `authenET` ahead, all other commands relating to calendars will not work.
+* **Alternative 2 (old version):** Every command goes through the authorization step to check if authorized.
+** Pros: No need extra command ahead, each command can execute independently.
+** Cons: A lot of unnecessary authorization processes, because this step is supposed to be run only once and all are set. The
+response time per command will be longer.
+// end::calendar[]
+
+// tag::lockunlock[]
+=== Lock and Unlock system
+==== Current Implementation
+
+The Lock and Unlock system is facilitated by maintaining a password inside `LogicManager` at runtime, and also maintaining
+the password in storage when application is closed. It allows to lock the application (hiding information) while keeping the application
+open, and unlock it to resume at anytime.
+
+The password is stored in storage as a field annotated as `@XmlElement` in `XmlSerializableAddressBook`, and is been read and converted to model type when the application
+is launched and kept at `LogicManager` in which the password can be handled at runtime.
+
+Below is the overall design of Lock and Unlock system. Arrows are representing logic flow and lines in blue, red and green are for event posting and handling.
+
+.Overall design of lock and unlock system.
+image::lockunlocksystem.png[width="800"]
+
+===== Implementation of `lock` command
+The logic flow of `lock` command is:
+
+. `AddressBookParser` is used to let the application accept `lock` command.
+. `LockCommandParser` is to make sure no other extra inputs are entered besides the command word `lock`.
+. `LockCommand` is used to set the state of the application to be locked, and post an event to indicate the application is locked such that
+no information should be shown now. Note the `DetailPanel` is the handler of the event. There are mainly two parts that need to be hidden: `PersonList` and `DetailPanel`. Refer to the first code snippet below.
+. `LogicManager` is used to check the state and decide whether the application is locked or not, and decide the logic flow accordingly. Refer to the second code snippet below.
+
+Below is the execution logic of `LockCommand`:
+[source,java]
+----
+public CommandResult execute() {
+    model.updateFilteredPersonList(predicate);
+    EventsCenter.getInstance().post(new HideDetailPanelEvent());
+    LogicManager.lock();
+    return new CommandResult(MESSAGE_SUCCESS);
+}
+----
+
+Below is the logic flow in `LogicManger`:
+[source,java]
+----
+    if (isLocked && !(command instanceof HelpCommand)) { //check if locked
+        command.setData(model, history, undoRedoStack);
+        if (command instanceof UnlockCommand) { //check unlock command
+            UnlockCommand unlockCommand = (UnlockCommand) command;
+            result = unlockCommand.execute();
+        } else {
+            result = new CommandResult("Addressbook has been locked, please unlock it first!");
+        }
+    } else { //unlocked case
+        command.setData(model, history, undoRedoStack);
+        result = command.execute();
+        undoRedoStack.push(command);
+    }
+----
+
+The following sequence diagram shows how `lock` command works:
+
+[NOTE]
+The event posted by LockCommand should firstly be reacted by `EventsCenter` and then handled by `DetailPanel`,
+this step is removed for clearer viewing and without messing up the diagram.
+
+.Sequence Diagram for Lock Command.
+image::lock_seq.jpg[width="800"]
+
+===== Implementation of `unlock` command
+
+The logic flow of `unlock` command is:
+
+. `AddressBookParser` is used to let the application accept `unlock` command.
+. `UnlockCommandParser` is to make sure no other extra inputs are entered besides the command word `unlock`. Similar to `LockCommandParser`.
+. `UnlockCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog.
+. `MainWindow` will handle the event posted by `UnlockCommand` and show the password input dialog. Then it will post an event containing user entered password.
+. `UnlockCommand` will then handle the event and get the password from the event, and compare it with the application's unlock password to decide whether the unlock process is successful. Refer to the code snippet below.
+. `LogicManager` is used to decide whether the application is locked or not, and decide the logic flow accordingly.
+
+Below is the execution logic of `UnlockCommand`:
+[source,java]
+----
+    public CommandResult execute() {
+        if (!LogicManager.isLocked()) {
+            return new CommandResult("Employees Tracker is already unlocked!");
+        }
+        //post a event to show password input dialog.
+        EventsCenter.getInstance().post(new ShowPasswordFieldEvent());
+
+        // if the password is set to "nopassword", means no input got from user.
+        if (this.password.equals("nopassword")) {
+            return new CommandResult(MESSAGE_MISSING_PASSWORD);
+        }
+        //check if the entered password match the unlock password.
+        if (this.password.compareTo(LogicManager.getPassword()) == 0) {
+            LogicManager.unLock();
+            EventsCenter.getInstance().post(new AddressBookUnlockedEvent());
+            model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_INCORRECT_PASSWORD);
+        }
+    }
+
+    /**
+    * handle the event to get the input password.
+    */
+    @Subscribe
+    private void handlePasswordEnteredEvent(PasswordEnteredEvent event) {
+        this.password = event.getPassword();
+    }
+----
+
+The following sequence diagram shows how `unlock` command works:
+
+[NOTE]
+The detail of the instantiation of `UnlockCommand` is removed, because it is similar to that of
+`LockCommand`. Note that both `MainWindow` and `UnlockCommand` are event handler, which is indicated by the two post method and the
+blue activation bar in the diagram, and the interaction with `EventsCenter` is also omitted like before.
+
+.Sequence Diagram for Unlock Command.
+image::unlock_seq.jpg[width="800"]
+
+===== Implementation of `setPassword` command
+
+This command is used to set new unlock password of the application, which is also part of
+the Lock and Unlock system. The implementation of `setPassword` command is similar to that of `unlock` command, but additionally,
+`setPassword` command requires to update the password in both model and storage.
+
+The logic flow of `setPassword` command is:
+
+. `AddressBookParser` is used to let the application accept `setPassword` command.
+. `SetPasswordCommandParser` is to make sure no other extra inputs are entered besides the command word `setPassword`. Similar to `LockCommandParser`.
+. `SetPasswordCommand` is used to post an event requesting `MainWindow` to pop up a password input dialog, get the passwords (old password and new password) entered by user, and
+compare the old password with the application's current unlock password to decide whether they match. If match, then update the password in both `LogicManager` and storage. Refer to the code snippet below.
+. `MainWindow` will handle the event and post another event containing user inputs, which is similar to that in `Unlock` command.
+
+[source,java]
+----
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new ShowSetPasswordDialogEvent());
+        //check if all password input fields are inputed by user.
+        if (!isComplete) {
+            return new CommandResult(MESSAGE_INCOMPLETE_FIELD);
+        }
+        //check if the old password match the current one.
+        if (this.oldPassword.compareTo(LogicManager.getPassword()) == 0) {
+            LogicManager.setPassword(this.newPassword);
+            model.setPassword(this.newPassword);
+            return new CommandResult(MESSAGE_SUCCESS);
+        } else {
+            return new CommandResult(MESSAGE_INCORRECT_OLDPASSWORD);
+        }
+    }
+----
+
+==== Design Considerations
+===== Aspect: How to input password values
+* **Alternative 1 (current choice):** Input all password in dialogs.
+** Pros: It is more secure as all password inputs in dialogs can be invisible.
+** Cons: Need the cooperation with UI to pop up the dialogs, which makes it harder to implement.
+* **Alternative 2 (old version):** Just let the passwords be the command parameters.
+** Pros: Easy to achieve as only need to parse the inputs in command parser to get the passwords.
+** Cons: Not so secure, because the password inputs are all visible like the command word, and someone else may accidentally see them.
+
+===== Aspect: Way of showing the password input dialog
+* **Alternative 1 (current choice):** Post an event to request MainWindow to show the Dialog.
+** Pros: Good to comply with the Events-Driven nature of the application's design, making the design more cohesive and less coupling.
+** Cons: Events-Driven design is routine-less. Need to put extra effort to control the events. As the application grows, there are more events posted
+and it is necessary to control these events well to prevent events messing up.
+* **Alternative 2:** Just add a static method in MainWindow that will show the Dialog.
+** Pros: Simpler implementation than current one, no need extra effort for event controlling.
+** Cons: The static method could not use the non-static attributes in MainWindow, as a result, need extra effort to deal with referencing non-static variables.
+
+===== Aspect: How to store the password in storage
+* **Alternative 1 (current choice):** Password is a visible field in storage in plaintext.
+** Pros: Easy to retrieve and update the password in storage.
+** Cons: Not secure because password is visible in plaintext.
+* **Alternative 2:** Password is still visible but encrypted.
+** Pros: Though password is visible, it it encrypted and one can only get the correct password by getting the encryption key. It is more secure.
+** Cons: Every time load the password from data, need to decrypt it and every time update it in storage, need to encrypt it.
+Also need to keep the encryption key somewhere secret.
+// end::lockunlock[]
+
+// tag::addphoto[]
+=== Add photo to employees
+==== Current Implementation
+
+Command `addPhoto` mainly copy the local photo files chosen by users to the data folder of E.T., and employees will be assigned with these
+photos which matches to their fields for photo.
+
+The logic flow of `addPhoto` command is:
+
+. `AddressBookParser` is used to let the application accept `addPhoto` command.
+. `AddPhotoCommandParser` is to make sure the user inputs are correct and extract the parameter.
+. `AddPhotoCommand` is will first post an event requesting `MainWindow` to pop up a file chooser, get the photo file chose by user,
+and check its validation. It will then copy this photo to the data folder if this photo does not exist there. Finally, it will update
+person and pass to `ModelManager`.
+. `ModelManager` will update the person list and the photo list accordingly.
+
+Here is the class diagram of `addPhoto` command:
+
+.Class diagram of `addPhoto` command.
+image::addphotoclassdia.png[width="800"]
+
+==== Design Considerations
+===== Aspect: How to maintain the photos
+* **Alternative 1 (current choice):** Store them at application's data folder which can be retrieved at runtime.
+** Pros: Easy to manage, as the photos are all in application's data folder.
+** Cons: Need to maintain an extra list in runtime storage to manage the photos in data folder.
+* **Alternative 2:** No need to store photos at application's data folder, load them directly from local disk.
+** Pros: No need to maintain the list of photos in application.
+** Cons: The change of photos' paths in local disk will cause loading error at runtime, need mechanisms to ensure person photo paths are
+dynamically referenced.
+// end::addphoto[]
+
+// tag::exportcom[]
+=== Export employees data
+
+Command `export` will export employees data as a .csv file into data folder.
+
+The logic flow of `addPhoto` command is:
+
+. `AddressBookParser` is used to let the application accept `export` command.
+. `ExportEmployeesCommand` is will first post an event to get the current employee list in `ModelManager`, and then create a .csv file
+at data folder. It will finally write the employees' information to that file.
+
+Here is the code snippet of the execution of `export` command:
+
+[source,java]
+----
+    public CommandResult execute() {
+        EventsCenter.getInstance().post(new GetEmployeesRequestEvent());
+        File csv = new File(EXPORT_FILE_PATH);
+        BufferedWriter bw = null;
+        try {
+            bw = new BufferedWriter(new FileWriter(csv));
+            bw.write("Name,Phone,Email,Address,Tags\n");
+            for (Person p : employees) {
+                String temp = p.getName().fullName + "," + p.getPhone().value + "," + p.getEmail().value + ","
+                        + p.getAddress().value.replaceAll(",", " ");
+                if (!p.getTags().isEmpty()) {
+                    temp = temp + "," + p.getTags().toString()
+                            .replaceAll(", ", " | ");
+                }
+                temp = temp + "\n";
+                bw.write(temp);
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+            return new CommandResult(MESSAGE_FAIL);
+        }
+        try {
+            bw.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return new CommandResult(MESSAGE_SUCCESS);
+    }
+----
+// end::exportcom[]
+
+// tag::ns[]
+
+
+
+=== Notification System
+This section discusses about the implementation of the notification feature of Employees Tracker.
+
+[NOTE]
+All usages of the word `Event` in this section refers to the class `com.google.api.services.calendar.model.Event`,
+not to be confused with Event classes in commons package which will be referred in their full name,
+e.g. BaseEvent, AddressBookChangedEvent.
+
+==== Current Implementation
+This section shows how the Notification System is implemented in the current version of ET.
+
+===== Introduction
+In the current implementation, the major classes and objects of the notification system includes:
+
+* The `Notification` class that stores of essential information for each `Event`.
+* The LinkedList of `Notification` in the `AddressBook` class that stores all `Notification` objects.
+* The `NotificationCard` class, which is a graphical representation of `Notification`.
+* The `Notification Center` class that stores all the `NotificationCard` objects.
+* The `MainWindow` class that is involved in showing `NotificationCard` objects on the GUI.
+* The `Model` class that initiates the add notifications and delete notifications operations.
+
+Please refer to the class diagram below for the association between them.
+
+.Class diagram of the Notification System
+image::Notification System.png[width="500"]
+
+===== Initialization of the Notification System
+
+For every time the app starts, the following initialization operations will be carried out:
+
+. `AddressBook` and LinkedList of `Notification` is read from storage.
+. `MainWindow` is created.
+. `MainWindow` creates a `NotificationCenter`.
+. `MainWindow` passes the `NotificationCenter` to `Model` through `Logic`.
+
+// end::ns[]
+
+===== Add-Notification Operation
+
+The following steps show how a Notification is added to the Notification System:
+
+.  A `Notification` is created.
+. `Model` to add the `Notification` into the `Notifications` list in `AddressBook`.
+. `Model` raises a `AddressBookChangedEvent` and `NotificationAddedEvent` after adding the Notification.
+. `Storage` handles the `AddressBookChangedEvent` and saves the new list of Notifications.
+. `Logic` handles the  `NotificationAddedEvent` and decides when to show the notification.
+. When it is time to show the notification, `Logic` will request `Ui` to show a notification.
+. `Ui` will instruct `MainWindow` to show a notification.
+. `MainWindow` will create a `NotificationCard` and shows it to user on-screen.
+. `MainWindow` will create another copy of the same `NotificationCard` and stores it in the `NotificationCenter`
+
+===== Find-owner-name operation
+
+[NOTE]
+Each `Event` is assigned (and thus) to an employee. In the following discussions, we will use the phrase `owner` to refer to the employee who is assigned to the `Event`.
+
+Note that the `Notification` class only contains a field called `ownerId` instead of the name, email, etc. of its `owner`.
+The information of the owner of a notification is retrieved through the `findPersonById` mechanism.
+The following are the details of the mechanism:
+
+* `AddressBook` class has a `nextId` integer field.
+* Whenever an employee is added, `addressBook` assigns the `nextId` to him and increment the `nextId` field.
+* The `Person` class has an `id` field to store the id.
+* When a `Notification` is created, it has a `ownerId` field that stores the `id` of its `owner`.
+* To retrieve the owner of a `Notification`, call `findPersonById(ownerId)` to obtain the `Person` owner. Then, use getter methods to obtain relevant information.
+
+===== Delete-notification operation
+
+Delete-notification operation has a simpler implementation compared to Add-notification operation. Please refer to _Figure 19_ below for the flow of the operation.
+
+.Activity Diagram for deleting notification
+image::Delete Notification.png[width=""]
+
+[NOTE]
+====
+* Deleting with `eventId` and *not* `deleteFromAddressBookOnly` is usally invoked by `deleteEvent` command.
+* Deleting with `eventId` and `deleteFromAddressBookOnly` is usually invoked by `Logic`, when it is yet to add a `NotificationCard` to the `NotificationCenter` but finds out that the `owner` has already been deleted.
+* Deleting with `eventId` is usually invoked by `delete` command, where `Notification` and `Person` are deleted together.
+====
+
+// tag::ns2[]
+===== Add-notifications-at-startup operation
+
+At each startup, after initializing the Notification System, ET will then go through the LinkedList of `Notification` in `AddressBook`.
+For each `Notification` in the LinkedList, `NotificationAddedEvent` will be called.
+That said, this may result in multiple threads attempting to make GUI operations at the same time through `MainWindow.showNewNotification`.
+This will result in concurrent modification issues. Thus, `Semaphore` is used to prevent those issues. Please refer to the simplified code of `MainWindow.showNewNotification` at below.
+
+[source, java]
+====
+  //current implementation only allows 1 thread to enter showNewNotification() at the same time.
+  Semaphore = new Semaphore(1);
+  /**
+     * Show in-app notification
+     */
+    public void showNewNotification(ShowNotificationEvent event) {
+        logger.info("Preparing in app notification");
+        //...metadata update
+        //hides notificationCard away from screen
+        notificationCard.setTranslateX(NOTIFICATION_CARD_WIDTH);
+        try {
+            semaphore.acquire();
+        } catch (InterruptedException e) {
+            e.printStackTrace();
+        }
+        notificationCard.setTranslateY(UP * shownNotificationCards.size() * NOTIFICATION_CARD_HEIGHT);
+        shownNotificationCards.add(notificationCard);
+        semaphore.release();
+        //..animations
+    }
+====
+
+==== Design Considerations
+There are a couple of aspects with regards to `Notification` that can be implemented in alternative designs.
+
+===== Aspect: extracting a Person's information
+* **Alternative1 (current choice)**: `searchEmployeeById` mechanism.
+** Pros: provides the latest information even if the `Person` is edited after the `Notification` is created.
+** Cons: requires `id` field to be implemented in `Person` and `AddressBook` class, provides wrong information if `id` is not implemented correctly (e.g. repeated id).
+* ** Alternative2**: storing the Person's Information in `Notification` class.
+** Pros: has a simpler implementation.
+** Cons: provides wrong information if `Person` 's information is edited after `Notification` is created, requires to update `Notification` when `Person` is edited, increases coupling.
+
+===== Aspect: storing `Event` locally
+* **Alternative1 (current choice)**: stores a list of `Notifications` in `AddressBook`.
+** Pros: ensures that notification feature remains working when there's no internet access, saves storage space as only essential information is saved.
+** Cons: has a complicated implementation (creation of `Notification` class and edit of `Person` and `AddressBook` class for `searchEmployeeById` mechanism).
+* **Alternative2** : stores a list of `Event` in `AddressBook`.
+** Pros: has a simpler implementation (doesn't need to implement `Notification` class).
+** Cons: requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, waste of storage space because `Event` class contains a lot of information unnecessary for notification feature.
+* **Alternative3** : stores a list of `Notifications` in `Person`.
+** Pros: has a simpler implementation (doesn't need to implement `searchEmployeeById` mechanism).
+** Cons: compromises performance, especially when there are a lot of employees and only a few `Notification`.
+* **Alternative4** : does not store `Event` locally (relies on Google calendar service).
+** Pros: has the simplest implementation (only need to pull data from Google, does not need to create local class), saves storage space as nothing is stored locally.
+** Cons: compromises notification feature if there's no internet access, requires another mechanism for extracting `ownerName` because `Event` class does not store `ownerName`, compromises performance if internet speed is slow).
+// end::ns2[]
+
+// tag::sort[]
+=== Sort existing employees
+==== Current Implementation
+The implementation of `sort` command involves following objects: +
+
+. Command: SortCommand.
+. Parser: SortCommandParser, AddressBookParser.
+. AddressBook, UniqueEmployeeList.
+
+The details of implementation of `sort` command are as follow:
+
+. `SortCommandParser` guarantees Employees Tracker to accept `sort` command.
+. `SortCommandParser` extracts the sorting field from user input.
+. `ModelManager` and `UniqueEmployeeList` provide sorting algorithm, called by `AddressBook`.
+. `UniqueEmployeeList` will sort the units by giving field.
+
+Here is the sequence diagram of `sort` command:
+
+.Sequence diagram of `sort` command.
+image::SortCommandSeqDia.png[width="800"]
+
+==== Design Considerations
+===== Aspect: Implementation of `SortCommand`
+* **Alternative1(current choice)**: Sort the employees in `UniqueEmployeeList`.
+** Pros: Easy to understand for new developers, and it is the most intuitive way of implementing.
+** Cons: Will create different levels of abstraction of the same sort method in Model for sorting, which results to slightly more work.
+* **Alternative2:** Create multiple `SortBy...` commands, use different comparators in these `SortBy...` commands.
+** Pros: Easier for developer to implement, because sorting by different fields will be executed by different commands separately.
+** Cons: Will raise a lot of redundant codes which can be extracted by Alternative1, and it is not user-friendly to let user treat "sorting by different fields" as different commands.
+
+Here is the code snippet of the execution of `sort` command in `UniqueEmployeeList`:
+
+[source,java]
+----
+    public void sort(String field) {
+            switch (field) {
+            case "name":
+                sortByName();
+                break;
+            case "phone":
+                sortByPhone();
+                break;
+            case "email":
+                sortByEmail();
+                break;
+            case "address":
+                sortByAddress();
+                break;
+            case "tag":
+                sortByTag();
+                break;
+            case "rate":
+                sortByRate();
+                break;
+            default:
+                throw new AssertionError("Sort field should be name, phone, email, tag, address or rate.");
+            }
+        }
+----
+// end::sort[]
+
+// tag::changeTheme[]
+=== Change theme of Employees Tracker
+
+`changeTheme` command is used to change the theme to `dark` or `bright`.
+
+* `changeTheme` is achieved by handling `changeThemeEvent` in `MainWindow`.
+* a new "theme" field is added in `GuiSetting`.
+// end::changeTheme[]
 
 === Logging
 
 We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
-
-[[Implementation-Configuration]]
-=== Configuration
-
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application.
+* `WARNING` : Can continue, but with caution.
+* `INFO` : Information showing the noteworthy actions by the App.
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
 
 == Documentation
+
+This section outlines how to do the documentation for Employees Tracker.
 
 We use asciidoc for writing documentation.
 
 [NOTE]
 We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
-=== Editing Documentation
+=== Editing documentation
 
 See <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to learn how to render `.adoc` files locally to preview the end result of your edits.
 Alternatively, you can download the AsciiDoc plugin for IntelliJ, which allows you to preview the changes you have made to your `.adoc` files in real-time.
 
-=== Publishing Documentation
+=== Publishing documentation
 
 See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to deploy GitHub Pages using Travis.
 
-=== Converting Documentation to PDF format
+=== Converting documentation to PDF format
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
@@ -412,27 +1129,29 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
 .  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
-.Saving documentation as PDF files in Chrome
+.Saving documentation as PDF files in Chrome.
 image::chrome_save_as_pdf.png[width="300"]
 
 [[Testing]]
 == Testing
 
-=== Running Tests
+This section outlines the testing procedure of Employees Tracker.
+
+=== Running tests
 
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 3^rd^ one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`.
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
@@ -441,25 +1160,25 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
 === Types of tests
 
 We have two types of tests:
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
+.  *GUI Tests* - These are tests involving the GUI. They include:
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
 .. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
+.  *Non-GUI Tests* - These are tests not involving the GUI. They include:
 ..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
+e.g. `seedu.address.commons.StringUtilTest`.
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
+e.g. `seedu.address.storage.StorageManagerTest`.
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+e.g. `seedu.address.logic.LogicManagerTest`.
 
 
-=== Troubleshooting Testing
+=== Troubleshooting testing
 **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
 
 * Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
@@ -467,35 +1186,33 @@ e.g. `seedu.address.logic.LogicManagerTest`
 
 == Dev Ops
 
-=== Build Automation
+This section outlines the development and operation of Employees Tracker.
+
+=== Build automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
-=== Continuous Integration
+=== Continuous integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
-=== Coverage Reporting
-
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
-
-=== Documentation Previews
+=== Documentation previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+=== Making a release
 
 Here are the steps to create a new release.
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number. e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+=== Managing dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+A project often depends on third-party libraries. For example, Employees Tracker depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+a. Include those libraries in the repo (this bloats the repo size). +
+b. Require developers to download those libraries manually (this creates extra work for developers).
 
 [[GetStartedProgramming]]
 [appendix]
@@ -536,12 +1253,12 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in Employees Tracker, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Employees Tracker.
 +
 ****
 * Hints
@@ -560,7 +1277,7 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your Employees Tracker application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
@@ -610,7 +1327,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in Employees Tracker.
 +
 **Before**
 +
@@ -623,7 +1340,7 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever Employees Tracker is updated.
 * Solution
 ** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
 ** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
@@ -635,12 +1352,12 @@ image::getting-started-ui-status-after.png[width="500"]
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving Employees Tracker to the cloud. However, the current implementation of the application constantly saves Employees Tracker after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for Employees Tracker storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that Employees Tracker can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -782,13 +1499,30 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
+* is a manger
+* has a need to keep track of a significant number of subordinate employees
+* need to assign work to employees and keep track of it
+* prefers desktop apps over mobile apps
+* can type fast, i.e. >45 words per minute
 * prefers typing over mouse input
 * is reasonably comfortable using CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: keep track of employees and their work easily through a single app
+
+*Feature Contribution*：
+
+. Li Yufei +
+* (minor) be able to lock the application and unlock it and must use the same password
+* (major) each employee has his own timetable and manager can add events on anyone's timetable
+. Yang Yuqing
+* (minor) be able to sort the employees by existing field (ie. name, phone, email, address, rate)
+* (major) UI optimization
+. Ho Bing Xuan
+* (minor) add Rating features
+* (major) notification feature for timetable entry
+. Gilbert Emerson
+* (minor) enhance on the Find feature, able to find by multiple keyphrases and also in multiple fields
+* (major) add Review feature
 
 [appendix]
 == User Stories
@@ -798,35 +1532,81 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *`|new user |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *`|user |add a new person | include employee that have just entered the company
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *`|user |have a dedicated timetable for each employee| trace progress of that person
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *`|user |add a timetable entry on anyone's timetable | assign jobs to employee
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *`|user |edit a timetable entry |update timetable entry information
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *`|user |delete a timetable entry | remove a job or event that is canceled
+
+|`* * *`|user |give employee a rating |evaluate their performance
+
+|`* * *`|user |change employee's rating | update my rating record when the performance of an employee changes
+
+|`* * *`|user |add notes on a timetable entry or on a person | include more details about the entry
+
+|`* * *`|user |search employees by specific criteria (e.g. name and tags) | search employees more easily
+
+|`* * *`|user |identify a person with name when carrying out commands | save time by not having to browse through a long list
+
+|`* *`|user |sort employees by name |locate an employee easily
+
+|`* *`|user |sort employees by their rating |give them bonus salaries accordingly
+
+|`* *`|user |sort employees by their salaries |see their salary conditions
+
+|`* *`|user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* *`|user |have my own timetable |manage my own time
+
+|`* *`|user |start composing an email with a command |send an email to a specific person faster
+
+|`* *`|user |mass adding timetable entry to many employees' timetable at once | save time by not having to add the event to person by person
+
+|`* *`|user |be notified for any deadline for the timetable entry of my employees | be aware of employees who are late in submitting their work
+
+|`* *`|user |export my employees tracker |share information with another user
+
+|`* *`|user |import my employees tracker |obtain information from another user
+
+|`*`|user |see timetable entries happening in other departments |be aware of the progress of other departments
+
+|`*`|user |view to-do-list |see my own upcoming jobs/events
+
+|`*`|user |export a list of people into excel sheet |do collective operations easily on other platform
+
+|`*`|user |login |have personalized privileges/window scheme
+
+|`*`|user |change the window scheme/theme/skin | have personalised experience in the app
+
+|`*`|user |know employee's location |search their location on the map
+
+|`*`|user |lock employees tracker |leave my app open while making unauthorized people cannot access it
+
+|`*`|user |unlock employees tracker |continue to use the app after leaving it locked
+
+|`*`|user |write a review to an employee that has ever worked below me| information his/her current manager of his/her performance
 |=======================================================================
-
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is the `Employees Tracker` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Add a timetable entry on anyone's timetable
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User requests to list employees
+2.   shows a list of employees
+3. User requests to add a entry to an employee's timetable
+4. Employees Tracker adds the entry
 +
 Use case ends.
 
@@ -840,20 +1620,443 @@ Use case ends.
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Employees Tracker shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Give employee a rating
+
+*MSS*
+
+1. User requests to list employees
+2. Employees Tracker shows a list of employees
+3. User requests to give an employee a rating
+4. Employees Tracker add the rating
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The given index is invalid.
++
+[none]
+** 3a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The given rating is not an integer.
++
+[none]
+** 3b1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 4a. The person has already been rated.
++
+[none]
+** 4a1. Employees Tracker updates the rating for the person with the new rating.
++
+Use case ends.
+
+[discrete]
+=== Use case: Sort the employees by their rating
+
+*MSS*
+
+1. User requests to list employees sorted by their ratings
+2. Employees Tracker accesses the list of all employees
+3. Employees Tracker sorts the employees in the list by their ratings
+4. Employees Tracker shows the sorted list
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Mass adding timetable entry to many employees' timetable at once
+
+*MSS*
+
+1. User requests to list all employees
+2. Employees Tracker shows a list of all employees
+3. User requests to add timetable entry to many employees
+4. Employees Tracker add the entry to many employees
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The index range given is invalid.
++
+[none]
+** 3a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use Case: Write a review to an employee that has ever worked below me
+
+*MSS*
+
+1. User requests to list all employees
+2. Employees Tracker shows a list of all employees
+3. User requests to add review to an employee
+4. Employees Tracker add the review to the employee
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty.
++
+Use case ends.
+
+* 3a. The index given is invalid.
++
+[none]
+** 3a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use Case: Export Employees Tracker
+
+*MSS*
+
+1. User requests export Employees Tracker into a directory
+2. Employees Tracker export Employees Tracker data in a file to the directory specified
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The directory is invalid.
++
+[none]
+** 1a1. Employees Tracker shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use Case: Import Employees Tracker
+
+*MSS*
+
+1. User requests import Employees Tracker file from a directory
+2. Employees Tracker import Employees Tracker data from the file in the directory specified
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The directory is invalid.
++
+[none]
+** 1a1. Employees Tracker shows an error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: edit timetable entry
+
+*MSS*
+
+1. User requests to list all persons.
+2. User requests to view the timetable of a person.
+3. Employees Tracker shows the timetable of that person.
+4. User requests to update the information of an entry in the timetable.
+5. Employees Tracker updates the new information for that timetable entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. The given index is invalid.
++
+[none]
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 2b. The person has no timetable entry.
++
+Use case ends.
+
+* 4a. The event name provided by user doesn't exist.
++
+[none]
+** 4a1. Employees Tracker shows an error message
++
+Use case resumes at step 2.
+
+* 4b. The new information given by user doesn't follow command format
++
+[none]
+** 4b1. Employees Tracker shows an error message
++
+Use case resumes at step 2.
+
+* 5a. Employees Tracker couldn't write to save file.
++
+[none]
+** 5a1. Employees Tracker shows error message and requests user to resolve the error.
+** 5a2. User resolves the error.
++
+Use case resumes at step 5.
+
+[discrete]
+=== Use case: delete a timetable entry
+
+*MSS*
+
+1. User requests to list all persons.
+2. User requests to view the timetable of a person.
+3. Employees Tracker shows the timetable of that person.
+4. User requests to delete an entry in that person's timetable.
+5. Employees Tracker deletes the timetable entry.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. The given index is invalid.
++
+[none]
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 2b. The person has no timetable entry.
++
+Use case ends.
+
+* 4a. The event name provided by user doesn't exist.
++
+[none]
+** 4a1. Employees Tracker shows an error message
++
+Use case resumes at step 2.
+
+* 5a. Employees Tracker couldn't write to save file.
++
+[none]
+** 5a1. Employees Tracker shows error message and requests user to resolve the error.
+** 5a2. User resolves the error.
++
+Use case resumes at step 5.
+
+[discrete]
+=== Use case: start composing email
+
+*MSS*
+
+1. User requests to list all persons.
+2. User requests to email a person in the list.
+3. Employees Tracker opens up a webpage for composing email to that person.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. The given index is invalid.
++
+[none]
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 3a. The computer has no access to internet.
++
+[none]
+** 3a1. Employees Tracker shows error message.
++
+Use case ends.
+
+[discrete]
+=== Use case: export a list of people as Excel spreadsheet
+
+*MSS*
+
+1. User requests to list all persons, or perform a search.
+2. User requests to export the list of persons as excel sheet and save it in a save file path.
+3. Employees Tracker exports the list of persons as excel sheet.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The list is empty.
++
+Use case ends.
+
+* 2a. The given save file path is invalid.
++
+[none]
+** 2a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 3a. Employees Tracker couldn't write to save file.
++
+[none]
+** 3a1. Employees Tracker shows error message and requests user to resolve the error.
+** 3a2. User resolves the error.
++
+Use case ends.
+
+[discrete]
+=== Use case: login
+
+*MSS*
+
+1. User starts Employees Tracker program.
+2. Employees Tracker requests user to enter username and password.
+3. User enters his username and password
+4. Employees Tracker shows the content.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The user enters an invalid username or wrong password.
++
+[none]
+** 3a1. Employees Tracker shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Lock Employees Tracker
+
+*MSS*
+
+1. User requests to lock Employees Tracker by entering "lock" and password
+2. Employees Tracker is locked unless user unlocks it.
++
+[none]
+* 2a. When employees tracker is locked, user are required to unlock Employees Tracker before any instruction.
++
+Use case ends.
+
+[discrete]
+=== Use case: Unlock Employees Tracker
+
+*MSS*
+
+1. User requests to unlock Employees Tracker by entering "unlock" and the password set earlier
+2. Employees Tracker unlocked. Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given password is incorrect, which means different from the one set earlier
++
+[none]
+** 1a1. Employees Tracker shows an error message and requires to re-enter password
++
+Use case resumes at step 1
+
+[discrete]
+=== Use case: Change an employee's rating
+
+*MSS*
+
+1. User requests to list employees
+2. Employees Tracker shows a list of employees
+3. User requests to change the rating of one of the employees from the list
+4. Employees Tracker changes the rating of the employee.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The employee does not exist in employees tracker.
++
+[none]
+** 3a1. Employees Tracker shows an error message.
++
+Use case resumes at step 2.
+
+* 3b. The rate is out of bound.
++
+[none]
+** 3b1. Employees Tracker shows an error message
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Change the window scheme/theme/skin
+
+*MSS*
+
+1. User requests to change the scheme/theme/skin on the User Interface
+2. Employees Tracker changes the scheme/theme/skin
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
-.  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
-
-_{More to be added}_
+.  Should be able to hold up to 1000 persons without a noticeable sluggishness (i.e. response time > 500ms) in performance for typical usage.
+.  A user with above average typing speed (i.e. ≥ 45 words per minute) for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The app should be used only by one user.
+.  Only the owner can view the data in the app
+.  The app should be able to apply to people who are generally managing ≤ 200 other people
+.  Should not consume memory more than 2GB
+.  Should be able to be run easily by non-technical user
+.  The save file of the app should be cross-compatible
+.  The app should be used only by one user.
+.  Only the owner can view the data in the app
+.  The app should be able to response the command within 500ms
+.  The app should be able to apply to people who are generally managing ≤ 200 other people
+.  Users should prefer typing over mouse input or other input methods.
+.  Users should be comfortable using CLI apps.
+.  The app should not have flow flaws when running.
+.  The app may utilise third party libraries, API and plug-ins.
+.  The app should be able to access the Internet.
+.  The app should be able to perform basic commands without internet access.
+.  This application should work well both on 32-bit and 64-bit environments.
+.  Should be easy to use by new users
+.  This application should be stable and maintainable
+.  This application is open source
 
 [appendix]
 == Glossary
@@ -889,7 +2092,7 @@ Given below are instructions to test the app manually.
 [NOTE]
 These instructions only provide a starting point for testers to work on; testers are expected to do more _exploratory_ testing.
 
-=== Launch and Shutdown
+=== Launch and shutdown
 
 . Initial launch
 
@@ -903,21 +2106,34 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Make sure you have access to Internet
 
-=== Deleting a person
+Some commands will not work without the access to Internet.
 
-. Deleting a person while all persons are listed
+=== Unlock E.T.
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
-.. Test case: `delete 1` +
-   Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
-.. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
-   Expected: Similar to previous.
+. E.T. is initially locked by default
 
-_{ more test cases ... }_
+.. type `unlock`, key in `admin` (default password) and press kbd:[Enter].
+
+. Change password
+
+.. type `setPassword`, key in old and new password and press kbd:[Enter]. You can press kbd:[Tab] to switch between
+the input fields.
+.. type `lock` to lock E.T..
+.. type `unlock`, key in the new password you just set. E.T. will be unlocked.
+
+=== Add some sample employees
+
+. There are no sample employees at the beginning, need to manually add some, here is some sample employees that can add.
+Copy and paste it in the command box and execute
+
+.. add n/Carl Smith p/98765432 e/johnd@example.com a/John street, block 123, #01-01 t/tester
+.. add n/Betsy Crowe t/tester e/betsycrowe@example.com a/Besty Street p/1234567
+.. add n/John Daniel e/johnda@example.com a/Newgate Prison p/00002222 t/developer
+.. add n/David Li e/davidli@example.com a/David Street p/88881111 t/teamleader
+
+=== See user guide for more commands
 
 === Saving data
 

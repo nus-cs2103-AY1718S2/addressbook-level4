@@ -14,6 +14,7 @@ import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.JumpToListRequestEvent;
+import seedu.address.commons.events.ui.PersonEditedEvent;
 import seedu.address.commons.events.ui.PersonPanelSelectionChangedEvent;
 import seedu.address.model.person.Person;
 
@@ -45,7 +46,7 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.getSelectionModel().selectedItemProperty()
                 .addListener((observable, oldValue, newValue) -> {
                     if (newValue != null) {
-                        logger.fine("Selection in person list panel changed to : '" + newValue + "'");
+                        logger.fine("Selection in employee list panel changed to : '" + newValue + "'");
                         raise(new PersonPanelSelectionChangedEvent(newValue));
                     }
                 });
@@ -66,6 +67,13 @@ public class PersonListPanel extends UiPart<Region> {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         scrollTo(event.targetIndex);
     }
+
+    //@@author emer7
+    @Subscribe
+    public void handlePersonEditedEvent(PersonEditedEvent event) {
+        scrollTo(event.getIndex());
+    }
+    //@@author
 
     /**
      * Custom {@code ListCell} that displays the graphics of a {@code PersonCard}.

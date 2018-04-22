@@ -7,18 +7,36 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import seedu.address.logic.commands.AddCommand;
+import seedu.address.logic.commands.AddPhotoCommand;
+import seedu.address.logic.commands.AuthenCommand;
+import seedu.address.logic.commands.ChangeThemeCommand;
 import seedu.address.logic.commands.ClearCommand;
 import seedu.address.logic.commands.Command;
 import seedu.address.logic.commands.DeleteCommand;
+import seedu.address.logic.commands.DeleteEventCommand;
+import seedu.address.logic.commands.DismissCommand;
 import seedu.address.logic.commands.EditCommand;
+import seedu.address.logic.commands.EmailAllCommand;
+import seedu.address.logic.commands.EmailCommand;
 import seedu.address.logic.commands.ExitCommand;
+import seedu.address.logic.commands.ExportEmployeesCommand;
 import seedu.address.logic.commands.FindCommand;
 import seedu.address.logic.commands.HelpCommand;
 import seedu.address.logic.commands.HistoryCommand;
 import seedu.address.logic.commands.ListCommand;
+import seedu.address.logic.commands.LockCommand;
+import seedu.address.logic.commands.MyCalendarCommand;
+import seedu.address.logic.commands.NotiCommand;
+import seedu.address.logic.commands.RateCommand;
 import seedu.address.logic.commands.RedoCommand;
+import seedu.address.logic.commands.ReviewCommand;
 import seedu.address.logic.commands.SelectCommand;
+import seedu.address.logic.commands.SetPasswordCommand;
+import seedu.address.logic.commands.SortCommand;
+import seedu.address.logic.commands.TestAddEventCommand;
+import seedu.address.logic.commands.TodoListCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.logic.commands.UnlockCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
 
 /**
@@ -54,6 +72,14 @@ public class AddressBookParser {
         case EditCommand.COMMAND_WORD:
             return new EditCommandParser().parse(arguments);
 
+        case RateCommand.COMMAND_WORD:
+            return new RateCommandParser().parse(arguments);
+
+        //@@author emer7
+        case ReviewCommand.COMMAND_WORD:
+            return new ReviewCommandParser().parse(arguments);
+        //@@author
+
         case SelectCommand.COMMAND_WORD:
             return new SelectCommandParser().parse(arguments);
 
@@ -83,6 +109,57 @@ public class AddressBookParser {
 
         case RedoCommand.COMMAND_WORD:
             return new RedoCommand();
+
+        case TestAddEventCommand.COMMAND_WORD:
+            return new TestAddEventCommandParser().parse(arguments);
+
+        case SortCommand.COMMAND_WORD:
+            return new SortCommandParser().parse(arguments);
+
+        case LockCommand.COMMAND_WORD:
+            return new LockCommand();
+
+        case UnlockCommand.COMMAND_WORD:
+            return new UnlockCommandParser().parse(arguments);
+
+        case SetPasswordCommand.COMMAND_WORD:
+            return new SetPasswordCommandParser().parse(arguments);
+
+        case ChangeThemeCommand.COMMAND_WORD:
+            return new ChangeThemeCommandParser().parse(arguments);
+
+        case AddCommand.TEST_COMMAND_WORD:
+            return new AddCommandParser().parse(arguments, true);
+
+        case DeleteEventCommand.COMMAND_WORD:
+            return new DeleteEventCommandParser().parse(arguments);
+
+        case NotiCommand.COMMAND_WORD:
+            return new NotiCommand();
+
+        case TodoListCommand.COMMAND_WORD:
+            return new TodoListCommand();
+
+        case MyCalendarCommand.COMMAND_WORD:
+            return new MyCalendarCommand();
+
+        case AddPhotoCommand.COMMAND_WORD:
+            return new AddPhotoCommandParser().parse(arguments);
+
+        case AuthenCommand.COMMAND_WORD:
+            return new AuthenCommand();
+
+        case DismissCommand.COMMAND_WORD:
+            return new DismissCommandParser().parse(arguments);
+
+        case EmailCommand.COMMAND_WORD:
+            return new EmailCommandParser().parse(arguments);
+
+        case EmailAllCommand.COMMAND_WORD:
+            return new EmailAllCommand();
+
+        case ExportEmployeesCommand.COMMAND_WORD:
+            return new ExportEmployeesCommand();
 
         default:
             throw new ParseException(MESSAGE_UNKNOWN_COMMAND);

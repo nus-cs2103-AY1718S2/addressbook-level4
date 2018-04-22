@@ -1,8 +1,13 @@
 package seedu.address.model;
 
+import java.util.LinkedList;
+
 import javafx.collections.ObservableList;
+import seedu.address.model.notification.Notification;
 import seedu.address.model.person.Person;
+import seedu.address.model.photo.Photo;
 import seedu.address.model.tag.Tag;
+
 
 /**
  * Unmodifiable view of an address book
@@ -21,4 +26,23 @@ public interface ReadOnlyAddressBook {
      */
     ObservableList<Tag> getTagList();
 
+    //@@author crizyli
+    /**
+     * Returns an unmodifiable view of the tags list.
+     * This list will not contain any duplicate tags.
+     */
+    ObservableList<Photo> getPhotoList();
+
+    //@@author IzHoBX
+    /**
+     * Returns an unmodifiable view of the notification list.
+     */
+    LinkedList<Notification> getNotificationsList();
+
+    int getNextId();
+    //@@author
+
+    String getPassword();
+
+    Person findPersonById(int id);
 }

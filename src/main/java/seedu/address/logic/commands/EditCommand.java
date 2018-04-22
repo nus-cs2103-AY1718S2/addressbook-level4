@@ -5,6 +5,7 @@ import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
 import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
 
@@ -24,8 +25,11 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
+import seedu.address.model.review.Review;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -35,22 +39,23 @@ public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the employee identified "
+            + "by the index number used in the last employees listing. "
             + "Existing values will be overwritten by the input values.\n"
             + "Parameters: INDEX (must be a positive integer) "
             + "[" + PREFIX_NAME + "NAME] "
             + "[" + PREFIX_PHONE + "PHONE] "
             + "[" + PREFIX_EMAIL + "EMAIL] "
             + "[" + PREFIX_ADDRESS + "ADDRESS] "
+            + "[" + PREFIX_RATING + "RATING] "
             + "[" + PREFIX_TAG + "TAG]...\n"
             + "Example: " + COMMAND_WORD + " 1 "
             + PREFIX_PHONE + "91234567 "
             + PREFIX_EMAIL + "johndoe@example.com";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
+    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited employee: %1$s";
     public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_DUPLICATE_PERSON = "This employee already exists in Employees Tracker.";
 
     private final Index index;
     private final EditPersonDescriptor editPersonDescriptor;
@@ -77,7 +82,7 @@ public class EditCommand extends UndoableCommand {
         } catch (DuplicatePersonException dpe) {
             throw new CommandException(MESSAGE_DUPLICATE_PERSON);
         } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            throw new AssertionError("The target employee cannot be missing");
         }
         model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
@@ -106,9 +111,19 @@ public class EditCommand extends UndoableCommand {
         Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
         Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
         Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
+        Rating updatedRating = editPersonDescriptor.getRating().orElse(personToEdit.getRating());
+        Set<Review> updatedReviews = editPersonDescriptor.getReviews().orElse(personToEdit.getReviews());
         Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        //@@author emer7
+        Person toReturn = new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
+                personToEdit.getCalendarId());
+        toReturn.setRating(updatedRating);
+        toReturn.setReviews(updatedReviews);
+        toReturn.setId(personToEdit.getId());
+        toReturn.setPhotoName(personToEdit.getPhotoName());
+        return toReturn;
+        //@@author
     }
 
     @Override
@@ -140,6 +155,9 @@ public class EditCommand extends UndoableCommand {
         private Email email;
         private Address address;
         private Set<Tag> tags;
+        private Set<Review> reviews;
+        private Rating rating;
+        private Photo photo;
 
         public EditPersonDescriptor() {}
 
@@ -152,14 +170,18 @@ public class EditCommand extends UndoableCommand {
             setPhone(toCopy.phone);
             setEmail(toCopy.email);
             setAddress(toCopy.address);
+            setRating(toCopy.rating);
             setTags(toCopy.tags);
+            setReviews(toCopy.reviews);
+            setPhoto(toCopy.photo);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
         public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.rating,
+                    this.reviews, this.tags);
         }
 
         public void setName(Name name) {
@@ -194,6 +216,25 @@ public class EditCommand extends UndoableCommand {
             return Optional.ofNullable(address);
         }
 
+        public void setPhoto(Photo photo) {
+            this.photo = photo;
+        }
+
+        public Optional<Photo> getPhoto() {
+            return Optional.ofNullable(photo);
+        }
+
+        //@@author IzHoBX
+        public void setRating(Rating rating) {
+            this.rating = rating;
+        }
+
+        public Optional<Rating> getRating() {
+            return Optional.ofNullable(rating);
+        }
+        //@@author
+
+
         /**
          * Sets {@code tags} to this object's {@code tags}.
          * A defensive copy of {@code tags} is used internally.
@@ -210,6 +251,25 @@ public class EditCommand extends UndoableCommand {
         public Optional<Set<Tag>> getTags() {
             return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
         }
+
+        //@@author emer7
+        /**
+         * Sets {@code reviews} to this object's {@code reviews}.
+         * A defensive copy of {@code reviews} is used internally.
+         */
+        public void setReviews(Set<Review> reviews) {
+            this.reviews = (reviews != null) ? new HashSet<>(reviews) : null;
+        }
+
+        /**
+         * Returns an unmodifiable review set, which throws {@code UnsupportedOperationException}
+         * if modification is attempted.
+         * Returns {@code Optional#empty()} if {@code reviews} is null.
+         */
+        public Optional<Set<Review>> getReviews() {
+            return (reviews != null) ? Optional.of(Collections.unmodifiableSet(reviews)) : Optional.empty();
+        }
+        //@@author
 
         @Override
         public boolean equals(Object other) {

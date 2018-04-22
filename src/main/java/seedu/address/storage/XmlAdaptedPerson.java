@@ -14,6 +14,9 @@ import seedu.address.model.person.Email;
 import seedu.address.model.person.Name;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.Phone;
+import seedu.address.model.person.Rating;
+import seedu.address.model.photo.Photo;
+import seedu.address.model.review.Review;
 import seedu.address.model.tag.Tag;
 
 /**
@@ -21,7 +24,7 @@ import seedu.address.model.tag.Tag;
  */
 public class XmlAdaptedPerson {
 
-    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Person's %s field is missing!";
+    public static final String MISSING_FIELD_MESSAGE_FORMAT = "Employee's %s field is missing!";
 
     @XmlElement(required = true)
     private String name;
@@ -31,6 +34,16 @@ public class XmlAdaptedPerson {
     private String email;
     @XmlElement(required = true)
     private String address;
+    @XmlElement(required = true)
+    private String calendarId;
+    @XmlElement
+    private String rating;
+    @XmlElement(required = true)
+    private String photoName;
+    @XmlElement
+    private List<XmlAdaptedReview> reviewed = new ArrayList<>();
+    @XmlElement
+    private int id;
 
     @XmlElement
     private List<XmlAdaptedTag> tagged = new ArrayList<>();
@@ -43,8 +56,10 @@ public class XmlAdaptedPerson {
 
     /**
      * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     * To retain until XmlAdaptedPersonTest is updated.
      */
-    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged) {
+    public XmlAdaptedPerson(String name, String phone, String email, String address, List<XmlAdaptedTag> tagged,
+                            String calendarId, String photoName) {
         this.name = name;
         this.phone = phone;
         this.email = email;
@@ -52,6 +67,36 @@ public class XmlAdaptedPerson {
         if (tagged != null) {
             this.tagged = new ArrayList<>(tagged);
         }
+        this.calendarId = calendarId;
+        this.id = Person.UNINITIALISED_ID;
+        this.photoName = photoName;
+    }
+
+    /**
+     * Constructs an {@code XmlAdaptedPerson} with the given person details.
+     */
+    public XmlAdaptedPerson(String name,
+                            String phone,
+                            String email,
+                            String address,
+                            String rating,
+                            List<XmlAdaptedReview> reviewed,
+                            List<XmlAdaptedTag> tagged,
+                            int id,
+                            String photoName) {
+        this.name = name;
+        this.phone = phone;
+        this.email = email;
+        this.address = address;
+        this.rating = rating;
+        if (reviewed != null) {
+            this.reviewed = new ArrayList<>(reviewed);
+        }
+        if (tagged != null) {
+            this.tagged = new ArrayList<>(tagged);
+        }
+        this.id = id;
+        this.photoName = photoName;
     }
 
     /**
@@ -64,10 +109,18 @@ public class XmlAdaptedPerson {
         phone = source.getPhone().value;
         email = source.getEmail().value;
         address = source.getAddress().value;
+        rating = source.getRating().value.toString();
+        reviewed = new ArrayList<>();
+        for (Review review : source.getReviews()) {
+            reviewed.add(new XmlAdaptedReview(review));
+        }
         tagged = new ArrayList<>();
         for (Tag tag : source.getTags()) {
             tagged.add(new XmlAdaptedTag(tag));
         }
+        calendarId = source.getCalendarId();
+        id = source.getId();
+        photoName = source.getPhotoName();
     }
 
     /**
@@ -79,6 +132,11 @@ public class XmlAdaptedPerson {
         final List<Tag> personTags = new ArrayList<>();
         for (XmlAdaptedTag tag : tagged) {
             personTags.add(tag.toModelType());
+        }
+
+        final List<Review> personReviews = new ArrayList<>();
+        for (XmlAdaptedReview review : reviewed) {
+            personReviews.add(review.toModelType());
         }
 
         if (this.name == null) {
@@ -113,8 +171,35 @@ public class XmlAdaptedPerson {
         }
         final Address address = new Address(this.address);
 
+        //@@author IzHoBX
+        if (this.rating == null) {
+            this.rating = (new Rating()).toString();
+        }
+        if (!Rating.isValidRating(this.rating)) {
+            throw new IllegalValueException(Rating.MESSAGE_RATING_CONSTRAINTS);
+        }
+
+        final Rating rating = new Rating(this.rating);
+        //@@author crizyli
+
+        final Photo photo = new Photo(this.photoName);
+
+        //@@author emer7
+        final Set<Review> reviews = new HashSet<>(personReviews);
+        //@@author
+
         final Set<Tag> tags = new HashSet<>(personTags);
-        return new Person(name, phone, email, address, tags);
+
+        //@@author emer7
+        Person toReturn = new Person(name, phone, email, address, tags, calendarId);
+        toReturn.setRating(rating);
+        toReturn.setReviews(reviews);
+        toReturn.setId(id);
+        toReturn.setPhotoName(photo.getName());
+        //System.out.println(toReturn.getName().fullName + "  " + toReturn.getPhotoName());
+
+        return toReturn;
+        //@@author
     }
 
     @Override

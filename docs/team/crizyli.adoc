@@ -1,0 +1,186 @@
+= Li Yufei - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Employees Tracker
+
+---
+
+== Overview
+
+Employees Tracker (E.T.) is a *Human Resource Manager* application that helps managers to manage their subordinates. Its
+has 2 main functionalities: providing information about employees, as well as helping in tracking the tasks assigned to
+each employee.
+
+Its User Interface (UI) is a hybrid of Command Line Interface (CLI) while still having the benefits of a Graphical User
+Interface (GUI). That said, ET will suit you better if you can type fast and are familiar with CLI.
+
+.UI page
+image::Ui.png[width="600"]
+
+== Summary of contributions
+
+*Code contributed*: [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/functional/crizyli.md[Functional code]] [https://github.com/CS2103JAN2018-W15-B1/main/blob/master/collated/test/crizyli.md[Test code]] {links to collated code files}
+
+=== Enhancement Added: Lock and Unlock System
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=unlock]
+include::../UserGuide.adoc[tag=lock]
+
+#End of Extract#
+
+---
+
+==== Justification
+
+Employees Tracker is a locked by default application in order to prevent the data from unauthorized access. With the lock-unlock system, only the application owner(typically, the manager) can access the application with a unlock password only known to him.
+
+==== Implementation
+
+(Pull requests https://github.com/CS2103JAN2018-W15-B1/main/pull/6[#6],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/102[#102],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/110[#110],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/192[#192])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=lockunlock]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Calendars and Operations on Calendars
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addevent]
+include::../UserGuide.adoc[tag=deleteevent]
+include::../UserGuide.adoc[tag=ct]
+include::../UserGuide.adoc[tag=auth]
+
+#End of Extract#
+
+---
+
+==== Justification
+Each employee who exists in ET will have his or her owm calendar. Manager can manage all the calendars through some commands
+that will be covered next.
+
+==== Implementation
+
+(Pull requests https://github.com/CS2103JAN2018-W15-B1/main/pull/61[#61],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/122[#122])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: AddPhotoCommand
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+==== Justification
+Employees have a photo field, and manager can update this field for every employee.
+
+==== Implementation
+
+(Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/165[#165],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/166[#166],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/169[#169],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/173[#173],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/197[#197])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=addphoto]
+
+#End of Extract#
+
+---
+
+=== Enhancement Added: Export Employees Data
+
+==== External behavior
+
+---
+#Start of Extract [from: User Guide]#
+
+include::../UserGuide.adoc[tag=export]
+
+#End of Extract#
+
+---
+
+==== Justification
+Manager can export the information of employees to an excel file.
+
+==== Implementation
+
+(Pull request https://github.com/CS2103JAN2018-W15-B1/main/pull/208[#208])
+
+---
+#Start of Extract [from: Developer Guide]#
+
+include::../DeveloperGuide.adoc[tag=exportcom]
+
+#End of Extract#
+
+---
+
+=== Enhancement Proposed: Data Encryption
+
+For now, the application's password and employees' information are in plaintext and visible to others besides the user. It is crucial to
+to do data encryption to secure the data from leaking. I am proposing to add a new class `Crypto` which is used to encrypt and decrypt the
+data. Refer to the diagram below:
+
+.Data encryption precess
+image::dataencrypt.png[width="600"]
+
+---
+
+=== Other enhancements and contributions
+
+* Bugs found and fixed: (https://github.com/CS2103JAN2018-W15-B1/main/issues/171[#171],
+https://github.com/CS2103JAN2018-W15-B1/main/issues/118[#118],
+https://github.com/CS2103JAN2018-W15-B1/main/issues/22[#22],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/222[#222],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/197[#197],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/187[#187],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/127[#127],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/122[#122],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/112[#112],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/60[#60],
+https://github.com/CS2103JAN2018-W15-B1/main/pull/43[#43])
+
+* Bugs found or suggestions during acceptance testing for other group: (https://github.com/CS2103JAN2018-F11-B1/main/issues/167[#167],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/172[#172],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/174[#174],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/183[#183],
+https://github.com/CS2103JAN2018-F11-B1/main/issues/191[#191])
+
+

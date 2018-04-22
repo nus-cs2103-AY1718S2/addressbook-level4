@@ -15,16 +15,22 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import javafx.collections.ObservableList;
+import seedu.address.commons.core.index.Index;
 import seedu.address.logic.CommandHistory;
 import seedu.address.logic.UndoRedoStack;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.Model;
 import seedu.address.model.ReadOnlyAddressBook;
+import seedu.address.model.notification.Notification;
+import seedu.address.model.notification.exceptions.NotificationNotFoundException;
 import seedu.address.model.person.Person;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.photo.Photo;
 import seedu.address.testutil.PersonBuilder;
+import seedu.address.ui.NotificationCard;
+import seedu.address.ui.NotificationCenter;
 
 public class AddCommandTest {
 
@@ -96,6 +102,27 @@ public class AddCommandTest {
      * A default model stub that have all of the methods failing.
      */
     private class ModelStub implements Model {
+
+        @Override
+        public Person getPerson(int index) throws IndexOutOfBoundsException {
+            return null;
+        }
+
+        @Override
+        public void setPassword(String password) {
+            return;
+        }
+
+        @Override
+        public String getPassword() {
+            return null;
+        }
+
+        @Override
+        public void addNotification(Notification e) {
+
+        }
+
         @Override
         public void addPerson(Person person) throws DuplicatePersonException {
             fail("This method should not be called.");
@@ -130,8 +157,46 @@ public class AddCommandTest {
         }
 
         @Override
+        public ObservableList<Photo> getPhotoList() {
+            fail("This method should not be called.");
+            return null;
+        }
+
+        //@@author Yoochard
+        @Override
+        public void sort(String field) {
+            fail("This method should not be called.");
+        }
+        //@@author
+
+        @Override
         public void updateFilteredPersonList(Predicate<Person> predicate) {
             fail("This method should not be called.");
+        }
+
+        @Override
+        public void findAllSavedNotifications() {
+        }
+
+        @Override
+        public void deleteNotification(String id, boolean deleteFromAddressBookOnly)
+                throws NotificationNotFoundException {
+
+        }
+
+        @Override
+        public void setNotificationCenter(NotificationCenter notificationCenter) {
+
+        }
+
+        @Override
+        public NotificationCenter getNotificationCenter() {
+            return null;
+        }
+
+        @Override
+        public NotificationCard deleteNotificationByIndex(Index targetIndex) throws NotificationNotFoundException {
+            return null;
         }
     }
 

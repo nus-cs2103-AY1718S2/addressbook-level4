@@ -2,7 +2,7 @@
 :imagesDir: ../images
 :stylesDir: ../stylesheets
 
-== PROJECT: CLIndar
+== PROJECT: AddressBook - Level 4
 
 ---
 
@@ -35,6 +35,7 @@ application worked.
 *** Coming out with most of the user stories for the team's major enhancements.
 ** Enhancements to existing features:
 *** Added 'esc' function feature whereby pressing 'esc' key allows deselection of list cell.
+//*** Wrote additional tests for existing features to increase coverage from 88% to 92% (Pull requests https://github.com[#36], https://github.com[#38])
 ** Documentation:
 *** Reviewed the language and grammar of the developer guide.
 *** Included and updated pictures and diagrams in the developer guide.

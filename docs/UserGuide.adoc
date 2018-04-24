@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= CLIndar - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -11,15 +11,29 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W13-B3/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
+// tag::introduction[]
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+CLIndar is a desktop application that helps university computing students manage their tasks and events, such as:
 
-== Quick Start
+* Keeping track of tasks and events and be reminded of their due dates.
+
+* Recording all completed tasks and finished events, so that the student knows what he has done.
+
+CLIndar is **Command-Line Interface (CLI)** based  and uses **Linux-style commands**, which computing students are familiar with. Thus, compared to traditional Graphical User Interface (GUI) applications,
+CLIndar is faster and provides more convenience for computing students.
+
+The current version of CLIndar is 1.5 and is available on Windows and Linux.
+// end::introduction[]
+
+// tag::getstarted[]
+== Get Started
+
+To start using CLIndar, follow the instructions below:
 
 .  Ensure you have Java version `1.8.0_60` or later installed in your Computer.
 +
@@ -27,238 +41,366 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+
+.  Download the latest `CLIndar.jar` link:{repoURL}/releases[here].
+.  Copy the file to the folder you want to use as the home folder for CLIndar.
+.  Double-click the file to start the app. The GUI should appear in a few seconds, as seen below.
 +
+
 image::Ui.png[width="790"]
+
 +
 .  Type the command in the command box and press kbd:[Enter] to execute it. +
 e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+Some example commands you can try:
 
-.  Refer to <<Features>> for details of each command.
+* *`task`* `n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/Enhance major component`: adds Software Engineering task to Desk Board.
+* *`event`* `n/Software Project s/01/05/2018 8:00 e/01/08/2018 8:00 l/School of Computing`: adds Software Project event to Desk Board.
+* *`ls task`* : lists all uncompleted tasks.
+* *`exit`* : exits the app.
 
+Refer to <<Features>> for details of commands in CLIndar.
+// end::getstarted[]
 [[Features]]
 == Features
 
-====
-*Command Format*
+The following describes the command format in CLIndar:
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
-* Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
-====
+* *Words in `UPPER_CASE` are the parameters to be supplied by the user.* +
+For example, in the following format `task n/NAME`,
+  `NAME` must be supplied by the user as the task name. The following is an example of the command to be keyed in by user:
+  `task n/Software Engineering Milestone 1`.
 
-=== Viewing help : `help`
+* *Items in square brackets are optional.* +
+For example,  `n/NAME [r/REMARK]` can be used as `n/Software Engineering Milestone 1 r/urgent` or as `n/Software Engineering Milestone 1`.
 
-Format: `help`
+* *Parameters can be in any order.* +
+For example, if the command specifies `n/NAME d/DATETIME`, `d/DATETIME n/NAME` is also acceptable.
 
-=== Adding a person: `add`
+// tag::helpcommand[]
+=== Viewing help : `help` or `man` `[As of  v1.1]`
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+Shows the help menu for all of the commands or only the `COMMAND_WORD` requested.
 
-[TIP]
-A person can have any number of tags (including 0)
+*Format:* `help`, `help COMMAND_WORD`, `man` or `man COMMAND_WORD`
 
-Examples:
+*Examples:*
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `help`
+* `man`
+* `help task`
+* `man task`
+* `help man`
+// end::helpcommand[]
+// tag::taskevent[]
+=== Adding a task: `task` `[As of  v1.2]`
 
-=== Listing all persons : `list`
+Adds a task to Desk Board.
 
-Shows a list of all persons in the address book. +
-Format: `list`
+*Format:* `task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`
 
-=== Editing a person : `edit`
+[NOTE]
+DUE_DATE_TIME parameter can be in d/m/y h:m or dd/mm/yy hh:mm
 
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+*Examples:*
 
-****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
-****
+* `task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`
+* `task n/Programming Methodology Assignment 2 d/16/3/2018 23:59`
 
-Examples:
+=== Adding an event: `event` `[As of  v1.3]`
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+Adds an event to Desk Board. +
 
-=== Locating persons by name: `find`
+*Format:* `event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+[NOTE]
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+Both START_TIME and END_TIME parameters can be in d/m/y h:m
+or dd/mm/yy hh:mm
 
-Examples:
+*Examples:*
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`
+* `event n/Blockchain Talk s/16/3/2018 16:00 e/16/03/2018 18:00`
+// end::taskevent[]
 
-=== Deleting a person : `delete`
+// tag::edit[]
+=== Edit a task: `edit task` `[As of v1.5]`
+Editing attributes of a task identified by its index in the task list.
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+*Format:* `edit task INDEX [n/NAME] [d/DUE_DATE_TIME] [r/REMARK] [t/TAGS]`
 
-****
-* Deletes the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* 1, 2, 3, ...
-****
+*Examples:*
 
-Examples:
+* `edit task 1 n/Project 1` +
+Rename the 1st task displayed to 'Project 1'
 
-* `list` +
-`delete 2` +
-Deletes the 2nd person in the address book.
-* `find Betsy` +
-`delete 1` +
-Deletes the 1st person in the results of the `find` command.
+* `edit task 2 n/edited name d/01/01/2018 23:59  r/new remark t/edited` +
+Edit the 2nd task in the list.
 
-=== Selecting a person : `select`
-
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
-
-****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
-****
-
-Examples:
-
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
-
-=== Listing entered commands : `history`
-
-Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+* `edit task 3 r/` +
+Removes all the tags of task 3
 
 [NOTE]
 ====
-Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
+`edit command would simply replace the whole list of tags with the list of `tags` provided by the inputs rather than adding the `tags` to the tag list.
+As such `edit task INDEX r/` would remove all the `tags` of the identified task.
+====
+
+
+=== Edit an event: `edit event` `[As of v1.5]`
+Editing attributes of a event identified by its index in the event list.
+
+*Format:* `edit event INDEX [n/NAME] [s/START_TIME] [e/END_TIME] [l/LOCATION] [r/REMARK]`
+
+*Examples:*
+
+* `edit event 1 n/Project 1` +
+Rename the 1st event displayed to 'Project 1'
+
+* `edit event 2 n/edited name s/01/01/2018 23:59 e/02/01/2018 23:59 l/new location  r/new remark t/edited` +
+Edit the 2nd event in the list.
+
+* `edit task 3 r/` +
+Removes all the tags of event 3
+
+[NOTE]
+====
+`edit` command would simply replace the whole list of tags with the list of `tags` provided by the inputs rather than adding the `tags` to the tag list.
+As such `edit event INDEX r/` would remove all the `tags` of the identified event.
+====
+// end::edit[]
+// tag::listcommand[]
+
+=== Listing tasks and events: `ls` `[As of  v1.4]`
+
+Shows one or two lists of tasks and events in Desk Board as described below.
+
+*Format:*
+
+* `ls task`: shows only uncompleted tasks.
+* `ls event`: shows only upcoming events.
+* `ls`: shows both uncompleted tasks and upcoming events in 2 separate lists.
+// end::listcommand[]
+
+
+=== Removing a task or event: `rm` `[As of  v1.4]`
+
+Removes a task or event from Desk Board according to the following conditions:
+
+* Removes the task or event at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* e.g. 1, 2, 3.
+
+*Format:*
+
+* `rm task INDEX`: removes a task.
+* `rm event INDEX`: removes an event.
+
+*Example:*
+
+* `ls task` +
+`rm task 2` +
+Removes the 2nd task in Desk Board.
+
+=== Completing a task: `complete task` `[As of  v1.5]`
+
+Completes the task at the specified `INDEX` based on the most recent listing.
+
+*Format:* `complete task INDEX`
+
+*Examples:*
+
+* `ls task` +
+`complete task 3` +
+Completes the 3rd task in Desk Board.
+
+
+
+// tag::find[]
+=== Finding task by name: `find task` `[As of v1.5]`
+Shows a list of all tasks and/or event which contains any given keyword in its name.
+
+*Format:* find task LIST_OF_KEYWORDS or find event LIST_OF_KEYWORDS or find LIST_OF_KEYWORDS
+
+*Examples:*
+
+* `find task CS2101` +
+Finds all tasks with name containing `CS2101`.
+
+* `find event exam` +
+Finds all events with name containing `exam`.
+
+* `find CS2101` +
+Finds all tasks and event with name containing `CS2101`.
+
+* `find CS2101 exam` +
+Finds all tasks and event with name containing either `CS2101` or `exam`.
+
+[NOTE]
+====
+* `find` command is case sensitive and will returns result that even part of the name matches the keywords.
+* `list` command can be used to retrieve the full list of event and task after this command.
+* `find` command is not undoable or redoable,
+====
+// end::find[]
+
+=== Shows overdue tasks: `overdue` `[As of v1.5]`
+
+Shows a list of tasks that remain uncompleted after their respective due dates.
+
+*Format:* `overdue`
+
+=== Selecting a task or event: `select task` or `select event` `[As of  v1.5]`
+
+Select the task or event at the specified `INDEX` based on the most recent listing.
+
+*Format:* `select task INDEX` or `select event INDEX`
+
+
+
+=== Listing entered commands : `history` `[Coming Soon in  v1.5]`
+
+Lists all the commands that you have entered in reverse chronological order.
+
+*Format:* `history`
+
+[NOTE]
+====
+Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box, just like in Linux.
 ====
 
 // tag::undoredo[]
-=== Undoing previous command : `undo`
+=== Undoing previous command : `undo` or `u`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores Desk Board to the state before the previous _undoable_ command was executed. +
+
+*Format:* `undo` or `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands are commands that modify Desk Board's content (e.g. `task`, `rm task`).
 ====
 
-Examples:
+*Examples:*
 
-* `delete 1` +
-`list` +
-`undo` (reverses the `delete 1` command) +
+* `rm task 1` +
+`ls task` +
+`undo` (reverses the `rm task 1` command) +
 
-* `select 1` +
-`list` +
-`undo` +
-The `undo` command fails as there are no undoable commands executed previously.
-
-* `delete 1` +
+* `rm event 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
+`u` (reverses the `clear` command) +
+`u` (reverses the `rm event 1` command)
 
-=== Redoing the previously undone command : `redo`
+=== Redoing previously undone command : `redo` or `r`
 
 Reverses the most recent `undo` command. +
-Format: `redo`
 
-Examples:
+*Format:* `redo` or `r`
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+*Examples:*
 
-* `delete 1` +
+* `rm task 1` +
+`undo` (reverses the `rm task 1` command) +
+`redo` (reapplies the `rm task 1` command) +
+
+* `rm task 1` +
 `redo` +
 The `redo` command fails as there are no `undo` commands executed previously.
 
-* `delete 1` +
+* `rm task 1` +
 `clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
+`u` (reverses the `clear` command) +
+`u` (reverses the `rm task 1` command) +
+`r` (reapplies the `rm task 1` command) +
+`r` (reapplies the `clear` command) +
 // end::undoredo[]
 
-=== Clearing all entries : `clear`
+=== Clearing all entries : `clear` or `c` `[Coming Soon in  v1.5]`
 
-Clears all entries from the address book. +
-Format: `clear`
+Clears all entries from Desk Board.
 
-=== Exiting the program : `exit`
+*Format:* `clear` or `c`
 
-Exits the program. +
-Format: `exit`
+// tag::exportimport[]
+=== Exporting data : `export` `[As of v1.5]`
+
+Exports Desk Board data into an xml file in the specified directory.
+
+[NOTE]
+This command does not allow overwriting of existing file.
+If a file with the same name exists in the same directory as `FILE_PATH`, then this command will not be executed.
+
+*Format:* `export f/FILE_PATH`
+
+*Example:*
+
+* `export f/C:\data\deskBoard.xml`
+
+=== Importing data : `import` `[As of v1.5rc]`
+
+Imports all entries from another Desk Board file in the specified file path.
+
+*Format:* `import f/FILE_PATH`
+
+*Example:*
+
+* `import f/C:\data\deskBoard.xml`
+// end::exportimport[]
+
+=== Exiting the program : `exit` `[As of v1.4.1]`
+
+Exits the program.
+
+*Format:* `exit`
+
+=== Listing all completed tasks: `ls complete task` or `ls com task` `[Coming Soon in  v1.5]`
+
+Shows a list of all completed tasks in Desk Board. +
+
+*Format:* `ls complete task` or `ls com task`
+
+=== Listing all past events: `ls past event` `[Coming Soon in v2.0]`
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+The data are saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
-
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
 
 == FAQ
 
 *Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous CLIndar folder.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
-* *Clear* : `clear`
-* *Delete* : `delete INDEX` +
-e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
-e.g. `edit 2 n/James Lee e/jameslee@example.com`
-* *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
-* *Help* : `help`
-* *Select* : `select INDEX` +
-e.g.`select 2`
-* *History* : `history`
-* *Undo* : `undo`
-* *Redo* : `redo`
+[cols="10%,<10%,<25%,<25%,<30%",options="header",]
+|=======================================================================
+|Command Word   |Alias      |Format                 |Example            |Function
+|`clear`        |`c`        |`clear`                |[[empty]]          |Clears all entries
+|`complete task`|`com task` |`complete task INDEX`  |`complete task 1`  |Completes task at index 1
+|`edit event`   |[[empty]]  |`edit event INDEX [n/NAME] [s/START_TIME] [e/END_TIME] [l/LOCATION] [r/REMARK]`|`edit event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`|Edit event with index 1 in the deskboard
+|`edit task`    |[[empty]]  |`edit task INDEX [n/NAME] [d/DUE_DATE_TIME] [r/REMARK] [t/TAGS]`|`edit task 3 n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`|Edit the task with index 3 in the Desk Board
+|`event`        |[[empty]]  |`event n/NAME s/START_TIME e/END_TIME [l/LOCATION] [r/REMARK]`|`event n/Software Project s/1/5/2018 8:00 e/01/08/2018 8:00 l/School of Computing r/remember to bring laptop charger`|Adds an event to Desk Board
+|`exit`         |[[empty]]  |`exit`                 |[[empty]]          |Exits the program
+|`export`       |[[empty]]  |`export f/FILE_PATH`   |`export f/C:\data\deskBoard.xml`      |Exports Desk Board data into an xml file in specified directory
+|`find`         |[[empty]]  |`find KEYWORD`         |`find CS2101`      |Finds events and tasks with name containing the given keyword
+|`find event`   |[[empty]]  |`find event KEYWORD`   |`find event cS2101`|Finds events with name containing the given keyword
+|`find task`    |[[empty]]  |`find task KEYWORD`    |`find task cS2101` |Finds tasks with name containing the given keyword
+|`history`      |[[empty]]  |`history`              |[[empty]]          |Lists all entered commands
+|`import`       |[[empty]]  |`import f/FILE_PATH`   |`import f/C:\data\deskBoard.xml`      |Imports Desk Board data from specified xml file
+|`list`         |`ls`       |`list`                 |[[empty]]          |Lists all uncompleted tasks and upcoming events
+|`list event`   |`ls event` |`list event`           |[[empty]]          |Lists all upcoming events only
+|`list task`    |`ls task`  |`list task`            |[[empty]]          |Lists all uncompleted tasks only
+|`ls complete task`|`ls com task`|`ls complete task`|[[empty]]          |Lists all completed tasks
+|`ls past event`|[[empty]]  |`ls past event`        |[[empty]]          |Lists all past events
+|`overdue`      |[[empty]]  |`overdue`              |[[empty]]          |Lists all overdue tasks
+|`redo`         |`r`        |`redo`                 |[[empty]]          |Reverses the most recent `undo` command
+|`remove event` |`rm event` |`remove event INDEX`   |`remove event 1`   |Removes event at index 1
+|`remove task`  |`rm task`  |`remove task INDEX`    |`remove task 1`    |Removes task at index 1
+|`select event` |[[empty]]  |`select event INDEX`   |`select event 1`  |Select event at index 1
+|`select task`  |[[empty]]  |`select task INDEX`    |`select task 1`  |Select task at index 1
+|`task`         |[[empty]]  |`task n/NAME d/DUE_DATE_TIME [r/REMARK] [t/TAGS]`|`task n/Software Engineering Milestone 1 d/16/03/2018 17:00 r/urgent`|Adds a task to Desk Board
+|`undo`         |`u`        |`undo`                 |[[empty]]          |Reverses the most recent undoable command

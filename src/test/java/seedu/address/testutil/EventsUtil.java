@@ -5,6 +5,7 @@ import javafx.application.Platform;
 import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.events.BaseEvent;
 
+// Note that this class is for Event Handling, and not for Activity.Event class
 /**
  * Helper methods related to events.
  */

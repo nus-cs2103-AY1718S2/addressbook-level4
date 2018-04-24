@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<deskBoard>
+    <!-- Valid Task -->
+    <tasks>
+        <name>Hans Muster</name>
+        <dateTime>28/03/2018 13:00</dateTime>
+        <remark>4th street</remark>
+    </tasks>
+    <!-- Task with invalid dateTime field -->
+    <tasks>
+        <name>Hans Muster</name>
+        <dateTime>28 Mar 2018 1pm</dateTime>
+        <remark>4th street</remark>
+    </tasks>
+</deskBoard>

@@ -1,8 +1,12 @@
 = Test Document
 :toc:
+:toc-title:
 :toc-placement: preamble
+:sectnums:
 :imagesDir: images
 :stylesDir: stylesheets
+:xrefstyle: full
+:experimental:
 
 This is a test asciidoc document to check the setup for asciidoc documentation.
 
@@ -10,6 +14,9 @@ This is a test asciidoc document to check the setup for asciidoc documentation.
 
 === Subheading
 
+==== Sub heading
+==== sub heading
+===== sub sub header
 .Bulleted lists
 * *bold*
 ** _italics_

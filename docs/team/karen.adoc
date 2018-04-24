@@ -1,0 +1,73 @@
+= Karen Frilya Celine - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: CLIndar
+
+---
+
+== Overview
+
+CLIndar is a desktop application that helps university computing students to manage their schedules.
+The application deals with 2 types of entries:
+
+* tasks: things that need to be done by a certain deadline; and
+* events: things that occur at a specific time and place.
+
+CLIndar is *Common-Line Interface (CLI)-based and uses Linux-style commands*, which computing students are familiar with.
+It also has a GUI created with JavaFX.
+It is written in Java, and has about 10 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *the ability to manage storage of tasks and events.*
+** What it does:
+*** *automatically saves* data after each update;
+*** *automatically loads* latest data upon launching of application;
+*** allows the user to *export* data into an xml file; and
+*** allows the user to *import* data from an xml file.
+
+** Justification: This enhancement improves the product significantly because:
+*** the automatic saving and loading allow the user to *view his/her latest tasks and events*; and
+*** the export and import features allow the user to *move their data (in the form of an xml file) from one computer to another* (e.g. through e-mail or thumb drive). +
+
+** Highlights: This enhancement requires new association between 2 major components (Logic and Storage) that were previously only indirectly related.
+It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes at different levels of abstraction.
+** Credits: This enhancement makes use of and enhances existing code written by previous developers, that deals with reading data from and saving data to an xml file.
+
+* *Minor enhancement*: Added an automatic sorting feature that allows the entries to be sorted by date/time every time a new entry is added.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/functional/karenfrilya97.md[Functional code]] [https://github.com/CS2103JAN2018-W13-B3/main/blob/master/collated/test/karenfrilya97.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.3` - `v1.5rc` (3 releases) on GitHub
+** Enhancements to existing features:
+*** Refactored the Storage component in order to morph Address Book - Level 4 into CLIndar (Pull requests https://github.com/CS2103JAN2018-W13-B3/main/pull/40[#40], https://github.com/CS2103JAN2018-W13-B3/main/pull/53[#53],
+https://github.com/CS2103JAN2018-W13-B3/main/pull/64[#64], https://github.com/CS2103JAN2018-W13-B3/main/pull/93[#93])
+** Documentation:
+*** Edited the grammar and punctuation of the Developer Guide in general: https://github.com/CS2103JAN2018-W13-B3/main/pull/152[#152]
+*** Restructured Section 4 (Implementation) of the Developer Guide: https://github.com/CS2103JAN2018-W13-B3/main/pull/152[#152]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W13-B3/main/pull/52[#52]
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-F14-B2/main/issues/175[#175], https://github.com/CS2103JAN2018-F14-B2/main/issues/181[#181], https://github.com/CS2103JAN2018-F14-B2/main/issues/182[#182])
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=exportimport]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=storage]
+
+include::../DeveloperGuide.adoc[tag=sorting]

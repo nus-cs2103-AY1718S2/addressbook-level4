@@ -5,7 +5,7 @@ import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_ACTIVITY;
 
 import java.util.Arrays;
 import java.util.Collections;
@@ -18,26 +18,29 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
+import seedu.address.model.FilePath;
+import seedu.address.model.activity.DateTime;
+import seedu.address.model.activity.Location;
+import seedu.address.model.activity.Name;
+import seedu.address.model.activity.Remark;
 import seedu.address.model.tag.Tag;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
+    private static final String INVALID_NAME = "CS2106&";
+    private static final String INVALID_DATETIME = "2011-03-04 13:00";
+    private static final String INVALID_LOCATION = "";
+    private static final String INVALID_REMARK = "";
+    private static final String INVALID_TAG = "#Important";
+    private static final String INVALID_FILEPATH = "no.xmlAtTheEnd";
 
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_NAME = "CS2106";
+    private static final String VALID_DATETIME = "15/3/2018 8:00";
+    private static final String VALID_LOCATION = "NUS LT29";
+    private static final String VALID_REMARK = "Print notes";
+    private static final String VALID_TAG_1 = "Important";
+    private static final String VALID_TAG_2 = "Difficult";
+    private static final String VALID_FILEPATH = "deskboard.xml";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -60,10 +63,10 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_ACTIVITY, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_ACTIVITY, ParserUtil.parseIndex("  1  "));
     }
 
     @Test
@@ -99,99 +102,99 @@ public class ParserUtilTest {
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((Optional<String>) null));
+    public void parseDateTime_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDateTime((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDateTime((Optional<String>) null));
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(Optional.of(INVALID_PHONE)));
+    public void parseDateTime_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDateTime(INVALID_DATETIME));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseDateTime(Optional.of(INVALID_DATETIME)));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parseDateTime_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseDateTime(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(VALID_PHONE)));
+    public void parseDateTime_validValueWithoutWhitespace_returnsDateTime() throws Exception {
+        DateTime expectedDateTime = new DateTime(VALID_DATETIME);
+        assertEquals(expectedDateTime, ParserUtil.parseDateTime(VALID_DATETIME));
+        assertEquals(Optional.of(expectedDateTime), ParserUtil.parseDateTime(Optional.of(VALID_DATETIME)));
     }
 
     @Test
-    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
-        String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
+    public void parseDateTime_validValueWithWhitespace_returnsTrimmedDateTime() throws Exception {
+        String datetimeWithWhitespace = WHITESPACE + VALID_DATETIME + WHITESPACE;
+        DateTime expectedDateTime = new DateTime(VALID_DATETIME);
+        assertEquals(expectedDateTime, ParserUtil.parseDateTime(datetimeWithWhitespace));
+        assertEquals(Optional.of(expectedDateTime), ParserUtil.parseDateTime(Optional.of(datetimeWithWhitespace)));
     }
 
     @Test
-    public void parseAddress_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((Optional<String>) null));
+    public void parseLocation_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocation((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseLocation((Optional<String>) null));
     }
 
     @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS)));
+    public void parseLocation_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseLocation(INVALID_LOCATION));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseLocation(Optional.of(INVALID_LOCATION)));
     }
 
     @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
+    public void parseLocation_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseLocation(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_ADDRESS));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(VALID_ADDRESS)));
+    public void parseLocation_validValueWithoutWhitespace_returnsLocation() throws Exception {
+        Location expectedLocation = new Location(VALID_LOCATION);
+        assertEquals(expectedLocation, ParserUtil.parseLocation(VALID_LOCATION));
+        assertEquals(Optional.of(expectedLocation), ParserUtil.parseLocation(Optional.of(VALID_LOCATION)));
     }
 
     @Test
-    public void parseAddress_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {
-        String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(addressWithWhitespace));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(addressWithWhitespace)));
+    public void parseLocation_validValueWithWhitespace_returnsTrimmedLocation() throws Exception {
+        String locationWithWhitespace = WHITESPACE + VALID_LOCATION + WHITESPACE;
+        Location expectedLocation = new Location(VALID_LOCATION);
+        assertEquals(expectedLocation, ParserUtil.parseLocation(locationWithWhitespace));
+        assertEquals(Optional.of(expectedLocation), ParserUtil.parseLocation(Optional.of(locationWithWhitespace)));
     }
 
     @Test
-    public void parseEmail_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
+    public void parseRemark_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRemark((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseRemark((Optional<String>) null));
     }
 
     @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional.of(INVALID_EMAIL)));
+    public void parseRemark_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseRemark(INVALID_REMARK));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseRemark(Optional.of(INVALID_REMARK)));
     }
 
     @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
+    public void parseRemark_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseRemark(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(VALID_EMAIL)));
+    public void parseRemark_validValueWithoutWhitespace_returnsRemark() throws Exception {
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        assertEquals(expectedRemark, ParserUtil.parseRemark(VALID_REMARK));
+        assertEquals(Optional.of(expectedRemark), ParserUtil.parseRemark(Optional.of(VALID_REMARK)));
     }
 
     @Test
-    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() throws Exception {
-        String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
+    public void parseRemark_validValueWithWhitespace_returnsTrimmedRemark() throws Exception {
+        String remarkWithWhitespace = WHITESPACE + VALID_REMARK + WHITESPACE;
+        Remark expectedRemark = new Remark(VALID_REMARK);
+        assertEquals(expectedRemark, ParserUtil.parseRemark(remarkWithWhitespace));
+        assertEquals(Optional.of(expectedRemark), ParserUtil.parseRemark(Optional.of(remarkWithWhitespace)));
     }
 
     @Test
@@ -242,5 +245,38 @@ public class ParserUtilTest {
         Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
 
         assertEquals(expectedTagSet, actualTagSet);
+    }
+
+    //@@author Kyomian
+    @Test
+    public void parseFilePath_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseFilePath((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseFilePath((Optional<String>) null));
+    }
+
+    @Test
+    public void parseFilePath_invalidValue_throwsIllegalValueException() {
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseFilePath(INVALID_FILEPATH));
+        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseFilePath(Optional.of(INVALID_FILEPATH)));
+    }
+
+    @Test
+    public void parseFilePath_optionalEmpty_returnsOptionalEmpty() throws Exception {
+        assertFalse(ParserUtil.parseFilePath(Optional.empty()).isPresent());
+    }
+
+    @Test
+    public void parseFilePath_validValueWithoutWhitespace_returnsFilePath() throws Exception {
+        FilePath expectedFilePath = new FilePath(VALID_FILEPATH);
+        assertEquals(expectedFilePath, ParserUtil.parseFilePath(VALID_FILEPATH));
+        assertEquals(Optional.of(expectedFilePath), ParserUtil.parseFilePath(Optional.of(VALID_FILEPATH)));
+    }
+
+    @Test
+    public void parseFilePath_validValueWithWhitespace_returnsTrimmedFilePath() throws Exception {
+        String filePathWithWhitespace = WHITESPACE + VALID_FILEPATH + WHITESPACE;
+        FilePath expectedFilePath = new FilePath(VALID_FILEPATH);
+        assertEquals(expectedFilePath, ParserUtil.parseFilePath(filePathWithWhitespace));
+        assertEquals(Optional.of(expectedFilePath), ParserUtil.parseFilePath(Optional.of(filePathWithWhitespace)));
     }
 }

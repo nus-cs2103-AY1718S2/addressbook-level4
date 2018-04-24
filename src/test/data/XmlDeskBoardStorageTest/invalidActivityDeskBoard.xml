@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<deskBoard>
+    <!-- Task with invalid name field -->
+    <tasks>
+        <name>CS2103T Milestone v1.3</name>
+        <dateTime>10/10/2010 10:10</dateTime>
+        <remark> </remark>
+    </tasks>
+</deskBoard>

@@ -6,8 +6,10 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
+import javafx.scene.input.KeyCode;
 import javafx.scene.input.KeyCombination;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
@@ -15,8 +17,13 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.DeselectEventListCellEvent;
+import seedu.address.commons.events.ui.DeselectTaskListCellEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ShowActivityRequestEvent;
+import seedu.address.commons.events.ui.ShowEventOnlyRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowTaskOnlyRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -27,6 +34,7 @@ import seedu.address.model.UserPrefs;
 public class MainWindow extends UiPart<Stage> {
 
     private static final String FXML = "MainWindow.fxml";
+    private static String view = "mainView";
 
     private final Logger logger = LogsCenter.getLogger(this.getClass());
 
@@ -34,13 +42,14 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
     private Config config;
+    private MainView mainView;
+    private TaskView taskView;
+    private EventView eventView;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane centerStagePlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,7 +58,10 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane taskListPanelPlaceholder;
+
+    @FXML
+    private StackPane eventListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -110,22 +122,47 @@ public class MainWindow extends UiPart<Stage> {
                 event.consume();
             }
         });
+
+        //@@author jasmoon
+        getRoot().addEventFilter(KeyEvent.KEY_RELEASED, event -> {
+            if (event.getCode() == KeyCode.ESCAPE)  {
+                int indexTask = mainView.getTaskListPanel().getSelectedIndex();
+                int indexEvent = mainView.getEventListPanel().getSelectedIndex();
+                if (indexTask != -1) {
+                    if (view.equals("mainView")) {
+                        raise(new DeselectTaskListCellEvent(mainView.getTaskListPanel().getTaskListView(), indexTask));
+                    } else if (view.equals("taskView")) {
+                        raise(new DeselectTaskListCellEvent(taskView.getTaskListPanel().getTaskListView(), indexTask));
+                    }
+                } else if (indexEvent != -1) {
+                    logger.fine("Selection in event list panel with index '" + indexEvent
+                            + "' has been deselected");
+                    if (view.equals("mainView")) {
+                        raise(new DeselectEventListCellEvent(mainView.getEventListPanel()
+                                .getEventListView(), indexEvent));
+                    } else if (view.equals("eventView")) {
+                        raise(new DeselectEventListCellEvent(eventView.getEventListPanel()
+                                .getEventListView(), indexEvent));
+                    }
+                }
+                event.consume();
+            }
+        });
     }
 
     /**
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        mainView = new MainView(logic);
+        centerStagePlaceholder.getChildren().add(mainView.getRoot());
 
+        //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getDeskBoardFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -181,17 +218,40 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
-    }
-
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author jasmoon
+    @Subscribe
+    private void handleShowActivityRequestEvent(ShowActivityRequestEvent event)    {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        view = "mainView";
+        mainView = new MainView(logic);
+        centerStagePlaceholder.getChildren().add(mainView.getRoot());
+    }
+
+    @Subscribe
+    private void handleShowEventOnlyRequestEvent(ShowEventOnlyRequestEvent event)   {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("EventView.fxml"));
+        view = "eventView";
+        eventView = new EventView(logic);
+        centerStagePlaceholder.getChildren().add(eventView.getRoot());
+    }
+
+    @Subscribe
+    private void handleShowTaskOnlyRequestEvent(ShowTaskOnlyRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("TaskView.fxml"));
+        view = "taskView";
+        taskView = new TaskView(logic);
+        centerStagePlaceholder.getChildren().add(taskView.getRoot());
     }
 }

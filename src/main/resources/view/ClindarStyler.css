@@ -1,0 +1,259 @@
+/*@@author jasmoon*/
+@font-face  {
+    font-family: 'Open Sans Bold';
+    src: url('../fonts/open-sans/OpenSans-Bold.ttf');
+}
+
+@font-face  {
+    font-family: 'Open Sans Semibold';
+    src: url('../fonts/open-sans/OpenSans-Semibold.ttf');
+}
+
+@font-face  {
+    font-family: 'Open Sans Italic';
+    src: url('../fonts/open-sans/OpenSans-Italic.ttf');
+}
+
+@font-face  {
+    font-family: 'Open Sans';
+    src: url('../fonts/open-sans/OpenSans-Regular.ttf');
+}
+
+@font-face  {
+    font-family: 'Arvo';
+    src: url('../fonts/arvo/Arvo-Regular.ttf');
+}
+
+@font-face  {
+    font-family: 'Arvo Italic';
+    src: url('../fonts/arvo/Arvo-Italic.ttf');
+}
+
+@font-face  {
+    font-family: 'Arvo Bold';
+    src: url('../fonts/arvo/Arvo-Bold.ttf');
+}
+
+/* menu bar*/
+.menu-bar {
+    -fx-background-color: #f7e399;
+    -fx-padding: 0 2 0 2;
+    -fx-border-width: 0 0 1 0;
+    -fx-border-color: #434547;
+}
+
+.menu-bar .label {
+    -fx-font-family: "Calibri Light";
+    -fx-font-size: 12pt;
+    -fx-text-fill: black;
+}
+
+.context-menu {
+    -fx-background-color: #ffd177;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #434547;
+}
+
+/* browser panel */
+
+#browser #name {
+    -fx-font-family: "Arvo Bold";
+    -fx-font-size: 28;
+}
+
+#browser .label {
+    -fx-font-family: "Arvo";
+    -fx-font-size: 13;
+    -fx-padding: 2 4 2 4;
+}
+
+#browser #emphasizeText {
+    -fx-font-family: "Arvo";
+    -fx-font-size: 18;
+}
+
+#browser #text {
+    -fx-font-family: "Arvo";
+    -fx-font-size: 13;
+}
+
+/* calendar panel */
+
+#calendarPanelPlaceholder   {
+    -fx-border-color: #434547;
+    -fx-border-width: 2 1 1 1;
+}
+
+#calendarPanel  {
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: white;
+}
+
+.scroll-pane {
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.scroll-pane .scroll-bar:horizontal .thumb {
+    -fx-background-color: linear-gradient(to bottom, #f4f4f4, #bcbcbc);
+    -fx-background-insets: 2;
+}
+
+/* taskList and eventList */
+
+.list-view   {
+    -fx-background-color: transparent;
+    -fx-border-insets: 2 2 2 2;
+    -fx-background-insets: 2 2 2 2;
+    -fx-focus-color: transparent;
+    -fx-faint-focus-color: transparent;
+}
+
+.list-cell:empty    {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.list-cell:filled:hover {
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: #2dc6c6;
+    -fx-border-insets: 0 0 0 1;
+    -fx-background-insets: 0 0 0 1;
+}
+
+.list-cell:filled:selected {
+    -fx-effect: innershadow(gaussian, rgba(98,100,104,0.8), 50, 0, -5.0, 5.0);
+}
+
+#taskListView .list-cell:filled:even {
+    -fx-background: linear-gradient(to right, #e8e8e8 0%, #e8e8e8 96%, #b2eaff 96%, #b2eaff 100%);
+}
+
+#taskListView .list-cell:filled:odd   {
+    -fx-background: linear-gradient(to right, #d1d1d1 0%, #d1d1d1 96%, #8ccef2 96%, #8ccef2 100%);
+}
+
+#eventListView .list-cell:filled:even {
+    -fx-background: linear-gradient(to right, #e8e8e8 0%, #e8e8e8 96%, #ffd6d8 96%, #ffd6d8 100%);
+}
+
+#eventListView .list-cell:filled:odd {
+    -fx-background: linear-gradient(to right, #d1d1d1 0%, #d1d1d1 96%, #ffb2b5 96%, #ffb2b5 100%);
+}
+
+.list-cell .label {
+    -fx-text-fill: black;
+}
+
+.cell_big_label {
+    -fx-font-family: "Open Sans Semibold";
+    -fx-font-size: 14pt;
+    -fx-text-fill: #010504;
+}
+
+.cell_small_label {
+    -fx-font-family: "Open Sans";
+    -fx-font-size: 8pt;
+    -fx-text-fill: #010504;
+}
+
+#tags {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+#tags .label {
+    -fx-font-family: "Open Sans";
+    -fx-font-size: 11;
+    -fx-padding: 1 3 1 3;
+}
+
+#tags .label, #browser .label {
+    -fx-text-fill: white;
+    -fx-background-color: #854c99;
+    -fx-border-radius: 2;
+    -fx-background-radius: 2;
+}
+
+.scroll-bar .thumb  {
+    -fx-background-color: linear-gradient(to right, #f4f4f4, #bcbcbc);
+    -fx-background-insets: 2;
+}
+
+.scroll-bar .increment-button, .list-view .scroll-bar .decrement-button {
+    -fx-background-color: transparent;
+    -fx-padding: 0 0 0 0;
+}
+
+.list-view .scroll-bar .increment-arrow, .list-view .scroll-bar .decrement-arrow {
+    -fx-shape: "|";
+}
+
+.list-view .scroll-bar:vertical .increment-arrow, .list-view .scroll-bar:vertical .decrement-arrow {
+    -fx-padding: 1 8 1 8;
+}
+
+.list-view .scroll-bar:horizontal .increment-arrow, .list-view .scroll-bar:horizontal .decrement-arrow {
+    -fx-padding: 8 1 8 1;
+}
+
+/* resultBox */
+.text-area  {
+    -fx-text-fill: black;
+}
+
+#resultBox {
+    -fx-background-color: transparent;
+    -fx-opacity: 0.45;
+    -fx-background-radius: 2px 2px 2px 2px;
+}
+
+/* commandBox */
+
+#commandBoxPlaceholder {
+    -fx-background-color: white;
+    -fx-opacity: 0.45;
+    -fx-background-radius: 4px 4px 4px 4px;
+}
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-width: 1 1 1 1;
+    -fx-border-color: grey;
+    -fx-border-radius: 4px 4px 4px 4px;
+    -fx-prompt-text-fill: black;
+    -fx-text-fill: black;
+}
+
+/* statusBar */
+
+#statusBarPlaceholder   {
+    -fx-background-color: #f7e399;
+    -fx-font-color: black;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #dbdad9;
+
+}
+
+.status-bar .label {
+    -fx-font-family: "Calibri Light";
+    -fx-font-size: 13;
+    -fx-padding: 0 0 0 4;
+    -fx-text-fill: black;
+}
+
+.grid-pane .anchor-pane {
+    -fx-background-color: #f7e399;
+    -fx-border-width: 1 0 0 0;
+    -fx-border-color: #dbdad9;
+}
+
+/* miscs */
+.background {
+    -fx-background-image: url("../images/light-veneer.png");
+    -fx-background-repeat: repeat;
+}
+
+.split-pane-divider {
+   -fx-background-color: transparent;
+}

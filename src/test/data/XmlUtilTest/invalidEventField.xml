@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<!-- Event with an invalid location field -->
+<event>
+    <name>CIP</name>
+    <dateTime>02/04/2018 08:00</dateTime>
+    <endDateTime>02/04/2018 12:00</endDateTime>
+    <location> michegan ave</location>
+    <tagged>CIP</tagged>
+</event>

@@ -1,8 +1,9 @@
-= AddressBook Level 4 - Developer Guide
+= CLIndar - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
 :sectnums:
+:sectnumlevels: 4
 :imagesDir: images
 :stylesDir: stylesheets
 :xrefstyle: full
@@ -10,15 +11,41 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W13-B3/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `CS2103JAN2018-W13-B3`      Since: `Mar 2018`      Licence: `MIT`
 
-== Setting up
+[[Introduction]]
+== Introduction
+CLIndar is a desktop application that helps university computing students to manage their tasks and events.
+With CLIndar, you can:
+
+* keep track of your tasks and events and be reminded of their due dates; and
+* record all completed tasks and events, so that you know what you have done.
+
+
+CLIndar is *Common-Line Interface (CLI) based and uses Linux-style commands*, which computing students are familiar with.
+Thus, compared to traditional Graphical User Interface (GUI) applications, this application is faster and provides more convenience for computing students.
+
+We are looking for developers who are savvy, keen to learn about developing Java applications using JavaFx UI
+framework and most importantly keen on developing CLIndar further. If you are interested, send us an email at CLIndar@gmail.com.
+CLIndar is *Common-Line Interface (CLI)-based and uses Linux-style commands*, which computing students are familiar with.
+
+This guide provides information on the core functionalities of CLIndar and their implementation, so that a developer can
+get started customizing and contributing to the application.
+
+[[ComputerSetup]]
+== Computer Setup
+
+This section describes the steps needed to set up your computer before you can start developing this application further with your own code.
+{empty} +
+{empty} +
 
 === Prerequisites
 
-. *JDK `1.8.0_60`* or later
+The following must be installed in your computer before you can begin using the application:
+
+. *JDK `1.8.0_144`* or later
 +
 [NOTE]
 Having any Java 8 version is not enough. +
@@ -30,49 +57,162 @@ This app will not work with earlier versions of Java 8.
 [NOTE]
 IntelliJ by default has Gradle and JavaFx plugins installed. +
 Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plugins` to re-enable them.
+{empty} +
+{empty} +
+
+=== Setup Procedure
+
+Do the following steps to set up the project in your computer.
+
+*Step 1:* Fork this repo by clicking the button circled below.
+
+.Forking this repo
+image::Origin Repo.png[width="600"]
+
+*Step 2:* Clone the fork.
+
+Open Git Bash. Change the current working directory to the location where you want the cloned directory to be made.
+
+*Step 3:* Type the following in the terminal:
+
+----
+git clone https://github.com/YOUR-USERNAME/main.git
+----
+The sub-directory titled 'main' should appear if `git clone https://github.com/YOUR-USERNAME/main.git` at
+C:/Users/temp folder is executed.
+
+[NOTE]
+The sub-directory titled 'main' contains the files and metadata that Git requires to maintain the changes you make to the source files. +
+
+{empty} +
+
+*Step 4:* Open IntelliJ and configure the correct JKD version for Gradle.
+
+[NOTE]
+If you are not in the welcome screen, click `File` > `Close Project` to close the existing project
+dialog first.
+{empty} +
 
 
-=== Setting up the project in your computer
+*Step 4a:* Click `Configure` > `Project Defaults` > `Project Structure`. Refer to _Figure 2_ below:
 
-. Fork this repo, and clone the fork to your computer
-. Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
-. Set up the correct JDK version for Gradle
-.. Click `Configure` > `Project Defaults` > `Project Structure`
-.. Click `New...` and find the directory of the JDK
-. Click `Import Project`
-. Locate the `build.gradle` file and select it. Click `OK`
-. Click `Open as Project`
-. Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+.Configuring IntelliJ settings
+image::Configure.png[width="600"]
+
+{empty} +
+
+*Step 4b:* Go to the `Project` tab and under `Project SDK` section, click `New...`. Find the directory
+of the JDK, and then click OK. Refer to _Figure 3_ below:
+
+.Setting up JDK
+image::Setup JDK.png[width="600"]
+
+{empty} +
+
+*Step 5:* To import the project, click `Import Project`. Refer to _Figure 4_ below:
+
+.Importing project to IntelliJ
+image::Import Project.png[width="600"]
+{empty} +
+
+*Step 5a:* Locate the `build.gradle` file in the `main` folder that you have cloned earlier and select it.
+Click `OK`. Refer to _Figure 5_ below:
+
+.Locating `build.gradle` file
+image::build.gradle.png[width="400"]
+{empty} +
+
+*Step 6b:* In the `Import Project from Gradle` that appears, click `OK` again. +
+
+{empty} +
+
+*Step 7:* To add dependency for CalendarFX, go to http://dlsc.com/products/calendarfx/ and click 'Download'. Refer
+to _Figure 6_ below:
+
+.Download CalendarFX
+image::CalendarFXDownload.png[width="600"]
+
+{empty} +
+
+*Step 7a:* Return to the project, go to `File` > `Project Structure...`. Refer to _Figure 7_ below:
+
+.Locating `Project Structure...`
+image::FileProjectStructure.png[width="600"]
+
+{empty} +
+
+*Step 7b:* Click on `Modules` tab > `addressbook-level4` module (lower) > `Dependencies` tab > '+' on the right side
+> `1 JAR or directories...`. Refer to _Figure 8_ below:
+
+.Adding dependency to project
+image::LocateAddDependency.png[width="600"]
+
+{empty} +
+
+*Step 7c:* Locate the download location of CalendarFX. Select both `lib` and `ext` in the folder, click `OK`
+and click `OK` again. Refer to _Figure 9_ below:
+
+.Adding `lib` and `ext` folder
+image::LibExtCalendarFX.png[width="600"]
+
+{empty} +
+
+*Step 8:* Open the `Terminal` (refer to _Figure 10_) and run the command `gradlew processResources`
+(Mac/Linux: `./gradlew processResources`). It should finish with the 'BUILD SUCCESSFUL' message. +
+
+.Opening Terminal on Intellij
+image::intellij-terminal.png[width="600"]
+
 This will generate all resources required by the application and tests.
+{empty} +
+{empty} +
 
-=== Verifying the setup
+=== Setup Verification
 
-. Run the `seedu.address.MainApp` and try a few commands
-. <<Testing,Run the tests>> to ensure they all pass.
+Do the following steps to verify that the project has been successfully set up in your computer:
 
-=== Configurations to do before writing code
+. Run the `seedu.address.MainApp` and try a few commands.
+. <<Testing,Run the tests>> to ensure that they all pass.
+{empty} +
+{empty} +
 
-==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+=== Configurations to Do Before Writing Code
 
-. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
-. Select `Editor` > `Code Style` > `Java`
-. Click on the `Imports` tab to set the order
+After you set up the project in your own computer, you still need to do the the configurations described in the following sections before you can start developing this application further with your own code.
+{empty} +
+{empty} +
 
-* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+==== Coding Style Configuration
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify, do the following steps:
 
-==== Updating documentation to match your fork
+. Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS).
+. Select `Editor` > `Code Style` > `Java`.
+. Click on the `Imports` tab.
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+* For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements.
+* For `Import Layout`: Set the order to be `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`.
 
-==== Setting up CI
+After you do the steps above, the Settings window should appear as shown in _Figure 11_ below.
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+.Configuring IntelliJ settings for import order
+image::Import Setting.png[width="600"]
+
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write the code.
+{empty} +
+{empty} +
+
+==== Documentation Updating
+
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W13-B3/main` repo. If you plan to develop this as a separate product, you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+{empty} +
+{empty} +
+
+
+==== CI Setup
+
+Travis needs to be set up to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
@@ -82,165 +222,880 @@ Coverage reporting could be useful for a team repository that hosts the final ve
 Optionally, you can set up AppVeyor as a second CI (see <<UsingAppVeyor#, UsingAppVeyor.adoc>>).
 
 [NOTE]
-Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based)
+Having both Travis and AppVeyor ensures your App works on both Unix-based platforms and Windows-based platforms (Travis is Unix-based and AppVeyor is Windows-based).
 
-==== Getting started with coding
+{empty} +
+{empty} +
 
-When you are ready to start coding,
+==== Steps to Get Started with Coding
+
+Follow the steps below when you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
+{empty} +
+{empty} +
 
+[[Design]]
 == Design
+This section describes how the features in this application are implemented internally.
+{empty} +
+{empty} +
 
 [[Design-Architecture]]
 === Architecture
+The high-level design of this application is illustrated by _Figure 12_ below.
 
-.Architecture Diagram
+.Architecture diagram
 image::Architecture.png[width="600"]
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
+Given below is a quick overview of the components, separated into 'Main' and 'Secondary' components.
 
 [TIP]
 The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
+{empty} +
+{empty} +
 
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
-* At shut down: Shuts down the components and invokes cleanup method where necessary.
+==== Primary Component
+`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for:
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+* at app launch: initializing all components in the correct sequence and connecting them up with each other; and
+* at shut down: shutting down all components and invoking cleanup method where necessary.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
-* `LogsCenter` : Used by many classes to write log messages to the App's log file.
+<<Design-Commons,*`Commons`*>> represents a collection of classes used by components within the secondary component and
+is stored in the `seedu.address.commons` package.
 
-The rest of the App consists of four components.
 
-* <<Design-Ui,*`UI`*>>: The UI of the App.
-* <<Design-Logic,*`Logic`*>>: The command executor.
-* <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
-* <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
+The two classes below play important roles at the architecture level:
 
-Each of the four components
+* `EventsCenter`: This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by the components within the secondary component to communicate with other components using events (i.e. a form of _Event Driven_ design).
+* `LogsCenter`: This class is used by many classes to write log messages to the App's log file.
+{empty} +
+{empty} +
 
-* Defines its _API_ in an `interface` with the same name as the Component.
-* Exposes its functionality using a `{Component Name}Manager` class.
+==== Secondary Component
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+The secondary component of the application consist of four components:
 
-.Class Diagram of the Logic Component
-image::LogicClassDiagram.png[width="800"]
+* <<Design-Ui,*`UI`*>>: This component controls the UI of the application.
+* <<Design-Logic,*`Logic`*>>: This component is the command executor.
+* <<Design-Model,*`Model`*>>: This component holds the data of the App in-memory.
+* <<Design-Storage,*`Storage`*>>: This component reads data from, and writes data to, the hard disk.
 
-[discrete]
-==== Events-Driven nature of the design
+Each of the four components:
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+* defines its _API_ in an `interface` with the same name as the sub-component; and
+* exposes its functionality using a `{Component Name}Manager` class.
 
-.Component interactions for `delete 1` command (part 1)
-image::SDforDeletePerson.png[width="800"]
+For example, the `Logic` component defines its API in the `Logic.java` interface and exposes its functionality using the
+`LogicManager.java` class. _Figure 13_ below is an overview of the `Logic` component.
+
+.The API of the `Logic` component
+image::LogicAPI.png[width="800"]
+{empty} +
+{empty} +
+
+==== Events-driven Design Nature
+
+_Figure 14_ below shows how the primary and secondary components interact in a scenario
+where the user issues the command `rm task 1`.
+
+
+.Components interactions for `rm task 1` command (part 1)
+image::SDforDeleteActivity.png[width="800"]
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `DeskBoardChangedEvent` when Desk Board data
+are changed, instead of asking the `Storage` to save the updates into the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+_Figure 15_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
-image::SDforDeletePersonEventHandling.png[width="800"]
+
+.Components interactions for `rm task 1` command (part 2)
+image::SDforDeleteActivityEventHandling.png[width="800"]
 
 [NOTE]
 Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
-The sections below give more details of each component.
+The section below gives more details of each of the secondary component.
+{empty} +
+{empty} +
 
 [[Design-Ui]]
-=== UI component
+=== UI Component
 
-.Structure of the UI Component
+_Figure 16_ below shows the architecture diagram of the `UI` component.
+
+.Structure of the `UI` component
 image::UiClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
+The `UI` consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `MainView`
+`ResultDisplay`, `StatusBarFooter`,  etc. Note that `TaskListPanel`, `EventListPanel`, `BrowserPanel` and
+`CalendarPanel` are part of `MainView`. All these, including the `MainWindow`, inherit
+from the abstract `UiPart` class.
 
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
+The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`].
 
-The `UI` component,
+The `UI` component:
 
-* Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
-* Responds to events raised from various parts of the App and updates the UI accordingly.
+* executes user commands using the `Logic` component;
+* binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change; and
+* responds to events raised from various parts of the App and updates the UI accordingly.
+
+{empty} +
 
 [[Design-Logic]]
-=== Logic component
+=== Logic Component
 
+_Figure 17_ below shows the architecture diagram of the `Logic` component.
 [[fig-LogicClassDiagram]]
-.Structure of the Logic Component
+.Structure of the `Logic` Component
 image::LogicClassDiagram.png[width="800"]
 
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
+{empty} +
+
+Finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>> in _Figure 18_ below.
+
+.Structure of commands in the `Logic` component
 image::LogicCommandClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* :
 link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
-.  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
-.  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
+The following describes the sequence of events executed by the Logic component:
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+*  `Logic` uses the `DeskBoardParser` class to parse the user command.
+*  This results in a `Command` object which is executed by the `LogicManager`.
+*  The command execution can affect the `Model` (e.g. adding a activity) and/or raise events.
+*  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+_Figure 19_ below is the Sequence Diagram for interactions within the `Logic` component for the `execute("rm task 1")` API call.
+
+.Interactions inside the `Logic` component for the `rm task 1` command
 image::DeletePersonSdForLogic.png[width="800"]
 
-[[Design-Model]]
-=== Model component
+{empty} +
 
-.Structure of the Model Component
+// tag::model[]
+[[Design-Model]]
+=== Model Component
+
+_Figure 20_ below shows the architecture diagram of the `Model` component.
+
+.Structure of the `Model` component
 image::ModelClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
 
-The `Model`,
+The `Model` component:
 
-* stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores a `UserPref` object that represents the user's preferences,
+* stores Desk Board data;
+* uses two classes to store information about `Event` and `Task` separately;
+* exposes an unmodifiable `ObservableList<Activity>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change; and
 * does not depend on any of the other three components.
 
+{empty} +
+// end::model[]
 [[Design-Storage]]
-=== Storage component
+=== Storage Component
 
-.Structure of the Storage Component
+_Figure 21_ below shows the structure of the `Storage` component.
+
+.Structure of the `Storage` component
 image::StorageClassDiagram.png[width="800"]
+
+{empty} +
 
 *API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
 
-The `Storage` component,
+The `Storage` component saves and reads back:
 
-* can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* `UserPref` objects in json format, and
+* Desk Board data in xml format.
 
-[[Design-Commons]]
-=== Common classes
+{empty} +
+{empty} +
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
-
+[[Implementation]]
 == Implementation
 
 This section describes some noteworthy details on how certain features are implemented.
+{empty} +
+{empty} +
 
-// tag::undoredo[]
-=== Undo/Redo feature
+[[Implementation-Activity]]
+=== Activity Management
+`Activity` resides in the `Model` component of the application.
+It is an important class in this application as it represents each entry in Desk Board.
+In CLIndar, an entry in Desk Board can be either a `Task` or an `Event`.
+
+==== Current Implementation
+_Figure 22_ below shows the relationship between `Activity` and its relevant components.
+
+.Class diagram for `Activity`
+image::UniqueActivityListClassDiagram.png[width="550"]
+
+As shown above, `Activity` is a superclass for `Task` and `Event`.
+`Activity` is made abstract so that it cannot be instantiated.
+This is because an entry in Desk Board must be either a `Task` or an `Event` and cannot simply be an `Activity`.
+{empty} +
+{empty} +
+
+===== Adding a task
+
+`Task` is one of the two types of entries in Desk Board in CLIndar.
+
+It represents a piece of work to be done by a certain deadline.
+Once the `Task` has been done by user, it can be mark as completed in the application.
+
+_Figure 23_ below shows how `Task` is represented in the application.
+
+.Class diagram for `Task`
+image::TaskClassDiagram.png[width="550"]
+
+A brief description of each of the attributes of `Task` is given below:
+
+* `name`: name of the task. This attribute is compulsory.
+* `dueDateTime`: deadline of the task which includes date and time. This attribute is compulsory.
+* `remark`: a short description or any other comments pertaining to the task. This attribute is optional.
+* `tags`: groupings for the task. This attribute is optional and a `Task` object can have multiple `tags`.
+
+A `Task` object can be added to Desk Board through the use of the `TaskCommand`.
+A `TaskCommand` is associated with a `Task` object to be added.
+When a `TaskCommand` object calls the method `executeUndoableCommand()`,
+the `Task` object is added into `UniqueActivityList` in the `DeskBoard`.
+Note that the `Task` object will not be added if an equivalent `Task`
+is found in Desk Board or the `name` or `dueDateTime` field is left empty.
+
+_Figure 24_ below shows how the relevant primary and secondary components interact
+in a scenario where the user issues the command `task n/NAME..`.
+
+.Relevant components interaction for `task n/NAME..` command (part 1)
+image::SDforTask.png[width='650']
+
+_Figure 25_ below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+
+
+.Relevant components interaction for `task n/NAME..` command (part 2)
+image::SDHandlingTaskEvent.png[width='650']
+
+The following is a snippet of code for `TaskCommand` 's  `executeUndoableCommand()` method.
+
+[source,java]
+----
+    public CommandResult executeUndoableCommand() throws CommandException {
+        requireNonNull(model);
+        try {
+            model.addActivity(toAdd);
+            return new CommandResult(String.format(MESSAGE_SUCCESS, toAdd));
+        } catch (DuplicateActivityException e) {
+            throw new CommandException(MESSAGE_DUPLICATE_TASK);
+        }
+    }
+----
+Once the task is successfully added, it will be reflected in the CLIndar GUI itself.
+{empty} +
+{empty} +
+
+===== Adding an event
+
+`Event` is the second and last type of entries in Desk Board in CLIndar.
+`Event` represents an activity with fixed start and end times, such as a test, doctor appointment etc.
+
+_Figure 26_ below shows how `Event` is implemented in the application.
+
+.Class diagram for `Event`
+image::EventClassDiagram.png[width="550"]
+
+A brief description of each of the attributes of `Event` is given below:
+
+* `name`: name of the event. This attribute is compulsory.
+* `startDateTime`: start date and time of the event. This attribute is compulsory.
+* `endDateTime`: end date and time of the event. This attribute is compulsory.
+* `location`: location of the event. This attribute is optional.
+* `remark`: a short description or any other comments pertaining to the event. This attribute is optional.
+* `tags`: groupings for the event. This attribute is optional and an `Event` object can have multiple `tags`.
+
+An `Event` object can be added to Desk Board through the use of the `EventCommand`.
+The way `Event` objects are added to `UniqueActivityList` is the same as `Task` objects.
+Note that the `Event` object will not be added if an equivalent `Event`
+is found in Desk Board or the `name`, `startDateTime` or `endDateTime` field is left empty.
+
+Once the `Event` is successfully added, it will be reflected in the CLIndar GUI itself.
+{empty} +
+{empty} +
+
+//tag::sorting[]
+===== Sorting task and event lists automatically
+When a `Task` or `Event` is added, it is inserted into the respective list such that the list is sorted in terms of their `dueDateTime` or `startDateTime` respectively.
+The sorting is done in the `UniqueActivityList` which contains a list of unique activities which is either a `Task` or an `Event`
+stored in an `internalList`.
+Each time an `Activity` is added to or edited in the `UniqueActivityList`,
+`internalList` will be sorted according to its `dateTime` attribute.
+Note that `dateTime` refers to `dueDateTime` for `Task` and `startDateTime` for `Event`.
+
+Following is a snippet which illustrates the function of `UniqueActivityList`:
+
+[source,java]
+----
+    public void add(Activity toAdd) throws DuplicateActivityException {
+        requireNonNull(toAdd);
+        if (contains(toAdd)) {
+            throw new DuplicateActivityException();
+        }
+        internalList.add(toAdd);
+        Collections.sort(internalList, dateTimeComparator);
+    }
+----
+{empty} +
+//end::sorting[]
+
+// tag::find[]
+===== Finding a task or an event
+`FindEvent` locates `Task` and `Event` objects which contain any keywords in their name.
+{empty} +
+The list shown in GUI is controlled by the http://docs.oracle.com/javase/8/docs/api/java/util/function/Predicate.html[`Predicate`] set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class[The list showned in GUI is controlled by the << `Predicate` set to the `Model` component. As such this class uses `NameContainsKeywordPredicate` class][]
+which is a subclass of `Predicate` class in Java library.
+{empty} +
+{empty} +
+The following snippet shows the `executeUndoableCommand()` of the `FindCommand` class.
+`UniqueActivityList` resides in the `Model` will be filtered by setting `predicate` object to be the `Predicate` of the filterlist.
+
+[source,java]
+----
+    public CommandResult execute() {
+        model.updateFilteredActivityList(predicate);
+        return new CommandResult(getMessageForActivityListShownSummary(model.getFilteredActivityList().size()));
+    }
+----
+
+{empty} +
+
+// end::find[]
+// tag::edit[]
+===== Editing a task or an event
+
+`Task` and `Event` objects can be edited using `EditCommand`.
+In the application, if a command requires a target to operate on,
+it will determine which `Task` or `Event` to modify by using the keywords `task` or `list` and index of the target in the displayed list.
+The `Task` and `Event` keyword would tell the program which list to select from. The index will indicate which `Task` or `Event` is the target.
+{empty} +
+{empty} +
+The edit command can modify every attribute described in the <<Adding a task, adding a task>> and <<Adding an event, adding an event>> section above.
+These fields is identified using the same prefix as the adding command.
+{empty} +
+{empty} +
+The following snippet shows the `executeUndoableCommand()` of the `EditCommand` class.
+`UniqueActivityList` resides in the `Model` will be updated by having `editedActivity` replacing `activityToEdit`.
+If `editedActitity` is identical to any `Activity` in `UniqueActivityList`, the edit operation will be aborted and a `DuplicateActivityException` will be thrown.
+[source,java]
+----
+        public CommandResult executeUndoableCommand() throws CommandException {
+            try {
+                model.updateActivity(activityToEdit, editedActivity);
+            } catch (DuplicateActivityException dpe) {
+                throw new CommandException(MESSAGE_DUPLICATE_ACTIVITY);
+            } catch (ActivityNotFoundException pnfe) {
+                throw new AssertionError("The target activity cannot be missing");
+            }
+            model.updateFilteredActivityList(PREDICATE_SHOW_ALL_ACTIVITY);
+            return new CommandResult(String.format(MESSAGE_EDIT_ACTIVITY_SUCCESS, editedActivity));
+        }
+----
+
+The `EditCommand` relies on two internal classes `EditEventDescriptor` and `EditTaskDescriptor` to store the information of modified attributes.
+The two classes shares many common behaviour, hence an interface `EditActivityDescriptor` is used for generic purpose.
+{empty} +
+{empty} +
+The api is given as below:
+[source,java]
+----
+    public static interface EditActivityDescriptor {
+
+        public boolean isAnyFieldEdited();
+
+        public EditActivityDescriptor getCopy();
+
+        public Activity createEditedActivity(Activity activityToEdit);
+    }
+----
+{empty} +
+// end::edit[]
+
+===== Removing a task or an event
+`Task` and `Event` objects can be removed through the use of the `RemoveCommand`
+by specifying the `Task` or `Event` and the index of the task/event reflected in the GUI.
+
+The following snippet shows the `executeUndoableCommand()` of the `RemoveCommand` class.
+`UniqueActivityList` resides in the `Model` will be updated by having `activityToDelete` deleted from it.
+If the index of an activity is not found, an `ActivityNotFoundException` will be thrown.
+
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToDelete);
+        try {
+            model.deleteActivity(activityToDelete);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        }
+
+        // ... some code ...
+    }
+----
+If `RemoveCommand` is successful, the relevant `Task` or `Event` at the specified index will be removed which
+will be reflected in the GUI.
+{empty} +
+{empty} +
+
+// tag::complete[]
+===== Completing a task
+`Task` objects can be completed through the use of the `CompleteCommand` by specifying the `Task`'s index reflected
+in the GUI. Note that `CompleteCommand` can only be applied to `Task` objects.
+
+Below is a snippet of how the `executeUndoableCommand()` of `CompleteCommand` updates the respective task
+to completed.
+[source,java]
+----
+    public CommandResult executeUndoableCommand() {
+        requireNonNull(activityToComplete);
+        try {
+            Activity completedActivity = activityToComplete.getCompletedCopy();
+            model.updateActivity(activityToComplete, completedActivity);
+        } catch (ActivityNotFoundException pnfe) {
+            throw new AssertionError("The target activity cannot be missing");
+        } catch (DuplicateActivityException dae) {
+            throw new AssertionError("The completed activity cannot be duplicated");
+        }
+        return new CommandResult(String.format(MESSAGE_COMPLETE_TASK_SUCCESS, activityToComplete));
+    }
+----
+If `CompleteCommand` is successful, 'Uncompleted' will be replaced by 'Completed' in the GUI.
+{empty} +
+{empty} +
+//end:complete[]
+
+//tag::activitydesign[]
+==== Design Considerations
+
+===== Aspect: Implementation of `Activity`, `Task` and `Event` class
+There are two ways to represent tasks and events in the application. The following shows the pros and cons for each alternative:
+
+
+* ** Alternative 1 (Current Choice):**
+Use a single class `Activity` as a superclass for `Task` and `Event`. +
+** Pros:
+As both `Task` and `Event` can be treated equally in most contexts other than their creation, this can simplify the code significantly.
+** Cons:
+It might be a harder to retrieve information as `Event` contains extra attributes that `Task` does not have.
+Extra accessor methods will also be required for `Event`.
+
+* **Alternative 2 :**
+Simply have two different class `Task` and `Event`.
+
+** Pros:
+There is a clear distinction between the two classes.
+** Cons:
+We will need to write codes for classes and methods related to `Task` and `Event` separately, when these could have been simplified by having classes and methods related to the superclass only.
+{empty} +
+{empty} +
+//end::activitydesign[]
+
+// tag::guiimplementation[]
+
+=== GUI Management
+
+This section describes implementation of features related to the GUI.
+
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+There are 3 views for the GUI of CLIndar - `MainView`, `TaskView` and `EventView`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`MainView` displays both `Task` and `Event which is the default display for
+the GUI. It comprises of `CalendarPanel`, `TaskListPanel`, `EventListPanel` and `BrowserPanel`.
 
+`TaskView` displays `Task` only on the GUI and comprises of `CalendarPanel`, `TaskListPanel` and `BrowserPanel`.
+
+`EventView` displays `Event` only on the GUI and comprises of `CalendarPanel`, `EventListPanel` and `BrowserPanel`.
+
+`centerStagePlaceholder` resides in the `MainWindow` of the UI component. It refers to the center stage of the GUI marked out by the red rectangle shown in _Figure 27_ below.
+
+.`centerStagePlaceholder`
+image::centerStagePlaceholder.png[width='650']
+
+To facilitate switching of views, the .xfml file of relevant view will be added to `centerStagePlaceholder`.
+
+Following is a snippet that shows how `MainView` is added to `centerStagePlaceholder`:
+----
+    @FXML
+    private StackPane centerStagePlaceholder;
+
+    /...some code.../
+
+    @Subscribe
+    private void handleShowActivityRequestEvent(ShowActivityRequestEvent event)    {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        centerStagePlaceholder.getChildren().clear();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("MainView.fxml"));
+        view = "mainView";
+        mainView = new MainView(logic);
+        centerStagePlaceholder.getChildren().add(mainView.getRoot());
+    }
+----
+{empty} +
+
+The calendar feature of the application makes use of the open source project - CalendarFX.
+
+Whenever `DeskboardChangedEvent` is fired from the `EventCenter`, meaning that an `Activity` has been added or removed,
+`CalendarPanel` receives it updates the calendar accordingly.
+
+The following is a snippet shows how `handleDeskBoardChangedEvent` synchronizes with `UniqueActivityList`:
+[source,java]
+----
+    @Subscribe
+    private void handleDeskBoardChangedEvent(DeskBoardChangedEvent event) {
+        syncCalendarWithActivities(event.data.getActivityList());
+    }
+----
+
+{empty} +
+
+Next, `BrowserPanel` is hidden in the GUI when the application is first initialised. Selecting a cell in either of the
+cells in `TaskListPanel` or `EventListPanel` causes the `BrowserPanel` to appear.
+
+The following is a snippet of how the constructor of `BrowserPanel` hides itself:
+[source,java]
+----
+    public BrowserPanel() {
+
+        /...some code.../
+        browser.managedProperty().bind(browser.visibleProperty());
+        browser.setVisible(false);
+        /...some code.../
+    }
+----
+
+Below is a snippet of how `BrowserPanel` displays the details of the `Task` selected in the GUI:
+[source,java]
+----
+    private void showBrowserPanelTask(Task task) {
+        Platform.runLater(new Runnable() {
+            @Override
+            public void run() {
+                browser.setVisible(true);
+                browser.getChildren().setAll(setupBrowserPanelTask(task));
+            }
+        });
+    }
+----
+
+{empty} +
+
+
+[discrete]
+===== Listing tasks and events
+
+A single `Task` or `Event` is displayed using a `TaskListCard` or `EventListCard` respectively. The list of all
+the `Task` objects added by the user is then displayed using the `TaskListPanel`, while `Event` objects added by
+user are displayed using `EventListPanel`. _Figure 28_ and _Figure 29_ are examples of a `TaskListCard` and an `EventListCard` respectively.
+
+.`TaskListCard` example
+image::TaskCard.png[width="300"]
+
+.`EventListCard` example
+image::EventCard.png[width='300']
+
+`ListCommand` allows the user to only view `Task` only, `Event` only or both in the GUI.
+
+_Figure 30_ below shows how the relevant primary and secondary components interact
+in a scenario where the user issues the command `list task`.
+
+.Component interactions for `list task` command (part 1)
+image::SDListCommand.png[width='650']
+
+_Figure 31_ below shows how the `EventsCenter` reacts to that event, which eventually
+results in 'centerStagePlaceholder` of the UI being updated to display `TaskView`.
+
+.Component interactions for `list task` command (part 2)
+image::SDListCommandEventHandling.png[width='650']
+
+The following snippet shows how `execute()` of `ListCommand` displays `Task` and/or `Event` objects in the GUI.
+If an invalid request for `ListCommand` happens, a `CommandException` will be thrown.
+
+[source,java]
+----
+    public CommandResult execute() throws CommandException {
+
+        switch(commandRequest)  {
+        case "task":
+            EventsCenter.getInstance().post(new ShowTaskOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_TASK);
+        case "event":
+            EventsCenter.getInstance().post(new ShowEventOnlyRequestEvent());
+            return new CommandResult(MESSAGE_SUCCESS_EVENT);
+        // ... some code ...
+
+        default:
+            throw new CommandException(String.format(Messages.MESSAGE_INVALID_LIST_REQUEST, commandRequest));
+        }
+    }
+----
+If `ListCommand` is successful:
+
+* `list` will show only `Task` objects;
+* `list event` will show only `Event` objects; and
+* `list` will show both `Task` and `Event` objects.
+// end::guiimplementation[]
+{empty} +
+{empty} +
+
+// tag::select[]
+===== Selecting a task or event
+`Task` objects can be selected through the use of the `SelectCommand` by specifying the `Task`'s or `Event`'s index reflected
+in the GUI.
+
+Below is a snippet of how the `execute()` of `SelectCommand` that select the specified activity.
+The code make use the `JumpToEventListRequestEvent` or `JumpToTaskListRequestEvent` to inform the GUI to select the specified `Task` or `Event`.
+
+[source,java]n
+----
+    public CommandResult execute() throws CommandException {
+        CommandResult result = null;
+        if (type.equalsIgnoreCase(TYPE_TASK)) {
+            List<Activity> lastShownList = model.getFilteredTaskList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+            }
+
+            EventsCenter.getInstance().post(new JumpToTaskListRequestEvent(targetIndex));
+            result = new CommandResult(String.format(MESSAGE_SELECT_ACTIVITY_SUCCESS, targetIndex.getOneBased()));
+        } else if (type.equalsIgnoreCase(TYPE_EVENT)) {
+            List<Activity> lastShownList = model.getFilteredEventList();
+
+            if (targetIndex.getZeroBased() >= lastShownList.size()) {
+                throw new CommandException(Messages.MESSAGE_INVALID_ACTIVITY_DISPLAYED_INDEX);
+            }
+
+            EventsCenter.getInstance().post(new JumpToEventListRequestEvent(targetIndex));
+            result = new CommandResult(String.format(MESSAGE_SELECT_ACTIVITY_SUCCESS, targetIndex.getOneBased()));
+        } else {
+            assert false : "Type is neither task or event, this should not happened!";
+        }
+        return result;
+    }
+----
+
+
+//end::select[]
+{empty} +
+
+
+==== Design Considerations
+
+This section describes various design considerations related to the GUI features. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
+// tag::listcommandaspect[]
+[discrete]
+===== Aspect: Implementation of `ListCommand`
+
+* **Alternative 1:** Have 1 panel which will display the 2 classes.
+** Pros: The coding required for this approach is much lesser.
+** Cons: The UI will be messier and less appealing.
+
+* ** Alternative 2 (current choice):** Have 2 panels which will display the 2 classes separately.
+** Pros: The backend coding will be neater as the 2 classes do not have the same number of compulsory
+information tags. The design of the UI will be much more intuitive too.
+** Cons: A lot more coding is required to create the 2 separate panel.
+{empty} +
+{empty} +
+
+We preferred the second alternative as it adheres more closely with fundamental design principles. The GUI
+has to be made as intuitive as possible to bring convenience and comfort to the user. As such, the second alternative is
+definitely the preferred approach here.
+// end::listcommandaspect[]
+{empty} +
+{empty} +
+
+// tag::storage[]
+=== Desk Board Storage Management
+
+This section describes the implementation and design considerations for the storage of `Task` and `Event` objects.
+
+==== Current Implementation
+
+The management of Desk Board storage in CLIndar includes automatic saving and loading of data, as well as export and import operations.
+The following describes how each feature is implemented.
+
+===== Storing tasks and events
+
+In CLIndar, Desk Board data are stored using an xml file. For this purpose, `DeskBoard`, which is composed of `Task` and `Event` objects,
+is converted into `XmlSerializableDeskBoard` containing `XmlAdaptedTask` and `XmlAdaptedEvent` objects.
+These xml-adapted objects have the same attributes as the objects they represent.
+However, the attributes are converted into `String` which can then be stored into xml format.
+Similar to how `Task` and `Event` objects inherit from `Activity` class (as discussed in <<Implementation - Activity, Activity Management>>),
+their xml-adapted equivalents inherit from `XmlAdaptedActivity` class.
+The constructor method of `XmlAdaptedActivity` below illustrates how a `Task` object can be converted into
+an `XmlAdaptedTask` object.
+
+[source,java]
+----
+    public XmlAdaptedActivity(Activity source) {
+        name = source.getName().fullName;
+        dateTime = source.getDateTime().toString();
+        if (source.getRemark() != null) {
+            remark = source.getRemark().value;
+        }
+        tagged = new ArrayList<>();
+        for (Tag tag : source.getTags()) {
+            tagged.add(new XmlAdaptedTag(tag));
+        }
+        isCompleted = source.isCompleted();
+    }
+----
+
+[NOTE]
+The constructor method of `XmlAdaptedTask` calls the constructor method of its superclass.
+
+{empty} +
+
+`XmlAdaptedTask` and `XmlAdaptedEvent` can be transformed back into `Task` and `Event` objects respectively using the method `toModelType()`.
+The following snippet of code shows how the method is implemented in `XmlAdaptedTask`.
+
+[source,java]
+----
+    public Task toModelType() throws IllegalValueException {
+        final List<Tag> activityTags = new ArrayList<>();
+        for (XmlAdaptedTag tag : tagged) {
+            activityTags.add(tag.toModelType());
+        }
+
+        if (this.name == null) {
+            throw new IllegalValueException(String.format(MISSING_FIELD_MESSAGE_FORMAT,
+                    getActivityType(), "name"));
+        }
+        if (!Name.isValidName(this.name)) {
+            throw new IllegalValueException(Name.MESSAGE_NAME_CONSTRAINTS);
+        }
+        final Name name = new Name(this.name);
+
+        // ... convert other attributes into respective classes ...
+
+        final Set<Tag> tags = new HashSet<>(activityTags);
+
+        return new Task(name, dateTime, remark, tags, this.isCompleted);
+    }
+----
+
+[NOTE]
+`XmlAdaptedActivity` does not have `toModelType()` method because it cannot create a new `Activity` object.
+
+{empty} +
+
+// may need to rephrase
+`XmlSerializableDeskBoard` too has a `toModelType()` method which returns a `DeskBoard` object.
+This method iterates through each `Task` or `Event` object that composes it, and calls the object's own `toModelType()` method.
+Unlike `DeskBoard` which has a single `UniqueActivityList` containing both `Task` and `Event` objects, `XmlSerializableDeskBoard` stores `XmlAdaptedTask` and `XmlAdaptedEvent` in
+two separate lists.
+{empty} +
+{empty} +
+
+===== Exporting data
+
+_Figure 32_ below shows the sequence diagram for export operation.
+
+.Export sequence diagram
+image::ExportSequenceDiagram.png[width="800"]
+
+As seen above, this operation requires the `Logic` component to access the `Storage` component.
+In particular, there needs to be an association between `ExecuteCommand` and `Storage`.
+The way such association can be created is similar to how an association between any subclass of `Command`
+and `Model` is formed.
+The modifications made to classes in the `Logic` component are shown in red in _Figure 33_.
+
+.Modification to `Logic` component
+image::LogicCommandClassDiagramModified.png[width="800"]
+
+After `ExportCommand` gains access to the application's `Storage` object, it can then call
+the `saveDeskBoard()` method in `Storage` which allows Desk Board data to be saved into an xml file in the specified `filePath`.
+{empty} +
+{empty} +
+
+===== Importing data
+
+_Figure 34_ below shows the sequence diagram for import operation.
+
+.Import sequence diagram
+image::ImportSequenceDiagram.png[width="800"]
+
+Just like `ExportCommand`, `ImportCommand` also needs to have access to the application's `Storage` object.
+This object reads the xml file at the given `filePath` and returns a `ReadOnlyDeskBoard` object based on the data saved in the file.
+Each `Activity` in the `ReadOnlyDeskBoard` is then added into the application's `DeskBoard`.
+This operation is abstracted to follow Single Level of Abstraction Principle (SLAP).
+_Figure 35_ below shows how `addActivities` is implemented in `Model` component which results in new entries from
+another `DeskBoard` object being added into the application's `Model`.
+
+.`addActivities()` sequence diagram
+image::AddActivitiesSequenceDiagram.png[width="800"]
+
+{empty} +
+
+==== Design Considerations
+
+This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
+
+[discrete]
+===== Aspect: Storage of `XmlAdaptedTask` and `XmlAdaptedEvent` in `XmlSerializableDeskBoard`
+
+* **Alternative 1 (current choice):** Use 2 lists to store objects of the 2 classes separately.
+** Pros: When the xml file is opened using another application (e.g. Microsoft Excel), details about tasks and events are shown separately.
+** Cons: Slightly more coding is required to create 2 separate lists.
+
+* **Alternative 2:** Use 1 list to store both `XmlAdaptedTask` and `XmlAdaptedEvent` objects.
+** Pros: This way mirrors the way `DeskBoard` stores `Task` and `Event` objects.
+** Cons: Whenever we want to perform an operation on an object stored, we need to check its class.
+
+{empty} +
+
+[discrete]
+===== Aspect: Association between `ExportCommand`/`ImportCommand` and `Storage` objects
+* **Alternative 1 (current choice):** Store the reference to the application's `Storage` in `LogicManager` which then passes it to the respective `Command` object.
+** Pros: This is consistent with the application's overall architecture.
+** Cons: We need to modify `LogicManager` and `Command` which can cause errors in other commands if the code is not written correctly.
+
+* **Alternative 2:** Create a new `StorageManager` object in `ExportCommand` and `ImportCommand`.
+** Pros: This is easier to code.
+** Cons: This application should not have multiple `Storage` objects.
+
+{empty} +
+// end::storage[]
+
+// tag::undoredo[]
+=== Undo/Redo Commands
+
+The current implementation and design considerations for the undo/redo feature are explained in this section.
+
+==== Current Implementation
+
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of Desk Board (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. _Figure 36_ below shows the inheritance diagram for commands.
+
+.Class diagram of a Logic command
 image::LogicCommandClassDiagram.png[width="800"]
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of Desk Board before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,21 +1130,29 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th activity in Desk Board. The current state of Desk Board is saved before the `delete 5` command executes.
+The `delete 5` command will then be pushed onto the `undoStack`
+(the current state is saved together with the command) as shown in _Figure 37_ below.
 
+.Undo and redo starting stack diagram
 image::UndoRedoStartingStackDiagram.png[width="800"]
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`.
+For example, the user may execute `add n/David ...` to add a new activity.
+_Figure 38_ shows the undo and redo stack diagram after the add command is executed.
 
+.Undo and redo stack diagram after more command is added
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the activity was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore Desk Board to the state before the `add` command executed.
+_Figure 39_ below shows the undo and redo stacks after the redo command is executed.
 
+.Undo stack pops into the redo stack
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
 
 [NOTE]
@@ -297,100 +1160,169 @@ If the `undoStack` is empty, then there are no other commands left to be undone,
 
 The following sequence diagram shows how the undo operation works:
 
+.Undo and redo stack sequence diagram
 image::UndoRedoSequenceDiagram.png[width="800"]
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo command does the exact opposite (pops from `redoStack`, pushes to `undoStack`, and restores Desk Board to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
 The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
 
+.Adding 'ClearCommand' to the undo stack
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
 
 Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
 
+.'ListCommand' does not affect the undo stack
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
 
 The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
+.Activity diagram for undo and redo
 image::UndoRedoActivityDiagram.png[width="650"]
 
 ==== Design Considerations
 
+This section describes various design considerations related to the implementation of undo/redo feature. For each aspect, we will discuss the 2 alternatives considered and the pros and cons for each alternative.
+
+[discrete]
 ===== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
 ** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
-** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
-** Pros: Does not involve the template pattern, easier for new developers to understand.
+** Cons: It will be hard for new developers to understand the template pattern.
+* **Alternative 2:** Just override `execute()`.
+** Pros: This does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
-===== Aspect: How undo & redo executes
+[discrete]
+===== Aspect: Execution of undo and redo
 
-* **Alternative 1 (current choice):** Saves the entire address book.
-** Pros: Easy to implement.
-** Cons: May have performance issues in terms of memory usage.
-* **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
+* **Alternative 1 (current choice):** Save the entire Desk Board data.
+** Pros: This is easy to implement.
+** Cons: There may be performance issues in terms of memory usage.
+* **Alternative 2:** Make individual command know how to undo/redo itself.
+** Pros: This will use less memory (e.g. for `delete`, just save the activity being deleted).
 ** Cons: We must ensure that the implementation of each individual command are correct.
 
-
+[discrete]
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
-** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
+* **Alternative 1 (current choice):** Only include commands that modifies Desk Board data (`add`, `clear`, `edit`).
+** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are lost).
+** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), only to realize that it does not do that, after executing `undo`.
 * **Alternative 2:** Include all commands.
-** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
-**Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
+** Pros: This might be more intuitive to the user.
+** Cons: User has no way of skipping such commands if he or she just want to reset the state of Desk Board and not the view.
 
+* **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
+[discrete]
 ===== Aspect: Data structure to support the undo/redo commands
 
-* **Alternative 1 (current choice):** Use separate stack for undo and redo
-** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
-** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
-* **Alternative 2:** Use `HistoryManager` for undo/redo
+* **Alternative 1 (current choice):** Use separate stack for undo and redo.
+** Pros: This is easy for new Computer Science student undergraduates to understand, who are likely to be the new incoming developers of our project.
+** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update both `HistoryManager` and `UndoRedoStack`.
+* **Alternative 2:** Use `HistoryManager` for undo/redo.
 ** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Cons: This requires dealing with commands that have already been undone: We must remember to skip these commands. This violates SRP and Separation of Concerns as `HistoryManager` now needs to do two different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
-=== [Proposed] Data Encryption
+// tag::overdue[]
+=== Overdue Feature
+The overdue feature will automatically tag tasks as "overdue" once their due date times have passed and tag events as "finished" once their end date times have passed.
+The current implementation and design considerations for this feature are explained in this section.
 
-_{Explain here how the data encryption feature will be implemented}_
+==== Current Implementation
+The overdue feature is implemented using the `ScheduledExecutorService` class, provided by the `java.util.concurrent` package. This class creates another thread in the system and that thread is scheduled to run a checker every 30 seconds.
 
-// end::dataencryption[]
+It is implemented in `DateTimeScheduler` as shown below.
+[source, java]
+----
+public class DateTimeScheduler {
+
+    private static final ScheduledExecutorService executor = Executors.newScheduledThreadPool(1);
+
+    public static void initialise(Model model) {
+        /... some code .../
+        executor.scheduleWithFixedDelay(checker, 0, 30, TimeUnit.SECONDS);
+    }
+}
+----
+
+The `checker` in the method `scheduleWithFixedDelay()` is implemented using the `Runnable` interface. The `checker`
+checks if a task has passed its due date time and if an event has passed its end date time. If so, the checker will tag an "Overdue" tag to the task and a "Finished" tag to the event.
+
+The `checker` is implemented as shown below.
+
+[source, java]
+----
+    public void run() {
+        /... some code .../
+        LocalDateTime currentDateTime = LocalDateTime.now();
+
+        Platform.runLater(() -> {
+            try {
+                markingAsOverdue(taskList, currentDateTime);
+                markingAsFinished(eventList, currentDateTime);
+            } catch () {
+                /... some code .../
+            }
+        });
+    }
+----
+
+The `checker` traverses the list of tasks and compares the due date time of each task to the `currentDateTime`, which is obtained from system time. Likewise,
+it traverses the list of events and compares the end date time of each event to the `currentDateTime`.
+Note that `Platform.runLater()` must wrap around the codes as https://stackoverflow.com/questions/21083945/how-to-avoid-not-on-fx-application-thread-currentthread-javafx-application-th[you cannot update the GUI from a thread other than the JavaFx Application thread.]
+
+==== Design Considerations
+This section describes various design considerations related to the overdue feature.
+
+[discrete]
+===== Aspect: Overdue check time interval
+
+* *Alternative 1 (current choice):* Use `ScheduledExecutorService` to check for overdue tasks and finished events every 30 seconds.
+** Pros: As 30 seconds are short, tasks and events can be checked whether they are overdue or finished respectively in **real time**.
+** Cons: As there is a thread created in the system, CLIndar would be more memory-intensive.
+
+* *Alternative 2:* Use `ScheduledExecutorService` to check for overdue tasks and finished events every 1 hour.
+** Pros: CLIndar would be less memory-intensive as the checker is conducted at a longer interval.
+** Cons: Overdue tasks and finished events will not be identified promptly.
+// end::overdue[]
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations as follows:
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
-*Logging Levels*
+The following are the four logging levels:
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE` means critical problem was detected which may possibly cause the termination of the application.
+* `WARNING` means application can continue, but with caution.
+* `INFO` shows noteworthy actions by the application.
+* `FINE` gives details that are not usually noteworthy but may be useful in debugging e.g. printing the actual list instead of just its size.
+
+{empty} +
 
 [[Implementation-Configuration]]
 === Configuration
+Certain properties of the application (e.g. App name, logging level) can be controlled through the configuration file (default: `config.json`).
 
-Certain properties of the application can be controlled (e.g App name, logging level) through the configuration file (default: `config.json`).
+{empty} +
+
 
 == Documentation
 
 We use asciidoc for writing documentation.
 
 [NOTE]
-We chose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
+We choose asciidoc over Markdown because asciidoc, although a bit more complex than Markdown, provides more flexibility in formatting.
 
 === Editing Documentation
 
@@ -405,20 +1337,23 @@ See <<UsingTravis#deploying-github-pages, UsingTravis.adoc>> to learn how to dep
 
 We use https://www.google.com/chrome/browser/desktop/[Google Chrome] for converting documentation to PDF format, as Chrome's PDF engine preserves hyperlinks used in webpages.
 
-Here are the steps to convert the project documentation files to PDF format.
+Here are the steps to convert the project documentation files to PDF format:
 
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in _Figure 44_ below.
 
 .Saving documentation as PDF files in Chrome
 image::chrome_save_as_pdf.png[width="300"]
 
-[[Testing]]
-== Testing
+{empty} +
 
-=== Running Tests
+[[Testing]]
+== Testing Procedures
+This sections describes the different ways to do testing on the application.
+
+=== Methods for Running Tests
 
 There are three ways to run tests.
 
@@ -427,75 +1362,107 @@ The most reliable way to run tests is the 3rd one. The first two methods might f
 
 *Method 1: Using IntelliJ JUnit test runner*
 
-* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`
-* To run a subset of tests, you can right-click on a test package, test class, or a test and choose `Run 'ABC'`
+You can choose to run all tests or only a subset of tests:
+
+* To run all tests, right-click on the `src/test/java` folder and choose `Run 'All Tests'`.
+* To run a subset of tests, right-click on a test package, test class, or a test and choose `Run 'ABC'`.
+
+{empty} +
 
 *Method 2: Using Gradle*
 
-* Open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`)
+To run tests using gradle, open a console and run the command `gradlew clean allTests` (Mac/Linux: `./gradlew clean allTests`).
 
 [NOTE]
 See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using Gradle.
+
+{empty} +
 
 *Method 3: Using Gradle (headless)*
 
 Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
-To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
+To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`).
 
-=== Types of tests
+{empty} +
 
-We have two types of tests:
+=== Test Types
 
-.  *GUI Tests* - These are tests involving the GUI. They include,
-.. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
-.  *Non-GUI Tests* - These are tests not involving the GUI. They include,
-..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
-..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
-..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+We have two types of tests, based on whether the tests involve the GUI:
 
+.  *GUI tests* which include:
+.. _System tests_ +
+These test the entire App by simulating user actions on the GUI. System tests are in the `systemtests` package.
+.. _Unit tests_ +
+These test the individual components. They can be found in `seedu.address.ui` package.
+.  *Non-GUI tests* which include:
+..  _Unit tests_ +
+These target the lowest level methods/classes. +
+Example: `seedu.adress.commons.StringUtilTest`.
+..  _Integration tests_ +
+These check the integration of multiple code units which are assumed to be working. +
+Example: `seedu.address.storage.StorageManagerTest`.
+..  Hybrids of unit and integration tests +
+These tests check multiple code units as well as how the are connected together. +
+Example: `seedu.address.logic.LogicManagerTest`.
 
-=== Troubleshooting Testing
-**Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+{empty} +
 
-* Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
-* Solution: Execute Gradle task `processResources`.
+=== Troubleshooting Test
+The following describes an example of troubleshooting test:
 
+* **Problem: `HelpWindowTest` fails with a `NullPointerException`.**
+
+** Reason: One of its dependencies, `UserGuide.html` in `src/main/resources/docs` is missing.
+** Solution: Execute Gradle task `processResources`.
+
+[[DevOps]]
 == Dev Ops
+This section features softwares which can be used to track the progress of the application development.
+
+{empty} +
 
 === Build Automation
 
 See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build automation.
 
+{empty} +
+
 === Continuous Integration
 
 We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+
+{empty} +
 
 === Coverage Reporting
 
 We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
+{empty} +
+
 === Documentation Previews
 When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
-=== Making a Release
+{empty} +
 
-Here are the steps to create a new release.
+=== Release Creation
+
+Here are the steps to create a new release:
 
 .  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
-.  Tag the repo with the version number. e.g. `v0.1`
+.  Tag the repo with the version number e.g. `v0.1`.
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
-=== Managing Dependencies
+{empty} +
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
-a. Include those libraries in the repo (this bloats the repo size) +
-b. Require developers to download those libraries manually (this creates extra work for developers)
+=== Dependencies Management
+
+A project often depends on third-party libraries. For example, this application depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives: +
+a. including those libraries in the repo (this bloats the repo size); and +
+b. requiring developers to download those libraries manually (this creates extra work for developers)
+
+{empty} +
 
 [[GetStartedProgramming]]
 [appendix]
@@ -520,7 +1487,7 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all activities in the list.
 +
 ****
 * Hints
@@ -536,20 +1503,20 @@ Do take a look at <<Design-Logic>> before attempting to modify the `Logic` compo
 [discrete]
 ==== `Model` component
 
-*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in the address book, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
+*Scenario:* You are in charge of `model`. One day, the `logic`-in-charge approaches you for help. He wants to implement a command such that the user is able to remove a particular tag from everyone in Desk Board, but the model API does not support such a functionality at the moment. Your job is to implement an API method, so that your teammate can use your API to implement his command.
 
 [TIP]
 Do take a look at <<Design-Model>> before attempting to modify the `Model` component.
 
-. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in the address book.
+. Add a `removeTag(Tag)` method. The specified tag will be removed from everyone in Desk Board.
 +
 ****
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a activity, and link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each activity, and remove the `tag` from each activity.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
@@ -560,12 +1527,12 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use CLIndar. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last activity in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside activity cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
 +
 **Before**
 +
@@ -610,7 +1577,7 @@ image::getting-started-ui-result-after.png[width="200"]
 *** Do read the commits one at a time if you feel overwhelmed.
 ****
 
-. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
+. Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in Desk Board.
 +
 **Before**
 +
@@ -623,24 +1590,24 @@ image::getting-started-ui-status-after.png[width="500"]
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
-** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
+** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever Desk Board is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of activities when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of activities whenever there are new changes to the addressbook.
 ** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of activities status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
 
 [discrete]
 ==== `Storage` component
 
-*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving the address book to the cloud. However, the current implementation of the application constantly saves the address book after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for the address book storage.
+*Scenario:* You are in charge of `storage`. For your next project milestone, your team plans to implement a new feature of saving Desk Board to the cloud. However, the current implementation of the application constantly saves Desk Board after the execution of each command, which is not ideal if the user is working on limited internet connection. Your team decided that the application should instead save the changes to a temporary local backup file first, and only upload to the cloud after the user closes the application. Your job is to implement a backup API for Desk Board storage.
 
 [TIP]
 Do take a look at <<Design-Storage>> before attempting to modify the `Storage` component.
 
-. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that the address book can be saved in a fixed temporary location.
+. Add a new method `backupAddressBook(ReadOnlyAddressBook)`, so that Desk Board can be saved in a fixed temporary location.
 +
 ****
 * Hint
@@ -658,19 +1625,19 @@ By creating this command, you will get a chance to learn how to implement a feat
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a activity specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first activity to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first activity.
 
 ==== Step-by-step Instructions
 
-===== [Step 1] Logic: Teach the app to accept 'remark' which does nothing
+===== [Step 1] Logic: Teach the app to accept `remark` which does nothing
 Let's start by teaching the application how to parse a `remark` command. We will add the logic of `remark` later.
 
 **Main:**
@@ -700,7 +1667,7 @@ for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each activity later.
 
 **Main:**
 
@@ -712,11 +1679,11 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/activity/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -724,13 +1691,13 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`].
 
 **Main:**
 
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`].
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the activity will be created without a remark).
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `deskBoard.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -744,11 +1711,11 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 . Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/activity/Person.java[`Person`].
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the activity that it is currently building.
 . Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
@@ -760,14 +1727,14 @@ Our remark label in link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.jav
 
 **Tests:**
 
-. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysPerson(...)`] so that it will compare the now-functioning remark label.
+. Modify link:{repoURL}/src/test/java/seedu/address/ui/testutil/GuiTestAssert.java[`GuiTestAssert#assertCardDisplaysTask(...)`] so that it will compare the now-functioning remark label.
 
 ===== [Step 8] Logic: Implement `RemarkCommand#execute()` logic
 We now have everything set up... but we still can't modify the remarks. Let's finish it up by adding in actual logic for our `remark` command.
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a activity.
 
 **Tests:**
 
@@ -780,15 +1747,64 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
-*Target user profile*:
+*Target user*: University Computing students
 
-* has a need to manage a significant number of contacts
+*Target user profile*: Our target users are expected to have the following characteristics:
+
+* have a need to manage a significant number of tasks and events
 * prefer desktop apps over other types
 * can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* prefer typing over mouse input
+* are reasonably comfortable using Linux-style commands and CLI apps
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: The user will have all their tasks and events in one app.
+This creates convenience for the user. The CLI also makes it
+faster than a typical mouse/GUI-driven app
+
+=== Feature contribution
+The following section describes the major and minor enhancements that each of our members contributes to the development of our product.
+
+==== Jarrett
+*Major enhancement:* Managing tasks and events in Desk Board, which includes:
+
+* **adding** of tasks and events into Desk Board;
+
+* **removing** tasks and events from Desk Board;
+
+* **clearing** tasks and events from Desk Board; and
+
+* **keeping track** of overdue tasks and finished events with the overdue feature and `overdue` command.
+
+*Minor enhancement:* Implementing Java 8 `LocalDateTime` API. This API is used to parse the date times of tasks and events provided by the user and formats the date times for display in the UI.
+{empty} +
+{empty} +
+
+==== Jasmund
+*Major enhancement:* Modifying the GUI to fit our task/event manager application. This includes but is not limited to allowing the UI to display 2 panes for showing the Task and Event lists separately.
+
+*Minor enhancement:* Modifying the 'help' command. In our application, 'help' can be followed by a command word (e.g. 'help task') so that instructions for only the command desired are shown. Moreover, 'man' command -- an alias for 'help' -- is also added for users who are familiar with Linux commands.
+{empty} +
+{empty} +
+
+==== Karen
+*Major enhancement:* Management of the storage of task and event data, which includes:
+
+** *automatic saving* of task and event data after each update;
+** *automatic loading* of latest task and event data upon launching of application;
+** *exporting* of task and event data into an xml file (when `export` command is called); and
+** *importing* of task and event data from an xml file (when `import` command is called).
+
+The automatic save and load features *allow users to view their latest tasks and events*. The export and import features allow users to *move their data from one computer to another* (e.g. through e-mail or thumb drive). +
+{empty} +
+
+*Minor enhancement:* Automatic sorting of tasks and events by date and time. This allows users to prioritize their earliest tasks and events first.
+{empty} +
+{empty} +
+
+==== Yuan Quan
+*Major enhancement:* Modifying the Model component. This includes creation of Event and Task classes, as well as their superclass, Activity. Other classes relevant to tasks and events are also created, such as DateTime.
+
+*Minor enhancement:* Creating 'complete' command. This command marks a Task object as completed.
 
 [appendix]
 == User Stories
@@ -798,51 +1814,202 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
 |Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|`* * *` |new user |see usage instructions |figure out how to use the application
 
-|`* * *` |user |add a new person |
+|`* * *` |student |add a new task |record a new task to remind myself
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |student |add a new event |record a new event to remind myself
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |student |record the location of an event |be in the right location
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |student |record items to bring for an event |attend an event with all the required items
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |student |view uncompleted tasks (in order of earliest to latest) |manage my time and finish my tasks on time
+
+|`* * *` |student |view upcoming events (in order of earliest to latest) |attend my events
+
+|`* * *` |student |change the deadline of a task |adjust my schedule when a deadline changes
+
+|`* * *` |student |change the time of an event |see the updated schedule in case there are changes
+
+|`* * *` |student |change the location of an event |be in the right location when the location changes
+
+|`* * *` |student |delete a task |remove tasks I no longer need to complete
+
+|`* * *` |student |delete an event |remove events I no longer need to attend
+
+|`* * *` |student |find a task by name |locate details of a task without having to go through the entire list
+
+|`* * *` |student |find an event by name |locate details of an event without having to go through the entire list
+
+|`* * *` |student |mark a task as complete |tell which tasks are completed and which are not
+
+|`* * *` |student |view completed tasks |be assured I have completed a task
+
+|`* * *` |student with design background |view tasks only|as I prefer have less clutter in the GUI
+
+|`* * *` |student with design background |view events only|as I prefer have less clutter in the GUI
+
+|`* * *` |student |automatically save data after each update |have my most updated schedule to view in the future without having to save every time I make a change
+
+|`* * *` |student |load my most updated data when I open the application |view my most updated schedule
+
+|`* * *` |student |export data into a file in specified directory |send the data into another computer via e-mail or thumb drive
+
+|`* * *` |student |import data from another file |easily add entries previously saved in another file (possible from another computer)
+
+|`* * *` |student |view entries in order of date |finish task with nearest deadline first and know the nearest event that is coming up
+
+|`* * *` |forgetful student |view overdue tasks |be assured I did not miss any deadline
+
+|`* *` |forgetful student |get notification for upcoming tasks |never forget to complete my tasks
+
+|`* *` |forgetful student |get notification for upcoming events |never forget to attend my events
+
+|`* *` |busy student |sort tasks based on priority |allocate sufficient time for each task
+
+|`* *` |busy student |filter tasks based on time period |view only tasks with deadlines within a certain time period
+
+|`* *` |busy student |filter events based on time period |view only events within a certain time period
+
+|`* *` |busy student |filter tasks based on tags |view only certain tasks when there are too many tasks to view
+
+|`* *` |busy student |filter events based on tags |view only certain events when there are too many events to view
+
+|`* *` |busy student |view free time slots before a deadline |know how much time I have when I'm actually free to finish my tasks
+
+|`* *` |procrastinating student |add estimated time needed to complete a task |estimate when to start on a task to complete it on time
+
+|`* *` |procrastinating student |view contact details of person in-charge for a deadline extension |have enough time to complete my assignments despite my tight schedule
+
+|`* *` |organized student |add multiple deadlines for a task |keep track of project progress
+
+|`* *` |NUS student |import timetable from NUSMods |avoid the trouble of keying in my lecture and tutorial schedules manually
+
+|`* *` |student |view free time slots |arrange for other events
+
+|`* *` |student |view common free time slots among my group mates |arrange a group meeting
+
+|`*` |student |be rewarded for completing a task |feel a sense of achievement
+
+|`*` |student |hide private events |minimize chance of someone else seeing them by accident
 |=======================================================================
 
-_{More to be added}_
 
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `CLIndar` and the *Actor* is the `User`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+
+=== Use case: Add task
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1. User adds a task into CLIndar by typing a command
+2. CLIndar parses command typed and adds in the task
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+** 2a. CLIndar detects that the format of the command typed is invalid
++
+[none]
+** 3a1. CLIndar shows an error message
++
+Use case ends.
+
+=== Use case: Add events
+
+*MSS*
+
+1. User adds an event into CLIndar by typing a command
+2. CLIndar parses command typed and adds in the event
++
+Use case ends.
+
+*Extensions*
+
+[none]
+** 3a. CLIndar detects that the format of the command typed is invalid
++
+[none]
+** 3a1. CLIndar shows an error message
++
+Use case ends.
+
+=== Use case: Complete task
+
+*MSS*
+
+1. User requests to mark a task as completed by typing a command
+2. CLIndar shows a list of uncompleted tasks
+3. User selects the task to be marked as completed by the index
+4. CLIndar marks the selected task as completed
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 2a. The list is empty
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. CLIndar shows an error message
 +
 Use case resumes at step 2.
+
+
+=== Use case: Show urgent task
+
+*MSS*
+
+1. User requests to show all tasks before a certain date by typing a command
+2. CLIndar shows a list of uncompleted tasks with deadline before the provided date
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The given date is invalid
++
+[none]
+** 1a1. CLIndar shows an error message
++
+Use case resumes at step 1.
+
+* 2a. The list is empty.
++
+Use case ends.
+
+=== Use case: Show help for command
+
+*MSS*
+
+1. User requests to show help for command requested
+2. CLIndar shows the help message for the requested command
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. The command requested is invalid
++
+[none]
+** 1a1. CLIndar shows an error message
++
+Use case resumes at step 1.
+
+Use case ends.
 
 _{More to be added}_
 
@@ -850,19 +2017,50 @@ _{More to be added}_
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 500 tasks and 500 events without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  The system should respond within two seconds when the user enters a command.
+.  The system CLI commands should be easy to remember for the average English speaker.
+.  A novice user should be able to understand how to use the system in a short period of time.
+.  The notification feature should not be deemed too annoying for the user.
 
 _{More to be added}_
 
 [appendix]
 == Glossary
 
+[[tasks]] Tasks::
+A particular work assigned by a professor.
+
+[[completed]] Completed::
+A task or event that has finished.
+
+[[deadline]] Deadline::
+The date and time by which an event will happen or a task is due.
+
+[[duration]] Duration::
+The amount of time left to complete a task or prepare for an event.
+
+[[events]] Events::
+A thing that will occur in a certain place at a particular interval of time.
+
+[[location]] Location::
+The place where the event will occur.
+
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
 [[private-contact-detail]] Private contact detail::
-A contact detail that is not meant to be shared with others
+A contact detail that is not meant to be shared with others.
+
+[[overdue]] Overdue::
+A task that has not been completed past the deadline.
+
+[[things-to-bring]] Things to bring::
+Things to be brought for an event that is going to happen.
+
+[[urgent]] Urgent::
+A task due or event that will happen within the next 24 hours.
 
 [appendix]
 == Product Survey
@@ -905,15 +2103,15 @@ These instructions only provide a starting point for testers to work on; testers
 
 _{ more test cases ... }_
 
-=== Deleting a person
+=== Deleting a activity
 
-. Deleting a person while all persons are listed
+. Deleting a activity while all activities are listed
 
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: List all activities using the `list` command. Multiple activities in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
+   Expected: No activity is deleted. Error details shown in the status message. Status bar remains the same.
 .. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
    Expected: Similar to previous.
 

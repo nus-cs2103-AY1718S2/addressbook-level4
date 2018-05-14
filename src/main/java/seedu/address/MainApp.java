@@ -262,7 +262,11 @@ public class MainApp extends Application {
     @Subscribe
     public void handlePasswordChangedEvent(PasswordChangedEvent event) throws Exception {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
-        userPrefs.setPasswordHash(CipherEngine.hashPassword(event.newPassword));
+        if (event.newPassword.length() > 0) {
+            userPrefs.setPasswordHash(CipherEngine.hashPassword(event.newPassword));
+        } else {
+            userPrefs.setPasswordHash("");
+        }
         try {
             storage.saveUserPrefs(userPrefs);
             if (event.oldPassword.length() > 0) {

@@ -100,6 +100,7 @@ public class LogicManager extends ComponentManager implements Logic {
             undoStack.push(command);
             return result;
         } catch (ParseException e) {
+            correctedCommand = null;
             return attemptCommandAutoCorrection(commandText, e);
         } finally {
             if (addToHistory) {
@@ -133,12 +134,13 @@ public class LogicManager extends ComponentManager implements Logic {
      */
     private Command getCommand(String commandText) throws ParseException {
         Command command;
+        String processedText;
         if (correctedCommand != null && commandText.equals("")) {
-            command = bookShelfParser.parseCommand(correctedCommand);
+            processedText = bookShelfParser.applyCommandAlias(correctedCommand);
         } else {
-            String processedText = bookShelfParser.applyCommandAlias(commandText);
-            command = bookShelfParser.parseCommand(processedText);
+            processedText = bookShelfParser.applyCommandAlias(commandText);
         }
+        command = bookShelfParser.parseCommand(processedText);
         correctedCommand = null;
         return command;
     }

@@ -5,7 +5,6 @@ import static seedu.address.commons.core.Messages.MESSAGE_INVALID_COMMAND_FORMAT
 import static seedu.address.logic.parser.CliSyntax.PREFIX_NEW;
 import static seedu.address.logic.parser.CliSyntax.PREFIX_OLD;
 
-import seedu.address.commons.util.CollectionUtil;
 import seedu.address.logic.LockManager;
 import seedu.address.logic.commands.SetPasswordCommand;
 import seedu.address.logic.parser.exceptions.ParseException;
@@ -35,7 +34,7 @@ public class SetPasswordCommandParser implements Parser<SetPasswordCommand> {
             newKey = String.valueOf(argMultimap.getValue(PREFIX_NEW).get().trim());
         }
 
-        boolean isValid = CollectionUtil.isAnyNonNull(oldKey) || CollectionUtil.isAnyNonNull(newKey);
+        boolean isValid = !(oldKey.isEmpty() && newKey.isEmpty());
 
         if (args.trim().isEmpty() || !isValid) {
             throw new ParseException(String.format(MESSAGE_INVALID_COMMAND_FORMAT, SetPasswordCommand.MESSAGE_USAGE));

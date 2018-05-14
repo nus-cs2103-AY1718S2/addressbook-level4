@@ -153,8 +153,8 @@ Other examples:
 
 * `search Artemis a/Andy Weir` +
 Returns a list of books containing the word `Artemis`, where `Andy Weir` matches one of the authors.
-* `search t/Babylon's Ashes c/Science Fiction` +
-Returns a list of `Science Fiction` books that contains `Babylon's Ashes` in the title.
+* `search t/Babylon's Ashes c/Fiction` +
+Returns a list of `Fiction` books that contains `Babylon's Ashes` in the title.
 
 [[select-command]]
 === Selecting a book : `select`
@@ -237,7 +237,7 @@ image::AddCommandAddedConfirmation.png[width="650"]
 
 Other examples:
 
-* `search t/Babylon's Ashes c/Science Fiction` +
+* `search t/Babylon's Ashes c/Fiction` +
 `add 1` +
 Adds the 1st book in the search results.
 
@@ -283,8 +283,8 @@ Other examples:
 
 * `list a/Andy Weir by/title` +
 Lists books in your book shelf that contains `Andy Weir` in one of the authors' name, and sort them in alphabetical order according to their titles.
-* `list t/Babylon's Ashes c/Science Fiction` +
-Lists `Science Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
+* `list t/Babylon's Ashes c/Fiction` +
+Lists `Fiction` books in your book shelf that contains `Babylon's Ashes` in the title.
 
 // tag::edit[]
 [[edit-command]]
@@ -405,7 +405,7 @@ image::ReviewsCommandLoaded.png[width="650"]
 
 Other examples:
 
-* `search t/Babylon's Ashes c/Science Fiction` +
+* `search t/Babylon's Ashes c/Fiction` +
 `reviews 1` +
 Shows online reviews of 1st book in the search results.
 
@@ -516,7 +516,7 @@ Format: `undo`
 Undoable commands are commands that modify the book shelf's content (`add`, `edit`, `delete`, and `clear`).
 ====
 
-Suppose you just deleted a book `Harry Potter and the Classical World`.
+Suppose you just deleted a book `Artificial Intelligence`.
 
 image::DeleteCommand.png[width="650"]
 
@@ -626,6 +626,7 @@ Deletes the command alias with the name `rm`.
 Deletes the command alias with the name `read`.
 // end::alias[]
 
+[[hint-system]]
 === Hint system _(since v1.5)_
 We understand that Bibliotek has many commands and it is difficult to remember the syntax of every command. With the hint system,
 you can reduce the burden on your memory and count on Bibliotek to remind you instead!
@@ -643,6 +644,7 @@ You can also see whether your command is valid, and if it isn't, what parameter 
 
 image::HintSystemNextParameter.png[width="650"]
 
+[[command-autocorrection]]
 === Command autocorrection _(since v1.5)_
 
 It is common to mispell words when you are typing fast, and when this happens, it is always a hassle to have to correct it and try again.
@@ -669,6 +671,7 @@ WARNING: If you have aliases with closely matching names, the accuracy of the au
 This section documents some additional features in Bibliotek that do not fall into the above categories.
 
 // tag::quoteOfTheDay[]
+[[quote-of-the-day]]
 === Displaying quote of the day
 
 When the right panel is empty (e.g. on start up), Bibliotek displays a default panel containing a random quote of the day about books.
@@ -730,7 +733,7 @@ NOTE: If you provide a `OLD_PASSWORD` when you in fact have no password, it is c
 
 TIP: You should remember your password after setting a new one.
 
-[[Lock-command]]
+[[lock-command]]
 === Locking the app : `lock` _(since v1.5)_
 
 If you are going away for a moment and want to prevent others from messing with the application, you can perform `lock`. +
@@ -753,7 +756,7 @@ Performing any other valid commands, for example `list`, will be responded with 
 
 image::LockCommandMessage.png[width="650"]
 
-[[Unlock-command]]
+[[unlock-command]]
 === Unlocking the app : `unlock` _(since v1.5)_
 
 If you previously performed `lock`, use `unlock` to unlock the app. +
@@ -842,7 +845,7 @@ Think the font size is too small or large for your liking? You can customize the
 font size to your own needs. +
 Format: `fontsize FONT_SIZE`
 
-[[autpcomplete-command]]
+[[autocomplete-command]]
 // tag::autocomplete[]
 === Autocompleting commands : `Tab` _(coming in v2.0)_
 
@@ -934,7 +937,7 @@ e.g. `list s/unread by/priorityd`
 |*View book reviews* |`reviews INDEX`
 |*Search for books* |`search [SEARCH_TERM] [i/ISBN] [t/TITLE] [a/AUTHOR] [c/CATEGORY]`
 
-e.g. `search t/Babylon's Ashes c/Science Fiction`
+e.g. `search t/Babylon's Ashes c/Fiction`
 |*Select a book* |`select INDEX`
 |*Set a new password* |`setpw [old/OLD_PASSWORD] [new/NEW_PASSWORD]`
 

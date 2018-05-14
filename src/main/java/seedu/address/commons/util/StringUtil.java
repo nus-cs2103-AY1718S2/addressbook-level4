@@ -94,7 +94,7 @@ public class StringUtil {
      */
     public static boolean isValidUrl(String s) {
         requireNonNull(s);
-        return s.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/[\\w- ./?%&=,'#]*)?");
+        return s.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/.*)?");
     }
 
     /**

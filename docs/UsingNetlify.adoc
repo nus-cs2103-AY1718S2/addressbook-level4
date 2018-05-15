@@ -1,20 +1,24 @@
 = Using Netlify
 :imagesDir: images
 :stylesDir: stylesheets
+:linkattrs:
 
-https://www.netlify.com/[Netlify] is an automated hosting platform for deploying static websites. With the aid of build tools such as Gradle, Netlify provides a smoother experience for previewing documentation. This can be done by using Netlify's https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/[Deploy Previews] feature, which shows a preview of the updated documentation whenever a pull request is made.
+https://www.netlify.com/[Netlify, window="_blank"] is an automated hosting platform for deploying static websites.
+With the aid of build tools such as Gradle, Netlify provides a smoother experience for previewing documentation.
+This can be done by using Netlify's https://www.netlify.com/blog/2016/07/20/introducing-deploy-previews-in-netlify/[Deploy Previews, window="_blank"] feature,
+which shows a preview of the updated documentation whenever a pull request is made.
 
 == Setting up Netlify
 . Fork the repository to your own organization.
 +
-. Go to https://www.netlify.com/ and click `Sign Up`. Next, click `GITHUB SIGN IN`, enter your GitHub account details and authorize netlify.
+. Go to https://www.netlify.com/[https://www.netlify.com/, window="_blank"] and click `Sign Up`. Next, click `GITHUB SIGN IN`, enter your GitHub account details and authorize netlify.
 +
 . After logging in, click `New site from Git`.
 +
 . You will then be brought to the setup page. Click `GitHub` to link your repository to Netlify.
 * Depending on whether you are the owner of the repository, you can either grant or request access to Netlify so that it can access your repository and build your documentation.
 +
-image:netlify/grant_or_request_access.png[Grant or request access, width = 630]
+image:netlify/grant_or_request_access.png[Grant or request access]
 * After granting or requesting access to your repository, click `Authorize netlify`.
 +
 . Pick your repository from the list.

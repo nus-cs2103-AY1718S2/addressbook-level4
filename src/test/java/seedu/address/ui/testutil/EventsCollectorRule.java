@@ -77,6 +77,18 @@ public class EventsCollectorRule implements TestRule {
         }
 
         /**
+         * Returns the most recent event collected, of the specified class.
+         */
+        public BaseEvent getMostRecent(Class clazz) {
+            for (int i = events.size() - 1; i >= 0; --i) {
+                if (events.get(i).getClass() == clazz) {
+                    return events.get(i);
+                }
+            }
+            return null;
+        }
+
+        /**
          * Returns true if the collector did not receive any events
          */
         public boolean isEmpty() {

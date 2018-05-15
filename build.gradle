@@ -9,8 +9,8 @@ plugins {
     id 'java'
     id 'jacoco'
     id 'checkstyle'
-    id "com.github.kt3k.coveralls" version "2.4.0"
-    id "com.github.johnrengelman.shadow" version '1.2.3'
+    id "com.github.kt3k.coveralls" version "2.8.2"
+    id "com.github.johnrengelman.shadow" version '2.0.2'
     id 'org.asciidoctor.convert' version '1.5.6'
     id 'application'
 }
@@ -30,40 +30,42 @@ checkstyle {
     toolVersion = '8.1'
 }
 
+jacoco {
+    toolVersion = '0.8.0'
+}
+
 jacocoTestReport {
     reports {
         xml.enabled false
         csv.enabled false
-        html.destination "${buildDir}/jacocoHtml"
+        html.destination file("${buildDir}/jacocoHtml")
     }
 }
 
 dependencies {
-    String testFxVersion = '4.0.7-alpha'
+    String testFxVersion = '4.0.13-alpha'
 
-    compile group: 'org.fxmisc.easybind', name: 'easybind', version: '1.0.3'
-    compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.11'
-    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.7.0'
-    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.7.4'
-    compile group: 'com.google.guava', name: 'guava', version: '19.0'
+    compile group: 'org.asynchttpclient', name: 'async-http-client', version: '2.4.3'
+    compile group: 'org.controlsfx', name: 'controlsfx', version: '8.40.14'
+    compile group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.9.4'
+    compile group: 'com.fasterxml.jackson.datatype', name: 'jackson-datatype-jsr310', version: '2.9.4'
+    compile group: 'com.google.guava', name: 'guava', version: '23.0'
 
     testCompile group: 'junit', name: 'junit', version: '4.12'
+    testCompile group: 'org.mockito', name: 'mockito-core', version: '2.16.0'
     testCompile group: 'org.testfx', name: 'testfx-core', version: testFxVersion
     testCompile group: 'org.testfx', name: 'testfx-junit', version: testFxVersion
-    testCompile group: 'org.testfx', name: 'testfx-legacy', version: testFxVersion, {
-        exclude group: 'junit', module: 'junit'
-    }
-    testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '1.8.0_20'
+    testCompile group: 'org.testfx', name: 'openjfx-monocle', version: '8u76-b04'
 }
 
 shadowJar {
-    archiveName = "addressbook.jar"
+    archiveName = "bibliotek.jar"
 
     destinationDir = file("${buildDir}/jar/")
 }
 
 task wrapper(type: Wrapper) {
-    gradleVersion = '2.12'
+    gradleVersion = '4.6'
 }
 
 task coverage(type: JacocoReport) {
@@ -105,6 +107,11 @@ allTests.dependsOn guiTests
 allTests.dependsOn nonGuiTests
 
 test {
+    test.maxParallelForks = Math.min(System.env.'CI' ? 2 : 4, Runtime.runtime.availableProcessors())
+    minHeapSize = "512m"
+    maxHeapSize = "1200m"
+    jvmArgs '-Xmx1200m'
+
     systemProperty 'testfx.setup.timeout', '60000'
 
     /*
@@ -146,14 +153,16 @@ test {
     }
 }
 
-task headless << {
-    println "Setting headless mode properties."
-    test {
-        systemProperty 'java.awt.robot', 'true'
-        systemProperty 'testfx.robot', 'glass'
-        systemProperty 'testfx.headless', 'true'
-        systemProperty 'prism.order', 'sw'
-        systemProperty 'prism.text', 't2k'
+task headless {
+    doLast {
+        println "Setting headless mode properties."
+        test {
+            systemProperty 'java.awt.robot', 'true'
+            systemProperty 'testfx.robot', 'glass'
+            systemProperty 'testfx.headless', 'true'
+            systemProperty 'prism.order', 'sw'
+            systemProperty 'prism.text', 't2k'
+        }
     }
 }
 
@@ -166,13 +175,13 @@ asciidoctor {
     outputDir "${buildDir}/docs"
 
     attributes linkcss: true,
-               stylesheet: 'gh-pages.css',
-               'source-highlighter': 'coderay',
-               icons: 'font',
-               experimental: true,
-               sectlinks: true,
-               idprefix: '',  // for compatibility with GitHub preview
-               idseparator: '-'
+            stylesheet: 'gh-pages.css',
+            'source-highlighter': 'coderay',
+            icons: 'font',
+            experimental: true,
+            sectAnchors: true,
+            idprefix: '',  // for compatibility with GitHub preview
+            idseparator: '-'
 }
 
 /*
@@ -196,12 +205,21 @@ task deployOfflineDocs(type: Copy) {
     }
 }
 
-task copyDummySearchPage(type: Copy) {
-    from 'docs/DummySearchPage.html'
-    into "${buildDir}/docs/html5"
-}
-
 deployOfflineDocs.dependsOn asciidoctor
 processResources.dependsOn deployOfflineDocs
+
+task download {
+    description "Pre-downloads most dependencies"
+    doLast {
+        configurations.getAsMap().each { name, config ->
+            println "Retrieving dependencies for $name"
+            try {
+                config.files
+            } catch (e) {
+                // skip
+            }
+        }
+    }
+}
 
 defaultTasks 'clean', 'headless', 'allTests', 'coverage', 'asciidoctor'

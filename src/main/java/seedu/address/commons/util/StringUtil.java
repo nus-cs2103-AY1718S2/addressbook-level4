@@ -5,11 +5,17 @@ import static seedu.address.commons.util.AppUtil.checkArgument;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.Base64;
+import java.util.Random;
 
 /**
  * Helper functions for handling strings.
  */
 public class StringUtil {
+
+    private static final int RANDOM_BYTE_LENGTH = 9;
 
     /**
      * Returns true if the {@code sentence} contains the {@code word}.
@@ -67,5 +73,73 @@ public class StringUtil {
         } catch (NumberFormatException nfe) {
             return false;
         }
+    }
+
+    /**
+     * Returns the URL encoded form of the string {@code s}, or any empty string
+     * if UTF-8 encoding is not supported.
+     */
+    public static String urlEncode(String s) {
+        requireNonNull(s);
+        try {
+            return URLEncoder.encode(s, "UTF-8");
+        } catch (UnsupportedEncodingException e) {
+            return "";
+        }
+    }
+
+    // Reused from http://www.extensionmethod.net/1555/csharp/string/isvalidurl
+    /**
+     * Checks whether the string {@code s} denotes a valid URL.
+     */
+    public static boolean isValidUrl(String s) {
+        requireNonNull(s);
+        return s.matches("http(s)?://([\\w-]+\\.)+[\\w-]+(/.*)?");
+    }
+
+    /**
+     * Replaces the {@code index} index of {@code target} with {@code replacement}.
+     * @throws IndexOutOfBoundsException if {@code index} is invalid.
+     */
+    public static String replace(String target, char replacement, int index) {
+        return target.substring(0, index) + replacement + target.substring(index + 1, target.length());
+    }
+
+    /**
+     * Adds {@code toAdd} behind the {@code index} index of {@code target}.
+     * @throws IndexOutOfBoundsException if {@code index} is invalid.
+     */
+    public static String addAfter(String target, char toAdd, int index) {
+        return target.substring(0, index + 1) + toAdd + target.substring(index + 1, target.length());
+    }
+
+    /**
+     * Removes the character at {@code index} index of {@code target}.
+     * @throws IndexOutOfBoundsException if {@code index} is invalid.
+     */
+    public static String removeAt(String target, int index) {
+        return target.substring(0, index) + target.substring(index + 1, target.length());
+    }
+
+    /**
+     * Returns a string with the leading whitespace removed.
+     */
+    public static String leftTrim(String s) {
+        int index = 0;
+        while (index < s.length() && s.charAt(index) == ' ') {
+            ++index;
+        }
+        return s.substring(index);
+    }
+
+    //@@author takuyakanbr
+    /**
+     * Returns a random 8 character string to be used as a prefix to a filename.
+     */
+    public static String generateRandomPrefix() {
+        byte[] randomBytes = new byte[RANDOM_BYTE_LENGTH];
+        new Random().nextBytes(randomBytes);
+        byte[] encodedBytes = Base64.getEncoder().encode(randomBytes);
+        return new String(encodedBytes).replace("/", "-");
     }
 }

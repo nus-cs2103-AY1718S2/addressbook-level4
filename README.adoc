@@ -1,11 +1,17 @@
-= Address Book (Level 4)
+= Bibliotek
 ifdef::env-github,env-browser[:relfileprefix: docs/]
 
-https://travis-ci.org/se-edu/addressbook-level4[image:https://travis-ci.org/se-edu/addressbook-level4.svg?branch=master[Build Status]]
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
-https://coveralls.io/github/se-edu/addressbook-level4?branch=master[image:https://coveralls.io/repos/github/se-edu/addressbook-level4/badge.svg?branch=master[Coverage Status]]
-https://www.codacy.com/app/damith/addressbook-level4?utm_source=github.com&utm_medium=referral&utm_content=se-edu/addressbook-level4&utm_campaign=Badge_Grade[image:https://api.codacy.com/project/badge/Grade/fc0b7775cf7f4fdeaf08776f3d8e364a[Codacy Badge]]
-https://gitter.im/se-edu/Lobby[image:https://badges.gitter.im/se-edu/Lobby.svg[Gitter chat]]
+https://circleci.com/gh/CS2103JAN2018-F14-B4/main/tree/master[image:https://img.shields.io/circleci/project/github/CS2103JAN2018-F14-B4/main.svg?label=circleci[Build Status]]
+https://travis-ci.org/CS2103JAN2018-F14-B4/main[image:https://img.shields.io/travis/CS2103JAN2018-F14-B4/main.svg?label=travis[Build Status]]
+https://ci.appveyor.com/project/takuyakanbr/main[image:https://img.shields.io/appveyor/ci/takuyakanbr/main.svg?label=appveyor[Build Status]]
+https://coveralls.io/github/CS2103JAN2018-F14-B4/main?branch=master[image:https://img.shields.io/coveralls/github/CS2103JAN2018-F14-B4/main.svg[Coverage Status]]
+https://www.codacy.com/app/takuyakanbr/main[image:https://img.shields.io/codacy/grade/aa9140dcebbd474c9dc16c57fe247e78.svg[Codacy Badge]]
+https://github.com/CS2103JAN2018-F14-B4/main/blob/master/LICENSE[image:https://img.shields.io/badge/license-MIT-blue.svg[License]]
+
+Bibliotek is a free book cataloguing application that is simple, fast, and easy to use. It is targeted at
+heavy readers who require a hassle-free way of managing and keep tracking of their read and unread books.
+
+You can download Bibliotek for free from our https://github.com/CS2103JAN2018-F14-B4/main/releases/latest[releases page].
 
 ifdef::env-github[]
 image::docs/images/Ui.png[width="600"]
@@ -15,26 +21,28 @@ ifndef::env-github[]
 image::images/Ui.png[width="600"]
 endif::[]
 
-* This is a desktop Address Book application. It has a GUI but most of the user interactions happen using a CLI (Command Line Interface).
-* It is a Java sample application intended for students learning Software Engineering while using Java as the main programming language.
-* It is *written in OOP fashion*. It provides a *reasonably well-written* code example that is *significantly bigger* (around 6 KLoC)than what students usually write in beginner-level SE modules.
-* What's different from https://github.com/se-edu/addressbook-level3[level 3]:
-** A more sophisticated GUI that includes a list  panel and an in-built Browser.
-** More test cases, including automated GUI testing.
-** Support for _Build Automation_ using Gradle and for _Continuous Integration_ using Travis CI.
+== Features
+
+* Runs on all mainstream OS
+* Uses short and simple commands for user interactions
+* Provides a GUI to display lists and details of books
+* Search online for new books and add them with a command
+* Prioritize, rate, and mark books as reading, read, or unread
+* View book reviews
+* View availability of books in the library
 
 == Site Map
 
 * <<UserGuide#, User Guide>>
 * <<DeveloperGuide#, Developer Guide>>
-* <<LearningOutcomes#, Learning Outcomes>>
 * <<AboutUs#, About Us>>
 * <<ContactUs#, Contact Us>>
 
 == Acknowledgements
 
-* Some parts of this sample application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
+* This application is built upon the https://github.com/se-edu/addressbook-level4[AddressBook-Level4] project created by https://github.com/se-edu[SE-EDU] initiative.
+* Some parts of this application were inspired by the excellent http://code.makery.ch/library/javafx-8-tutorial/[Java FX tutorial] by
 _Marco Jakob_.
-* Libraries used: https://github.com/TomasMikula/EasyBind[EasyBind], https://github.com/TestFX/TestFX[TextFX], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/FasterXML/jackson[Jackson], https://github.com/google/guava[Guava], https://github.com/junit-team/junit4[JUnit4]
+* Libraries used: https://github.com/AsyncHttpClient/async-http-client[AsyncHttpClient], https://bitbucket.org/controlsfx/controlsfx/[ControlsFX], https://github.com/google/guava[Guava], https://github.com/FasterXML/jackson[Jackson], https://github.com/junit-team/junit4[JUnit4], https://github.com/mockito/mockito[Mockito], https://github.com/TestFX/TestFX[TextFX]
 
 == Licence : link:LICENSE[MIT]

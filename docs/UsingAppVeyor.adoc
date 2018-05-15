@@ -1,8 +1,9 @@
 = AppVeyor
 :imagesDir: images
 :stylesDir: stylesheets
+:linkattrs:
 
-https://www.appveyor.com/[AppVeyor] is a _Continuous Integration_ platform for GitHub projects. It runs its builds on Windows virtual machines.
+https://www.appveyor.com/[AppVeyor, window="_blank"_] is a _Continuous Integration_ platform for GitHub projects. It runs its builds on Windows virtual machines.
 
 AppVeyor can run the project's tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features have not been broken on Windows by the changes.
 
@@ -11,12 +12,12 @@ The current AppVeyor setup performs the following things whenever someone pushes
 * Runs the `gradlew.bat headless allTests` command.
 * Automatically retries the build up to 3 times if a task fails.
 
-If you would like to customize your AppVeyor build further, you can learn more about AppVeyor from the https://www.appveyor.com/docs/[AppVeyor Documentation].
+If you would like to customize your AppVeyor build further, you can learn more about AppVeyor from the https://www.appveyor.com/docs/[AppVeyor Documentation, window="_blank"].
 
 == Setting up AppVeyor
 
 .  Fork the repo to your own organization.
-.  Go to https://ci.appveyor.com/, and under `Login`, click on `GitHub` to login with your GitHub account. Enter your GitHub account details if needed.
+.  Go to https://ci.appveyor.com/[https://ci.appveyor.com/, window="_blank"], and under `Login`, click on `GitHub` to login with your GitHub account. Enter your GitHub account details if needed.
 +
 image:appveyor/login.png[Click on GitHub in the login page]
 +
@@ -75,13 +76,20 @@ The markdown code should be in this format:
 Convert it to the asciidoc format as follows:
 +
 ----
-<link to project>[image:<link to image>[Build status]]
+<link to project>[image:<link to image>[Build Status]]
 ----
 +
 The asciidoc code should look similar to:
 +
 ----
-https://ci.appveyor.com/project/damithc/addressbook-level4[image:https://ci.appveyor.com/api/projects/status/3boko2x2vr5cc3w2?svg=true[Build status]]
+https://ci.appveyor.com/project/takuyakanbr/main[image:https://ci.appveyor.com/api/projects/status/0b9xn6cwd3i8a80b?svg=true[Build Status]]
 ----
 +
 Copy and paste the asciidoc code to your `README.adoc` file.
++
+* Alternatively, for a more consistent styling, you can also use the badges from https://shields.io/[Shields.io, window="_blank"].
+Simply copy the code below, and replace the `<username>` with your GitHub username (or GitHub organization, if your repository belongs to one) and `<repo>` with your repository name.
++
+----
+https://ci.appveyor.com/project/<username>/<repo>[image:https://img.shields.io/appveyor/ci/<username>/<repo>.svg?label=appveyor[Build Status]]
+----

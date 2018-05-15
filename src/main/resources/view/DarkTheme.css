@@ -1,3 +1,15 @@
+@font-face {
+    src: url("OpenSansEmoji.ttf");
+}
+
+body {
+    background-color: transparent;
+    font-size: 11pt;
+    font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue";
+    color: #e2e2e2;
+    overflow-y: hidden;
+}
+
 .background {
     -fx-background-color: derive(#1d1d1d, 20%);
     background-color: #383838; /* Used in the default.html file */
@@ -5,28 +17,45 @@
 
 .label {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: #555555;
+    -fx-font-family: "OpenSansEmoji";
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: #e2e2e2;
     -fx-opacity: 0.9;
 }
 
 .label-bright {
     -fx-font-size: 11pt;
-    -fx-font-family: "Segoe UI Semibold";
-    -fx-text-fill: white;
+    -fx-font-family: "OpenSansEmoji";
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: #f1f1f1;
+    -fx-opacity: 1;
+}
+
+.label-muted {
+    -fx-font-size: 11pt;
+    -fx-font-family: "OpenSansEmoji";
+    -fx-font-smoothing-type: gray;
+    -fx-text-fill: #adadad;
     -fx-opacity: 1;
 }
 
 .label-header {
-    -fx-font-size: 32pt;
-    -fx-font-family: "Segoe UI Light";
-    -fx-text-fill: white;
+    -fx-font-size: 24pt;
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
+    -fx-text-fill: #f1f1f1;
+    -fx-opacity: 1;
+}
+
+.label-subheading {
+    -fx-font-size: 20pt;
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
+    -fx-text-fill: #f1f1f1;
     -fx-opacity: 1;
 }
 
 .text-field {
     -fx-font-size: 12pt;
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Segoe UI Semibold", "Helvetica Neue", "HelveticaNeue";
 }
 
 .tab-pane {
@@ -66,7 +95,7 @@
 
 .table-view .column-header .label {
     -fx-font-size: 20pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
     -fx-text-fill: white;
     -fx-alignment: center-left;
     -fx-opacity: 1;
@@ -104,7 +133,7 @@
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: #4c4e4f;
 }
 
 .list-cell:filled:selected {
@@ -117,19 +146,29 @@
 }
 
 .list-cell .label {
-    -fx-text-fill: white;
+    -fx-text-fill: #f1f1f1;
 }
 
 .cell_big_label {
-    -fx-font-family: "Segoe UI Semibold";
+    -fx-font-family: "Segoe UI Semibold", "Helvetica Neue", "HelveticaNeue";
     -fx-font-size: 16px;
     -fx-text-fill: #010504;
 }
 
 .cell_small_label {
-    -fx-font-family: "Segoe UI";
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue";
     -fx-font-size: 13px;
     -fx-text-fill: #010504;
+}
+
+.scroll-pane {
+    -fx-background-color: transparent;
+    -fx-background-insets: none;
+    -fx-padding: 0 0 0 0;
+}
+
+.scroll-pane > .viewport {
+    -fx-background-color: transparent;
 }
 
 .anchor-pane {
@@ -142,24 +181,30 @@
      -fx-border-top-width: 1px;
 }
 
-.status-bar {
-    -fx-background-color: derive(#1d1d1d, 20%);
-    -fx-text-fill: black;
-}
-
 .result-display {
     -fx-background-color: transparent;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
+    -fx-font-size: 12pt;
+    -fx-text-fill: #f1f1f1;
 }
 
 .result-display .label {
     -fx-text-fill: black !important;
 }
 
+.result-display .text {
+    -fx-line-spacing: -0.15em;
+}
+
+.status-bar {
+    -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-text-fill: black;
+    -fx-padding: 0.3em 0.6em 0.3em 0.6em;
+}
+
 .status-bar .label {
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
+    -fx-font-size: 14px;
     -fx-text-fill: white;
 }
 
@@ -193,11 +238,16 @@
 
 .menu-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-padding: 0 0.5em 0 0.5em;
+}
+
+.menu-bar .menu {
+    -fx-padding: 0.2em 0.6em 0.2em 0.6em;
 }
 
 .menu-bar .label {
-    -fx-font-size: 14pt;
-    -fx-font-family: "Segoe UI Light";
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
     -fx-text-fill: white;
     -fx-opacity: 0.9;
 }
@@ -217,7 +267,7 @@
     -fx-border-width: 2;
     -fx-background-radius: 0;
     -fx-background-color: #1d1d1d;
-    -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
     -fx-text-fill: #d8d8d8;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
@@ -282,15 +332,18 @@
 
 .scroll-bar {
     -fx-background-color: derive(#1d1d1d, 20%);
+    -fx-padding: 0 0 0 0;
 }
 
 .scroll-bar .thumb {
     -fx-background-color: derive(#1d1d1d, 50%);
-    -fx-background-insets: 3;
+    -fx-background-insets: 4;
+    -fx-background-radius: 5px;
 }
 
 .scroll-bar .increment-button, .scroll-bar .decrement-button {
     -fx-background-color: transparent;
+    -fx-background-insets: 0 0 0 0;
     -fx-padding: 0 0 0 0;
 }
 
@@ -299,11 +352,31 @@
 }
 
 .scroll-bar:vertical .increment-arrow, .scroll-bar:vertical .decrement-arrow {
-    -fx-padding: 1 8 1 8;
+    -fx-padding: 0 8 0 8;
 }
 
 .scroll-bar:horizontal .increment-arrow, .scroll-bar:horizontal .decrement-arrow {
-    -fx-padding: 8 1 8 1;
+    -fx-padding: 8 0 8 0;
+}
+
+.error {
+    -fx-text-fill: #d06651 !important; /* The error class should always override the default text-fill style */
+}
+
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
+}
+
+.tag-selector {
+    -fx-border-width: 1;
+    -fx-border-color: white;
+    -fx-border-radius: 3;
+    -fx-background-radius: 3;
+}
+
+.tooltip-text {
+    -fx-text-fill: white;
 }
 
 #cardPane {
@@ -316,19 +389,31 @@
     -fx-text-fill: #F70D1A;
 }
 
-#commandTextField {
+#commandBox {
     -fx-background-color: transparent #383838 transparent #383838;
     -fx-background-insets: 0;
     -fx-border-color: #383838 #383838 #ffffff #383838;
     -fx-border-insets: 0;
     -fx-border-width: 1;
-    -fx-font-family: "Segoe UI Light";
-    -fx-font-size: 13pt;
-    -fx-text-fill: white;
+    -fx-padding: 6px 10px 6px 10px;
 }
 
-#filterField, #personListPanel, #personWebpage {
-    -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
+#commandTextField, #commandBoxHints {
+    -fx-background-color: transparent #383838 transparent #383838;
+    -fx-background-insets: 0;
+    -fx-border-radius: 0;
+    -fx-font-family: "Segoe UI Light", "Helvetica Neue Light", "HelveticaNeue-Light";
+    -fx-font-size: 13pt;
+    -fx-text-fill: #f1f1f1;
+    -fx-padding: 0;
+}
+
+#commandBoxHints {
+    -fx-opacity: 0.35;
+}
+
+.command-box-disabled {
+    -fx-opacity: 0.8;
 }
 
 #resultDisplay .content {
@@ -336,16 +421,133 @@
     -fx-background-radius: 0;
 }
 
-#tags {
+#description {
+    -fx-font-size: 10pt;
+}
+
+.pills, .pills-small, .pills-authors, .pills-categories, .pills-authors-small, .pills-categories-small {
     -fx-hgap: 7;
     -fx-vgap: 3;
 }
 
-#tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+.pills .label {
+    -fx-text-fill: #f1f1f1;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-font-size: 11pt;
+}
+
+.pills-small .label {
+    -fx-text-fill: #f1f1f1;
+    -fx-padding: 1 5 1 5;
+    -fx-border-radius: 7;
+    -fx-background-radius: 7;
+    -fx-font-size: 9.5pt;
+}
+
+.pills-authors .label {
+    -fx-text-fill: #f1f1f1;
     -fx-padding: 1 3 1 3;
-    -fx-border-radius: 2;
-    -fx-background-radius: 2;
-    -fx-font-size: 11;
+    -fx-background-color: #3e916866;
+    -fx-font-size: 11pt;
+}
+
+.pills-authors-small .label {
+    -fx-text-fill: #f1f1f1;
+    -fx-padding: 1 3 1 3;
+    -fx-background-color: #3e916866;
+    -fx-font-size: 9.5pt;
+}
+
+.pills-categories .label {
+    -fx-text-fill: #f1f1f1;
+    -fx-padding: 1 3 1 3;
+    -fx-background-color: #3e7b9166;
+    -fx-font-size: 11pt;
+}
+
+.pills-categories-small .label {
+    -fx-text-fill: #f1f1f1;
+    -fx-padding: 1 3 1 3;
+    -fx-background-color: #3e7b9166;
+    -fx-font-size: 9.5pt;
+}
+
+.status-unread.label {
+    -fx-background-color: #d50000;
+}
+
+.status-reading.label {
+    -fx-background-color: #FF6F00;
+}
+
+.status-read.label {
+    -fx-background-color: #2E7D32;
+}
+
+.priority-none.label {
+    -fx-background-color: #616161;
+}
+
+.priority-low.label {
+    -fx-background-color: #33691E;
+}
+
+.priority-medium.label {
+    -fx-background-color: #F57F17;
+}
+
+.priority-high.label {
+    -fx-background-color: #E65100;
+}
+
+.rating-unrated.label {
+    -fx-background-color: #616161;
+}
+
+.rating-rated.label {
+    -fx-background-color: #616161;
+    -fx-text-fill: #F9A825;
+}
+
+
+#aliasListContainer {
+    -fx-background-color: derive(#1d1d1d, 30%);
+}
+
+.alias-list-header {
+    -fx-font-family: "Segoe UI Semibold", "Helvetica Neue", "HelveticaNeue";
+}
+
+.alias-details {
+    -fx-hgap: 7;
+    -fx-vgap: 3;
+}
+
+.alias-id {
+    -fx-font-family: "Segoe UI Semibold", "Helvetica Neue", "HelveticaNeue";
+    -fx-min-width: 20px;
+}
+
+.alias-name {
+    -fx-font-family: "Segoe UI Semibold", "Helvetica Neue", "HelveticaNeue";
+    -fx-min-width: 80px;
+    -fx-margin: 0 6px 0 0;
+}
+
+.label.alias-named-args {
+    -fx-text-fill: #adadad;
+}
+
+
+#welcomeContainer {
+    -fx-background-color: derive(#1d1d1d, 30%);
+}
+
+.label.qotd {
+    -fx-font-family: "Segoe UI", "Helvetica Neue", "HelveticaNeue";
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+    -fx-text-fill: #adadad;
 }

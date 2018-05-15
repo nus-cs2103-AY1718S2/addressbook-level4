@@ -1,28 +1,19 @@
 package seedu.address.logic.commands;
 
-import static java.util.Objects.requireNonNull;
-import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.AddressBook;
-import seedu.address.model.ReadOnlyAddressBook;
 
 /**
- * Represents a command which can be undone and redone.
+ * Represents a command which can be undone.
  */
 public abstract class UndoableCommand extends Command {
-    private ReadOnlyAddressBook previousAddressBook;
 
     protected abstract CommandResult executeUndoableCommand() throws CommandException;
 
     /**
-     * Stores the current state of {@code model#addressBook}.
+     * Store what is required of the current state of {@code model#bookShelf}.
+     * {@code UndoableCommand}s that needs to save some data should override this method.
      */
-    private void saveAddressBookSnapshot() {
-        requireNonNull(model);
-        this.previousAddressBook = new AddressBook(model.getAddressBook());
-    }
+    protected void saveSnapshot() {}
 
     /**
      * This method is called before the execution of {@code UndoableCommand}.
@@ -31,34 +22,14 @@ public abstract class UndoableCommand extends Command {
     protected void preprocessUndoableCommand() throws CommandException {}
 
     /**
-     * Reverts the AddressBook to the state before this command
-     * was executed and updates the filtered person list to
-     * show all persons.
+     * Revert the state of {@code model#bookShelf} back to before this command was executed.
+     * @return success or failure message.
      */
-    protected final void undo() {
-        requireAllNonNull(model, previousAddressBook);
-        model.resetData(previousAddressBook);
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
-
-    /**
-     * Executes the command and updates the filtered person
-     * list to show all persons.
-     */
-    protected final void redo() {
-        requireNonNull(model);
-        try {
-            executeUndoableCommand();
-        } catch (CommandException ce) {
-            throw new AssertionError("The command has been successfully executed previously; "
-                    + "it should not fail now");
-        }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-    }
+    protected abstract String undo();
 
     @Override
     public final CommandResult execute() throws CommandException {
-        saveAddressBookSnapshot();
+        saveSnapshot();
         preprocessUndoableCommand();
         return executeUndoableCommand();
     }

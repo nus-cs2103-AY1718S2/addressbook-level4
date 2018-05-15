@@ -1,40 +1,78 @@
 package seedu.address.model;
 
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
-import static seedu.address.testutil.TypicalPersons.ALICE;
-import static seedu.address.testutil.TypicalPersons.BENSON;
+import static seedu.address.model.Model.PREDICATE_SHOW_ALL_BOOKS;
+import static seedu.address.testutil.TypicalBooks.ARTEMIS;
+import static seedu.address.testutil.TypicalBooks.BABYLON_ASHES;
+import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
 
-import java.util.Arrays;
-
+import org.junit.After;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
-import seedu.address.model.person.NameContainsKeywordsPredicate;
-import seedu.address.testutil.AddressBookBuilder;
+import seedu.address.logic.LockManager;
+import seedu.address.model.alias.Alias;
+import seedu.address.testutil.BookShelfBuilder;
 
 public class ModelManagerTest {
     @Rule
     public ExpectedException thrown = ExpectedException.none();
 
+    @After
+    public void tearDown() {
+        LockManager.getInstance().initialize(LockManager.NO_PASSWORD);
+    }
+
     @Test
-    public void getFilteredPersonList_modifyList_throwsUnsupportedOperationException() {
+    public void constructor_isPasswordProtected_hideAllBooks() {
+        LockManager.getInstance().initialize("invalid$11$11$invalid$invalid");
+        ModelManager modelManager = new ModelManager(getTypicalBookShelf(), new UserPrefs());
+        assertEquals(0, modelManager.getDisplayBookList().size());
+    }
+
+    @Test
+    public void getDisplayBookList_modifyList_throwsUnsupportedOperationException() {
         ModelManager modelManager = new ModelManager();
         thrown.expect(UnsupportedOperationException.class);
-        modelManager.getFilteredPersonList().remove(0);
+        modelManager.getDisplayBookList().remove(0);
+    }
+
+    @Test
+    public void getRecentBooksList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getRecentBooksList().remove(0);
+    }
+
+    @Test
+    public void getDisplayAliasList_modifyList_throwsUnsupportedOperationException() {
+        ModelManager modelManager = new ModelManager();
+        thrown.expect(UnsupportedOperationException.class);
+        modelManager.getDisplayAliasList().remove(0);
     }
 
     @Test
     public void equals() {
-        AddressBook addressBook = new AddressBookBuilder().withPerson(ALICE).withPerson(BENSON).build();
-        AddressBook differentAddressBook = new AddressBook();
+        BookShelf bookShelf = new BookShelfBuilder().withBook(ARTEMIS).withBook(BABYLON_ASHES).build();
+        BookShelf differentBookShelf = new BookShelf();
         UserPrefs userPrefs = new UserPrefs();
 
         // same values -> returns true
-        ModelManager modelManager = new ModelManager(addressBook, userPrefs);
-        ModelManager modelManagerCopy = new ModelManager(addressBook, userPrefs);
+        ModelManager modelManager = new ModelManager(bookShelf, userPrefs);
+        ModelManager modelManagerCopy = new ModelManager(bookShelf, userPrefs);
+        assertTrue(modelManager.equals(modelManagerCopy));
+
+        // same values -> returns true
+        modelManager.updateSearchResults(bookShelf);
+        modelManagerCopy.updateSearchResults(bookShelf);
+        assertTrue(modelManager.equals(modelManagerCopy));
+
+        // same values -> returns true
+        modelManager.addRecentBook(ARTEMIS);
+        modelManagerCopy.addRecentBook(ARTEMIS);
         assertTrue(modelManager.equals(modelManagerCopy));
 
         // same object -> returns true
@@ -46,20 +84,28 @@ public class ModelManagerTest {
         // different types -> returns false
         assertFalse(modelManager.equals(5));
 
-        // different addressBook -> returns false
-        assertFalse(modelManager.equals(new ModelManager(differentAddressBook, userPrefs)));
+        // different bookShelf -> returns false
+        assertFalse(modelManager.equals(new ModelManager(differentBookShelf, userPrefs)));
 
-        // different filteredList -> returns false
-        String[] keywords = ALICE.getName().fullName.split("\\s+");
-        modelManager.updateFilteredPersonList(new NameContainsKeywordsPredicate(Arrays.asList(keywords)));
-        assertFalse(modelManager.equals(new ModelManager(addressBook, userPrefs)));
+        // different searchResults -> returns false
+        assertFalse(modelManager.equals(new ModelManager(bookShelf, userPrefs)));
+
+        // different recentBooks -> returns false
+        modelManagerCopy.addRecentBook(BABYLON_ASHES);
+        assertFalse(modelManager.equals(modelManagerCopy));
+
+        // different alias list -> returns false
+        modelManagerCopy = new ModelManager(bookShelf, userPrefs);
+        modelManagerCopy.addAlias(new Alias("1", "1", "1"));
+        assertFalse(modelManager.equals(modelManagerCopy));
 
         // resets modelManager to initial state for upcoming tests
-        modelManager.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
+        modelManager.updateBookListFilter(PREDICATE_SHOW_ALL_BOOKS);
 
         // different userPrefs -> returns true
         UserPrefs differentUserPrefs = new UserPrefs();
-        differentUserPrefs.setAddressBookName("differentName");
-        assertTrue(modelManager.equals(new ModelManager(addressBook, differentUserPrefs)));
+        differentUserPrefs.setBookShelfName("differentName");
+        ModelManager modelManagerDiffPrefs = new ModelManager(bookShelf, differentUserPrefs);
+        assertTrue(modelManagerDiffPrefs.equals(new ModelManager(bookShelf, new UserPrefs())));
     }
 }

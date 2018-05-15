@@ -2,6 +2,7 @@ package seedu.address.commons.util;
 
 import static org.hamcrest.CoreMatchers.containsString;
 import static org.hamcrest.MatcherAssert.assertThat;
+import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 import static org.junit.Assert.assertTrue;
 
@@ -155,5 +156,85 @@ public class StringUtilTest {
         StringUtil.getDetails(null);
     }
 
+    //---------------- Tests for isValidUrl --------------------------------------
 
+    //@@author qiu-siqi
+    @Test
+    public void isValidUrl_nullGiven_throwsNullPointerException() {
+        thrown.expect(NullPointerException.class);
+        StringUtil.isValidUrl(null);
+    }
+
+    @Test
+    public void isValidUrl_emptyString() {
+        assertFalse(StringUtil.isValidUrl(""));
+    }
+
+    @Test
+    public void isValidUrl_validUrl_success() {
+        assertTrue(StringUtil.isValidUrl(
+                "https://catalogue.nlb.gov.sg/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/6689797/241229563,1"));
+    }
+
+    @Test
+    public void isValidUrl_invalidUrl_failure() {
+        assertFalse(StringUtil.isValidUrl(
+                "https:///catalogue.nlb.gov.sg/cgi-bin/spydus.exe/FULL/EXPNOS/BIBENQ/6689797/241229563,1"));
+    }
+
+    //---------------- Tests for replace --------------------------------------
+
+    @Test
+    public void replace_success() {
+        assertEquals("hello", StringUtil.replace("aello", 'h', 0));
+    }
+
+    @Test
+    public void replace_invalidIndex() {
+        thrown.expect(IndexOutOfBoundsException.class);
+        StringUtil.replace("aello", 'h', 6);
+    }
+
+    //---------------- Tests for addAfter --------------------------------------
+
+    @Test
+    public void addAfter_first_success() {
+        assertEquals("hello", StringUtil.addAfter("ello", 'h', -1));
+    }
+
+    @Test
+    public void addAfter_last_success() {
+        assertEquals("hello", StringUtil.addAfter("hell", 'o', 3));
+    }
+
+    @Test
+    public void addAfter_invalidIndex() {
+        thrown.expect(IndexOutOfBoundsException.class);
+        StringUtil.replace("hello", 'h', 5);
+    }
+
+    //---------------- Tests for removeAt --------------------------------------
+
+    @Test
+    public void removeAt_success() {
+        assertEquals("hello", StringUtil.removeAt("heello", 1));
+    }
+
+    @Test
+    public void removeAt_invalidIndex() {
+        thrown.expect(IndexOutOfBoundsException.class);
+        StringUtil.removeAt("hello", -1);
+    }
+
+    //---------------- Tests for leftTrim --------------------------------------
+
+    @Test
+    public void leftTrim_success() {
+        assertEquals("hello", StringUtil.leftTrim("     hello"));
+    }
+
+    @Test
+    public void leftTrim_rightNotTrimmed_success() {
+        assertEquals("hello ", StringUtil.leftTrim("     hello "));
+    }
 }

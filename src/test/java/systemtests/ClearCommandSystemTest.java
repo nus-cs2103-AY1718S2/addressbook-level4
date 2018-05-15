@@ -1,71 +1,56 @@
 package systemtests;
 
-import static seedu.address.commons.core.Messages.MESSAGE_UNKNOWN_COMMAND;
-import static seedu.address.testutil.TypicalPersons.KEYWORD_MATCHING_MEIER;
-
 import org.junit.Test;
 
 import seedu.address.commons.core.index.Index;
 import seedu.address.logic.commands.ClearCommand;
-import seedu.address.logic.commands.RedoCommand;
 import seedu.address.logic.commands.UndoCommand;
+import seedu.address.model.BookShelf;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.model.UserPrefs;
 
-public class ClearCommandSystemTest extends AddressBookSystemTest {
+public class ClearCommandSystemTest extends BibliotekSystemTest {
 
     @Test
     public void clear() {
-        final Model defaultModel = getModel();
+        Model model = getModel();
 
-        /* Case: clear non-empty address book, command with leading spaces and trailing alphanumeric characters and
-         * spaces -> cleared
-         */
+        /* Case: clear non-empty book shelf, command with leading spaces and trailing alphanumeric characters and
+         * spaces -> cleared */
         assertCommandSuccess("   " + ClearCommand.COMMAND_WORD + " ab12   ");
-        assertSelectedCardUnchanged();
+        assertSelectedBookListCardUnchanged();
 
-        /* Case: undo clearing address book -> original address book restored */
+        /* Case: undo clearing book shelf -> original book shelf restored */
         String command = UndoCommand.COMMAND_WORD;
-        String expectedResultMessage = UndoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command,  expectedResultMessage, defaultModel);
-        assertSelectedCardUnchanged();
+        String expectedResultMessage = ClearCommand.UNDO_SUCCESS;
+        assertCommandSuccess(command,  expectedResultMessage, model);
+        assertSelectedBookListCardUnchanged();
 
-        /* Case: redo clearing address book -> cleared */
-        command = RedoCommand.COMMAND_WORD;
-        expectedResultMessage = RedoCommand.MESSAGE_SUCCESS;
-        assertCommandSuccess(command, expectedResultMessage, new ModelManager());
-        assertSelectedCardUnchanged();
-
-        /* Case: selects first card in person list and clears address book -> cleared and no card selected */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        selectPerson(Index.fromOneBased(1));
+        /* Case: selects first card in book list and clears book shelf -> cleared and no card selected */
+        executeCommand(UndoCommand.COMMAND_WORD); // restores the original book shelf
+        selectBook(Index.fromOneBased(1));
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardDeselected();
+        assertSelectedBookListCardDeselected();
 
-        /* Case: filters the person list before clearing -> entire address book cleared */
-        executeCommand(UndoCommand.COMMAND_WORD); // restores the original address book
-        showPersonsWithName(KEYWORD_MATCHING_MEIER);
+        /* Case: clear empty book shelf -> cleared */
         assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
+        assertSelectedBookListCardUnchanged();
 
-        /* Case: clear empty address book -> cleared */
-        assertCommandSuccess(ClearCommand.COMMAND_WORD);
-        assertSelectedCardUnchanged();
-
-        /* Case: mixed case command word -> rejected */
-        assertCommandFailure("ClEaR", MESSAGE_UNKNOWN_COMMAND);
     }
 
     /**
      * Executes {@code command} and verifies that the command box displays an empty string, the result display
      * box displays {@code ClearCommand#MESSAGE_SUCCESS} and the model related components equal to an empty model.
      * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
+     * {@code BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
      * Also verifies that the command box has the default style class and the status bar's sync status changes.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
+     * @see BibliotekSystemTest#assertApplicationDisplaysExpected(String, String, Model)
      */
     private void assertCommandSuccess(String command) {
-        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager());
+        Model model = getModel();
+        assertCommandSuccess(command, ClearCommand.MESSAGE_SUCCESS, new ModelManager(new BookShelf(), new UserPrefs(),
+                model.getRecentBooksListAsBookShelf(), model.getAliasList()));
     }
 
     /**
@@ -75,27 +60,10 @@ public class ClearCommandSystemTest extends AddressBookSystemTest {
      */
     private void assertCommandSuccess(String command, String expectedResultMessage, Model expectedModel) {
         executeCommand(command);
+
         assertApplicationDisplaysExpected("", expectedResultMessage, expectedModel);
         assertCommandBoxShowsDefaultStyle();
         assertStatusBarUnchangedExceptSyncStatus();
     }
 
-    /**
-     * Executes {@code command} and verifies that the command box displays {@code command}, the result display
-     * box displays {@code expectedResultMessage} and the model related components equal to the current model.
-     * These verifications are done by
-     * {@code AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)}.<br>
-     * Also verifies that the browser url, selected card and status bar remain unchanged, and the command box has the
-     * error style.
-     * @see AddressBookSystemTest#assertApplicationDisplaysExpected(String, String, Model)
-     */
-    private void assertCommandFailure(String command, String expectedResultMessage) {
-        Model expectedModel = getModel();
-
-        executeCommand(command);
-        assertApplicationDisplaysExpected(command, expectedResultMessage, expectedModel);
-        assertSelectedCardUnchanged();
-        assertCommandBoxShowsErrorStyle();
-        assertStatusBarUnchanged();
-    }
 }

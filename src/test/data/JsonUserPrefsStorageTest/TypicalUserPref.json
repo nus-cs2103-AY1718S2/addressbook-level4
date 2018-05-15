@@ -1,5 +1,5 @@
 {
-  "guiSettings" : {
+  "windowSettings" : {
     "windowWidth" : 1000.0,
     "windowHeight" : 500.0,
     "windowCoordinates" : {
@@ -7,6 +7,7 @@
       "y" : 100
     }
   },
-  "addressBookFilePath" : "addressbook.xml",
-  "addressBookName" : "TypicalAddressBookName"
+  "bookShelfFilePath" : "bookshelf.xml",
+  "bookShelfName" : "TypicalBookShelfName",
+  "appTheme": "WHITE"
 }

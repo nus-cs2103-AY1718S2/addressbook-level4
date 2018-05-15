@@ -1,5 +1,6 @@
 {
   "appTitle" : "Typical App Title",
   "logLevel" : "INFO",
-  "userPrefsFilePath" : "C:\\preferences.json"
+  "userPrefsFilePath" : "C:\\preferences.json",
+  "recentBooksFilePath" : "C:\\recentbooks.xml"
 }

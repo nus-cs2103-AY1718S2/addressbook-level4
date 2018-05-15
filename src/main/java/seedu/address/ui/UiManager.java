@@ -13,6 +13,7 @@ import seedu.address.MainApp;
 import seedu.address.commons.core.ComponentManager;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.WindowSettings;
 import seedu.address.commons.events.storage.DataSavingExceptionEvent;
 import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.Logic;
@@ -30,7 +31,7 @@ public class UiManager extends ComponentManager implements Ui {
     public static final String FILE_OPS_ERROR_DIALOG_CONTENT_MESSAGE = "Could not save data to file";
 
     private static final Logger logger = LogsCenter.getLogger(UiManager.class);
-    private static final String ICON_APPLICATION = "/images/address_book_32.png";
+    private static final String ICON_APPLICATION = "/images/book_flat_32.png";
 
     private Logic logic;
     private Config config;
@@ -64,9 +65,11 @@ public class UiManager extends ComponentManager implements Ui {
 
     @Override
     public void stop() {
-        prefs.updateLastUsedGuiSetting(mainWindow.getCurrentGuiSetting());
+        WindowSettings windowSettings = mainWindow.getCurrentGuiSetting();
+        if (windowSettings.getWindowCoordinates().getX() >= 0 || windowSettings.getWindowCoordinates().getY() >= 0) {
+            prefs.updateLastUsedGuiSetting(windowSettings);
+        }
         mainWindow.hide();
-        mainWindow.releaseResources();
     }
 
     private void showFileOperationAlertAndWait(String description, String details, Throwable cause) {

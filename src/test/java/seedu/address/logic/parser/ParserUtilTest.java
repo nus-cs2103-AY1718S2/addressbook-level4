@@ -2,13 +2,10 @@ package seedu.address.logic.parser;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
-import static org.junit.Assert.assertTrue;
-
 import static seedu.address.logic.parser.ParserUtil.MESSAGE_INVALID_INDEX;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import java.util.Arrays;
-import java.util.Collections;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -18,26 +15,21 @@ import org.junit.Test;
 import org.junit.rules.ExpectedException;
 
 import seedu.address.commons.exceptions.IllegalValueException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Phone;
-import seedu.address.model.tag.Tag;
+import seedu.address.logic.parser.exceptions.ParseException;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Category;
+import seedu.address.model.book.Description;
+import seedu.address.model.book.Title;
 import seedu.address.testutil.Assert;
 
 public class ParserUtilTest {
-    private static final String INVALID_NAME = "R@chel";
-    private static final String INVALID_PHONE = "+651234";
-    private static final String INVALID_ADDRESS = " ";
-    private static final String INVALID_EMAIL = "example.com";
-    private static final String INVALID_TAG = "#friend";
 
-    private static final String VALID_NAME = "Rachel Walker";
-    private static final String VALID_PHONE = "123456";
-    private static final String VALID_ADDRESS = "123 Main Street #0505";
-    private static final String VALID_EMAIL = "rachel@example.com";
-    private static final String VALID_TAG_1 = "friend";
-    private static final String VALID_TAG_2 = "neighbour";
+    private static final String VALID_TITLE = "Valid Title";
+    private static final String VALID_DESCRIPTION = "Valid Description";
+    private static final String VALID_AUTHOR_1 = "Author A";
+    private static final String VALID_AUTHOR_2 = "Author B";
+    private static final String VALID_CATEGORY_1 = "Category A";
+    private static final String VALID_CATEGORY_2 = "Category B";
 
     private static final String WHITESPACE = " \t\r\n";
 
@@ -60,187 +52,116 @@ public class ParserUtilTest {
     @Test
     public void parseIndex_validInput_success() throws Exception {
         // No whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("1"));
+        assertEquals(INDEX_FIRST_BOOK, ParserUtil.parseIndex("1"));
 
         // Leading and trailing whitespaces
-        assertEquals(INDEX_FIRST_PERSON, ParserUtil.parseIndex("  1  "));
+        assertEquals(INDEX_FIRST_BOOK, ParserUtil.parseIndex("  1  "));
     }
 
     @Test
-    public void parseName_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseName((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseName((Optional<String>) null));
+    public void parseTitle_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseTitle((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseTitle((Optional<String>) null));
     }
 
     @Test
-    public void parseName_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseName(INVALID_NAME));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseName(Optional.of(INVALID_NAME)));
+    public void parseTitle_optionalEmpty_returnsOptionalEmpty() {
+        assertFalse(ParserUtil.parseTitle(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parseName_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseName(Optional.empty()).isPresent());
+    public void parseTitle_validValueWithoutWhitespace_returnsTitle() {
+        Title expectedTitle = new Title(VALID_TITLE);
+        assertEquals(expectedTitle, ParserUtil.parseTitle(VALID_TITLE));
+        assertEquals(Optional.of(expectedTitle), ParserUtil.parseTitle(Optional.of(VALID_TITLE)));
     }
 
     @Test
-    public void parseName_validValueWithoutWhitespace_returnsName() throws Exception {
-        Name expectedName = new Name(VALID_NAME);
-        assertEquals(expectedName, ParserUtil.parseName(VALID_NAME));
-        assertEquals(Optional.of(expectedName), ParserUtil.parseName(Optional.of(VALID_NAME)));
+    public void parseTitle_validValueWithWhitespace_returnsTrimmedTitle() {
+        String titleWithWhitespace = WHITESPACE + VALID_TITLE + WHITESPACE;
+        Title expectedTitle = new Title(VALID_TITLE);
+        assertEquals(expectedTitle, ParserUtil.parseTitle(titleWithWhitespace));
+        assertEquals(Optional.of(expectedTitle), ParserUtil.parseTitle(Optional.of(titleWithWhitespace)));
     }
 
     @Test
-    public void parseName_validValueWithWhitespace_returnsTrimmedName() throws Exception {
-        String nameWithWhitespace = WHITESPACE + VALID_NAME + WHITESPACE;
-        Name expectedName = new Name(VALID_NAME);
-        assertEquals(expectedName, ParserUtil.parseName(nameWithWhitespace));
-        assertEquals(Optional.of(expectedName), ParserUtil.parseName(Optional.of(nameWithWhitespace)));
+    public void parseDescription_null_throwsNullPointerException() {
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDescription((String) null));
+        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseDescription((Optional<String>) null));
     }
 
     @Test
-    public void parsePhone_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parsePhone((Optional<String>) null));
+    public void parseDescription_optionalEmpty_returnsOptionalEmpty() {
+        assertFalse(ParserUtil.parseDescription(Optional.empty()).isPresent());
     }
 
     @Test
-    public void parsePhone_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(INVALID_PHONE));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parsePhone(Optional.of(INVALID_PHONE)));
+    public void parseDescription_validValueWithoutWhitespace_returnsDescription() {
+        Description expectedDescription = new Description(VALID_DESCRIPTION);
+        assertEquals(expectedDescription, ParserUtil.parseDescription(VALID_DESCRIPTION));
+        assertEquals(Optional.of(expectedDescription), ParserUtil.parseDescription(Optional.of(VALID_DESCRIPTION)));
     }
 
     @Test
-    public void parsePhone_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parsePhone(Optional.empty()).isPresent());
+    public void parseDescription_validValueWithWhitespace_returnsTrimmedDescription() {
+        String descWithWhitespace = WHITESPACE + VALID_DESCRIPTION + WHITESPACE;
+        Description expectedDescription = new Description(VALID_DESCRIPTION);
+        assertEquals(expectedDescription, ParserUtil.parseDescription(descWithWhitespace));
+        assertEquals(Optional.of(expectedDescription), ParserUtil.parseDescription(Optional.of(descWithWhitespace)));
     }
 
     @Test
-    public void parsePhone_validValueWithoutWhitespace_returnsPhone() throws Exception {
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(VALID_PHONE));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(VALID_PHONE)));
-    }
-
-    @Test
-    public void parsePhone_validValueWithWhitespace_returnsTrimmedPhone() throws Exception {
-        String phoneWithWhitespace = WHITESPACE + VALID_PHONE + WHITESPACE;
-        Phone expectedPhone = new Phone(VALID_PHONE);
-        assertEquals(expectedPhone, ParserUtil.parsePhone(phoneWithWhitespace));
-        assertEquals(Optional.of(expectedPhone), ParserUtil.parsePhone(Optional.of(phoneWithWhitespace)));
-    }
-
-    @Test
-    public void parseAddress_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseAddress((Optional<String>) null));
-    }
-
-    @Test
-    public void parseAddress_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(INVALID_ADDRESS));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseAddress(Optional.of(INVALID_ADDRESS)));
-    }
-
-    @Test
-    public void parseAddress_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseAddress(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseAddress_validValueWithoutWhitespace_returnsAddress() throws Exception {
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(VALID_ADDRESS));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(VALID_ADDRESS)));
-    }
-
-    @Test
-    public void parseAddress_validValueWithWhitespace_returnsTrimmedAddress() throws Exception {
-        String addressWithWhitespace = WHITESPACE + VALID_ADDRESS + WHITESPACE;
-        Address expectedAddress = new Address(VALID_ADDRESS);
-        assertEquals(expectedAddress, ParserUtil.parseAddress(addressWithWhitespace));
-        assertEquals(Optional.of(expectedAddress), ParserUtil.parseAddress(Optional.of(addressWithWhitespace)));
-    }
-
-    @Test
-    public void parseEmail_null_throwsNullPointerException() {
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((String) null));
-        Assert.assertThrows(NullPointerException.class, () -> ParserUtil.parseEmail((Optional<String>) null));
-    }
-
-    @Test
-    public void parseEmail_invalidValue_throwsIllegalValueException() {
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(INVALID_EMAIL));
-        Assert.assertThrows(IllegalValueException.class, () -> ParserUtil.parseEmail(Optional.of(INVALID_EMAIL)));
-    }
-
-    @Test
-    public void parseEmail_optionalEmpty_returnsOptionalEmpty() throws Exception {
-        assertFalse(ParserUtil.parseEmail(Optional.empty()).isPresent());
-    }
-
-    @Test
-    public void parseEmail_validValueWithoutWhitespace_returnsEmail() throws Exception {
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(VALID_EMAIL));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(VALID_EMAIL)));
-    }
-
-    @Test
-    public void parseEmail_validValueWithWhitespace_returnsTrimmedEmail() throws Exception {
-        String emailWithWhitespace = WHITESPACE + VALID_EMAIL + WHITESPACE;
-        Email expectedEmail = new Email(VALID_EMAIL);
-        assertEquals(expectedEmail, ParserUtil.parseEmail(emailWithWhitespace));
-        assertEquals(Optional.of(expectedEmail), ParserUtil.parseEmail(Optional.of(emailWithWhitespace)));
-    }
-
-    @Test
-    public void parseTag_null_throwsNullPointerException() throws Exception {
+    public void parseAuthor_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTag(null);
+        ParserUtil.parseAuthor(null);
     }
 
     @Test
-    public void parseTag_invalidValue_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTag(INVALID_TAG);
+    public void parseAuthor_validValueWithoutWhitespace_returnsAuthor() {
+        Author expectedAuthor = new Author(VALID_AUTHOR_1);
+        assertEquals(expectedAuthor, ParserUtil.parseAuthor(VALID_AUTHOR_1));
     }
 
     @Test
-    public void parseTag_validValueWithoutWhitespace_returnsTag() throws Exception {
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(VALID_TAG_1));
+    public void parseAuthors_collectionWithValidAuthors_returnsAuthorSet() {
+        Set<Author> actualAuthorSet = ParserUtil.parseAuthors(Arrays.asList(VALID_AUTHOR_1, VALID_AUTHOR_2));
+        Set<Author> expectedAuthorSet =
+                new HashSet<>(Arrays.asList(new Author(VALID_AUTHOR_1), new Author(VALID_AUTHOR_2)));
+
+        assertEquals(expectedAuthorSet, actualAuthorSet);
     }
 
     @Test
-    public void parseTag_validValueWithWhitespace_returnsTrimmedTag() throws Exception {
-        String tagWithWhitespace = WHITESPACE + VALID_TAG_1 + WHITESPACE;
-        Tag expectedTag = new Tag(VALID_TAG_1);
-        assertEquals(expectedTag, ParserUtil.parseTag(tagWithWhitespace));
-    }
-
-    @Test
-    public void parseTags_null_throwsNullPointerException() throws Exception {
+    public void parseCategory_null_throwsNullPointerException() {
         thrown.expect(NullPointerException.class);
-        ParserUtil.parseTags(null);
+        ParserUtil.parseCategory(null);
     }
 
     @Test
-    public void parseTags_collectionWithInvalidTags_throwsIllegalValueException() throws Exception {
-        thrown.expect(IllegalValueException.class);
-        ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, INVALID_TAG));
+    public void parseCategory_validValueWithoutWhitespace_returnsCategory() {
+        Category expectedCategory = new Category(VALID_CATEGORY_1);
+        assertEquals(expectedCategory, ParserUtil.parseCategory(VALID_CATEGORY_1));
     }
 
     @Test
-    public void parseTags_emptyCollection_returnsEmptySet() throws Exception {
-        assertTrue(ParserUtil.parseTags(Collections.emptyList()).isEmpty());
+    public void parseCategorys_collectionWithValidCategorys_returnsCategorySet() {
+        Set<Category> actualCategorySet = ParserUtil.parseCategories(Arrays.asList(VALID_CATEGORY_1, VALID_CATEGORY_2));
+        Set<Category> expectedCategorySet =
+                new HashSet<>(Arrays.asList(new Category(VALID_CATEGORY_1), new Category(VALID_CATEGORY_2)));
+
+        assertEquals(expectedCategorySet, actualCategorySet);
     }
 
     @Test
-    public void parseTags_collectionWithValidTags_returnsTagSet() throws Exception {
-        Set<Tag> actualTagSet = ParserUtil.parseTags(Arrays.asList(VALID_TAG_1, VALID_TAG_2));
-        Set<Tag> expectedTagSet = new HashSet<Tag>(Arrays.asList(new Tag(VALID_TAG_1), new Tag(VALID_TAG_2)));
+    public void parseRating_validRating_success() throws ParseException {
+        assertEquals(-1, ParserUtil.parseRating("-1").rating);
+        assertEquals(0, ParserUtil.parseRating("0").rating);
+        assertEquals(5, ParserUtil.parseRating("5").rating);
+    }
 
-        assertEquals(expectedTagSet, actualTagSet);
+    @Test
+    public void parseRating_invalidRating_throwsParseException() throws ParseException {
+        thrown.expect(ParseException.class);
+        ParserUtil.parseRating("6");
     }
 }

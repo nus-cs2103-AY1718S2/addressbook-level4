@@ -1,14 +1,16 @@
 package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import org.junit.Before;
 import org.junit.Test;
 
 import seedu.address.logic.CommandHistory;
-import seedu.address.logic.UndoRedoStack;
+import seedu.address.logic.UndoStack;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.network.NetworkManager;
 
 public class HistoryCommandTest {
     private HistoryCommand historyCommand;
@@ -19,7 +21,7 @@ public class HistoryCommandTest {
         Model model = new ModelManager();
         history = new CommandHistory();
         historyCommand = new HistoryCommand();
-        historyCommand.setData(model, history, new UndoRedoStack());
+        historyCommand.setData(model, mock(NetworkManager.class), history, new UndoStack());
     }
 
     @Test

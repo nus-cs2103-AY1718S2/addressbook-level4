@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.FlowPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+
+<HBox id="cardPane" fx:id="cardPane" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1">
+  <GridPane HBox.hgrow="ALWAYS">
+    <columnConstraints>
+      <ColumnConstraints hgrow="SOMETIMES" minWidth="10" prefWidth="150" />
+    </columnConstraints>
+    <VBox alignment="CENTER_LEFT" GridPane.columnIndex="0">
+      <padding>
+        <Insets bottom="15.0" left="15.0" right="5.0" top="10.0" />
+      </padding>
+      <HBox alignment="CENTER_LEFT">
+        <Label fx:id="id" styleClass="cell_big_label">
+          <minWidth>
+            <!-- Ensures that the label text is never truncated -->
+            <Region fx:constant="USE_PREF_SIZE" />
+          </minWidth>
+        </Label>
+        <Label fx:id="title" styleClass="cell_big_label" text="\$title" />
+      </HBox>
+      <FlowPane fx:id="authors" styleClass="pills-authors-small" />
+      <FlowPane fx:id="categories" styleClass="pills-categories-small">
+        <VBox.margin>
+           <Insets top="5.0" />
+        </VBox.margin>
+      </FlowPane>
+      <FlowPane styleClass="pills-small">
+        <VBox.margin>
+          <Insets top="5.0" />
+        </VBox.margin>
+        <Label fx:id="status" />
+        <Label fx:id="priority" />
+        <Label fx:id="rating" />
+      </FlowPane>
+    </VBox>
+      <rowConstraints>
+         <RowConstraints />
+      </rowConstraints>
+  </GridPane>
+</HBox>

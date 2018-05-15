@@ -2,47 +2,36 @@ package seedu.address.logic.commands;
 
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.fail;
-import static seedu.address.logic.commands.CommandTestUtil.deleteFirstPerson;
-import static seedu.address.logic.commands.CommandTestUtil.showPersonAtIndex;
-import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_PERSON;
-import static seedu.address.testutil.TypicalPersons.getTypicalAddressBook;
+import static seedu.address.logic.commands.CommandTestUtil.deleteFirstBook;
+import static seedu.address.logic.commands.CommandTestUtil.showBookAtIndex;
+import static seedu.address.testutil.TypicalBooks.getTypicalBookShelf;
+import static seedu.address.testutil.TypicalIndexes.INDEX_FIRST_BOOK;
 
 import org.junit.Test;
 
-import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
 import seedu.address.model.UserPrefs;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
 public class UndoableCommandTest {
-    private final Model model = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private final Model model = new ModelManager(getTypicalBookShelf(), new UserPrefs());
     private final DummyCommand dummyCommand = new DummyCommand(model);
 
-    private Model expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
+    private Model expectedModel = new ModelManager(getTypicalBookShelf(), new UserPrefs());
 
     @Test
     public void executeUndo() throws Exception {
         dummyCommand.execute();
-        deleteFirstPerson(expectedModel);
+        deleteFirstBook(expectedModel);
         assertEquals(expectedModel, model);
 
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
+        showBookAtIndex(model, INDEX_FIRST_BOOK);
 
-        // undo() should cause the model's filtered list to show all persons
         dummyCommand.undo();
-        expectedModel = new ModelManager(getTypicalAddressBook(), new UserPrefs());
-        assertEquals(expectedModel, model);
-    }
-
-    @Test
-    public void redo() {
-        showPersonAtIndex(model, INDEX_FIRST_PERSON);
-
-        // redo() should cause the model's filtered list to show all persons
-        dummyCommand.redo();
-        deleteFirstPerson(expectedModel);
+        expectedModel = new ModelManager(getTypicalBookShelf(), new UserPrefs());
         assertEquals(expectedModel, model);
     }
 
@@ -50,17 +39,30 @@ public class UndoableCommandTest {
      * Deletes the first person in the model's filtered list.
      */
     class DummyCommand extends UndoableCommand {
+        private Book bookToDelete;
+
         DummyCommand(Model model) {
             this.model = model;
         }
 
         @Override
-        public CommandResult executeUndoableCommand() throws CommandException {
-            Person personToDelete = model.getFilteredPersonList().get(0);
+        protected String undo() {
             try {
-                model.deletePerson(personToDelete);
-            } catch (PersonNotFoundException pnfe) {
-                fail("Impossible: personToDelete was retrieved from model.");
+                model.addBook(bookToDelete);
+                return "Success";
+            } catch (DuplicateBookException e) {
+                fail("Impossible: bookToDelete was deleted.");
+                return "Failure";
+            }
+        }
+
+        @Override
+        public CommandResult executeUndoableCommand() {
+            bookToDelete = model.getDisplayBookList().get(0);
+            try {
+                model.deleteBook(bookToDelete);
+            } catch (BookNotFoundException pnfe) {
+                fail("Impossible: bookToDelete was retrieved from model.");
             }
             return new CommandResult("");
         }

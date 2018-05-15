@@ -1,0 +1,120 @@
+= CircleCI
+:imagesDir: images
+:stylesDir: stylesheets
+:linkattrs:
+:repoURL: https://github.com/CS2103JAN2018-F14-B4/main
+
+https://circleci.com/[CircleCI, window="_blank"_] is a _Continuous Integration_ platform for GitHub projects.
+
+CircleCI can run the projects' tests automatically whenever new code is pushed to the repo. This ensures that existing functionality and features have not been broken by the changes.
+
+The current CircleCI set up performs the following things whenever someone push code to the repo:
+
+* Runs the `gradle checkstyleMain checkstyleTest headless allTests coverage coveralls asciidoctor` command (see <<UsingGradle#, UsingGradle>> for more details on what this command means).
+* Runs additional link:#repository-wide-checks[repository-wide checks].
+
+If you would like to customise your CircleCI build further, you can learn more about CircleCI from https://circleci.com/docs/2.0/[CircleCI Documentation].
+
+== Setting up CircleCI
+
+.  Fork the repo to your own organization.
+.  Go to https://circleci.com/signup/[https://circleci.com/signup/, window="_blank"] and click `Sign Up with GitHub`, then enter your GitHub account details if needed.
++
+image:circleci/signing_in.png[Signing into CircleCI]
++
+.  On the https://circleci.com/dashboard[Dashboard, window="_blank"], select your organization in the drop-down box at the top left corner.
++
+image:circleci/switch_org.png[Select your organization]
++
+* If the organization is not shown, go to the https://circleci.com/account[Account Integrations] page, and click on `Check permissions` as shown below:
++
+image:circleci/check_permissions.png[Check permissions]
++
+This should bring you to a GitHub page that manages the access of third-party applications. Depending on whether you are the owner of the repository, you can either grant access
++
+image:grant_access.png[Grant access]
++
+or request access
++
+image:request_access.png[Request access]
++
+to CircleCI so that it can access your commits and build your code.
++
+.  Select `Add Projects` from the left sidebar.
++
+image:circleci/add_projects.png[Add projects]
++
+.  Find the forked repository that you wish to add, and select `Set Up Project`.
++
+image:circleci/set_up_project.png[Set up project]
++
+.  The next page explains how to configure your project so that CircleCI can test your commits.
+Since this repo comes with a CircleCI link:{repoURL}/blob/master/.circleci/config.yml[`config.yml`, window="_blank"], there is no need for you to create one yourself.
+.  Click on `Start building`.
++
+image:circleci/start_building.png[Start building]
++
+.  CircleCI will start building your latest commit on `master`.
++
+image:circleci/building.png[Building project]
++
+* Go to the repository and see the pushed commit. There should be an icon which will link you to the CircleCI build.
++
+image:circleci/commit_build.png[Commit build]
++
+* As the build is run on a provided remote machine, we can only examine the logs it produces:
++
+image:circleci/circleci_build.png[CircleCI build]
++
+.  Update the link to the 'build status' badge at the top of the `README.adoc` to point to the build status of your own repo.
++
+* For a more consistent styling, you can use the badges from https://shields.io/[Shields.io, window="_blank"].
+Simply copy the code below, and replace the `<username>` with your GitHub username (or GitHub organization, if your repository belongs to one) and `<repo>` with your repository name.
++
+----
+https://circleci.com/gh/<username>/<repo>/tree/master[image:https://img.shields.io/circleci/project/github/<username>/<repo>.svg?label=circleci[Build Status]]
+----
+
+== Building pull requests
+
+In order to allow CircleCI to build and test pull requests, there are a few options we need to enable.
+
+.  Go to your https://circleci.com/dashboard[Dashboard, window="_blank"] and click on the cog beside your repository.
++
+image:circleci/project_settings.png[Project settings]
++
+.  Select the `Advanced Settings` tab.
++
+image:circleci/advanced_settings.png[Advanced settings]
++
+.  Turn `On` the following options: `Build forked pull requests`, `Pass secrets to builds from forked pull requests`, and `Only build pull requests`.
+This last option lets CircleCI skip the building of the `gh-pages` branch.
++
+image:circleci/enable_options.png[Enable options]
+
+== Repository-wide checks
+
+In addition to running Gradle checks, we also configure CircleCI to run some repository-wide checks. Unlike the Gradle checks which only cover files used in the build process, these repository-wide checks cover _all_ files in the repository. They check for repository rules which are hard to enforce on development machines such as line ending requirements.
+
+These checks are implemented as POSIX shell scripts, and thus can only be run on POSIX-compliant operating systems such as macOS and Linux. To run all checks locally on these operating systems, execute the following in the repository root directory:
+
+[source,shell]
+----
+./config/travis/run-checks.sh
+----
+
+Any warnings or errors will be printed out to the console.
+
+=== Implementing new checks
+
+Checks are implemented as executable `check-*` scripts within the `config/travis/` directory. The `run-checks.sh` script will automatically pick up and run files named as such.
+
+Check scripts should print out errors in the following format:
+
+....
+SEVERITY:FILENAME:LINE: MESSAGE
+....
+
+where `SEVERITY` is either `ERROR` or `WARN`, `FILENAME` is the path to the file relative to the current directory, `LINE` is the line of the file where the error occurred and `MESSAGE` is the message explaining the error.
+
+Check scripts must exit with a non-zero exit code if any errors occur.

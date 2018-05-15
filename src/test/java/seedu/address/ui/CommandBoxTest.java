@@ -1,6 +1,7 @@
 package seedu.address.ui;
 
 import static org.junit.Assert.assertEquals;
+import static org.mockito.Mockito.mock;
 
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import seedu.address.logic.LogicManager;
 import seedu.address.logic.commands.ListCommand;
 import seedu.address.model.Model;
 import seedu.address.model.ModelManager;
+import seedu.address.network.NetworkManager;
 
 public class CommandBoxTest extends GuiUnitTest {
 
@@ -28,7 +30,7 @@ public class CommandBoxTest extends GuiUnitTest {
     @Before
     public void setUp() {
         Model model = new ModelManager();
-        Logic logic = new LogicManager(model);
+        Logic logic = new LogicManager(model, mock(NetworkManager.class));
 
         CommandBox commandBox = new CommandBox(logic);
         commandBoxHandle = new CommandBoxHandle(getChildNode(commandBox.getRoot(),
@@ -66,7 +68,12 @@ public class CommandBoxTest extends GuiUnitTest {
         assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
 
         guiRobot.push(KeyCode.A);
-        assertEquals(defaultStyleOfCommandBox, commandBoxHandle.getStyleClass());
+        assertEquals(errorStyleOfCommandBox, commandBoxHandle.getStyleClass());
+
+        // does nothing when command box is disabled
+        commandBoxHandle.disable();
+        commandBoxHandle.run(COMMAND_THAT_SUCCEEDS);
+        assertEquals(COMMAND_THAT_SUCCEEDS, commandBoxHandle.getInput());
     }
 
     @Test
@@ -98,6 +105,12 @@ public class CommandBoxTest extends GuiUnitTest {
         assertInputHistory(KeyCode.UP, COMMAND_THAT_SUCCEEDS);
         assertInputHistory(KeyCode.DOWN, COMMAND_THAT_FAILS);
         assertInputHistory(KeyCode.DOWN, thirdCommand);
+        assertInputHistory(KeyCode.DOWN, "");
+
+        // does nothing when command box is disabled
+        commandBoxHandle.disable();
+        assertInputHistory(KeyCode.UP, "");
+        assertInputHistory(KeyCode.UP, "");
         assertInputHistory(KeyCode.DOWN, "");
     }
 

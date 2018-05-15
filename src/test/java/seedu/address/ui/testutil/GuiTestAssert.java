@@ -1,67 +1,114 @@
 package seedu.address.ui.testutil;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.List;
 import java.util.stream.Collectors;
 
-import guitests.guihandles.PersonCardHandle;
-import guitests.guihandles.PersonListPanelHandle;
+import guitests.guihandles.AliasCardHandle;
+import guitests.guihandles.AliasListPanelHandle;
+import guitests.guihandles.BookCardHandle;
+import guitests.guihandles.BookDetailsPanelHandle;
+import guitests.guihandles.BookListPanelHandle;
 import guitests.guihandles.ResultDisplayHandle;
-import seedu.address.model.person.Person;
+import seedu.address.model.alias.Alias;
+import seedu.address.model.book.Author;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Category;
 
 /**
  * A set of assertion methods useful for writing GUI tests.
  */
 public class GuiTestAssert {
+
+    /**
+     * Asserts that {@code detailsPanel} displays the details of {@code expectedBook}.
+     */
+    public static void assertDetailsPanelDisplaysBook(Book expectedBook, BookDetailsPanelHandle detailsPanel) {
+        assertEquals(expectedBook.getTitle().toString(), detailsPanel.getTitle());
+        assertEquals(expectedBook.getIsbn().toString(), detailsPanel.getIsbn());
+        assertEquals(expectedBook.getPublisher().toString(), detailsPanel.getPublisher());
+        assertEquals(expectedBook.getPublicationDate().toString(), detailsPanel.getPublicationDate());
+        assertEquals(expectedBook.getDescription().toString(), detailsPanel.getDescription());
+        assertEquals(expectedBook.getAuthors().stream().map(Author::getDisplayText)
+                .collect(Collectors.toList()), detailsPanel.getAuthors());
+        assertEquals(expectedBook.getCategories().stream().map(Category::getDisplayText)
+                .collect(Collectors.toList()), detailsPanel.getCategories());
+    }
+
     /**
      * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
      */
-    public static void assertCardEquals(PersonCardHandle expectedCard, PersonCardHandle actualCard) {
-        assertEquals(expectedCard.getId(), actualCard.getId());
-        assertEquals(expectedCard.getAddress(), actualCard.getAddress());
-        assertEquals(expectedCard.getEmail(), actualCard.getEmail());
-        assertEquals(expectedCard.getName(), actualCard.getName());
-        assertEquals(expectedCard.getPhone(), actualCard.getPhone());
-        assertEquals(expectedCard.getTags(), actualCard.getTags());
+    public static void assertCardEquals(BookCardHandle expectedCard, BookCardHandle actualCard) {
+        assertTrue(actualCard.equals(expectedCard));
     }
 
     /**
-     * Asserts that {@code actualCard} displays the details of {@code expectedPerson}.
+     * Asserts that {@code actualCard} displays the details of {@code expectedBook}.
      */
-    public static void assertCardDisplaysPerson(Person expectedPerson, PersonCardHandle actualCard) {
-        assertEquals(expectedPerson.getName().fullName, actualCard.getName());
-        assertEquals(expectedPerson.getPhone().value, actualCard.getPhone());
-        assertEquals(expectedPerson.getEmail().value, actualCard.getEmail());
-        assertEquals(expectedPerson.getAddress().value, actualCard.getAddress());
-        assertEquals(expectedPerson.getTags().stream().map(tag -> tag.tagName).collect(Collectors.toList()),
-                actualCard.getTags());
+    public static void assertCardDisplaysBook(Book expectedBook, BookCardHandle actualCard) {
+        assertTrue(actualCard.equals(expectedBook));
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that {@code actualCard} displays the same values as {@code expectedCard}.
+     */
+    public static void assertAliasCardEquals(AliasCardHandle expectedCard, AliasCardHandle actualCard) {
+        assertTrue(actualCard.equals(expectedCard));
+    }
+
+    /**
+     * Asserts that {@code actualCard} displays the details of {@code expectedAlias}.
+     */
+    public static void assertAliasCardDisplaysAlias(Alias expectedAlias, AliasCardHandle actualCard) {
+        assertTrue(actualCard.equals(expectedAlias));
+    }
+
+    /**
+     * Asserts that the list in {@code bookListPanelHandle} displays the details of {@code books} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, Person... persons) {
-        for (int i = 0; i < persons.length; i++) {
-            assertCardDisplaysPerson(persons[i], personListPanelHandle.getPersonCardHandle(i));
+    public static void assertListMatching(BookListPanelHandle bookListPanelHandle, Book... books) {
+        for (int i = 0; i < books.length; i++) {
+            bookListPanelHandle.navigateToCard(i);
+            assertCardDisplaysBook(books[i], bookListPanelHandle.getBookCardHandle(i).get());
         }
     }
 
     /**
-     * Asserts that the list in {@code personListPanelHandle} displays the details of {@code persons} correctly and
+     * Asserts that the list in {@code aliasListPanelHandle} displays the details of {@code aliases} correctly and
      * in the correct order.
      */
-    public static void assertListMatching(PersonListPanelHandle personListPanelHandle, List<Person> persons) {
-        assertListMatching(personListPanelHandle, persons.toArray(new Person[0]));
+    public static void assertListMatching(AliasListPanelHandle aliasListPanelHandle, Alias... aliases) {
+        for (int i = 0; i < aliases.length; i++) {
+            aliasListPanelHandle.navigateToCard(i);
+            assertAliasCardDisplaysAlias(aliases[i], aliasListPanelHandle.getAliasCardHandle(i).get());
+        }
     }
 
     /**
-     * Asserts the size of the list in {@code personListPanelHandle} equals to {@code size}.
+     * Asserts that the list in {@code bookListPanelHandle} displays the details of {@code books} correctly and
+     * in the correct order.
      */
-    public static void assertListSize(PersonListPanelHandle personListPanelHandle, int size) {
-        int numberOfPeople = personListPanelHandle.getListSize();
-        assertEquals(size, numberOfPeople);
+    public static void assertListMatching(BookListPanelHandle bookListPanelHandle, List<Book> books) {
+        assertListMatching(bookListPanelHandle, books.toArray(new Book[0]));
+    }
+
+    /**
+     * Asserts that the list in {@code aliasListPanelHandle} displays the details of {@code aliases} correctly and
+     * in the correct order.
+     */
+    public static void assertListMatching(AliasListPanelHandle aliasListPanelHandle, List<Alias> aliases) {
+        assertListMatching(aliasListPanelHandle, aliases.toArray(new Alias[0]));
+    }
+
+    /**
+     * Asserts the size of the list in {@code bookListPanelHandle} equals to {@code size}.
+     */
+    public static void assertListSize(BookListPanelHandle bookListPanelHandle, int size) {
+        int numberOfBooks = bookListPanelHandle.getListSize();
+        assertEquals(size, numberOfBooks);
     }
 
     /**

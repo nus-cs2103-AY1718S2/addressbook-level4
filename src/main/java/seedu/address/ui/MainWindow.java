@@ -6,6 +6,7 @@ import com.google.common.eventbus.Subscribe;
 
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextInputControl;
 import javafx.scene.input.KeyCombination;
@@ -13,10 +14,19 @@ import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.StackPane;
 import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
-import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.core.WindowSettings;
+import seedu.address.commons.events.ui.ActiveListChangedEvent;
+import seedu.address.commons.events.ui.BookListSelectionChangedEvent;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
+import seedu.address.commons.events.ui.ClearMainContentRequestEvent;
+import seedu.address.commons.events.ui.DeselectBookRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
+import seedu.address.commons.events.ui.ReselectBookRequestEvent;
+import seedu.address.commons.events.ui.ShowAliasListRequestEvent;
+import seedu.address.commons.events.ui.ShowBookReviewsRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
+import seedu.address.commons.events.ui.ShowLibraryResultRequestEvent;
 import seedu.address.logic.Logic;
 import seedu.address.model.UserPrefs;
 
@@ -34,13 +44,21 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
-    private PersonListPanel personListPanel;
+    private WelcomePanel welcomePanel;
+    private BookDetailsPanel bookDetailsPanel;
+    private BookReviewsPanel bookReviewsPanel;
+    private BookInLibraryPanel bookInLibraryPanel;
+    private AliasListPanel aliasListPanel;
+    private BookListPanel bookListPanel;
+    private HelpWindow helpWindow;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private Scene scene;
+
+    @FXML
+    private StackPane mainContentPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -49,7 +67,7 @@ public class MainWindow extends UiPart<Stage> {
     private MenuItem helpMenuItem;
 
     @FXML
-    private StackPane personListPanelPlaceholder;
+    private StackPane bookListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -69,6 +87,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        updateStylesheet(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -116,16 +135,27 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        welcomePanel = new WelcomePanel();
+        bookDetailsPanel = new BookDetailsPanel();
+        bookReviewsPanel = new BookReviewsPanel();
+        bookInLibraryPanel = new BookInLibraryPanel();
+        aliasListPanel = new AliasListPanel(logic.getDisplayAliasList());
+        mainContentPlaceholder.getChildren().add(welcomePanel.getRoot());
+        mainContentPlaceholder.getChildren().add(bookDetailsPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(bookReviewsPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(bookInLibraryPanel.getRoot());
+        mainContentPlaceholder.getChildren().add(aliasListPanel.getRoot());
+        bookReviewsPanel.hide();
+        bookInLibraryPanel.hide();
+        bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
 
-        personListPanel = new PersonListPanel(logic.getFilteredPersonList());
-        personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
+        bookListPanel = new BookListPanel(logic.getActiveList());
+        bookListPanelPlaceholder.getChildren().add(bookListPanel.getRoot());
 
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
-        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getAddressBookFilePath());
+        StatusBarFooter statusBarFooter = new StatusBarFooter(prefs.getBookShelfFilePath());
         statusbarPlaceholder.getChildren().add(statusBarFooter.getRoot());
 
         CommandBox commandBox = new CommandBox(logic);
@@ -144,19 +174,27 @@ public class MainWindow extends UiPart<Stage> {
      * Sets the default size based on user preferences.
      */
     private void setWindowDefaultSize(UserPrefs prefs) {
-        primaryStage.setHeight(prefs.getGuiSettings().getWindowHeight());
-        primaryStage.setWidth(prefs.getGuiSettings().getWindowWidth());
-        if (prefs.getGuiSettings().getWindowCoordinates() != null) {
-            primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
-            primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
+        primaryStage.setHeight(prefs.getWindowSettings().getWindowHeight());
+        primaryStage.setWidth(prefs.getWindowSettings().getWindowWidth());
+        if (prefs.getWindowSettings().getWindowCoordinates() != null) {
+            primaryStage.setX(prefs.getWindowSettings().getWindowCoordinates().getX());
+            primaryStage.setY(prefs.getWindowSettings().getWindowCoordinates().getY());
+        }
+    }
+
+    /** Updates the stylesheet used based on user preferences. */
+    private void updateStylesheet(UserPrefs prefs) {
+        scene.getStylesheets().setAll(prefs.getAppTheme().getCssFile());
+        if (bookDetailsPanel != null) {
+            bookDetailsPanel.setStyleSheet(prefs.getAppTheme().getCssFile());
         }
     }
 
     /**
      * Returns the current size and the position of the main Window.
      */
-    GuiSettings getCurrentGuiSetting() {
-        return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
+    WindowSettings getCurrentGuiSetting() {
+        return new WindowSettings(primaryStage.getWidth(), primaryStage.getHeight(),
                 (int) primaryStage.getX(), (int) primaryStage.getY());
     }
 
@@ -165,12 +203,41 @@ public class MainWindow extends UiPart<Stage> {
      */
     @FXML
     public void handleHelp() {
-        HelpWindow helpWindow = new HelpWindow();
+        if (helpWindow == null) {
+            helpWindow = new HelpWindow();
+        }
         helpWindow.show();
     }
 
     void show() {
         primaryStage.show();
+    }
+
+    /**
+     * Hides all panels in the main content.
+     */
+    private void hideMainContent() {
+        welcomePanel.hide();
+        bookDetailsPanel.hide();
+        bookReviewsPanel.hide();
+        bookInLibraryPanel.hide();
+        aliasListPanel.hide();
+    }
+
+    /**
+     * Clears book list selection and hides all panels in the main content.
+     */
+    private void clearSelectionAndHideMainContent() {
+        bookListPanel.clearSelection();
+        hideMainContent();
+    }
+
+    /**
+     * Clears book list selection, hides all panels in the main content and shows the welcome panel.
+     */
+    private void showWelcomePanel() {
+        clearSelectionAndHideMainContent();
+        welcomePanel.show();
     }
 
     /**
@@ -181,17 +248,76 @@ public class MainWindow extends UiPart<Stage> {
         raise(new ExitAppRequestEvent());
     }
 
-    public PersonListPanel getPersonListPanel() {
-        return this.personListPanel;
-    }
-
-    void releaseResources() {
-        browserPanel.freeResources();
+    @Subscribe
+    private void handleChangeThemeRequestEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        prefs.setAppTheme(event.newTheme);
+        updateStylesheet(prefs);
     }
 
     @Subscribe
-    private void handleShowHelpEvent(ShowHelpRequestEvent event) {
+    private void handleShowHelpRequestEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    @Subscribe
+    private void handleActiveListChangedEvent(ActiveListChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showWelcomePanel();
+        bookListPanel.setBookList(logic.getActiveList());
+        bookListPanel.scrollToTop();
+    }
+
+    @Subscribe
+    private void handleClearMainContentRequestEvent(ClearMainContentRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        showWelcomePanel();
+    }
+
+    @Subscribe
+    private void handleBookListSelectionChangedEvent(BookListSelectionChangedEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        hideMainContent();
+        bookDetailsPanel.show();
+    }
+
+    @Subscribe
+    private void handleShowBookReviewsRequestEvent(ShowBookReviewsRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearSelectionAndHideMainContent();
+        bookReviewsPanel.show();
+    }
+
+    @Subscribe
+    private void handleShowBookInLibraryRequestEvent(ShowLibraryResultRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearSelectionAndHideMainContent();
+        bookInLibraryPanel.show();
+    }
+
+    @Subscribe
+    private void handleShowAliasListRequestEvent(ShowAliasListRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        clearSelectionAndHideMainContent();
+        aliasListPanel.show();
+    }
+
+    @Subscribe
+    private void handleDeselectBookRequestEvent(DeselectBookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (bookListPanel.deselectBook()) {
+            hideMainContent();
+            welcomePanel.show();
+        }
+    }
+
+    @Subscribe
+    private void handleReselectBookRequestEvent(ReselectBookRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        if (bookListPanel.reselectBook()) {
+            hideMainContent();
+            bookDetailsPanel.show();
+        }
     }
 }

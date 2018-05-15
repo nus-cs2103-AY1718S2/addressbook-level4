@@ -1,114 +1,132 @@
 package seedu.address.logic.commands;
 
 import static java.util.Objects.requireNonNull;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_ADDRESS;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_EMAIL;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_NAME;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_PHONE;
-import static seedu.address.logic.parser.CliSyntax.PREFIX_TAG;
-import static seedu.address.model.Model.PREDICATE_SHOW_ALL_PERSONS;
+import static seedu.address.commons.util.CollectionUtil.requireAllNonNull;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_PRIORITY;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_RATING;
+import static seedu.address.logic.parser.CliSyntax.PREFIX_STATUS;
 
-import java.util.Collections;
-import java.util.HashSet;
-import java.util.List;
 import java.util.Objects;
 import java.util.Optional;
-import java.util.Set;
 
-import seedu.address.commons.core.Messages;
+import seedu.address.commons.core.EventsCenter;
 import seedu.address.commons.core.index.Index;
+import seedu.address.commons.events.ui.DeselectBookRequestEvent;
+import seedu.address.commons.events.ui.ReselectBookRequestEvent;
 import seedu.address.commons.util.CollectionUtil;
+import seedu.address.commons.util.CommandUtil;
 import seedu.address.logic.commands.exceptions.CommandException;
-import seedu.address.model.person.Address;
-import seedu.address.model.person.Email;
-import seedu.address.model.person.Name;
-import seedu.address.model.person.Person;
-import seedu.address.model.person.Phone;
-import seedu.address.model.person.exceptions.DuplicatePersonException;
-import seedu.address.model.person.exceptions.PersonNotFoundException;
-import seedu.address.model.tag.Tag;
+import seedu.address.model.ActiveListType;
+import seedu.address.model.book.Book;
+import seedu.address.model.book.Priority;
+import seedu.address.model.book.Rating;
+import seedu.address.model.book.Status;
+import seedu.address.model.book.exceptions.BookNotFoundException;
+import seedu.address.model.book.exceptions.DuplicateBookException;
 
+//@@author 592363789
 /**
- * Edits the details of an existing person in the address book.
+ * Edits the status, priority, and rating of an existing book.
  */
 public class EditCommand extends UndoableCommand {
 
     public static final String COMMAND_WORD = "edit";
 
-    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the details of the person identified "
-            + "by the index number used in the last person listing. "
-            + "Existing values will be overwritten by the input values.\n"
-            + "Parameters: INDEX (must be a positive integer) "
-            + "[" + PREFIX_NAME + "NAME] "
-            + "[" + PREFIX_PHONE + "PHONE] "
-            + "[" + PREFIX_EMAIL + "EMAIL] "
-            + "[" + PREFIX_ADDRESS + "ADDRESS] "
-            + "[" + PREFIX_TAG + "TAG]...\n"
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Edits the rating, status, and priority"
+            + " of the book identified by the index number.\n"
+            + "Parameters: INDEX [s/STATUS] [p/PRIORITY] [r/RATING] "
             + "Example: " + COMMAND_WORD + " 1 "
-            + PREFIX_PHONE + "91234567 "
-            + PREFIX_EMAIL + "johndoe@example.com";
+            + PREFIX_RATING + "-1 " + PREFIX_PRIORITY + "low " + PREFIX_STATUS + "unread";
 
-    public static final String MESSAGE_EDIT_PERSON_SUCCESS = "Edited Person: %1$s";
-    public static final String MESSAGE_NOT_EDITED = "At least one field to edit must be provided.";
-    public static final String MESSAGE_DUPLICATE_PERSON = "This person already exists in the address book.";
+    public static final String MESSAGE_SUCCESS = "Edited Book: %1$s";
+    public static final String MESSAGE_NO_PARAMETERS = "At least one field to edit must be provided.";
+    public static final String MESSAGE_WRONG_ACTIVE_LIST = "Items from the current list cannot be edited.";
+
+    public static final String UNDO_SUCCESS = "Successfully undone editing of %s.";
+    public static final String UNDO_FAILURE = "Failed to undo editing of %s.";
 
     private final Index index;
-    private final EditPersonDescriptor editPersonDescriptor;
+    private final EditDescriptor editDescriptor;
 
-    private Person personToEdit;
-    private Person editedPerson;
+    private Book bookToEdit;
+    private Book editedBook;
 
     /**
-     * @param index of the person in the filtered person list to edit
-     * @param editPersonDescriptor details to edit the person with
+     * @param index of the book in the filtered book list to edit the rating.
+     * @param editDescriptor details to edit the book with.
      */
-    public EditCommand(Index index, EditPersonDescriptor editPersonDescriptor) {
-        requireNonNull(index);
-        requireNonNull(editPersonDescriptor);
+    public EditCommand(Index index, EditDescriptor editDescriptor) {
+        requireAllNonNull(index, editDescriptor);
 
         this.index = index;
-        this.editPersonDescriptor = new EditPersonDescriptor(editPersonDescriptor);
+        this.editDescriptor = editDescriptor;
     }
 
     @Override
-    public CommandResult executeUndoableCommand() throws CommandException {
+    public CommandResult executeUndoableCommand() {
+        requireAllNonNull(bookToEdit, editedBook);
+
         try {
-            model.updatePerson(personToEdit, editedPerson);
-        } catch (DuplicatePersonException dpe) {
-            throw new CommandException(MESSAGE_DUPLICATE_PERSON);
-        } catch (PersonNotFoundException pnfe) {
-            throw new AssertionError("The target person cannot be missing");
+            EventsCenter.getInstance().post(new DeselectBookRequestEvent());
+            model.updateBook(bookToEdit, editedBook);
+            EventsCenter.getInstance().post(new ReselectBookRequestEvent());
+        } catch (DuplicateBookException dpe) {
+            throw new AssertionError("Editing target book should not result in a duplicate");
+        } catch (BookNotFoundException pnfe) {
+            throw new AssertionError("The target book should not be missing");
         }
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS);
-        return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, editedPerson));
+        return new CommandResult(String.format(MESSAGE_SUCCESS, editedBook));
     }
 
     @Override
     protected void preprocessUndoableCommand() throws CommandException {
-        List<Person> lastShownList = model.getFilteredPersonList();
+        requireNonNull(model);
 
-        if (index.getZeroBased() >= lastShownList.size()) {
-            throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
-        }
+        checkActiveListType();
+        CommandUtil.checkValidIndex(model, index);
 
-        personToEdit = lastShownList.get(index.getZeroBased());
-        editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
+        bookToEdit = CommandUtil.getBook(model, index);
+        editedBook = createEditedBook(bookToEdit, editDescriptor);
     }
 
     /**
-     * Creates and returns a {@code Person} with the details of {@code personToEdit}
-     * edited with {@code editPersonDescriptor}.
+     * Throws a {@link CommandException} if the active list type is not supported by this command.
      */
-    private static Person createEditedPerson(Person personToEdit, EditPersonDescriptor editPersonDescriptor) {
-        assert personToEdit != null;
+    private void checkActiveListType() throws CommandException {
+        if (model.getActiveListType() != ActiveListType.BOOK_SHELF) {
+            throw new CommandException(MESSAGE_WRONG_ACTIVE_LIST);
+        }
+    }
 
-        Name updatedName = editPersonDescriptor.getName().orElse(personToEdit.getName());
-        Phone updatedPhone = editPersonDescriptor.getPhone().orElse(personToEdit.getPhone());
-        Email updatedEmail = editPersonDescriptor.getEmail().orElse(personToEdit.getEmail());
-        Address updatedAddress = editPersonDescriptor.getAddress().orElse(personToEdit.getAddress());
-        Set<Tag> updatedTags = editPersonDescriptor.getTags().orElse(personToEdit.getTags());
+    //@@author
+    /**
+     * Creates and returns a {@code Book} with the details of {@code bookToEdit}
+     * edited with {@code editDescriptor}.
+     */
+    private static Book createEditedBook(Book bookToEdit, EditDescriptor editDescriptor) {
+        requireAllNonNull(bookToEdit, editDescriptor);
 
-        return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags);
+        Status updatedStatus = editDescriptor.getStatus().orElse(bookToEdit.getStatus());
+        Priority updatedPriority = editDescriptor.getPriority().orElse(bookToEdit.getPriority());
+        Rating updatedRating = editDescriptor.getRating().orElse(bookToEdit.getRating());
+
+        return new Book(bookToEdit.getGid(), bookToEdit.getIsbn(), bookToEdit.getAuthors(),
+                bookToEdit.getTitle(), bookToEdit.getCategories(), bookToEdit.getDescription(),
+                updatedStatus, updatedPriority, updatedRating,
+                bookToEdit.getPublisher(), bookToEdit.getPublicationDate());
+    }
+
+    @Override
+    protected String undo() {
+        requireAllNonNull(model, editedBook, bookToEdit);
+
+        try {
+            model.updateBook(editedBook, bookToEdit);
+            return String.format(UNDO_SUCCESS, editedBook);
+        } catch (DuplicateBookException | BookNotFoundException e) {
+            // Should never end up here
+            return String.format(UNDO_FAILURE, editedBook);
+        }
     }
 
     @Override
@@ -126,89 +144,59 @@ public class EditCommand extends UndoableCommand {
         // state check
         EditCommand e = (EditCommand) other;
         return index.equals(e.index)
-                && editPersonDescriptor.equals(e.editPersonDescriptor)
-                && Objects.equals(personToEdit, e.personToEdit);
+                && editDescriptor.equals(e.editDescriptor)
+                && Objects.equals(bookToEdit, e.bookToEdit);
     }
-
+    //@@author 592363789
     /**
-     * Stores the details to edit the person with. Each non-empty field value will replace the
-     * corresponding field value of the person.
+     * Stores the details to edit the book with. Each non-empty field value will replace the
+     * corresponding field value of the book.
      */
-    public static class EditPersonDescriptor {
-        private Name name;
-        private Phone phone;
-        private Email email;
-        private Address address;
-        private Set<Tag> tags;
+    public static class EditDescriptor {
+        private Status status;
+        private Priority priority;
+        private Rating rating;
 
-        public EditPersonDescriptor() {}
+        public EditDescriptor() {}
 
         /**
          * Copy constructor.
-         * A defensive copy of {@code tags} is used internally.
          */
-        public EditPersonDescriptor(EditPersonDescriptor toCopy) {
-            setName(toCopy.name);
-            setPhone(toCopy.phone);
-            setEmail(toCopy.email);
-            setAddress(toCopy.address);
-            setTags(toCopy.tags);
+        public EditDescriptor(EditDescriptor toCopy) {
+            setStatus(toCopy.status);
+            setPriority(toCopy.priority);
+            setRating(toCopy.rating);
         }
 
         /**
          * Returns true if at least one field is edited.
          */
-        public boolean isAnyFieldEdited() {
-            return CollectionUtil.isAnyNonNull(this.name, this.phone, this.email, this.address, this.tags);
+        public boolean isValid() {
+            return CollectionUtil.isAnyNonNull(this.status, this.priority, this.rating);
         }
 
-        public void setName(Name name) {
-            this.name = name;
+        public void setStatus(Status status) {
+            this.status = status;
         }
 
-        public Optional<Name> getName() {
-            return Optional.ofNullable(name);
+        public Optional<Status> getStatus() {
+            return Optional.ofNullable(status);
         }
 
-        public void setPhone(Phone phone) {
-            this.phone = phone;
+        public void setPriority(Priority priority) {
+            this.priority = priority;
         }
 
-        public Optional<Phone> getPhone() {
-            return Optional.ofNullable(phone);
+        public Optional<Priority> getPriority() {
+            return Optional.ofNullable(priority);
         }
 
-        public void setEmail(Email email) {
-            this.email = email;
+        public void setRating(Rating rating) {
+            this.rating = rating;
         }
 
-        public Optional<Email> getEmail() {
-            return Optional.ofNullable(email);
-        }
-
-        public void setAddress(Address address) {
-            this.address = address;
-        }
-
-        public Optional<Address> getAddress() {
-            return Optional.ofNullable(address);
-        }
-
-        /**
-         * Sets {@code tags} to this object's {@code tags}.
-         * A defensive copy of {@code tags} is used internally.
-         */
-        public void setTags(Set<Tag> tags) {
-            this.tags = (tags != null) ? new HashSet<>(tags) : null;
-        }
-
-        /**
-         * Returns an unmodifiable tag set, which throws {@code UnsupportedOperationException}
-         * if modification is attempted.
-         * Returns {@code Optional#empty()} if {@code tags} is null.
-         */
-        public Optional<Set<Tag>> getTags() {
-            return (tags != null) ? Optional.of(Collections.unmodifiableSet(tags)) : Optional.empty();
+        public Optional<Rating> getRating() {
+            return Optional.ofNullable(rating);
         }
 
         @Override
@@ -219,18 +207,17 @@ public class EditCommand extends UndoableCommand {
             }
 
             // instanceof handles nulls
-            if (!(other instanceof EditPersonDescriptor)) {
+            if (!(other instanceof EditDescriptor)) {
                 return false;
             }
 
             // state check
-            EditPersonDescriptor e = (EditPersonDescriptor) other;
+            EditDescriptor e = (EditDescriptor) other;
 
-            return getName().equals(e.getName())
-                    && getPhone().equals(e.getPhone())
-                    && getEmail().equals(e.getEmail())
-                    && getAddress().equals(e.getAddress())
-                    && getTags().equals(e.getTags());
+            return getStatus().equals(e.getStatus())
+                    && getPriority().equals(e.getPriority())
+                    && getRating().equals(e.getRating());
         }
     }
+
 }

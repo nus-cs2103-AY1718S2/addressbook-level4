@@ -1,0 +1,40 @@
+{
+  "kind": "books#volume",
+  "id": "5vWx09ppPzZZ",
+  "etag": "1vrR49abcde",
+  "selfLink": "http://example.com",
+  "volumeInfo": {
+    "title": "The Book Without a Title",
+    "authors": [
+      "John Doe"
+    ],
+    "publisher": "ABC Publishing House",
+    "publishedDate": "2018-03-10",
+    "description": "This is a valid description.",
+    "industryIdentifiers": [],
+    "pageCount": 300,
+    "printedPageCount": 250,
+    "printType": "BOOK",
+    "categories": [
+      "Category 1",
+      "Category 2 / Category 3"
+    ],
+    "averageRating": 4.0,
+    "ratingsCount": 50,
+    "maturityRating": "NOT_MATURE",
+    "allowAnonLogging": true,
+    "contentVersion": "1.1.1.1.preview.1",
+    "imageLinks": {
+      "smallThumbnail": "http://example.com",
+      "thumbnail": "http://example.com",
+      "small": "http://example.com",
+      "medium": "http://example.com",
+      "large": "http://example.com",
+      "extraLarge": "http://example.com"
+    },
+    "language": "en",
+    "previewLink": "http://example.com",
+    "infoLink": "http://example.com",
+    "canonicalVolumeLink": "http://example.com"
+  }
+}

@@ -1,0 +1,67 @@
+= Muhammad Nur Kamal Bin Mohammed Ariff - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Club Connect
+
+---
+
+== Overview
+
+*Club Connect* is a desktop application targeted at club members who are students at the National University of Singapore (NUS).
+It aims to make the tedious process of club management easier and more effective.
+
+The user interacts with it using a CLI, and it has a GUI created with JavaFX. It is written in Java, and has about 10 kLoC.
+
+== Purpose
+
+This project portfolio serves as a document to showcase my aptitude as a developer to potential employers.
+The features I added to Club Connect shows my strong understanding in programming concepts. The documentation I added
+shows my ability to write clearly.
+
+== Summary of contributions
+
+* *Major enhancement*: Added *voting system*
+** What it does: Allows `Exco` members to add/delete polls and view/hide results of polls. It also allows any member to vote in polls, but only once for each poll
+** Justification: This feature improves the product significantly because the `Exco` members can accurately determine the views of other members so that they can take the best path of action for the club.
+
+* *Minor enhancement*: Improved navigability of member list by adding compress/decompress mechanism and making `Find` command able to search by field or by all fields instead of just name.
+** Justification: This feature improves the product significantly since it saves time when looking for information
+of other members. More time can be spent on doing more important actions such as adding polls and assigning tasks.
+
+* *Code contributed*: https://github.com/CS2103JAN2018-W15-B4/main/blob/master/collated/functional/MuhdNurKamal.md[Functional code]
+https://github.com/CS2103JAN2018-W15-B4/main/blob/master/collated/test/MuhdNurKamal.md[Test code]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed release `Peer Testing` on GitHub
+** Enhancements to existing features:
+*** Replaced Address field of members to Matriculation Number https://github.com/CS2103JAN2018-W15-B4/main/pull/67[#67]
+** Community:
+*** PRs reviewed (with non-trivial review comments): https://github.com/CS2103JAN2018-W15-B4/main/pull/168[#168], https://github.com/CS2103JAN2018-W15-B4/main/pull/167[#167], https://github.com/CS2103JAN2018-W15-B4/main/pull/149[#149], https://github.com/CS2103JAN2018-W15-B4/main/pull/125[#125]
+*** Fixed bug that caused most System tests to fail https://github.com/CS2103JAN2018-W15-B4/main/pull/154[#154]
+
+== Contributions to the User Guide
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=addpoll]
+
+include::../UserGuide.adoc[tag=vote]
+
+include::../UserGuide.adoc[tag=find]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=polls]
+
+include::../DeveloperGuide.adoc[tag=vote]
+
+include::../DeveloperGuide.adoc[tag=viewhide]

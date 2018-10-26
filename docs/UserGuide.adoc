@@ -1,4 +1,4 @@
-= AddressBook Level 4 - User Guide
+= Club Connect - User Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,14 +10,30 @@
 ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
+:important-caption: :warning:
+:format-caption:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4
+:repoURL: https://github.com/CS2103JAN2018-W15-B4/main
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B4`      Since: `Feb 2018`      Licence: `MIT`
 
 == Introduction
 
-AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for managing contacts*. More importantly, AB4 is *optimized for those who prefer to work with a Command Line Interface* (CLI) while still having the benefits of a Graphical User Interface (GUI). If you can type fast, AB4 can get your contact management tasks done faster than traditional GUI apps. Interested? Jump to the <<Quick Start>> to get started. Enjoy!
+*Club Connect* is an application targeted at <<DeveloperGuide#club,club>> <<DeveloperGuide#member,members>> who are students at the National University of Singapore (NUS).
+It aims to make the tedious process of club management easier and more effective.
+
+Currently, Club Connect is a computer application that makes use of a *Command Line Interface* (<<DeveloperGuide#cli,CLI>>) for increased productivity, while still having the benefits of a Graphical User Interface (GUI).
+So, you can have increased productivity (owing to the CLI) without having to give up the beauty and aesthetics of a traditional GUI application.
+
+The faster you type, the faster Club Connect gets your club-management tasks done.
+Interested? Continue on to <<Quick Start>> to get started.
+
+The symbols and formatting used in this document, along with their corresponding meanings, are: +
+ℹ️: Note +
+⚠   : Important +
+  💡  : Tip +
+`code`: Commands that can be entered into *Club Connect* or Technical keywords +
+kbd:[key]: Button on your keyboard +
 
 == Quick Start
 
@@ -27,156 +43,894 @@ AddressBook Level 4 (AB4) is for those who *prefer to use a desktop app for mana
 Having any Java 8 version is not enough. +
 This app will not work with earlier versions of Java 8.
 +
-.  Download the latest `addressbook.jar` link:{repoURL}/releases[here].
-.  Copy the file to the folder you want to use as the home folder for your Address Book.
-.  Double-click the file to start the app. The GUI should appear in a few seconds.
+.  Download the latest `clubconnect.jar` link:{https://github.com/CS2103JAN2018-W15-B4/main}/releases[here].
+.  Copy the file to the folder that you want to use as the home folder for Club Connect (and the club Database).
+.  Double-click the file to start the app. The GUI (as shown in Figure 1) should appear in a few seconds.
 +
-image::Ui.png[width="790"]
+[[launch-app]]
+[.text-center]
+.Club Connect application on launch
+image::clubconnectlaunch.png[width="550"]
 +
-.  Type the command in the command box and press kbd:[Enter] to execute it. +
-e.g. typing *`help`* and pressing kbd:[Enter] will open the help window.
-.  Some example commands you can try:
+. Execute the `signup` command. No other command will work unless you sign up.
+. Execute the `login` command once you've signed up. The GUI should look similar to Figure 2.
++
+[[login]]
+[.text-center]
+.Club Connect application after logging in
+image::login.png[width="550"]
++
+.  Type a command in the command box and press kbd:[Enter] to execute it. +
+e.g. You can type *`help`* and press kbd:[Enter] to open the help window (shown in Figure 2).
++
+[[help-window]]
+[.text-center]
+.Club Connect Help window
+image::help-window.png[height="450"]
++
+.  Try some of these example commands:
 
-* *`list`* : lists all contacts
-* **`add`**`n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01` : adds a contact named `John Doe` to the Address Book.
-* **`delete`**`3` : deletes the 3rd contact shown in the current list
-* *`exit`* : exits the app
+* *`list`* : lists all members of the club on the left pane
+* *`add`*`n/John Doe p/98765432 e/johnd@example.com m/A1234567H` : adds a member named `John Doe` to your Club Connect members list
+* *`delete`*`3` : deletes the 3rd member shown in the current list
+* *`exit`* : exits the Club Connect app
 
-.  Refer to <<Features>> for details of each command.
+Figure 4 helps you familiarise yourself with the GUI. The different components of the GUI are labelled below.
+
+.Club Connect GUI.
+image::clubconnectgui.png[width="650"]
 
 [[Features]]
 == Features
 
+This section describes the various features that Club Connect puts at your disposal.
+
+This is how you should interpret the commands in this user guide.
 ====
 *Command Format*
 
-* Words in `UPPER_CASE` are the parameters to be supplied by the user e.g. in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe`.
-* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/friend` or as `n/John Doe`.
-* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/friend`, `t/friend t/family` etc.
+* Words in `UPPER_CASE` are the parameters to be supplied by the user. For example, in `add n/NAME`, `NAME` is a parameter which can be used as `add n/John Doe` or `add n/Jane Doe`.
+* Items in square brackets are optional e.g `n/NAME [t/TAG]` can be used as `n/John Doe t/President` or as `n/John Doe`.
+* Items with `…`​ after them can be used multiple times including zero times e.g. `[t/TAG]...` can be used as `{nbsp}` (i.e. 0 times), `t/Treasurer`, `t/Captain t/Goalkeeper` etc.
 * Parameters can be in any order e.g. if the command specifies `n/NAME p/PHONE_NUMBER`, `p/PHONE_NUMBER n/NAME` is also acceptable.
 ====
 
-=== Viewing help : `help`
+// tag::valid-entries[]
+Here are some things to take note of before you begin using Club Connect.
+[[constraints]]
+====
+*Valid Entries*
 
-Format: `help`
+* *Names* of members should only contain alphabets, numbers and spaces.
+The name should not be blank and cannot begin with a space (" ").
 
-=== Adding a person: `add`
+* *Phone numbers* can only contain numbers, and should be at least 3 digits long.
 
-Adds a person to the address book +
-Format: `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...`
+* *Email IDs* of members should be of the format: username@emailservice.com and should not contain spaces.
+
+* *Matriculation Numbers* should follow the format of those at NUS.
+So, they must begin with a letter, followed by 7 digits and should end with a letter.
+
+* *Groups* should only contain letters and digits. They must not be empty.
+
+* *Tags* should also only contain letters, digits and hyphens. They cannot be empty, and cannot begin with a hyphen ("-").
+====
+// end::valid-entries[]
+
+// tag::SignUp[]
+=== Signing up a member: `signup` (since v1.4)
+Signs up a member to Club Connect. +
+Format: `signup n/NAME p/PHONE_NUMBER e/EMAIL m/MATRIC_NUMBER [t/TAG]...` +
+Aliases: `register`, `enroll` +
+[TIP]
+A member can have any number of tags (including 0).
+
+****
+* You must not specify a group while signing up.
+* The member who signed up will be automatically be added to a group named exco.
+* You can only sign-up once.
+* You must use the credentials of the signed-up member to continue using Club Connect.
+****
+
+[NOTE]
+Refer to `login` command documentation for user credentials.
+
+Example: `signup n/Alan Walker p/97456895 e/alanw@gmail.com m/A0156489C t/President`
+
+Figure 5 shows the output of the `signup` command.
+
+.Output of signup command.
+image::signupoutput.png[width="400"]
+// end::SignUp[]
+
+// tag::LogIn[]
+=== Logging in to the application: `login` (Since v1.3)
+Logs in a member to Club Connect. +
+Format: `login u/USERNAME pw/PASSWORD` +
+Alias: `signin`
+
+Example: `login u/A0123456H pw/password`
+
+* Use your `MATRIC NUMBER` as your username.
+* The default password is `password`. We advise you to change your password using the `changepass` command once you've logged in.
+
+Figure 6 shows the output of the `login` command.
+
+.Output of login command.
+image::loginoutput.png[width="350"]
+// end::LogIn[]
+
+// tag::ChangePass[]
+=== Changing password : `changepass` (Since v1.4)
+
+Changes your password, if you are logged in.
+
+Format: `changepass u/USERNAME pw/OLD_PASSWORD npw/NEW_PASSWORD` +
+Alias: `changepw`
+
+****
+* Members are only able to change their own password.
+* Exco members can change the password of any member. The member is indicated by their username.
+****
+
+Examples:
+
+* `changepass u/A0123456H pw/password npw/pword` +
+Changes the password of the member with username `A0123456H` to `pword`.
+* `changepass u/A1234567H pw/password npw/brandnewpassword` +
+Changes the password of the member with username `A1234567H` to `brandnewpassword`.
+
+Figures 7 and 8 show the output of the `changepass` command (before and after).
+
+.Before the changepass command has been executed.
+image::changepassbefore.png[width="350"]
+
+.After the changepass command has been executed.
+image::changepassafter.png[width="350"]
+// end::ChangePass[]
+
+// tag::LogOut[]
+=== Logging out of the application : `logout` (Since v1.4)
+
+Logouts out the user from Club Connect. +
+Format: `logout` +
+Alias: `signout`
+
+Figure 9 shows the output of the `logout` command.
+
+.Output of logout command.
+image::logoutoutput.png[width="350"]
+// end::LogOut[]
+
+// tag::add[]
+=== Adding a member: `add`
+
+Adds a member to Club Connect. +
+Format: `add n/NAME p/PHONE_NUMBER e/EMAIL m/MATRIC_NUMBER [g/GROUP] [t/TAG]...` +
+Aliases: `a`, `insert` +
 
 [TIP]
-A person can have any number of tags (including 0)
+A member can have any number of tags (including 0).
+[TIP]
+The `group` attribute is an optional attribute.
+A member will be assigned to the default group `Member` if no group is specified in the command.
+
+[IMPORTANT]
+This command is for `Exco` members only.
 
 Examples:
 
-* `add n/John Doe p/98765432 e/johnd@example.com a/John street, block 123, #01-01`
-* `add n/Betsy Crowe t/friend e/betsycrowe@example.com a/Newgate Prison p/1234567 t/criminal`
+* `add n/John Doe p/98765432 e/johnd@example.com m/A1234567H`
+* `add n/Betsy Crowe p/95462159 e/betsycrowe@u.nus.edu m/A0145625K g/Logistics t/Head`
+// end::add[]
 
-=== Listing all persons : `list`
+// tag::addpoll[]
+=== Adding a poll: `addpoll` (Since v1.3)
 
-Shows a list of all persons in the address book. +
-Format: `list`
-
-=== Editing a person : `edit`
-
-Edits an existing person in the address book. +
-Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [a/ADDRESS] [t/TAG]...`
+Adds a poll to Club Connect. +
+Format: `addpoll q/QUESTION ans/ANSWER [ans/ANSWER]...` +
+Aliases: `addp`, `poll`
 
 ****
-* Edits the person at the specified `INDEX`. The index refers to the index number shown in the last person listing. The index *must be a positive integer* 1, 2, 3, ...
-* At least one of the optional fields must be provided.
-* Existing values will be updated to the input values.
-* When editing tags, the existing tags of the person will be removed i.e adding of tags is not cumulative.
-* You can remove all the person's tags by typing `t/` without specifying any tags after it.
+* A poll must have 1 question, and at least 1 answer.
+* Questions and answers must be non-empty.
+* Answers must be distinct, else the duplicates will be removed.
 ****
+Examples:
+
+* `addpoll q/Which day should be Free Ice-Cream Day? ans/Monday ans/Wednesday ans/Friday` +
+Creates a poll asking members to vote for which day Free Ice-Cream Day should be held on.
+The options to choose from are `Monday`, `Wednesday` and `Friday`.
+* `addpoll q/Where should the annual sports meeting be held? ans/I-Cube ans/LT7` +
+Creates a poll asking members to vote for where the annual sports meeting should be held.
+The answers to choose from are `I-Cube` and `LT7`.
+
+[IMPORTANT]
+This command is for `Exco` members only.
+
+Figure 10 shows the a sample poll.
+
+.Sample poll created using the addpoll command.
+image::samplepoll.png[width="350"]
+// end::addpoll[]
+
+// tag::addtask[]
+=== Adding a task: `addtask` (Since v1.3)
+
+Adds a task to Club Connect. +
+Format: `addtask desc/DESCRIPTION d/DUE_DATE ti/TIME` +
+Aliases: `addt`, `task`
+
+*****
+* The `date` and `time` attributes must be valid dates and time (in 24-hour format).
+* The range of the year in the `Date` is 1900 - 2099.
+* By default, the `Assignor` and `Assignee` of the task is the member that is currently logged in.
+* If you wish to assign taks to other members in the capacity of an Exco member, use the `assigntask` command.
+* The default `Status` given to a newly created task is `Yet to Begin`. This can be updated using the `changetaskstatus` command.
+*****
+
+[NOTE]
+Duplicate tasks are not allowed.
 
 Examples:
 
-* `edit 1 p/91234567 e/johndoe@example.com` +
-Edits the phone number and email address of the 1st person to be `91234567` and `johndoe@example.com` respectively.
-* `edit 2 n/Betsy Crower t/` +
-Edits the name of the 2nd person to be `Betsy Crower` and clears all existing tags.
+* `addtask desc/Book PGP Function Room 3 d/02/06/2018 ti/19:00` +
+Adds a task with description `Book PGP Function Room 3` due on `02/06/2018` at `19:00`.
+* `addtask desc/Buy Food d/03.06.2018 ti/15:00` +
+Adds a task with description `Buy Food` due on `03/06/2018` at `15:00`.
+// end::addtask[]
 
-=== Locating persons by name: `find`
+// tag::assigntask[]
+=== Assigning a task: `assigntask` (Since v1.4)
 
-Finds persons whose names contain any of the given keywords. +
-Format: `find KEYWORD [MORE_KEYWORDS]`
+Adds a task to Club Connect and assigns it to a member. +
+Format: `assigntask desc/DESCRIPTION d/DUE_DATE ti/TIME m/MATRIC_NUMBER` +
+Alias: `assignt`
 
-****
-* The search is case insensitive. e.g `hans` will match `Hans`
-* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`
-* Only the name is searched.
-* Only full words will be matched e.g. `Han` will not match `Hans`
-* Persons matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`
-****
+*****
+* The `date` and `time` attributes must be valid dates and time (in 24-hour format).
+* The member who the task is meant to be assigned to must exist in the club book.
+* The default `Status` given to a newly created task is `Yet to Begin`. This can be updated using the `changetaskstatus` command.
+*****
+[NOTE]
+Duplicate tasks are not allowed.
+[IMPORTANT]
+This command is for `Exco` members only.
+
+This command assigns the task to the member based on the entered `MATRIC_NUMBER`.
 
 Examples:
 
-* `find John` +
-Returns `john` and `John Doe`
-* `find Betsy Tim John` +
-Returns any person having names `Betsy`, `Tim`, or `John`
+* `assigntask desc/Book PGP Function Room 3 d/02/06/2018 ti/19:00 m/A1234567H` +
+Assigns a task to `A1234567H` with description `Book PGP Function Room 3` due on `02/06/2018` at `19:00`.
+* `assigntask desc/Buy Food d/03.06.2018 ti/15:00 m/A1122334K` +
+Assigns a task to `A1122334K` with description `Buy Food` due on `03/06/2018` at `15:00`.
+// end::assigntask[]
 
-=== Deleting a person : `delete`
+// tag::changeassignee[]
+=== Changing the assignee of a task : `changeassignee` (Since v1.5rc)
 
-Deletes the specified person from the address book. +
-Format: `delete INDEX`
+Changes the assignee of a task in Club Connect. +
+Format: `changeassignee INDEX m/MATRIC_NUMBER` +
+Alias: `assignee`
+
 
 ****
-* Deletes the person at the specified `INDEX`.
+* `INDEX` *must be a positive integer* 1, 2, 3, ...
+* You cannot change the `Assignee` to a member who has already been assigned a task with identical attributes by another `Exco` member.
+* Passing the current `Assignee` of the task in the input throws an error as there is no change.
+* No duplicate tasks are allowed.
+****
+
+
+[IMPORTANT]
+This command is only for `Exco` members.
+
+Examples:
+
+* `changeassignee 1 m/A0123456H` +
+Changes the assignee of the 1st task to `A0123456H` in the task listing.
+* `assignee 3 m/A6656789H` +
+Changes the assignee of the 3rd task to `A6656789H` in the task listing.
+// end::changeassignee[]
+
+[[changepic]]
+// tag::changepic[]
+
+=== Changing your profile photo : `changepic` (Since v1.2)
+
+Changes the photo displayed on your profile to the photo specified by the path. +
+Format: `changepic PHOTO_PATH` +
+Aliases: `pic`, `profilepic`
+
+****
+* PHOTO_PATH must be an absolute path to the photo file.
+* This command is only guaranteed to work for JPG (.jpg), and PNG (.png) files.
+* Since `changepic` is not an undoable command, you need to use the <<removepic,`removepic`>> command to reset your profile photo back to the default image.
+****
+
+[NOTE]
+Profile photos are displayed with a 4:3 height to width ratio in Club Connect.
+
+[NOTE]
+It may take longer to set your profile photo to an image whose file size is above 1 MB.
+
+[TIP]
+To get the absolute path to the photo, see <<absolute-path, Absolute path of a file>>.
+
+Examples:
+
+* `changepic C:/Users/John Doe/Desktop/john_doe.jpg` +
+Changes your profile picture to the "john_doe.jpg" image on `John Doe` 's `Desktop`.
+* `changepic C:/Users/Admin/Downloads/CathyRay.png` +
+Changes your profile picture to the "CathyRay.png" image in your `Downloads` folder.
+
+Figure 11 shows the output of the `changepic` command.
+
+.Output of changepic command.
+image::changepicoutput.png[width="400"]
+// end::changepic[]
+
+// tag::changetaskstatus[]
+=== Changing the status of your task : `changetaskstatus` (Since v1.5rc)
+
+Changes the status of a task in Club Connect. +
+Format: `changetaskstatus INDEX st/STATUS` +
+Aliases: `cts`, `changestatus`, `status`
+
+****
+* `INDEX` *must be a positive integer* 1, 2, 3, ...
+* The `STATUS` can be one of ```Yet To Begin```, ```In Progress```, and ```Completed```.
+* You can only change the status of a task that you have been assigned or a task that you have assigned.
+* Club Connect detects if there is no change in the `STATUS`.
+****
+
+[TIP]
+Tasks are color-coded by status: +
+[red]#Yet To Begin# +
+[yellow]#In Progress# +
+[green]#Completed#
+
+Examples:
+
+* `changetaskstatus 1 st/In Progress` +
+Changes the status of the 1st task to `In Progress` in the task listing.
+* `status 3 st/Completed` +
+Changes the status of the 3rd task to `Completed` in the task listing.
+
+The three types of statuses are shown below in Figures 12, 13 and 14.
+
+.A task that is a member is yet to begin.
+image::yettobegin.png[width="450"]
+
+.A task in progress.
+image::inprogress.png[width="450"]
+
+.A completed task.
+image::completed.png[width="450"]
+// end::changetaskstatus[]
+
+=== Clearing all entries : `clear`
+
+Clears all entries from Club Connect. +
+Format A: `clear` +
+Format B: `clear LETTER` +
+Aliases: `c`, `erase`
+
+****
+* Firstly, execute Clear Command by entering Format A into the command line.
+* A confirmation message will be shown.
+* To confirm clearing all entries from Club Connect, enter Format B into the command line.
+* Format B has to be executed immediately after executing Format A.
+* `LETTER` must be equals to "Y" (case-insensitive) to confirm clearing data from Club Connect
+* Any other `LETTER` will cancel the execution
+****
+[IMPORTANT]
+This command is for `Exco` members only.
+
+Examples:
+
+* `Clear` +
+`Clear Y` +
+Executes the clear command, and confirms it.
+* `Clear` +
+`Clear N` +
+Executes the clear command, and aborts it.
+
+Figures 15 and 16 show the output of the `clear` and `clear Y` commands respectively.
+
+.Output of clear command.
+image::clearbefore.png[width="500"]
+
+.Output of clear Y command.
+image::clearafter.png[width="350"]
+
+// tag::compressdecompress[]
+=== Compressing member details : `compress` (Since v1.2)
+
+Compresses the details of members in the member list +
+Format: `compress` +
+Alias: `comp`
+
+****
+* No changes if member details are already compressed
+* Use this to remove clutter in contact list
+****
+
+Figure 17 shows the output of the `compress` command.
+
+.Compressed cards.
+image::compress.png[width="350"]
+
+=== Decompressing member details : `decompress` (Since v1.2)
+
+Decompresses the details of members in the member list +
+Format: `decompress` +
+Alias: `decomp`
+
+****
+* No changes if member details are already decompressed
+* Use this to see more detailed information of members in contact list
+****
+
+Figure 18 shows the output of the `decompress` command.
+
+.Decompressed cards.
+image::decompress.png[width="350"]
+// end::compressdecompress[]
+
+=== Deleting a member : `delete`
+
+Deletes the specified member from Club Connect. +
+Format: `delete INDEX` +
+Aliases: `del`, `rm`, `remove`
+
+****
+* Deletes the member at the specified `INDEX`.
 * The index refers to the index number shown in the most recent listing.
 * The index *must be a positive integer* 1, 2, 3, ...
+****
+[IMPORTANT]
+This command is for `Exco` members only.
+
+****
+* Deleting a member who is the `Assignee` will result in all relevant tasks being deleted.
+* Deleting a member who is the `Assignor` of a task will not affect the list of tasks.
 ****
 
 Examples:
 
 * `list` +
 `delete 2` +
-Deletes the 2nd person in the address book.
+Deletes the 2nd member in the member listing.
 * `find Betsy` +
 `delete 1` +
-Deletes the 1st person in the results of the `find` command.
+Deletes the 1st member in the results of the `find` command.
 
-=== Selecting a person : `select`
+// tag::deletepoll[]
+=== Deleting a poll : `deletepoll` (Since v1.3)
 
-Selects the person identified by the index number used in the last person listing. +
-Format: `select INDEX`
+Deletes the specified poll from Club Connect. +
+Format: `deletepoll INDEX` +
+Aliases: `rmpoll`, `delpoll`
 
 ****
-* Selects the person and loads the Google search page the person at the specified `INDEX`.
-* The index refers to the index number shown in the most recent listing.
-* The index *must be a positive integer* `1, 2, 3, ...`
+* Deletes the poll at the specified `INDEX`.
+* The index refers to the index number shown in the most recent poll listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+[IMPORTANT]
+This command is for `Exco` members only.
+
+Examples:
+
+* `deletepoll 2` +
+Deletes the 2nd poll in the poll listing.
+* `deletepoll 4` +
+Deletes the 4th poll in the poll listing.
+// end::deletepoll[]
+
+// tag::deletetag[]
+=== Deleting a tag : `deletetag` (Since v1.1)
+
+Deletes the specified tag from all members in Club Connect. +
+Format: `deletetag t/TAG` +
+Aliases: `rmtag`, `deltag`
+[IMPORTANT]
+This command is for `Exco` members only.
+
+****
+* Deletes the specified tag for all members who are tagged with it.
+* Deletes the specified tag from Club Connect.
 ****
 
 Examples:
 
-* `list` +
-`select 2` +
-Selects the 2nd person in the address book.
-* `find Betsy` +
-`select 1` +
-Selects the 1st person in the results of the `find` command.
+* `deletetag t/Treasurer` +
+Deletes the `Treasurer` tag for all members tagged with `Treasurer` in Club Connect.
+* `deletetag t/EventInCharge` +
+Deletes the `EventInCharge` tag for all members tagged with `EventInCharge` in Club Connect.
+
+Figure 19 shows the output of the `deletetag` command.
+
+.Output of deletetag command.
+image::deletetagoutput.png[width="350"]
+// end::deletetag[]
+
+// tag::deletetask[]
+=== Deleting a task : `deletetask` (Since v1.3)
+
+Deletes the specified task from the club book. +
+Format: `deletetask INDEX` +
+Aliases: `deltask`, `rmtask`
+
+****
+* Deletes the task at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* 1, 2, 3, ...
+****
+
+[NOTE]
+Only Members who are the `Assignor` can delete their respective tasks.
+
+Examples:
+
+* `viewmytasks` +
+`deletetask 2` +
+Deletes the 2nd task in the results of the `viewmytasks` command.
+* `viewalltasks` +
+`deletetask 1` +
+Deletes the 1st task in the results of the `viewalltasks` command.
+// end::deletetask[]
+
+=== Editing a member : `edit`
+
+Edits the details of an existing member in Club Connect. +
+Format: `edit INDEX [n/NAME] [p/PHONE] [e/EMAIL] [m/MATRIC_NUMBER] [g/GROUP] [t/TAG]...` +
+Aliases: `e`, `update`
+
+****
+* Edits the member at the specified `INDEX`. The index refers to the index number shown in the last member listing. The index *must be a positive integer* 1, 2, 3, ...
+* At least one of the optional fields must be provided.
+* Existing values will be updated to the input values.
+* You can remove a member from a group by editing the member's group to `member` as it is the default group in Club Connect.
+* You cannot remove a member from a group by typing `g/` without specifying any group after it as GROUP must comply with the requirements of a valid group name.
+* When editing tags, the existing tags of the member will be removed i.e adding of tags is not cumulative.
+* You can remove all the member's tags by typing `t/` without specifying any tags after it.
+****
+[IMPORTANT]
+This command is for `Exco` members only.
+
+Examples:
+
+* `edit 1 p/91234567 e/johndoe@example.com` +
+Edits the phone number and email address of the 1st member in the list to `91234567` and `johndoe@example.com` respectively.
+* `edit 2 n/Betsy Crower t/` +
+Edits the name of the 2nd member to `Betsy Crower` and clears all existing tags.
+* `edit 3 g/finance` +
+Edits the group of the 3rd member to be `finance`.
+
+Figure 20 shows the output of the `edit` command.
+
+.Output of edit command.
+image::editoutput.png[width="550"]
+// tag::email[]
+=== Emailing club members: `email` (Since v1.2)
+
+Opens up the chosen mail client's 'Compose Message' page in the system's default web browser with the relevant fields filled-in. The recipients will be the members that belong to the chosen `Group` or `Tag`.  +
+Format A: `email g/GROUP c/CLIENT [s/SUBJECT] [b/BODY]` +
+Format B: `email t/TAG c/CLIENT [s/SUBJECT] [b/BODY]` +
+Alias: `mail`
+
+[NOTE]
+Club Connect currently only supports Gmail and Outlook mail clients.
+
+[NOTE]
+Emails can only be sent to members belonging to EITHER a Group OR a Tag. Club Connect currently doesn't support sending emails to members belonging to BOTH a Group and a Tag.
+
+****
+* Opens up the mail client's URL in the default web browser e.g. Google Chrome
+* A Group AND a Tag is not considered valid input
+* The Group (or Tag) must exist in the club book
+* The Group (or Tag) must be in valid format
+****
+
+Examples:
+
+* `email g/logistics c/gmail s/Meeting Minutes` +
+Opens up the Compose Message page of Gmail with the `Subject` field filled-in. The recipients are all the members that belong to the `logistics` group.
+* `email t/projectHead c/outlook` +
+Opens up the Compose Message page of Outlook with blank `Subject` and `Body` fields. The recipients are all the members that are tagged with `projectHead`.
+// end::email[]
+
+=== Exiting the application : `exit`
+
+Exits the Club Connect application. +
+Format: `exit` +
+Aliases: `q`, `quit`
+
+// tag::export[]
+=== Exporting Club Connect members: `export` (Since v1.3)
+
+Exports the data of all members in Club Connect to a <<DeveloperGuide#csv,CSV>> file. +
+Format: 'export CSV_FILE_PATH` +
+Alias: `exp`
+
+****
+* Exports Name, Phone Number, Email, Matriculation Number, Group, and Tags of all members in Club Connect to a CSV file.
+* CSV_FILE_PATH must be the absolute path to a CSV file.
+* In order for this command to work correctly, ensure that none of the members have double quotes (") in any of their data.
+* A new CSV file with the specified name is created if it does not already exist.
+* If the CSV file already exists, then the data in the file is overwritten.
+****
+
+[NOTE]
+You can import the generated CSV file from Microsoft Excel to get an even better view of the data.
+
+[TIP]
+To get the absolute path to the CSV file, see <<absolute-path, Absolute path of a file>>.
+
+Examples:
+
+* `export C:/Users/John Doe/Desktop/members.csv` +
+Exports all members in Club Connect to the "members.csv" file on `John Doe` 's `Desktop`.
+* `export C:/Users/Jane Doe/Desktop/clubbook.csv` +
+Exports all members in Club Connect to the "clubbook.csv" file on `Jane Doe` 's `Desktop`.
+// end::export[]
+
+// tag::find[]
+=== Locating members: `find` (Since v1.2)
+
+Finds members whose details contain any of the given keywords. +
+Format: `find [PREFIX] KEYWORD [MORE_KEYWORDS]` +
+Aliases: `f`, `search` +
+Allowed `PREFIX`: +
+n/ = `NAME` +
+p/ = `PHONE NUMBER` +
+e/ = `EMAIL` +
+m/ = `MATRIC NUMBER` +
+g/ = `GROUP` +
+t/ = `TAG` +
+
+****
+* An additional `PREFIX` can be stated after `find` to narrow search to a particular field. e.g e/ for email
+* A maximum of 1 `PREFIX` should be stated. Additional prefixes are considered as keywords
+* If no `PREFIX` is stated, all member fields will be searched.
+* The search is case insensitive. e.g `hans` will match `Hans`.
+* The order of the keywords does not matter. e.g. `Hans Bo` will match `Bo Hans`.
+* Partial matches will be matched e.g. `Han` will match `Hans`.
+* Members matching at least one keyword will be returned (i.e. `OR` search). e.g. `Hans Bo` will return `Hans Gruber`, `Bo Yang`.
+****
+
+Examples:
+
+* `find n/Betsy Tim John` +
+Returns all members having names containing `Betsy`, `Tim`, or `John`.
+* `find g/logistics` +
+Returns all members in the logistics `group`
+* `find p/123` +
+Returns any member having phone number containing 123.
+* `find 9119` +
+Returns all members containing `9119` in any field (e.g. phone number or email)
+
+Figure 21 shows the output of the `find` command.
+
+.Output of find command.
+image::findoutput.png[width="350"]
+
+// end::find[]
+
+=== Viewing help : `help`
+
+Opens the Club Connect help window (see <<help-window,Figure 2>>). +
+Format : `help` +
+Aliases : `h`, `info`
+
+// tag::hideresults[]
+=== Hiding results of polls : `hideresults` (Since v1.4)
+
+Hides the results of all polls in Club Connect.
+[NOTE]
+This is a command that can be used to remove clutter from poll results. +
+
+Format: `hideresults` +
+Alias: `hideres`
+[IMPORTANT]
+This command is for `Exco` members only.
+// end::hideresults[]
 
 === Listing entered commands : `history`
 
 Lists all the commands that you have entered in reverse chronological order. +
-Format: `history`
+Format: `history` +
+Alias: `his`
 
 [NOTE]
 ====
 Pressing the kbd:[&uarr;] and kbd:[&darr;] arrows will display the previous and next input respectively in the command box.
 ====
 
-// tag::undoredo[]
+// tag::import[]
+=== Importing members into Club Connect: `import` (Since v1.4)
+
+Imports the details of all valid members in the specified CSV file into Club Connect.
+Format: 'import CSV_FILE_PATH` +
+Alias: `imp`
+
+****
+* CSV_FILE_PATH must be an absolute path to the CSV file.
+* The CSV file should organise its data in the format required by this application (see <<csv-data-format, CSV file format>>).
+* Members who do have <<constraints,valid values>> or are duplicates of members already in Club Connect
+  (i.e. they have the same matriculation number) are not imported from the file.
+* In order for this command to work correctly, ensure that none of the data values contain double quoutes (").
+****
+
+[IMPORTANT]
+This command is for `Exco` members only.
+
+[NOTE]
+You cannot overwrite existing members (i.e. you cannot edit details of members in Club Connect) by using the `import` command.
+
+[TIP]
+You can save a Microsoft Excel spreadsheet as a CSV file by changing the file extension while saving the file.
+
+[TIP]
+To get the absolute path to the CSV file, see <<absolute-path, Absolute path of a file>>.
+
+Examples:
+
+* `import C:/Users/John Doe/Desktop/members.csv` +
+Imports all members in the "members.csv" file on `John Doe` 's Desktop to Club Connect.
+* `import /Users/Jane Doe/Desktop/clubbook.csv` +
+Imports all members in the "clubbook.csv" file on `Jane Doe` 's Desktop to Club Connect.
+
+Figure 22 shows the output of the `import` command.
+
+.Output of import command.
+image::importoutput.png[width="350"]
+// end::import[]
+
+=== Listing all members : `list`
+
+Shows a list of all members in Club Connect. +
+Format: `list` +
+Alias: `l`
+
+Figure 23 shows the output of the `list` command.
+
+.Output of list command.
+image::listoutput.png[width="300"]
+=== Redoing the previously undone command : `redo`
+
+Reverses the most recent `undo` command. +
+Format: `redo` +
+Alias: `r`
+
+Examples:
+
+* `delete 1` +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+
+* `delete 1` +
+`redo` +
+The `redo` command fails as there are no `undo` commands executed previously.
+
+* `delete 1` +
+`clear` +
+`undo` (reverses the `clear` command) +
+`undo` (reverses the `delete 1` command) +
+`redo` (reapplies the `delete 1` command) +
+`redo` (reapplies the `clear` command) +
+
+// tag::removegroup[]
+=== Deleting a group : `deletegroup` (Since v1.1)
+
+Deletes the specified group from Club Connect. +
+Format: `deletegroup g/GROUP` +
+Aliases: `rmgroup`, `delgroup`
+****
+* Deletes the specified group from Club Connect.
+* Once the group is deleted, all members who were part of the group will be assigned to the default group `member`.
+* The group must not be a mandatory group (`Member`) as that is the default group.
+* The group `Exco` cannot be deleted.
+* The group must exist in Club Connect and be in valid format (i.e. no white-spaces and non-empty).
+****
+[IMPORTANT]
+This command is for `Exco` members only.
+
+Examples:
+
+* `deletegroup g/logistics` +
+Deletes the `logistics` group from Club Connect.
+
+* `deletegroup g/pr` +
+Deletes the `pr` group from Club Connect.
+
+Figure 24 shows the output of the `deletegroup` command.
+
+.Output of deletegroup command.
+image::deletegroupoutput.png[width="350"]
+// end::removegroup[]
+
+// tag::removepic[]
+[[removepic]]
+=== Removing your profile photo : `removepic` (Since v1.5)
+
+Removes your profile photo and sets it back to Club Connect's default profile photo. +
+Format: `removepic` +
+Aliases: `rmpic`, `defaultpic`, `delpic`
+
+[NOTE]
+This command cannot be undone. You will have to set your profile photo by using the <<changepic,`changepic`>> command again.
+
+[NOTE]
+If you have not set a profile photo, your profile photo will still be the default photo.
+// end::removepic[]
+
+// tag::select[]
+=== Selecting a member : `select` (since v1.5rc)
+
+Selects the member identified by the index number used in the most recent member listing. +
+Format: `select INDEX` +
+Aliases: `s`, `show`
+
+****
+* Selects the member and loads the member page the member at the specified `INDEX`.
+* The index refers to the index number shown in the most recent listing.
+* The index *must be a positive integer* `1, 2, 3, ...`
+****
+
+[TIP]
+In order to get the UI to look as intended, check out <<Tips>>.
+
+Examples:
+
+* `list` +
+`select 2` +
+Selects the 2nd member in Club Connect.
+* `find Betsy` +
+`s 1` +
+Selects the 1st member in the results of the `find` command.
+
+Figure 25 shows the output of the `select` command.
+
+.Member overview panel with a member's details.
+image::selectoutput.png[width="350"]
+// end::select[]
+
+// tag::viewresults[]
+=== Viewing results of polls : `viewresults` (Since v1.4)
+
+Displays the results of polls in Club Connect.
+
+[NOTE]
+This is a command that can be used to monitor polls in Club Connect. +
+
+[NOTE]
+Results include number of voters for each answer of a poll and total number of voters who took part in the poll. Results are anonymous. +
+
+Format: `viewresults` +
+Alias: `viewres`
+
+[IMPORTANT]
+This command is for `Exco` members only.
+
+Figure 26 shows the output of the `viewresults` command.
+
+.Output of viewresults command.
+image::viewresults.png[width="350"]
+// end::viewresults[]
+
 === Undoing previous command : `undo`
 
-Restores the address book to the state before the previous _undoable_ command was executed. +
-Format: `undo`
+Restores Club Connect to the state before the previous _undoable_ command was executed. +
+Format: `undo` +
+Alias: `u`
 
 [NOTE]
 ====
-Undoable commands: those commands that modify the address book's content (`add`, `delete`, `edit` and `clear`).
+Undoable commands: those commands that modify Club Connect's content (`add`, `delete`, `edit` and `clear`).
 ====
 
 Examples:
@@ -195,70 +949,207 @@ The `undo` command fails as there are no undoable commands executed previously.
 `undo` (reverses the `clear` command) +
 `undo` (reverses the `delete 1` command) +
 
-=== Redoing the previously undone command : `redo`
+// tag::viewalltasks[]
+=== Viewing all tasks in Club Connect : `viewalltasks` (Since v1.4)
 
-Reverses the most recent `undo` command. +
-Format: `redo`
+Displays all the tasks created/assigned in Club Connect. This is a command that can be used by `Exco` members to monitor all the tasks in the club. +
+Format: `viewalltasks` +
+Alias: `alltasks`
+[IMPORTANT]
+This command is for `Exco` members only.
+// end::viewalltasks[]
+
+// tag::viewmytasks[]
+=== Viewing tasks assigned to or assigned by you : `viewmytasks` (Since v1.4)
+
+Display all tasks created/assigned by the currently logged-in member in Club Connect. +
+
+[NOTE]
+The main purpose of this command is to enable `Exco` members to toggle between all tasks and those related to them. +
+
+Format: `viewmytasks` +
+Alias: `mytasks`
+// end::viewmytasks[]
+
+// tag::vote[]
+=== Voting in a poll : `vote` (Since v1.4)
+
+Votes for the specified answer in the specified poll in Club Connect . +
+Format: `vote POLL_INDEX ANSWER_INDEX` +
+Alias: `vpoll`
+
+****
+* The POLL_INDEX refers to the index number shown in the most recent poll listing.
+* The ANSWER_INDEX refers to one of the index number of the answers of the specified poll.
+* The indices *must be positive integers* 1, 2, 3, ...
+* Polls voted by current logged in member will not be visible in the poll list unless logged in as an `Exco` member
+****
 
 Examples:
 
-* `delete 1` +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
+* `vote 1 2` +
+Votes for the 2nd answer in the 1st poll of the poll listing
+* `vote 5 1` +
+Votes for the 1st answer in the 5th poll of the poll listing
 
-* `delete 1` +
-`redo` +
-The `redo` command fails as there are no `undo` commands executed previously.
+Figure 27 shows the output of the `vote` command.
 
-* `delete 1` +
-`clear` +
-`undo` (reverses the `clear` command) +
-`undo` (reverses the `delete 1` command) +
-`redo` (reapplies the `delete 1` command) +
-`redo` (reapplies the `clear` command) +
-// end::undoredo[]
+.Output of the vote command.
+image::samplevote.png[width="450"]
+// end::vote[]
 
-=== Clearing all entries : `clear`
+=== Auto-Complete Command (Since v1.3)
+Auto-completes the command on pressing the kbd:[TAB] key. Cycles through all possible commands based on user input.
 
-Clears all entries from the address book. +
-Format: `clear`
-
-=== Exiting the program : `exit`
-
-Exits the program. +
-Format: `exit`
+[NOTE]
+The feature is only meant for command words, and not their aliases.
 
 === Saving the data
 
-Address book data are saved in the hard disk automatically after any command that changes the data. +
+Club Connect data is saved in the hard disk automatically after any command that changes the data. +
 There is no need to save manually.
 
-// tag::dataencryption[]
-=== Encrypting data files `[coming in v2.0]`
-
-_{explain how the user can enable/disable data encryption}_
-// end::dataencryption[]
-
-== FAQ
-
-*Q*: How do I transfer my data to another Computer? +
-*A*: Install the app in the other computer and overwrite the empty data file it creates with the file that contains the data of your previous Address Book folder.
+[TIP]
+To further increase your efficiency while using Club Connect, check out <<Tips>>.
 
 == Command Summary
 
-* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL a/ADDRESS [t/TAG]...` +
-e.g. `add n/James Ho p/22224444 e/jamesho@example.com a/123, Clementi Rd, 1234665 t/friend t/colleague`
+* *Add* `add n/NAME p/PHONE_NUMBER e/EMAIL m/MATRIC_NUMBER g/GROUP [t/TAG]...` +
+e.g. `add n/James Jerome p/22224444 e/jamesjerome@example.com m/A1234567H g/publicity`
+* *Add Poll* `addpoll q/QUESTION ans/ANSWER [ans/ANSWER]...` +
+e.g. `addpoll q/Where should the annual meeting be held? ans/I-Cube ans/LT7`
+* *Add Task* : `addtask desc/DESCRIPTION d/DUE_DATE ti/TIME` +
+e.g. `addtask desc/Buy Confetti d/03.04.2018 ti/19:00`
+* *Assign Task* : `assigntask desc/DESCRIPTION d/DUE_DATE ti/TIME m/MATRIC_NUMBER` +
+e.g. `assigntask desc/Buy Confetti d/03.04.2018 ti/19:00 m/A0123457H`
+* *Change Password* : `changepass u/USERNAME pw/OLD_PASSWORD npw/NEW_PASSWORD` +
+e.g. `changepass u/A0123456H pw/password npw/newpassword `
+* *Change Task Assignee* : `changeassignee INDEX m/MATRIC_NUMBER` +
+e.g. `changeassignee 1 m/A1234567H`
+* *Change Display Picture* : `changepic PHOTO_PATH` +
+e.g. `changepic C:/Users/John Doe/Desktop/john_doe.jpg` +
+* *Change Task Status* : `changetaskstatus INDEX st/STATUS` +
+e.g. `changetaskstatus 1 st/Completed`
 * *Clear* : `clear`
+* *Compress Member Details* : `compress`
+* *Decompress Member Details* : `decompress`
 * *Delete* : `delete INDEX` +
 e.g. `delete 3`
-* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [a/ADDRESS] [t/TAG]...` +
+* *Delete Group* : `deletegroup g/GROUP` +
+e.g. `deletegroup g/Publicity`
+* *Delete Poll* `deletepoll INDEX` +
+e.g. `deletepoll 2`
+* *Delete Tag* : `deletetag t/TAG` +
+e.g. `deletetag t/EventHelper`
+* *Delete Task* : `deletetask INDEX` +
+e.g. `deletetask 2`
+* *Edit* : `edit INDEX [n/NAME] [p/PHONE_NUMBER] [e/EMAIL] [m/MATRIC_NUMBER] [g/GROUP] [t/TAG]...` +
 e.g. `edit 2 n/James Lee e/jameslee@example.com`
+* *Email* : `email g/GROUP OR t/TAG c/CLIENT [s/SUBJECT] [b/BODY]` +
+e.g. `email g/marketing c/outlook s/Test Subject b/Test Body`
+* *Exit* : `exit`
+* *Export Club Connect data* : `export` +
+e.g. `export C:/Users/John Doe/Downloads/ClubConnectMembers.csv`
 * *Find* : `find KEYWORD [MORE_KEYWORDS]` +
-e.g. `find James Jake`
-* *List* : `list`
+e.g. `find James Jacob`
 * *Help* : `help`
+* *Hide results of polls* : `hideresults`
+* *History* : `history`
+* *Import members into Club Connect* : `import` +
+e.g. `import C:/Users/Admin/Desktop/members.csv`
+* *List* : `list`
+* *Login* : `login u/USERNAME pw/PASSWORD` +
+e.g. `login u/A0123456H pw/password`
+* *Logout* : `logout`
+* *Redo* : `redo`
+* *Remove Profile Picture* : `removepic` +
 * *Select* : `select INDEX` +
 e.g.`select 2`
-* *History* : `history`
+* *Sign Up* : `signup n/NAME p/PHONE_NUMBER e/EMAIL m/MATRIC_NUMBER [t/TAG]...` +
+e.g.`signup n/John Doe p/89876765 e/johnd@gmail.com m/A0987654L t/President`
 * *Undo* : `undo`
-* *Redo* : `redo`
+* *View All Tasks* : `viewalltasks`
+* *View My Tasks* : `viewmytasks`
+* *View results of polls* : `viewresults`
+* *Vote in a Poll* `vote POLL_INDEX ANSWER_INDEX` +
+e.g. `vote 10 2`
+
+// tag::tips[]
+== Tips
+
+Not satisfied with your productivity while using Club Connect?
+Can't remember the command names?
+Here are some tips and tricks:
+
+* *Data transfer to another computer* +
+. Install the Club Connect app on the other computer.
+. Overwrite the empty data file it creates (`clubbook.xml`) with the data file from your previous `Club Connect` folder.
+
+* *Alternative command names* +
+If you do not like the default command name or feel that it is too long, you can use one of its aliases to execute the command instead.
++
+Example: The `changepic` command uses `pic` as an alias.
+So, both commands shown below can be used change your profile picture to the "john_doe.jpg" image on John Doe's Desktop. +
+`changepic C:/Users/John Doe/Desktop/john_doe.jpg`
++
+`pic C:/Users/John Doe/Desktop/john_doe.jpg` +
+
+[[absolute-path]]
+* *Absolute path of a file* +
+To get the absolute path of a file on Windows, follow these steps:
+
+. Right-click on the file and select `Properties`. This will bring up a window containing the properties of the file.
+. Locate the path in the `General` section, next to the keywprd `Location`.
+. Add the complete name of the file (e.g. "/file_name.jpg") to the end of this location to get the absolute path to the file.
+
++
+
+To get the absolute path of a file on MacOS, follow these steps:
+
+. Select the file and press kbd:[Command]+kbd:[I] to open the information window for it.
+. Locate the path in the `General` section, next to the keyword `Where`.
+. Add the complete name of the file (e.g. "/file_name.jpg") to the end of this location to get the absolute path to the file.
+
+[[csv-data-format]]
+// tag::csv-data-format[]
+* *CSV format for `import`* +
+In order to successfully import data of members from the specified file, it has to follow the format shown in Figure 28.
++
+.Required format of data in the file
+image::CSV_format.png[height="350"]
++
+The columns in the import file should be in the same order as shown in the figure above.
+All the tags of a member should be in a single cell, separated by commas (",").
+Also, to successfully import the data of a member, you have to make sure that their details conform to the <<constraints, constraints>>.
+Figure 29 shows some examples of invalid entries with the corresponding reasons in red.
++
+[[invalid-csv-format]]
+.Invalid format of data in the file (reasons are shown in red)
+image::invalid_CSV_format.png[height="110"]
+
+* *Member Profile* +
+In order for the member profile to look as intended when a member is selected using the `select` command, ensure that:
+
+** The name of selected member does not exceed the width of the panel.
+** The tags of selected member can be displayed in one line.
+// end::csv-data-format[]
+
+// end::tips[]
+
+// tag::v2.0[]
+== Coming in v2.0
+
+* *Encrypt data files* : `encrypt` +
+Encryption is the process of encoding information in such a way that only authorized parties can access it and others cannot.  +
+By encrypting Club Connect's data files, you can ensure that others will not be able to read members' information if they open the files. Do note, however, that this may slightly affect performance.
+
+* *Chat with any member* : `chat INDEX` +
+You can message other members in real time without ever needing to leave the Club Connect application.
+
+* *Group Chats* : `gchat GROUP_NAME` +
+Tired of sending the same message to multiple members? The *Group Chat* feature allows you to have conversations as a group so that everyone is kept in the loop.
+
+* *Submit anonymous feedback* : `feedback` +
+Not satisfied with certain aspects of the club? Afraid to speak up? +
+Fret not, Club Connect provides you with a platform to voice your opinions. And yes, we guarantee your anonymity.
+// end::v2.0[]

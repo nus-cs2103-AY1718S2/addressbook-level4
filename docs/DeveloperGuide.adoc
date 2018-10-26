@@ -1,4 +1,4 @@
-= AddressBook Level 4 - Developer Guide
+= Club Connect - Developer Guide
 :toc:
 :toc-title:
 :toc-placement: preamble
@@ -10,13 +10,26 @@ ifdef::env-github[]
 :tip-caption: :bulb:
 :note-caption: :information_source:
 endif::[]
-:repoURL: https://github.com/se-edu/addressbook-level4/tree/master
+:repoURL: https://github.com/CS2103JAN2018-W15-B4/main/tree/master
 
-By: `Team SE-EDU`      Since: `Jun 2016`      Licence: `MIT`
+By: `Team W15-B4`      Since: `Jun 2016`      Licence: `MIT`
+
+== Introduction
+
+Club Connect is a computer application targeted at student club members at the National University of Singapore (NUS).
+It aims to make the tedious process of club management easier are more effective.
+It provides features that are essential for a club to function smoothly such as user authentication, assigning tasks, email blasts, conducting polls, and importing and exporting member details.
+
+This guide provides the necessary information for developers who are interested in contributing to the application. If you are a novice developer, it is recommended that you read through this guide sequentially. The guide will thoroughly explain all aspects of this project- from the steps required to set up the project on your computer, to the implementation details of some features of this application.
+
+To familiarise yourself with the source code it is recommended that you try out the tasks in  <<GetStartedProgramming,Appendix A, Suggested Programming Tasks to Get Started>>. If you are an experienced developer, you may wish to jump to  <<Design-Architecture,Section 3.1, “Architecture”>> to begin understanding the software architecture.
 
 == Setting up
 
+The steps that you need to follow to set up the Club Connect project on your computer are listed below.
+
 === Prerequisites
+Install the following on your computer before you begin the project setup:
 
 . *JDK `1.8.0_60`* or later
 +
@@ -34,6 +47,8 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 
 === Setting up the project in your computer
 
+Follow these steps to set up the project on your computer:
+
 . Fork this repo, and clone the fork to your computer
 . Open IntelliJ (if you are not in the welcome screen, click `File` > `Close Project` to close the existing project dialog first)
 . Set up the correct JDK version for Gradle
@@ -43,36 +58,45 @@ Do not disable them. If you have disabled them, go to `File` > `Settings` > `Plu
 . Locate the `build.gradle` file and select it. Click `OK`
 . Click `Open as Project`
 . Click `OK` to accept the default settings
-. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`). It should finish with the `BUILD SUCCESSFUL` message. +
+. Open a console and run the command `gradlew processResources` (Mac/Linux: `./gradlew processResources`).
+  It should finish with the `BUILD SUCCESSFUL` message. +
 This will generate all resources required by the application and tests.
 
 === Verifying the setup
 
-. Run the `seedu.address.MainApp` and try a few commands
+Perform the following steps to verify that the project has been set up properly:
+
+. Run the `seedu.club.MainApp` and try a few commands
 . <<Testing,Run the tests>> to ensure they all pass.
 
 === Configurations to do before writing code
 
+Go through these steps before you begin contributing to the project.
+
 ==== Configuring the coding style
 
-This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards]. IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
+This project follows https://github.com/oss-generic/process/blob/master/docs/CodingStandards.adoc[oss-generic coding standards].
+IntelliJ's default style is mostly compliant with ours but it uses a different import order from ours. To rectify,
 
 . Go to `File` > `Settings...` (Windows/Linux), or `IntelliJ IDEA` > `Preferences...` (macOS)
 . Select `Editor` > `Code Style` > `Java`
 . Click on the `Imports` tab to set the order
 
 * For `Class count to use import with '\*'` and `Names count to use static import with '*'`: Set to `999` to prevent IntelliJ from contracting the import statements
-* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`. Add a `<blank line>` between each `import`
+* For `Import Layout`: The order is `import static all other imports`, `import java.\*`, `import javax.*`, `import org.\*`, `import com.*`, `import all other imports`.
+  Add a `<blank line>` between each `import`
 
-Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure Intellij to check style-compliance as you write code.
+Optionally, you can follow the <<UsingCheckstyle#, UsingCheckstyle.adoc>> document to configure IntelliJ to check style-compliance as you write code.
 
 ==== Updating documentation to match your fork
 
-After forking the repo, links in the documentation will still point to the `se-edu/addressbook-level4` repo. If you plan to develop this as a separate product (i.e. instead of contributing to the `se-edu/addressbook-level4`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
+After forking the repo, links in the documentation will still point to the `CS2103JAN2018-W15-B4/main` repo.
+If you plan to develop this as a separate product (i.e. instead of contributing to `CS2103JAN2018-W15-B4/main`) , you should replace the URL in the variable `repoURL` in `DeveloperGuide.adoc` and `UserGuide.adoc` with the URL of your fork.
 
 ==== Setting up CI
 
-Set up Travis to perform Continuous Integration (CI) for your fork. See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
+Set up Travis to perform Continuous Integration (CI) for your fork.
+See <<UsingTravis#, UsingTravis.adoc>> to learn how to set it up.
 
 After setting up Travis, you can optionally set up coverage reporting for your team fork (see <<UsingCoveralls#, UsingCoveralls.adoc>>).
 
@@ -86,32 +110,39 @@ Having both Travis and AppVeyor ensures your App works on both Unix-based platfo
 
 ==== Getting started with coding
 
-When you are ready to start coding,
+When you are ready to start coding:
 
 1. Get some sense of the overall design by reading <<Design-Architecture>>.
 2. Take a look at <<GetStartedProgramming>>.
 
 == Design
 
+This section describes the architecture and 6 components that are part of the Club Connect project.
+
+[TIP]
+The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder.
+To update a diagram, modify the diagram in the .pptx file, select the objects of the diagram, and choose `Save as picture`.
+
 [[Design-Architecture]]
 === Architecture
 
-.Architecture Diagram
+The *_Architecture Diagram_* (Refer to Figure 1) explains the high-level design of the App.
+Given below is a quick overview of each component.
+
 image::Architecture.png[width="600"]
+_Figure 1. Architecture Diagram_
 
-The *_Architecture Diagram_* given above explains the high-level design of the App. Given below is a quick overview of each component.
 
-[TIP]
-The `.pptx` files used to create diagrams in this document can be found in the link:{repoURL}/docs/diagrams/[diagrams] folder. To update a diagram, modify the diagram in the pptx file, select the objects of the diagram, and choose `Save as picture`.
+`Main` is a component that has only one class called link:{repoURL}/src/main/java/seedu/club/MainApp.java[`MainApp`].
+It is responsible for the following:
 
-`Main` has only one class called link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp`]. It is responsible for,
-
-* At app launch: Initializes the components in the correct sequence, and connects them up with each other.
+* At app launch: Initializes the components in the correct sequence and connects them up with each other.
 * At shut down: Shuts down the components and invokes cleanup method where necessary.
 
-<<Design-Commons,*`Commons`*>> represents a collection of classes used by multiple other components. Two of those classes play important roles at the architecture level.
+`Commons` represents a collection of classes used by multiple other components.
+Two of those classes play important roles at the architecture level. Classes used by multiple components are in the `seedu.club.commons` package.
 
-* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by components to communicate with other components using events (i.e. a form of _Event Driven_ design)
+* `EventsCenter` : This class (written using https://github.com/google/guava/wiki/EventBusExplained[Google's Event Bus library]) is used by a component to communicate with other components using events (i.e. a form of _Event Driven_ design).
 * `LogsCenter` : Used by many classes to write log messages to the App's log file.
 
 The rest of the App consists of four components.
@@ -121,110 +152,116 @@ The rest of the App consists of four components.
 * <<Design-Model,*`Model`*>>: Holds the data of the App in-memory.
 * <<Design-Storage,*`Storage`*>>: Reads data from, and writes data to, the hard disk.
 
-Each of the four components
+Each of the four components:
 
 * Defines its _API_ in an `interface` with the same name as the Component.
 * Exposes its functionality using a `{Component Name}Manager` class.
 
-For example, the `Logic` component (see the class diagram given below) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
+For example, the `Logic` component (Refer to Figure 2) defines it's API in the `Logic.java` interface and exposes its functionality using the `LogicManager.java` class.
 
-.Class Diagram of the Logic Component
 image::LogicClassDiagram.png[width="800"]
+_Figure 2. Class Diagram of the Logic Component_
 
 [discrete]
 ==== Events-Driven nature of the design
 
-The _Sequence Diagram_ below shows how the components interact for the scenario where the user issues the command `delete 1`.
+The _Sequence Diagram_ below (Figure 3) shows how the components interact in the scenario where the user issues the command `delete 1`.
 
-.Component interactions for `delete 1` command (part 1)
 image::SDforDeletePerson.png[width="800"]
+_Figure 3. Component interactions for `delete 1` command (part 1)_
 
 [NOTE]
-Note how the `Model` simply raises a `AddressBookChangedEvent` when the Address Book data are changed, instead of asking the `Storage` to save the updates to the hard disk.
+Note how the `Model` simply raises a `ClubBookChangedEvent` when the Club Book data is changed, instead of asking the `Storage` to save the updates to the hard disk.
 
-The diagram below shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
+The diagram below (Figure 4) shows how the `EventsCenter` reacts to that event, which eventually results in the updates being saved to the hard disk and the status bar of the UI being updated to reflect the 'Last Updated' time.
 
-.Component interactions for `delete 1` command (part 2)
 image::SDforDeletePersonEventHandling.png[width="800"]
+_Figure 4. Component interactions for `delete 1` command (part 2)_
 
 [NOTE]
-Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them. This is an example of how this Event Driven approach helps us reduce direct coupling between components.
+Note how the event is propagated through the `EventsCenter` to the `Storage` and `UI` without `Model` having to be coupled to either of them.
+This is an example of how this Event Driven approach helps us reduce direct coupling between components.
 
-The sections below give more details of each component.
+The sections below describe the four components in greater detail.
 
 [[Design-Ui]]
 === UI component
+*API* : link:{repoURL}/src/main/java/seedu/club/ui/Ui.java[`Ui.java`]
 
-.Structure of the UI Component
-image::UiClassDiagram.png[width="800"]
+The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `MemberListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
 
-*API* : link:{repoURL}/src/main/java/seedu/address/ui/Ui.java[`Ui.java`]
+The `UI` component uses JavaFx UI framework.
+The layouts of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder.
+For example, the layout of the link:{repoURL}/src/main/java/seedu/club/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
 
-The UI consists of a `MainWindow` that is made up of parts e.g.`CommandBox`, `ResultDisplay`, `PersonListPanel`, `StatusBarFooter`, `BrowserPanel` etc. All these, including the `MainWindow`, inherit from the abstract `UiPart` class.
-
-The `UI` component uses JavaFx UI framework. The layout of these UI parts are defined in matching `.fxml` files that are in the `src/main/resources/view` folder. For example, the layout of the link:{repoURL}/src/main/java/seedu/address/ui/MainWindow.java[`MainWindow`] is specified in link:{repoURL}/src/main/resources/view/MainWindow.fxml[`MainWindow.fxml`]
-
-The `UI` component,
+The `UI` component:
 
 * Executes user commands using the `Logic` component.
-* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` change.
+* Binds itself to some data in the `Model` so that the UI can auto-update when data in the `Model` changes.
 * Responds to events raised from various parts of the App and updates the UI accordingly.
+
+Refer to Figure 5 for the structure of the UI component.
+
+image::UiClassDiagram.png[width="800"]
+_Figure 5. Structure of the UI Component_
 
 [[Design-Logic]]
 === Logic component
-
-[[fig-LogicClassDiagram]]
-.Structure of the Logic Component
-image::LogicClassDiagram.png[width="800"]
-
-.Structure of Commands in the Logic Component. This diagram shows finer details concerning `XYZCommand` and `Command` in <<fig-LogicClassDiagram>>
-image::LogicCommandClassDiagram.png[width="800"]
-
 *API* :
-link:{repoURL}/src/main/java/seedu/address/logic/Logic.java[`Logic.java`]
+link:{repoURL}/src/main/java/seedu/club/logic/Logic.java[`Logic.java`]
 
-.  `Logic` uses the `AddressBookParser` class to parse the user command.
+.  `Logic` uses the `ClubBookParser` class to parse the user command.
 .  This results in a `Command` object which is executed by the `LogicManager`.
-.  The command execution can affect the `Model` (e.g. adding a person) and/or raise events.
+.  The command execution can affect the `Model` (e.g. adding a member) and/or raise events.
 .  The result of the command execution is encapsulated as a `CommandResult` object which is passed back to the `Ui`.
 
-Given below is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+Refer to Figure 6 for the structure of the Logic component.
 
-.Interactions Inside the Logic Component for the `delete 1` Command
+[[fig-LogicClassDiagram]]
+image::LogicClassDiagram.png[width="800"]
+_Figure 6. Structure of the Logic Component_
+
+Figure 7 below shows finer details concerning `XYZCommand` and `Command` depicted in Figure 6.
+
+image::LogicCommandClassDiagram.png[width="800"]
+_Figure 7. Structure of Commands in the Logic Component._
+
+Given below (Figure 8) is the Sequence Diagram for interactions within the `Logic` component for the `execute("delete 1")` API call.
+
 image::DeletePersonSdForLogic.png[width="800"]
+_Figure 8. Interactions Inside the Logic Component for the `delete 1` Command_
 
 [[Design-Model]]
 === Model component
 
-.Structure of the Model Component
-image::ModelClassDiagram.png[width="800"]
+*API* : link:{repoURL}/src/main/java/seedu/club/model/Model.java[`Model.java`]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model.java`]
-
-The `Model`,
+The `Model`:
 
 * stores a `UserPref` object that represents the user's preferences.
-* stores the Address Book data.
-* exposes an unmodifiable `ObservableList<Person>` that can be 'observed' e.g. the UI can be bound to this list so that the UI automatically updates when the data in the list change.
+* stores the Club Book data.
+* exposes an unmodifiable `ObservableList<Member>` that can be 'observed'
+  For example, the UI can be bound to this list so that the UI automatically updates when the data in the list changes.
 * does not depend on any of the other three components.
 
+Refer to Figure 9 for the structure of the Model component.
+
+image::ModelClassDiagram.png[width="800"]
+_Figure 9. Structure of the Model Component_
 [[Design-Storage]]
 === Storage component
 
-.Structure of the Storage Component
-image::StorageClassDiagram.png[width="800"]
+*API* : link:{repoURL}/src/main/java/seedu/club/storage/Storage.java[`Storage.java`]
 
-*API* : link:{repoURL}/src/main/java/seedu/address/storage/Storage.java[`Storage.java`]
-
-The `Storage` component,
+The `Storage` component:
 
 * can save `UserPref` objects in json format and read it back.
-* can save the Address Book data in xml format and read it back.
+* can save the Club Book data in xml format and read it back.
 
-[[Design-Commons]]
-=== Common classes
+Refer to Figure 10 for the structure of the Storage component.
 
-Classes used by multiple components are in the `seedu.addressbook.commons` package.
+image::StorageClassDiagram.png[width="800"]
+_Figure 10. Structure of the Storage Component_
 
 == Implementation
 
@@ -234,13 +271,20 @@ This section describes some noteworthy details on how certain features are imple
 === Undo/Redo feature
 ==== Current Implementation
 
-The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`. It supports undoing and redoing of commands that modifies the state of the address book (e.g. `add`, `edit`). Such commands will inherit from `UndoableCommand`.
+The undo/redo mechanism is facilitated by an `UndoRedoStack`, which resides inside `LogicManager`.
+It supports undoing and redoing of commands that modifies the state of the club book (e.g. `add`, `edit`).
+Such commands will inherit from `UndoableCommand`.
 
-`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead. The following diagram shows the inheritance diagram for commands:
+`UndoRedoStack` only deals with `UndoableCommands`. Commands that cannot be undone will inherit from `Command` instead.
+The following diagram (Refer to figure 11) shows the inheritance diagram for commands:
 
 image::LogicCommandClassDiagram.png[width="800"]
+_Figure 11. Inheritance Diagram for commands_
 
-As you can see from the diagram, `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`. Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the address book before execution. `UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implements the details of how to execute the specific command. Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
+As you can see from the diagram (Figure 11), `UndoableCommand` adds an extra layer between the abstract `Command` class and concrete commands that can be undone, such as the `DeleteCommand`.
+Note that extra tasks need to be done when executing a command in an _undoable_ way, such as saving the state of the club book before execution.
+`UndoableCommand` contains the high-level algorithm for those extra tasks while the child classes implement the details of how to execute the specific command.
+Note that this technique of putting the high-level algorithm in the parent class and lower-level steps of the algorithm in the child classes is also known as the https://www.tutorialspoint.com/design_pattern/template_pattern.htm[template pattern].
 
 Commands that are not undoable are implemented this way:
 [source,java]
@@ -275,55 +319,71 @@ public class DeleteCommand extends UndoableCommand {
 
 Suppose that the user has just launched the application. The `UndoRedoStack` will be empty at the beginning.
 
-The user executes a new `UndoableCommand`, `delete 5`, to delete the 5th person in the address book. The current state of the address book is saved before the `delete 5` command executes. The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+The user executes a new `UndoableCommand` - `delete 5`, to delete the 5th member in the club book.
+The current state of the club book is saved before the `delete 5` command executes.
+The `delete 5` command will then be pushed onto the `undoStack` (the current state is saved together with the command).
+(Refer to Figure 12)
 
 image::UndoRedoStartingStackDiagram.png[width="800"]
+_Figure 12. Initial state of `undoStack` and `redoStack`_
 
-As the user continues to use the program, more commands are added into the `undoStack`. For example, the user may execute `add n/David ...` to add a new person.
+As the user continues to use the program, more commands are added into the `undoStack`.
+For example, the user may execute `add n/David ...` to add a new member (Refer to Figure 13).
 
 image::UndoRedoNewCommand1StackDiagram.png[width="800"]
+_Figure 13. State of `undoStack` and `redoStack` after executing `add` command_
 
 [NOTE]
 If a command fails its execution, it will not be pushed to the `UndoRedoStack` at all.
 
-The user now decides that adding the person was a mistake, and decides to undo that action using `undo`.
+The user now decides that adding the member was a mistake, and decides to undo that action using `undo`.
 
-We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`. We will restore the address book to the state before the `add` command executed.
+We will pop the most recent command out of the `undoStack` and push it back to the `redoStack`.
+We will restore the club book to the state before the `add` command executed (Refer to figure 14).
 
 image::UndoRedoExecuteUndoStackDiagram.png[width="800"]
+_Figure 14. State of `undoStack` and `redoStack` after executing `undo` command._
 
 [NOTE]
 If the `undoStack` is empty, then there are no other commands left to be undone, and an `Exception` will be thrown when popping the `undoStack`.
 
-The following sequence diagram shows how the undo operation works:
+The following sequence diagram (Figure 15) shows how the undo operation works:
 
 image::UndoRedoSequenceDiagram.png[width="800"]
+_Figure 15. Sequence Diagram of `undo` command_
 
-The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the address book to the state after the command is executed).
+The redo does the exact opposite (pops from `redoStack`, push to `undoStack`, and restores the club book to the state after the command is executed).
 
 [NOTE]
 If the `redoStack` is empty, then there are no other commands left to be redone, and an `Exception` will be thrown when popping the `redoStack`.
 
-The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`. This time the `redoStack` is no longer empty. It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern desktop applications follow).
+The user now decides to execute a new command, `clear`. As before, `clear` will be pushed into the `undoStack`.
+This time the `redoStack` is no longer empty.
+It will be purged as it no longer make sense to redo the `add n/David` command (this is the behavior that most modern computer applications follow). (Refer to figure 16)
 
 image::UndoRedoNewCommand2StackDiagram.png[width="800"]
+_Figure 16. State of `undoStack` and `redoStack` after executing `clear` command._
 
-Commands that are not undoable are not added into the `undoStack`. For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution:
+Commands that are not undoable are not added into the `undoStack`.
+For example, `list`, which inherits from `Command` rather than `UndoableCommand`, will not be added after execution (Refer to Figure 17):
 
 image::UndoRedoNewCommand3StackDiagram.png[width="800"]
+_Figure 17. State of `undoStack` and `redoStack` after executing `list` command._
 
-The following activity diagram summarize what happens inside the `UndoRedoStack` when a user executes a new command:
+The following activity diagram (Figure 18) summarize what happens inside the `UndoRedoStack` when a user executes a new command:
 
 image::UndoRedoActivityDiagram.png[width="650"]
+_Figure 18. Activity Diagram for Undo-Redo_
 
 ==== Design Considerations
 
 ===== Aspect: Implementation of `UndoableCommand`
 
-* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`
-** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour. Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
+* **Alternative 1 (current choice):** Add a new abstract method `executeUndoableCommand()`.
+** Pros: We will not lose any undone/redone functionality as it is now part of the default behaviour.
+   Classes that deal with `Command` do not have to know that `executeUndoableCommand()` exist.
 ** Cons: Hard for new developers to understand the template pattern.
-* **Alternative 2:** Just override `execute()`
+* **Alternative 2:** Just override `execute()`.
 ** Pros: Does not involve the template pattern, easier for new developers to understand.
 ** Cons: Classes that inherit from `UndoableCommand` must remember to call `super.execute()`, or lose the ability to undo/redo.
 
@@ -333,18 +393,18 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Easy to implement.
 ** Cons: May have performance issues in terms of memory usage.
 * **Alternative 2:** Individual command knows how to undo/redo by itself.
-** Pros: Will use less memory (e.g. for `delete`, just save the person being deleted).
-** Cons: We must ensure that the implementation of each individual command are correct.
+** Pros: Will use less memory (e.g. for `delete`, just save the member being deleted).
+** Cons: We must ensure that the implementation of each individual command is correct.
 
 
 ===== Aspect: Type of commands that can be undone/redone
 
-* **Alternative 1 (current choice):** Only include commands that modifies the address book (`add`, `clear`, `edit`).
-** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data are * lost).
+* **Alternative 1 (current choice):** Only include commands that modify the club book (`add`, `clear`, `edit`)
+** Pros: We only revert changes that are hard to change back (the view can easily be re-modified as no data is * lost).
 ** Cons: User might think that undo also applies when the list is modified (undoing filtering for example), * only to realize that it does not do that, after executing `undo`.
-* **Alternative 2:** Include all commands.
+* **Alternative 2:** Include all commands
 ** Pros: Might be more intuitive for the user.
-** Cons: User have no way of skipping such commands if he or she just want to reset the state of the address * book and not the view.
+** Cons: Users have no way of skipping such commands if they just want to reset the state of the club * book and not the view.
 **Additional Info:** See our discussion  https://github.com/se-edu/addressbook-level4/issues/390#issuecomment-298936672[here].
 
 
@@ -354,31 +414,1068 @@ image::UndoRedoActivityDiagram.png[width="650"]
 ** Pros: Easy to understand for new Computer Science student undergraduates to understand, who are likely to be * the new incoming developers of our project.
 ** Cons: Logic is duplicated twice. For example, when a new command is executed, we must remember to update * both `HistoryManager` and `UndoRedoStack`.
 * **Alternative 2:** Use `HistoryManager` for undo/redo
-** Pros: We do not need to maintain a separate stack, and just reuse what is already in the codebase.
-** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands. Violates Single Responsibility Principle and Separation of Concerns as `HistoryManager` now needs to do two * different things.
+** Pros: We do not need to maintain a separate stack, and can just reuse what is already in the codebase.
+** Cons: Requires dealing with commands that have already been undone: We must remember to skip these commands.
+Furthermore, the "Single Responsibility" and "Separation of Concerns" principles are violated as `HistoryManager` now needs to do two * different things.
 // end::undoredo[]
 
-// tag::dataencryption[]
+
+
+// tag::AccountManagementTag[]
+=== Account Management
+Account Management are authentication which members can store unique data into, logs into their own account to modify their account details and also start the Club Connect by Signing up the first user.
+
+==== Current Implementation
+Account Management mechanism is facilitated by several command classes in Club Connect.
+
+===== Signing up
+`signup` mechanism is fascilitated by the `SignUpCommand` class.
+It allows the setting up of Club Connect.
+
+[NOTE]
+SignUpCommand can only be executed once. Only can be executed again after clearing Club Connect.
+
+The `SignUpCommand` extends for `Command`. It is not an undoable command.
+Figure 19 (shown below) depicts the UML representation of the `SignUpCommand`.
+
+image::SignUpCommandUML.png[width="200"]
+_Figure 19. UML Diagram of `SignUpCommand`._
+
+Parsing of command is performed by `SignUpCommandParser`, which returns a `SignUpCommand` object after parsing Name, Phone, Email, Matric Number, [Tags].
+Figure 20 below shows the sequence diagram of the `SignUpCommandParser`.
+
+image::SDforSignUpCommand.png[width="800"]
+_Figure 20. Sequence Diagram for the parsing of `SignUpCommandParser.`_
+
+Figure 21 below shows the high-level sequence diagram of the command execution.
+
+image::SDSignUp.png[widit="800"]
+_Figure 21. High-Level Sequence diagram of signing up a member._
+
+===== Logging in
+`login` mechanism is facilitated by the `LogInCommand` class.
+It allows `Exco` members to use `Exco` privileges in the Club Book. It also allows both `Members` and `Exco` to have their own account.
+The `LogInCommand` consists of the following fields:
+
+* Username - Username of the member.
+* Password - Password of the member.
+
+The `LogInCommand` extends for `Command`. It is not an undoable command.
+Figure 22 (shown below) depicts the UML representation of the `LogInCommand`.
+
+image::LogInCommandUML.png[width="350"]
+_Figure 22. UML Diagram of `LogInCommand`._
+
+Parsing of command is performed by `LogInCommandParser`, which returns a `LogInCommand` object after parsing Username and Password object.
+Figure 23 below shows the sequence diagram of the `LogInCommandParser`.
+
+image::SDforLogInCommand.png[width="800"]
+_Figure 23. Sequence diagram of `LogInCommandParser`._
+
+Figure 24 below shows the high-level sequence diagram of the command execution.
+
+image::SDLogIn.png[width="800"]
+_Figure 24. High-Level Sequence diagram of logging in a member._
+
+==== Changing Password
+`changepass` mechanism is facilitated by the `ChangePasswordCommand` class.
+It allows `Members` to change their current password to a new password.
+The `ChangePasswordCommand` consist fo the following fields:
+
+* Username - Username of the member.
+* Password - Current Password of the member.
+* NewPassword - New Password given by the member.
+
+`ChangePasswordCommand` extends from `Command` and not from `UndoableCommand`, as it is not an undoable command.
+Figure 25 (shown below) depicts the UML representation of the `ChangePasswordCommand`.
+
+image::ChangePasswordUML.png[width="400"]
+_Figure 25. UML Diagram of `ChangePasswordCommand`.
+
+Parsing of command is performed by `ChangePasswordCommandParser`, which returns a `ChangePassword` object after parsing Username, Password and Newpassword.
+Figure 26 below shows the sequence diagram of the `ChangePasswordCommandParser`.
+
+image::SDforChangePasswordCommand.png[width="800"]
+_Figure 26. Sequence diagram of `ChangePasswordCommmandParser`.
+
+Figure 27 below shows the high-level sequence diagram of the command execution.
+
+image::SDChangePassword.png[width="800"]
+_Figure 27. High-Level Sequence diagam of changing the password of a member
+// end::AccountManagementTag[]
+
+
+
+// tag::email[]
+=== Email Mechanism
+==== Current Implementation
+The `email` mechanism of Club Connect is facilitated by the `EmailCommand` class and is event-driven.
+The `EmailCommand` consists of the following fields:
+
+* Client - the mail client used to send the email (currently restricted to GMail and Outlook).
+* Subject - the subject of the email (optional field).
+* Body - the body of the email (optional field).
+* Group - the club group to whom the user wishes to send an email to.
+* Tag - the tag to which the user wishes to send an email to.
+
+[NOTE]
+Emails can only be sent to members belonging to EITHER a Group OR a Tag.
+Club Connect currently doesn't support sending emails to members belonging to BOTH a Group and a Tag.
+
+The `EmailCommand` extends from `Command` and not from `UndoableCommand`, as it is not an undoable command.
+Refer to Figure 28 for the UML diagram.
+
+image::EmailCommandUML.png[width="500"]
+_Figure 28. EmailCommand UML Diagram_
+
+`EmailCommandParser` is responsible for parsing the `email` command. It returns a `EmailCommand` object after parsing `Client`, `Subject`, `Body`, `Group`, and `Tag`.
+Figure 29 depicts the sequence of parsing the command.
+
+image::SDforEmailCommandParser.png[width="600"]
+_Figure 29. Sequence Diagram for Email Command parsing_
+
+[NOTE]
+Since `Subject` and `Body` are optional fields, their default values are `EMPTY_SUBJECT_STRING` and `EMPTY_BODY_STRING` which store blank Strings.
+
+[NOTE]
+As Club Connect only allows emails to be sent to members of EITHER a `Group` OR a `Tag`, a valid command will result in either one of them being assigned to `null`.
+
+The `EmailCommand#execute()` calls the following methods of `model`:
+
+. ```generateEmailRecipients()``` - takes in a `Group` and `Tag` object. Depending on the object that is not `null`, it returns a string of recipients.
+. ```sendEmail()``` - takes in the recipient string, and an object each of `Client`, `Subject`, and `Body`.
+
+`EmailCommand#sendEmail()` raises an event `SendEmailRequestEvent`, which triggers the system's default browser to open the chosen mail client's 'Compose Message' page with all the relevant fields filled-in.
+Figure 30 depicts the high-level sequence of events that take place.
+
+image::SDforEmail.png[width="600"]
+_Figure 30. Sequence Diagram for Email Command_
+
+
+The browser URL for composing the email is generated as follows:
+
+[source, java]
+----
+public static final String GMAIL_EMAIL_URL =
+            "https://mail.google.com/mail/?view=cm&fs=1&tf=1&source=mailto&to=%1$s&su=%2$s&body=%3$s";
+
+public static final String OUTLOOK_EMAIL_URL =
+            "https://outlook.office.com/?path=/mail/action/compose&to=%1$s&subject=%2$s&body=%3$s";
+
+Desktop.getDesktop().browse(new URI(String.format(GMAIL_EMAIL_URL, recipients, subject, body)));
+----
+
+
+==== Design Considerations
+===== Aspect: Location of opening the mail client
+* **Alternative 1 (current choice)**: Open up the mail client in system's default web browser.
+** Pros: Easy to implement
+** Cons: Since Club Connect can be used by multiple people via user authentication, the default browser will have the owner of the system logged into his/her mail account.
+* **Alternative 2:** Open up the mail client in `BrowserPanel`.
+** Pros: No dependency on third party apps.
+** Cons: Older version browser will disallow auto-filling of email fields.
+// end::email[]
+
+// tag::addtask[]
+=== Task-Management
+Tasks are pieces of work to be done or undertaken. Members can create tasks for themselves, and can also be assigned to a task by `Exco` members.
+
+==== Current Implementation
+The task-management mechanism is facilitated by several command classes in Club Connect, which will be covered in subsequent sub-sections.
+
+Task-management commands require a member to be logged in (and thus by extension, an initial sign-up).
+
+Figure 31 below shows the UML diagram of the `Task` class.
+
+image::TaskUML.png[width="500" align="center"]
+_Figure 31. Task UML Diagram_
+
+
+===== Adding Tasks
+---
+Adding Tasks is facilitated by the `AddTaskCommand`. When this command is invoked, it adds a task with the input `Description`, `Date`, and `Time`. The status of every newly created task is by default set to `Yet To Begin`. The `Assignor` and `Assignee` of the task is set to the `Matric Number` of the member who is currently logged into `Club Connect`.
+
+Figure 32 below shows the UML representation of `AddTaskCommand`.
+
+image::AddTaskCommandUML.png[width="150" align="center"]
+_Figure 32. UML diagram of `AddTaskCommand`._
+
+Figure 33 shows the flow of parsing an `AddTaskCommand` object:
+
+image::SDforAddTaskCommandParser.png[width="400" align="center"]
+_Figure 33. Sequence Diagram for `AddTaskCommand` parsing._
+
+
+Figure 34 depicts the high-level sequence of events that take place.
+
+image::SDforAddTask.png[width="400" align="center"]
+_Figure 34. Sequence Diagram for adding a task._
+
+==== Design Considerations
+===== Aspect: Displaying Assignor and Assignee
+* **Alternative 1 (current choice)**: Displays currently logged-in member as Assignor and Assignee.
+** Pros: It is required for `assigntask`.
+** Cons: Displaying the same matriculation number twice is redundant.
+* **Alternative 2:** Don't display Assignor and Assignee as it is a personal to-do list.
+** Pros: Takes care of redundancies in Alternative 1 above.
+** Cons: The implementation of `assigntask` becomes more complex.
+
+// end::addtask[]
+
+// tag::assigntask[]
+===== Assigning Tasks
+---
+
+Assigning tasks can be accomplished with the `AssignTaskCommand`. Tasks are assigned to members through the `Matric Number` attribute. +
+
+Figure 35 below shows the UML representation of `AssignTaskCommand`.
+
+image::AssignTaskCommandUML.png[width="150" align="center"]
+_Figure 35. UML diagram of `AssignTaskCommand`._
+
+The implementation of assigning tasks is similar to that of adding tasks. The only difference is that the Assignor is set to the `Matric Number` of the member who is currently logged in.
+
+The parsing of an `AssignTaskCommand` is performed by the `AssignTaskCommandParser`. +
+Figure 36 shows the flow of parsing an `AssignTaskCommand` object:
+
+image::SDforAssignTaskCommandParser.png[width="400" align="center"]
+_Figure 36. Sequence Diagram for `AssignTaskCommand` parsing._
+
+Figure 37 depicts the high-level sequence of events that take place.
+
+image::SDforAssignTask.png[width="400" align="center"]
+_Figure 37. Sequence Diagram for assigning a task._
+
+
+==== Design Considerations
+===== Aspect: Displaying similar tasks for different Assignees
+* **Alternative 1 (current choice)**: Make a copy of the task for every new `Assignee` if all other parameters are same.
+** Pros: Easy to implement
+** Cons: Clutters the `TaskListPanel` because of redundancies.
+* **Alternative 2:** Maintain a list of `Assignee` s in a task .
+** Pros: Reduces clutter in the `TaskListPanel` and is easy on the eye.
+** Cons: Relatively difficult to implement.
+// end::assigntask[]
+
+// tag::tasks-delete[]
+===== Deleting Tasks
+---
+The 'DeleteTaskCommand` is used to delete a task. A task can only be deleted if the member who is currently logged in is either the `Assignor` or the `Assignee`. +
+The command object takes in the `INDEX` of the task to be deleted.
+
+Figure 38 below shows the UML representation of `DeleteTaskCommand`.
+
+image::DeleteTaskCommandUML.png[width="150" align="center"]
+_Figure 38. UML diagram of `DeleteTaskCommand`._
+
+`DeleteTaskCommandParser` is responsible for parsing the user input into a `DeleteTaskCommand` object. +
+Figure 39 illustrates the sequence in which the parsing is done.
+
+image::SDforDeleteTaskCommandParser.png[width="400" align="center"]
+_Figure 39. Sequence Diagram for `DeleteTaskCommand` parsing._
+
+The high-level sequence of events is shown below in Figure 40.
+
+image::SDforDeleteTask.png[width="400" align="center"]
+
+_Figure 40. Sequence Diagram for deleting a task._
+
+==== Design Considerations
+===== Aspect: Who can delete tasks?
+* **Alternative 1 (current choice)**: Only Assignors can delete tasks.
+** Pros: It improves accountability of the club.
+** Cons: All the workload falls on the Assignor.
+* **Alternative 2:** Assignor or Assignee can delete task.
+** Pros: The workload is evenly distributed.
+** Cons: Reduces transparency of club and accountability of club members.
+
+// end::tasks-delete[]
+
+
+// tag::taskassignee[]
+===== Changing Task Assignee
+---
+
+The `ChangeAssigneeCommand` is used to change the `Assignee` of a task. +
+
+Figure 41 below shows the UML representation of `ChangeAssigneeCommand`.
+
+image::ChangeAssigneeCommandUML.png[width="150" align="center"]
+_Figure 41. UML Diagram of `ChangeAssigneeCommand`._
+
+`ChangeAssigneeCommandParser` is responsible for parsing the `changeassignee` command. It returns a `ChangeAssigneeCommand` object after parsing the `INDEX` and the `Assignee`.
+Figure 42 shows the sequence diagram of the `ChangeAssigneeCommandParser`.
+
+image::SDforChangeAssigneeCommandParser.png[width="400" align="center"]
+_Figure 42. Sequence Diagram of `ChangeAssigneeCommandParser`._
+
+Figure 43 below shows the high-level sequence diagram of the command execution.
+
+image::SDforChangeAssignee.png[width="400" align="center"]
+_Figure 43. Sequence Diagram of changing the `Assignee` of a task._
+
+==== Design Considerations
+===== Aspect: Who can change assignees?
+* **Alternative 1 (current choice)**: Only Exco members can change assignees of tasks.
+** Pros: It improves accountability of the club.
+** Cons: All the workload falls on the Exco members.
+* **Alternative 2:** Assignor or Assignee can change the assignee task.
+** Pros: People who are directly related to the task take up resonsibility. This boosts accountability of members.
+** Cons: Similar to deleting a task, it reduces transparency of club and accountability of club members.
+// end::taskassignee[]
+
+
+// tag::taskstatus[]
+===== Changing Task Status
+---
+
+Changing a task's status is made possible by the `ChangeTaskStatusCommand`. +
+
+Figure 44 below shows the UML representation of `ChangeTaskStatusCommand`.
+
+image::ChangeTaskStatusCommandUML.png[width="150" align="center"]
+_Figure 44. UML Diagram of `ChangeTaskStatusCommand`._
+
+Parsing of the command is performed by `ChangeTaskStatusCommandParser`, which returns a `ChangeTaskStatusCommand` object. +
+Figure 45 below depicts the parsing of the `ChangeTaskStatusObject`.
+
+image::SDforChangeTaskStatusCommandParser.png[width="400" align="center"]
+_Figure 45. Sequence Diagram for `ChangeTaskStatusCommand` parsing._
+
+Figure 46 below describes the high-level sequence of events that take place.
+
+image::SDforChangeTaskStatus.png[width="400" align="center"]
+
+_Figure 46. Sequence Diagram for changing the status of a task._
+
+==== Design Considerations
+===== Aspect: Who can change task status?
+* **Alternative 1 (current choice)**: Assignor or Assignee can change the task status.
+** Pros: They are directly associated with the task.
+** Cons: Exco should also have a say.
+* **Alternative 2:** Exco, Assignee or Assignor can change status.
+** Pros: Exco's powers kept in check.
+** Cons: Exco may misinterpret status of the task.
+// end::taskstatus[]
+
+// tag::taskviewing[]
+===== Viewing All Tasks
+---
+
+`Exco` members can view all the tasks in `Club Connect` using the `ViewAllTasksCommand`.
+
+The high-level sequence of events on executing the `ViewAllTasksCommand` is described below in Figure 47.
+
+image::SDforViewAllTasks.png[width="400" align="center"]
+_Figure 47. Sequence Diagram for viewing all tasks._
+
+===== Viewing My Tasks
+---
+
+`Exco` members need a way to toggle between all tasks in `Club Connect` and the tasks that are related to them (i.e. tasks that they have assigned or been assigned to). This is achieved by the `ViewMyTasksCommand`.
+
+The `Predicate` used is `TaskIsRelatedToMemberPredicate`. Here is the overridden `TaskIsRelatedToMemberPredicate#test` method.
+[source, java]
+@Override
+public boolean test(Task task) {
+    return member.getMatricNumber().toString().equalsIgnoreCase(task.getAssignor().getValue())
+            || member.getMatricNumber().toString().equalsIgnoreCase(task.getAssignee().getValue());
+}
+
+The sequence diagram of the `viewmytasks` command is shown below in Figure 48.
+
+image::SDforViewMyTasks.png[width="400" align="center"]
+_Figure 48. Sequence Diagram for viewing tasks of the currently logged-in member._
+// end::taskviewing[]
+
+
+// tag::polls[]
+=== Polls-feature
+
+A poll contains a question and any number of answers. Any member can vote in a poll but only once. Only 'Exco' members
+are allowed to add/delete polls and view/hide poll results. Polls are displayed in the poll `ListView` GUI of Club Connect.
+
+==== Current Implementation
+The poll feature is facilitated by the command classes below:
+
+* `AddPollCommand`
+* `DeletePollCommand`
+* `VoteCommand`
+* `ViewResultsCommand`
+* `HideResultsCommand`
+
+Since all the commands above require the user be logged in, the statements below are present in their `execute` methods.
+
+[source, java]
+requireToSignUp();
+requireToLogIn();
+
+To restrict the commands that only `Exco` members can execute, the `AddPollCommand`, `DeletePollCommand`,
+`ViewResultsCommand` and `HideResultsCommand` will have the statement below in their `execute` methods.
+
+[source, java]
+requireExcoLogIn();
+
+Figure 49 below shows the UML diagram of the `Poll` class.
+
+image::PollUML.png[width="400"]
+_Figure 49. Poll UML Diagram_
+
+A `Poll` consists of the following:
+
+* Question: Represents the question of the poll.
+* ObservableList<Answer>: Represents the answers of the poll.
+* Set<MatricNumber>: Represents all members that have voted in the poll.
+
+Figure 50 below shows the UML diagram of the `Answer` class.
+
+image::AnswerUML.png[width="100"]
+_Figure 50. Poll UML Diagram_
+
+An `Answer` consists of the following:
+
+* String: Represents the sequence of characters making up the answer
+* int: Represents the number of members who voted for this answer
+
+// end::polls[]
+
+
+// tag::addpoll[]
+===== Adding Polls
+---
+Adding Polls is facilitated by the `AddPollCommand` which inherits from `UndoableCommand` to make adding polls undoable.
+When a poll is created by the `AddPollCommand`, it's Set<MatricNumber>
+is initialized as empty because no member has voted in the poll.
+
+Figure 51 shows the flow of adding a poll:
+
+image::SDforAddPoll.png[width="800"]
+_Figure 51. Sequence Diagram for adding a poll_
+
+The execution of the command invokes `Model#addPoll(poll)`. +
+The following code snippet shows the implementation:
+
+[source, java]
+@Override
+public synchronized void addPoll(Poll poll) throws DuplicatePollException {
+    requireNonNull(poll);
+    clubBook.addPoll(poll);
+    updateFilteredPollList(new PollIsRelevantToMemberPredicate(getLoggedInMember()));
+    indicateClubBookChanged();
+}
+
+After successful execution, the poll will be added to the Club Book and the poll `ListView` GUI.
+// end::addpoll[]
+
+// tag::deletepoll[]
+===== Deleting Polls
+---
+Deleting Polls is facilitated by the `DeletePollCommand` which inherits from `UndoableCommand` to make deleting polls undoable.
+
+Figure 52 shows the flow of deleting a poll:
+
+image::SDforDeletePoll.png[width="800"]
+_Figure 52. Sequence Diagram for deleting a poll_
+
+The execution of the command invokes `Model#deletePoll()`.
+The following code snippet shows the implementation:
+
+[source, java]
+@Override
+public synchronized void deletePoll(Poll target) throws PollNotFoundException {
+    requireNonNull(target);
+    clubBook.removePoll(target);
+    indicateClubBookChanged();
+}
+
+After successful execution, the poll will be deleted from the Club Book and the poll `ListView` GUI.
+// end::deletepoll[]
+
+// tag::vote[]
+===== Voting in Polls
+---
+
+Voting in polls is facilitated by the `VoteCommand` which inherits from `UndoableCommand` to make voting undoable.
+
+The input of the command is the `POLL_INDEX` of a poll and `ANSWER_INDEX` of the answer of the poll
+
+Figure 53 shows the flow of voting in a poll:
+
+image::SDforVote.png[width]"550" ]
+_Figure 53. Sequence Diagram for voting in a poll_
+
+The execution of the command invokes `Model#voteInPoll()`.
+The following code snippet shows the implementation:
+
+[source,java]
+@Override
+public String voteInPoll(Poll poll, Index answerIndex)
+        throws PollNotFoundException, AnswerNotFoundException, UserAlreadyVotedException {
+    requireAllNonNull(poll, answerIndex);
+    String voteDetails = clubBook.voteInPoll(poll, answerIndex, getLoggedInMember().getMatricNumber());
+    indicateClubBookChanged();
+    return voteDetails;
+}
+
+After successful execution, the voteCount of the answer in the poll will increment by 1. If the user is not an `Exco` member
+the poll will be removed from the poll `ListView` GUI, otherwise it will remain in the GUI for `Exco` members to monitor the results.
+// end::vote[]
+
+// tag::viewhide[]
+===== Viewing/Hiding All Poll Results
+---
+
+Viewing and Hiding Poll Results is facilitated by the `ViewResultsCommand` and `HideResultsCommand`.
+
+By default poll results are not shown(Figure 54), but when `ViewResultsCommand` is executed, results consisting of
+how many people voted in a poll and how many voted for each answer will be shown(Figure 55).
+
+image::PollWithoutResults.png[width="300"]
+_Figure 54. Poll Without Results_
+
+image::PollWithResults.png[width="300"]
+_Figure 55. Poll With Results_
+
+Since viewing and hiding results of polls are similar in implementation, only viewing results of polls will be discussed.
+
+When an `Exco` member inputs 'viewresults', the sequence diagram (Figure 56) below shows how the different components interact
+to post a `ViewResultsRequestEvent`.
+
+image::HighLevelSDforViewResultsToEventsCenter.png[width="800"]
+_Figure 56. Sequence Diagram to `EventsCenter` for viewing poll results ._
+
+Then, the `PollListPanel` which contains the poll `ListView`, will handle the event (Figure 57) by showing results of results of all polls (Figure 46).
+
+image::HighLevelSDforViewResultsFromEventsCenter.png[width="800"]
+_Figure 57. Sequence Diagram from `EventsCenter` for viewing poll results._
+
+The following code snippet shows the implementation:
+
+[source, java]
+@Subscribe
+private void handleViewResultsEvent(ViewResultsRequestEvent event) {
+    logger.info(LogsCenter.getEventHandlingLogMessage(event));
+    showPollResults();
+}
+
+Hiding results of polls will be done in a similar manner except `HideResultsRequestEvent` is posted and handled instead
+of `ViewResultsRequestEvent`.
+
+==== Design Considerations
+===== Aspect: Keeping track of how many members voted for each answer of a poll and who has voted in a poll
+* **Alternative 1 (current choice)**: Make each `Answer` keep track of how many votes it has received and each `Poll`
+keep track of who has voted in it using a Set<MatricNumber>
+** Pros: Voters are not tied to any specific answer hence ensuring anonymity
+** Cons: Harder to ensure sum of vote count of all `Answer`s in a `Poll` must equal to size of Set<MatricNumber> in the poll
+* **Alternative 2:** Make each `Answer` contain a Set<MatricNumber>. It's size is the number of voters and to keep track of
+who voted, check user's `MatricNumber` with all `MatricNumber` in all `Answer` of a `Poll`
+** Pros: Easy to implement
+** Cons: No anonymity since information of who voted for which Answer is stored inside Set<MatricNumber> of an `Answer`
+// end::viewhide[]
+
+// tag::removegroup[]
+=== Delete Group Mechanism
+==== Current Implementation
+
+The `deletegroup` mechanism is facilitated by the `DeleteGroupCommand` class. It allows `Exco` members to delete a group from `Club Connect`. The group of all members part of the group that is to be deleted will be changed to the default group - `member`.
+
+The `DeleteGroupCommand` extends from `UndoableCommand` as it is an undoable command. Figure 58 below depicts the UML representation of the `Command`.
+
+image::DeleteGroupCommandUML.png[width="150" align="center"]
+_Figure 58. UML Diagram of `DeleteGroupCommand`._
+
+`DeleteGroupCommandParser` is responsible for parsing the `deletegroup` command. It returns a `DeleteGroupCommand` object after parsing the `Group`. The parsing of the command is shown below in Figure 59.
+
+The method where the deletion takes place in each member is `ClubBook#deleteGroupFromMember`.
+
+[source, java]
+private void deleteGroupFromMember(Group toRemove, Member member)
+        throws MemberNotFoundException {
+    if (!member.getGroup().toString().equalsIgnoreCase(toRemove.toString())) {
+        return;
+    }
+    Group defaultGroup = new Group(Group.DEFAULT_GROUP);
+    Member newMember = new Member(member.getName(), member.getPhone(), member.getEmail(), member.getMatricNumber(),
+            defaultGroup, member.getTags());
+    try {
+        updateMember(member, newMember);
+    } catch (DuplicateMatricNumberException dme) {
+        throw new AssertionError("Deleting a member's group only should not result in a duplicate. "
+                + "See member#equals(Object).");
+    }
+}
+
+image::SDforDeleteGroupCommandParser.png[width="400" align="center"]
+_Figure 59. Sequence Diagram for the parsing of `DeleteGroupCommand`._
+
+The high-level sequence of events is depicted in Figure 60 below.
+
+image::SDforDeleteGroup.png[width="400" align="center"]
+_Figure 60. Sequence Diagram for delete a group from `Club Connect`._
+
+
+==== Design Considerations
+===== Aspect: Implementation of `DeleteGroupCommand`
+* **Alternative 1 (current choice)**: Overwrite the relevant `Member` objects with new `Member` objects.
+** Pros: Easy to implement.
+** Cons: Requires looping through all the members in `Club Connect`.
+* **Alternative 2:** To maintain a `UniqueGroupList`
+** Pros: Cleaner implementation.
+** Cons: Relatively difficult to implement.
+
+// end::removegroup[]
+
+// tag::import[]
+=== Importing Members
+==== Current Implementation
+
+The `import` mechanism of Club Connect is facilitated by the `ImportCommand` class and is event-driven.
+It allows members to add the list of members from a <<csv,CSV>> file to Club Connect at one go.
+To facilitate this, it makes use of the `CsvUtil` class, which converts `Member` objects to CSV format.
+
+The `ImportCommand` extends from the `UndoableCommand` class, and only consists of a `File` attribute.
+This is illustrated in the UML diagram shown in Figure 61.
+
+image::ImportCommandUML.png[width="150"]
+_Figure 61. ImportCommand UML Diagram_
+
+The `import` command involves the use of multiple components of the Club Connect application.
+Figure 62 (below) shows the high-level _Sequence Diagram_ for the `import` command.
+
+image::SDforImport.png[width="900"]
+_Figure 62. High Level Sequence Diagram for the `import C:/Users/Admin/club.csv` command_
+
+`Logic` is responsible for parsing the `import` command.
+It returns an `ImportCommand` object after parsing the CSV file path.
+
+The `ImportCommand#execute()` method invokes the `importMembers()` method from `model`.
+
+The `Model` component invokes the `readClubBook()` method of the `CsvClubBookStorage` object to get the list of `Member`
+objects that are to be added to Club Connect. The members from the list are then sequentially added to the club book.
+If a `DuplicateMatricNumberException` is encountered while adding a member, then that member is not added to the club book
+and execution continues. This way, even if there are a few members with invalid data values, the import command will
+still work for those members with valid data. This implementation is shown in the code snipped below:
+
+[source, java]
+----
+public int importMembers(File importFile) throws IOException {
+    CsvClubBookStorage csvStorage = new CsvClubBookStorage(importFile);
+    UniqueMemberList importedMembers = csvStorage.readClubBook();
+    int numberMembers = 0;
+    for (Member member: importedMembers) {
+        try {
+            clubBook.addMember(member);
+            numberMembers++;
+        } catch (DuplicateMatricNumberException dmne) {
+            //...logging...
+        }
+    }
+    indicateClubBookChanged();
+    return numberMembers;
+}
+----
+
+The conversion of data from the CSV file to `Member` objects is facilitated by the `CsvUtil` class. Part of the implementation is shown here:
+[source, java]
+----
+public static UniqueMemberList getDataFromFile(File file) throws IOException {
+    UniqueMemberList importedMembers = new UniqueMemberList();
+    String data = FileUtil.readFromFile(file);
+    String[] membersData = data.split("\n");
+    for (int i = 1; i < membersData.length; i++) { //membersData[0] contains column headers
+        try {
+            Member member = getMember(membersData[i]);
+            importedMembers.add(member);
+        } catch (Exception e) {
+            //...logging...
+        }
+    }
+    return importedMembers;
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of `ImportCommand`
+
+* **Alternative 1 (current choice)**: Implement parser for CSV files ourselves
+** Pros: Greater control over what the format in the file to be imported from should be
+** Cons: Harder to implement, less flexible in terms of how data can be stored in the file as the data values are not binded to tags
+
+* **Alternative 2**: Use existing libraries (such as http://opencsv.sourceforge.net/[OpenCSV] and
+https://github.com/FasterXML/jackson-dataformats-text/tree/master/csv[Jackson])
+** Pros: More flexible in terms of how the data can be stored in the import file
+** Cons: Security issues or bugs in the external library cannot be fixed, licensing issues, difficult to use due to poor documentation
+
+===== Aspect: Input file format
+
+* **Alternative 1 (current choice)**: Import from a CSV file
+** Pros: Easier for users to create and modify their data in a CSV file
+** Cons: Implementation becomes more complex and may become less robust as support for parsing data from CSV files has to be added.
+
+* **Alternative 2**: Import from a XML file
+** Pros: Easier to implement and parse data, as the code already supports the reading of data from XML format
+** Cons: Harder for non-technical users to create and modify their data in a XML file
+// end::import[]
+
+// tag::export[]
+=== Exporting Members
+==== Current Implementation
+
+The `export` mechanism of Club Connect is facilitated by the `ExportCommand` class and is event-driven.
+It allows members to export the list of members in Club Connect as a CSV file.
+It makes use of the `CsvUtil` class to convert `Member` objects to CSV format.
+
+The `ExportCommand` extends from the `Command` class, as it is not an undoable command and only consists of a `File` attribute.
+Figure 63 depicts the UML diagram for the `ExportCommand` class.
+
+image::ExportCommandUML.png[width="350"]
+_Figure 63. ExportCommand UML Diagram_
+
+The `export` command uses multiple components of the Club Connect application.
+The _Sequence Diagram_ below (Figure 64) shows the interactions between some of these components.
+As you can see, the `ExportCommand` is driven by the `NewExportDataAvailableEvent`.
+
+image::SDforExport.png[width="800"]
+_Figure 64. High Level Sequence Diagram for the `export C:/Users/Admin/members.csv` command_
+
+This event is handled by the `Storage` component as shown in Figure 65.
+
+image::SDforExportEventHandling.png[width="650"]
+_Figure 65. High Level Sequence Diagram showing how the `Storage` component handles the `NewExportDataAvailableEvent`
+
+`Storage` makes use of a `CsvClubBookStorage` object to write data to the file specified by the export path.
+This is shown in the code snippet below:
+
+[source, java]
+----
+public void exportDataToFile(String data, File exportFile) throws IOException {
+    csvClubBookStorage.setClubBookFile(exportFile);
+    // ... logging ...
+    csvClubBookStorage.saveData(data);
+}
+----
+
+Then, the `csvClubBookStorage` object gets the column headers for the file from the `CsvUtil` class:
+
+[source, java]
+----
+public void saveData(String data, File file) throws IOException {
+    // ... logging ...
+    String columnHeaders = CsvUtil.getHeaders();
+    String dataToExport = columnHeaders + data;
+    CsvFileStorage.saveDataToFile(file, dataToExport);
+}
+----
+
+Finally, the `CsvFileStorage` class saves the data to the file by using the `writeToFile` method from the `FileUtil` class.
+
+[source, java]
+----
+public static void saveDataToFile(File file, String data) throws IOException {
+    FileUtil.writeToFile(file, data);
+}
+----
+
+==== Design Considerations
+
+===== Aspect: Output file format
+
+* **Alternative 1 (current choice)**: Export to a CSV file
+** Pros: More user-friendly in terms of understandability, generated file is compatible with the `import` command
+** Cons: Harder to implement as support for converting data of `Member` to CSV format needs to be added
+
+* **Alternative 2**: Export to a XML file
+** Pros: Easier to implement and as the code already supports the writing of data in XML format
+** Cons: Raw file provides a less intuitive view of data, generated file is not compatible with the `import` command
+// end::export[]
+
+// tag::profilephoto[]
+=== Changing Profile Photo Mechanism
+==== Current Implementation
+
+The `changepic` mechanism of Club Connect is facilitated by the `ChangeProfilePhotoCommand` class and is event-driven.
+It allows members to modify their profile photos displayed in the application.
+To facilitate this, it makes use of the `ProfilePhoto` class.
+
+Currently, the `ChangeProfilePhotoCommand` extends from the `Command` class, and not from `UndoableCommand`.
+
+Refer to Figure 66 for the UML diagram.
+The `ProfilePhoto` class consists of a `String` attribute to store the file path of the profile photo.
+
+image::ChangeProfilePhotoCommandUML.png[width="350"]
+_Figure 66. ChangeProfilePhotoCommand UML Diagram_
+
+The `displaypic` command involves the use of multiple components of Club Connect.
+Figure 67 (below) shows the interactions between these components.
+As you can see, the `ChangeProfilePhotoCommand` is driven by the `ProfilePhotoChangedEvent`.
+
+image::SDforChangeProfilePhoto.png[width="800"]
+_Figure 67. High Level Sequence Diagram for the `changepic C:/Users/Admin/Desktop/photo.png` command_
+
+ChangeProfilePhotoCommandParser is responsible for parsing the `changepic` command.
+It returns a `ChangeProfilePhotoCommand` object after parsing the photo file path.
+Figure 68 depicts the Sequence Diagram for interactions within the `Logic` component for the `execute("changepic C:/Users/Admin/Desktop/ photo.png")` API call.
+
+image::ChangeProfilePhotoCommandSdForLogic.png[width="650"]
+_Figure 68. Interactions Inside the Logic Component for the `changepic C:/Users/Admin/Desktop/photo.png` command
+
+The `ChangeProfilePhotoCommand#execute()` method invokes the `addProfilePhoto()` method from `model`.
+Complying with the rules of <<abstraction,abstraction>>, the `Logic` component calls on `Model` to handle the internal details for updation.
+
+The actual reading of the profile photo from the path provided is done by the `Storage` component.
+It copies the photo as a <<bmp,bitmap image file>> (.bmp) to the Club Connect application's resources.
+
+The code used for reading and copying the file is as follows:
+
+[source, java]
+----
+@Override
+public void copyOriginalPhotoFile(String originalPhotoPath, String newPhotoName) throws PhotoException {
+    BufferedImage originalPhoto = null;
+    try {
+        logger.info("Profile Photo is being read from " + originalPhotoPath);
+        URL photoUrl = new URL(URL_PREFIX + originalPhotoPath);
+        newPath = SAVE_PHOTO_DIRECTORY + newPhotoName + PHOTO_FILE_EXTENSION;
+        InputStream photoStream = photoUrl.openStream();
+        createPhotoFileCopy(photoStream, newPath);
+    } catch (IOException ioe) {
+        // ... exception handling ...
+    }
+}
+
+public void createPhotoFileCopy(InputStream photoStream, String newPath) throws PhotoWriteException {
+    // ... logging ...
+    try {
+        FileUtil.createDirs(new File(SAVE_PHOTO_DIRECTORY));
+        Files.copy(photoStream, Paths.get(newPath), StandardCopyOption.REPLACE_EXISTING);
+    } catch (IOException ioe) {
+        // ... exception handling ...
+    }
+}
+----
+
+The logged in member's details are then updated to include this new profile photo.
+
+The photo specified by the path is set to the `ImageView` object by the following code in the `Ui` component:
+
+[source, java]
+----
+private ImageView profilePhoto;
+private void setProfilePhoto(Member member) {
+    Image photo;
+    String photoPath = member.getProfilePhoto().getPhotoPath();
+    if (photoPath.equals(EMPTY_STRING) || photoPath.equals(DEFAULT_PHOTO_PATH)) {
+        photo = new Image(MainApp.class.getResourceAsStream(DEFAULT_PHOTO_PATH), photoWidth, photoHeight, false, true);
+    } else {
+        photo = new Image("file:" + photoPath, photoWidth, photoHeight, false, true);
+    }
+    profilePhoto.setImage(photo);
+}
+----
+
+The actual displaying of the profile photo is done by using this fxml code:
+
+[source, fxml]
+----
+<HBox alignment="CENTER_LEFT">
+    <ImageView fx:id="profilePhoto" fitWidth="100" fitHeight="130">
+        <HBox.margin>
+            <Insets left="7.5" bottom="7.5" right="5.0" top="7.5" />
+        </HBox.margin>
+    </ImageView>
+</HBox>
+----
+
+==== Design Considerations
+
+===== Aspect: Implementation of `ChangeProfilePhotoCommand`
+
+* **Alternative 1 (current choice)**: Logged in member can only change his/her own profile photo
+** Pros: Easy to implement, makes intuitive sense
+** Cons: There is no way for Exco members to ensure that members have appropriate profile photos
+
+* **Alternative 2**: Exco members can change any member's profile photo
+** Pros: Exco members have the ability to exercise control over members' profile photos
+** Cons: Implementation becomes more complicated
+
+===== Aspect: Source files of profile photos
+
+* **Alternative 1 (current choice)**: Make a copy the source image provided to the applications resources
+** Pros: Application becomes portable and independent from the rest of the system.
+   Members can delete the original file from the computer, without affecting the Club Connect Application
+** Cons: Changes made to the original source images are not reflected in the application
+
+* **Alternative 2**: Always read the profile photo from the file path provided
+** Pros: Changes made in the source image are reflected in the application
+** Cons: Application becomes highly dependent on the system, in terms of profile photos
+// end::profilephoto[]
+
+// tag::compressdecompress[]
+=== Compress/Decompress Mechanism
+==== Current Implementation
+
+Member details are shown as cards in the GUI. Cards can either be decompressed(Figure 69) or compressed(Figure 70).
+
+image::DecompressedMemberCards.png[width="300"]
+_Figure 69. Decompressed Member Cards_
+
+image::CompressedCards.png[width="300"]
+_Figure 70. Compressed Member Cards_
+
+The `MemberCard` class provides an abstraction for the member card shown in the GUI. By default, it shows a member card that is decompressed.
+To differentiate between compressed and decompressed member card, we introduced a `CompressedMemberCard` class. This class extends `MemberCard` (Figure 71) since a `CompressedMemberCard` is a `MemberCard`.
+Each of these classes contain a different static String showing location of the actual `FXML` file that determines layout of the member card, hence we get different layouts.
+
+image::MemberCardClassDiagram.png[width="300"]
+_Figure 71. `MemberCard` class diagram_
+
+The `compress` and `decompress` commands allows members to select whether they want to see detailed information of members or see a compressed version for easy viewing.
+These commands do not extend from `UndoableCommand` but just from `Command` since they do not change the state of the club book.
+
+Due to the similar nature of the `compress` and `decompress` commands, only the `compress` command will be discussed.
+
+Suppose that the user has just launched the application. The member cards would be decompressed (Figure 69).
+
+
+The user inputs 'compress' and the sequence diagram (Figure 72) below shows how the different components interact.
+
+image::SDforCompressToEventsCenter.png[width="800"]
+_Figure 72. Sequence diagram for compress command to Events Center_
+
+Then, the `MemberListPanel`, which contains the `MemberCard` objects will handle the event (Figure 73). If the cards are already compressed, no changes occur.
+However, if the cards are decompressed, the `MemberCard` objects would be converted to `CompressedMemberCard` objects.
+
+image::SDforCompressFromEventsCenter.png[width="800"]
+_Figure 73. Sequence diagram for compress command from Events Center_
+
+==== Design Considerations
+===== Aspect: How to interact from Logic to Ui
+* **Alternative 1 (current choice)**: Use Event-Driven approach to interact from `CompressCommand`/`DecompressCommand` to `MemberListPanel`
+** Pros: Reduces coupling.
+** Cons: Slower than just directly changing the `Ui` since a seperate class(`EventsCenter`) has to manage interactions, not
+just for compress/decompress but for other events as well.
+* **Alternative 2:** Keep a `Ui` attribute in every command just like `Model`
+** Pros: Easy to implement.
+** Cons: Increases coupling
+// end::compressdecompress[]
+
+
+// tag::autocomplete[]
+=== Auto-Complete Command Mechanism
+
+==== Current Implementation
+
+The auto-complete mechanism is an enhancement added to reduce the frequency pf typos and thus by extension, invalid commands.
+
+It makes use of the key press event `KeyEvent`. Pressing ```TAB``` cycles through all possible commands based on user input.
+
+The `ArrayList<String> commandList` in `CommandList.java` stores all the command formats.
+
+Here is the implementation for handling the key-press event:
+
+[source, java]
+private void handleKeyPress(KeyEvent keyEvent) {
+    switch (keyEvent.getCode()) {
+    .
+    .
+    case TAB:
+        keyEvent.consume();
+        completeCommandIndex++;
+        autoComplete(commandTextField.getText());
+        break;
+    .
+    .
+    }
+}
+
+Shown below is the implementation of the `autoComplete` method.
+
+[source, java]
+private void autoComplete(String input) {
+    if (!input.equals("")) {
+        if (oldInput == null) {
+            oldInput = input;
+        } else if (!input.startsWith(oldInput)) {
+            oldInput = input;
+            completeCommandIndex = 0;
+        }
+        List<String> completedCommands = LogicManager.COMMAND_LIST.stream().filter(s -> s.startsWith(oldInput))
+                .collect(Collectors.toList());
+        if (!completedCommands.isEmpty()) {
+            replaceText(completedCommands.get(completeCommandIndex % completedCommands.size()));
+        } else {
+            replaceText("");
+        }
+    }
+}
+
+==== Design Considerations
+===== Implementation of cycling through commands
+* **Alternative 1 (current choice)**: Use string manipulation to store old input and only change it if the new input doesn't start with the old input.
+** Pros: It's easy to implement.
+** Cons: It's not so good in terms of code quality.
+* **Alternative 2:** If there are 'N' commands that start with `XXX`, create 'N' strings with each concatenated one after the other in increasing length i.e. XXX~1~, XXX~1~XXX~2~, ... ,XXX~1~XXX~2~XXX~3~...XXX~N~. Keep truncating the commands not needed from the front.
+** Pros: Possibly cleaner code.
+** Cons: It's relatively hard to implement.
+
+// end::autocomplete[]
+
+// tag::dataencryption1[]
 === [Proposed] Data Encryption
+==== Rationale
+Data encryption is key to any App that deals with personal data of individuals.
 
-_{Explain here how the data encryption feature will be implemented}_
+We plan to use Symmetric Key Encryption to ensure the confidentiality of data.
 
-// end::dataencryption[]
+==== How Symmetric Key Encryption works
+Symmetric key encryption is an encryption philosophy where the two communicating parties share a pre-established secret key *k*.
+It consists of 2 algorithms `E` (Encrypting or Encoding) and `D` (Decryption or Decoding) which take in the same key *k* to perform their respective operations.
+
+The 2 algorithms `E` and `D` are efficient algorithms, such that:
+
+* *D*(*E*(*k*,m)) = m, where 'm' is the message that needs to be kept confidential.
+* For *k* chosen uniformly at random, *E*(*k*,m) gives no additional information about 'm' to an adversary.
+
+==== Proposed Implementation
+We plan to make use of classes that are defined in Javax's Crypto package.
+
+The classes that would feature in the implementation are:
+
+* KeyGenerator -> constructs a secret (symmetric) key.
+* Cipher ->  provides the functionality of a cryptographic cipher for encryption and decryption.
+
+The construction of a symmetric key is done by passing the algorithm the encryption will use. The Advanced Encryption Scheme (AES) algorithm is a secure encryption algorithm that has proven been proven secure. A 128-bit AES symmetric key will be used to encrypt all data files.
+
+Once the key is generated, all data will be encrypted with AES. Anyone who wishes to view the decrypted form of the data must possess the secret key.
+
+Figure 74 below describes the encryption procedure used in AES – specifically, the Cipher Block Chaining (CBC) mode.
+
+image::encryption.png[width="500" align="center"]
+_Figure 74. AES – CBC mode encryption._
+
+Figure 75 below shows the decryption process.
+
+image::decryption.png[width="500" align="center"]
+_Figure 75. AES – CBC mode decrption._
+
+// end::dataencryption1[]
 
 === Logging
 
-We are using `java.util.logging` package for logging. The `LogsCenter` class is used to manage the logging levels and logging destinations.
+We are using `java.util.logging` package for logging.
+The `LogsCenter` class is used to manage the logging levels and logging destinations.
 
-* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>)
-* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level
+* The logging level can be controlled using the `logLevel` setting in the configuration file (See <<Implementation-Configuration>>).
+* The `Logger` for a class can be obtained using `LogsCenter.getLogger(Class)` which will log messages according to the specified logging level.
 * Currently log messages are output through: `Console` and to a `.log` file.
 
 *Logging Levels*
 
-* `SEVERE` : Critical problem detected which may possibly cause the termination of the application
-* `WARNING` : Can continue, but with caution
-* `INFO` : Information showing the noteworthy actions by the App
-* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size
+* `SEVERE` : Critical problem detected which may possibly cause the termination of the application.
+* `WARNING` : Can continue, but with caution.
+* `INFO` : Information showing the noteworthy actions by the App.
+* `FINE` : Details that is not usually noteworthy but may be useful in debugging e.g. print the actual list instead of just its size.
 
 [[Implementation-Configuration]]
 === Configuration
@@ -410,10 +1507,11 @@ Here are the steps to convert the project documentation files to PDF format.
 .  Follow the instructions in <<UsingGradle#rendering-asciidoc-files, UsingGradle.adoc>> to convert the AsciiDoc files in the `docs/` directory to HTML format.
 .  Go to your generated HTML files in the `build/docs` folder, right click on them and select `Open with` -> `Google Chrome`.
 .  Within Chrome, click on the `Print` option in Chrome's menu.
-.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings indicated in the screenshot below.
 
-.Saving documentation as PDF files in Chrome
+.  Set the destination to `Save as PDF`, then click `Save` to save a copy of the file in PDF format. For best results, use the settings in Figure 76 below.
+
 image::chrome_save_as_pdf.png[width="300"]
+_Figure 76. Screenshot of saving documentation as PDF in Chrome_
 
 [[Testing]]
 == Testing
@@ -423,7 +1521,8 @@ image::chrome_save_as_pdf.png[width="300"]
 There are three ways to run tests.
 
 [TIP]
-The most reliable way to run tests is the 3rd one. The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
+The most reliable way to run tests is the 3rd one.
+The first two methods might fail some GUI tests due to platform/resolution-specific idiosyncrasies.
 
 *Method 1: Using IntelliJ JUnit test runner*
 
@@ -439,7 +1538,8 @@ See <<UsingGradle#, UsingGradle.adoc>> for more info on how to run tests using G
 
 *Method 3: Using Gradle (headless)*
 
-Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode. In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
+Thanks to the https://github.com/TestFX/TestFX[TestFX] library we use, our GUI tests can be run in the _headless_ mode.
+In the headless mode, GUI tests do not show up on the screen. That means the developer can do other things on the Computer while the tests are running.
 
 To run tests in headless mode, open a console and run the command `gradlew clean headless allTests` (Mac/Linux: `./gradlew clean headless allTests`)
 
@@ -449,14 +1549,14 @@ We have two types of tests:
 
 .  *GUI Tests* - These are tests involving the GUI. They include,
 .. _System Tests_ that test the entire App by simulating user actions on the GUI. These are in the `systemtests` package.
-.. _Unit tests_ that test the individual components. These are in `seedu.address.ui` package.
+.. _Unit tests_ that test the individual components. These are in `seedu.club.ui` package.
 .  *Non-GUI Tests* - These are tests not involving the GUI. They include,
 ..  _Unit tests_ targeting the lowest level methods/classes. +
-e.g. `seedu.address.commons.StringUtilTest`
+e.g. `seedu.club.commons.StringUtilTest`
 ..  _Integration tests_ that are checking the integration of multiple code units (those code units are assumed to be working). +
-e.g. `seedu.address.storage.StorageManagerTest`
+e.g. `seedu.club.storage.StorageManagerTest`
 ..  Hybrids of unit and integration tests. These test are checking multiple code units as well as how the are connected together. +
-e.g. `seedu.address.logic.LogicManagerTest`
+e.g. `seedu.club.logic.LogicManagerTest`
 
 
 === Troubleshooting Testing
@@ -473,27 +1573,30 @@ See <<UsingGradle#, UsingGradle.adoc>> to learn how to use Gradle for build auto
 
 === Continuous Integration
 
-We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects. See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
+We use https://travis-ci.org/[Travis CI] and https://www.appveyor.com/[AppVeyor] to perform _Continuous Integration_ on our projects.
+See <<UsingTravis#, UsingTravis.adoc>> and <<UsingAppVeyor#, UsingAppVeyor.adoc>> for more details.
 
 === Coverage Reporting
 
-We use https://coveralls.io/[Coveralls] to track the code coverage of our projects. See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
+We use https://coveralls.io/[Coveralls] to track the code coverage of our projects.
+See <<UsingCoveralls#, UsingCoveralls.adoc>> for more details.
 
 === Documentation Previews
-When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged. See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
+When a pull request has changes to asciidoc files, you can use https://www.netlify.com/[Netlify] to see a preview of how the HTML version of those asciidoc files will look like when the pull request is merged.
+See <<UsingNetlify#, UsingNetlify.adoc>> for more details.
 
 === Making a Release
 
 Here are the steps to create a new release.
 
-.  Update the version number in link:{repoURL}/src/main/java/seedu/address/MainApp.java[`MainApp.java`].
+.  Update the version number in link:{repoURL}/src/main/java/seedu/club/MainApp.java[`MainApp.java`].
 .  Generate a JAR file <<UsingGradle#creating-the-jar-file, using Gradle>>.
 .  Tag the repo with the version number. e.g. `v0.1`
 .  https://help.github.com/articles/creating-releases/[Create a new release using GitHub] and upload the JAR file you created.
 
 === Managing Dependencies
 
-A project often depends on third-party libraries. For example, Address Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
+A project often depends on third-party libraries. For example, Club Book depends on the http://wiki.fasterxml.com/JacksonHome[Jackson library] for XML parsing. Managing these _dependencies_ can be automated using Gradle. For example, Gradle can download the dependencies automatically, which is better than these alternatives. +
 a. Include those libraries in the repo (this bloats the repo size) +
 b. Require developers to download those libraries manually (this creates extra work for developers)
 
@@ -503,9 +1606,11 @@ b. Require developers to download those libraries manually (this creates extra w
 
 Suggested path for new programmers:
 
-1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time. Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
+1. First, add small local-impact (i.e. the impact of the change does not go beyond the component) enhancements to one component at a time.
+Some suggestions are given in <<GetStartedProgramming-EachComponent>>.
 
-2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components. <<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
+2. Next, add a feature that touches multiple components to learn how to implement an end-to-end feature across all components.
+<<GetStartedProgramming-RemarkCommand>> explains how to go about adding such a feature.
 
 [[GetStartedProgramming-EachComponent]]
 === Improving each component
@@ -515,12 +1620,14 @@ Each individual exercise in this section is component-based (i.e. you would not 
 [discrete]
 ==== `Logic` component
 
-*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command. Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words. Your job is to implement such aliases.
+*Scenario:* You are in charge of `logic`. During dog-fooding, your team realize that it is troublesome for the user to type the whole command in order to execute a command.
+Your team devise some strategies to help cut down the amount of typing necessary, and one of the suggestions was to implement aliases for the command words.
+Your job is to implement such aliases.
 
 [TIP]
 Do take a look at <<Design-Logic>> before attempting to modify the `Logic` component.
 
-. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all persons in the list.
+. Add a shorthand equivalent alias for each of the individual commands. For example, besides typing `clear`, the user can also type `c` to remove all members in the list.
 +
 ****
 * Hints
@@ -547,9 +1654,9 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 * Hints
 ** The link:{repoURL}/src/main/java/seedu/address/model/Model.java[`Model`] and the link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] API need to be updated.
 ** Think about how you can use SLAP to design the method. Where should we place the main logic of deleting tags?
-**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a person, and link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] allows you to update the tags.
+**  Find out which of the existing API methods in  link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] and link:{repoURL}/src/main/java/seedu/address/model/member/Person.java[`Person`] classes can be used to implement the tag removal logic. link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`] allows you to update a member, and link:{repoURL}/src/main/java/seedu/address/model/member/Person.java[`Person`] allows you to update the tags.
 * Solution
-** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each person, and remove the `tag` from each person.
+** Implement a `removeTag(Tag)` method in link:{repoURL}/src/main/java/seedu/address/model/AddressBook.java[`AddressBook`]. Loop through each member, and remove the `tag` from each member.
 ** Add a new API method `deleteTag(Tag)` in link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`]. Your link:{repoURL}/src/main/java/seedu/address/model/ModelManager.java[`ModelManager`] should call `AddressBook#removeTag(Tag)`.
 ** Add new tests for each of the new public methods that you have added.
 ** See this https://github.com/se-edu/addressbook-level4/pull/790[PR] for the full solution.
@@ -560,21 +1667,29 @@ Do take a look at <<Design-Model>> before attempting to modify the `Model` compo
 [discrete]
 ==== `Ui` component
 
-*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last person in the list. Your job is to implement improvements to the UI to solve all these problems.
+*Scenario:* You are in charge of `ui`. During a beta testing session, your team is observing how the users use your address book application. You realize that one of the users occasionally tries to delete non-existent tags from a contact, because the tags all look the same visually, and the user got confused. Another user made a typing mistake in his command, but did not realize he had done so because the error message wasn't prominent enough. A third user keeps scrolling down the list, because he keeps forgetting the index of the last member in the list. Your job is to implement improvements to the UI to solve all these problems.
 
 [TIP]
 Do take a look at <<Design-Ui>> before attempting to modify the `UI` component.
 
-. Use different colors for different tags inside person cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow.
+. Use different colors for different tags inside member cards. For example, `friends` tags can be all in brown, and `colleagues` tags can be all in yellow as shown in Figure 78.
 +
-**Before**
+Figure 77 below shows the member details before the modification.
 +
+**Before** +
+
 image::getting-started-ui-tag-before.png[width="300"]
-+
-**After**
-+
+
+_Figure 77. Member details before modification_
+
+Figure 78 below shows the member details after the modification.
+
+**After** +
+
 image::getting-started-ui-tag-after.png[width="300"]
-+
+
+_Figure 78. Member details after modification_
+
 ****
 * Hints
 ** The tag labels are created inside link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[the `PersonCard` constructor] (`new Label(tag.tagName)`). https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Label.html[JavaFX's `Label` class] allows you to modify the style of each Label, such as changing its color.
@@ -588,13 +1703,19 @@ image::getting-started-ui-tag-after.png[width="300"]
 
 . Modify link:{repoURL}/src/main/java/seedu/address/commons/events/ui/NewResultAvailableEvent.java[`NewResultAvailableEvent`] such that link:{repoURL}/src/main/java/seedu/address/ui/ResultDisplay.java[`ResultDisplay`] can show a different style on error (currently it shows the same regardless of errors).
 +
+
+Figure 79 below shows the `ResultDisplay` before the modification. +
 **Before**
 +
 image::getting-started-ui-result-before.png[width="200"]
+_Figure 79. ResultDisplay before modification_
 +
 **After**
 +
+Figure 80 below shows the `ResultDisplay` after the modification.
++
 image::getting-started-ui-result-after.png[width="200"]
+_Figure 80. ResultDisplay after modification_
 +
 ****
 * Hints
@@ -612,23 +1733,29 @@ image::getting-started-ui-result-after.png[width="200"]
 
 . Modify the link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to show the total number of people in the address book.
 +
+
+Figure 81 below shows the `StatusBarFooter` before the modification.
++
 **Before**
 +
 image::getting-started-ui-status-before.png[width="500"]
+_Figure 81. StatusBarFooter before modification_+
+Figure 82 below shows the `StatusBarFooter` after the modification.
 +
 **After**
 +
 image::getting-started-ui-status-after.png[width="500"]
-+
+_Figure 82. StatusBarFooter after modification_
+
 ****
 * Hints
 ** link:{repoURL}/src/main/resources/view/StatusBarFooter.fxml[`StatusBarFooter.fxml`] will need a new `StatusBar`. Be sure to set the `GridPane.columnIndex` properly for each `StatusBar` to avoid misalignment!
 ** link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] needs to initialize the status bar on application start, and to update it accordingly whenever the address book is updated.
 * Solution
-** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of persons when the application just started.
-** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of persons whenever there are new changes to the addressbook.
+** Modify the constructor of link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter`] to take in the number of members when the application just started.
+** Use link:{repoURL}/src/main/java/seedu/address/ui/StatusBarFooter.java[`StatusBarFooter#handleAddressBookChangedEvent(AddressBookChangedEvent)`] to update the number of members whenever there are new changes to the addressbook.
 ** For tests, modify link:{repoURL}/src/test/java/guitests/guihandles/StatusBarFooterHandle.java[`StatusBarFooterHandle`] by adding a state-saving functionality for the total number of people status, just like what we did for save location and sync status.
-** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of persons status bar.
+** For system tests, modify link:{repoURL}/src/test/java/systemtests/AddressBookSystemTest.java[`AddressBookSystemTest`] to also verify the new total number of members status bar.
 ** See this https://github.com/se-edu/addressbook-level4/pull/803[PR] for the full solution.
 ****
 
@@ -658,15 +1785,15 @@ By creating this command, you will get a chance to learn how to implement a feat
 *Scenario:* You are a software maintainer for `addressbook`, as the former developer team has moved on to new projects. The current users of your application have a list of new feature requests that they hope the software will eventually have. The most popular request is to allow adding additional comments/notes about a particular contact, by providing a flexible `remark` field for each contact, rather than relying on tags alone. After designing the specification for the `remark` command, you are convinced that this feature is worth implementing. Your job is to implement the `remark` command.
 
 ==== Description
-Edits the remark for a person specified in the `INDEX`. +
+Edits the remark for a member specified in the `INDEX`. +
 Format: `remark INDEX r/[REMARK]`
 
 Examples:
 
 * `remark 1 r/Likes to drink coffee.` +
-Edits the remark for the first person to `Likes to drink coffee.`
+Edits the remark for the first member to `Likes to drink coffee.`
 * `remark 1 r/` +
-Removes the remark for the first person.
+Removes the remark for the first member.
 
 ==== Step-by-step Instructions
 
@@ -700,7 +1827,7 @@ for `RemarkCommandParser`.
 . Modify link:{repoURL}/src/test/java/seedu/address/logic/parser/AddressBookParserTest.java[`AddressBookParserTest`] to test that the correct command is generated according to the user input.
 
 ===== [Step 3] Ui: Add a placeholder for remark in `PersonCard`
-Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each person later.
+Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui/PersonCard.java[`PersonCard`] s to display a remark for each member later.
 
 **Main:**
 
@@ -712,11 +1839,11 @@ Let's add a placeholder on all our link:{repoURL}/src/main/java/seedu/address/ui
 . Modify link:{repoURL}/src/test/java/guitests/guihandles/PersonCardHandle.java[`PersonCardHandle`] so that future tests can read the contents of the remark label.
 
 ===== [Step 4] Model: Add `Remark` class
-We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
+We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/seedu/address/model/member/Person.java[`Person`] class. Instead of just using a `String`, let's follow the conventional class structure that the codebase already uses by adding a `Remark` class.
 
 **Main:**
 
-. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/person/Address.java[`Address`], remove the regex and change the names accordingly).
+. Add `Remark` to model component (you can copy from link:{repoURL}/src/main/java/seedu/address/model/member/Address.java[`Address`], remove the regex and change the names accordingly).
 . Modify `RemarkCommand` to now take in a `Remark` instead of a `String`.
 
 **Tests:**
@@ -724,13 +1851,13 @@ We have to properly encapsulate the remark in our link:{repoURL}/src/main/java/s
 . Add test for `Remark`, to test the `Remark#equals()` method.
 
 ===== [Step 5] Model: Modify `Person` to support a `Remark` field
-Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Now we have the `Remark` class, we need to actually use it inside link:{repoURL}/src/main/java/seedu/address/model/member/Person.java[`Person`].
 
 **Main:**
 
-. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
-. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the person will be created without a remark).
-. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `addressBook.xml` so that the application will load the sample data when you launch it.)
+. Add `getRemark()` in link:{repoURL}/src/main/java/seedu/address/model/member/Person.java[`Person`].
+. You may assume that the user will not be able to use the `add` and `edit` commands to modify the remarks field (i.e. the member will be created without a remark).
+. Modify link:{repoURL}/src/main/java/seedu/address/model/util/SampleDataUtil.java/[`SampleDataUtil`] to add remarks for the sample data (delete your `clubBook.xml` so that the application will load the sample data when you launch it.)
 
 ===== [Step 6] Storage: Add `Remark` field to `XmlAdaptedPerson` class
 We now have `Remark` s for `Person` s, but they will be gone when we exit the application. Let's modify link:{repoURL}/src/main/java/seedu/address/storage/XmlAdaptedPerson.java[`XmlAdaptedPerson`] to include a `Remark` field so that it will be saved.
@@ -741,14 +1868,14 @@ We now have `Remark` s for `Person` s, but they will be gone when we exit the ap
 
 **Tests:**
 
-. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsAddressBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
+. Fix `invalidAndValidPersonAddressBook.xml`, `typicalPersonsClubBook.xml`, `validAddressBook.xml` etc., such that the XML tests will not fail due to a missing `<remark>` element.
 
 ===== [Step 6b] Test: Add withRemark() for `PersonBuilder`
-Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/person/Person.java[`Person`].
+Since `Person` can now have a `Remark`, we should add a helper method to link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`], so that users are able to create remarks when building a link:{repoURL}/src/main/java/seedu/address/model/member/Person.java[`Person`].
 
 **Tests:**
 
-. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the person that it is currently building.
+. Add a new method `withRemark()` for link:{repoURL}/src/test/java/seedu/address/testutil/PersonBuilder.java[`PersonBuilder`]. This method will create a new `Remark` for the member that it is currently building.
 . Try and use the method on any sample `Person` in link:{repoURL}/src/test/java/seedu/address/testutil/TypicalPersons.java[`TypicalPersons`].
 
 ===== [Step 7] Ui: Connect `Remark` field to `PersonCard`
@@ -767,7 +1894,7 @@ We now have everything set up... but we still can't modify the remarks. Let's fi
 
 **Main:**
 
-. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a person.
+. Replace the logic in `RemarkCommand#execute()` (that currently just throws an `Exception`), with the actual logic to modify the remarks of a member.
 
 **Tests:**
 
@@ -780,15 +1907,66 @@ See this https://github.com/se-edu/addressbook-level4/pull/599[PR] for the step-
 [appendix]
 == Product Scope
 
+Club Connect is targeted at Student Organizations, such as clubs and societies, that are characterized by a well-established hierarchy.
+Student organizations can have hundreds of members, who are divided into sub-committees that have narrower focuses. These subcommittee members are often assigned individual and group tasks. With time, it becomes very difficult to keep track of everything manually.
+This is why these organizations require a system for enrolling members, delegating tasks, organising events, and opening polls and getting feedback.
+Club Connect provides student organisations with a one-stop shop for all their managerial and organisation needs.
+
 *Target user profile*:
 
-* has a need to manage a significant number of contacts
-* prefer desktop apps over other types
-* can type fast
-* prefers typing over mouse input
-* is reasonably comfortable using CLI apps
+* <<exco-member,Exco member>> of a <<club,Club>>
+* <<member,Member>> of a club
 
-*Value proposition*: manage contacts faster than a typical mouse/GUI driven app
+*Value proposition*: clubs can efficiently manage its activities and members faster than a typical mouse/GUI driven application
+
+*Feature Contribution:*
+
+1. Yash Chowdhary
+
+* Major Feature: Task Management
++
+Each member of a student club / organization is responsible for carrying out tasks that are assigned to him/her. Managing tasks encompasses adding tasks or maintaining a To-Do List for yourself, being assigned tasks by Exco members, removing a task from the list once it has been completed, and updating a task's status. This ensures transparency and accountability of the club.
+
+* Minor Feature: Email Command + Auto-Complete + Group Management
++
+** Every student club / organisation makes use of email blasts to communicate with its members. Whether it is for general communication or for club-related events, the ability to email members is essential to the smooth functioning of an organization.
+
+** In situations where it is quite tedious to enter all of the parameters of a command, the auto-complete feature is a life-saver. Designed to reduce the chances of entering an invalid command format, it also comes to the aid of forgetful users of the application.
+
+** Every student club/organisation is sub-divided into sub-committees - each with a different set of responsibilities. `Groups` in `Club Connect` emulate this. Furthermore, a club should be given the option to do as it pleases with its sub-committees - rename them, shuffle members, and even remove the sub-committee if need be.
+
+2. Amrut Prabhu
+
+* Major Feature: Importing and Exporting Members List
++
+After recruitment events like SLF at NUS or other situations in which details of incoming members are recorded on an Excel sheet, the data can be imported from the Club Connect application instead of manually adding all the members.
+The list of members from the Club Connect application can be exported to formats such as .csv or .txt so that the club members can have access to a readable and sharable version of the member list outside the Club Connect application.
+
+* Minor Feature: Profile photo
++
+All the members of a club are not known by each other, which is especially the case in larger clubs.
+Adding a profile photo makes it easier to know what other members look like and to differentiate between members with similar names.
+
+3. Muhammad Nur Kamal Bin Mohammed Ariff
+
+* Major Feature: Polling system
++
+Exco members can create polls and look at the results to help ascertain the needs and wants of other members. Members can vote for polls to express what they require from the club.
+
+* Minor Feature: Improve navigability of member list by adding compress/decompress mechanism and revamping `Find` command
++
+Users can use compress command to clear clutter from member information in member list. Users can also use decompress command to see more information about members in member list.
+`Find` command can now search for members by partial matches, search by specified field (e.g. by email) or just search by all fields.
+
+4. Song Weiyang
+
+* Major Feature: Log In Function
++
+Members can log in to their own accounts and excess their unique storage files. This can allow allocation of task to certain members and memebrs can organise their datas uniquely.
+
+* Minor Feature: AutoSorting
++
+After Members edited their list of contacts, the contact list will be automatically sorted in alphabetical order.
 
 [appendix]
 == User Stories
@@ -797,18 +1975,99 @@ Priorities: High (must have) - `* * \*`, Medium (nice to have) - `* \*`, Low (un
 
 [width="59%",cols="22%,<23%,<25%,<30%",options="header",]
 |=======================================================================
-|Priority |As a ... |I want to ... |So that I can...
-|`* * *` |new user |see usage instructions |refer to instructions when I forget how to use the App
+|Priority |As a/an ... |I want to ... |So that I can...
+|`* * *` |New member |see usage instructions |refer to instructions when I forget how to use the App
 
-|`* * *` |user |add a new person |
+|`* * *` |<<exco-member,Exco member>> |add a new member to the club | begin assigning groups and tasks to the member
 
-|`* * *` |user |delete a person |remove entries that I no longer need
+|`* * *` |Exco member |delete a member from the club |remove entries that the club no longer needs
 
-|`* * *` |user |find a person by name |locate details of persons without having to go through the entire list
+|`* * *` |Exco member |divide members into groups using tags |manage the committee members more efficiently
 
-|`* *` |user |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+|`* * *` |Exco member |remove a particular tag/group | remove redundancies or remove irrelevant tags
 
-|`*` |user with many persons in the address book |sort persons by name |locate a person easily
+|`* * *` |Exco member |remove a member from a particular group | keep the App up-to-date, and also take into account students that opt-out or graduate
+
+|`* * *` |Exco member |add a task for certain members | assign members to do a task
+
+|`* * *` |Exco member |view the status of a task | see the progress made towards completing the task
+
+|`* * *` |Exco member |remove a task | delete tasks that have been completed
+
+|`* * *` |Exco member |create a poll | get the opinions of the club members
+
+|`* * *` |Exco member who created a poll |view results of the poll | see the opinions of the members
+
+|`* * *` |Member |edit my contact details |keep my contact information updated
+
+|`* * *` |Member |undo my command |reverse any undesirable commands or mistakes
+
+|`* * *` |Member |redo a command |return to the state before I undid a command
+
+|`* * *` |Member |select a member |view the member's details
+
+|`* * *` |Member |find a member by name |locate details of members without having to go through the entire list
+
+|`* * *` |Member |find members by a specified field |locate details of members without having to go through the entire list
+
+|`* * *` |Member |get notifications for new tasks |be aware of new tasks assigned to me
+
+|`* * *` |Member |add a profile photo |be identified by others
+
+|`* * *` |Member |add multiple <<entry,entries>> for <<attribute,attributes>> |provide all alternative contact details to others
+
+|`* * *` |Member |logout of the application |maintain integrity of my data and actions
+
+|`* * *` |Member |login to my account |access my data
+
+|`* * *` |Member |vote in a poll |provide my opinions
+
+|`* * *` |Member |remove a task assigned to me |focus on the yet to be done tasks
+
+|`* * *` |Busy member |be able to directly email members using my default mail client |save time and reduce errors by not needing to add recipients myself
+
+|`* * *` |Member |export members' info |so that I can share the details easily
+
+|`* * *` |Exco member |import data |add members' info to Club Connect efficiently
+
+|`* *` |Member |hide <<private-contact-detail,private contact details>> by default |minimize chance of someone else seeing them by accident
+
+|`* *` |Member |be notified on members' birthdays |wish them on time
+
+|`* *` |Member |compress the display of members |browse through the list of members with less distractions
+
+|`* *` |Efficient member |use shortcuts for commands |enter commands quickly
+
+|`* *` |Forgetful member |use multiple names for commands |use the right command by using any intuitive name
+
+|`* *` |Forgetful member |add an alternative name for a command |use names that I am used to
+
+|`* *` |Forgetful member |have suggestions for commands |correct myself easily when I make a mistake
+
+|`*` |Exco member |view anonymous feedback |see members' opinions of how the club can be improved
+
+|`*` |Member with many members in the address book |sort members by name |locate a member easily
+
+|`*` |Member |choose fields that should be displayed in the members list |view only those attributes that I want
+
+|`*` |Member |submit anonymous feedback |give my opinions to improve the club system and facilities
+
+|`*` |Member |create a group chat |broadcast messages
+
+|`*` |Member |chat with other members |communicate with them
+
+|`*` |Member |know who is online |I can chat with members in real time.
+
+|`*` |Member |see a list of my frequently viewed members |I can quickly access them
+
+|`*` |Member |email <<profile,profiles>> of members to others |I can share the information easily
+
+|`*` |Member |print profiles of selected members |view the information in the absence of a computer
+
+|`*` |Socially active member |link my social media |I can directly post things that I do in the club
+
+|`*` |Member |change the theme of the application |use the application with an appearance that I think looks best
+
 |=======================================================================
 
 _{More to be added}_
@@ -816,70 +2075,342 @@ _{More to be added}_
 [appendix]
 == Use Cases
 
-(For all use cases below, the *System* is the `AddressBook` and the *Actor* is the `user`, unless specified otherwise)
+(For all use cases below, the *System* is `Club Connect` and the *Actor* is the `user`, unless specified otherwise)
 
 [discrete]
-=== Use case: Delete person
+=== Use case: Delete member
+*System* : Club Connect
+
+*Actor* : Exco member
+
+*Precondition* : User is logged in.
 
 *MSS*
 
-1.  User requests to list persons
-2.  AddressBook shows a list of persons
-3.  User requests to delete a specific person in the list
-4.  AddressBook deletes the person
+1.  User requests to list members.
+2.  Club Connect shows a list of members.
+3.  User requests to delete a specific member in the list.
+4.  Club Connect deletes the member.
 +
 Use case ends.
 
 *Extensions*
 
 [none]
-* 2a. The list is empty.
+* 2a. The list only contains the User.
 +
 Use case ends.
 
 * 3a. The given index is invalid.
 +
 [none]
-** 3a1. AddressBook shows an error message.
+** 3a1. Club Connect shows an error message.
 +
 Use case resumes at step 2.
 
-_{More to be added}_
+[discrete]
+=== Use case: Add member
+
+*System* : Club Connect
+
+*Actor* : Exco member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to list members.
+2.  Club Connect shows a list of members.
+3.  User requests to add a member to the list.
+4.  Club Connect adds the member.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 3a. The syntax of the add command is invalid.
+** 3a1. Club Connect shows an error message.
+** 3a1. Club Connect shows correct format for add command.
++
+Use case resumes at step 2.
+
+* 3a. The matric number of member already exists in Club Connect.
+** 3a1. Club Connect shows an error message.
++
+Use case resumes at step 2.
+
+[discrete]
+=== Use case: Show Help
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests help.
+2.  Club Connect shows usage instructions.
++
+Use case ends.
+
+[discrete]
+
+=== Use case: Sort members
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to sort by specified field.
+2.  Club Connect lists members sorted according to specified field.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Invalid field specified.
+** 1a1. Club Connect shows an error message and displays all possible valid fields.
++
+Use case resumes at step 1.
+* 1b. No field specified.
+** 1b2. Club Connect shows list of members sorted by name.
++
+Use case ends.
+
+[discrete]
+=== Use case: Exit
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to exit Club Connect.
+2.  Club Connect exits.
++
+Use case ends.
+
+[discrete]
+=== Use case: Undo command
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to undo previous command.
+2.  Club Connect undoes previous command.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Previous command is undoable.
+** 1a1. Club Connect undoes latest undoable command.
++
+Use case ends.
+
+* 1b. No previous commands given.
++
+Use case ends.
+
+[discrete]
+=== Use case: Redo command
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to redo.
+2.  Club Connect redoes the change made by previous undo command.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. There are no redoable commands.
++
+Use case ends.
+
+[discrete]
+=== Use case: Login
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged out.
+
+*MSS*
+
+1.  Club Connect shows login screen.
+2.  User enters username and password.
+3.  Club Connect login as member with given username and password.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Username and password combination invalid.
+** 1a1. Club Connect shows an error message.
++
+Use case resumes at step 1.
+
+[discrete]
+=== Use case: Logout
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to logout.
+2.  Club Connect logouts to login screen.
++
+Use case ends.
+
+[discrete]
+=== Use case: Find member
+
+*System* : Club Connect
+
+*Actor* : Member
+
+*Precondition* : User is logged in.
+
+*MSS*
+
+1.  User requests to find member by specified field using keyword.
+2.  Club Connect shows a list of members containing keyword in specified field.
++
+Use case ends.
+
+*Extensions*
+
+[none]
+* 1a. Invalid field specified.
+** 1a1. Club Connect shows an error message and displays all possible valid fields.
++
+Use case resumes at step 1.
+* 1b. No field specified.
+** 1b2. Club Connect shows a list of members containing keyword in any possible field.
++
+Use case ends.
 
 [appendix]
 == Non Functional Requirements
 
 .  Should work on any <<mainstream-os,mainstream OS>> as long as it has Java `1.8.0_60` or higher installed.
-.  Should be able to hold up to 1000 persons without a noticeable sluggishness in performance for typical usage.
+.  Should be able to hold up to 1000 members without a noticeable sluggishness in performance for typical usage.
 .  A user with above average typing speed for regular English text (i.e. not code, not system admin commands) should be able to accomplish most of the tasks faster using commands than using the mouse.
+.  Should respond within 1 second.
+.  Should work on 32- and 64- bit environments.
+.  Should be easy to use for a first-time user.
+.  Should be able to handle any sort of input, i.e. should recover from invalid input.
+.  Should have friendly user guides and developer guides.
+.  Should allow certain data to be private.
+.  Should have command names that concisely describe their function.
+.  Should be open-source.
+.  Development should not cost money.
+.  Should be able to work offline.
+.  Should take up as little memory on the hard disk.
+.  Should be compatible with all Operating System, i.e Windows and Macintosh.
+.  Should save data regularly.
+.  Current versions must be backward compatible with older versions to support undo.
+
 
 _{More to be added}_
 
 [appendix]
+
+// tag::glossary[]
+
 == Glossary
+
+[[abstraction]] Abstraction::
+In Object-oriented Programming, abstraction is the mechanism by which users are provided with only the functionality, and not the implementation details.
+So, abstraction provides users with information on what an object does, rather than how it does it.
+
+[[attribute]] Attribute::
+An attribute is a type of detail of a member.
+For example, an attribute of a member could be phone number, email, matriculation number and so on.
+
+[[bmp]] Bitmap Image File::
+Bitmap Image file (BMP) is a file format that stores bitmap graphics data.
+It is device independent and you do not need a graphics adapter to display it.
+Images stored as BMP files can be losslessly compressed.
+
+[[club]] Club::
+A student organisation or association at the National University of Singapore.
+These include (but are not limited to) Faculty/Non-Faculty clubs, Academic/Non-Academic Societies, Interest Groups and Sports groups.
+Some examples include Computing Club, Mathematics Society and Basketball Varsity Team.
+
+[[clubbook]] Club Book::
+The internal database of Club Connect that stores member, task and poll information.
+
+[[cli]] CLI::
+Acronym for Command Line Interface. It is a purely text-based interface for software.
+User respond to visual prompts by typing single commands into the interface and receive results as text as well.
+An example of CLI would be MS-DOS.
+
+[[csv]] CSV::
+A comma-separated values (CSV) file is a text file that uses a comma (",") to separate values.
+This allows data to be saved in a table structured format.
+
+[[entry]] Entry::
+A value added to a member's attribute.
+
+[[exco-member]] Exco member::
+A member who is part of the Executive Committee of the club.
+Exco members are seen as the leaders of the club.
+Exco members can execute certain commands and view features that are not available to other members of the club.
+
+[NOTE]
+An Exco member is still regarded as a member.
+
+[[gui]] GUI::
+Acronnym for Graphical User Interface.
+In a GUI, the software interface consists of graphical icons, menus and/or other visual indicators to display information.
+Users can typically interact with these graphics, rather than just using text in the <<cli,command line>>.
+For example, all Windows operating systems have a GUI.
 
 [[mainstream-os]] Mainstream OS::
 Windows, Linux, Unix, OS-X
 
+[[member]] Member::
+One of the members who compose a group organization. They are the target users of our application.
+
 [[private-contact-detail]] Private contact detail::
 A contact detail that is not meant to be shared with others
 
-[appendix]
-== Product Survey
+[[profile]] Profile::
+Visual display of the information (attributes and entries) of a member.
 
-*Product Name*
-
-Author: ...
-
-Pros:
-
-* ...
-* ...
-
-Cons:
-
-* ...
-* ...
+// end::glossary[]
 
 [appendix]
 == Instructions for Manual Testing
@@ -903,26 +2434,335 @@ These instructions only provide a starting point for testers to work on; testers
 .. Re-launch the app by double-clicking the jar file. +
    Expected: The most recent window size and location is retained.
 
-_{ more test cases ... }_
+=== Deleting a member
 
-=== Deleting a person
+. Deleting a member while all members are listed
 
-. Deleting a person while all persons are listed
-
-.. Prerequisites: List all persons using the `list` command. Multiple persons in the list.
+.. Prerequisites: You must be logged in to Club Connect as an `Exco` member.
+   List all members using the `list` command. Multiple members in the list.
 .. Test case: `delete 1` +
    Expected: First contact is deleted from the list. Details of the deleted contact shown in the status message. Timestamp in the status bar is updated.
 .. Test case: `delete 0` +
-   Expected: No person is deleted. Error details shown in the status message. Status bar remains the same.
-.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size) _{give more}_ +
+   Expected: No member is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `delete`, `delete x` (where x is larger than the list size), `delete -1` (index must be a positive integer) +
    Expected: Similar to previous.
 
-_{ more test cases ... }_
+=== Adding a task
 
-=== Saving data
+. Adding a task
 
-. Dealing with missing/corrupted data files
+.. Prerequisites: You must be logged in to Club Connect.
+.. Test case: `addtask desc/Test Task 1 d/20/05/2018 t/19:00` +
+   Expected: A task is created and its details are displayed on the task pane(far right). Timestamp in the status bar is updated.
+.. Test case: `addtask desc/Test Task 2 d/20/05/2018` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `addtask desc/Test Task 3 d/20/05/2018 t/19:65` (invalid time) `addtask desc/Test Task 4 d/29/02/2018 t/19:00` (invalid leap day)
+   Expected: Similar to previous.
 
-.. _{explain how to simulate a missing/corrupted file and the expected behavior}_
+=== Assigning a task
 
-_{ more test cases ... }_
+. Assigning a task
+
+.. Prerequisites: You must be logged in to Club Connect as an `Exco` member.
+.. Test case: `assigntask desc/Assigned Task 1 d/20/05/2018 t/18:00 m/A0123456H` +
+   Expected: A task is created and assigned to `A0123456H`. Task details displayed on the task pane. Timestamp in the status bar is updated.
+.. Test case: `assigntask desc/Assigned Task 1 d/20/05/2018` +
+   Expected: No task is added. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `assigntask`, `assigntask desc/Assigned Task 1 d/20/05/2018 t/18:00 m/A1234T`, `assigntask desc/Assigned Task 1 d/20/05/2018 m/A0123456K` (missing time field) +
+   Expected: Similar to previous.
+
+=== Deleting a task
+
+. Deleting a task while all tasks are listed
+
+.. Prerequisites: List all your tasks using the `viewmytasks` command. Multiple tasks in the list.
+.. Test case: `deletetask 1` +
+   Expected: First task is deleted from the list. Details of the deleted task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `delete 0` +
+   Expected: No task is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `deletetask`, `deletetask x` (where x is larger than the task list size), `deletetask -1` (index must be a positive integer) +
+   Expected: Similar to previous.
+
+=== Changing a task's status
+
+. Changing a task's status while all tasks are listed
+
+.. Prerequisites: List all your tasks using the `viewmytasks` command. Multiple tasks in the list. All tasks are set to `Yet To Begin`.
+.. Test case: `changestatus 1 st/Completed` +
+ Expected: First task's status is changed to `Completed`. Description of the modified task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `changestatus 0 st/Completed` +
+ Expected: No task is affected. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `changestatus`, `changestatus x st/In Progress` (where x is larger than the task list size), `changestatus -1 st/Completed` (index must be a positive integer) +
+ Expected: Similar to previous.
+
+=== Changing a task's assignee
+
+. Changing a task's assignee while all tasks are listed
+
+.. Prerequisites: You must be logged in to Club Connect as an `Exco` member. List all the tasks using the `viewalltasks` command. Multiple tasks in the list.
+.. Test case: `changeassignee 1 m/A0123456H` +
+Expected: First task's assignee is changed to `A0123456H`. Description of the modified task shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `changeassignee 0 m/A0123456H` +
+Expected: No task is affected. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect commands to try: `changeassignee`, `changeassignee x m/A1234567H` (where x is larger than the task list size), `changeassignee -1 m/A2233445G` (index must be a positive integer) +
+Expected: Similar to previous.
+
+=== Deleting a group
+
+. Deleting a group from Club Connect
+
+.. Prerequisites: You must be logged in to Club Connect as an `Exco` member.
+.. Test case: `deletegroup g/Logistics` +
+   Expected: The group of all members previously part of the `Logistics` group will be changed to `Member`. The name of the deleted group shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `deletegroup g/Member` +
+   Expected: No group is deleted. Error details shown in the status message. Status bar remains the same.
+.. Test case: `deletegroup`, `deletegroup g/Exco` (mandatory group)
+   Expected: Similar to previous.
+
+=== Adding a poll
+
+. Adding a poll as an `Exco` member
+
+.. Prerequisites: Login as `Exco member`.
+.. Test case: `addpoll q/Which is the right answer? ans/Left ans/Right` +
+   Expected: New poll added in poll list with question "Which is the right answer?" and answers "Left" and "Right".
+   Details of the added poll shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `addpoll q/hello ans/bye ans/bye ans/jane` +
+   Expected: New poll added in poll list with question "hello" and answers "bye" and "jane".
+   Details of the added poll shown in the status message. Timestamp in the status bar is updated.
+.. Test case: Type `addpoll q/hi ans/a ans/b ans/c` twice +
+   Expected: For first command, new poll added in poll list with question "hi" and answers "a" and "b".
+   Details of the added poll shown in the status message. Timestamp in the status bar is updated. Then for the second,
+   no poll is added. Duplicate poll error will be shown in status message. Status bar remains the same.
+.. Other incorrect addpoll commands to try: `addpoll`, `addpoll x` (where x is larger than the list size or is negative) +
+   Expected: No poll is added. Error details shown in the status message. Status bar remains the same.
+
+. Adding a poll as an a non-`Exco` member
+
+.. Prerequisites: Login as a non-`Exco` member
+.. Test case: `addpoll q/Which is the right answer? ans/Left ans/Right` +
+   Expected: No poll is deleted. Error details shown in the status message. Status bar remains the same.
+
+=== Deleting a poll
+
+. Deleting a poll as an `Exco` member
+
+.. Prerequisites: Login as `Exco member` and there are polls listed.
+.. Test case: `deletepoll 1` +
+   Expected: First poll is deleted from the list. Details of the deleted poll shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `deletepoll 0` +
+   Expected: No poll is deleted. Error details shown in the status message. Status bar remains the same.
+.. Other incorrect delete commands to try: `deletepoll`, `deletepoll x` (where x is larger than the list size or is negative) +
+   Expected: Similar to previous.
+
+. Deleting a poll as an a non-`Exco` member
+
+.. Prerequisites: Login as a non-`Exco` member and there are polls listed.
+.. Test case: `deletepoll 1` +
+   Expected: No poll is deleted. Command requires Exco-member shown in status message. Status bar remains the same.
+
+=== Voting in a poll
+
+. Voting in a poll as an `Exco` member
+
+.. Prerequisites: Login as `Exco member` and all polls in poll list are not yet voted by user.
+.. Test case: `vote 1 1` +
+   Expected: Vote success shown the status message. Timestamp in the status bar is updated.
+.. Other incorrect vote commands to try: `vote`, `vote x y` (where x and/or y is larger than the poll list size or is negative) +
+   Expected: No poll is voted for. Error details shown in the status message. Status bar remains the same.
+
+. Voting in a poll as a non-`Exco` member
+
+.. Prerequisites: Login as a non-`Exco` member and all polls in poll list are not yet voted by user.
+.. Test case: `vote 1 1` +
+   Expected: Vote success shown in the status message. Timestamp in the status bar is updated. Poll is removed from poll list.
+.. Other incorrect vote commands to try: `vote`, `vote x y` (where x and/or y is larger than the poll list size or is negative) +
+   Expected: No poll is voted for. Error details shown in the status message. Status bar remains the same.
+
+=== Viewing results of polls
+
+. Viewing results of polls as an `Exco` member
+
+.. Prerequisites: Login as `Exco member`, there are polls in the poll list and polls don't display results.
+.. Test case: `viewresults` +
+   Expected: Results of polls shown in poll list. View results success shown in status message. Timestamp in the status bar is updated.
+
+. Viewing results of polls as a non-`Exco` member
+
+.. Prerequisites: Login as a non-`Exco` member and there are polls in the poll list.
+.. Test case: `viewresults` +
+   Expected: No results are shown in poll list. Command requires Exco-member shown in status message. Status bar remains the same.
+
+=== Hiding results of polls
+
+. Hiding results of polls as an `Exco` member
+
+.. Prerequisites: Login as `Exco member` and there are polls in the poll list and polls display results.
+.. Test case: `hideresults` +
+   Expected: Results of polls hidden in poll list. Hide results success shown in status message. Timestamp in the status bar is updated.
+
+. Hiding results of polls as a non-`Exco` member
+
+.. Prerequisites: Login as a non-`Exco` member and there are polls in the poll list.
+.. Test case: `vote 1 1` +
+   Expected: No results are shown in poll list. Command requires Exco-member shown in status message. Status bar remains the same.
+
+=== Compressing member cards
+
+. Compressing members cards when they are decompressed
+
+.. Prerequisites: Login and membercards are decompressed
+.. Test case: `compress` +
+   Expected: Member cards become compressed. Compress success shown in status message. Timestamp in the status bar is updated.
+
+. Compressing members cards when they are already compressed
+
+.. Prerequisites: Login and membercards are compressed
+.. Test case: `compress` +
+   Expected: Member cards remain compressed. Compress success shown in status message. Timestamp in the status bar is updated.
+
+=== Decompressing member cards
+
+. Decompressing members cards when they are compressed
+
+.. Prerequisites: Login and membercards are decompressed
+.. Test case: `decompress` +
+   Expected: Member cards become decompressed. Decompress success shown in status message. Timestamp in the status bar is updated.
+
+. Decompressing members cards when they are already compressed
+
+.. Prerequisites: Login and membercards are decompressed
+.. Test case: `compress` +
+   Expected: Member cards remain decompressed. Decompress success shown in status message. Timestamp in the status bar is updated.
+
+=== Finding members
+
+. Find by specified field
+
+.. Prerequisites: Login and there are more than 5 members in the application
+.. Test case: `find n/John` +
+   Expected: Member list filtered to members with name containing John. Number of members found shown in status message. Timestamp in the status bar is updated.
+.. Other find commands to try: `find PREFIX` (where PREFIX refers to the prefix of the field to narrow down the search. Possible prefixes defined in UserGuide.adoc) +
+   Expected: Find command will narrow down search by the specified field given by PREFIX
+
+. Find by all fields
+
+.. Prerequisites: Login and there are more than 5 members in the application
+.. Test case: `find lala` +
+   Expected: Member list filtered to members with fields containing lala. Number of members found shown in status message. Timestamp in the status bar is updated.
+
+// tag::ap-manual-testing[]
+=== Importing members
+. Importing members as an `Exco` member
+
+.. Prerequisites: You must be logged in to Club Connect as an `Exco` member.
+.. Test case: `import C:/Users/John/Desktop/correctly_formatted_data.csv` +
+   Expected: All members in the file `C:/Users/John/Desktop/correctly_formatted_data.csv` who have valid entries and do not share the same matriculation member with any member in Club Connect
+   are added to `Club Members`. The number of members imported is shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `import C:/Users/John/Desktop/data_in_incorrect_format.csv` +
+   Expected: No members are added to Club Connect. Error details are shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `import C:/Users/John/Desktop/does_not_exist.csv` +
+   Expected: No members are added to Club Connect. Error window pops up. Error details are shown in the status message. Status bar remains the same.
+.. Incorrect import commands to try: `import`, `import C:/Users/John/members.txt`
+   Expected: No members are added to Club Connect. Error details are shown in the status message. Status bar remains the same.
+
+. Importing members as a non-`Exco` member
+
+.. Prerequisites: You must be logged in to Club Connect and you must not be an `Exco` member.
+.. Test case: `import C:/Users/John/Desktop/correctly_formatted_data.csv` +
+   Expected: No members are added to Club Connect. Command requires Exco-member shown in status message. Status bar remains the same.
+.. Test case: `import C:/Users/John/Desktop/data_in_incorrect_format.csv` +
+   Expected: Similar to previous.
+.. Incorrect import commands to try: `import`, `import C:/Users/John/members.txt`
+   Expected: No members are added to Club Connect. Error details are shown in the status message. Status bar remains the same.
+
+=== Exporting members
+. Exporting members as a member
+
+.. Prerequisites: You must be logged in to Club Connect.
+.. Test case: `export C:/Users/John/Desktop/does_not_exist.csv` +
+   Expected: Writes data of all members in Club Connect to `C:/Users/John/Desktop/does_not_exist.csv`.
+   Success message is shown in the status message. Status bar remains the same.
+.. Test case: `export C:/Users/John/Desktop/already_exists.csv` +
+   Expected: Overwrites `C:/Users/John/Desktop/already_exists.csv` with data of all members in Club Connect.
+             Success message is shown in the status message.Status bar remains the same.
+.. Incorrect export commands to try: `export`, `export C:/Users/John/members.txt`
+   Expected: No members are exported to a file. Error details are shown in the status message. Status bar remains the same.
+
+=== Changing profile photo
+. Changing your profile photo when you have selected yourself
+.. Prerequisites: You must be logged in to Club Connect.
+.. Test case: `changepic C:/Users/John/Desktop/valid_photo.jpg` +
+   Expected: Your profile photo changes to the image at `C:/Users/John/Desktop/valid_photo.jpg`.
+   Your image in the `Logged in` panel, the `Club Members` panel, and the `Member Profile` panel changes to this new photo.
+   Timestamp in the status bar is updated.
+.. Test case: `changepic C:/Users/John/Desktop/does_not_exist.jpg` +
+   Expected: Your profile photo is unchanged. Error window pops up. Invalid photo path is shown in status message.
+   Your image in the `Logged in` panel, the `Club Members` panel, and the `Member Profile` panel remains the same.
+   Status bar remains the same.
+.. Test case: `changepic C:/Users/John/Desktop/` +
+   Expected: Your profile photo is unchanged. Error details are shown in status message.
+   Your image in the `Logged in` panel, the `Club Members` panel, and the `Member Profile` panel remains the same.
+   Status bar remains the same.
+.. Other incorrect change photo commands to try: `changepic`, `changepic C:/Users/John/image.bmp`
+   Expected: Similar to previous.
+
+. Changing your profile photo when you have not selected yourself
+.. Prerequisites: You must be logged in to Club Connect.
+.. Test case: `changepic C:/Users/John/Desktop/valid_photo.jpg` +
+   Expected: Your profile photo changes to the image at `C:/Users/John/Desktop/valid_photo.jpg`.
+   Your image in the `Logged in` panel and the `Club Members` panel changes. Timestamp in the status bar is updated.
+.. Test case: `changepic C:/Users/John/Desktop/does_not_exist.jpg` +
+   Expected: Your profile photo is unchanged. Error window pops up. Invalid photo path is shown in status message.
+   Your image in the `Logged in` panel and the `Club Members` panel remains the same.
+   Status bar remains the same.
+.. Test case: `changepic C:/Users/John/Desktop/` +
+   Expected: Your profile photo is unchanged. Error details are shown in status message.
+   Your image in the `Logged in` panel and the `Club Members` panel panel remains the same.
+   Status bar remains the same.
+.. Other incorrect change photo commands to try: `changepic`, `changepic C:/Users/John/image.bmp`
+   Expected: Similar to previous.
+
+=== Removing profile photo
+. Removing your profile photo when it is not the default photo and you have selected yourself
+.. Prerequisites: You must be logged in to Club Connect. You must have changed your profile photo.
+.. Test case: `removepic` +
+   Expected: Your profile photo changes to Club Connect's default profile photo.
+   Your image in the `Logged in` panel, the `Club Members` panel, and the `Member Profile` panel changes.
+   Timestamp in the status bar is updated.
+
+. Removing your profile photo when it is not the default photo and you have not selected yourself
+.. Prerequisites: You must be logged in to Club Connect. You must have changed your profile photo.
+.. Test case: `removepic` +
+   Expected: Your profile photo changes to Club Connect's default profile photo.
+   Your image in the `Logged in` panel and the `Club Members` panel changes. Timestamp in the status bar is updated.
+
+. Removing your profile photo when it is the default photo
+.. Prerequisites: You must be logged in to Club Connect. You must have not changed your profile photo.
+.. Test case: `removepic` +
+   Expected: Your profile photo remains as Club Connect's default profile photo.
+   Your image in the `Logged in` panel, the `Club Members` panel, and the `Member Profile` panel remains the same.
+   Timestamp in the status bar is updated.
+
+=== Deleting a tag
+. Deleting a tag as an `Exco` member
+
+.. Prerequisites: You must be logged in to Club Connect as an `Exco` member.
+.. Test case: `deletetag t/Head` +
+   Expected: The tag from all members previously tagged with `Head` will be removed. The name of the deleted taglogin u/A0123456H pw/password
+ shown in the status message. Timestamp in the status bar is updated.
+.. Test case: `deletetag t/This-does-not-exist` +
+   Expected: No tag is deleted as the tag does not exist. Error details are shown in the status message. Status bar remains the same.
+.. Incorrect delete tag commands to try: `deletetag`, `deletetag t/invalid format tag`
+   Expected: No tag is deleted as the tag name format is invalid. Error details are shown in the status message. Status bar remains the same.
+
+. Deleting a tag as a non-`Exco` member
+
+.. Prerequisites: You must be logged in to Club Connect and you must not be an `Exco` member.
+.. Test case: `deletetag t/Head` +
+   Expected: No tags are deleted from members. Command requires Exco-member shown in status message. Status bar remains the same.
+.. Test case: `deletetag t/This-does-not-exist` +
+   Expected: Similar to previous.
+.. Incorrect delete tag commands to try: `deletetag`, `deletetag t/invalid format tag`
+   Expected: No tag is deleted as the tag name format is invalid. Relevant error details are shown in the status message. Status bar remains the same.
+// end::ap-manual-testing[]

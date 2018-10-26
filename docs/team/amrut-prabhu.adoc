@@ -6,7 +6,7 @@
 
 == 1. Overview
 
-*Club Connect* is a computer application targeted at student club members at the National University of Singapore (NUS).
+https://github.com/amrut-prabhu/club-connect[*Club Connect*] is a computer application targeted at student club members at the National University of Singapore (NUS).
 It aims to make the tedious process of club management easier and more effective.
 It provides all members of the club with the ability to browse through profiles of other members, participate in polls,
 and manage club-related tasks.
@@ -15,11 +15,13 @@ Since Club Connect is targeted at those who prefer using the keyboard over a mou
 However, all the output is displayed in a traditional Graphical User Interface (GUI) -
 which is just computer jargon for a display that includes panes, menus and message boxes.
 
+You can see more details about the project https://github.com/CS2103JAN2018-W15-B4/main[here] and get the latest release https://github.com/CS2103JAN2018-W15-B4/main/releases[here].
+
 == 2. About this portfolio
 
 This project portfolio documents my contributions to the *Club Connect* project.
 It includes a summary of features that I implemented and other contributions to the project.
-Some extracts of my documentation in the Club Connect User Guide and Developer Guide are also included.
+Some extracts of my documentation in the Club Connect https://cs2103jan2018-w15-b4.github.io/main/UserGuide.html[User Guide] and https://cs2103jan2018-w15-b4.github.io/main/DeveloperGuide.html[Developer Guide] are also included.
 
 == 3. Summary of contributions
 

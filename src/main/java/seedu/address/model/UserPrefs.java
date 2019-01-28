@@ -10,11 +10,12 @@ import seedu.address.commons.core.GuiSettings;
 public class UserPrefs {
 
     private GuiSettings guiSettings;
-    private String addressBookFilePath = "data/addressbook.xml";
-    private String addressBookName = "MyAddressBook";
+    private String addressBookFilePath = "data/medeina.xml";
+    private String addressBookName = "Medeina";
+    private String defaultTheme = "/view/LightTheme.css";
 
     public UserPrefs() {
-        this.setGuiSettings(500, 500, 0, 0);
+        this.setGuiSettings(500, 500, 0, 0, defaultTheme);
     }
 
     public GuiSettings getGuiSettings() {
@@ -25,8 +26,8 @@ public class UserPrefs {
         this.guiSettings = guiSettings;
     }
 
-    public void setGuiSettings(double width, double height, int x, int y) {
-        guiSettings = new GuiSettings(width, height, x, y);
+    public void setGuiSettings(double width, double height, int x, int y, String theme) {
+        guiSettings = new GuiSettings(width, height, x, y, theme);
     }
 
     public String getAddressBookFilePath() {
@@ -71,7 +72,7 @@ public class UserPrefs {
         StringBuilder sb = new StringBuilder();
         sb.append("Gui Settings : " + guiSettings.toString());
         sb.append("\nLocal data file location : " + addressBookFilePath);
-        sb.append("\nAddressBook name : " + addressBookName);
+        sb.append("\nMedeina name : " + addressBookName);
         return sb.toString();
     }
 

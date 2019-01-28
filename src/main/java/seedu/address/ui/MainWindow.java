@@ -1,9 +1,12 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
 import com.google.common.eventbus.Subscribe;
+//import com.calendarfx.view.CalendarView;
 
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.MenuItem;
@@ -15,6 +18,7 @@ import javafx.stage.Stage;
 import seedu.address.commons.core.Config;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.commons.core.LogsCenter;
+import seedu.address.commons.events.ui.ChangeThemeRequestEvent;
 import seedu.address.commons.events.ui.ExitAppRequestEvent;
 import seedu.address.commons.events.ui.ShowHelpRequestEvent;
 import seedu.address.logic.Logic;
@@ -34,13 +38,15 @@ public class MainWindow extends UiPart<Stage> {
     private Logic logic;
 
     // Independent Ui parts residing in this Ui container
-    private BrowserPanel browserPanel;
+    private CalendarWindow calendarWindow;
+    //private BrowserPanel browserPanel;
     private PersonListPanel personListPanel;
+    private PetPatientListPanel petPatientListPanel;
     private Config config;
     private UserPrefs prefs;
 
     @FXML
-    private StackPane browserPlaceholder;
+    private StackPane calendarPlaceholder;
 
     @FXML
     private StackPane commandBoxPlaceholder;
@@ -50,6 +56,9 @@ public class MainWindow extends UiPart<Stage> {
 
     @FXML
     private StackPane personListPanelPlaceholder;
+
+    @FXML
+    private StackPane petPatientListPanelPlaceholder;
 
     @FXML
     private StackPane resultDisplayPlaceholder;
@@ -69,6 +78,7 @@ public class MainWindow extends UiPart<Stage> {
         // Configure the UI
         setTitle(config.getAppTitle());
         setWindowDefaultSize(prefs);
+        setWindowDefaultTheme(prefs);
 
         setAccelerators();
         registerAsAnEventHandler(this);
@@ -116,12 +126,17 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
-        browserPanel = new BrowserPanel();
-        browserPlaceholder.getChildren().add(browserPanel.getRoot());
+        //browserPanel = new BrowserPanel();
+        //@@author Robert-Peng
+        calendarWindow = new CalendarWindow(logic.getFilteredAppointmentList());
+        this.calendarPlaceholder.getChildren().add(calendarWindow.getRoot());
 
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
         personListPanelPlaceholder.getChildren().add(personListPanel.getRoot());
 
+        petPatientListPanel = new PetPatientListPanel(logic.getFilteredPetPatientList());
+        petPatientListPanelPlaceholder.getChildren().add(petPatientListPanel.getRoot());
+        //@@author
         ResultDisplay resultDisplay = new ResultDisplay();
         resultDisplayPlaceholder.getChildren().add(resultDisplay.getRoot());
 
@@ -150,16 +165,30 @@ public class MainWindow extends UiPart<Stage> {
             primaryStage.setX(prefs.getGuiSettings().getWindowCoordinates().getX());
             primaryStage.setY(prefs.getGuiSettings().getWindowCoordinates().getY());
         }
+        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getCurrentTheme());
+    }
+
+    //@@author aquarinte
+    /**
+     * Sets the default theme based on user preferences.
+     */
+    private void setWindowDefaultTheme(UserPrefs prefs) {
+        getRoot().getScene().getStylesheets().add(prefs.getGuiSettings().getCurrentTheme());
     }
 
     /**
-     * Returns the current size and the position of the main Window.
+     * Returns the current size, position, and theme of the main Window.
      */
     GuiSettings getCurrentGuiSetting() {
+        ObservableList<String> cssFiles = getRoot().getScene().getStylesheets();
+        assert cssFiles.size() == 2 : "There should only be 2 stylesheets used in main Window.";
+
+        String theme = cssFiles.stream().filter(c -> !c.contains("/view/Extensions.css")).findFirst().get();
         return new GuiSettings(primaryStage.getWidth(), primaryStage.getHeight(),
-                (int) primaryStage.getX(), (int) primaryStage.getY());
+                (int) primaryStage.getX(), (int) primaryStage.getY(), theme);
     }
 
+    //@@author
     /**
      * Opens the help window.
      */
@@ -185,13 +214,51 @@ public class MainWindow extends UiPart<Stage> {
         return this.personListPanel;
     }
 
-    void releaseResources() {
+
+    /*void releaseResources() {
         browserPanel.freeResources();
-    }
+    }*/
 
     @Subscribe
     private void handleShowHelpEvent(ShowHelpRequestEvent event) {
         logger.info(LogsCenter.getEventHandlingLogMessage(event));
         handleHelp();
+    }
+
+    //@@author aquarinte
+    /**
+     * Changes the theme of Medeina.
+     */
+    @Subscribe
+    public void handleChangeThemeEvent(ChangeThemeRequestEvent event) {
+        logger.info(LogsCenter.getEventHandlingLogMessage(event));
+        String userSelectedTheme = event.theme.getThemePath();
+        String userSelectedStyleSheet = this.getClass().getResource(userSelectedTheme).toExternalForm();
+        if (!hasStyleSheet(userSelectedStyleSheet)) {
+            changeStyleSheet(userSelectedStyleSheet);
+        }
+    }
+
+    /**
+     * Checks whether {@code theme} is already in use by the application.
+     */
+    public Boolean hasStyleSheet(String theme) {
+        List<String> styleSheetsInUsed = getRoot().getScene().getStylesheets();
+        if (styleSheetsInUsed.contains(theme)) {
+            return true;
+        }
+        return false;
+    }
+
+    /**
+     * Removes all existing stylesheets and add the given {@code theme} to style sheets.
+     * Re-adds Extensions.css to style sheets.
+     */
+    public void changeStyleSheet(String theme) {
+        String extensions = this.getClass().getResource("/view/Extensions.css").toExternalForm();
+        getRoot().getScene().getStylesheets().clear();
+        getRoot().getScene().getStylesheets().add(extensions); //re-add Extensions.css
+        boolean isChanged = getRoot().getScene().getStylesheets().add(theme);
+        assert isChanged == true : "Medeina's theme is not successfully changed.";
     }
 }

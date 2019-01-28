@@ -3,6 +3,7 @@ package seedu.address.testutil;
 import seedu.address.commons.exceptions.IllegalValueException;
 import seedu.address.model.AddressBook;
 import seedu.address.model.person.Person;
+import seedu.address.model.person.exceptions.DuplicateNricException;
 import seedu.address.model.person.exceptions.DuplicatePersonException;
 import seedu.address.model.tag.Tag;
 
@@ -31,6 +32,8 @@ public class AddressBookBuilder {
             addressBook.addPerson(person);
         } catch (DuplicatePersonException dpe) {
             throw new IllegalArgumentException("person is expected to be unique.");
+        } catch (DuplicateNricException e) {
+            throw new IllegalArgumentException("NRIC is expected to be unique.");
         }
         return this;
     }

@@ -1,0 +1,76 @@
+= Peng Xuanchang - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Medeina
+
+---
+
+== Overview
+
+Medeina is a desktop application designed to assist veterinarians and their assistants in managing contacts, pet patient details, and appointments.
+The app utilises Command Line Interface (CLI), thus user will interact with the app using mostly commands.
+
+Medeina is written in Java, and its graphical user interface (GUI) is created using Javafx.
+
+This application was built upon an existing code base for an address book for the module CS2103T Software Engineering, and has around 20kLoC.
+
+
+== Summary of contributions
+
+* *Major enhancement*: Integrating CalenderFX as framework for Calender view to show appointments, and and create new Panel to list petPatients
+** What it does: allows the user to list out current PetPatients in the panel, and manage appointments using calendar view.
+** Justification: This feature improves the product significantly because user is now able to see Owners, PetPatients, and appointments on the same page.
+** Highlights: This enhancement affects existing commands and commands to be added in future. It required an in-depth analysis of design alternatives. The implementation too was challenging as it required changes to existing commands. It has greatly changed the original GUI.
+
+* *Minor enhancement*: Added NRIC field in Owner’s profile
+** What it does: The NRIC field will help the veterinarians and their assistants to better locate an owner using their unique ID.
+** Justification: The feature helps user to avoid confusion when there are patients who share the same name. It also helps to tie pets to a certain user. When pets have duplicated names, they can be differentiated by their tagged NRICs.
+
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/Robert-Peng.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/Robert-Peng.md[Test code]] _{give links to collated code files}_
+
+* *Other contributions*:
+
+** Project management:
+*** Consistently contributed to achieve weekly milestone from `v1.1` - `v1.5rc`.
+** Enhancements to existing features:
+*** Created tabs for both OwnerList and PetPatientList  (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/196[#196])
+*** Improve *List* command to list out both owners and petPatients (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/143[#143])
+*** Assign different colors to different tags (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/14[#14])
+*** Implemented calendar switch view command which was integrated later into `listappt` command (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/179[#179])
+*** Create tab for both contact list and pet patient list (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/196[#196])
+** Documentation:
+*** Adding prefaces and changing language in the User Guide (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/70[#70])
+*** Adding screenshot of command results in the User Guide (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/151[#151])
+** Community:
+*** Reported bugs and suggestions for other teams in the class (examples:  https://github.com/CS2103JAN2018-W11-B3/main/issues/136[1], https://github.com/CS2103JAN2018-W11-B3/main/issues/130[2], https://github.com/CS2103JAN2018-W11-B3/main/issues/126[3])
+
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=GUI]
+
+include::../UserGuide.adoc[tag=listcommand]
+
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=UIcomponent]
+
+include::../DeveloperGuide.adoc[tag=ListPets]
+
+include::../DeveloperGuide.adoc[tag=calendar]
+
+
+
+

@@ -1,0 +1,58 @@
+= Wynona Kaan - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Medeina
+
+---
+
+== Overview
+
+Medeina is a desktop application designed for veterinarians and their assistants to manage contacts, pet patients and appointments. Users mainly interact with Medeina using a Command Line Interface. Medeina has a Graphical User Interface created with JavaFX. It is written in Java, and has about 20 kLoC.
+
+== Summary of contributions
+
+* *Major enhancement*: added *the ability to delete and force delete*
+** What it does: Can delete appointments, pet patients and contacts. Additionally, forcefully deleting pet patients and owners (and its dependencies).
+** Justification: Users can delete obsolete information. Users does not need to delete every dependency manually, but can just use the force option to immediately delete all dependencies.
+** Highlights: Implementation for the force option was difficult as it required safe deletion of dependencies before an element that has dependencies can be deleted.
+
+* *Major enhancement*: added *the ability find owners, pet patients and multiple prefixes of information*
+** What it does: Finding can be done by including an `OPTION` (accepted `-o` for owner, `-p` for pet patients) and added with any amount of supported `PREFIX` with any amount of keywords under each `PREFIX`.
+** Justification: This feature improves the product significantly because a user can find for vital information. In addition, the user can find more specific information by adding on prefixes and more keywords.
+** Highlights: The find command can be as specific as `find -p n/NAME s/SPECIES b/BREED c/COLOUR bt/BLOOD_TYPE t/TAGS` to find as specific information as possible. This required understanding of the prior FindCommand which made heavy use of Java 8 Predicates.
+
+* *Minor enhancement*: added the capability to store appointments in the .xml file.
+
+* *Minor enhancement*: added the capability list appointments of any date, in all 4 views allowed in CalendarFX.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/wynonaK.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/wynonaK.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.4` (1 release) on GitHub, Consistently contributed to achieve weekly milestone from `v1.1` - `v1.5rc`.
+** Documentation
+*** Improved user-friendliness in the User Guide by adding prefaces, Touched up on `v2.0` upcoming functions in the User Guide. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/79[#79])
+*** Updated the Developer Guide with new images to demonstrate the Model Component, as well as update obsolete information in Medeina. (Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/243[#243], Pull request https://github.com/CS2103JAN2018-F14-B2/main/pull/5[#5])
+** Community:
+*** Reported bugs and suggestions for other teams (Example: https://github.com/CS2103JAN2018-W15-B4/main/issues/202[#202])
+
+== Contributions to the User Guide
+
+|===
+|_Given below are some sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=find]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are some sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=listappt]
+
+include::../DeveloperGuide.adoc[tag=delete]
+

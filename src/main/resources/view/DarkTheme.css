@@ -3,6 +3,41 @@
     background-color: #383838; /* Used in the default.html file */
 }
 
+//@@author Robert-Peng
+
+.tab-pane .tab-header-area .tab-background{
+-fx-opacity: 0;
+}
+
+#owner-Tab {
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
+}
+
+#petPatient-Tab {
+    -fx-background-color: A9A9A9;
+    -fx-text-base-color: black;
+}
+
+#owner-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-background-color: derive(#1d1d1d, 20%);
+
+}
+
+#petPatient-pane {
+    -fx-font-size: 12pt;
+    -fx-font-family: "Segoe UI Semibold";
+    -fx-base: null;
+    -fx-border-color: null;
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+//@@author
+
 .label {
     -fx-font-size: 11pt;
     -fx-font-family: "Segoe UI Semibold";
@@ -30,7 +65,7 @@
 }
 
 .tab-pane {
-    -fx-padding: 0 0 0 1;
+    -fx-padding: 0 0 0 10;
 }
 
 .tab-pane .tab-header-area {
@@ -40,9 +75,9 @@
 }
 
 .table-view {
-    -fx-base: #1d1d1d;
-    -fx-control-inner-background: #1d1d1d;
-    -fx-background-color: #1d1d1d;
+    -fx-base: black;
+    -fx-control-inner-background: black;
+    -fx-background-color: black;
     -fx-table-cell-border-color: transparent;
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
@@ -57,9 +92,6 @@
     -fx-border-width: 0 0 1 0;
     -fx-background-color: transparent;
     -fx-border-color:
-        transparent
-        transparent
-        derive(-fx-base, 80%)
         transparent;
     -fx-border-insets: 0 10 1 0;
 }
@@ -87,10 +119,28 @@
     -fx-background-color: derive(#1d1d1d, 20%);
 }
 
+//@@author Robert-Peng
+
+#personListView {
+    -fx-background-color: derive(#1d1d1d, 20%);
+}
+
 .list-view {
     -fx-background-insets: 0;
     -fx-padding: 0;
+    -fx-background-color: white;
+}
+
+#personListView .list-cell:filled:odd {
+    -fx-background-color: #515658;
+}
+
+#petPatientListView {
     -fx-background-color: derive(#1d1d1d, 20%);
+}
+
+#petPatientListView .list-cell:filled:odd {
+    -fx-background-color: #515658
 }
 
 .list-cell {
@@ -100,20 +150,17 @@
 }
 
 .list-cell:filled:even {
-    -fx-background-color: #3c3e3f;
+    -fx-background-color: transparent;
 }
 
 .list-cell:filled:odd {
-    -fx-background-color: #515658;
+    -fx-background-color: transparent;
 }
+//@@author
 
-.list-cell:filled:selected {
-    -fx-background-color: #424d5f;
-}
-
-.list-cell:filled:selected #cardPane {
-    -fx-border-color: #3e7b91;
-    -fx-border-width: 1;
+.list-cell:empty {
+    /* Empty cells will not have alternating colours */
+    -fx-background: #383838;
 }
 
 .list-cell .label {
@@ -219,7 +266,7 @@
     -fx-background-color: #1d1d1d;
     -fx-font-family: "Segoe UI", Helvetica, Arial, sans-serif;
     -fx-font-size: 11pt;
-    -fx-text-fill: #d8d8d8;
+    -fx-text-fill: black;
     -fx-background-insets: 0 0 0 0, 0, 1, 2;
 }
 
@@ -342,10 +389,63 @@
 }
 
 #tags .label {
-    -fx-text-fill: white;
-    -fx-background-color: #3e7b91;
+
+
     -fx-padding: 1 3 1 3;
     -fx-border-radius: 2;
     -fx-background-radius: 2;
     -fx-font-size: 11;
+}
+/**
+ *Solution below adopted from :
+ *https://github.com/se-edu/addressbook-level4/pull/798/commits/167b3d0b4f7ad34296d2fbf505f9ae71f983f53c
+ */
+#tags .teal {
+    -fx-text-fill: white;
+    -fx-background-color: #3e7b91;
+}
+
+#tags .red {
+    -fx-text-fill: black;
+    -fx-background-color: red;
+}
+
+#tags .yellow {
+    -fx-background-color: yellow;
+    -fx-text-fill: black;
+}
+
+#tags .blue {
+    -fx-text-fill: white;
+    -fx-background-color: blue;
+}
+
+#tags .orange {
+    -fx-text-fill: black;
+    -fx-background-color: orange;
+}
+
+#tags .brown {
+    -fx-text-fill: white;
+    -fx-background-color: brown;
+}
+
+#tags .green {
+    -fx-text-fill: black;
+    -fx-background-color: green;
+}
+
+#tags .pink {
+    -fx-text-fill: black;
+    -fx-background-color: pink;
+}
+
+#tags .black {
+    -fx-text-fill: white;
+    -fx-background-color: black;
+}
+
+#tags .grey {
+    -fx-text-fill: black;
+    -fx-background-color: grey;
 }

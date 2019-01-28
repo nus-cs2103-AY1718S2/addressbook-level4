@@ -12,7 +12,10 @@ public class MainWindowHandle extends StageHandle {
     private final CommandBoxHandle commandBox;
     private final StatusBarFooterHandle statusBarFooter;
     private final MainMenuHandle mainMenu;
-    private final BrowserPanelHandle browserPanel;
+    private final CalendarPanelHandle calendarPanel;
+    private final PetPatientListPanelHandle petPatientListPanel;
+    //private final BrowserPanelHandle browserPanel;
+
 
     public MainWindowHandle(Stage stage) {
         super(stage);
@@ -22,7 +25,10 @@ public class MainWindowHandle extends StageHandle {
         commandBox = new CommandBoxHandle(getChildNode(CommandBoxHandle.COMMAND_INPUT_FIELD_ID));
         statusBarFooter = new StatusBarFooterHandle(getChildNode(StatusBarFooterHandle.STATUS_BAR_PLACEHOLDER));
         mainMenu = new MainMenuHandle(getChildNode(MainMenuHandle.MENU_BAR_ID));
-        browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
+        calendarPanel = new CalendarPanelHandle(getChildNode(CalendarPanelHandle.CALENDARPANEL_ID));
+        petPatientListPanel = new PetPatientListPanelHandle(
+            getChildNode(PetPatientListPanelHandle.PETPATIENT_LIST_VIEW_ID));
+        //browserPanel = new BrowserPanelHandle(getChildNode(BrowserPanelHandle.BROWSER_ID));
     }
 
     public PersonListPanelHandle getPersonListPanel() {
@@ -45,7 +51,19 @@ public class MainWindowHandle extends StageHandle {
         return mainMenu;
     }
 
-    public BrowserPanelHandle getBrowserPanel() {
-        return browserPanel;
+    //@@author Robert-Peng
+    public CalendarPanelHandle getCalendarPanel() {
+        return calendarPanel;
     }
+
+
+    public PetPatientListPanelHandle getPetPatientListPanel() {
+        return petPatientListPanel;
+    }
+    //@@author
+
+    //public BrowserPanelHandle getBrowserPanel() {
+    //    return browserPanel;
+    //}
+
 }

@@ -1,19 +1,28 @@
 package seedu.address.ui;
 
+import java.util.List;
 import java.util.logging.Logger;
 
+import javafx.application.Platform;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.geometry.Side;
+import javafx.scene.control.ContextMenu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextField;
 import javafx.scene.input.KeyEvent;
 import javafx.scene.layout.Region;
 import seedu.address.commons.core.LogsCenter;
 import seedu.address.commons.events.ui.NewResultAvailableEvent;
+import seedu.address.commons.util.StringUtil;
 import seedu.address.logic.ListElementPointer;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.logic.parser.exceptions.ParseException;
+
 
 /**
  * The UI component that is responsible for receiving user command inputs.
@@ -22,20 +31,46 @@ public class CommandBox extends UiPart<Region> {
 
     public static final String ERROR_STYLE_CLASS = "error";
     private static final String FXML = "CommandBox.fxml";
+    private static ChangeListener<String> autocompleteListener;
 
     private final Logger logger = LogsCenter.getLogger(CommandBox.class);
     private final Logic logic;
     private ListElementPointer historySnapshot;
 
+
     @FXML
     private TextField commandTextField;
+    private ContextMenu suggestionBox;
+
+    private boolean isAutocompleting;
+    private Autocomplete autocompleteLogic;
 
     public CommandBox(Logic logic) {
         super(FXML);
         this.logic = logic;
+        suggestionBox = new ContextMenu();
+        commandTextField.setContextMenu(suggestionBox);
+        autocompleteLogic = Autocomplete.getInstance();
+        autocompleteLogic.init(logic);
+        historySnapshot = logic.getHistorySnapshot();
         // calls #setStyleToDefault() whenever there is a change to the text of the command box.
         commandTextField.textProperty().addListener((unused1, unused2, unused3) -> setStyleToDefault());
-        historySnapshot = logic.getHistorySnapshot();
+
+        //@@author aquarinte-reused
+        /** Caret position bug fix from https://bugs.openjdk.java.net/browse/JDK-8088614 */
+        autocompleteListener = new ChangeListener<String>() {
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                Platform.runLater(new Runnable() {
+                    public void run() {
+                        triggerAutocomplete(newValue);
+                    }
+                });
+            }
+        };
+        commandTextField.textProperty().addListener(autocompleteListener);
+        isAutocompleting = true;
+        //@@author
     }
 
     /**
@@ -55,7 +90,11 @@ public class CommandBox extends UiPart<Region> {
             keyEvent.consume();
             navigateToNextInput();
             break;
+        case F2:
+            toggleAutocomplete();
+            break;
         default:
+            hideSuggestionBox();
             // let JavaFx handle the keypress
         }
     }
@@ -148,4 +187,115 @@ public class CommandBox extends UiPart<Region> {
         styleClass.add(ERROR_STYLE_CLASS);
     }
 
+    //@@author aquarinte
+    /**
+     * Toggles autocomplete on or off.
+     */
+    private void toggleAutocomplete() {
+        if (isAutocompleting) {
+            commandTextField.textProperty().removeListener(getAutocompleteListener());
+            isAutocompleting = false;
+            hideSuggestionBox();
+            logger.info("Autocomplete has been toggled [OFF]");
+        } else {
+            commandTextField.textProperty().addListener(getAutocompleteListener());
+            isAutocompleting = true;
+            logger.info("Autocomplete has been toggled [ON]");
+        }
+    }
+
+    private void hideSuggestionBox() {
+        if (suggestionBox.isShowing()) {
+            suggestionBox.hide();
+        }
+    }
+
+    /**
+     * Calls Autocomplete class to process commandTextField's content.
+     *
+     * @param newValue New user input.
+     */
+    private void triggerAutocomplete(String newValue) {
+        suggestionBox.getItems().clear();
+
+        if (!newValue.equals("")) {
+
+            List<String> suggestions = autocompleteLogic.getSuggestions(commandTextField);
+
+            if (!suggestions.isEmpty()) {
+                setContextMenu(suggestions);
+            }
+        }
+    }
+
+    /**
+     * Sets the context menu {@code suggestionBox} with autocomplete suggestions.
+     */
+    private void setContextMenu(List<String> suggestions) {
+        for (String s : suggestions) {
+            MenuItem m = new MenuItem(s);
+            String autocompleteValue = StringUtil.removeDescription(s);
+            m.setOnAction(event -> handleAutocompleteSelection(autocompleteValue));
+            suggestionBox.getItems().add(m);
+        }
+        suggestionBox.show(commandTextField, Side.BOTTOM, 0, 0);
+    }
+
+    /**
+     * Updates text in commandTextField with autocomplete selection {@code toAdd}.
+     *
+     * Supports insertion of autocomplete selection in the middle of commandTextField.
+     * user input: 'a', selected autocomplete 'add' --> commandTextField will show 'add' and not 'aadd'.
+     * user input: 'nr/F012', selected autocomplete 'F0123456B' --> commandTextField will show 'nr/F0123456B'
+     * and not 'nr/F012F0123456B'.
+     */
+    private void handleAutocompleteSelection(String toAdd) {
+        int cursorPosition = commandTextField.getCaretPosition();
+        int userInputLength = commandTextField.getText().length();
+
+        // .split() retains all whitespaces in array.
+        String[] words = commandTextField.getText(0, cursorPosition).split("((?<= )|(?= ))", -1);
+        String targetWord = words[words.length - 1];
+        String restOfInput = getRemainingInput(cursorPosition, userInputLength);
+
+        if (containsPrefix(targetWord)) {
+            String[] splitByPrefix = targetWord.split("/");
+            words[words.length - 1] = splitByPrefix[0] + "/" + toAdd;
+        } else {
+            words[words.length - 1] = toAdd;
+        }
+
+        String updatedInput = String.join("", words);
+        int newCursorPosition = updatedInput.length();
+        commandTextField.setText(updatedInput + restOfInput);
+        commandTextField.positionCaret(newCursorPosition);
+    }
+
+    /**
+     * Returns remaining text in {@code commandTextField} after {@code cursorPosition}, if any.
+     */
+    private String getRemainingInput(int cursorPosition, int userInputLength) {
+        String restOfInput = "";
+        if (userInputLength > cursorPosition + 1) {
+            restOfInput = commandTextField.getText(cursorPosition, commandTextField.getText().length());
+        }
+        return restOfInput;
+    }
+
+    /**
+     * Returns true if {@code toCheck} contains a prefix or is a prefix.
+     */
+    private boolean containsPrefix(String toCheck) {
+        if (toCheck.contains("/")) {
+            return true;
+        } else if (toCheck.length() > 0 && toCheck.substring(toCheck.length() - 1).equals("/")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static ChangeListener getAutocompleteListener() {
+        return autocompleteListener;
+    }
 }

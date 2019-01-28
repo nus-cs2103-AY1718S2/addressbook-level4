@@ -1,0 +1,58 @@
+= Jacqueline Cheong - Project Portfolio
+:imagesDir: ../images
+:stylesDir: ../stylesheets
+
+== PROJECT: Medeina
+This portfolio page showcases my contributions to the Medeina Project.
+
+== Overview
+
+Medeina is a free desktop application designed to provide veterinarians and their assistants with better management over contacts, pet patient details and appointments. User interactions happen through the Command Line Interface (CLI), and it has a Graphical User Interface (GUI) created using JavaFX.
+
+== Summary of contributions
+
+* *Major enhancement*: Autocomplete
+** *What it does:* The autocomplete feature provides suggestions for command words, options, prefixes and parameters in a context menu as the user types. Suggestions for options and prefixes come with descriptions to give users an overview of what the option or prefix is used for.
+** *Justification:* Medeina's command syntax involves many options, prefixes and parameters, which can be daunting for potential users. Autocomplete supports and complements Medeina's command syntax to enhance user experience. In addition, the autocomplete feature also provides users a way to reference existing data in Medeina to reduce the margin for errors in typing.
+** *Highlights:* This enhancement requires the exploration of the singleton pattern and listeners for JavaFX. It involves an in-depth analysis of command syntax parsing e.g. to determine which group of tags (contact, pet patient, appointment) to show as autocomplete suggestions based on user input.
+** *Credits:* https://bugs.openjdk.java.net/browse/JDK-8088614[Bug fix for JavaFx textfield caret position issue]
+
+* *Minor enhancement*: Support for changing theme that is persistent beyond app restart.
+
+* *Code contributed*: [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/functional/aquarinte.md[Functional code]] [https://github.com/CS2103JAN2018-F14-B2/main/blob/master/collated/test/aquarinte.md[Test code]]
+
+* *Other contributions*:
+
+** Project management:
+*** Managed releases `v1.2` and `v1.3` (2 releases) on GitHub
+** Enhancements to existing features:
+*** Added a new GUI color scheme (Pull requests https://github.com/CS2103JAN2018-F14-B2/main/pull/156[#156], https://github.com/CS2103JAN2018-F14-B2/main/pull/188[#188])
+** Documentation:
+*** Introduced a new format to document features and examples (https://github.com/CS2103JAN2018-F14-B2/main/pull/137[137])
+*** Re-structure contents in User Guide to improve organization and user-friendliness (https://github.com/CS2103JAN2018-F14-B2/main/pull/214[#214])
+*** Added a section to describe command format/syntax used (https://github.com/CS2103JAN2018-F14-B2/main/pull/244)
+** Community:
+*** Reported bugs and suggestions for other teams (examples:  https://github.com/CS2103JAN2018-F11-B1/main/issues/170[#170], https://github.com/CS2103JAN2018-F11-B1/main/issues/179[#179])
+** Tools:
+*** Integrated a new Github plugin (CircleCI) to the team repo https://github.com/CS2103JAN2018-F14-B2/main/pull/207[#207]
+*** Integrated TravisCI, Coveralls, and Netlify to the team repo
+
+== Contributions to the User Guide
+
+
+|===
+|_Given below are sections I contributed to the User Guide. They showcase my ability to write documentation targeting end-users._
+|===
+
+include::../UserGuide.adoc[tag=autocompleteUG]
+
+include::../UserGuide.adoc[tag=addcommandUG]
+
+== Contributions to the Developer Guide
+
+|===
+|_Given below are sections I contributed to the Developer Guide. They showcase my ability to write technical documentation and the technical depth of my contributions to the project._
+|===
+
+include::../DeveloperGuide.adoc[tag=autocompleteDG]
+include::../DeveloperGuide.adoc[tag=addcommandDG]

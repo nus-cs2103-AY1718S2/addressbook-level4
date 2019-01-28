@@ -46,6 +46,7 @@ If you are already familiar with Medeina's Command Line Interface (CLI), head on
 
 {empty} +
 // tag::GUI[]
+
 == Quick Start
 
 To successsfully install and run Medeina, you need to:
@@ -736,11 +737,10 @@ Medeina will have support to run concurrently on different systems. The data wil
 *Q*: Suppose I want to make an appointment for a pet patient named "Happy". However, the contact that "Happy" is assigned under, has yet another pet patient that is named "Happy" as well. I end up making an appointment for the other "Happy" instead. What can I do?
 *A*: Medeina is developed with the assumption that no pet patients under the same contact will share a name. However, there is a solution for such rare cases. Edit one of the pet patients to a name with a slight variation e.g. "Happy dog" to include species in the name for differentiation, or "Happy 1" to indicate the older pet patient for differentiation.
 
-=======
 // end::FAQ[]
 {empty} +
-
 // tag::commandsummaryUG[]
+
 == Command Summary
 
 You can find a summary of all commands available in Medeina in the following sections.
